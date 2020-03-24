@@ -1,4 +1,4 @@
-package com.madebyprism.mbprncore;
+package live.selecta.app.consumer;
 
 import android.app.Application;
 

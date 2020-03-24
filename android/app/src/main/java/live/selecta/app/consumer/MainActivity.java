@@ -1,4 +1,4 @@
-package com.madebyprism.mbprncore;
+package live.selecta.app.consumer;
 
 import com.reactnativenavigation.NavigationActivity;
 import org.devio.rn.splashscreen.SplashScreen;

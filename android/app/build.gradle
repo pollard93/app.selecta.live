@@ -148,13 +148,13 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.madebyprism.mbprncore"
+        applicationId "live.selecta.app.consumer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"
         versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1 // DO NOT UPDATE - development use only - overwritten by fastlane
         versionName project.hasProperty('versionName') ? project.property('versionName') : "0.0.0" // DO NOT UPDATE - development use only - overwritten by fastlane
-        resValue "string", "build_config_package", "com.madebyprism.mbprncore"
+        resValue "string", "build_config_package", "live.selecta.app.consumer"
     }
     splits {
         abi {
