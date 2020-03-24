@@ -3,13 +3,13 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: deleteNotification
+// GraphQL mutation operation: deleteConsumerNotification
 // ====================================================
 
-export interface deleteNotification {
-  deleteNotification: boolean | null;
+export interface deleteConsumerNotification {
+  deleteConsumerNotification: boolean | null;
 }
 
-export interface deleteNotificationVariables {
+export interface deleteConsumerNotificationVariables {
   id: string;
 }

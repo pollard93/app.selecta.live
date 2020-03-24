@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 import { FILE_FRAGMENT } from './File';
 
-export const NOTIFICATION_FRAGMENT = gql`
-  fragment NOTIFICATION_FRAGMENT on Notification {
+export const CONSUMER_NOTIFICATION_FRAGMENT = gql`
+  fragment CONSUMER_NOTIFICATION_FRAGMENT on ConsumerNotification {
     id
     type
     sender {
