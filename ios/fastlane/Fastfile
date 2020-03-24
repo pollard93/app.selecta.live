@@ -1,0 +1,275 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Create Beta and App Store apps on both App Store Connect and the Apple Developer Portal"
+  lane :produce_apps do
+    # Beta
+    produce(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      itc_team_id: '2203907',
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
+      app_name: "#{ENV['APP_NAME']} beta",
+
+      enable_services: {
+        push_notification: "on",
+      }
+    )
+    produce(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      itc_team_id: '2203907',
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
+      app_name: "#{ENV['APP_NAME']} beta onesignal",
+      skip_itc: true,
+    )
+
+    # Release
+    # produce(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   itc_team_id: '2203907',
+    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}",
+    #   app_name: "#{ENV['APP_NAME']}",
+
+    #   enable_services: {
+    #     push_notification: "on",
+    #   }
+    # )
+    # produce(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   itc_team_id: '2203907',
+    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension",
+    #   app_name: "#{ENV['APP_NAME']} onesignal",
+    #   skip_itc: true,
+    # )
+  end
+
+  desc "Create pems for push notifications"
+  lane :gen_pems do
+    # Debug
+    get_push_certificate(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      # force: true, # create a new profile, even if the old one is still valid
+      development: true,
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug", # optional app identifier,
+      save_private_key: true,
+      output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+      new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+        # Update onesignal account with new pem
+        onesignal(
+          app_id: "5ecd491b-45a8-43fd-9d98-f8629fc4775c",
+          app_name: "mbp-rn Debug",
+          auth_token: "#{ENV['ONESIGNAL_DEBUG_AUTH_TOKEN']}",
+          apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/development_#{ENV['BASE_BUNDLE_ID']}.debug.p12",
+          apns_env: "sandbox"
+        )
+      end
+    )
+    # Beta development
+    get_push_certificate(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      # force: true, # create a new profile, even if the old one is still valid
+      development: true,
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
+      save_private_key: true,
+      output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+      new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+        # Update onesignal account with new pem
+        onesignal(
+          app_id: "63926411-8276-4c20-9fe2-bb31f15d5214",
+          app_name: "mbp-rn Beta",
+          auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
+          apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/development_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
+          apns_env: "sandbox"
+        )
+      end
+    )
+    # Beta production
+    get_push_certificate(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      # force: true, # create a new profile, even if the old one is still valid
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
+      save_private_key: true,
+      output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+      new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+        # Update onesignal account with new pem
+        onesignal(
+          app_id: "63926411-8276-4c20-9fe2-bb31f15d5214",
+          app_name: "mbp-rn Beta",
+          auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
+          apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/production_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
+        )
+      end
+    )
+    # Release
+    # get_push_certificate(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   # force: true, # create a new profile, even if the old one is still valid
+    #   # development: true,
+    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}", # optional app identifier,
+    #   save_private_key: true,
+    #   output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+    #   new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+    #     # Update onesignal account with new pem
+    #     onesignal(
+    #       app_id: "2a561871-28fd-4b8a-a365-8cf9888e7b8b",
+    #       app_name: "mbp-rn",
+    #       auth_token: "#{ENV['ONESIGNAL_RELEASE_AUTH_TOKEN']}",
+    #       apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/production_#{ENV['BASE_BUNDLE_ID']}.p12",
+    #     )
+    #   end
+    # )
+  end
+
+  desc "Creates all required certificates & provisioning profiles"
+  lane :gen_match do
+    # Beta adhoc
+    match(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      type: "adhoc",
+      app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
+      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_branch: "master",
+    )
+    # Beta appstore
+    match(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      type: "appstore",
+      app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
+      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_branch: "master",
+    )
+    # Release
+    # match(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   type: "appstore",
+    #   app_identifier: ["#{ENV['BASE_BUNDLE_ID']}", "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension"],
+    #   git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+    #   git_branch: "master",
+    # )
+  end
+
+  desc "Build ipa and push to browserstack"
+  lane :adhoc do
+    match(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      type: "adhoc",
+      app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
+      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_branch: "master",
+      readonly: true,
+    )
+
+    sh('yarn', 'build:ios')
+
+    gym(
+      workspace: "#{ENV['XWORKSPACE_NAME']}",
+      scheme: "#{ENV['SCHEME_NAME']}",
+      configuration: "Beta",
+      export_method: 'ad-hoc',
+      output_directory: "builds",
+      output_name: 'adhoc.ipa',
+    )
+
+    upload_to_browserstack_app_live(
+      browserstack_username: ENV['BROWSERSTACK_USERNAME'],
+      browserstack_access_key: ENV['BROWSERSTACK_ACCESS_KEY'],
+      file_path: "builds/adhoc.ipa"
+    )
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "#{ENV['XPROJECT_NAME']}")
+
+    match(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      type: "appstore",
+      app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
+      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_branch: "master",
+      readonly: true,
+    )
+
+    sh('yarn', 'format:version')
+    sh('yarn', 'setup:all')
+    sh('yarn', 'build:ios')
+
+    gym(
+      workspace: "#{ENV['XWORKSPACE_NAME']}",
+      scheme: "#{ENV['SCHEME_NAME']}",
+      configuration: "Beta",
+      export_method: 'app-store',
+      output_directory: "builds",
+      output_name: 'beta.ipa',
+    )
+
+    upload_to_testflight(
+      username: "dev@madebyprism.com",
+      team_id: "2203907",
+      ipa: "builds/beta.ipa"
+    )
+  end
+
+  # desc "Push a new release build to the App Store"
+  # lane :release do
+  #   increment_build_number(xcodeproj: "#{ENV['XPROJECT_NAME']}")
+
+  #   match(
+  #     username: 'dev@madebyprism.com',
+  #     team_id: 'CQFWKU4GYE',
+  #     type: "appstore",
+  #     app_identifier: ["#{ENV['BASE_BUNDLE_ID']}", "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension"],
+  #     git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+  #     git_branch: "master",
+  #     readonly: true,
+  #   )
+
+  #   sh('yarn', 'format:version')
+  #   sh('yarn', 'setup:all')
+  #   sh('yarn', 'build:ios')
+
+  #   gym(
+  #     workspace: "#{ENV['XWORKSPACE_NAME']}",
+  #     scheme: "#{ENV['SCHEME_NAME']}",
+  #     configuration: "Release",
+  #     output_directory: "builds",
+  #     output_name: 'release.ipa',
+  #   )
+
+  #   upload_to_app_store(
+  #     skip_metadata: true,
+  #     skip_screenshots: true,
+  #     username: "dev@madebyprism.com",
+  #     team_id: "2203907",
+  #     ipa: "builds/release.ipa",
+  #   )
+  # end
+end

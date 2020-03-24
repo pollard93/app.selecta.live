@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name_debug">mbpRnCore debug</string>
+  <string name="app_name_beta">mbpRnCore beta</string>
+  <string name="app_name_release">mbpRnCore</string>
+  <!-- Required for react-native-rename -->
+  <!-- <string name="app_name">mbpRnCore</string> -->
+</resources>

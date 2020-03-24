@@ -1,0 +1,201 @@
+{
+  "env": {
+    "es6": true,
+    "jest": true
+  },
+  "extends": "airbnb-base",
+  "globals": {
+    "fetch": false
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "eslint-plugin-react",
+    "react-native"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
+    "react/jsx-uses-react": [
+      "error"
+    ],
+    "react/jsx-uses-vars": [
+      "error"
+    ],
+    "comma-dangle": [
+      "error"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-return-assign": [
+      "off"
+    ],
+    "import/no-named-as-default": [
+      "off"
+    ],
+    "import/no-named-as-default-member": [
+      "off"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 200,
+        "ignoreComments": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ImportDeclaration": "never"
+      }
+    ],
+    "no-await-in-loop": [
+      "off"
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.tsx",
+          "**/*.stories.tsx",
+          "scripts/*"
+        ]
+      }
+    ],
+    "no-case-declarations": [
+      "off"
+    ],
+    "no-restricted-syntax": [
+      "error",
+      "WithStatement"
+    ],
+    "default-case": "off",
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allowAfterThis": true
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "react-native/no-color-literals": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-raw-text": 2,
+    "react-native/no-single-element-style-arrays": 2,
+    "react-native/no-unused-styles": 2,
+    "react-native/sort-styles": [
+      "error",
+      "asc",
+      {
+        "ignoreClassNames": true
+      }
+    ],
+    "react-native/split-platform-components": 2,
+    "camelcase": [
+      "error",
+      {
+        "allow": [
+          "FILE_FRAGMENT_url",
+          "FILE_FRAGMENT",
+          "NOTIFICATION_FRAGMENT_sender_profilePicture_url",
+          "NOTIFICATION_FRAGMENT_sender_profilePicture",
+          "NOTIFICATION_FRAGMENT_sender",
+          "NOTIFICATION_FRAGMENT",
+          "USER_SELF_FRAGMENT_profilePicture_url",
+          "USER_SELF_FRAGMENT_profilePicture",
+          "USER_SELF_FRAGMENT",
+          "deleteNotification",
+          "deleteNotificationVariables",
+          "login_login",
+          "login",
+          "loginVariables",
+          "loginWithSocial_loginWithSocial",
+          "loginWithSocial",
+          "loginWithSocialVariables",
+          "readNotification_readNotification",
+          "readNotification",
+          "readNotificationVariables",
+          "register_register",
+          "register",
+          "registerVariables",
+          "requestPasswordReset",
+          "requestPasswordResetVariables",
+          "getNotifications_getNotifications_notifications_sender_profilePicture_url",
+          "getNotifications_getNotifications_notifications_sender_profilePicture",
+          "getNotifications_getNotifications_notifications_sender",
+          "getNotifications_getNotifications_notifications",
+          "getNotifications_getNotifications",
+          "getNotifications",
+          "getNotificationsVariables",
+          "getSelf_getSelf_profilePicture_url",
+          "getSelf_getSelf_profilePicture",
+          "getSelf_getSelf",
+          "getSelf",
+          "notificationsSub_notifications_node_sender_profilePicture_url",
+          "notificationsSub_notifications_node_sender_profilePicture",
+          "notificationsSub_notifications_node_sender",
+          "notificationsSub_notifications_node",
+          "notificationsSub_notifications",
+          "notificationsSub",
+          "putAccessToken",
+          "putAccessTokenVariables",
+          "removeAccessToken",
+          "getAccessToken"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ],
+        "extensions": [
+          ".ts",
+          ".tsx",
+          ".js"
+        ]
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.test.tsx"
+      ],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
+}

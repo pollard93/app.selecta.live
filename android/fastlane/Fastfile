@@ -1,0 +1,115 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new Beta Build to browserstack"
+  lane :update_onesignal do
+    onesignal(
+      app_id: "5ecd491b-45a8-43fd-9d98-f8629fc4775c",
+      app_name: "mbpRnCore Debug",
+      auth_token: "#{ENV['ONESIGNAL_DEBUG_AUTH_TOKEN']}",
+      android_token: "#{ENV['ANDROID_DEBUG_SERVER_KEY']}",
+      android_gcm_sender_id: "#{ENV['ANDROID_DEBUG_SENDER_ID']}",
+    )
+    onesignal(
+      app_id: "63926411-8276-4c20-9fe2-bb31f15d5214",
+      app_name: "mbpRnCore Beta",
+      auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
+      android_token: "#{ENV['ANDROID_BETA_SERVER_KEY']}",
+      android_gcm_sender_id: "#{ENV['ANDROID_BETA_SENDER_ID']}",
+    )
+    onesignal(
+      app_id: "2a561871-28fd-4b8a-a365-8cf9888e7b8b",
+      app_name: "mbpRnCore",
+      auth_token: "#{ENV['ONESIGNAL_RELEASE_AUTH_TOKEN']}",
+      android_token: "#{ENV['ANDROID_RELEASE_SERVER_KEY']}",
+      android_gcm_sender_id: "#{ENV['ANDROID_RELEASE_SENDER_ID']}",
+    )
+  end
+
+  desc "Submit a new Beta Build to browserstack"
+  lane :adhoc do
+    gradle(task: "assembleReleaseBeta")
+    upload_to_browserstack_app_live(
+      browserstack_username: ENV['BROWSERSTACK_USERNAME'],
+      browserstack_access_key: ENV['BROWSERSTACK_ACCESS_KEY'],
+      file_path: "./app/build/outputs/apk/releaseBeta/app-releaseBeta.apk"
+    )
+  end
+
+  desc "Submit a new Beta Build to the Google Play Store"
+  lane :beta do
+    # Get the last version code and increment it.
+    versionCode = File.read("metadata/versionCode").to_i
+    versionCode = versionCode+1
+
+    # Save versionCode
+    f = File.new("metadata/versionCode", "w")
+    f.write(versionCode)
+    f.close
+
+    # Set and get the version number
+    sh('yarn', 'format:version')
+    sh('yarn', 'setup:all')
+    versionName = File.read("metadata/versionName")
+
+    # Build
+    gradle(
+      task: "assemble",
+      build_type: "ReleaseBeta",
+      properties: {
+        'versionCode' => versionCode,
+        'versionName' => versionName,
+      }
+    )
+
+    upload_to_play_store(
+      track: 'internal',
+      package_name: 'com.madebyprism.mbprncore.beta',
+      apk: "./app/build/outputs/apk/releaseBeta/app-releaseBeta.apk",
+    )
+  end
+
+  # desc "Deploy a new version to the Google Play Store"
+  # lane :release do
+  #   # Get the last version code and increment it.
+  #   versionCode = File.read("metadata/versionCode").to_i
+  #   versionCode = versionCode+1
+
+  #   # Save versionCode
+  #   f = File.new("metadata/versionCode", "w")
+  #   f.write(versionCode)
+  #   f.close
+
+  #   # Set and get the version number
+  #   sh('yarn', 'format:version')
+  #   sh('yarn', 'setup:all')
+  #   versionName = File.read("metadata/versionName")
+
+  #   # Build
+  #   gradle(
+  #     task: "assemble",
+  #     build_type: "Release",
+  #     properties: {
+  #       'versionCode' => versionCode,
+  #       'versionName' => versionName,
+  #     }
+  #   )
+
+  #   upload_to_play_store(aab: "./app/build/outputs/bundle/release/app.aab")
+  # end
+end
