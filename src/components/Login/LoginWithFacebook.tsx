@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
@@ -12,7 +10,7 @@ import { SOCIAL_PROVIDER } from '../../../__generated__/globalTypes';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 
-const LoginWithFacebookExample = () => {
+const LoginWithFacebook = () => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
 
@@ -42,6 +40,7 @@ const LoginWithFacebookExample = () => {
    */
   const [loginSocialMutation] = useLoginWithSocialMutation({
     onCompleted: async ({ loginWithSocial: { token } }) => {
+      console.log('token', token);
       // Facebook user token has been used, and the user is now logged in as normal
       // Logout to discard unnecessary token
       LoginManager.logOut();
@@ -57,7 +56,8 @@ const LoginWithFacebookExample = () => {
       // Execute getSelf to cache it
       getSelf();
     },
-    onError: () => {
+    onError: (err) => {
+      console.log('err', err);
       setLoading(false);
       LoginManager.logOut();
       // TODO - toast
@@ -78,6 +78,8 @@ const LoginWithFacebookExample = () => {
          */
         LoginManager.logInWithPermissions(['public_profile', 'email']).then(
           async (result) => {
+            console.log('result', result);
+
             if (result.isCancelled) {
               setLoading(false);
               return;
@@ -104,6 +106,7 @@ const LoginWithFacebookExample = () => {
              * Sucess get facebook user access token and execute loginWithSocial using token
              */
             const { accessToken } = await AccessToken.getCurrentAccessToken();
+            console.log('accessToken', accessToken);
             loginSocialMutation({
               context: {
                 headers: {
@@ -126,4 +129,4 @@ const LoginWithFacebookExample = () => {
   );
 };
 
-export default LoginWithFacebookExample;
+export default LoginWithFacebook;

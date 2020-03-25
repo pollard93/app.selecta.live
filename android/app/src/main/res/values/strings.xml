@@ -2,6 +2,11 @@
   <string name="app_name_debug">consumerAppSelectaLive debug</string>
   <string name="app_name_beta">consumerAppSelectaLive beta</string>
   <string name="app_name_release">consumerAppSelectaLive</string>
+
   <!-- Required for react-native-rename -->
   <!-- <string name="app_name">consumerAppSelectaLive</string> -->
+
+  <!-- Facebook login -->
+  <string name="facebook_app_id">233563547770081</string>
+  <string name="fb_login_protocol_scheme">fb233563547770081</string>
 </resources>
