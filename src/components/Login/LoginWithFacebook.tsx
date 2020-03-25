@@ -78,8 +78,6 @@ const LoginWithFacebook = () => {
          */
         LoginManager.logInWithPermissions(['public_profile', 'email']).then(
           async (result) => {
-            console.log('result', result);
-
             if (result.isCancelled) {
               setLoading(false);
               return;
@@ -105,12 +103,12 @@ const LoginWithFacebook = () => {
             /**
              * Sucess get facebook user access token and execute loginWithSocial using token
              */
-            const { accessToken } = await AccessToken.getCurrentAccessToken();
-            console.log('accessToken', accessToken);
+            const { idToken } = await AccessToken.getCurrentAccessToken();
+            console.log('idToken', idToken);
             loginSocialMutation({
               context: {
                 headers: {
-                  authorization: accessToken.toString(),
+                  authorization: idToken.toString(),
                 },
               },
               variables: {

@@ -4,6 +4,7 @@ import Form from '../hoc/Form/Form';
 import { InitialConfig } from '../hoc/Form/FormInterfaces';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
 import LoginWithFacebook from './LoginWithFacebook';
+import LoginWithGoogle from './LoginWithGoogle';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -80,6 +81,7 @@ const LoginView = (props: LoginViewProps) => {
             />
 
             <LoginWithFacebook />
+            <LoginWithGoogle />
           </>
         );
       }}
