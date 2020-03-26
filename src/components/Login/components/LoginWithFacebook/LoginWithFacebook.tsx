@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Button, Alert } from 'react-native';
-import { goHome } from '../../screens/utils';
-import { useLoginWithSocialMutation } from '../../API/mutation/loginWithSocial/loginWithSocial';
-import PushNotifications from '../../modules/PushNotifications';
-import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
-import { SOCIAL_PROVIDER } from '../../../__generated__/globalTypes';
-import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
+import { goHome } from '../../../../screens/utils';
+import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
+import PushNotifications from '../../../../modules/PushNotifications';
+import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
+import { SOCIAL_PROVIDER } from '../../../../../__generated__/globalTypes';
+import { putAccessToken, putAccessTokenVariables } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
+import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 
 const LoginWithFacebook = () => {
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,6 @@ const LoginWithFacebook = () => {
    */
   const [loginSocialMutation] = useLoginWithSocialMutation({
     onCompleted: async ({ loginWithSocial: { token } }) => {
-      console.log('token', token);
       // Facebook user token has been used, and the user is now logged in as normal
       // Logout to discard unnecessary token
       LoginManager.logOut();
@@ -56,8 +55,7 @@ const LoginWithFacebook = () => {
       // Execute getSelf to cache it
       getSelf();
     },
-    onError: (err) => {
-      console.log('err', err);
+    onError: () => {
       setLoading(false);
       LoginManager.logOut();
       // TODO - toast
@@ -103,12 +101,11 @@ const LoginWithFacebook = () => {
             /**
              * Sucess get facebook user access token and execute loginWithSocial using token
              */
-            const { idToken } = await AccessToken.getCurrentAccessToken();
-            console.log('idToken', idToken);
+            const { accessToken } = await AccessToken.getCurrentAccessToken();
             loginSocialMutation({
               context: {
                 headers: {
-                  authorization: idToken.toString(),
+                  authorization: accessToken.toString(),
                 },
               },
               variables: {

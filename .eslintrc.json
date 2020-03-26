@@ -82,7 +82,9 @@
         "devDependencies": [
           "**/*.test.tsx",
           "**/*.stories.tsx",
-          "scripts/*"
+          "scripts/*",
+          "__mocks__/**/*",
+          "setup-tests.js"
         ]
       }
     ],

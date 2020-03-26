@@ -7,15 +7,27 @@ import 'jest-enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import 'isomorphic-fetch';
-import MockAsyncStorage from 'mock-async-storage';
+import fs from 'fs';
+import path from 'path';
 
-// Mocks
-const mockImpl = new MockAsyncStorage();
-jest.mock('@react-native-community/async-storage', () => mockImpl);
-jest.mock('react-native-splash-screen', () => ({
-  hide: jest.fn(),
-}));
-jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
+
+/**
+ * Include all mocks in __mocks__
+ */
+const isDirectory = (dir, file) => fs.statSync(path.join(dir, file)).isDirectory();
+const mockExists = (dir, file) => fs.existsSync(path.join(dir, file));
+const initMocks = (dir) => {
+  fs.readdirSync(dir)
+    .forEach((file) => {
+      if (isDirectory(dir, file)) {
+        initMocks(path.join(dir, file));
+      } else if (mockExists(dir, file)) {
+        jest.requireActual(path.join(dir, file));
+      }
+    });
+};
+initMocks(path.join(__dirname, '__mocks__'));
+
 
 /**
  * Set up DOM in node.js environment for Enzyme to mount to

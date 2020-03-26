@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import Form from '../hoc/Form/Form';
 import { InitialConfig } from '../hoc/Form/FormInterfaces';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
-import LoginWithFacebook from './LoginWithFacebook';
-import LoginWithGoogle from './LoginWithGoogle';
+import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
+import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -67,21 +67,23 @@ const LoginView = (props: LoginViewProps) => {
             />
 
             {!props.reset && (
-              <Button
-                title='Forgotten Password?'
-                onPress={props.onReset}
-                disabled={props.loading}
-              />
+              <>
+                <Button
+                  title='Forgotten Password?'
+                  onPress={props.onReset}
+                  disabled={props.loading}
+                />
+
+                <Button
+                  title='Register'
+                  onPress={props.onRegister}
+                  disabled={props.loading}
+                />
+
+                <LoginWithFacebook />
+                <LoginWithGoogle />
+              </>
             )}
-
-            <Button
-              title='Register'
-              onPress={props.onRegister}
-              disabled={props.loading}
-            />
-
-            <LoginWithFacebook />
-            <LoginWithGoogle />
           </>
         );
       }}
