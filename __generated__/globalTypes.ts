@@ -6,6 +6,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum CLIENT_TYPE {
+  CONSUMER = "CONSUMER",
+  PRODUCER = "PRODUCER",
+}
+
 export enum MutationType {
   CREATED = "CREATED",
   DELETED = "DELETED",

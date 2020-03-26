@@ -3,8 +3,8 @@ import { MutationHookOptions, useMutation } from 'react-apollo';
 import { requestPasswordResetVariables, requestPasswordReset } from './__generated__/requestPasswordReset';
 
 export const REQUEST_PASSWORD_RESET_MUTATION = gql`
-  mutation requestPasswordReset($email: String!){
-    requestPasswordReset(email: $email)
+  mutation requestPasswordReset($email: String!, $client: CLIENT_TYPE!){
+    requestPasswordReset(email: $email, client: $client)
   }
 `;
 

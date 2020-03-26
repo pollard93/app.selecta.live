@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Thu Mar 26 2020 11:45:24 GMT+0000 (Greenwich Mean Time)
+# timestamp: Thu Mar 26 2020 18:01:53 GMT+0000 (Greenwich Mean Time)
 
 type AuthPayload {
   token: String!
@@ -278,6 +278,11 @@ input ChannelWhereInput {
   NOT: [ChannelWhereInput!]
 }
 
+enum CLIENT_TYPE {
+  CONSUMER
+  PRODUCER
+}
+
 type ConsumerNotification {
   id: ID!
   type: NOTIFICATION_TYPE!
@@ -548,7 +553,7 @@ type Mutation {
   readConsumerNotification(id: String!, unRead: Boolean): ConsumerNotification!
   register(email: String!, password: String!): AuthPayload
   reportStream(id: String!, content: String!): Boolean
-  requestPasswordReset(email: String!): Boolean
+  requestPasswordReset(email: String!, client: CLIENT_TYPE!): Boolean
   resetPassword(password: String!): AuthPayload
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf

@@ -48,7 +48,13 @@ const Login = (props: LoginProps) => {
           const token = uri.replace('reset-password/', '');
           const { exp } = jwtDecode(token);
           if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            // TODO - toast - token expired
+            context.push({
+              duration: 1000,
+              component: (
+                <Toast content="Link has expired" />
+              ),
+              dismissible: false,
+            });
             return;
           }
 
