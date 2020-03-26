@@ -5,6 +5,7 @@
   "scripts": {
     "build:ios": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --assets-dest ios --platform ios",
     "dev": "react-native start",
+    "dev:android:deep:linking": "./node_modules/.bin/ts-node ./scripts/dev:android:deep:linking.ts",
     "dev:api": "./node_modules/.bin/ts-node ./scripts/dev:api.ts",
     "dev:appicon": "react-native set-icon --path icon.jpg",
     "dev:icons": "./node_modules/.bin/ts-node ./scripts/dev:icons.ts",
@@ -38,6 +39,7 @@
     "deep-equal": "^1.1.1",
     "email-validator": "^2.0.4",
     "graphql-tag": "^2.10.1",
+    "jwt-decode": "^2.2.0",
     "metro": "^0.59.0",
     "react": "16.9.0",
     "react-apollo": "^3.1.3",

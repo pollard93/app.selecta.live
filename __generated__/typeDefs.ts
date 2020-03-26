@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Mar 24 2020 18:38:10 GMT+0000 (Greenwich Mean Time)
+# timestamp: Thu Mar 26 2020 11:45:24 GMT+0000 (Greenwich Mean Time)
 
 type AuthPayload {
   token: String!

@@ -61,7 +61,7 @@ const LoginView = (props: LoginViewProps) => {
             {!props.reset && Password}
 
             <Button
-              disabled={!valid}
+              // disabled={!valid}
               title={buttonTitle}
               onPress={triggerSubmit}
             />
