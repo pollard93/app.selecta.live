@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApolloClient } from 'react-apollo';
 import SplashScreen from 'react-native-splash-screen';
-import { Linking, Platform, Text } from 'react-native';
+import { Linking, Platform } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Config from 'react-native-config';
 import { useToast } from 'mbp-components-rn-toast';

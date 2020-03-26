@@ -12,11 +12,9 @@ const RequestPasswordReset = () => {
   const [requestPasswordResetMutation, { loading }] = useRequestPasswordResetMutation({
     onCompleted: () => {
       setComplete(true);
-      // TODO - toast
     },
     onError: () => {
       setComplete(true);
-      // TODO - toast
     },
   });
 

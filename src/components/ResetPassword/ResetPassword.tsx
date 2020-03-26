@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApolloClient } from 'react-apollo';
+import { useToast } from 'mbp-components-rn-toast';
 import ResetPasswordView from './ResetPasswordView';
 import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
@@ -8,6 +9,8 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { useResetPasswordMutation } from '../../API/mutation/resetPassword/resetPassword';
 import { resetPasswordVariables } from '../../API/mutation/resetPassword/__generated__/resetPassword';
+import Toast from '../UI/Toast/Toast';
+import { getGQLErrorMessage } from '../../utils/functions';
 
 export interface ResetPasswordProps {
   token: string;
@@ -16,6 +19,7 @@ export interface ResetPasswordProps {
 const ResetPassword = (props: ResetPasswordProps) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
+  const context = useToast();
 
 
   /**
@@ -37,9 +41,16 @@ const ResetPassword = (props: ResetPasswordProps) => {
       // Navigate to home now getSelf is cached
       goHome();
     },
-    onError: () => {
+    onError: (e) => {
       setLoading(false);
-      // TODO - toast
+
+      context.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
     },
     fetchPolicy: 'network-only',
   });
@@ -66,9 +77,16 @@ const ResetPassword = (props: ResetPasswordProps) => {
       // Execute getSelf to cache it
       getSelf();
     },
-    onError: () => {
+    onError: (e) => {
       setLoading(false);
-      // TODO - toast
+
+      context.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
     },
   });
 

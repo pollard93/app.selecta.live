@@ -5,6 +5,8 @@ import wait from 'waait';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
+import { useToast } from 'mbp-components-rn-toast';
+import { MockedProvider } from '@apollo/react-testing';
 import ResetPassword from './ResetPassword';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
@@ -12,10 +14,18 @@ import { getAccessToken } from '../../ApolloClient/resolvers/query/getAccessToke
 import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
 import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
+import { RESET_PASSWORD_MUTATION } from '../../API/mutation/resetPassword/resetPassword';
+import ResetPasswordView from './ResetPasswordView';
 
 const client = mockClient();
 
 describe('<ResetPassword />', () => {
+  const toastStub = sinon.spy(useToast(), 'push');
+
+  afterEach(() => {
+    toastStub.restore();
+  });
+
   it('should succeed', async () => {
     const wrapper = mount(
       <ApolloProvider client={client}>
@@ -67,5 +77,79 @@ describe('<ResetPassword />', () => {
     // Update - button should not return to enabled as no errors
     wrapper.update();
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
+  });
+
+  it('should fail to resetPassword', async () => {
+    const toastSpy = sinon.spy(useToast(), 'push');
+
+    const mocks = [{
+      request: {
+        query: RESET_PASSWORD_MUTATION,
+      },
+      error: new Error(),
+    }];
+
+    const wrapper = mount(
+      <MockedProvider
+        mocks={mocks}
+        addTypename={false}
+      >
+        <ResetPassword token="string" />
+      </MockedProvider>,
+    );
+
+    // Submit and update
+    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.update();
+
+    // ResetPasswordView.loading is now true
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.true;
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // ResetPasswordView.loading is now false
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
+
+    // Toast should have been executed
+    expect(toastSpy.called).to.be.true;
+  });
+
+  it('should fail getSelf', async () => {
+    const toastSpy = sinon.spy(useToast(), 'push');
+
+    const mocks = [{
+      request: {
+        query: GET_SELF_QUERY,
+      },
+      error: new Error(),
+    }];
+
+    const wrapper = mount(
+      <MockedProvider
+        mocks={mocks}
+        addTypename={false}
+      >
+        <ResetPassword token="string" />
+      </MockedProvider>,
+    );
+
+    // Submit and update
+    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.update();
+
+    // ResetPasswordView.loading is now true
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.true;
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // ResetPasswordView.loading is now false
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
+
+    // Toast should have been executed
+    expect(toastSpy.called).to.be.true;
   });
 });
