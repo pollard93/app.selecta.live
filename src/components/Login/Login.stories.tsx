@@ -13,7 +13,6 @@ storiesOf('Login', module)
   .add('LoginView Default', () => (
     <LoginView
       loading={false}
-      reset={false}
       onReset={action('onReset')}
       onSubmit={action('onSubmit')}
       onRegister={action('onRegister')}
@@ -22,7 +21,6 @@ storiesOf('Login', module)
   .add('LoginView Loading', () => (
     <LoginView
       loading={true}
-      reset={false}
       onReset={action('onReset')}
       onSubmit={action('onSubmit')}
       onRegister={action('onRegister')}
@@ -31,7 +29,6 @@ storiesOf('Login', module)
   .add('LoginView Reset', () => (
     <LoginView
       loading={false}
-      reset={true}
       onReset={action('onReset')}
       onSubmit={action('onSubmit')}
       onRegister={action('onRegister')}
@@ -40,7 +37,6 @@ storiesOf('Login', module)
   .add('LoginView Reset Loading', () => (
     <LoginView
       loading={true}
-      reset={true}
       onReset={action('onReset')}
       onSubmit={action('onSubmit')}
       onRegister={action('onRegister')}
