@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useApolloClient } from 'react-apollo';
 import SplashScreen from 'react-native-splash-screen';
-import { Linking, Platform } from 'react-native';
+import { Linking, Platform, Text } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Config from 'react-native-config';
+import { useToast } from 'mbp-components-rn-toast';
 import LoginView from './LoginView';
 import { goHome, pushScreen, goToRequireUpdateScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
@@ -18,6 +19,8 @@ import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/reso
 import { STACK } from '../../screens/utils/interfaces';
 import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
 import { RequestPasswordResetScreenName } from '../../screens/RequestResetPasswordScreen/RequestResetPasswordScreen';
+import { getGQLErrorMessage } from '../../utils/functions';
+import Toast from '../UI/Toast/Toast';
 
 export interface LoginProps {
   toastMessage?: string;
@@ -26,6 +29,7 @@ export interface LoginProps {
 const Login = (props: LoginProps) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
+  const context = useToast();
 
 
   /**
@@ -103,9 +107,16 @@ const Login = (props: LoginProps) => {
       // Navigate to home now getSelf is cached
       goHome();
     },
-    onError: () => {
+    onError: (e) => {
       setLoading(false);
-      // TODO - toast
+
+      context.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
     },
     fetchPolicy: 'network-only',
   });
@@ -127,9 +138,16 @@ const Login = (props: LoginProps) => {
       // Execute getSelf to cache it
       getSelf();
     },
-    onError: () => {
+    onError: (e) => {
       setLoading(false);
-      // TODO - toast
+
+      context.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
     },
   });
 
@@ -139,12 +157,13 @@ const Login = (props: LoginProps) => {
    */
   useEffect(() => {
     if (props.toastMessage) {
-      // this.context.ref.current.show((
-      //   <Toast
-      //     type='ERROR'
-      //     message={this.props.toastMessage}
-      //   />
-      // ), 0);
+      context.push({
+        duration: 1000,
+        component: (
+          <Toast content={props.toastMessage} />
+        ),
+        dismissible: false,
+      });
     }
 
     // Logout after render

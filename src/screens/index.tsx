@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { ApolloProvider } from 'react-apollo';
 import { SafeAreaView } from 'react-native';
+import { ToastProvider } from 'mbp-components-rn-toast';
 import ApolloClient from '../ApolloClient';
 import InitScreen from './InitScreen/InitScreen';
 import GlobalStyles from '../styles/stylesheets/GlobalStyles';
@@ -16,7 +17,9 @@ const wrapContext = (Component) => {
   const wrapped = (props) => (
     <SafeAreaView style={GlobalStyles.PageFill}>
       <ApolloProvider client={ApolloClient}>
-        <Component {...props} />
+        <ToastProvider position='bottom'>
+          <Component {...props} />
+        </ToastProvider>
       </ApolloProvider>
     </SafeAreaView>
   );
