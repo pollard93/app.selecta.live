@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView from './RegisterView';
@@ -13,6 +13,7 @@ export interface RegisterProps {}
 
 const Register: FunctionComponent<RegisterProps> = () => {
   const client = useApolloClient();
+  const [loading, setLoading] = useState(false);
 
 
   /**
@@ -20,6 +21,9 @@ const Register: FunctionComponent<RegisterProps> = () => {
    */
   const [getSelf] = useGetSelfLazyQuery({
     onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+      // Bind notifications
+      PushNotifications.init(id);
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
@@ -28,13 +32,11 @@ const Register: FunctionComponent<RegisterProps> = () => {
         return;
       }
 
-      // Bind notifications
-      PushNotifications.init(id);
-
       // Navigate to home now getSelf is cached
       goHome();
     },
     onError: () => {
+      setLoading(false);
       // TODO - toast
     },
     fetchPolicy: 'network-only',
@@ -44,7 +46,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
   /**
    * Register mutation, stores access token and executes getSelf on completion
    */
-  const [registerMutation, { loading }] = useRegisterMutation({
+  const [registerMutation] = useRegisterMutation({
     onCompleted: async ({ register: { token } }) => {
       // Store token
       await client.mutate<putAccessToken, putAccessTokenVariables>({
@@ -58,6 +60,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
       getSelf();
     },
     onError: () => {
+      setLoading(false);
       // TODO - toast
     },
   });
@@ -66,7 +69,8 @@ const Register: FunctionComponent<RegisterProps> = () => {
   /**
    * Form submission
    */
-  const onSubmit = async (variables: registerVariables) => {
+  const onSubmit = (variables: registerVariables) => {
+    setLoading(true);
     registerMutation({
       variables,
     });

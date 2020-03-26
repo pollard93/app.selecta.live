@@ -1,11 +1,11 @@
-import { TextInput, Button } from 'react-native';
+import { Button, TextInput } from 'react-native';
 import React from 'react';
 import { mount } from 'enzyme';
 import wait from 'waait';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import Login from './Login';
+import ResetPassword from './ResetPassword';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
 import { getAccessToken } from '../../ApolloClient/resolvers/query/getAccessToken/__generated__/getAccessToken';
@@ -15,11 +15,11 @@ import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 
 const client = mockClient();
 
-describe('<Login >', () => {
+describe('<ResetPassword />', () => {
   it('should succeed', async () => {
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <Login />
+        <ResetPassword token="string" />
       </ApolloProvider>,
     );
 
@@ -29,14 +29,13 @@ describe('<Login >', () => {
     const pushNotificationInitSpy = sinon.spy(PushNotifications, 'init');
 
     // Test password is secure
-    expect(wrapper.find(TextInput).at(1).props().secureTextEntry).to.equal(true);
+    expect(wrapper.find(TextInput).first().props().secureTextEntry).to.equal(true);
 
     // Login Button is disabled as default
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
 
     // Test text change
-    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
-    wrapper.find(TextInput).at(1).props().onChangeText('password');
+    wrapper.find(TextInput).first().props().onChangeText('password');
     wrapper.update();
 
     // Form should now be valid

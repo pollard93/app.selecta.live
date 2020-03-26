@@ -7,7 +7,6 @@ import Config from 'react-native-config';
 import LoginView from './LoginView';
 import { goHome, pushScreen, goToRequireUpdateScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
-import { useRequestPasswordResetMutation } from '../../API/mutation/requestPasswordReset/requestPasswordReset';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
 import { RegisterScreenProps, RegisterScreenName } from '../../screens/RegisterScreen/RegisterScreen';
 import PushNotifications from '../../modules/PushNotifications';
@@ -18,6 +17,7 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { STACK } from '../../screens/utils/interfaces';
 import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
+import { RequestPasswordResetScreenName } from '../../screens/RequestResetPasswordScreen/RequestResetPasswordScreen';
 
 export interface LoginProps {
   toastMessage?: string;
@@ -25,7 +25,6 @@ export interface LoginProps {
 
 const Login = (props: LoginProps) => {
   const client = useApolloClient();
-  const [reset, setReset] = useState(false);
   const [loading, setLoading] = useState(false);
 
 
@@ -90,6 +89,9 @@ const Login = (props: LoginProps) => {
    */
   const [getSelf] = useGetSelfLazyQuery({
     onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+      // Bind notifications
+      PushNotifications.init(id);
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
@@ -97,9 +99,6 @@ const Login = (props: LoginProps) => {
         goToRequireUpdateScreen();
         return;
       }
-
-      // Bind notifications
-      PushNotifications.init(id);
 
       // Navigate to home now getSelf is cached
       goHome();
@@ -136,21 +135,6 @@ const Login = (props: LoginProps) => {
 
 
   /**
-   * Request password reset mutation
-   */
-  const [requestPasswordResetMutation] = useRequestPasswordResetMutation({
-    onCompleted: () => {
-      setLoading(false);
-      // TODO - toast
-    },
-    onError: () => {
-      setLoading(false);
-      // TODO - toast
-    },
-  });
-
-
-  /**
    * On Mount logout and clear cache, if toast message is passed, then show it
    */
   useEffect(() => {
@@ -175,19 +159,8 @@ const Login = (props: LoginProps) => {
   /**
    * Form submission
    */
-  const onSubmit = async (variables: loginVariables) => {
+  const onSubmit = (variables: loginVariables) => {
     setLoading(true);
-
-    if (reset) {
-      // Reqiest password reset, will never error
-      requestPasswordResetMutation({
-        variables: {
-          email: variables.email,
-        },
-      });
-      return;
-    }
-
     loginMutation({
       variables,
     });
@@ -195,7 +168,19 @@ const Login = (props: LoginProps) => {
 
 
   /**
-   * Navigate to register
+   * Navigate to RequestPasswordResetScreen
+   */
+  const onReset = () => {
+    pushScreen(STACK.LOGIN, {
+      component: {
+        name: RequestPasswordResetScreenName,
+      },
+    });
+  };
+
+
+  /**
+   * Navigate to RegisterScreen
    */
   const onRegister = () => {
     pushScreen<RegisterScreenProps>(STACK.LOGIN, {
@@ -209,9 +194,8 @@ const Login = (props: LoginProps) => {
   return (
     <LoginView
       loading={loading}
-      reset={reset}
       onSubmit={onSubmit}
-      onReset={() => setReset(true)}
+      onReset={onReset}
       onRegister={onRegister}
     />
   );
