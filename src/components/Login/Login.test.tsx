@@ -20,10 +20,20 @@ import LoginView from './LoginView';
 const client = mockClient();
 
 describe('<Login >', () => {
-  const toastStub = sinon.spy(useToast(), 'push');
+  /**
+   * Define sandbox and spies
+   */
+  const sandbox = sinon.createSandbox();
+  let pushNotificationInitSpy;
+  let toastSpy;
+
+  beforeEach(() => {
+    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    toastSpy = sandbox.spy(useToast(), 'push');
+  });
 
   afterEach(() => {
-    toastStub.restore();
+    sandbox.restore();
   });
 
   it('should succeed', async () => {
@@ -32,9 +42,6 @@ describe('<Login >', () => {
         <Login />
       </ApolloProvider>,
     );
-
-    // Define Spies
-    const pushNotificationInitSpy = sinon.spy(PushNotifications, 'init');
 
     // Test password is secure
     expect(wrapper.find(TextInput).at(1).props().secureTextEntry).to.equal(true);
@@ -119,8 +126,6 @@ describe('<Login >', () => {
   });
 
   it('should fail to login', async () => {
-    const toastSpy = sinon.spy(useToast(), 'push');
-
     const mocks = [{
       request: {
         query: LOGIN_MUTATION,
@@ -152,12 +157,10 @@ describe('<Login >', () => {
     expect(wrapper.find(LoginView).props().loading).to.be.false;
 
     // Toast should have been executed
-    expect(toastSpy.called).to.be.true;
+    expect(toastSpy.callCount).to.equal(1);
   });
 
   it('should fail getSelf', async () => {
-    const toastSpy = sinon.spy(useToast(), 'push');
-
     const mocks = [{
       request: {
         query: GET_SELF_QUERY,
@@ -189,6 +192,6 @@ describe('<Login >', () => {
     expect(wrapper.find(LoginView).props().loading).to.be.false;
 
     // Toast should have been executed
-    expect(toastSpy.called).to.be.true;
+    expect(toastSpy.callCount).to.equal(1);
   });
 });

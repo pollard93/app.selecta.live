@@ -20,10 +20,20 @@ import ResetPasswordView from './ResetPasswordView';
 const client = mockClient();
 
 describe('<ResetPassword />', () => {
-  const toastStub = sinon.spy(useToast(), 'push');
+  /**
+   * Define sandbox and spies
+   */
+  const sandbox = sinon.createSandbox();
+  let pushNotificationInitSpy;
+  let toastSpy;
+
+  beforeEach(() => {
+    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    toastSpy = sandbox.spy(useToast(), 'push');
+  });
 
   afterEach(() => {
-    toastStub.restore();
+    sandbox.restore();
   });
 
   it('should succeed', async () => {
@@ -32,11 +42,6 @@ describe('<ResetPassword />', () => {
         <ResetPassword token="string" />
       </ApolloProvider>,
     );
-
-    /**
-     * Define Spies
-     */
-    const pushNotificationInitSpy = sinon.spy(PushNotifications, 'init');
 
     // Test password is secure
     expect(wrapper.find(TextInput).first().props().secureTextEntry).to.equal(true);
@@ -80,8 +85,6 @@ describe('<ResetPassword />', () => {
   });
 
   it('should fail to resetPassword', async () => {
-    const toastSpy = sinon.spy(useToast(), 'push');
-
     const mocks = [{
       request: {
         query: RESET_PASSWORD_MUTATION,
@@ -113,12 +116,10 @@ describe('<ResetPassword />', () => {
     expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
 
     // Toast should have been executed
-    expect(toastSpy.called).to.be.true;
+    expect(toastSpy.callCount).to.equal(1);
   });
 
   it('should fail getSelf', async () => {
-    const toastSpy = sinon.spy(useToast(), 'push');
-
     const mocks = [{
       request: {
         query: GET_SELF_QUERY,
@@ -150,6 +151,6 @@ describe('<ResetPassword />', () => {
     expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
 
     // Toast should have been executed
-    expect(toastSpy.called).to.be.true;
+    expect(toastSpy.callCount).to.equal(1);
   });
 });
