@@ -5,6 +5,7 @@ import { getStorybookUI, configure, addDecorator } from '@storybook/react-native
 import { ApolloProvider } from 'react-apollo';
 import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
+import Provider from '../src/modules/AssetPicker/AssetPicker';
 
 import './rn-addons';
 
@@ -12,7 +13,9 @@ const client = mockClient();
 
 addDecorator((getStory) => (
   <ApolloProvider client={client}>
-    {getStory()}
+    <Provider>
+      {getStory()}
+    </Provider>
   </ApolloProvider>
 ));
 
@@ -23,7 +26,9 @@ configure(() => {
 
 // Refer to https://github.com/storybooks/storybook/tree/master/app/react-native#start-command-parameters
 // To find allowed options for getStorybookUI
-const StorybookUIRoot = getStorybookUI({});
+const StorybookUIRoot = getStorybookUI({
+  onDeviceUI: false,
+});
 
 // If you are using React Native vanilla and after installation you don't see your app name here, write it manually.
 // If you use Expo you can safely remove this line.

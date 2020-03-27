@@ -7,6 +7,8 @@ function loadStories() {
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Register/Register.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
+	require('../src/components/UserSelf/Profile/Profile.stories');
+	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
 	require('../src/components/hoc/Form/Form.stories');
 }
 
@@ -14,6 +16,8 @@ const stories = [
 	'../src/components/Login/Login.stories',
 	'../src/components/Register/Register.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
+	'../src/components/UserSelf/Profile/Profile.stories',
+	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
 	'../src/components/hoc/Form/Form.stories'
 ];
 
