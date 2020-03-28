@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { View, Button } from 'react-native';
-import AsyncImage from 'mbp-components-rn-asyncimage';
+import AsyncImage, { AsyncImageProps } from 'mbp-components-rn-asyncimage';
 import { useAssetPicker } from 'mbp-components-rn-assetpicker';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import { ReactNativeFile } from 'apollo-upload-client';
-import { AsyncImageProps } from 'mbp-components-rn-asyncimage/dist/components/AsyncImage/AsyncImage';
 
-interface EditableImageProps {
+
+export interface EditableImageProps {
   asyncImageProps: AsyncImageProps;
-  onSubmit: (file: ReactNativeFile) => Promise<any>;
+  onSubmit?: (file: ReactNativeFile) => Promise<any>; // Renderes component uncontrollable
+  onChange?: (file: ReactNativeFile) => Promise<any>; // Renders component controllable
 }
 
 const EditableImage = (props: EditableImageProps) => {
   const assetPicker = useAssetPicker();
   const [selectedAsset, setSelectedAsset] = useState<PhotoIdentifier['node']>();
+  const [fullUrl] = useState(props.asyncImageProps.fullUrl);
   const [loading, setLoading] = useState(false);
 
 
@@ -26,7 +28,20 @@ const EditableImage = (props: EditableImageProps) => {
       open: true,
       isMulti: false,
       onSelectAssets: (assets) => {
-        setSelectedAsset(assets[0]);
+        /**
+         * On select asset
+         * Contolled - execute props.onChange with ReactNativeFile
+         * Uncontolled - set asset in selectedAsset
+         */
+        if (props.onChange) {
+          props.onChange(new ReactNativeFile({
+            uri: assets[0].image.uri,
+            name: assets[0].image.filename,
+            type: assets[0].type,
+          }));
+        } else {
+          setSelectedAsset(assets[0]);
+        }
 
         /**
          * Close picker
@@ -40,10 +55,16 @@ const EditableImage = (props: EditableImageProps) => {
 
 
   /**
-   * On cancel null selectedAsset
+   * On cancel
+   * Contolled - execute props.onChange
+   * Uncontolled - null selectedAsset
    */
   const onCancel = () => {
-    setSelectedAsset(null);
+    if (props.onChange) {
+      props.onChange(null);
+    } else {
+      setSelectedAsset(null);
+    }
   };
 
 
@@ -51,6 +72,7 @@ const EditableImage = (props: EditableImageProps) => {
    * On Submit execute props.onSubmit with selectedAsset as ReactNativeFile
    * null selectedAsset whether it fails or not
    * The submission should updated the cache and re render this component with the updated data
+   * Should only be used on uncontrolled component
    */
   const onSubmit = async () => {
     try {
@@ -71,30 +93,48 @@ const EditableImage = (props: EditableImageProps) => {
   };
 
 
+  /**
+   * Can cancel
+   * Contolled - fullUrl set initially in state is different from the current fullUrl in props
+   * Uncontolled - selectedAsset is populated
+   */
+  const canCancel = () => {
+    if (props.onChange) {
+      return props.asyncImageProps.fullUrl !== fullUrl;
+    }
+
+    return !!selectedAsset;
+  };
+
+
   return (
     <View>
       <AsyncImage
         {...props.asyncImageProps}
-        fullUrl={(selectedAsset && selectedAsset.image.uri) || props.asyncImageProps.fullUrl}
+        fullUrl={selectedAsset?.image?.uri || props.asyncImageProps.fullUrl}
+        // eslint-disable-next-line global-require
+        placeholderImageSource={require('../../../../icon.jpg')}
       />
 
       <Button
-        title="Change Profile Picture"
+        title="Change"
         disabled={loading}
         onPress={openPicker}
       />
 
       <Button
         title="Cancel"
-        disabled={!selectedAsset || loading}
+        disabled={!canCancel() || loading}
         onPress={onCancel}
       />
 
-      <Button
-        title="Submit"
-        disabled={!selectedAsset || loading}
-        onPress={onSubmit}
-      />
+      {props.onSubmit && (
+        <Button
+          title="Submit"
+          disabled={!selectedAsset || loading}
+          onPress={onSubmit}
+        />
+      )}
     </View>
   );
 };

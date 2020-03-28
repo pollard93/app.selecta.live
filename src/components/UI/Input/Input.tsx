@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, Switch, Picker } from 'react-native';
 import { ConfigParams } from '../../hoc/Form/FormInterfaces';
+import EditableImage, { EditableImageProps } from '../EditableImage/EditableImage';
 
 class Input extends Component<ConfigParams> {
   state = {}
@@ -54,6 +55,26 @@ class Input extends Component<ConfigParams> {
               />
             ))}
           </Picker>
+        );
+
+      case 'image':
+        /**
+         * Merge this.props.value into imageProps
+         * this.props.value is ReactNativeImage
+         */
+        const imageProps: EditableImageProps = {
+          ...this.props.imageProps,
+          asyncImageProps: {
+            ...this.props.imageProps.asyncImageProps,
+            fullUrl: this.props.value?.uri ?? this.props.imageProps.asyncImageProps.fullUrl,
+          },
+        };
+
+        return (
+          <EditableImage
+            {...imageProps}
+            onChange={(file) => this.props.onChange(file)}
+          />
         );
 
       default:

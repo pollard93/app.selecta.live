@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import * as EmailValidator from 'email-validator';
 import equal from 'deep-equal';
-
+import { ReactNativeFile } from 'apollo-upload-client';
 import { FormProps, FormState, Config, ConfigParams, Fields, InitialConfig } from './FormInterfaces';
-
 import Input from '../../UI/Input/Input';
 
 class Form<T> extends Component<FormProps<T>, FormState> {
@@ -326,6 +325,11 @@ class Form<T> extends Component<FormProps<T>, FormState> {
 
       case 'number':
         return /^\d*\.?\d*$/;
+
+      case 'image':
+        return {
+          test: (v) => v instanceof ReactNativeFile,
+        };
 
       default:
         return {

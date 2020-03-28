@@ -12304,9 +12304,9 @@ markdown-to-jsx@^6.9.3:
   version "0.1.0"
   resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#b6c7abf9b0e12e900a1003428eda2db0e62697e4"
 
-"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.1.0":
-  version "0.1.0"
-  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#01e14add9c69a14c656c0c714d7bffaddbb15a83"
+"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.1.5":
+  version "0.1.5"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#2cf57ede81ca4066e92d5dfd7ac5ef56ea10ee86"
 
 "mbp-components-rn-toast@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.1.0":
   version "0.1.0"

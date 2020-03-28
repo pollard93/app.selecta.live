@@ -5,7 +5,6 @@ import { getStorybookUI, configure, addDecorator } from '@storybook/react-native
 import { ApolloProvider } from 'react-apollo';
 import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
-import Provider from '../src/modules/AssetPicker/AssetPicker';
 
 import './rn-addons';
 
@@ -13,9 +12,7 @@ const client = mockClient();
 
 addDecorator((getStory) => (
   <ApolloProvider client={client}>
-    <Provider>
-      {getStory()}
-    </Provider>
+    {getStory()}
   </ApolloProvider>
 ));
 

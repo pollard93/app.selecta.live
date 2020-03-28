@@ -1,5 +1,5 @@
-import React from 'react';
-import { AssetPickerProvider, AssetPickerItemProps, ListFooterComponentProps, MultiSelectComponentProps } from 'mbp-components-rn-assetpicker';
+import React, { ReactNode } from 'react';
+import { AssetPickerProvider as AssetPickerProviderModule, AssetPickerItemProps, ListFooterComponentProps, MultiSelectComponentProps } from 'mbp-components-rn-assetpicker';
 import { View, Image, Text, Button } from 'react-native';
 
 /**
@@ -43,8 +43,8 @@ const MultiSelectComponent = (props: MultiSelectComponentProps) => (
 );
 
 
-const Provider = ({ children }) => (
-  <AssetPickerProvider
+const AssetPickerProvider = ({ children }: { children?: ReactNode }) => (
+  <AssetPickerProviderModule
     config={{
       AssetPickerItem,
       ListFooterComponent,
@@ -52,8 +52,8 @@ const Provider = ({ children }) => (
     }}
   >
     {children}
-  </AssetPickerProvider>
+  </AssetPickerProviderModule>
 );
 
 
-export default Provider;
+export default AssetPickerProvider;
