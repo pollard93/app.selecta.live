@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { StreamOrderByInput, StreamWhereInput } from "./../../../../../__generated__/globalTypes";
+import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL query operation: searchStreams
