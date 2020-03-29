@@ -3,10 +3,12 @@
 // https://www.apollographql.com/docs/graphql-tools/mocking.html
 
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
+import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
 
 export default {
   Query: () => ({
     getStreamFeed,
+    searchStreams,
   }),
   DateTime: () => new Date(0).toISOString(),
   Url: () => ({
