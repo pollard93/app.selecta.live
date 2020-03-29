@@ -12300,6 +12300,10 @@ markdown-to-jsx@^6.9.3:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
+"mbp-components-rn-apolloflatlist@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#0.1.0":
+  version "0.1.0"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#9f0d6a7e82104a9ef0ff58f30311211e0864abf5"
+
 "mbp-components-rn-assetpicker@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.1.0":
   version "0.1.0"
   resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#b6c7abf9b0e12e900a1003428eda2db0e62697e4"
