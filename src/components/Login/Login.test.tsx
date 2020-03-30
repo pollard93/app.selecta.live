@@ -5,6 +5,7 @@ import wait from 'waait';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { MockedProvider } from '@apollo/react-testing';
+import { ApolloProvider } from 'react-apollo';
 import LoginView, { LoginViewProps } from './LoginView';
 import { LOGIN_MUTATION } from '../../API/mutation/login/login';
 import Login from './Login';
@@ -13,6 +14,9 @@ import { REQUEST_PASSWORD_RESET_MUTATION } from '../../API/mutation/requestPassw
 import { login_login } from '../../API/mutation/login/__generated__/login';
 import resolvers from '../../ApolloClient/resolvers';
 import { LOCAL_AUTH_KEY } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessToken';
+import mockClient from '../../API/utils/mockClient';
+
+const client = mockClient();
 
 describe('Login tests', () => {
   it('Tests render and submission handler', () => {
@@ -22,17 +26,19 @@ describe('Login tests', () => {
 
     // Mount initial state of login view
     const wrapper = mount<LoginViewProps>(
-      <LoginView
-        loading={false}
-        reset={false}
-        onReset={onReset}
-        onSubmit={onSubmit}
-        onRegister={onRegister}
-      />,
+      <ApolloProvider client={client}>
+        <LoginView
+          loading={false}
+          reset={false}
+          onReset={onReset}
+          onSubmit={onSubmit}
+          onRegister={onRegister}
+        />
+      </ApolloProvider>,
     );
 
     // Test render
-    expect(wrapper.find(Button)).to.have.lengthOf(3);
+    expect(wrapper.find(Button)).to.have.lengthOf(5);
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
     expect(wrapper.find(Button).first().props().title).to.equal('Login');
     expect(wrapper.find(Button).at(1).props().disabled).to.be.false;
@@ -75,17 +81,19 @@ describe('Login tests', () => {
   it('Tests login loading state', () => {
     // Mount loading state of login view
     const wrapper = mount<LoginViewProps>(
-      <LoginView
-        loading={true}
-        reset={false}
-        onReset={null}
-        onSubmit={null}
-        onRegister={null}
-      />,
+      <ApolloProvider client={client}>
+        <LoginView
+          loading={true}
+          reset={false}
+          onReset={null}
+          onSubmit={null}
+          onRegister={null}
+        />
+      </ApolloProvider>,
     );
 
     // All buttons should be disabled
-    expect(wrapper.find(Button)).to.have.lengthOf(3);
+    expect(wrapper.find(Button)).to.have.lengthOf(5);
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
     expect(wrapper.find(Button).first().props().title).to.equal('Logging in');
     expect(wrapper.find(Button).at(1).props().disabled).to.be.true;
@@ -98,17 +106,19 @@ describe('Login tests', () => {
 
     // Mount reset state of login view
     const wrapper = mount<LoginViewProps>(
-      <LoginView
-        loading={false}
-        reset={true}
-        onReset={onReset}
-        onSubmit={onSubmit}
-        onRegister={null}
-      />,
+      <ApolloProvider client={client}>
+        <LoginView
+          loading={false}
+          reset={true}
+          onReset={onReset}
+          onSubmit={onSubmit}
+          onRegister={null}
+        />
+      </ApolloProvider>,
     );
 
     // Test render
-    expect(wrapper.find(Button)).to.have.lengthOf(2);
+    expect(wrapper.find(Button)).to.have.lengthOf(1);
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
     expect(wrapper.find(Button).first().props().title).to.equal('Request Reset');
     expect(wrapper.find('Input')).to.have.lengthOf(1);
@@ -136,17 +146,19 @@ describe('Login tests', () => {
   it('Tests reset loading state', () => {
     // Mount loading state of login view
     const wrapper = mount<LoginViewProps>(
-      <LoginView
-        loading={true}
-        reset={true}
-        onReset={null}
-        onSubmit={null}
-        onRegister={null}
-      />,
+      <ApolloProvider client={client}>
+        <LoginView
+          loading={true}
+          reset={true}
+          onReset={null}
+          onSubmit={null}
+          onRegister={null}
+        />
+      </ApolloProvider>,
     );
 
     // Button should be disabled
-    expect(wrapper.find(Button)).to.have.lengthOf(2);
+    expect(wrapper.find(Button)).to.have.lengthOf(1);
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
     expect(wrapper.find(Button).first().props().title).to.equal('Requesting Reset');
   });

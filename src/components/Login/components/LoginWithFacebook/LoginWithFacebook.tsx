@@ -1,18 +1,16 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Button, Alert } from 'react-native';
-import { goHome } from '../../screens/utils';
-import { useLoginWithSocialMutation } from '../../API/mutation/loginWithSocial/loginWithSocial';
-import PushNotifications from '../../modules/PushNotifications';
-import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
-import { SOCIAL_PROVIDER } from '../../../__generated__/globalTypes';
-import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
+import { goHome } from '../../../../screens/utils';
+import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
+import PushNotifications from '../../../../modules/PushNotifications';
+import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
+import { SOCIAL_PROVIDER } from '../../../../../__generated__/globalTypes';
+import { putAccessToken, putAccessTokenVariables } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
+import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 
-const LoginWithFacebookExample = () => {
+const LoginWithFacebook = () => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
 
@@ -126,4 +124,4 @@ const LoginWithFacebookExample = () => {
   );
 };
 
-export default LoginWithFacebookExample;
+export default LoginWithFacebook;

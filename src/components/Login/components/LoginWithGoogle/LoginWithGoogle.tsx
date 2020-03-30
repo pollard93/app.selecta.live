@@ -1,24 +1,29 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { Button } from 'react-native';
-import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-import { goHome } from '../../screens/utils';
-import { useLoginWithSocialMutation } from '../../API/mutation/loginWithSocial/loginWithSocial';
-import PushNotifications from '../../modules/PushNotifications';
-import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
-import { SOCIAL_PROVIDER } from '../../../__generated__/globalTypes';
-import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import { goHome } from '../../../../screens/utils';
+import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
+import PushNotifications from '../../../../modules/PushNotifications';
+import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
+import { SOCIAL_PROVIDER } from '../../../../../__generated__/globalTypes';
+import { putAccessToken, putAccessTokenVariables } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
+import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 
-GoogleSignin.configure({
-  iosClientId: '',
-});
-
-const LoginWithGoogleExample = () => {
+const LoginWithGoogle = () => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
+
+
+  /**
+   * Configure on mount
+   */
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: '235314003497-37plkfi911daivvke6ic7pv4mhphg68l.apps.googleusercontent.com',
+      iosClientId: '235314003497-4jl8egs3ca885o2crijqngq3i86rh6cu.apps.googleusercontent.com',
+    });
+  }, []);
 
 
   /**
@@ -43,7 +48,6 @@ const LoginWithGoogleExample = () => {
     },
     onError: () => {
       setLoading(false);
-      signOut();
       // TODO - toast
     },
     fetchPolicy: 'network-only',
@@ -118,4 +122,4 @@ const LoginWithGoogleExample = () => {
   );
 };
 
-export default LoginWithGoogleExample;
+export default LoginWithGoogle;
