@@ -4,6 +4,7 @@
 // https://github.com/elderfo/react-native-storybook-loader.git
 
 function loadStories() {
+	require('../src/components/Channel/ChannelProfile/ChannelProfile.stories');
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/ConsumerNotification/ConsumerNotifications/ConsumerNotifications.stories');
 	require('../src/components/Login/Login.stories');
@@ -19,6 +20,7 @@ function loadStories() {
 }
 
 const stories = [
+	'../src/components/Channel/ChannelProfile/ChannelProfile.stories',
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/ConsumerNotification/ConsumerNotifications/ConsumerNotifications.stories',
 	'../src/components/Login/Login.stories',
