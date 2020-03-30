@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sun Mar 29 2020 17:07:09 GMT+0100 (British Summer Time)
+# timestamp: Mon Mar 30 2020 10:38:43 GMT+0100 (British Summer Time)
 
 type AuthPayload {
   token: String!
@@ -36,12 +36,9 @@ type ChannelAuthPayload {
 
 type ChannelNotification {
   id: ID!
-  type: CHANNEL_NOTIFICATION_TYPE!
-  channelReceiver: Channel!
-  channelReceiverId: String!
+  type: CHANNEL_NOTIFICATION_TYPE
   readDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime
 }
 
 enum ChannelNotificationOrderByInput {
@@ -747,6 +744,13 @@ type StreamMessageClientPayload {
   count: Int!
 }
 
+type StreamMessageClientSubscriptionPayload {
+  mutation: MutationType!
+  node: StreamMessageClient
+  updatedFields: [String!]
+  previousValues: StreamMessagePreviousValues
+}
+
 enum StreamMessageOrderByInput {
   id_ASC
   id_DESC
@@ -763,13 +767,6 @@ type StreamMessagePreviousValues {
   streamId: String!
   message: String!
   createdAt: DateTime!
-}
-
-type StreamMessageSubscriptionPayload {
-  mutation: MutationType!
-  node: StreamMessage
-  updatedFields: [String!]
-  previousValues: StreamMessagePreviousValues
 }
 
 input StreamMessageWhereInput {
@@ -1111,7 +1108,7 @@ input StreamWhereInput {
 type Subscription {
   consumerNotifications: ConsumerNotificationSubscriptionPayload
   channelNotifications: ChannelNotificationSubscriptionPayload
-  streamMessages(id: String!): StreamMessageSubscriptionPayload
+  streamMessages(id: String!): StreamMessageClientSubscriptionPayload
 }
 
 """The \`Upload\` scalar type represents a file upload."""

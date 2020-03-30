@@ -13433,45 +13433,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "CHANNEL_NOTIFICATION_TYPE",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "channelReceiver",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Channel",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "channelReceiverId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "CHANNEL_NOTIFICATION_TYPE",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -13493,29 +13457,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updatedAt",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -15652,7 +15596,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "StreamMessageSubscriptionPayload",
+              "name": "StreamMessageClientSubscriptionPayload",
               "ofType": null
             },
             "isDeprecated": false,
@@ -16043,7 +15987,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "StreamMessageSubscriptionPayload",
+        "name": "StreamMessageClientSubscriptionPayload",
         "description": null,
         "fields": [
           {
@@ -16068,7 +16012,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "StreamMessage",
+              "name": "StreamMessageClient",
               "ofType": null
             },
             "isDeprecated": false,
