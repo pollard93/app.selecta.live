@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-native/no-color-literals */
 import React from 'react';
 import { Button, View } from 'react-native';
 import { storiesOf } from '@storybook/react-native';

@@ -6,6 +6,7 @@
 function loadStories() {
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Register/Register.stories');
+	require('../src/components/StreamFeed/StreamFeed.stories');
 	require('../src/components/UI/EditableImage/EditableImage.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
@@ -16,6 +17,7 @@ function loadStories() {
 const stories = [
 	'../src/components/Login/Login.stories',
 	'../src/components/Register/Register.stories',
+	'../src/components/StreamFeed/StreamFeed.stories',
 	'../src/components/UI/EditableImage/EditableImage.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
