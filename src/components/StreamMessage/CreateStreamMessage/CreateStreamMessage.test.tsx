@@ -13,7 +13,7 @@ import { getStreamMessages, getStreamMessagesVariables } from '../../../API/quer
 
 const client = mockClient();
 
-describe('<AsyncImage />', () => {
+describe('<CreateStreamMessage />', () => {
   /**
    * Define sandbox and spies
    */
