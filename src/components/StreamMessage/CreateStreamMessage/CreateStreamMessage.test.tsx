@@ -10,6 +10,7 @@ import mockClient from '../../../API/utils/mockClient';
 import CreateStreamMessage from './CreateStreamMessage';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessages, getStreamMessagesVariables } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
+import { PUT_STREAM_MESSAGE_MUTATION } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 
 const client = mockClient();
 
@@ -101,7 +102,7 @@ describe('<CreateStreamMessage />', () => {
   test('should succeed', async () => {
     const mocks = [{
       request: {
-        query: GET_STREAM_MESSAGES_QUERY,
+        query: PUT_STREAM_MESSAGE_MUTATION,
       },
       error: new Error(),
     }];
