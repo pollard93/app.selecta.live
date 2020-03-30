@@ -7,19 +7,19 @@ import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
 import { MockedProvider } from '@apollo/react-testing';
-import Register from './Register';
+import ResetPassword from './ResetPassword';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
 import { getAccessToken } from '../../ApolloClient/resolvers/query/getAccessToken/__generated__/getAccessToken';
 import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
 import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
-import { REGISTER_MUTATION } from '../../API/mutation/register/register';
-import RegisterView from './RegisterView';
+import { RESET_PASSWORD_MUTATION } from '../../API/mutation/resetPassword/resetPassword';
+import ResetPasswordView from './ResetPasswordView';
 
 const client = mockClient();
 
-describe('<Register />', () => {
+describe('<ResetPassword />', () => {
   /**
    * Define sandbox and spies
    */
@@ -39,19 +39,18 @@ describe('<Register />', () => {
   it('should succeed', async () => {
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <Register />
+        <ResetPassword token="string" />
       </ApolloProvider>,
     );
 
     // Test password is secure
-    expect(wrapper.find(TextInput).at(1).props().secureTextEntry).to.equal(true);
+    expect(wrapper.find(TextInput).first().props().secureTextEntry).to.equal(true);
 
     // Login Button is disabled as default
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
 
     // Test text change
-    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
-    wrapper.find(TextInput).at(1).props().onChangeText('password');
+    wrapper.find(TextInput).first().props().onChangeText('password');
     wrapper.update();
 
     // Form should now be valid
@@ -85,10 +84,10 @@ describe('<Register />', () => {
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
   });
 
-  it('should fail to register', async () => {
+  it('should fail to resetPassword', async () => {
     const mocks = [{
       request: {
-        query: REGISTER_MUTATION,
+        query: RESET_PASSWORD_MUTATION,
       },
       error: new Error(),
     }];
@@ -98,7 +97,7 @@ describe('<Register />', () => {
         mocks={mocks}
         addTypename={false}
       >
-        <Register />
+        <ResetPassword token="string" />
       </MockedProvider>,
     );
 
@@ -106,15 +105,15 @@ describe('<Register />', () => {
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
 
-    // RegisterView.loading is now true
-    expect(wrapper.find(RegisterView).props().loading).to.be.true;
+    // ResetPasswordView.loading is now true
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.true;
 
     // Wait for response and update
     await wait(0);
     wrapper.update();
 
-    // RegisterView.loading is now false
-    expect(wrapper.find(RegisterView).props().loading).to.be.false;
+    // ResetPasswordView.loading is now false
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
 
     // Toast should have been executed
     expect(toastSpy.callCount).to.equal(1);
@@ -133,7 +132,7 @@ describe('<Register />', () => {
         mocks={mocks}
         addTypename={false}
       >
-        <Register />
+        <ResetPassword token="string" />
       </MockedProvider>,
     );
 
@@ -141,15 +140,15 @@ describe('<Register />', () => {
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
 
-    // RegisterView.loading is now true
-    expect(wrapper.find(RegisterView).props().loading).to.be.true;
+    // ResetPasswordView.loading is now true
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.true;
 
     // Wait for response and update
     await wait(0);
     wrapper.update();
 
-    // RegisterView.loading is now false
-    expect(wrapper.find(RegisterView).props().loading).to.be.false;
+    // ResetPasswordView.loading is now false
+    expect(wrapper.find(ResetPasswordView).props().loading).to.be.false;
 
     // Toast should have been executed
     expect(toastSpy.callCount).to.equal(1);

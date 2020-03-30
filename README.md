@@ -114,7 +114,7 @@ In `/android/` run `fastlane update_onesignal` to update the OneSignal apps with
 import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider } from 'react-apollo/test-utils';
+import { MockedProvider } from '@apollo/react-testing';
 import mockClient from './src/API/utils/mockClient';
 import { expect } from 'chai';
 

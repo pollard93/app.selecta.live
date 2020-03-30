@@ -8,14 +8,12 @@ import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
 
 export interface LoginViewProps {
   loading: boolean;
-  reset: boolean;
   onSubmit: (variables: loginVariables) => void;
   onReset: () => void;
   onRegister: () => void;
 }
 
-type LoginForm = new () => Form<loginVariables>;
-const LoginForm = Form as LoginForm;
+class LoginForm extends Form<loginVariables> {}
 
 const LoginView = (props: LoginViewProps) => {
   const [config] = useState<InitialConfig>({
@@ -35,7 +33,7 @@ const LoginView = (props: LoginViewProps) => {
       name: 'password',
       placeholder: 'Password',
       value: '',
-      required: !props.reset,
+      required: true,
       textInputProps: {
         placeholder: 'Password',
       },
@@ -47,46 +45,33 @@ const LoginView = (props: LoginViewProps) => {
       config={config}
       onSubmit={props.onSubmit}
     >
-      {({ fields: { Email, Password }, valid, triggerSubmit }) => {
-        let buttonTitle = props.loading ? 'Logging in' : 'Login';
+      {({ fields: { Email, Password }, valid, triggerSubmit }) => (
+        <>
+          {Email}
+          {Password}
 
-        if (props.reset) {
-          buttonTitle = props.loading ? 'Requesting Reset' : 'Request Reset';
-        }
+          <Button
+            disabled={!valid || props.loading}
+            title={props.loading ? 'Logging in' : 'Login'}
+            onPress={triggerSubmit}
+          />
 
-        return (
-          <>
-            {Email}
+          <Button
+            title='Forgotten Password?'
+            onPress={props.onReset}
+            disabled={props.loading}
+          />
 
-            {!props.reset && Password}
+          <Button
+            title='Register'
+            onPress={props.onRegister}
+            disabled={props.loading}
+          />
 
-            <Button
-              disabled={!valid}
-              title={buttonTitle}
-              onPress={triggerSubmit}
-            />
-
-            {!props.reset && (
-              <>
-                <Button
-                  title='Forgotten Password?'
-                  onPress={props.onReset}
-                  disabled={props.loading}
-                />
-
-                <Button
-                  title='Register'
-                  onPress={props.onRegister}
-                  disabled={props.loading}
-                />
-
-                <LoginWithFacebook />
-                <LoginWithGoogle />
-              </>
-            )}
-          </>
-        );
-      }}
+          <LoginWithFacebook />
+          <LoginWithGoogle />
+        </>
+      )}
     </LoginForm>
   );
 };

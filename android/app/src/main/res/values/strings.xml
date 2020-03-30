@@ -9,4 +9,7 @@
   <!-- Facebook login -->
   <string name="facebook_app_id">233563547770081</string>
   <string name="fb_login_protocol_scheme">fb233563547770081</string>
+
+  <!-- Deep linking -->
+  <string name="deep_linking_protocol_scheme">live.selecta.app.consumer</string>
 </resources>

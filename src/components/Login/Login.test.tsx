@@ -2,58 +2,52 @@ import { TextInput, Button } from 'react-native';
 import React from 'react';
 import { mount } from 'enzyme';
 import wait from 'waait';
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import sinon from 'sinon';
-import { MockedProvider } from '@apollo/react-testing';
 import { ApolloProvider } from 'react-apollo';
-import LoginView, { LoginViewProps } from './LoginView';
-import { LOGIN_MUTATION } from '../../API/mutation/login/login';
+import { MockedProvider } from '@apollo/react-testing';
+import { useToast } from 'mbp-components-rn-toast';
 import Login from './Login';
-import { store } from '../../utils/storage';
-import { REQUEST_PASSWORD_RESET_MUTATION } from '../../API/mutation/requestPasswordReset/requestPasswordReset';
-import { login_login } from '../../API/mutation/login/__generated__/login';
-import resolvers from '../../ApolloClient/resolvers';
-import { LOCAL_AUTH_KEY } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessToken';
 import mockClient from '../../API/utils/mockClient';
+import PushNotifications from '../../modules/PushNotifications';
+import { getAccessToken } from '../../ApolloClient/resolvers/query/getAccessToken/__generated__/getAccessToken';
+import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
+import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
+import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
+import { LOGIN_MUTATION } from '../../API/mutation/login/login';
+import LoginView from './LoginView';
 
 const client = mockClient();
 
-describe('Login tests', () => {
-  it('Tests render and submission handler', () => {
-    const onReset = sinon.spy();
-    const onSubmit = sinon.spy();
-    const onRegister = sinon.spy();
+describe('<Login >', () => {
+  /**
+   * Define sandbox and spies
+   */
+  const sandbox = sinon.createSandbox();
+  let pushNotificationInitSpy;
+  let toastSpy;
 
-    // Mount initial state of login view
-    const wrapper = mount<LoginViewProps>(
+  beforeEach(() => {
+    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    toastSpy = sandbox.spy(useToast(), 'push');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('should succeed', async () => {
+    const wrapper = mount(
       <ApolloProvider client={client}>
-        <LoginView
-          loading={false}
-          reset={false}
-          onReset={onReset}
-          onSubmit={onSubmit}
-          onRegister={onRegister}
-        />
+        <Login />
       </ApolloProvider>,
     );
 
-    // Test render
-    expect(wrapper.find(Button)).to.have.lengthOf(5);
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
-    expect(wrapper.find(Button).first().props().title).to.equal('Login');
-    expect(wrapper.find(Button).at(1).props().disabled).to.be.false;
-    expect(wrapper.find('Input')).to.have.lengthOf(2);
-    expect(wrapper.find(TextInput)).to.have.lengthOf(2);
-    expect(wrapper.find('Form')).to.have.lengthOf(1);
-
-    // Test password field has secureTextEntry prop set
+    // Test password is secure
     expect(wrapper.find(TextInput).at(1).props().secureTextEntry).to.equal(true);
 
-    // Test submit immediately
-    wrapper.find(Button).first().props().onPress({} as any);
-    expect(onSubmit).to.have.property('callCount', 1);
-    expect(onSubmit.args[0][0].email).to.equal('');
-    expect(onSubmit.args[0][0].password).to.equal('');
+    // Login Button is disabled as default
+    expect(wrapper.find(Button).first().props().disabled).to.be.true;
 
     // Test text change
     wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
@@ -63,220 +57,141 @@ describe('Login tests', () => {
     // Form should now be valid
     expect(wrapper.find(Button).first().props().disabled).to.be.false;
 
-    // Submit again
+    // Submit and wait for response and update
     wrapper.find(Button).first().props().onPress({} as any);
-    expect(onSubmit).to.have.property('callCount', 2);
-    expect(onSubmit.args[1][0].email).to.equal('email@test.com');
-    expect(onSubmit.args[1][0].password).to.equal('password');
-
-    // Test press of reset button
-    wrapper.find(Button).at(1).props().onPress({} as any);
-    expect(onReset).to.have.property('callCount', 1);
-
-    // Test press of reset button
-    wrapper.find(Button).at(2).props().onPress({} as any);
-    expect(onRegister).to.have.property('callCount', 1);
-  });
-
-  it('Tests login loading state', () => {
-    // Mount loading state of login view
-    const wrapper = mount<LoginViewProps>(
-      <ApolloProvider client={client}>
-        <LoginView
-          loading={true}
-          reset={false}
-          onReset={null}
-          onSubmit={null}
-          onRegister={null}
-        />
-      </ApolloProvider>,
-    );
-
-    // All buttons should be disabled
-    expect(wrapper.find(Button)).to.have.lengthOf(5);
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
-    expect(wrapper.find(Button).first().props().title).to.equal('Logging in');
-    expect(wrapper.find(Button).at(1).props().disabled).to.be.true;
-    expect(wrapper.find(Button).at(2).props().disabled).to.be.true;
-  });
-
-  it('Tests password reset render and submission handler', async () => {
-    const onSubmit = sinon.spy();
-    const onReset = sinon.spy();
-
-    // Mount reset state of login view
-    const wrapper = mount<LoginViewProps>(
-      <ApolloProvider client={client}>
-        <LoginView
-          loading={false}
-          reset={true}
-          onReset={onReset}
-          onSubmit={onSubmit}
-          onRegister={null}
-        />
-      </ApolloProvider>,
-    );
-
-    // Test render
-    expect(wrapper.find(Button)).to.have.lengthOf(1);
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
-    expect(wrapper.find(Button).first().props().title).to.equal('Request Reset');
-    expect(wrapper.find('Input')).to.have.lengthOf(1);
-    expect(wrapper.find(TextInput)).to.have.lengthOf(1);
-    expect(wrapper.find('Form')).to.have.lengthOf(1);
-
-    // Test submit immediately
-    wrapper.find(Button).first().props().onPress({} as any);
-    expect(onSubmit).to.have.property('callCount', 1);
-    expect(onSubmit.args[0][0].email).to.equal('');
-
-    // Test text change
-    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    await wait(0);
     wrapper.update();
 
-    // Form should now be valid
-    expect(wrapper.find(Button).first().props().disabled).to.be.false;
+    // Button is now disabled as loading
+    expect(wrapper.find(Button).first().props().disabled).to.be.true;
 
-    // Submit again
-    wrapper.find(Button).first().props().onPress({} as any);
-    expect(onSubmit).to.have.property('callCount', 2);
-    expect(onSubmit.args[1][0].email).to.equal('email@test.com');
+    // Check that the access token has been stored
+    const gat = client.readQuery<getAccessToken>({
+      query: GET_ACCESS_TOKEN_QUERY,
+    });
+    expect(typeof gat.getAccessToken).to.equal('string');
+
+    // Get self should now be cached
+    const gs = client.readQuery<getSelf>({
+      query: GET_SELF_QUERY,
+    });
+    expect(typeof gs.getSelf.id).to.equal('string');
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.called).to.be.true;
+
+    // Update - button should not return to enabled as no errors
+    wrapper.update();
+    expect(wrapper.find(Button).first().props().disabled).to.be.true;
   });
 
-  it('Tests reset loading state', () => {
-    // Mount loading state of login view
-    const wrapper = mount<LoginViewProps>(
+  it('should remove token on mount', async () => {
+    /**
+     * Before mount add token
+     */
+    client.writeQuery<getAccessToken>({
+      query: GET_ACCESS_TOKEN_QUERY,
+      data: {
+        getAccessToken: 'token',
+      },
+    });
+
+
+    /**
+     * Mount component
+     */
+    mount(
       <ApolloProvider client={client}>
-        <LoginView
-          loading={true}
-          reset={true}
-          onReset={null}
-          onSubmit={null}
-          onRegister={null}
-        />
+        <Login />
       </ApolloProvider>,
     );
 
-    // Button should be disabled
-    expect(wrapper.find(Button)).to.have.lengthOf(1);
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
-    expect(wrapper.find(Button).first().props().title).to.equal('Requesting Reset');
-  });
 
-  it('Tests login error', async () => {
-    const mocks = [
-      {
-        request: {
-          query: LOGIN_MUTATION,
-          variables: {
-            email: '',
-            password: '',
-          },
-        },
-        error: new Error(),
-      },
-    ];
+    /**
+     * Mount should logout
+     */
 
-    const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        resolvers={resolvers}
-        addTypename={false}
-      >
-        <Login />
-      </MockedProvider>,
-    );
-
-    // Submit form
-    wrapper.find(Button).first().props().onPress({} as any);
-
-    // Wait for response
+    // Wait for async to complete
     await wait(0);
 
-    // Check that no response is stored
-    const localAuth = await store(LOCAL_AUTH_KEY);
-    expect(localAuth).to.deep.equal(null);
+    // If empty will throw
+    try {
+      client.readQuery<getAccessToken>({
+        query: GET_ACCESS_TOKEN_QUERY,
+      });
+      expect.fail();
+    } catch (e) {
+      assert.isOk(true);
+    }
   });
 
-  it('Tests login success', async () => {
-    const login: login_login = {
-      __typename: 'AuthPayload',
-      token: 'token-here',
-    };
-
-    const mocks = [
-      {
-        request: {
-          query: LOGIN_MUTATION,
-          variables: {
-            email: '',
-            password: '',
-          },
-        },
-        result: {
-          data: {
-            login,
-          },
-        },
+  it('should fail to login', async () => {
+    const mocks = [{
+      request: {
+        query: LOGIN_MUTATION,
       },
-    ];
+      error: new Error(),
+    }];
 
     const wrapper = mount(
       <MockedProvider
         mocks={mocks}
-        resolvers={resolvers}
         addTypename={false}
       >
         <Login />
       </MockedProvider>,
     );
 
-    // Submit form
+    // Submit and update
     wrapper.find(Button).first().props().onPress({} as any);
-
-    // Wait for response
-    await wait(0);
-
-    // Check that the response is stored
-    const token = await store(LOCAL_AUTH_KEY);
-    expect(token).to.deep.equal(login.token);
-  });
-
-  it('Tests reset success', async () => {
-    const mocks = [
-      {
-        request: {
-          query: REQUEST_PASSWORD_RESET_MUTATION,
-          variables: {
-            email: '',
-          },
-        },
-        result: {
-          data: {
-            requestPasswordReset: true,
-          },
-        },
-      },
-    ];
-
-    const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
-        <Login />
-      </MockedProvider>,
-    );
-
-    // Reset Password button
-    wrapper.find(Button).at(1).props().onPress({} as any);
     wrapper.update();
-    expect(wrapper.find(LoginView).props().reset).to.be.true;
 
-    // Submit
-    wrapper.find(Button).at(0).props().onPress({} as any);
+    // LoginView.loading is now true
+    expect(wrapper.find(LoginView).props().loading).to.be.true;
 
-    // Wait for response
+    // Wait for response and update
     await wait(0);
+    wrapper.update();
+
+    // LoginView.loading is now false
+    expect(wrapper.find(LoginView).props().loading).to.be.false;
+
+    // Toast should have been executed
+    expect(toastSpy.callCount).to.equal(1);
+  });
+
+  it('should fail getSelf', async () => {
+    const mocks = [{
+      request: {
+        query: GET_SELF_QUERY,
+      },
+      error: new Error(),
+    }];
+
+    const wrapper = mount(
+      <MockedProvider
+        mocks={mocks}
+        addTypename={false}
+      >
+        <Login />
+      </MockedProvider>,
+    );
+
+    // Submit and update
+    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.update();
+
+    // LoginView.loading is now true
+    expect(wrapper.find(LoginView).props().loading).to.be.true;
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // LoginView.loading is now false
+    expect(wrapper.find(LoginView).props().loading).to.be.false;
+
+    // Toast should have been executed
+    expect(toastSpy.callCount).to.equal(1);
   });
 });
