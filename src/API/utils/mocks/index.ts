@@ -2,6 +2,7 @@
 // Reference
 // https://www.apollographql.com/docs/graphql-tools/mocking.html
 
+import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
 import { getConsumerNotifications } from './resolvers/query/getConsumerNotifications/getConsumerNotifications';
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
@@ -14,6 +15,7 @@ export default {
     putStreamMessage,
   }),
   Query: () => ({
+    getChannelStreams,
     getConsumerNotifications,
     getStreamFeed,
     getStreamMessages,
