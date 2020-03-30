@@ -1,5 +1,6 @@
 import { PickerItemProps, TextInputProps, SwitchProps, PickerProps } from 'react-native';
 import Form from './Form';
+import { EditableImageProps } from '../../UI/EditableImage/EditableImage';
 
 export interface InitialConfigParams {
   type: string;
@@ -10,6 +11,7 @@ export interface InitialConfigParams {
   textInputProps?: TextInputProps;
   switchProps?: SwitchProps;
   pickerProps?: PickerProps;
+  imageProps?: EditableImageProps;
   disabled?: boolean;
   options?: PickerItemProps[];
   resolve?: (value: any) => any;

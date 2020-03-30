@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react-native';
 import { ApolloError } from 'apollo-client';
 import LoadRetry from './LoadRetry';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
-import CenterView from '../../hoc/CenterView/CenterView';
+import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 
 storiesOf('LoadRetry', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)

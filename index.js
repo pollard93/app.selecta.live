@@ -1,4 +1,4 @@
-/* DEFAULT APPLICATION */
+/* DEFAULT APPLICATION *
 import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './src/screens';
 import { InitScreenName } from './src/screens/InitScreen/InitScreen';
@@ -19,7 +19,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 });
 /* */
 
-/* STORYBOOK *
+/* STORYBOOK */
 import { Navigation } from 'react-native-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import Storybook from './storybook';
