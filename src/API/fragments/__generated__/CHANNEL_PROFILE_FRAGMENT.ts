@@ -26,4 +26,6 @@ export interface CHANNEL_PROFILE_FRAGMENT {
   id: string;
   name: string | null;
   profileImage: CHANNEL_PROFILE_FRAGMENT_profileImage | null;
+  following: boolean | null;
+  followersEdge: number | null;
 }

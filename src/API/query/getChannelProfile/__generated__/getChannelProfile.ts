@@ -26,6 +26,8 @@ export interface getChannelProfile_getChannelProfile {
   id: string;
   name: string | null;
   profileImage: getChannelProfile_getChannelProfile_profileImage | null;
+  following: boolean | null;
+  followersEdge: number | null;
 }
 
 export interface getChannelProfile {

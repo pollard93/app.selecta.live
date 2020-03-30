@@ -8,6 +8,8 @@ export const CHANNEL_PROFILE_FRAGMENT = gql`
     profileImage {
       ...FILE_FRAGMENT
     }
+    following
+    followersEdge
   },
   ${FILE_FRAGMENT}
 `;
