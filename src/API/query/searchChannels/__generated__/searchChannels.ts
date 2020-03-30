@@ -28,6 +28,8 @@ export interface searchChannels_searchChannels_channels {
   id: string;
   name: string | null;
   profileImage: searchChannels_searchChannels_channels_profileImage | null;
+  following: boolean | null;
+  followersEdge: number | null;
 }
 
 export interface searchChannels_searchChannels {

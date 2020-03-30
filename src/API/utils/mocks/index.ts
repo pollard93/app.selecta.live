@@ -2,6 +2,7 @@
 // Reference
 // https://www.apollographql.com/docs/graphql-tools/mocking.html
 
+import { followChannel } from './resolvers/mutation/followChannel/followChannel';
 import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
 import { getConsumerNotifications } from './resolvers/query/getConsumerNotifications/getConsumerNotifications';
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
@@ -12,6 +13,7 @@ import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
 
 export default {
   Mutation: () => ({
+    followChannel,
     putStreamMessage,
   }),
   Query: () => ({
