@@ -126,6 +126,9 @@
       "error",
       {
         "allow": [
+          "CHANNEL_PROFILE_FRAGMENT_profileImage_url",
+          "CHANNEL_PROFILE_FRAGMENT_profileImage",
+          "CHANNEL_PROFILE_FRAGMENT",
           "CONSUMER_NOTIFICATION_FRAGMENT_sender_profilePicture_url",
           "CONSUMER_NOTIFICATION_FRAGMENT_sender_profilePicture",
           "CONSUMER_NOTIFICATION_FRAGMENT_sender",
@@ -181,6 +184,12 @@
           "getStreamFeed_getStreamFeed",
           "getStreamFeed",
           "getStreamFeedVariables",
+          "searchChannels_searchChannels_channels_profileImage_url",
+          "searchChannels_searchChannels_channels_profileImage",
+          "searchChannels_searchChannels_channels",
+          "searchChannels_searchChannels",
+          "searchChannels",
+          "searchChannelsVariables",
           "searchStreams_searchStreams_streams_channel",
           "searchStreams_searchStreams_streams_image_url",
           "searchStreams_searchStreams_streams_image",

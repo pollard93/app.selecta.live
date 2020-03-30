@@ -26,7 +26,7 @@ public class MainApplication extends NavigationApplication {
         ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
             @Override
             protected String getJSMainModuleName() {
-                return "index";
+                return BuildConfig.REACT_APP_APP_STORYBOOK == "true" ? "index.storybook" : "index";
             }
         };
         return new ReactGateway(this, isDebug(), host);

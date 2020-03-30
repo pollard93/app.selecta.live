@@ -15,6 +15,23 @@ export enum CLIENT_TYPE {
   PRODUCER = "PRODUCER",
 }
 
+export enum ChannelOrderByInput {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  credit_ASC = "credit_ASC",
+  credit_DESC = "credit_DESC",
+  description_ASC = "description_ASC",
+  description_DESC = "description_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+  verified_ASC = "verified_ASC",
+  verified_DESC = "verified_DESC",
+}
+
 export enum MutationType {
   CREATED = "CREATED",
   DELETED = "DELETED",
