@@ -165,7 +165,7 @@ test('Apollo Testing options', async () => {
 
 To automatically update the storylist, run `yarn dev:storybook`
 
-To run storybook, edit `index.js` and comment in `STORYBOOK`, and comment out `DEFAULT APPLICATION`.
+To run storybook, edit `.env.Debug` and set `REACT_APP_APP_STORYBOOK=true`
 
 ---
 
