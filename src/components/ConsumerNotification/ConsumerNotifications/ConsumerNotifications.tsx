@@ -7,8 +7,10 @@ import { getConsumerNotificationsVariables, getConsumerNotifications, getConsume
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import NotificationListItem from '../NotificationListItem/NotificationListItem';
 import styles from './ConsumerNotifications.styles';
+import { CONSUMER_NOTIFICATIONS_SUBSCRIPTION } from '../../../API/subscription/consumerNotifications/consumerNotifications';
+import { consumerNotifications } from '../../../API/subscription/consumerNotifications/__generated__/consumerNotifications';
 
-class ConsumerNotificationsFlatList extends ApolloFlatList<getConsumerNotificationsVariables, getConsumerNotifications, getConsumerNotifications_getConsumerNotifications_notifications> {}
+class ConsumerNotificationsFlatList extends ApolloFlatList<getConsumerNotificationsVariables, getConsumerNotifications, getConsumerNotifications_getConsumerNotifications_notifications, null, consumerNotifications> {}
 
 const ConsumerNotifications = () => (
   <ConsumerNotificationsFlatList
@@ -29,6 +31,26 @@ const ConsumerNotifications = () => (
     ListFooterComponent={(moreToLoad) => (
       <Text>{moreToLoad ? 'LOADING' : 'NO MORE TO LOAD'}</Text>
     )}
+    subscriptionOptions={{
+      document: CONSUMER_NOTIFICATIONS_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        // Only want to insert created nodes
+        if (subscriptionData.data.consumerNotifications.mutation !== 'CREATED') return prev;
+
+        try {
+          return {
+            ...prev,
+            getConsumerNotifications: {
+              ...prev.getConsumerNotifications,
+              notifications: [subscriptionData.data.consumerNotifications.node, ...prev.getConsumerNotifications.notifications],
+              count: prev.getConsumerNotifications.count + 1,
+            },
+          };
+        } catch (e) {
+          return prev;
+        }
+      },
+    }}
   />
 );
 
