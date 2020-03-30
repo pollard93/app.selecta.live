@@ -99,7 +99,7 @@ describe('<CreateStreamMessage />', () => {
     expect(resAfter.getStreamMessages.messages[0].message).to.equal('message');
   });
 
-  test('should succeed', async () => {
+  test('should fail', async () => {
     const mocks = [{
       request: {
         query: PUT_STREAM_MESSAGE_MUTATION,
