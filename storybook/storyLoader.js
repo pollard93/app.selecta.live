@@ -11,8 +11,10 @@ function loadStories() {
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Register/Register.stories');
 	require('../src/components/Stream/ChannelStreams/ChannelStreams.stories');
+	require('../src/components/Stream/PayForStream/PayForStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamFeed/StreamFeed.stories');
+	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
 	require('../src/components/UI/EditableImage/EditableImage.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
@@ -29,8 +31,10 @@ const stories = [
 	'../src/components/Login/Login.stories',
 	'../src/components/Register/Register.stories',
 	'../src/components/Stream/ChannelStreams/ChannelStreams.stories',
+	'../src/components/Stream/PayForStream/PayForStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamFeed/StreamFeed.stories',
+	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
 	'../src/components/UI/EditableImage/EditableImage.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
