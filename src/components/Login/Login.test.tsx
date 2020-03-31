@@ -129,7 +129,7 @@ describe('<Login >', () => {
     }
   });
 
-  it.only('should fail to login', async () => {
+  it('should fail to login', async () => {
     const mocks = [{
       request: {
         query: LOGIN_MUTATION,
