@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Button, TextInput } from 'react-native';
 import AsyncImage, { AsyncImageProps } from 'mbp-components-rn-asyncimage';
 import { useAssetPicker } from 'mbp-components-rn-assetpicker';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
@@ -7,16 +7,27 @@ import { ReactNativeFile } from 'apollo-upload-client';
 
 
 export interface EditableImageProps {
+  setRef: any;
   asyncImageProps: AsyncImageProps;
-  onSubmit?: (file: ReactNativeFile) => Promise<any>; // Renderes component uncontrollable
-  onChange?: (file: ReactNativeFile) => Promise<any>; // Renders component controllable
+  onChange: (file: ReactNativeFile) => Promise<any>;
 }
 
 const EditableImage = (props: EditableImageProps) => {
   const assetPicker = useAssetPicker();
   const [selectedAsset, setSelectedAsset] = useState<PhotoIdentifier['node']>();
-  const [fullUrl] = useState(props.asyncImageProps.fullUrl);
-  const [loading, setLoading] = useState(false);
+  const [fullUrl, setFullUrl] = useState(props.asyncImageProps.fullUrl);
+
+
+  /**
+   * When the image is updated outside of the component, possibly by a request
+   * If the fullUrl has changed, clear selectedAsset and setFullUrl
+   */
+  useEffect(() => {
+    if (fullUrl !== props.asyncImageProps.fullUrl) {
+      setFullUrl(props.asyncImageProps.fullUrl);
+      setSelectedAsset(null);
+    }
+  }, [props.asyncImageProps.fullUrl]);
 
 
   /**
@@ -30,18 +41,17 @@ const EditableImage = (props: EditableImageProps) => {
       onSelectAssets: (assets) => {
         /**
          * On select asset
-         * Contolled - execute props.onChange with ReactNativeFile
-         * Uncontolled - set asset in selectedAsset
+         * Set asset in selectedAsset
+         * Execute props.onChange with ReactNativeFile
          */
-        if (props.onChange) {
-          props.onChange(new ReactNativeFile({
-            uri: assets[0].image.uri,
-            name: assets[0].image.filename,
-            type: assets[0].type,
-          }));
-        } else {
-          setSelectedAsset(assets[0]);
-        }
+
+        setSelectedAsset(assets[0]);
+
+        props.onChange(new ReactNativeFile({
+          uri: assets[0].image.uri,
+          name: assets[0].image.filename,
+          type: assets[0].type,
+        }));
 
         /**
          * Close picker
@@ -55,86 +65,35 @@ const EditableImage = (props: EditableImageProps) => {
 
 
   /**
-   * On cancel
-   * Contolled - execute props.onChange
-   * Uncontolled - null selectedAsset
+   * On cancel - null selectedAsset and execute onChange
    */
   const onCancel = () => {
-    if (props.onChange) {
-      props.onChange(null);
-    } else {
-      setSelectedAsset(null);
-    }
-  };
-
-
-  /**
-   * On Submit execute props.onSubmit with selectedAsset as ReactNativeFile
-   * null selectedAsset whether it fails or not
-   * The submission should updated the cache and re render this component with the updated data
-   * Should only be used on uncontrolled component
-   */
-  const onSubmit = async () => {
-    try {
-      setLoading(true);
-
-      await props.onSubmit(new ReactNativeFile({
-        uri: selectedAsset.image.uri,
-        name: selectedAsset.image.filename,
-        type: selectedAsset.type,
-      }));
-
-      setLoading(false);
-      setSelectedAsset(null);
-    } catch (e) {
-      setLoading(false);
-      setSelectedAsset(null);
-    }
-  };
-
-
-  /**
-   * Can cancel
-   * Contolled - fullUrl set initially in state is different from the current fullUrl in props
-   * Uncontolled - selectedAsset is populated
-   */
-  const canCancel = () => {
-    if (props.onChange) {
-      return props.asyncImageProps.fullUrl !== fullUrl;
-    }
-
-    return !!selectedAsset;
+    setSelectedAsset(null);
+    props.onChange(null);
   };
 
 
   return (
     <View>
+      <TextInput ref={props.setRef} />
+
       <AsyncImage
         {...props.asyncImageProps}
-        fullUrl={selectedAsset?.image?.uri || props.asyncImageProps.fullUrl}
+        fullUrl={selectedAsset?.image?.uri || fullUrl}
         // eslint-disable-next-line global-require
         placeholderImageSource={require('../../../../icon.jpg')}
       />
 
       <Button
         title="Change"
-        disabled={loading}
         onPress={openPicker}
       />
 
       <Button
         title="Cancel"
-        disabled={!canCancel() || loading}
+        disabled={!selectedAsset}
         onPress={onCancel}
       />
-
-      {props.onSubmit && (
-        <Button
-          title="Submit"
-          disabled={!selectedAsset || loading}
-          onPress={onSubmit}
-        />
-      )}
     </View>
   );
 };

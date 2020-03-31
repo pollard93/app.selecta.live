@@ -1,52 +1,31 @@
-import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import React from 'react';
+import { Button, ScrollView, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
+import { useForm } from 'react-hook-form';
+import { ReactNativeFile } from 'apollo-upload-client';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-import Form from '../../hoc/Form/Form';
 import { updateSelfVariables } from '../../../API/mutation/updateSelf/__generated__/updateSelf';
-import { InitialConfig } from '../../hoc/Form/FormInterfaces';
+import EditableImage from '../../UI/EditableImage/EditableImage';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
-class UpdateProfileForm extends Form<updateSelfVariables> {}
+type FormData = {
+  name: string;
+  profilePicture: ReactNativeFile;
+};
 
 const ProfileUpdate = () => {
   const { data: { getSelf } } = useGetSelfQuery();
-  const context = useToast();
-
-  /**
-   * Form config
-   */
-  const [config] = useState<InitialConfig>({
-    Name: {
-      type: 'text',
-      name: 'name',
-      value: getSelf?.name,
-      required: false,
-      textInputProps: {
-        placeholder: 'Name',
-      },
-    },
-    ProfilePicture: {
-      type: 'image',
-      name: 'profilePicture',
-      value: null,
-      required: false,
-      imageProps: {
-        asyncImageProps: {
-          splashUrl: getSelf?.profilePicture?.url?.splash,
-          fullUrl: getSelf?.profilePicture?.url?.full,
-          containerProps: {
-            style: {
-              width: 250,
-              height: 250,
-            },
-          },
-        },
-      },
+  const { register, setValue, handleSubmit, reset, formState: { isValid, dirty } } = useForm<FormData>({
+    mode: 'onChange',
+    defaultValues: {
+      name: undefined,
+      profilePicture: undefined,
     },
   });
+  const toast = useToast();
 
 
   /**
@@ -54,7 +33,18 @@ const ProfileUpdate = () => {
    */
   const [updateSelfMutation, { loading }] = useUpdateSelfMutation({
     onCompleted: () => {
-      context.push({
+      /**
+       * Reset form
+       */
+      reset({
+        name: undefined,
+        profilePicture: undefined,
+      });
+
+      /**
+       * Success toast
+       */
+      toast.push({
         duration: 1000,
         component: (
           <Toast content='Updated profile' />
@@ -63,7 +53,7 @@ const ProfileUpdate = () => {
       });
     },
     onError: (e) => {
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={getGQLErrorMessage(e)} />
@@ -76,44 +66,55 @@ const ProfileUpdate = () => {
 
   /**
    * On Submit execute updateSelfMutation with form data
-   * Reset form
    */
-  const onSubmit = (variables: updateSelfVariables, form: Form<updateSelfVariables>) => {
-    try {
-      updateSelfMutation({
-        variables,
-      });
-
-      form.reset({ resetAll: true });
-    // eslint-disable-next-line no-empty
-    } catch (e) {}
+  const onSubmit = (variables: updateSelfVariables) => {
+    updateSelfMutation({
+      variables,
+    });
   };
 
 
   return (
-    <View>
-      <UpdateProfileForm
-        config={config}
-        onSubmit={onSubmit}
-        validateForm={(c, form) => {
-          const anyInvalid = form.anyInvalid(c);
-          const anyValidAndChanged = form.anyValidAndChanged(c);
-          return !anyInvalid && anyValidAndChanged;
+    <ScrollView style={GlobalStyles.PageFill}>
+      <TextInput
+        ref={
+          register(
+            { name: 'name' },
+            { required: false, validate: (v) => v === undefined || v.length },
+          )
+        }
+        onChangeText={(text) => setValue('name', text, true)}
+        placeholder="Name"
+        returnKeyType="next"
+        defaultValue={getSelf.name}
+      />
+
+      <EditableImage
+        setRef={
+          register(
+            { name: 'profilePicture' },
+            { required: false, validate: (v) => v === undefined || v instanceof ReactNativeFile },
+          )
+        }
+        asyncImageProps={{
+          splashUrl: getSelf.profilePicture?.url?.splash,
+          fullUrl: getSelf.profilePicture?.url?.full,
+          containerProps: {
+            style: {
+              width: 250,
+              height: 250,
+            },
+          },
         }}
-      >
-        {({ fields: { Name, ProfilePicture }, valid, triggerSubmit }) => (
-          <>
-            {Name}
-            {ProfilePicture}
-            <Button
-              title="Submit"
-              disabled={!valid || loading}
-              onPress={triggerSubmit}
-            />
-          </>
-        )}
-      </UpdateProfileForm>
-    </View>
+        onChange={async (file) => setValue('profilePicture', file, true)}
+      />
+
+      <Button
+        title="Submit"
+        onPress={handleSubmit(onSubmit)}
+        disabled={loading || !isValid || !dirty}
+      />
+    </ScrollView>
   );
 };
 

@@ -5,20 +5,24 @@
 import { followChannel } from './resolvers/mutation/followChannel/followChannel';
 import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
 import { getConsumerNotifications } from './resolvers/query/getConsumerNotifications/getConsumerNotifications';
+import { getSelf } from './resolvers/query/getSelf/getSelf';
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { searchChannels } from './resolvers/query/searchChannels/searchChannels';
 import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
+import { updateSelf } from './resolvers/mutation/updateSelf/updateSelf';
 
 export default {
   Mutation: () => ({
     followChannel,
     putStreamMessage,
+    updateSelf,
   }),
   Query: () => ({
     getChannelStreams,
     getConsumerNotifications,
+    getSelf,
     getStreamFeed,
     getStreamMessages,
     searchChannels,
