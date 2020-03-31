@@ -169,6 +169,8 @@
           "register_register",
           "register",
           "registerVariables",
+          "reportStream",
+          "reportStreamVariables",
           "requestPasswordReset",
           "requestPasswordResetVariables",
           "resetPassword_resetPassword",
