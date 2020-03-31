@@ -7,6 +7,7 @@ import { getChannelStreams } from './resolvers/query/getChannelStreams/getChanne
 import { getConsumerNotifications } from './resolvers/query/getConsumerNotifications/getConsumerNotifications';
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
+import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { searchChannels } from './resolvers/query/searchChannels/searchChannels';
 import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
@@ -21,6 +22,7 @@ export default {
     getConsumerNotifications,
     getStreamFeed,
     getStreamMessages,
+    getStreamUrl,
     searchChannels,
     searchStreams,
   }),
