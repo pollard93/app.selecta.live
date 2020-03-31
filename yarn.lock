@@ -15347,6 +15347,11 @@ react-native-onesignal@^3.5.0:
   dependencies:
     invariant "^2.2.2"
 
+react-native-purchases@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-3.1.0.tgz#659146eef9a987c0a12737a929ff9a54ac34a2e6"
+  integrity sha512-ribDtqh/cZTTDq9H6FS1jXbEaClxg+scmvPHQra1ycPs/qafduxoIJSLGFppyzfduMBj6hfkvsj//pNMKZtKJg==
+
 react-native-rename@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-native-rename/-/react-native-rename-2.4.1.tgz#54256367b0375ae49f5026b35914d5ba2a229221"

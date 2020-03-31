@@ -19,26 +19,40 @@ platform :ios do
 
   desc "Create Beta and App Store apps on both App Store Connect and the Apple Developer Portal"
   lane :produce_apps do
-    # Beta
+    # Debug
     produce(
       username: 'dev@madebyprism.com',
       team_id: 'CQFWKU4GYE',
       itc_team_id: '2203907',
-      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
-      app_name: "#{ENV['APP_NAME']} beta",
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug",
+      app_name: "#{ENV['APP_NAME']} debug",
 
       enable_services: {
         push_notification: "on",
+        in_app_purchase: "on",
       }
     )
-    produce(
-      username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
-      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
-      app_name: "#{ENV['APP_NAME']} beta onesignal",
-      skip_itc: true,
-    )
+
+    # Beta
+    # produce(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   itc_team_id: '2203907',
+    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
+    #   app_name: "#{ENV['APP_NAME']} beta",
+
+    #   enable_services: {
+    #     push_notification: "on",
+    #   }
+    # )
+    # produce(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'CQFWKU4GYE',
+    #   itc_team_id: '2203907',
+    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
+    #   app_name: "#{ENV['APP_NAME']} beta onesignal",
+    #   skip_itc: true,
+    # )
 
     # Release
     # produce(

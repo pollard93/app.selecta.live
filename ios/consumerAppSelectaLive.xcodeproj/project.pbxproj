@@ -24,6 +24,7 @@
 		BC4246E2233F78F200A52916 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4246E1233F78F200A52916 /* NotificationService.m */; };
 		BC4246E6233F78F200A52916 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
+		BCC5E77D24327D8C005AE505 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCC5E77C24327D8C005AE505 /* StoreKit.framework */; };
 		CB23AFFF273BC85402268605 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */; };
 		E144BB6A387C439D8124DEA4 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B405E18378540EA8098FEA7 /* Inter-Bold.ttf */; };
 		F97C9D07320343CCAE906906 /* Inter-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E731602C00A4A43898342F2 /* Inter-Semibold.ttf */; };
@@ -109,6 +110,7 @@
 		BC4246ED233F7BDA00A52916 /* consumerAppSelectaLive.debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = consumerAppSelectaLive.debug.entitlements; path = consumerAppSelectaLive/consumerAppSelectaLive.debug.entitlements; sourceTree = "<group>"; };
 		BC42BCFE2333F85100E6BDB4 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		BC92FFC12339186400D986A6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		BCC5E77C24327D8C005AE505 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		C07EB01DDDE9BE9FC39C87B2 /* Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1EBB0B60E785F36A6845977 /* Pods-consumerAppSelectaLive-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6763E96B58CE73517F23EFBF /* libPods-consumerAppSelectaLive.a in Frameworks */,
+				BCC5E77D24327D8C005AE505 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +210,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BCC5E77C24327D8C005AE505 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */,
