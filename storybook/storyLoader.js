@@ -18,7 +18,6 @@ function loadStories() {
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
-	require('../src/components/hoc/Form/Form.stories');
 }
 
 const stories = [
@@ -35,8 +34,7 @@ const stories = [
 	'../src/components/UI/EditableImage/EditableImage.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
-	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
-	'../src/components/hoc/Form/Form.stories'
+	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories'
 ];
 
 module.exports = {
