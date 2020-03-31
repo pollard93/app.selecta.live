@@ -52,13 +52,17 @@ describe('<Login >', () => {
     // Test text change
     wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
     wrapper.find(TextInput).at(1).props().onChangeText('password');
+    await wait(0);
     wrapper.update();
 
     // Form should now be valid
     expect(wrapper.find(Button).first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     await wait(0);
     wrapper.update();
 
@@ -125,7 +129,7 @@ describe('<Login >', () => {
     }
   });
 
-  it('should fail to login', async () => {
+  it.only('should fail to login', async () => {
     const mocks = [{
       request: {
         query: LOGIN_MUTATION,
@@ -142,8 +146,16 @@ describe('<Login >', () => {
       </MockedProvider>,
     );
 
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    wrapper.find(TextInput).at(1).props().onChangeText('password');
+    wrapper.update();
+
     // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     wrapper.update();
 
     // LoginView.loading is now true
@@ -177,8 +189,16 @@ describe('<Login >', () => {
       </MockedProvider>,
     );
 
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    wrapper.find(TextInput).at(1).props().onChangeText('password');
+    wrapper.update();
+
     // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     wrapper.update();
 
     // LoginView.loading is now true

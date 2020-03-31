@@ -51,13 +51,17 @@ describe('<ResetPassword />', () => {
 
     // Test text change
     wrapper.find(TextInput).first().props().onChangeText('password');
+    await wait(0);
     wrapper.update();
 
     // Form should now be valid
     expect(wrapper.find(Button).first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     await wait(0);
     wrapper.update();
 
@@ -101,8 +105,15 @@ describe('<ResetPassword />', () => {
       </MockedProvider>,
     );
 
+    // Test text change
+    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.update();
+
     // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     wrapper.update();
 
     // ResetPasswordView.loading is now true
@@ -136,8 +147,15 @@ describe('<ResetPassword />', () => {
       </MockedProvider>,
     );
 
+    // Test text change
+    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.update();
+
     // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     wrapper.update();
 
     // ResetPasswordView.loading is now true

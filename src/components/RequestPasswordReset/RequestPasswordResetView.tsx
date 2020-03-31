@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Text } from 'react-native';
+import React from 'react';
+import { Button, Text, ScrollView, TextInput } from 'react-native';
+import { validate as validateEmail } from 'email-validator';
+import { useForm } from 'react-hook-form';
 import { requestPasswordResetVariables } from '../../API/mutation/requestPasswordReset/__generated__/requestPasswordReset';
-import { InitialConfig } from '../hoc/Form/FormInterfaces';
-import Form from '../hoc/Form/Form';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface RequestPasswordResetViewProps {
   complete: boolean;
@@ -10,22 +11,12 @@ export interface RequestPasswordResetViewProps {
   onSubmit: (variables: requestPasswordResetVariables) => void;
 }
 
-class RequestPasswordResetViewForm extends Form<requestPasswordResetVariables> {}
+type FormData = {
+  email: string;
+};
 
 const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
-  const [config] = useState<InitialConfig>({
-    Email: {
-      type: 'email',
-      name: 'email',
-      value: '',
-      required: true,
-      textInputProps: {
-        placeholder: 'Email',
-        keyboardType: 'email-address',
-        autoCapitalize: 'none',
-      },
-    },
-  });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
 
 
   if (props.complete) {
@@ -34,21 +25,26 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
 
 
   return (
-    <RequestPasswordResetViewForm
-      config={config}
-      onSubmit={props.onSubmit}
-    >
-      {({ fields: { Email }, valid, triggerSubmit }) => (
-        <>
-          {Email}
-          <Button
-            disabled={!valid || props.loading}
-            title="Reset Password"
-            onPress={triggerSubmit}
-          />
-        </>
-      )}
-    </RequestPasswordResetViewForm>
+    <ScrollView style={GlobalStyles.PageFill}>
+      <TextInput
+        ref={() => {
+          register({ name: 'email' }, { required: true, validate: validateEmail });
+        }}
+        onChangeText={(text) => setValue('email', text, true)}
+        placeholder="Email"
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="next"
+        onSubmitEditing={handleSubmit(props.onSubmit)}
+      />
+      {errors.email && <Text>This is required.</Text>}
+
+      <Button
+        title="Submit"
+        onPress={handleSubmit(props.onSubmit)}
+        disabled={props.loading || !isValid || !dirty}
+      />
+    </ScrollView>
   );
 };
 
