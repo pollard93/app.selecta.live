@@ -2,9 +2,9 @@ import React from 'react';
 import AssetPickerProvider from '../../../src/modules/AssetPickerProvider/AssetPickerProvider';
 
 const AssetPickerDecorator = (props) => (
-    <AssetPickerProvider>
+  <AssetPickerProvider>
     {props.children}
-    </AssetPickerProvider>
+  </AssetPickerProvider>
 );
 
 export default AssetPickerDecorator;

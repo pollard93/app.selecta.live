@@ -3,17 +3,18 @@ import { Button, ScrollView, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
+import { EditableAsyncImage } from 'mbp-components-rn-asyncimage';
+import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { updateSelfVariables } from '../../../API/mutation/updateSelf/__generated__/updateSelf';
-import EditableImage from '../../UI/EditableImage/EditableImage';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 type FormData = {
   name: string;
-  profilePicture: ReactNativeFile;
+  profilePicture: PhotoIdentifier['node'];
 };
 
 const ProfileUpdate = () => {
@@ -69,7 +70,14 @@ const ProfileUpdate = () => {
    */
   const onSubmit = (variables: updateSelfVariables) => {
     updateSelfMutation({
-      variables,
+      variables: {
+        ...variables,
+        profilePicture: variables.profilePicture && new ReactNativeFile({
+          uri: variables.profilePicture.image.uri,
+          name: variables.profilePicture.image.filename,
+          type: variables.profilePicture.type,
+        }),
+      },
     });
   };
 
@@ -80,7 +88,7 @@ const ProfileUpdate = () => {
         ref={
           register(
             { name: 'name' },
-            { required: false, validate: (v) => v === undefined || v.length },
+            { required: false },
           )
         }
         onChangeText={(text) => setValue('name', text, true)}
@@ -89,11 +97,11 @@ const ProfileUpdate = () => {
         defaultValue={getSelf.name}
       />
 
-      <EditableImage
+      <EditableAsyncImage
         setRef={
           register(
             { name: 'profilePicture' },
-            { required: false, validate: (v) => v === undefined || v instanceof ReactNativeFile },
+            { required: false },
           )
         }
         asyncImageProps={{
@@ -107,7 +115,22 @@ const ProfileUpdate = () => {
           },
         }}
         onChange={async (file) => setValue('profilePicture', file, true)}
-      />
+      >
+        {({ selectedAsset, openPicker, onCancel }) => (
+          <>
+            <Button
+              title="Change"
+              onPress={openPicker}
+            />
+
+            <Button
+              title="Cancel"
+              disabled={!selectedAsset}
+              onPress={onCancel}
+            />
+          </>
+        )}
+      </EditableAsyncImage>
 
       <Button
         title="Submit"
