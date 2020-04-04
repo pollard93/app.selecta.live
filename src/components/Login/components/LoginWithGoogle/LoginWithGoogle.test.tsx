@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { ApolloProvider } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
-import { MockedProvider } from '@apollo/react-testing';
 import mockClient from '../../../../API/utils/mockClient';
 import LoginWithGoogle from './LoginWithGoogle';
 import { GET_ACCESS_TOKEN_QUERY } from '../../../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
@@ -15,25 +14,27 @@ import { getAccessToken } from '../../../../ApolloClient/resolvers/query/getAcce
 import PushNotifications from '../../../../modules/PushNotifications';
 import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
-import { LOGIN_WITH_SOCIAL_MUTATION } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
-
-const client = mockClient();
+import * as ScreenUtilsModule from '../../../../screens/utils';
 
 describe('<LoginWithGoogle />', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = sinon.createSandbox();
-  let configureSpy;
-  let hasPlayServicesSpy;
-  let signInSpy;
-  let getTokensSpy;
-  let revokeAccessSpy;
-  let signOutSpy;
-  let pushNotificationInitSpy;
-  let toastSpy;
+  let configureSpy = sandbox.spy(GoogleSignin, 'configure');
+  let hasPlayServicesSpy = sandbox.spy(GoogleSignin, 'hasPlayServices');
+  let signInSpy = sandbox.spy(GoogleSignin, 'signIn');
+  let getTokensSpy = sandbox.spy(GoogleSignin, 'getTokens');
+  let revokeAccessSpy = sandbox.spy(GoogleSignin, 'revokeAccess');
+  let signOutSpy = sandbox.spy(GoogleSignin, 'signOut');
+  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+  let toastSpy = sandbox.spy(useToast(), 'push');
+  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
-  beforeEach(() => {
+  afterEach(() => {
+    sandbox.restore();
+
     configureSpy = sandbox.spy(GoogleSignin, 'configure');
     hasPlayServicesSpy = sandbox.spy(GoogleSignin, 'hasPlayServices');
     signInSpy = sandbox.spy(GoogleSignin, 'signIn');
@@ -42,13 +43,13 @@ describe('<LoginWithGoogle />', () => {
     signOutSpy = sandbox.spy(GoogleSignin, 'signOut');
     pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
     toastSpy = sandbox.spy(useToast(), 'push');
-  });
-
-  afterEach(() => {
-    sandbox.restore();
+    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
   it('should succeed', async () => {
+    const client = mockClient();
+
     const wrapper = mount(
       <ApolloProvider client={client}>
         <LoginWithGoogle />
@@ -95,34 +96,35 @@ describe('<LoginWithGoogle />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.called).to.be.true;
 
+    // Should have goneHome
+    expect(goHomeSpy.callCount).to.equal(1);
+
     // Update - button should not return to enabled as no errors
     wrapper.update();
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
   });
 
   it('should fail to loginWithSocial', async () => {
-    const mocks = [{
-      request: {
-        query: LOGIN_WITH_SOCIAL_MUTATION,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force loginSocial to error
+     */
+    const client = mockClient({
+      Mutation: () => ({
+        loginWithSocial: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <LoginWithGoogle />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
     // Submit and update
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
-
-    // Button.disabled is now true
-    expect(wrapper.find(Button).props().disabled).to.be.true;
 
     // Wait for response and update
     await wait(0);
@@ -139,28 +141,26 @@ describe('<LoginWithGoogle />', () => {
   });
 
   it('should fail getSelf', async () => {
-    const mocks = [{
-      request: {
-        query: GET_SELF_QUERY,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force getSelf to error
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <LoginWithGoogle />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
     // Submit and update
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
-
-    // Button.disabled is now true
-    expect(wrapper.find(Button).props().disabled).to.be.true;
 
     // Wait for response and update
     await wait(0);
@@ -174,5 +174,38 @@ describe('<LoginWithGoogle />', () => {
 
     // Toast should have been executed
     expect(toastSpy.callCount).to.equal(1);
+  });
+
+  it('should goToRequireUpdateScreen if getSelf.requiresUpdate is true', async () => {
+    /**
+     * Create mock client and force getSelf.requiresUpdate to be true
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => ({
+          requiresUpdate: true,
+        }),
+      }),
+    });
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <LoginWithGoogle />
+      </ApolloProvider>,
+    );
+
+    // Submit and update
+    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.update();
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // Should goToRequireUpdateScreen
+    expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
+
+    // Should not have goneHome
+    expect(goHomeSpy.callCount).to.equal(0);
   });
 });

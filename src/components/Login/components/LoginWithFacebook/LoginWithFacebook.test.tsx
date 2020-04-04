@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { ApolloProvider } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
-import { MockedProvider } from '@apollo/react-testing';
 import mockClient from '../../../../API/utils/mockClient';
 import LoginWithFacebook from './LoginWithFacebook';
 import { GET_ACCESS_TOKEN_QUERY } from '../../../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
@@ -15,34 +14,36 @@ import { getAccessToken } from '../../../../ApolloClient/resolvers/query/getAcce
 import PushNotifications from '../../../../modules/PushNotifications';
 import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
-import { LOGIN_WITH_SOCIAL_MUTATION } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
-
-const client = mockClient();
+import * as ScreenUtilsModule from '../../../../screens/utils';
 
 describe('<LoginWithFacebook />', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = sinon.createSandbox();
-  let loginWithPermissionsSpy;
-  let logoutSpy;
-  let getCurrentAccessTokenSpy;
-  let pushNotificationInitSpy;
-  let toastSpy;
+  let loginWithPermissionsSpy = sandbox.spy(LoginManager as any, 'logInWithPermissions');
+  let logoutSpy = sandbox.spy(LoginManager as any, 'logOut');
+  let getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
+  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+  let toastSpy = sandbox.spy(useToast(), 'push');
+  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
-  beforeEach(() => {
+  afterEach(() => {
+    sandbox.restore();
+
     loginWithPermissionsSpy = sandbox.spy(LoginManager as any, 'logInWithPermissions');
     logoutSpy = sandbox.spy(LoginManager as any, 'logOut');
     getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
     pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
     toastSpy = sandbox.spy(useToast(), 'push');
-  });
-
-  afterEach(() => {
-    sandbox.restore();
+    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
   it('should succeed', async () => {
+    const client = mockClient();
+
     const wrapper = mount(
       <ApolloProvider client={client}>
         <LoginWithFacebook />
@@ -87,40 +88,41 @@ describe('<LoginWithFacebook />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.called).to.be.true;
 
+    // Should have goneHome
+    expect(goHomeSpy.callCount).to.equal(1);
+
     // Update - button should not return to enabled as no errors
     wrapper.update();
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
   });
 
   it('should fail to loginWithSocial', async () => {
-    const mocks = [{
-      request: {
-        query: LOGIN_WITH_SOCIAL_MUTATION,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force loginSocial to error
+     */
+    const client = mockClient({
+      Mutation: () => ({
+        loginWithSocial: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <LoginWithFacebook />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
     // Submit and update
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
 
-    // Button.disabled is now true
-    expect(wrapper.find(Button).props().disabled).to.be.true;
-
     // Wait for response and update
     await wait(0);
     wrapper.update();
 
-    // Button.disabled is now false
+    // Button is not disabled as loading is false
     expect(wrapper.find(Button).props().disabled).to.be.false;
 
     // Facebook should now be signed out
@@ -131,34 +133,32 @@ describe('<LoginWithFacebook />', () => {
   });
 
   it('should fail getSelf', async () => {
-    const mocks = [{
-      request: {
-        query: GET_SELF_QUERY,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force getSelf to error
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <LoginWithFacebook />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
     // Submit and update
     wrapper.find(Button).first().props().onPress({} as any);
     wrapper.update();
 
-    // Button.disabled is now true
-    expect(wrapper.find(Button).props().disabled).to.be.true;
-
     // Wait for response and update
     await wait(0);
     wrapper.update();
 
-    // Button.disabled is now false
+    // Button is not disabled as loading is false
     expect(wrapper.find(Button).props().disabled).to.be.false;
 
     // Facebook should now be signed out
@@ -166,5 +166,38 @@ describe('<LoginWithFacebook />', () => {
 
     // Toast should have been executed
     expect(toastSpy.callCount).to.equal(1);
+  });
+
+  it('should goToRequireUpdateScreen if getSelf.requiresUpdate is true', async () => {
+    /**
+     * Create mock client and force getSelf.requiresUpdate to be true
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => ({
+          requiresUpdate: true,
+        }),
+      }),
+    });
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <LoginWithFacebook />
+      </ApolloProvider>,
+    );
+
+    // Submit and update
+    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.update();
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // Should goToRequireUpdateScreen
+    expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
+
+    // Should not have goneHome
+    expect(goHomeSpy.callCount).to.equal(0);
   });
 });

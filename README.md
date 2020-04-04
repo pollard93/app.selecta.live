@@ -114,44 +114,48 @@ In `/android/` run `fastlane update_onesignal` to update the OneSignal apps with
 import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider } from '@apollo/react-testing';
 import mockClient from './src/API/utils/mockClient';
-import { expect } from 'chai';
 
-const client = mockClient();
-
-const ComponentWithQuery = () => <div></div>;
-
-test('Apollo Testing options', async () => {
-  // Mocked Provider, good for testing errors and simple responses
-
-  const mocks = [{
-    request: {
-      query: QUERY,
-    },
-    error: new Error(),
-  }];
-
-  const mockedProviderWrapper = mount(
-    <MockedProvider
-      mocks={mocks}
-      addTypename={false}
-    >
-      <ComponentWithQuery />
-    </MockedProvider>,
-  );
+test('Apollo Testing', async () => {
+  /**
+   * Create mock client
+   * This auto generates response data
+   * Mock data can be overridden by passing an object like the example below
+   */
+  const client = mockClient({
+    Query: () => ({
+      /**
+       * Override the getSelf query and force requiresUpdate to be false
+       */
+      getSelf: () => ({
+        requiresUpdate: true,
+      }),
+    }),
+    Mutation: () => ({
+      /**
+       * Override the login mutation and throw an error
+       */
+      login: () => {
+        throw new Error();
+      },
+    }),
+  });
 
   // Or can wrap in a provider, and assign the mock client which will hit the mock server
   // Good for auto generating intricate responses
 
-  const apolloProviderWrapper = mount(
+  /**
+   * Wrap component in ApolloProvider with client
+   */
+  const wrapper = mount(
     <ApolloProvider client={client}>
       <ComponentWithQuery />
     </ApolloProvider>,
   );
 
-  // Direct access to the mock server cache, to test for changes after events
-
+  /**
+   * Direct access to the mock server cache, to test for changes after events
+   */
   const { data: { response } } = await client.query({
     query: QUERY,
     variables: {},

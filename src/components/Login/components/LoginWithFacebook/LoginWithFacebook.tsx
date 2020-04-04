@@ -40,7 +40,6 @@ const LoginWithFacebook = () => {
     },
     onError: (e) => {
       setLoading(false);
-      LoginManager.logOut();
 
       context.push({
         duration: 1000,
