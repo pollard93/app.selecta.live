@@ -237,6 +237,8 @@
           "getStreamProfile_getStreamProfile",
           "getStreamProfile",
           "getStreamProfileVariables",
+          "getStreamUrl",
+          "getStreamUrlVariables",
           "searchChannels_searchChannels_channels_profileImage_url",
           "searchChannels_searchChannels_channels_profileImage",
           "searchChannels_searchChannels_channels",

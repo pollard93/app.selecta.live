@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Tue Mar 31 2020 09:14:39 GMT+0100 (British Summer Time)
+# timestamp: Tue Mar 31 2020 10:17:58 GMT+0100 (British Summer Time)
 
 type AuthPayload {
   token: String!

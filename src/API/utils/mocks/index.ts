@@ -9,6 +9,7 @@ import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
 import { getStreamProfile } from './resolvers/query/getStreamProfile/getStreamProfile';
 import { payForStream } from './resolvers/mutation/payForStream/payForStream';
+import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { searchChannels } from './resolvers/query/searchChannels/searchChannels';
 import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
@@ -25,6 +26,7 @@ export default {
     getStreamFeed,
     getStreamMessages,
     getStreamProfile,
+    getStreamUrl,
     searchChannels,
     searchStreams,
   }),
