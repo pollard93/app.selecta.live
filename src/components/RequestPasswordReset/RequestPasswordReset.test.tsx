@@ -4,16 +4,14 @@ import { mount } from 'enzyme';
 import wait from 'waait';
 import { expect } from 'chai';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider } from '@apollo/react-testing';
 import RequestPasswordReset from './RequestPasswordReset';
 import mockClient from '../../API/utils/mockClient';
 import RequestPasswordResetView from './RequestPasswordResetView';
-import { REQUEST_PASSWORD_RESET_MUTATION } from '../../API/mutation/requestPasswordReset/requestPasswordReset';
-
-const client = mockClient();
 
 describe('<RequestPasswordReset />', () => {
   it('should succeed', async () => {
+    const client = mockClient();
+
     const wrapper = mount(
       <ApolloProvider client={client}>
         <RequestPasswordReset />
@@ -25,13 +23,17 @@ describe('<RequestPasswordReset />', () => {
 
     // Test text change
     wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    await wait(0);
     wrapper.update();
 
     // Form should now be valid
     expect(wrapper.find(Button).first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     await wait(0);
     wrapper.update();
 
@@ -41,28 +43,32 @@ describe('<RequestPasswordReset />', () => {
   });
 
   it('should fail to requestPasswordReset', async () => {
-    const mocks = [{
-      request: {
-        query: REQUEST_PASSWORD_RESET_MUTATION,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force getSelf to error
+     */
+    const client = mockClient({
+      Mutation: () => ({
+        requestPasswordReset: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <RequestPasswordReset />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
-    // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
     wrapper.update();
 
-    // RequestPasswordResetView.loading is now true
-    expect(wrapper.find(RequestPasswordResetView).props().loading).to.be.true;
+    // Submit and update
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
 
     // Wait for response and update
     await wait(0);

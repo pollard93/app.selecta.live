@@ -1,58 +1,64 @@
-import { Button } from 'react-native';
-import React, { useState } from 'react';
-import Form from '../hoc/Form/Form';
+import { Button, ScrollView, TextInput, Text } from 'react-native';
+import React, { useRef } from 'react';
+import { validate as validateEmail } from 'email-validator';
+import { useForm } from 'react-hook-form';
 import { registerVariables } from '../../API/mutation/register/__generated__/register';
-import { InitialConfig } from '../hoc/Form/FormInterfaces';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface RegisterViewProps {
   loading: boolean,
   onSubmit: (variables: registerVariables) => void;
 }
 
-class RegisterForm extends Form<registerVariables> {}
+type FormData = {
+  email: string;
+  password: string;
+};
 
 const RegisterView = (props: RegisterViewProps) => {
-  const [config] = useState<InitialConfig>({
-    Email: {
-      type: 'email',
-      name: 'email',
-      value: '',
-      required: true,
-      textInputProps: {
-        placeholder: 'Email',
-        keyboardType: 'email-address',
-        autoCapitalize: 'none',
-      },
-    },
-    Password: {
-      type: 'password',
-      name: 'password',
-      placeholder: 'Password',
-      value: '',
-      required: true,
-      textInputProps: {
-        placeholder: 'Password',
-      },
-    },
-  });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+  const passwordRef = useRef(null);
 
   return (
-    <RegisterForm
-      config={config}
-      onSubmit={props.onSubmit}
-    >
-      {({ fields: { Email, Password }, valid, triggerSubmit }) => (
-        <>
-          {Email}
-          {Password}
-          <Button
-            disabled={!valid || props.loading}
-            title={props.loading ? 'Loading' : 'Register'}
-            onPress={triggerSubmit}
-          />
-        </>
-      )}
-    </RegisterForm>
+    <ScrollView style={GlobalStyles.PageFill}>
+      <TextInput
+        ref={() => {
+          register({ name: 'email' }, { required: true, validate: validateEmail });
+        }}
+        onChangeText={(text) => setValue('email', text, true)}
+        placeholder="Email"
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="next"
+        onSubmitEditing={() => {
+          if (passwordRef.current) {
+            passwordRef.current.focus();
+          }
+        }}
+      />
+      {errors.email && <Text>This is required.</Text>}
+
+      <TextInput
+        ref={(e) => {
+          register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+          passwordRef.current = e;
+        }}
+        onChangeText={(text) => setValue('password', text, true)}
+        placeholder="Password"
+        secureTextEntry
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="done"
+        onSubmitEditing={handleSubmit(props.onSubmit)}
+      />
+      {errors.password && <Text>This is required.</Text>}
+
+      <Button
+        title="Submit"
+        onPress={handleSubmit(props.onSubmit)}
+        disabled={props.loading || !isValid || !dirty}
+      />
+    </ScrollView>
   );
 };
 

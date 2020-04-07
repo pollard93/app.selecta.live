@@ -1,50 +1,44 @@
-import { Button } from 'react-native';
-import React, { useState } from 'react';
-import Form from '../hoc/Form/Form';
-import { InitialConfig } from '../hoc/Form/FormInterfaces';
+import { Button, ScrollView, TextInput, Text } from 'react-native';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { resetPasswordVariables } from '../../API/mutation/resetPassword/__generated__/resetPassword';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface ResetPasswordViewProps {
   loading: boolean;
   onSubmit: (variables: resetPasswordVariables) => void;
 }
 
-class ResetPasswordForm extends Form<resetPasswordVariables> {}
+type FormData = {
+  password: string;
+};
 
 const ResetPasswordView = (props: ResetPasswordViewProps) => {
-  const [config] = useState<InitialConfig>({
-    Password: {
-      type: 'password',
-      name: 'password',
-      placeholder: 'Password',
-      value: '',
-      required: true,
-      textInputProps: {
-        style: {
-          borderColor: 'black',
-          borderWidth: 1,
-        },
-      },
-    },
-  });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+
 
   return (
-    <ResetPasswordForm
-      config={config}
-      onSubmit={props.onSubmit}
-    >
-      {({ fields: { Password }, valid, triggerSubmit }) => (
-        <>
-          {Password}
+    <ScrollView style={GlobalStyles.PageFill}>
+      <TextInput
+        ref={() => {
+          register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+        }}
+        onChangeText={(text) => setValue('password', text, true)}
+        placeholder="Password"
+        secureTextEntry
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="done"
+        onSubmitEditing={handleSubmit(props.onSubmit)}
+      />
+      {errors.password && <Text>This is required.</Text>}
 
-          <Button
-            title='Reset password?'
-            onPress={triggerSubmit}
-            disabled={!valid || props.loading}
-          />
-        </>
-      )}
-    </ResetPasswordForm>
+      <Button
+        title="Submit"
+        onPress={handleSubmit(props.onSubmit)}
+        disabled={props.loading || !isValid || !dirty}
+      />
+    </ScrollView>
   );
 };
 

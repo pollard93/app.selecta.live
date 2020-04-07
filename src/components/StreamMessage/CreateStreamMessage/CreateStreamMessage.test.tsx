@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider, wait } from '@apollo/react-testing';
+import { wait } from '@apollo/react-testing';
 import { expect } from 'chai';
 import { TextInput, Button } from 'react-native';
 import Sinon from 'sinon';
@@ -10,26 +10,24 @@ import mockClient from '../../../API/utils/mockClient';
 import CreateStreamMessage from './CreateStreamMessage';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessages, getStreamMessagesVariables } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
-import { PUT_STREAM_MESSAGE_MUTATION } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 
-const client = mockClient();
 
 describe('<CreateStreamMessage />', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = Sinon.createSandbox();
-  let toastSpy;
-
-  beforeEach(() => {
-    toastSpy = sandbox.spy(useToast(), 'push');
-  });
+  let toastSpy = sandbox.spy(useToast(), 'push');
 
   afterEach(() => {
     sandbox.restore();
+
+    toastSpy = sandbox.spy(useToast(), 'push');
   });
 
   test('should succeed', async () => {
+    const client = mockClient();
+
     const variables = {
       id: 'test',
       first: 5,
@@ -100,18 +98,19 @@ describe('<CreateStreamMessage />', () => {
   });
 
   test('should fail', async () => {
-    const mocks = [{
-      request: {
-        query: PUT_STREAM_MESSAGE_MUTATION,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force putStreamMessage to error
+     */
+    const client = mockClient({
+      Mutation: () => ({
+        putStreamMessage: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <CreateStreamMessage
           variables={{
             id: 'test',
@@ -119,7 +118,7 @@ describe('<CreateStreamMessage />', () => {
             after: null,
           }}
         />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
     // Update value and submit

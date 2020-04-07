@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { SEARCH_STREAMS_QUERY } from '../../../API/query/searchStreams/searchStreams';
 import { searchStreamsVariables, searchStreams, searchStreams_searchStreams_streams } from '../../../API/query/searchStreams/__generated__/searchStreams';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamListItem from '../StreamListItem/StreamListItem';
-import Input from '../../UI/Input/Input';
 import styles from './SearchStreams.styles';
 
 class SearchStreamsFlatList extends ApolloFlatList<searchStreamsVariables, searchStreams, searchStreams_searchStreams_streams> {}
@@ -15,19 +14,12 @@ const SearchStreams = () => {
 
   return (
     <View>
-      <Input
-        type="text"
-        name="search"
-        required={false}
+      <TextInput
         value={search}
-        onChange={setSearch}
-        textInputProps={{
-          placeholder: 'Search name',
-        }}
-        originalValue={null}
-        originalValid={null}
-        touched={null}
-        changed={null}
+        onChangeText={setSearch}
+        placeholder='Search name'
+        returnKeyType="done"
+        blurOnSubmit
       />
 
       <SearchStreamsFlatList
