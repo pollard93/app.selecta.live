@@ -12,26 +12,29 @@ import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAc
 import InitScreen from './InitScreen';
 import * as AClientModule from '../../ApolloClient';
 import * as ScreenUtilsModule from '../utils';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<InitScreen >', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = sinon.createSandbox();
-  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+  let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+  let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-  let goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
-  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let goToLoginSpy = sandbox.stub(ScreenUtilsModule, 'goToLogin');
+  let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+  let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(async () => {
     sandbox.restore();
 
-    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+    inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-    goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
-    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    goToLoginSpy = sandbox.stub(ScreenUtilsModule, 'goToLogin');
+    goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+    goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
 
@@ -78,6 +81,7 @@ describe('<InitScreen >', () => {
     await wait(0);
 
     expect(pushNotificationInitSpy.callCount).to.equal(1);
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
     expect(getTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
   });
@@ -103,6 +107,8 @@ describe('<InitScreen >', () => {
       </ApolloProvider>,
     );
     wrapper.update();
+    await wait(0);
+    await wait(0);
     await wait(0);
 
     expect(getTokenSpy.callCount).to.equal(1);
@@ -131,6 +137,12 @@ describe('<InitScreen >', () => {
     );
     wrapper.update();
     await wait(0);
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);

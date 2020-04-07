@@ -103,6 +103,9 @@ const Login = (props: LoginProps) => {
       // Bind notifications
       PushNotifications.init(id);
 
+      // Bind in app purchases
+      InAppPurchases.init();
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */

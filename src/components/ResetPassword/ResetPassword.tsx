@@ -11,6 +11,7 @@ import { useResetPasswordMutation } from '../../API/mutation/resetPassword/reset
 import { resetPasswordVariables } from '../../API/mutation/resetPassword/__generated__/resetPassword';
 import Toast from '../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 export interface ResetPasswordProps {
   token: string;
@@ -29,6 +30,9 @@ const ResetPassword = (props: ResetPasswordProps) => {
     onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
+
+      // Bind in app purchases
+      InAppPurchases.init();
 
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen

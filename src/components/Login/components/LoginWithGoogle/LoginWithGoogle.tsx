@@ -12,6 +12,7 @@ import { putAccessToken, putAccessTokenVariables } from '../../../../ApolloClien
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
+import InAppPurchases from '../../../../modules/InAppPurchases';
 
 const LoginWithGoogle = () => {
   const [loading, setLoading] = useState(false);
@@ -46,6 +47,9 @@ const LoginWithGoogle = () => {
     onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
+
+      // Bind in app purchases
+      InAppPurchases.init();
 
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
