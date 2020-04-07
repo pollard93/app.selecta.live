@@ -12,14 +12,16 @@ function loadStories() {
 	require('../src/components/Purchase/Purchases/Purchases.stories');
 	require('../src/components/Register/Register.stories');
 	require('../src/components/Stream/ChannelStreams/ChannelStreams.stories');
+	require('../src/components/Stream/PayForStream/PayForStream.stories');
+	require('../src/components/Stream/PaidForStreams/PaidForStreams.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamFeed/StreamFeed.stories');
+	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
+	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
-	require('../src/components/UI/EditableImage/EditableImage.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
-	require('../src/components/hoc/Form/Form.stories');
 }
 
 const stories = [
@@ -31,14 +33,16 @@ const stories = [
 	'../src/components/Purchase/Purchases/Purchases.stories',
 	'../src/components/Register/Register.stories',
 	'../src/components/Stream/ChannelStreams/ChannelStreams.stories',
+	'../src/components/Stream/PayForStream/PayForStream.stories',
+	'../src/components/Stream/PaidForStreams/PaidForStreams.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamFeed/StreamFeed.stories',
+	'../src/components/Stream/StreamProfile/StreamProfile.stories',
+	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
-	'../src/components/UI/EditableImage/EditableImage.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
-	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
-	'../src/components/hoc/Form/Form.stories'
+	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories'
 ];
 
 module.exports = {

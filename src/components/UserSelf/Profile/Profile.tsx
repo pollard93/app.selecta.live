@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import AsyncImage from 'mbp-components-rn-asyncimage';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
 
 const Profile = () => {

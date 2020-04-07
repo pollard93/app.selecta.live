@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { SEARCH_CHANNELS_QUERY } from '../../../API/query/searchChannels/searchChannels';
 import { searchChannelsVariables, searchChannels, searchChannels_searchChannels_channels } from '../../../API/query/searchChannels/__generated__/searchChannels';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import ChannelListItem from '../ChannelListItem/ChannelListItem';
-import Input from '../../UI/Input/Input';
 import styles from './SearchChannels.styles';
 
 class SearchChannelsFlatList extends ApolloFlatList<searchChannelsVariables, searchChannels, searchChannels_searchChannels_channels> {}
@@ -15,19 +14,12 @@ const SearchChannels = () => {
 
   return (
     <View>
-      <Input
-        type="text"
-        name="search"
-        required={false}
+      <TextInput
         value={search}
-        onChange={setSearch}
-        textInputProps={{
-          placeholder: 'Search name',
-        }}
-        originalValue={null}
-        originalValid={null}
-        touched={null}
-        changed={null}
+        onChangeText={setSearch}
+        placeholder='Search name'
+        returnKeyType="done"
+        blurOnSubmit
       />
 
       <SearchChannelsFlatList

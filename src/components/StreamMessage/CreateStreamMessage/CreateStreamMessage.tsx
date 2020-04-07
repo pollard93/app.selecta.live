@@ -1,7 +1,6 @@
 import React, { useState, memo } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-import Input from '../../UI/Input/Input';
 import { usePutStreamMessageMutation } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 import { getStreamMessagesVariables, getStreamMessages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
@@ -22,6 +21,10 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
    * Appends new message to cache on completion
    */
   const [mutation, { loading, client }] = usePutStreamMessageMutation({
+    variables: {
+      id: props.variables.id,
+      message,
+    },
     onCompleted: ({ putStreamMessage }) => {
       // Reset message state
       setMessage('');
@@ -66,40 +69,21 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
   });
 
 
-  const onSubmit = () => {
-    mutation({
-      variables: {
-        id: props.variables.id,
-        message,
-      },
-    });
-  };
-
-
   return (
     <View>
-      <Input
-        type="text"
-        name="search"
-        required={false}
+      <TextInput
         value={message}
-        onChange={setMessage}
-        textInputProps={{
-          placeholder: 'Enter message',
-          blurOnSubmit: true,
-          onSubmitEditing: onSubmit,
-          returnKeyType: 'send',
-          editable: !loading,
-        }}
-        originalValue={null}
-        originalValid={null}
-        touched={null}
-        changed={null}
+        onChangeText={setMessage}
+        placeholder='Enter message'
+        returnKeyType="send"
+        blurOnSubmit
+        onSubmitEditing={onSubmit}
+        editable={!loading}
       />
 
       <Button
         title="Submit"
-        onPress={onSubmit}
+        onPress={() => mutation()}
         disabled={loading || message.length === 0}
       />
     </View>

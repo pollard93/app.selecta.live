@@ -10,6 +10,8 @@ import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import InAppPurchases from '../../modules/InAppPurchases';
 
 const InitScreen = () => {
+  const client = useApolloClient();
+
   /**
    * Get self query
    */
@@ -44,7 +46,7 @@ const InitScreen = () => {
   useEffect(() => {
     (async () => {
       // If there's no token go straight to login
-      const token = await getToken();
+      const token = await getToken(client);
       if (!token) {
         goToLogin({});
         return;

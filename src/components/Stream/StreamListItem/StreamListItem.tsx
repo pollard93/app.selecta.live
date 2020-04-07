@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import AsyncImage from 'mbp-components-rn-asyncimage';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 interface StreamListItemProps {

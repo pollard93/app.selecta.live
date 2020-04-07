@@ -1,8 +1,9 @@
-import { Button } from 'react-native';
-import React, { useState } from 'react';
-import Form from '../hoc/Form/Form';
-import { InitialConfig } from '../hoc/Form/FormInterfaces';
+import React, { useRef } from 'react';
+import { TextInput, Button, Text, ScrollView } from 'react-native';
+import { useForm } from 'react-hook-form';
+import { validate as validateEmail } from 'email-validator';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
 
@@ -13,66 +14,64 @@ export interface LoginViewProps {
   onRegister: () => void;
 }
 
-class LoginForm extends Form<loginVariables> {}
+type FormData = {
+  email: string;
+  password: string;
+};
 
 const LoginView = (props: LoginViewProps) => {
-  const [config] = useState<InitialConfig>({
-    Email: {
-      type: 'email',
-      name: 'email',
-      value: '',
-      required: true,
-      textInputProps: {
-        placeholder: 'Email',
-        keyboardType: 'email-address',
-        autoCapitalize: 'none',
-      },
-    },
-    Password: {
-      type: 'password',
-      name: 'password',
-      placeholder: 'Password',
-      value: '',
-      required: true,
-      textInputProps: {
-        placeholder: 'Password',
-      },
-    },
-  });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+  const passwordRef = useRef(null);
 
   return (
-    <LoginForm
-      config={config}
-      onSubmit={props.onSubmit}
-    >
-      {({ fields: { Email, Password }, valid, triggerSubmit }) => (
-        <>
-          {Email}
-          {Password}
+    <ScrollView style={GlobalStyles.PageFill}>
+      <TextInput
+        ref={() => {
+          register({ name: 'email' }, { required: true, validate: validateEmail });
+        }}
+        onChangeText={(text) => setValue('email', text, true)}
+        placeholder="Email"
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="next"
+        onSubmitEditing={() => {
+          if (passwordRef.current) {
+            passwordRef.current.focus();
+          }
+        }}
+      />
+      {errors.email && <Text>This is required.</Text>}
 
-          <Button
-            disabled={!valid || props.loading}
-            title={props.loading ? 'Logging in' : 'Login'}
-            onPress={triggerSubmit}
-          />
+      <TextInput
+        ref={(e) => {
+          register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+          passwordRef.current = e;
+        }}
+        onChangeText={(text) => setValue('password', text, true)}
+        placeholder="Password"
+        secureTextEntry
+        autoCompleteType="email"
+        keyboardType="email-address"
+        returnKeyType="done"
+        onSubmitEditing={handleSubmit(props.onSubmit)}
+      />
+      {errors.password && <Text>This is required.</Text>}
 
-          <Button
-            title='Forgotten Password?'
-            onPress={props.onReset}
-            disabled={props.loading}
-          />
+      <Button
+        title="Submit"
+        onPress={handleSubmit(props.onSubmit)}
+        disabled={props.loading || !isValid || !dirty}
+      />
 
-          <Button
-            title='Register'
-            onPress={props.onRegister}
-            disabled={props.loading}
-          />
+      <Button
+        title='Forgotten Password?'
+        onPress={props.onReset}
+        disabled={props.loading}
+      />
 
-          <LoginWithFacebook />
-          <LoginWithGoogle />
-        </>
-      )}
-    </LoginForm>
+      <LoginWithFacebook />
+      <LoginWithGoogle />
+    </ScrollView>
   );
 };
 

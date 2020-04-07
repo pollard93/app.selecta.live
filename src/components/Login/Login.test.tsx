@@ -5,8 +5,8 @@ import wait from 'waait';
 import { expect, assert } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider } from '@apollo/react-testing';
 import { useToast } from 'mbp-components-rn-toast';
+import SplashScreen from 'react-native-splash-screen';
 import Login from './Login';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
@@ -14,29 +14,33 @@ import { getAccessToken } from '../../ApolloClient/resolvers/query/getAccessToke
 import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
 import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
-import { LOGIN_MUTATION } from '../../API/mutation/login/login';
 import LoginView from './LoginView';
-
-const client = mockClient();
+import * as ScreenUtilsModule from '../../screens/utils';
 
 describe('<Login >', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = sinon.createSandbox();
-  let pushNotificationInitSpy;
-  let toastSpy;
-
-  beforeEach(() => {
-    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
-    toastSpy = sandbox.spy(useToast(), 'push');
-  });
+  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+  let toastSpy = sandbox.spy(useToast(), 'push');
+  let splashScreenSpy = sandbox.spy(SplashScreen, 'hide');
+  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
     sandbox.restore();
+
+    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    toastSpy = sandbox.spy(useToast(), 'push');
+    splashScreenSpy = sandbox.spy(SplashScreen, 'hide');
+    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
   it('should succeed', async () => {
+    const client = mockClient();
+
     const wrapper = mount(
       <ApolloProvider client={client}>
         <Login />
@@ -52,13 +56,17 @@ describe('<Login >', () => {
     // Test text change
     wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
     wrapper.find(TextInput).at(1).props().onChangeText('password');
+    await wait(0);
     wrapper.update();
 
     // Form should now be valid
     expect(wrapper.find(Button).first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
     await wait(0);
     wrapper.update();
 
@@ -80,12 +88,17 @@ describe('<Login >', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.called).to.be.true;
 
+    // Should have goneHome
+    expect(goHomeSpy.callCount).to.equal(1);
+
     // Update - button should not return to enabled as no errors
     wrapper.update();
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
   });
 
-  it('should remove token on mount', async () => {
+  it('should remove token on mount, should toast and hide splash screen', async () => {
+    const client = mockClient();
+
     /**
      * Before mount add token
      */
@@ -102,7 +115,7 @@ describe('<Login >', () => {
      */
     mount(
       <ApolloProvider client={client}>
-        <Login />
+        <Login toastMessage="test" />
       </ApolloProvider>,
     );
 
@@ -123,31 +136,50 @@ describe('<Login >', () => {
     } catch (e) {
       assert.isOk(true);
     }
+
+
+    /**
+     * Should toast if prop passed
+     */
+
+    expect(toastSpy.callCount).to.equal(1);
+
+
+    /**
+     * Should hide splashscreen
+     */
+
+    expect(splashScreenSpy.callCount).to.equal(1);
   });
 
   it('should fail to login', async () => {
-    const mocks = [{
-      request: {
-        query: LOGIN_MUTATION,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force login to error
+     */
+    const client = mockClient({
+      Mutation: () => ({
+        login: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <Login />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
-    // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    wrapper.find(TextInput).at(1).props().onChangeText('password');
     wrapper.update();
 
-    // LoginView.loading is now true
-    expect(wrapper.find(LoginView).props().loading).to.be.true;
+    // Submit and update
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
 
     // Wait for response and update
     await wait(0);
@@ -161,28 +193,33 @@ describe('<Login >', () => {
   });
 
   it('should fail getSelf', async () => {
-    const mocks = [{
-      request: {
-        query: GET_SELF_QUERY,
-      },
-      error: new Error(),
-    }];
+    /**
+     * Create mock client and force getSelf to error
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => {
+          throw new Error();
+        },
+      }),
+    });
 
     const wrapper = mount(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
+      <ApolloProvider client={client}>
         <Login />
-      </MockedProvider>,
+      </ApolloProvider>,
     );
 
-    // Submit and update
-    wrapper.find(Button).first().props().onPress({} as any);
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    wrapper.find(TextInput).at(1).props().onChangeText('password');
     wrapper.update();
 
-    // LoginView.loading is now true
-    expect(wrapper.find(LoginView).props().loading).to.be.true;
+    // Submit and update
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
 
     // Wait for response and update
     await wait(0);
@@ -193,5 +230,46 @@ describe('<Login >', () => {
 
     // Toast should have been executed
     expect(toastSpy.callCount).to.equal(1);
+  });
+
+  it('should goToRequireUpdateScreen if getSelf.requiresUpdate is true', async () => {
+    /**
+     * Create mock client and force getSelf.requiresUpdate to be true
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => ({
+          requiresUpdate: true,
+        }),
+      }),
+    });
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <Login />
+      </ApolloProvider>,
+    );
+
+    // Test text change
+    wrapper.find(TextInput).at(0).props().onChangeText('email@test.com');
+    wrapper.find(TextInput).at(1).props().onChangeText('password');
+    await wait(0);
+    wrapper.update();
+
+    // Submit
+    await wrapper.find(Button).first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // Should goToRequireUpdateScreen
+    expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
+
+    // Should not have goneHome
+    expect(goHomeSpy.callCount).to.equal(0);
   });
 });

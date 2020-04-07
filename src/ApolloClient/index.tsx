@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
@@ -21,10 +22,9 @@ import { version } from '../../package.json';
  * Safely get token from storage
  * Will use the apollo cache first
  */
-export const getToken = async () => {
+export const getToken = async (client: ApolloClient<any>) => {
   try {
-    // eslint-disable-next-line no-use-before-define
-    const res = await AClient.query<getAccessToken>({
+    const res = await client.query<getAccessToken>({
       query: GET_ACCESS_TOKEN_QUERY,
     });
     return res.data.getAccessToken;
@@ -53,7 +53,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
     reconnectionAttempts: 3,
     connectionParams: async () => ({
-      authorization: `Bearer ${await getToken()}`,
+      authorization: `Bearer ${await getToken(AClient)}`,
       credentials: 'include',
     }),
     // connectionCallback: err => {
@@ -87,7 +87,7 @@ const authMiddleware = setContext(async (operation, { headers }) => ({
     'client-version': version,
     authorization: headers && headers.authorization
       ? `Bearer ${headers.authorization}`
-      : `Bearer ${await getToken()}`,
+      : `Bearer ${await getToken(AClient)}`,
   },
 }));
 
