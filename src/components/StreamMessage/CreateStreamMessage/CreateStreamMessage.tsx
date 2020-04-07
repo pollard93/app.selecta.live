@@ -21,6 +21,10 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
    * Appends new message to cache on completion
    */
   const [mutation, { loading, client }] = usePutStreamMessageMutation({
+    variables: {
+      id: props.variables.id,
+      message,
+    },
     onCompleted: ({ putStreamMessage }) => {
       // Reset message state
       setMessage('');
@@ -65,16 +69,6 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
   });
 
 
-  const onSubmit = () => {
-    mutation({
-      variables: {
-        id: props.variables.id,
-        message,
-      },
-    });
-  };
-
-
   return (
     <View>
       <TextInput
@@ -89,7 +83,7 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
 
       <Button
         title="Submit"
-        onPress={onSubmit}
+        onPress={() => mutation()}
         disabled={loading || message.length === 0}
       />
     </View>

@@ -8,6 +8,9 @@ import { getConsumerNotifications } from './resolvers/query/getConsumerNotificat
 import { getSelf } from './resolvers/query/getSelf/getSelf';
 import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
+import { getStreamProfile } from './resolvers/query/getStreamProfile/getStreamProfile';
+import { payForStream } from './resolvers/mutation/payForStream/payForStream';
+import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { searchChannels } from './resolvers/query/searchChannels/searchChannels';
 import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
@@ -16,6 +19,7 @@ import { updateSelf } from './resolvers/mutation/updateSelf/updateSelf';
 export default {
   Mutation: () => ({
     followChannel,
+    payForStream,
     putStreamMessage,
     updateSelf,
   }),
@@ -25,6 +29,8 @@ export default {
     getSelf,
     getStreamFeed,
     getStreamMessages,
+    getStreamProfile,
+    getStreamUrl,
     searchChannels,
     searchStreams,
   }),
