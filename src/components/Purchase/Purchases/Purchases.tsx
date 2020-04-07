@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import rnPurchases, { PurchasesPackage } from 'react-native-purchases';
-import { Text, View, TouchableOpacity, Platform } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { useValidateInAppPurchaseMutation } from '../../../API/mutation/validateInAppPurchase/validateInAppPurchase';
-import { PLATFORM } from '../../../../__generated__/globalTypes';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
-import { useGetProductConfigQuery, GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
+import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
 import { getProductConfig } from '../../../API/query/getProductConfig/__generated__/getProductConfig';
 
 interface Product extends RNIap.Product {
@@ -38,7 +35,6 @@ const Purchases = () => {
       const { data } = await client.query<getProductConfig>({
         query: GET_PRODUCT_CONFIG_QUERY,
       });
-      console.log('getAvailableProducts -> data', data);
 
 
       /**
@@ -69,15 +65,10 @@ const Purchases = () => {
   }, []);
 
 
-  const purchaseProduct = async (sku) => {
-    try {
-      await RNIap.requestPurchase(sku, false);
-    } catch (err) {
-      console.warn(err.code, err.message);
-    }
-  };
-
-
+  /**
+   * Loading or error
+   * If error, allow refetch of products
+   */
   if (loading || error) {
     return (
       <LoadRetry
@@ -86,6 +77,21 @@ const Purchases = () => {
       />
     );
   }
+
+
+  /**
+   * Requests a purchase from native
+   */
+  const purchaseProduct = async (productId: string) => {
+    try {
+      await RNIap.requestPurchase(productId, false);
+    } catch (err) {
+      /**
+       * TODO - investigate error codes and update handling
+       */
+      console.warn(err.code, err.message);
+    }
+  };
 
 
   return (

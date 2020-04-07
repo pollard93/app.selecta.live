@@ -47,7 +47,7 @@
     "mbp-components-rn-apolloflatlist": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#0.1.2",
     "mbp-components-rn-assetpicker": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.1.0",
     "mbp-components-rn-asyncimage": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.2.0",
-    "mbp-components-rn-toast": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.1.0",
+    "mbp-components-rn-toast": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.1.1",
     "metro": "^0.59.0",
     "react": "16.9.0",
     "react-apollo": "^3.1.3",

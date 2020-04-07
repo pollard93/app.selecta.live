@@ -1,8 +1,10 @@
+import React from 'react';
 import * as RNIap from 'react-native-iap';
 import { Platform, EmitterSubscription } from 'react-native';
 import { VALIDATE_IN_APP_PURCHASE_MUTATION } from '../../API/mutation/validateInAppPurchase/validateInAppPurchase';
 import { validateInAppPurchaseVariables, validateInAppPurchase } from '../../API/mutation/validateInAppPurchase/__generated__/validateInAppPurchase';
 import AClient from '../../ApolloClient';
+import Toast from '../../components/UI/Toast/Toast';
 
 declare global {
   namespace NodeJS {
@@ -14,11 +16,18 @@ declare global {
 }
 
 class InAppPurchases {
+  /**
+   * Set subscribers
+   */
   public static init() {
-    global.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(InAppPurchases.purchaseUpdated);
-    global.purchaseErrorSubscription = RNIap.purchaseErrorListener(InAppPurchases.purchaseError);
+    global.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(InAppPurchases.purchaseUpdated) as EmitterSubscription;
+    global.purchaseErrorSubscription = RNIap.purchaseErrorListener(InAppPurchases.purchaseError) as EmitterSubscription;
   }
 
+
+  /**
+   * Disconnect subscribers
+   */
   public static disconnect() {
     if (global.purchaseUpdateSubscription) {
       global.purchaseUpdateSubscription.remove();
@@ -65,12 +74,26 @@ class InAppPurchases {
         RNIap.consumePurchaseAndroid(purchase.purchaseToken);
       }
     } catch (e) {
-      console.log('Purchases -> e', e);
+      InAppPurchases.purchaseError(e);
     }
   }
 
+
+  /**
+   * Push a toast on error
+   * TODO - test error scenarios and update message appropriately
+   */
   private static async purchaseError(error) {
-    console.warn('purchaseError', error);
+    console.log('InAppPurchases -> purchaseError -> error', error);
+    if (global.toast) {
+      global.toast.push({
+        duration: 1000,
+        component: (
+          <Toast content="Something went wrong with your payment" />
+        ),
+        dismissible: false,
+      });
+    }
   }
 }
 
