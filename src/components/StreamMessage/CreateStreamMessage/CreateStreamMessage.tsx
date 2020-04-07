@@ -77,7 +77,7 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
         placeholder='Enter message'
         returnKeyType="send"
         blurOnSubmit
-        onSubmitEditing={onSubmit}
+        onSubmitEditing={() => mutation()}
         editable={!loading}
       />
 
