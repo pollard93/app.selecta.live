@@ -26,6 +26,7 @@ export interface USER_SELF_FRAGMENT {
   id: string;
   name: string | null;
   email: string | null;
+  credit: number | null;
   profilePicture: USER_SELF_FRAGMENT_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: boolean | null;

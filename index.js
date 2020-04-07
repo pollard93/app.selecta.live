@@ -8,6 +8,8 @@ console.disableYellowBox = true;
 registerScreens();
 
 Navigation.events().registerAppLaunchedListener(() => {
+  console.log('launched');
+
   Navigation.setRoot({
     root: {
       component: {

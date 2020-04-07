@@ -6,6 +6,7 @@ export const USER_SELF_FRAGMENT = gql`
     id
     name
     email
+    credit
     profilePicture {
       ...FILE_FRAGMENT
     }

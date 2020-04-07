@@ -26,6 +26,7 @@ export interface updateSelf_updateSelf {
   id: string;
   name: string | null;
   email: string | null;
+  credit: number | null;
   profilePicture: updateSelf_updateSelf_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: boolean | null;

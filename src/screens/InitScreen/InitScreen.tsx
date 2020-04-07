@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Options } from 'react-native-navigation';
+import { useApolloClient } from 'react-apollo';
 import { goToLogin, goHome, goToRequireUpdateScreen } from '../utils';
 import { getToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import PushNotifications from '../../modules/PushNotifications';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 const InitScreen = () => {
   /**
@@ -13,6 +15,12 @@ const InitScreen = () => {
    */
   const [getSelfQuery] = useGetSelfLazyQuery({
     onCompleted: ({ getSelf: { id, requiresUpdate } }) => {
+      // Bind notifications
+      PushNotifications.init(id);
+
+      // Bind in app purchases
+      InAppPurchases.init();
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
@@ -20,9 +28,6 @@ const InitScreen = () => {
         goToRequireUpdateScreen();
         return;
       }
-
-      // Bind notifications
-      PushNotifications.init(id);
 
       // Navigate to home now getSelf is cached
       goHome();
