@@ -26,6 +26,7 @@ const Purchases = () => {
    */
   const getAvailableProducts = async () => {
     setLoading(true);
+    setError(false);
 
     try {
       /**
@@ -41,6 +42,9 @@ const Purchases = () => {
        * Get products from services
        */
       const products = await RNIap.getProducts(data.getProductConfig.map((pc) => pc.productId));
+      if (!products || !products.length) {
+        throw new Error();
+      }
 
 
       /**
@@ -52,6 +56,7 @@ const Purchases = () => {
       })));
       setLoading(false);
     } catch (err) {
+      setLoading(false);
       setError(true);
     }
   };
