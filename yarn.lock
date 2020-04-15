@@ -12325,13 +12325,13 @@ markdown-to-jsx@^6.9.3:
   version "0.1.2"
   resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#e6a77fb00291da36b26bef8ba34482c48027c97a"
 
-"mbp-components-rn-assetpicker@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.1.0":
-  version "0.1.0"
-  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#b6c7abf9b0e12e900a1003428eda2db0e62697e4"
+"mbp-components-rn-assetpicker@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.1.1":
+  version "0.1.1"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#ad1f69a5b8e725b56bcf976276ecd8bc9a393875"
 
-"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.2.0":
-  version "0.2.0"
-  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#915b0cd91e8e91bdf1f128ff6bd9dc2cad3817a4"
+"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.2.1":
+  version "0.2.1"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#4719cbcda7f8e7935b0cdf20b5b606f5c929f27a"
 
 "mbp-components-rn-toast@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.1.1":
   version "0.1.1"
