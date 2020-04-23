@@ -20,9 +20,11 @@ Rename app project wide:
 
 4. Rename Xcode app display names: Targets <newName> -> Build Settings -> `APP_DISPLAY_NAME`, expand and replace `mbpRnCore` with <newName> in all configurations.
 
-5. Rename android app display names: `android/app/src/main/res/values/strings.xml`
+5. Rename `mbpRnCore.beta.entitlements` and `mbpRnCore.beta.entitlements` replaceing `mbpRnCore` with new name.
 
-6. Update `package` in `android/app/src/main/java/path/*/*/*/SplashActivity.java`
+6. Rename android app display names: `android/app/src/main/res/values/strings.xml`
+
+7. Update `package` in `android/app/src/main/java/path/*/*/*/SplashActivity.java`
 
 ##### Bundle id
 
@@ -169,23 +171,23 @@ test('Apollo Testing', async () => {
 
 To automatically update the storylist, run `yarn dev:storybook`
 
-To run storybook, edit `.env.Debug` and set `REACT_APP_APP_STORYBOOK=true`
+To run storybook, edit `index.js` and comment in `STORYBOOK`, and comment out `DEFAULT APPLICATION`.
 
 ---
 
 ## Scripts
 
-### `gen:api`
+### `dev:api`
 
 Connects to a running API on localhost:4000, validates all queries/mutations and generates typescript from them.
 
-### `gen:icons`
+### `dev:icons`
 
 Generates @2x, @1x from @3x icons.
 
-### `gen:appicon`
+### `dev:appicon`
 
-Generates app icons and all necessary sizes from `/Icon.jpg` in the root and places them in the appropriate positions.
+Generates app icons and all necessary sizes from `/icon.jpg` in the root and places them in the appropriate positions. Must be 1024x1024
 
 ---
 
@@ -292,12 +294,18 @@ Group font family, weight, size and other common text style properties in `/src/
 ### Facebook
 
 1. Follow the installation instructions for [react-native-fbsdk](https://github.com/facebook/react-native-fbsdk)
-2. Reference `src/components/Login/LoginWithFacebookExample.tsx` for example integration
+2. Render `src/components/Login/components/LoginWithFacebook/LoginWithFacebook.tsx` in login
+3. Uncomment contents in `__mocks__/react-native-fbsdk.js`
+4. Remove `react-native-fbsdk` from `react-native.config.js`
+5. Move `react-native-fbsdk` into dependencies from devDependencies
 
 ### Google
 
 1. Follow the installation instructions for [react-native-google-signin](https://github.com/react-native-community/google-signin)
-2. Reference `src/components/Login/LoginWithGoogleExample.tsx` for example integration
+2. Render `src/components/Login/components/LoginWithGoogle/LoginWithGoogle.tsx` in login
+3. Uncomment contents in `__mocks__/@react-native-community/google-sign.js`
+4. Remove `@react-native-community/google-signin` from `react-native.config.js`
+5. Move `@react-native-community/google-signin` into dependencies from devDependencies
 
 ---
 
@@ -306,14 +314,14 @@ Group font family, weight, size and other common text style properties in `/src/
 ### IOS
 
 1. Open the project in Xcode
-2. In Images.xcassets change the SplashIcon to your logo
+2. In Images.xcassets there is a SplashIcon, running `dev:appicon` will generate these images from `icon.jpg`
 3. Open LaunchScreen.xib, select the view and choose background colour from the menu on the right
 
 For more details read this article (https://medium.com/@appstud/add-a-splash-screen-to-a-react-native-app-810492e773f9)
 
 
 ### Android
-1. Navigate to `android/app/src/main/res` and you will see the following folders:
+1. Icons are locations in `android/app/src/main/res`, you will see the following folders:
     - mipmap-hdpi
     - mipmap-ldpi
     - mipmap-mdpi
@@ -321,7 +329,7 @@ For more details read this article (https://medium.com/@appstud/add-a-splash-scr
     - mipmap-xxhdpi
     - mipmap-xxx-hdpi
 
-2. In each of the mentioned folders change logo.png to your new logo
+2. Running `dev:appicon` will generate these images from `icon.jpg`
 3. To change the background colour open `/android/app/src/main/res/values/colors.xml` and change the value for `splashscreen_bg`
 
 For more details read this article (https://medium.com/@appstud/add-a-splash-screen-to-a-react-native-app-810492e773f9)
