@@ -14,7 +14,7 @@ const StreamListItem = (props: StreamListItemProps) => (
       splashUrl={props.data?.image?.url?.splash}
       fullUrl={props.data?.image?.url?.full}
       // eslint-disable-next-line global-require
-      placeholderImageSource={require('../../../../icon.jpg')}
+      placeholderImageSource={require('../../../../icons/icon.jpg')}
       containerProps={{
         style: {
           width: 100,

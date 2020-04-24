@@ -11,8 +11,21 @@ const exec = util.promisify(childProcess.exec);
  * Creates app icons and splash icons from icon.jpg in root
  */
 void (async function () {
-  const file = path.join(__dirname, '../icon.jpg');
-  const mainLogo = await Jimp.read(file);
+  const maingIconPath = path.join(__dirname, '../icons/icon.jpg');
+  const mainIcon = await Jimp.read(maingIconPath);
+
+
+  /**
+   * Create pixel densities for use later
+   */
+  // Save @3x.{png,jpg}
+  const clone = mainIcon.clone();
+  await clone.write(path.join(__dirname, '../icons/density/icon@3x.jpg'));
+  await clone.write(path.join(__dirname, '../icons/density/icon@3x.png'));
+
+  // Generate densities (.{png,jpg} not working for some reason!)
+  await exec(`yarn dev:icons dir:${path.join(__dirname, '../icons/density/*@3x.png')}`);
+  await exec(`yarn dev:icons dir:${path.join(__dirname, '../icons/density/*@3x.jpg')}`);
 
 
   /**
@@ -20,50 +33,43 @@ void (async function () {
    * https://medium.com/google-design/designing-adaptive-icons-515af294c783
    */
   await new Promise((res) => {
-    const resizedImage = mainLogo
+    const resizedImage = mainIcon
       .clone()
-      .resize(mainLogo.bitmap.width * 0.6, mainLogo.bitmap.height * 0.6);
+      .resize(mainIcon.bitmap.width * 0.6, mainIcon.bitmap.height * 0.6);
 
     // Create a new image and blit in the resized image
     // 0x0 = 0 = rgba(0, 0, 0, 0)
-    new Jimp(mainLogo.bitmap.width, mainLogo.bitmap.height, 'rgba(255, 255, 255, 1)')
-      .blit(resizedImage, mainLogo.bitmap.width * 0.2, mainLogo.bitmap.height * 0.2)
-      .write(file.replace('icon', 'icon-android'), () => res()); // save
+    new Jimp(mainIcon.bitmap.width, mainIcon.bitmap.height, 'rgba(255, 255, 255, 1)')
+      .blit(resizedImage, mainIcon.bitmap.width * 0.2, mainIcon.bitmap.height * 0.2)
+      .write(maingIconPath.replace('icon.', 'icon-android.'), () => res()); // save
   });
 
 
   /**
    * Run command to generate all app icons
    */
-  await exec('react-native set-icon --platform ios --path icon.jpg');
-  await exec('react-native set-icon --platform android --path icon-android.jpg');
+  await exec('react-native set-icon --platform ios --path icons/icon.jpg');
+  await exec('react-native set-icon --platform android --path icons/icon-android.jpg');
 
 
   /**
-   * Create paths for all splash icons
-   * Paths are .png
+   * Splash screen icons
+   * Move the density icons to their destinations for splash screens
    */
-  const splashIconPathIOS = path.join(__dirname, `../ios/${pack.name}/Images.xcassets/SplashIcon.imageset/icon@3x.png`);
-  const splashIconsPaths = [
-    splashIconPathIOS,
-    path.join(__dirname, '../android/app/src/main/res/mipmap-hdpi/icon.png'),
-    path.join(__dirname, '../android/app/src/main/res/mipmap-ldpi/icon.png'),
-    path.join(__dirname, '../android/app/src/main/res/mipmap-mdpi/icon.png'),
-    path.join(__dirname, '../android/app/src/main/res/mipmap-xhdpi/icon.png'),
-    path.join(__dirname, '../android/app/src/main/res/mipmap-xxhdpi/icon.png'),
-    path.join(__dirname, '../android/app/src/main/res/mipmap-xxxhdpi/icon.png'),
+  const map = [
+    // iOS
+    { from: path.join(__dirname, '../icons/density/icon@3x.png'), to: path.join(__dirname, `../ios/${pack.name}/Images.xcassets/SplashIcon.imageset/icon@3x.png`) },
+    { from: path.join(__dirname, '../icons/density/icon@2x.png'), to: path.join(__dirname, `../ios/${pack.name}/Images.xcassets/SplashIcon.imageset/icon@2x.png`) },
+    { from: path.join(__dirname, '../icons/density/icon.png'), to: path.join(__dirname, `../ios/${pack.name}/Images.xcassets/SplashIcon.imageset/icon.png`) },
+    // Android
+    { from: path.join(__dirname, '../icons/density/icon.png'), to: path.join(__dirname, '../android/app/src/main/res/mipmap-mdpi/icon.png') },
+    { from: path.join(__dirname, '../icons/density/icon@2x.png'), to: path.join(__dirname, '../android/app/src/main/res/mipmap-hdpi/icon.png') },
+    { from: path.join(__dirname, '../icons/density/icon@3x.png'), to: path.join(__dirname, '../android/app/src/main/res/mipmap-xhdpi/icon.png') },
+    { from: path.join(__dirname, '../icons/density/icon@3x.png'), to: path.join(__dirname, '../android/app/src/main/res/mipmap-xxhdpi/icon.png') },
+    { from: path.join(__dirname, '../icons/density/icon@3x.png'), to: path.join(__dirname, '../android/app/src/main/res/mipmap-xxxhdpi/icon.png') },
   ];
 
-
-  /**
-   * Save main image in above paths as pngs
-   */
-  const splashIcon = mainLogo.clone();
-  await Promise.all(splashIconsPaths.map((p) => splashIcon.write(p)));
-
-
-  /**
-   * Run dev:icons on iOS splashIcon
-   */
-  await exec(`yarn dev:icons dir:${splashIconPathIOS}`);
+  await Promise.all(map.map((x) => (
+    exec(`cp ${x.from} ${x.to}`)
+  )));
 }());

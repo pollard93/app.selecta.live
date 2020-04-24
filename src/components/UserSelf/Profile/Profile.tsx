@@ -15,7 +15,7 @@ const Profile = () => {
         splashUrl={getSelf?.profilePicture?.url?.splash}
         fullUrl={getSelf?.profilePicture?.url?.full}
         // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icon.jpg')}
+        placeholderImageSource={require('../../../../icons/icon.jpg')}
         containerProps={{
           style: {
             width: 250,
