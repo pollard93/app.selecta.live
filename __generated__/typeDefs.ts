@@ -1,7 +1,12 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Mar 31 2020 10:17:58 GMT+0100 (British Summer Time)
+# timestamp: Fri Apr 24 2020 10:12:13 GMT+0100 (British Summer Time)
+
+type AppUpdatePayload {
+  appStoreUrl: String
+  playStoreUrl: String
+}
 
 type AuthPayload {
   token: String!
@@ -182,6 +187,14 @@ type ChannelSelf {
   adminsEdge: Int
   pendingCredit: Int
   credit: Int
+  creditMinimumStreamCost: Int
+  creditWithdrawalValue: Int
+  creditWithdrawalMinimum: Int
+}
+
+type ChannelSelfsPayLoad {
+  channels: [ChannelSelf!]!
+  count: Int!
 }
 
 input ChannelWhereInput {
@@ -550,11 +563,11 @@ type Mutation {
   readConsumerNotification(id: String!, unRead: Boolean): ConsumerNotification!
   register(email: String!, password: String!): AuthPayload
   reportStream(id: String!, content: String!): Boolean
-  requestPasswordReset(email: String!, client: CLIENT_TYPE!): Boolean
+  requestPasswordReset(email: String!): Boolean
   resetPassword(password: String!): AuthPayload
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
-  validateInAppPurchase(platform: PLATFORM!, receipt: String!): UserSelf!
+  validateInAppPurchase(receipt: String!): UserSelf!
   cancelStream(id: String!): StreamSelf
   deleteChannelNotification(id: String!): Boolean
   loginChannel(id: String!, code: String!): ChannelAuthPayload
@@ -584,12 +597,18 @@ enum PLATFORM {
   ANDROID
 }
 
+type ProductConfig {
+  productId: String!
+  credit: Int!
+}
+
 type Query {
   canViewStream(id: String!): Boolean!
   getChannelProfile(id: String!): ChannelProfile!
   getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
   getConsumerNotifications(first: Int, after: String): ConsumerNotificationsPayLoad!
   getPaidForStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getProductConfig: [ProductConfig!]!
   getSelf: UserSelf
   getStreamFeed(first: Int, after: String): StreamProfilesPayLoad!
   getStreamProfile(id: String!): StreamProfile!
@@ -598,12 +617,11 @@ type Query {
   searchStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   validateResetToken: Boolean
   verifyUser: Boolean
-  calculateStreamRevenue(cost: Int!, consumers: Int!): Float!
   channelNameExists(name: String!): Boolean!
   getChannelNotifications(first: Int, after: String): ChannelNotificationsPayLoad!
   getChannelSelf: ChannelSelf!
-  getChannelSelfs: [ChannelSelf!]!
-  getRequestedChannels: [RequestedChannel!]!
+  getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
+  getRequestedChannels(first: Int, after: String): RequestedChannelsPayLoad
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
@@ -611,11 +629,10 @@ type Query {
 
 type RequestedChannel {
   id: ID!
-  name: String!
-  description: String!
-  user: User!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  name: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 enum RequestedChannelOrderByInput {
@@ -629,6 +646,11 @@ enum RequestedChannelOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+type RequestedChannelsPayLoad {
+  channels: [RequestedChannel!]!
+  count: Int!
 }
 
 input RequestedChannelWhereInput {
@@ -1179,7 +1201,7 @@ type UserSelf {
   credit: Float
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
-  requiresUpdate: Boolean
+  requiresUpdate: AppUpdatePayload
 }
 
 input UserWhereInput {

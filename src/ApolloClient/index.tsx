@@ -80,11 +80,13 @@ const link = split(
 /**
  * Auth middleware, sets the header if it's not already set
  * Attaches the current client-version to headers
+ * Attaches the current client-type to headers
  */
 const authMiddleware = setContext(async (operation, { headers }) => ({
   headers: {
     ...headers,
     'client-version': version,
+    'client-type': 'CONSUMER',
     authorization: headers && headers.authorization
       ? `Bearer ${headers.authorization}`
       : `Bearer ${await getToken(AClient)}`,

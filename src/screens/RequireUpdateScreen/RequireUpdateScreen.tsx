@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { View, Text, Linking, Platform, Button } from 'react-native';
 import { Options } from 'react-native-navigation';
 import SplashScreen from 'react-native-splash-screen';
-import Config from 'react-native-config';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import { useGetSelfQuery } from '../../API/query/getSelf/getSelf';
 
 const RequireUpdateScreen = () => {
+  const { data: { getSelf } } = useGetSelfQuery();
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -21,7 +23,7 @@ const RequireUpdateScreen = () => {
            * TODO - this requires setup per app
            */
           try {
-            const url = Platform.OS === 'ios' ? Config.REACT_APP_APP_STORE_LINK : Config.REACT_APP_PLAY_STORE_LINK;
+            const url = Platform.OS === 'ios' ? getSelf.requiresUpdate.appStoreUrl : getSelf.requiresUpdate.playStoreUrl;
             await Linking.openURL(url);
             // eslint-disable-next-line no-empty
           } catch (e) {}

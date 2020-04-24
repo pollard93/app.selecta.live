@@ -10,7 +10,10 @@ export const USER_SELF_FRAGMENT = gql`
       ...FILE_FRAGMENT
     }
     unreadNotificationCount
-    requiresUpdate
+    requiresUpdate {
+      appStoreUrl
+      playStoreUrl
+    }
   },
   ${FILE_FRAGMENT}
 `;
