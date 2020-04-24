@@ -21,6 +21,12 @@ export interface updateSelf_updateSelf_profilePicture {
   url: updateSelf_updateSelf_profilePicture_url | null;
 }
 
+export interface updateSelf_updateSelf_requiresUpdate {
+  __typename: "AppUpdatePayload";
+  appStoreUrl: string | null;
+  playStoreUrl: string | null;
+}
+
 export interface updateSelf_updateSelf {
   __typename: "UserSelf";
   id: string;
@@ -28,7 +34,7 @@ export interface updateSelf_updateSelf {
   email: string | null;
   profilePicture: updateSelf_updateSelf_profilePicture | null;
   unreadNotificationCount: number | null;
-  requiresUpdate: boolean | null;
+  requiresUpdate: updateSelf_updateSelf_requiresUpdate | null;
 }
 
 export interface updateSelf {

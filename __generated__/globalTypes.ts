@@ -10,11 +10,6 @@ export enum CHANNEL_NOTIFICATION_TYPE {
   TEST = "TEST",
 }
 
-export enum CLIENT_TYPE {
-  CONSUMER = "CONSUMER",
-  PRODUCER = "PRODUCER",
-}
-
 export enum ChannelOrderByInput {
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",

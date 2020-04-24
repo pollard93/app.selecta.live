@@ -21,6 +21,12 @@ export interface USER_SELF_FRAGMENT_profilePicture {
   url: USER_SELF_FRAGMENT_profilePicture_url | null;
 }
 
+export interface USER_SELF_FRAGMENT_requiresUpdate {
+  __typename: "AppUpdatePayload";
+  appStoreUrl: string | null;
+  playStoreUrl: string | null;
+}
+
 export interface USER_SELF_FRAGMENT {
   __typename: "UserSelf";
   id: string;
@@ -28,5 +34,5 @@ export interface USER_SELF_FRAGMENT {
   email: string | null;
   profilePicture: USER_SELF_FRAGMENT_profilePicture | null;
   unreadNotificationCount: number | null;
-  requiresUpdate: boolean | null;
+  requiresUpdate: USER_SELF_FRAGMENT_requiresUpdate | null;
 }
