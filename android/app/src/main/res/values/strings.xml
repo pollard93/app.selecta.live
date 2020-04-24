@@ -11,5 +11,7 @@
   <string name="fb_login_protocol_scheme">fb233563547770081</string>
 
   <!-- Deep linking -->
-  <string name="deep_linking_protocol_scheme">live.selecta.app.consumer</string>
+  <string name="deep_linking_protocol_scheme_debug">live.selecta.app.consumer.debug</string>
+  <string name="deep_linking_protocol_scheme_beta">live.selecta.app.consumer.beta</string>
+  <string name="deep_linking_protocol_scheme_release">live.selecta.app.consumer</string>
 </resources>

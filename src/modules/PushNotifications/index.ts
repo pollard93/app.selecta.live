@@ -15,8 +15,10 @@ class PushNotifications {
     // If the user has not previously accepting notifications, setExternalUserId above will have failed
     // If and when the user does accept it, subscribe to the onIds event and try and setExternalId
     const setExternalId = () => {
-      OneSignal.setExternalUserId(id);
-      OneSignal.removeEventListener('ids', setExternalId);
+      setTimeout(() => {
+        OneSignal.setExternalUserId(id);
+        OneSignal.removeEventListener('ids', setExternalId);
+      }, 10000);
     };
     OneSignal.addEventListener('ids', setExternalId);
   }
@@ -24,9 +26,6 @@ class PushNotifications {
   public static disconnect() {
     OneSignal.removeEventListener('received', PushNotifications.onReceived);
     OneSignal.removeEventListener('opened', PushNotifications.onOpened);
-  }
-
-  public static remove() {
     OneSignal.removeExternalUserId();
   }
 
