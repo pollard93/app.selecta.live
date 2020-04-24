@@ -130,7 +130,7 @@ test('Apollo Testing', async () => {
        * Override the getSelf query and force requiresUpdate to be false
        */
       getSelf: () => ({
-        requiresUpdate: true,
+        requiresUpdate: null,
       }),
     }),
     Mutation: () => ({

@@ -1,5 +1,10 @@
 # source: http://localhost:4000/graphql
-# timestamp: Tue Apr 07 2020 11:55:55 GMT+0100 (British Summer Time)
+# timestamp: Fri Apr 24 2020 12:09:44 GMT+0100 (British Summer Time)
+
+type AppUpdatePayload {
+  appStoreUrl: String
+  playStoreUrl: String
+}
 
 type AuthPayload {
   token: String!
@@ -556,7 +561,7 @@ type Mutation {
   readConsumerNotification(id: String!, unRead: Boolean): ConsumerNotification!
   register(email: String!, password: String!): AuthPayload
   reportStream(id: String!, content: String!): Boolean
-  requestPasswordReset(email: String!, client: CLIENT_TYPE!): Boolean
+  requestPasswordReset(email: String!): Boolean
   resetPassword(password: String!): AuthPayload
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
@@ -1194,7 +1199,7 @@ type UserSelf {
   credit: Float
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
-  requiresUpdate: Boolean
+  requiresUpdate: AppUpdatePayload
 }
 
 input UserWhereInput {

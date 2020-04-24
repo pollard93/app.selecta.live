@@ -256,7 +256,10 @@ describe('<Login >', () => {
     const client = mockClient({
       Query: () => ({
         getSelf: () => ({
-          requiresUpdate: true,
+          requiresUpdate: {
+            appStoreUrl: '',
+            playStoreUrl: '',
+          },
         }),
       }),
     });
