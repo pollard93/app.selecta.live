@@ -15,8 +15,8 @@ const removeAccessToken: LocalResolver<null, boolean> = async (_, args, { cache 
   // Remove token from async storage
   await store(LOCAL_AUTH_KEY, null);
 
-  // Remove notifications
-  PushNotifications.remove();
+  // Disconnect notifications
+  PushNotifications.disconnect();
 
   return true;
 };

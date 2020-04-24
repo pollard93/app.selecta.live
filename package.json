@@ -1,5 +1,5 @@
 {
-  "name": "consumer.app.selecta.live",
+  "name": "consumerAppSelectaLive",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "dev": "react-native start",
     "dev:android:deep:linking": "./node_modules/.bin/ts-node ./scripts/dev:android:deep:linking.ts",
     "dev:api": "./node_modules/.bin/ts-node ./scripts/dev:api.ts",
-    "dev:appicon": "react-native set-icon --path icon.jpg",
+    "dev:appicon": "./node_modules/.bin/ts-node ./scripts/dev:appicon.ts",
     "dev:icons": "./node_modules/.bin/ts-node ./scripts/dev:icons.ts",
     "dev:storybook": "rnstl",
     "format:version": "./node_modules/.bin/ts-node ./scripts/format:version.ts",

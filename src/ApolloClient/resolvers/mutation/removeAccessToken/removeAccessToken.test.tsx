@@ -25,8 +25,8 @@ describe('removeAccessToken tests', () => {
       },
     });
 
-    // Create spy on Pushnotificatons.remove()
-    const spy = Sinon.spy(PushNotifications, 'remove');
+    // Create spy on Pushnotificatons.disconnect()
+    const spy = Sinon.spy(PushNotifications, 'disconnect');
 
     /**
      * Make request

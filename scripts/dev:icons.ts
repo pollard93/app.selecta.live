@@ -1,6 +1,7 @@
 /* eslint-disable func-names, no-void, max-len, no-console */
 import glob from 'glob';
 import Jimp from 'jimp';
+import { reduceArgs } from './utils';
 
 /**
  * Searches src/assets/images recursively for any files with @3x.png appendix
@@ -8,7 +9,16 @@ import Jimp from 'jimp';
  * For example, icon@3x.png will generate icon@2x.png and icon.png (@1x)
  */
 void (async function () {
-  glob('src/assets/images/**/*@3x.png', null, async (err, files) => {
+  /**
+   * Override direactory by passing arg
+   */
+  const { dir } = reduceArgs<{dir: string}>();
+
+  /**
+   * Get all @3x images and process
+   */
+  glob(dir || 'src/assets/images/**/*@3x.png', null, async (err, files) => {
+    console.log('files', files);
     if (err) {
       console.error(err);
       process.exit(0);
