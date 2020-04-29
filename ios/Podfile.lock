@@ -313,7 +313,7 @@ DEPENDENCIES:
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
-  - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-video (from `../node_modules/selecta.components.react-native-video`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -384,7 +384,7 @@ EXTERNAL SOURCES:
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-video:
-    :path: "../node_modules/react-native-video"
+    :path: "../node_modules/selecta.components.react-native-video"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:

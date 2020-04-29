@@ -60,7 +60,7 @@
     "react-native-navigation": "3.7.0",
     "react-native-onesignal": "^3.5.0",
     "react-native-splash-screen": "^3.2.0",
-    "react-native-video": "^4.4.5",
+    "selecta.components.react-native-video": "file:../components/selecta.components.react-native-video/",
     "subscriptions-transport-ws": "^0.9.16"
   },
   "devDependencies": {

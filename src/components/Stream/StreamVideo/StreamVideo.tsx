@@ -1,18 +1,17 @@
 import React from 'react';
-import Video from 'react-native-video';
-import Config from 'react-native-config';
 import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import styles from './StreamVideo.styles';
+import StreamVideoView from './StreamVideoView';
+import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 
 interface StreamVideoProps {
-  id: string;
+  data: getStreamProfile_getStreamProfile;
 }
 
 const StreamVideo = (props: StreamVideoProps) => {
   const queryResult = useGetStreamUrlQuery({
     variables: {
-      id: props.id,
+      id: props.data.id,
     },
   });
 
@@ -29,14 +28,10 @@ const StreamVideo = (props: StreamVideoProps) => {
 
 
   return (
-    <Video
-      source={{ uri: Config.REACT_APP_APP_TEST_STREAM_URL }} // Can be a URL or a local file.
-      // ref={(ref) => {
-      //   this.player = ref;
-      // }} // Store reference
-      onBuffer={console.log} // Callback when remote video is buffering
-      onError={console.log} // Callback when video cannot be loaded
-      style={styles.wrap}
+    <StreamVideoView
+      // url={queryResult.data.getStreamUrl}
+      url="http://192.168.1.19:8080/live/ck9fhvccj001e0712yfzebofu/fZA1SiuYll0FCIzvmJw2Ig/1588169981/test-id.m3u8"
+      data={props.data}
     />
   );
 };
