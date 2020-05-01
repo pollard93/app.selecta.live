@@ -35,7 +35,7 @@ const StreamProfile = (props: StreamProfileProps) => {
         splashUrl={getStreamProfile.image?.url?.splash}
         fullUrl={getStreamProfile.image?.url?.full}
         // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icon.jpg')}
+        placeholderImageSource={require('../../../../icons/icon.jpg')}
         containerProps={{
           style: {
             width: 100,

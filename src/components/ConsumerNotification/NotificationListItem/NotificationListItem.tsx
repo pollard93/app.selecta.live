@@ -14,7 +14,7 @@ const NotificationListItem = (props: NotificationListItemProps) => (
       splashUrl={props.data?.sender?.profilePicture?.url?.splash}
       fullUrl={props.data?.sender?.profilePicture?.url?.full}
       // eslint-disable-next-line global-require
-      placeholderImageSource={require('../../../../icon.jpg')}
+      placeholderImageSource={require('../../../../icons/icon.jpg')}
       containerProps={{
         style: {
           width: 100,

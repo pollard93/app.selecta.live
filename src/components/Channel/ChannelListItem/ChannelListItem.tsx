@@ -14,7 +14,7 @@ const ChannelListItem = (props: ChannelListItemProps) => (
       splashUrl={props.data?.profileImage?.url?.splash}
       fullUrl={props.data?.profileImage?.url?.full}
       // eslint-disable-next-line global-require
-      placeholderImageSource={require('../../../../icon.jpg')}
+      placeholderImageSource={require('../../../../icons/icon.jpg')}
       containerProps={{
         style: {
           width: 100,

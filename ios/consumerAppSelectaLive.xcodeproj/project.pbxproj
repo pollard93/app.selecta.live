@@ -16,15 +16,16 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* consumerAppSelectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */; };
-		387E1ACDB84E7E13F82D6FE8 /* libPods-consumerAppSelectaLiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F31DB5BFAD5C373C74B794 /* libPods-consumerAppSelectaLiveTests.a */; };
 		3CF540228E3424C1DAB36F31 /* libPods-consumerAppSelectaLive-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F14BBD316980A4E526C51C4 /* libPods-consumerAppSelectaLive-tvOSTests.a */; };
 		442105BF5B2F07C3BA205FAF /* libPods-consumerAppSelectaLive-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707FE0BBA97EABF7039D55E /* libPods-consumerAppSelectaLive-tvOS.a */; };
 		508DD67970DE4C61A3C26821 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D5D781BCD421295B36863 /* Inter-Regular.ttf */; };
+		60F3595EB549FB095541DD8F /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */; };
 		6763E96B58CE73517F23EFBF /* libPods-consumerAppSelectaLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */; };
 		BC4246E2233F78F200A52916 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4246E1233F78F200A52916 /* NotificationService.m */; };
 		BC4246E6233F78F200A52916 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
 		BCC5E77D24327D8C005AE505 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCC5E77C24327D8C005AE505 /* StoreKit.framework */; };
+		BCEFDBBE2459F3F300B8D4F8 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */; };
 		CB23AFFF273BC85402268605 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */; };
 		E144BB6A387C439D8124DEA4 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B405E18378540EA8098FEA7 /* Inter-Bold.ttf */; };
 		F97C9D07320343CCAE906906 /* Inter-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E731602C00A4A43898342F2 /* Inter-Semibold.ttf */; };
@@ -73,6 +74,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = consumerAppSelectaLiveTests.m; sourceTree = "<group>"; };
 		052B7DDB11C76C3F45B58668 /* Pods-consumerAppSelectaLive.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.beta.xcconfig"; sourceTree = "<group>"; };
+		077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
 		0A8351AE4FEF9C015B73EE0C /* Pods-consumerAppSelectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
 		0BDA38AEB5AA72542BA2E779 /* Pods-consumerAppSelectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
 		1178B667E05EF9798297A785 /* Pods-consumerAppSelectaLive-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		7E731602C00A4A43898342F2 /* Inter-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Semibold.ttf"; path = "../src/assets/fonts/Inter-Semibold.ttf"; sourceTree = "<group>"; };
 		7F9D5D781BCD421295B36863 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		AF518C5256E127C943DD2B61 /* Pods-consumerAppSelectaLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.debug.xcconfig"; sourceTree = "<group>"; };
 		BC4246D9233F78A100A52916 /* consumerAppSelectaLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = consumerAppSelectaLive.entitlements; path = consumerAppSelectaLive/consumerAppSelectaLive.entitlements; sourceTree = "<group>"; };
@@ -111,18 +114,21 @@
 		BC42BCFE2333F85100E6BDB4 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		BC92FFC12339186400D986A6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BCC5E77C24327D8C005AE505 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		BCEFDBBC2459F3F200B8D4F8 /* consumerAppSelectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "consumerAppSelectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
+		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = consumerAppSelectaLive/Dummy.swift; sourceTree = "<group>"; };
 		BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		C07EB01DDDE9BE9FC39C87B2 /* Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1EBB0B60E785F36A6845977 /* Pods-consumerAppSelectaLive-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
 		D54FA311AF02E7DE3237FD3E /* Pods-consumerAppSelectaLiveTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.app store.xcconfig"; sourceTree = "<group>"; };
+		D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
 		E0ACF317D2936AADDDDC39F9 /* Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig"; sourceTree = "<group>"; };
+		E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E6B632494727384C14E12836 /* Pods-consumerAppSelectaLive.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.appstore.xcconfig"; sourceTree = "<group>"; };
 		E6EBE0E9C617C26FC3651B19 /* Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EEB3428CF604B718F4E005BA /* Pods-consumerAppSelectaLive-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F07DC9092F12EE312972B91F /* Pods-consumerAppSelectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F3F31DB5BFAD5C373C74B794 /* libPods-consumerAppSelectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9CD27B61DCE8ACC12278B72 /* Pods-consumerAppSelectaLive.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.app store.xcconfig"; sourceTree = "<group>"; };
 		F9D2CF6009C49F2FE2D4BD86 /* Pods-consumerAppSelectaLive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,7 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				387E1ACDB84E7E13F82D6FE8 /* libPods-consumerAppSelectaLiveTests.a in Frameworks */,
+				60F3595EB549FB095541DD8F /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +198,7 @@
 		13B07FAE1A68108700A75B9A /* consumerAppSelectaLive */ = {
 			isa = PBXGroup;
 			children = (
+				BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */,
 				BC4246D9233F78A100A52916 /* consumerAppSelectaLive.entitlements */,
 				BC4246EC233F7BDA00A52916 /* consumerAppSelectaLive.beta.entitlements */,
 				BC4246ED233F7BDA00A52916 /* consumerAppSelectaLive.debug.entitlements */,
@@ -216,8 +223,8 @@
 				24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */,
 				4707FE0BBA97EABF7039D55E /* libPods-consumerAppSelectaLive-tvOS.a */,
 				4F14BBD316980A4E526C51C4 /* libPods-consumerAppSelectaLive-tvOSTests.a */,
-				F3F31DB5BFAD5C373C74B794 /* libPods-consumerAppSelectaLiveTests.a */,
 				212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */,
+				9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -240,6 +247,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E39093A8C741BEFD18C8D068 /* Pods */,
 				975D8233FB2A46AE929F90DB /* Resources */,
+				BCEFDBBC2459F3F200B8D4F8 /* consumerAppSelectaLive-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -305,6 +313,9 @@
 				281BC5C8099353E5BCD03458 /* Pods-OneSignalNotificationServiceExtension.appstore.xcconfig */,
 				A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
 				BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */,
+				D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */,
+				077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -320,6 +331,7 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				CA7A21C844DCB4ADE303E6C0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,6 +438,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = CQFWKU4GYE;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -657,6 +670,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CA7A21C844DCB4ADE303E6C0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F021F91CAFDCA699080DF5A9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -672,7 +705,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLiveTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -733,6 +766,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				BCEFDBBE2459F3F300B8D4F8 /* Dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,8 +831,9 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F07DC9092F12EE312972B91F /* Pods-consumerAppSelectaLiveTests.debug.xcconfig */;
+			baseConfigurationReference = E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -807,6 +842,10 @@
 				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -820,13 +859,18 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A8351AE4FEF9C015B73EE0C /* Pods-consumerAppSelectaLiveTests.release.xcconfig */;
+			baseConfigurationReference = D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -844,16 +888,22 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "consumerAppSelectaLive Debug";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.debug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -862,6 +912,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.debug;
 				PRODUCT_NAME = consumerAppSelectaLive;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -872,15 +925,22 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = consumerAppSelectaLive;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -889,6 +949,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer;
 				PRODUCT_NAME = consumerAppSelectaLive;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive";
+				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -908,6 +970,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -936,6 +1002,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -963,6 +1033,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -990,6 +1064,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1126,6 +1204,10 @@
 				MARKETING_VERSION = 1.3.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.debug.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1189,6 +1271,10 @@
 				MARKETING_VERSION = 1.3.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.OneSignalNotificationServiceExtension";
@@ -1254,6 +1340,10 @@
 				MARKETING_VERSION = 1.3.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.beta.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.beta.OneSignalNotificationServiceExtension";
@@ -1316,15 +1406,22 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "consumerAppSelectaLive Beta";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.beta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1333,19 +1430,26 @@
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.beta;
 				PRODUCT_NAME = consumerAppSelectaLive;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.beta";
+				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Beta;
 		};
 		BC6CF026233232190083E024 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BDA38AEB5AA72542BA2E779 /* Pods-consumerAppSelectaLiveTests.beta.xcconfig */;
+			baseConfigurationReference = 077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1372,6 +1476,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1399,6 +1507,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DFB_SONARKIT_ENABLED=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
