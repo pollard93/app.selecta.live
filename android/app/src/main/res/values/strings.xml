@@ -1,17 +1,17 @@
 <resources>
-  <string name="app_name_debug">consumerAppSelectaLive debug</string>
-  <string name="app_name_beta">consumerAppSelectaLive beta</string>
-  <string name="app_name_release">consumerAppSelectaLive</string>
+  <string name="app_name_debug">Selecta Live Debug</string>
+  <string name="app_name_beta">Selecta Live Beta</string>
+  <string name="app_name_release">Selecta Live</string>
 
   <!-- Required for react-native-rename -->
-  <!-- <string name="app_name">consumerAppSelectaLive</string> -->
+  <!-- <string name="app_name">selectaLive</string> -->
 
   <!-- Facebook login -->
   <string name="facebook_app_id">233563547770081</string>
   <string name="fb_login_protocol_scheme">fb233563547770081</string>
 
   <!-- Deep linking -->
-  <string name="deep_linking_protocol_scheme_debug">live.selecta.app.consumer.debug</string>
-  <string name="deep_linking_protocol_scheme_beta">live.selecta.app.consumer.beta</string>
-  <string name="deep_linking_protocol_scheme_release">live.selecta.app.consumer</string>
+  <string name="deep_linking_protocol_scheme_debug">live.selecta.app.debug</string>
+  <string name="deep_linking_protocol_scheme_beta">live.selecta.app.beta</string>
+  <string name="deep_linking_protocol_scheme_release">live.selecta.app</string>
 </resources>

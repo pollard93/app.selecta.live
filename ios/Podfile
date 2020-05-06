@@ -55,8 +55,8 @@ def flipper_post_install(installer)
   installer.pods_project.save
 end
 
-target 'consumerAppSelectaLive' do
-  # Pods for consumerAppSelectaLive
+target 'selectaLive' do
+  # Pods for selectaLive
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -112,7 +112,7 @@ target 'consumerAppSelectaLive' do
     end
    end
 
-  target 'consumerAppSelectaLiveTests' do
+  target 'selectaLiveTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -124,10 +124,10 @@ target 'OneSignalNotificationServiceExtension' do
   pod 'OneSignal', '>= 2.9.3', '< 3.0'
 end
 
-target 'consumerAppSelectaLive-tvOS' do
-  # Pods for consumerAppSelectaLive-tvOS
+target 'selectaLive-tvOS' do
+  # Pods for selectaLive-tvOS
 
-  target 'consumerAppSelectaLive-tvOSTests' do
+  target 'selectaLive-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

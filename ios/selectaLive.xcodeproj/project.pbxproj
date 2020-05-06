@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* consumerAppSelectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */; };
+		00E356F31AD99517003FC87E /* selectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* selectaLiveTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -15,12 +15,12 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* consumerAppSelectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */; };
-		3CF540228E3424C1DAB36F31 /* libPods-consumerAppSelectaLive-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F14BBD316980A4E526C51C4 /* libPods-consumerAppSelectaLive-tvOSTests.a */; };
-		442105BF5B2F07C3BA205FAF /* libPods-consumerAppSelectaLive-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707FE0BBA97EABF7039D55E /* libPods-consumerAppSelectaLive-tvOS.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* selectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* selectaLiveTests.m */; };
+		3CF540228E3424C1DAB36F31 /* libPods-selectaLive-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */; };
+		442105BF5B2F07C3BA205FAF /* libPods-selectaLive-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */; };
 		508DD67970DE4C61A3C26821 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D5D781BCD421295B36863 /* Inter-Regular.ttf */; };
-		60F3595EB549FB095541DD8F /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */; };
-		6763E96B58CE73517F23EFBF /* libPods-consumerAppSelectaLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */; };
+		60F3595EB549FB095541DD8F /* libPods-selectaLive-selectaLiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */; };
+		6763E96B58CE73517F23EFBF /* libPods-selectaLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24571C3AD69B927539C0832E /* libPods-selectaLive.a */; };
 		BC4246E2233F78F200A52916 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4246E1233F78F200A52916 /* NotificationService.m */; };
 		BC4246E6233F78F200A52916 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
@@ -36,14 +36,14 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = consumerAppSelectaLive;
+			remoteInfo = selectaLive;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "consumerAppSelectaLive-tvOS";
+			remoteInfo = "selectaLive-tvOS";
 		};
 		BC4246E4233F78F200A52916 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -69,66 +69,66 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* consumerAppSelectaLiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = consumerAppSelectaLiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* selectaLiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = selectaLiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = consumerAppSelectaLiveTests.m; sourceTree = "<group>"; };
-		052B7DDB11C76C3F45B58668 /* Pods-consumerAppSelectaLive.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.beta.xcconfig"; sourceTree = "<group>"; };
-		077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
-		0A8351AE4FEF9C015B73EE0C /* Pods-consumerAppSelectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
-		0BDA38AEB5AA72542BA2E779 /* Pods-consumerAppSelectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
-		1178B667E05EF9798297A785 /* Pods-consumerAppSelectaLive-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* consumerAppSelectaLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = consumerAppSelectaLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = consumerAppSelectaLive/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = consumerAppSelectaLive/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* selectaLiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = selectaLiveTests.m; sourceTree = "<group>"; };
+		052B7DDB11C76C3F45B58668 /* Pods-selectaLive.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.beta.xcconfig"; sourceTree = "<group>"; };
+		077B60DE9C663EA67EA32C12 /* Pods-selectaLive-selectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-selectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
+		0A8351AE4FEF9C015B73EE0C /* Pods-selectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
+		0BDA38AEB5AA72542BA2E779 /* Pods-selectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
+		1178B667E05EF9798297A785 /* Pods-selectaLive-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.release.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* selectaLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = selectaLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = selectaLive/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = selectaLive/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = consumerAppSelectaLive/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = consumerAppSelectaLive/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = consumerAppSelectaLive/main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = selectaLive/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = selectaLive/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = selectaLive/main.m; sourceTree = "<group>"; };
 		212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		24571C3AD69B927539C0832E /* libPods-selectaLive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		281BC5C8099353E5BCD03458 /* Pods-OneSignalNotificationServiceExtension.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.appstore.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.appstore.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "consumerAppSelectaLive-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* consumerAppSelectaLive-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "consumerAppSelectaLive-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4707FE0BBA97EABF7039D55E /* libPods-consumerAppSelectaLive-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLive-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* selectaLive-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "selectaLive-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* selectaLive-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "selectaLive-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B405E18378540EA8098FEA7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		4B6A610808D7E62154AD3C57 /* Pods-consumerAppSelectaLive-tvOS.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.appstore.xcconfig"; sourceTree = "<group>"; };
-		4F14BBD316980A4E526C51C4 /* libPods-consumerAppSelectaLive-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLive-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		69311FA1FB06845E72B09972 /* Pods-consumerAppSelectaLive-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		6AEA1CC4F7D802B71189A203 /* Pods-consumerAppSelectaLiveTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.appstore.xcconfig"; sourceTree = "<group>"; };
-		6BE072390F5553236E11F13C /* Pods-consumerAppSelectaLive-tvOS.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.app store.xcconfig"; sourceTree = "<group>"; };
-		7DA111C8D34BF6F678880068 /* Pods-consumerAppSelectaLive-tvOSTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.app store.xcconfig"; sourceTree = "<group>"; };
+		4B6A610808D7E62154AD3C57 /* Pods-selectaLive-tvOS.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.appstore.xcconfig"; sourceTree = "<group>"; };
+		4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69311FA1FB06845E72B09972 /* Pods-selectaLive-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		6AEA1CC4F7D802B71189A203 /* Pods-selectaLiveTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.appstore.xcconfig"; sourceTree = "<group>"; };
+		6BE072390F5553236E11F13C /* Pods-selectaLive-tvOS.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.app store.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.app store.xcconfig"; sourceTree = "<group>"; };
+		7DA111C8D34BF6F678880068 /* Pods-selectaLive-tvOSTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.app store.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.app store.xcconfig"; sourceTree = "<group>"; };
 		7E731602C00A4A43898342F2 /* Inter-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Semibold.ttf"; path = "../src/assets/fonts/Inter-Semibold.ttf"; sourceTree = "<group>"; };
 		7F9D5D781BCD421295B36863 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-selectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
-		AF518C5256E127C943DD2B61 /* Pods-consumerAppSelectaLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.debug.xcconfig"; sourceTree = "<group>"; };
-		BC4246D9233F78A100A52916 /* consumerAppSelectaLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = consumerAppSelectaLive.entitlements; path = consumerAppSelectaLive/consumerAppSelectaLive.entitlements; sourceTree = "<group>"; };
+		AF518C5256E127C943DD2B61 /* Pods-selectaLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.debug.xcconfig"; sourceTree = "<group>"; };
+		BC4246D9233F78A100A52916 /* selectaLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.entitlements; path = selectaLive/selectaLive.entitlements; sourceTree = "<group>"; };
 		BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4246E0233F78F200A52916 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		BC4246E1233F78F200A52916 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		BC4246E3233F78F200A52916 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC4246EC233F7BDA00A52916 /* consumerAppSelectaLive.beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = consumerAppSelectaLive.beta.entitlements; path = consumerAppSelectaLive/consumerAppSelectaLive.beta.entitlements; sourceTree = "<group>"; };
-		BC4246ED233F7BDA00A52916 /* consumerAppSelectaLive.debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = consumerAppSelectaLive.debug.entitlements; path = consumerAppSelectaLive/consumerAppSelectaLive.debug.entitlements; sourceTree = "<group>"; };
+		BC4246EC233F7BDA00A52916 /* selectaLive.beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.beta.entitlements; path = selectaLive/selectaLive.beta.entitlements; sourceTree = "<group>"; };
+		BC4246ED233F7BDA00A52916 /* selectaLive.debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.debug.entitlements; path = selectaLive/selectaLive.debug.entitlements; sourceTree = "<group>"; };
 		BC42BCFE2333F85100E6BDB4 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		BC92FFC12339186400D986A6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		BCEFDBBC2459F3F200B8D4F8 /* consumerAppSelectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "consumerAppSelectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
-		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = consumerAppSelectaLive/Dummy.swift; sourceTree = "<group>"; };
+		BCEFDBBC2459F3F200B8D4F8 /* selectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "selectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
+		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = selectaLive/Dummy.swift; sourceTree = "<group>"; };
 		BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		C07EB01DDDE9BE9FC39C87B2 /* Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D1EBB0B60E785F36A6845977 /* Pods-consumerAppSelectaLive-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
-		D54FA311AF02E7DE3237FD3E /* Pods-consumerAppSelectaLiveTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.app store.xcconfig"; sourceTree = "<group>"; };
-		D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
-		E0ACF317D2936AADDDDC39F9 /* Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig"; sourceTree = "<group>"; };
-		E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E6B632494727384C14E12836 /* Pods-consumerAppSelectaLive.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.appstore.xcconfig"; sourceTree = "<group>"; };
-		E6EBE0E9C617C26FC3651B19 /* Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOSTests/Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig"; sourceTree = "<group>"; };
+		C07EB01DDDE9BE9FC39C87B2 /* Pods-selectaLive-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D1EBB0B60E785F36A6845977 /* Pods-selectaLive-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
+		D54FA311AF02E7DE3237FD3E /* Pods-selectaLiveTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.app store.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.app store.xcconfig"; sourceTree = "<group>"; };
+		D55CF8F9055154D8CFC16112 /* Pods-selectaLive-selectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-selectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
+		E0ACF317D2936AADDDDC39F9 /* Pods-selectaLive-tvOSTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.beta.xcconfig"; sourceTree = "<group>"; };
+		E2A139F443F4BE935B4C7071 /* Pods-selectaLive-selectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-selectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E6B632494727384C14E12836 /* Pods-selectaLive.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.appstore.xcconfig"; sourceTree = "<group>"; };
+		E6EBE0E9C617C26FC3651B19 /* Pods-selectaLive-tvOSTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EEB3428CF604B718F4E005BA /* Pods-consumerAppSelectaLive-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive-tvOS/Pods-consumerAppSelectaLive-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		F07DC9092F12EE312972B91F /* Pods-consumerAppSelectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F9CD27B61DCE8ACC12278B72 /* Pods-consumerAppSelectaLive.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.app store.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.app store.xcconfig"; sourceTree = "<group>"; };
-		F9D2CF6009C49F2FE2D4BD86 /* Pods-consumerAppSelectaLive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-consumerAppSelectaLive.release.xcconfig"; path = "Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive.release.xcconfig"; sourceTree = "<group>"; };
+		EEB3428CF604B718F4E005BA /* Pods-selectaLive-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F07DC9092F12EE312972B91F /* Pods-selectaLiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.debug.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F9CD27B61DCE8ACC12278B72 /* Pods-selectaLive.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.app store.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.app store.xcconfig"; sourceTree = "<group>"; };
+		F9D2CF6009C49F2FE2D4BD86 /* Pods-selectaLive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.release.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60F3595EB549FB095541DD8F /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a in Frameworks */,
+				60F3595EB549FB095541DD8F /* libPods-selectaLive-selectaLiveTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6763E96B58CE73517F23EFBF /* libPods-consumerAppSelectaLive.a in Frameworks */,
+				6763E96B58CE73517F23EFBF /* libPods-selectaLive.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				442105BF5B2F07C3BA205FAF /* libPods-consumerAppSelectaLive-tvOS.a in Frameworks */,
+				442105BF5B2F07C3BA205FAF /* libPods-selectaLive-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CF540228E3424C1DAB36F31 /* libPods-consumerAppSelectaLive-tvOSTests.a in Frameworks */,
+				3CF540228E3424C1DAB36F31 /* libPods-selectaLive-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,13 +175,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* consumerAppSelectaLiveTests */ = {
+		00E356EF1AD99517003FC87E /* selectaLiveTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* consumerAppSelectaLiveTests.m */,
+				00E356F21AD99517003FC87E /* selectaLiveTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = consumerAppSelectaLiveTests;
+			path = selectaLiveTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -192,13 +192,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* consumerAppSelectaLive */ = {
+		13B07FAE1A68108700A75B9A /* selectaLive */ = {
 			isa = PBXGroup;
 			children = (
 				BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */,
-				BC4246D9233F78A100A52916 /* consumerAppSelectaLive.entitlements */,
-				BC4246EC233F7BDA00A52916 /* consumerAppSelectaLive.beta.entitlements */,
-				BC4246ED233F7BDA00A52916 /* consumerAppSelectaLive.debug.entitlements */,
+				BC4246D9233F78A100A52916 /* selectaLive.entitlements */,
+				BC4246EC233F7BDA00A52916 /* selectaLive.beta.entitlements */,
+				BC4246ED233F7BDA00A52916 /* selectaLive.debug.entitlements */,
 				BC92FFC12339186400D986A6 /* Config.xcconfig */,
 				BC42BCFE2333F85100E6BDB4 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -208,7 +208,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = consumerAppSelectaLive;
+			name = selectaLive;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -216,11 +216,11 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				24571C3AD69B927539C0832E /* libPods-consumerAppSelectaLive.a */,
-				4707FE0BBA97EABF7039D55E /* libPods-consumerAppSelectaLive-tvOS.a */,
-				4F14BBD316980A4E526C51C4 /* libPods-consumerAppSelectaLive-tvOSTests.a */,
+				24571C3AD69B927539C0832E /* libPods-selectaLive.a */,
+				4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */,
+				4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */,
 				212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */,
-				9B829DDA59C7E32F11B5F4B6 /* libPods-consumerAppSelectaLive-consumerAppSelectaLiveTests.a */,
+				9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -235,15 +235,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* consumerAppSelectaLive */,
+				13B07FAE1A68108700A75B9A /* selectaLive */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* consumerAppSelectaLiveTests */,
+				00E356EF1AD99517003FC87E /* selectaLiveTests */,
 				BC4246DF233F78F200A52916 /* OneSignalNotificationServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E39093A8C741BEFD18C8D068 /* Pods */,
 				975D8233FB2A46AE929F90DB /* Resources */,
-				BCEFDBBC2459F3F200B8D4F8 /* consumerAppSelectaLive-Bridging-Header.h */,
+				BCEFDBBC2459F3F200B8D4F8 /* selectaLive-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -253,10 +253,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* consumerAppSelectaLive.app */,
-				00E356EE1AD99517003FC87E /* consumerAppSelectaLiveTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* consumerAppSelectaLive-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* selectaLive.app */,
+				00E356EE1AD99517003FC87E /* selectaLiveTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* selectaLive-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* selectaLive-tvOSTests.xctest */,
 				BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
@@ -285,33 +285,33 @@
 		E39093A8C741BEFD18C8D068 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AF518C5256E127C943DD2B61 /* Pods-consumerAppSelectaLive.debug.xcconfig */,
-				F9D2CF6009C49F2FE2D4BD86 /* Pods-consumerAppSelectaLive.release.xcconfig */,
-				EEB3428CF604B718F4E005BA /* Pods-consumerAppSelectaLive-tvOS.debug.xcconfig */,
-				1178B667E05EF9798297A785 /* Pods-consumerAppSelectaLive-tvOS.release.xcconfig */,
-				C07EB01DDDE9BE9FC39C87B2 /* Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig */,
-				69311FA1FB06845E72B09972 /* Pods-consumerAppSelectaLive-tvOSTests.release.xcconfig */,
-				F07DC9092F12EE312972B91F /* Pods-consumerAppSelectaLiveTests.debug.xcconfig */,
-				0A8351AE4FEF9C015B73EE0C /* Pods-consumerAppSelectaLiveTests.release.xcconfig */,
-				F9CD27B61DCE8ACC12278B72 /* Pods-consumerAppSelectaLive.app store.xcconfig */,
-				052B7DDB11C76C3F45B58668 /* Pods-consumerAppSelectaLive.beta.xcconfig */,
-				6BE072390F5553236E11F13C /* Pods-consumerAppSelectaLive-tvOS.app store.xcconfig */,
-				D1EBB0B60E785F36A6845977 /* Pods-consumerAppSelectaLive-tvOS.beta.xcconfig */,
-				7DA111C8D34BF6F678880068 /* Pods-consumerAppSelectaLive-tvOSTests.app store.xcconfig */,
-				E0ACF317D2936AADDDDC39F9 /* Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig */,
-				D54FA311AF02E7DE3237FD3E /* Pods-consumerAppSelectaLiveTests.app store.xcconfig */,
-				0BDA38AEB5AA72542BA2E779 /* Pods-consumerAppSelectaLiveTests.beta.xcconfig */,
-				E6B632494727384C14E12836 /* Pods-consumerAppSelectaLive.appstore.xcconfig */,
-				4B6A610808D7E62154AD3C57 /* Pods-consumerAppSelectaLive-tvOS.appstore.xcconfig */,
-				E6EBE0E9C617C26FC3651B19 /* Pods-consumerAppSelectaLive-tvOSTests.appstore.xcconfig */,
-				6AEA1CC4F7D802B71189A203 /* Pods-consumerAppSelectaLiveTests.appstore.xcconfig */,
+				AF518C5256E127C943DD2B61 /* Pods-selectaLive.debug.xcconfig */,
+				F9D2CF6009C49F2FE2D4BD86 /* Pods-selectaLive.release.xcconfig */,
+				EEB3428CF604B718F4E005BA /* Pods-selectaLive-tvOS.debug.xcconfig */,
+				1178B667E05EF9798297A785 /* Pods-selectaLive-tvOS.release.xcconfig */,
+				C07EB01DDDE9BE9FC39C87B2 /* Pods-selectaLive-tvOSTests.debug.xcconfig */,
+				69311FA1FB06845E72B09972 /* Pods-selectaLive-tvOSTests.release.xcconfig */,
+				F07DC9092F12EE312972B91F /* Pods-selectaLiveTests.debug.xcconfig */,
+				0A8351AE4FEF9C015B73EE0C /* Pods-selectaLiveTests.release.xcconfig */,
+				F9CD27B61DCE8ACC12278B72 /* Pods-selectaLive.app store.xcconfig */,
+				052B7DDB11C76C3F45B58668 /* Pods-selectaLive.beta.xcconfig */,
+				6BE072390F5553236E11F13C /* Pods-selectaLive-tvOS.app store.xcconfig */,
+				D1EBB0B60E785F36A6845977 /* Pods-selectaLive-tvOS.beta.xcconfig */,
+				7DA111C8D34BF6F678880068 /* Pods-selectaLive-tvOSTests.app store.xcconfig */,
+				E0ACF317D2936AADDDDC39F9 /* Pods-selectaLive-tvOSTests.beta.xcconfig */,
+				D54FA311AF02E7DE3237FD3E /* Pods-selectaLiveTests.app store.xcconfig */,
+				0BDA38AEB5AA72542BA2E779 /* Pods-selectaLiveTests.beta.xcconfig */,
+				E6B632494727384C14E12836 /* Pods-selectaLive.appstore.xcconfig */,
+				4B6A610808D7E62154AD3C57 /* Pods-selectaLive-tvOS.appstore.xcconfig */,
+				E6EBE0E9C617C26FC3651B19 /* Pods-selectaLive-tvOSTests.appstore.xcconfig */,
+				6AEA1CC4F7D802B71189A203 /* Pods-selectaLiveTests.appstore.xcconfig */,
 				9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
 				281BC5C8099353E5BCD03458 /* Pods-OneSignalNotificationServiceExtension.appstore.xcconfig */,
 				A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
 				BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
-				E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */,
-				D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */,
-				077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */,
+				E2A139F443F4BE935B4C7071 /* Pods-selectaLive-selectaLiveTests.debug.xcconfig */,
+				D55CF8F9055154D8CFC16112 /* Pods-selectaLive-selectaLiveTests.release.xcconfig */,
+				077B60DE9C663EA67EA32C12 /* Pods-selectaLive-selectaLiveTests.beta.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -319,9 +319,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* consumerAppSelectaLiveTests */ = {
+		00E356ED1AD99517003FC87E /* selectaLiveTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "consumerAppSelectaLiveTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "selectaLiveTests" */;
 			buildPhases = (
 				F021F91CAFDCA699080DF5A9 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -334,14 +334,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = consumerAppSelectaLiveTests;
-			productName = consumerAppSelectaLiveTests;
-			productReference = 00E356EE1AD99517003FC87E /* consumerAppSelectaLiveTests.xctest */;
+			name = selectaLiveTests;
+			productName = selectaLiveTests;
+			productReference = 00E356EE1AD99517003FC87E /* selectaLiveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* consumerAppSelectaLive */ = {
+		13B07F861A680F5B00A75B9A /* selectaLive */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "selectaLive" */;
 			buildPhases = (
 				65B4695D4EF47B2F0B1AE4BD /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -357,14 +357,14 @@
 			dependencies = (
 				BC4246E5233F78F200A52916 /* PBXTargetDependency */,
 			);
-			name = consumerAppSelectaLive;
-			productName = consumerAppSelectaLive;
-			productReference = 13B07F961A680F5B00A75B9A /* consumerAppSelectaLive.app */;
+			name = selectaLive;
+			productName = selectaLive;
+			productReference = 13B07F961A680F5B00A75B9A /* selectaLive.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* selectaLive-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "selectaLive-tvOS" */;
 			buildPhases = (
 				B25C3AE238D2DFEEAA487A64 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -377,14 +377,14 @@
 			);
 			dependencies = (
 			);
-			name = "consumerAppSelectaLive-tvOS";
-			productName = "consumerAppSelectaLive-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS.app */;
+			name = "selectaLive-tvOS";
+			productName = "selectaLive-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* selectaLive-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* selectaLive-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "selectaLive-tvOSTests" */;
 			buildPhases = (
 				05C5F7781411C05F72FE3876 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -396,9 +396,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "consumerAppSelectaLive-tvOSTests";
-			productName = "consumerAppSelectaLive-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* consumerAppSelectaLive-tvOSTests.xctest */;
+			name = "selectaLive-tvOSTests";
+			productName = "selectaLive-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* selectaLive-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		BC4246DD233F78F200A52916 /* OneSignalNotificationServiceExtension */ = {
@@ -461,7 +461,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "consumerAppSelectaLive" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "selectaLive" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -475,10 +475,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* consumerAppSelectaLive */,
-				00E356ED1AD99517003FC87E /* consumerAppSelectaLiveTests */,
-				2D02E47A1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* selectaLive */,
+				00E356ED1AD99517003FC87E /* selectaLiveTests */,
+				2D02E47A1E0B4A5D006451C7 /* selectaLive-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* selectaLive-tvOSTests */,
 				BC4246DD233F78F200A52916 /* OneSignalNotificationServiceExtension */,
 			);
 		};
@@ -559,7 +559,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLive-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-selectaLive-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -608,7 +608,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-selectaLive/Pods-selectaLive-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
@@ -619,7 +619,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive/Pods-consumerAppSelectaLive-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-selectaLive/Pods-selectaLive-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		65B4695D4EF47B2F0B1AE4BD /* [CP] Check Pods Manifest.lock */ = {
@@ -637,7 +637,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLive-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-selectaLive-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -659,7 +659,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLive-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-selectaLive-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -672,7 +672,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
@@ -683,7 +683,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F021F91CAFDCA699080DF5A9 /* [CP] Check Pods Manifest.lock */ = {
@@ -701,7 +701,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-selectaLive-selectaLiveTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -753,7 +753,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* consumerAppSelectaLiveTests.m in Sources */,
+				00E356F31AD99517003FC87E /* selectaLiveTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,7 +780,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* consumerAppSelectaLiveTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* selectaLiveTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,12 +797,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* consumerAppSelectaLive */;
+			target = 13B07F861A680F5B00A75B9A /* selectaLive */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* consumerAppSelectaLive-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* selectaLive-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 		BC4246E5233F78F200A52916 /* PBXTargetDependency */ = {
@@ -819,7 +819,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = consumerAppSelectaLive;
+			path = selectaLive;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -827,7 +827,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2A139F443F4BE935B4C7071 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.debug.xcconfig */;
+			baseConfigurationReference = E2A139F443F4BE935B4C7071 /* Pods-selectaLive-selectaLiveTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -835,7 +835,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
+				INFOPLIST_FILE = selectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
@@ -849,18 +849,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive.app/consumerAppSelectaLive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive.app/selectaLive";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D55CF8F9055154D8CFC16112 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.release.xcconfig */;
+			baseConfigurationReference = D55CF8F9055154D8CFC16112 /* Pods-selectaLive-selectaLiveTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
+				INFOPLIST_FILE = selectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
@@ -874,25 +874,25 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive.app/consumerAppSelectaLive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive.app/selectaLive";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF518C5256E127C943DD2B61 /* Pods-consumerAppSelectaLive.debug.xcconfig */;
+			baseConfigurationReference = AF518C5256E127C943DD2B61 /* Pods-selectaLive.debug.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "consumerAppSelectaLive Debug";
+				APP_DISPLAY_NAME = "Selecta Live Debug";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.debug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.debug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
+				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
@@ -905,10 +905,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.debug;
-				PRODUCT_NAME = consumerAppSelectaLive;
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.debug;
+				PRODUCT_NAME = selectaLive;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -917,19 +917,19 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9D2CF6009C49F2FE2D4BD86 /* Pods-consumerAppSelectaLive.release.xcconfig */;
+			baseConfigurationReference = F9D2CF6009C49F2FE2D4BD86 /* Pods-selectaLive.release.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = consumerAppSelectaLive;
+				APP_DISPLAY_NAME = "Selecta Live";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.entitlements;
+				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
+				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
@@ -942,10 +942,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer;
-				PRODUCT_NAME = consumerAppSelectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive";
-				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app;
+				PRODUCT_NAME = selectaLive;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive";
+				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -953,7 +953,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EEB3428CF604B718F4E005BA /* Pods-consumerAppSelectaLive-tvOS.debug.xcconfig */;
+			baseConfigurationReference = EEB3428CF604B718F4E005BA /* Pods-selectaLive-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -964,7 +964,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -975,7 +975,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -985,7 +985,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1178B667E05EF9798297A785 /* Pods-consumerAppSelectaLive-tvOS.release.xcconfig */;
+			baseConfigurationReference = 1178B667E05EF9798297A785 /* Pods-selectaLive-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -996,7 +996,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1007,7 +1007,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1017,7 +1017,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C07EB01DDDE9BE9FC39C87B2 /* Pods-consumerAppSelectaLive-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = C07EB01DDDE9BE9FC39C87B2 /* Pods-selectaLive-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1027,7 +1027,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1038,17 +1038,17 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive-tvOS.app/consumerAppSelectaLive-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive-tvOS.app/selectaLive-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69311FA1FB06845E72B09972 /* Pods-consumerAppSelectaLive-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 69311FA1FB06845E72B09972 /* Pods-selectaLive-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1058,7 +1058,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1069,10 +1069,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive-tvOS.app/consumerAppSelectaLive-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive-tvOS.app/selectaLive-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1204,7 +1204,7 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.debug.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.debug.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1271,9 +1271,9 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1340,9 +1340,9 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.beta.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.beta.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.beta.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1398,19 +1398,19 @@
 		};
 		BC6CF025233232190083E024 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 052B7DDB11C76C3F45B58668 /* Pods-consumerAppSelectaLive.beta.xcconfig */;
+			baseConfigurationReference = 052B7DDB11C76C3F45B58668 /* Pods-selectaLive.beta.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "consumerAppSelectaLive Beta";
+				APP_DISPLAY_NAME = "Selecta Live Beta";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = consumerAppSelectaLive/consumerAppSelectaLive.beta.entitlements;
+				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.beta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = consumerAppSelectaLive/Info.plist;
+				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.3.0;
@@ -1423,10 +1423,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.consumer.beta;
-				PRODUCT_NAME = consumerAppSelectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.consumerAppSelectaLive.beta";
-				SWIFT_OBJC_BRIDGING_HEADER = "consumerAppSelectaLive-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta;
+				PRODUCT_NAME = selectaLive;
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.beta";
+				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1434,12 +1434,12 @@
 		};
 		BC6CF026233232190083E024 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 077B60DE9C663EA67EA32C12 /* Pods-consumerAppSelectaLive-consumerAppSelectaLiveTests.beta.xcconfig */;
+			baseConfigurationReference = 077B60DE9C663EA67EA32C12 /* Pods-selectaLive-selectaLiveTests.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = consumerAppSelectaLiveTests/Info.plist;
+				INFOPLIST_FILE = selectaLiveTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
@@ -1453,13 +1453,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive.app/consumerAppSelectaLive";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive.app/selectaLive";
 			};
 			name = Beta;
 		};
 		BC6CF027233232190083E024 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1EBB0B60E785F36A6845977 /* Pods-consumerAppSelectaLive-tvOS.beta.xcconfig */;
+			baseConfigurationReference = D1EBB0B60E785F36A6845977 /* Pods-selectaLive-tvOS.beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1470,7 +1470,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOS/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1481,7 +1481,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1491,7 +1491,7 @@
 		};
 		BC6CF028233232190083E024 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0ACF317D2936AADDDDC39F9 /* Pods-consumerAppSelectaLive-tvOSTests.beta.xcconfig */;
+			baseConfigurationReference = E0ACF317D2936AADDDDC39F9 /* Pods-selectaLive-tvOSTests.beta.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1501,7 +1501,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "consumerAppSelectaLive-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "selectaLive-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -1512,10 +1512,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.consumerAppSelectaLive-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.selectaLive-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/consumerAppSelectaLive-tvOS.app/consumerAppSelectaLive-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/selectaLive-tvOS.app/selectaLive-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Beta;
@@ -1523,7 +1523,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "consumerAppSelectaLiveTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "selectaLiveTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1533,7 +1533,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "selectaLive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1543,7 +1543,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "selectaLive-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1553,7 +1553,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "consumerAppSelectaLive-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "selectaLive-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1563,7 +1563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "consumerAppSelectaLive" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "selectaLive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

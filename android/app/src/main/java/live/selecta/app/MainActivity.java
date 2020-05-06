@@ -1,4 +1,4 @@
-package live.selecta.app.consumer;
+package live.selecta.app;
 
 import com.reactnativenavigation.NavigationActivity;
 import org.devio.rn.splashscreen.SplashScreen;

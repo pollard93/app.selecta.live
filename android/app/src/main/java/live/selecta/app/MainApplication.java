@@ -1,4 +1,4 @@
-package live.selecta.app.consumer;
+package live.selecta.app;
 
 import android.app.Application;
 import android.content.Context;
