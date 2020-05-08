@@ -141,7 +141,7 @@ const authMiddleware = setContext(async ({ operationName }, { headers }) => {
     headers: {
       ...headers,
       'client-version': version,
-      'client-type': 'PRODUCER',
+      'client-type': 'MOBILE',
       authorization: headers && headers.authorization
         ? `Bearer ${headers.authorization}`
         : `Bearer ${await token()}`,
