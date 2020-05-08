@@ -31,9 +31,8 @@ const RegisterView = (props: RegisterViewProps) => {
         keyboardType="email-address"
         returnKeyType="next"
         onSubmitEditing={() => {
-          if (passwordRef.current) {
-            passwordRef.current.focus();
-          }
+          // eslint-disable-next-line no-unused-expressions
+          passwordRef.current?.focus();
         }}
       />
       {errors.email && <Text>This is required.</Text>}

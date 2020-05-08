@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri Apr 24 2020 10:12:13 GMT+0100 (British Summer Time)
+# timestamp: Fri May 08 2020 09:20:33 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -24,6 +24,10 @@ type Channel {
   admins(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   streams(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   credit: Float!
+  creditMinimumStreamCost: Int!
+  creditWithdrawalValue: Int!
+  creditWithdrawalMinimum: Int!
+  freeStreamAllowance: Int!
   notifications(where: ChannelNotificationWhereInput, orderBy: ChannelNotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChannelNotification!]
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   createdAt: DateTime!
@@ -156,6 +160,14 @@ enum ChannelOrderByInput {
   verified_DESC
   credit_ASC
   credit_DESC
+  creditMinimumStreamCost_ASC
+  creditMinimumStreamCost_DESC
+  creditWithdrawalValue_ASC
+  creditWithdrawalValue_DESC
+  creditWithdrawalMinimum_ASC
+  creditWithdrawalMinimum_DESC
+  freeStreamAllowance_ASC
+  freeStreamAllowance_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -190,6 +202,7 @@ type ChannelSelf {
   creditMinimumStreamCost: Int
   creditWithdrawalValue: Int
   creditWithdrawalMinimum: Int
+  freeStreamAllowance: Int
 }
 
 type ChannelSelfsPayLoad {
@@ -261,6 +274,38 @@ input ChannelWhereInput {
   credit_lte: Float
   credit_gt: Float
   credit_gte: Float
+  creditMinimumStreamCost: Int
+  creditMinimumStreamCost_not: Int
+  creditMinimumStreamCost_in: [Int!]
+  creditMinimumStreamCost_not_in: [Int!]
+  creditMinimumStreamCost_lt: Int
+  creditMinimumStreamCost_lte: Int
+  creditMinimumStreamCost_gt: Int
+  creditMinimumStreamCost_gte: Int
+  creditWithdrawalValue: Int
+  creditWithdrawalValue_not: Int
+  creditWithdrawalValue_in: [Int!]
+  creditWithdrawalValue_not_in: [Int!]
+  creditWithdrawalValue_lt: Int
+  creditWithdrawalValue_lte: Int
+  creditWithdrawalValue_gt: Int
+  creditWithdrawalValue_gte: Int
+  creditWithdrawalMinimum: Int
+  creditWithdrawalMinimum_not: Int
+  creditWithdrawalMinimum_in: [Int!]
+  creditWithdrawalMinimum_not_in: [Int!]
+  creditWithdrawalMinimum_lt: Int
+  creditWithdrawalMinimum_lte: Int
+  creditWithdrawalMinimum_gt: Int
+  creditWithdrawalMinimum_gte: Int
+  freeStreamAllowance: Int
+  freeStreamAllowance_not: Int
+  freeStreamAllowance_in: [Int!]
+  freeStreamAllowance_not_in: [Int!]
+  freeStreamAllowance_lt: Int
+  freeStreamAllowance_lte: Int
+  freeStreamAllowance_gt: Int
+  freeStreamAllowance_gte: Int
   notifications_every: ChannelNotificationWhereInput
   notifications_some: ChannelNotificationWhereInput
   notifications_none: ChannelNotificationWhereInput
@@ -286,11 +331,6 @@ input ChannelWhereInput {
   AND: [ChannelWhereInput!]
   OR: [ChannelWhereInput!]
   NOT: [ChannelWhereInput!]
-}
-
-enum CLIENT_TYPE {
-  CONSUMER
-  PRODUCER
 }
 
 type ConsumerNotification {
@@ -557,14 +597,9 @@ scalar Json
 type Mutation {
   deleteConsumerNotification(id: String!): Boolean
   followChannel(id: String!, unfollow: Boolean): ChannelProfile
-  login(email: String!, password: String!): AuthPayload
-  loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
   payForStream(id: String!): StreamProfile!
   readConsumerNotification(id: String!, unRead: Boolean): ConsumerNotification!
-  register(email: String!, password: String!): AuthPayload
   reportStream(id: String!, content: String!): Boolean
-  requestPasswordReset(email: String!): Boolean
-  resetPassword(password: String!): AuthPayload
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
   validateInAppPurchase(receipt: String!): UserSelf!
@@ -578,7 +613,12 @@ type Mutation {
   updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload): StreamSelf
   withdrawFunds: ChannelSelf
+  login(email: String!, password: String!): AuthPayload
+  loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
   putStreamMessage(id: String!, message: String!): StreamMessageClient
+  register(email: String!, password: String!): AuthPayload
+  requestPasswordReset(email: String!): Boolean
+  resetPassword(password: String!): AuthPayload
 }
 
 enum MutationType {

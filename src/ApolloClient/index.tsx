@@ -9,17 +9,21 @@ import { getMainDefinition } from 'apollo-utilities';
 import Config from 'react-native-config';
 import { setContext } from 'apollo-link-context';
 import gql from 'graphql-tag';
-import { goToLogin } from '../screens/utils';
+import { goToLogin, goHome } from '../screens/utils';
 import { GET_ACCESS_TOKEN_QUERY } from './resolvers/query/getAccessToken/getAccessTokenQuery';
 import { getAccessToken } from './resolvers/query/getAccessToken/__generated__/getAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from './resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from './resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import resolvers from './resolvers/index';
 import { version } from '../../package.json';
+import { getChannelAccessToken } from './resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
+import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from './resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
+import { putChannelAccessToken, putChannelAccessTokenVariables } from './resolvers/mutation/putChannelAccessToken/__generated__/putChannelAccessToken';
+import { PUT_CHANNEL_ACCESS_TOKEN_MUTATION } from './resolvers/mutation/putChannelAccessToken/putChannelAccessTokenMutation';
 
 
 /**
- * Safely get token from storage
+ * Safely get general access token from storage
  * Will use the apollo cache first
  */
 export const getToken = async (client: ApolloClient<any>) => {
@@ -28,6 +32,21 @@ export const getToken = async (client: ApolloClient<any>) => {
       query: GET_ACCESS_TOKEN_QUERY,
     });
     return res.data.getAccessToken;
+  } catch (e) {
+    return null;
+  }
+};
+
+
+/**
+ * Safely get channel access token from cache
+ */
+export const getChannelToken = async (client: ApolloClient<any>) => {
+  try {
+    const res = await client.query<getChannelAccessToken>({
+      query: GET_CHANNEL_ACCESS_TOKEN_QUERY,
+    });
+    return res.data.getChannelAccessToken;
   } catch (e) {
     return null;
   }
@@ -53,7 +72,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
     reconnectionAttempts: 3,
     connectionParams: async () => ({
-      authorization: `Bearer ${await getToken(AClient)}`,
+      authorization: `Bearer ${await getChannelToken(AClient)}`,
       credentials: 'include',
     }),
     // connectionCallback: err => {
@@ -78,20 +97,49 @@ const link = split(
 
 
 /**
+ * Define endpoints that require general access token
+ */
+const generalTokenEndpoints = [
+  'getChannelSelfs',
+  'getSelf',
+  'loginChannel',
+  'requestChannelLogin',
+];
+
+
+/**
  * Auth middleware, sets the header if it's not already set
  * Attaches the current client-version to headers
  * Attaches the current client-type to headers
  */
-const authMiddleware = setContext(async (operation, { headers }) => ({
-  headers: {
-    ...headers,
-    'client-version': version,
-    'client-type': 'CONSUMER',
-    authorization: headers && headers.authorization
-      ? `Bearer ${headers.authorization}`
-      : `Bearer ${await getToken(AClient)}`,
-  },
-}));
+const authMiddleware = setContext(async ({ operationName }, { headers }) => {
+  /**
+   * If access token is required
+   * Get either a general or channel access token
+   * Dependant on generalTokenEndpoints
+   */
+  const token = () => (
+    generalTokenEndpoints.includes(operationName)
+      ? getToken(AClient)
+      : getChannelToken(AClient)
+  );
+
+  /**
+   * Merge package.json version as client-version into every request
+   * If authorization header is given, prepend with Bearer
+   * Otherwise fall back to stored/cached access token
+   */
+  return ({
+    headers: {
+      ...headers,
+      'client-version': version,
+      'client-type': 'PRODUCER',
+      authorization: headers && headers.authorization
+        ? `Bearer ${headers.authorization}`
+        : `Bearer ${await token()}`,
+    },
+  });
+});
 
 
 /**
@@ -116,6 +164,19 @@ const tokenAfterware = new ApolloLink((operation, forward) => forward(operation)
           },
         });
     }
+
+    // If channel token is returned in headers, execute PUT_CHANNEL_ACCESS_TOKEN_MUTATION with new token
+    const channelToken = headers.get('channel_token');
+    if (channelToken) {
+      // eslint-disable-next-line no-use-before-define
+      AClient
+        .mutate<putChannelAccessToken, putChannelAccessTokenVariables>({
+          mutation: PUT_CHANNEL_ACCESS_TOKEN_MUTATION,
+          variables: {
+            token: channelToken,
+          },
+        });
+    }
   }
 
   return response;
@@ -130,11 +191,14 @@ export const typeDefs = gql`
 
   extend type Query {
     getAccessToken: String!
+    getChannelAccessToken: String!
   }
 
   extend type Mutation {
-    putAccessToken(token: String): Boolean
+    putAccessToken(token: String!): Boolean
+    putChannelAccessToken(token: String!): Boolean
     removeAccessToken: Boolean
+    removeChannelAccessToken: Boolean
   }
 `;
 
@@ -149,11 +213,20 @@ const AClient = new ApolloClient({
     onError((args) => {
       const { graphQLErrors } = args;
       if (graphQLErrors) {
-        // Check for Expired Token message, logout and show toast
-        const expired = graphQLErrors.find((e) => e.message === 'Expired Token');
-        if (expired) {
+        // Check for Expired General Token message, logout and show toast
+        const expiredGeneral = graphQLErrors.find((e) => e.message === 'Expired General Token');
+        if (expiredGeneral) {
           goToLogin({
             toastMessage: 'Your session has expired! Please login again',
+          });
+          return;
+        }
+
+        // Check for Expired Channel Token message, goHome and show toast
+        const expiredChannel = graphQLErrors.find((e) => e.message === 'Expired Channel Token');
+        if (expiredChannel) {
+          goHome({
+            toastMessage: 'Your channel session has expired! Please login again',
           });
         }
       }

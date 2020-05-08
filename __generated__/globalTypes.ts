@@ -13,10 +13,18 @@ export enum CHANNEL_NOTIFICATION_TYPE {
 export enum ChannelOrderByInput {
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
+  creditMinimumStreamCost_ASC = "creditMinimumStreamCost_ASC",
+  creditMinimumStreamCost_DESC = "creditMinimumStreamCost_DESC",
+  creditWithdrawalMinimum_ASC = "creditWithdrawalMinimum_ASC",
+  creditWithdrawalMinimum_DESC = "creditWithdrawalMinimum_DESC",
+  creditWithdrawalValue_ASC = "creditWithdrawalValue_ASC",
+  creditWithdrawalValue_DESC = "creditWithdrawalValue_DESC",
   credit_ASC = "credit_ASC",
   credit_DESC = "credit_DESC",
   description_ASC = "description_ASC",
   description_DESC = "description_DESC",
+  freeStreamAllowance_ASC = "freeStreamAllowance_ASC",
+  freeStreamAllowance_DESC = "freeStreamAllowance_DESC",
   id_ASC = "id_ASC",
   id_DESC = "id_DESC",
   name_ASC = "name_ASC",
@@ -197,6 +205,38 @@ export interface ChannelWhereInput {
   credit_lte?: number | null;
   credit_gt?: number | null;
   credit_gte?: number | null;
+  creditMinimumStreamCost?: number | null;
+  creditMinimumStreamCost_not?: number | null;
+  creditMinimumStreamCost_in?: number[] | null;
+  creditMinimumStreamCost_not_in?: number[] | null;
+  creditMinimumStreamCost_lt?: number | null;
+  creditMinimumStreamCost_lte?: number | null;
+  creditMinimumStreamCost_gt?: number | null;
+  creditMinimumStreamCost_gte?: number | null;
+  creditWithdrawalValue?: number | null;
+  creditWithdrawalValue_not?: number | null;
+  creditWithdrawalValue_in?: number[] | null;
+  creditWithdrawalValue_not_in?: number[] | null;
+  creditWithdrawalValue_lt?: number | null;
+  creditWithdrawalValue_lte?: number | null;
+  creditWithdrawalValue_gt?: number | null;
+  creditWithdrawalValue_gte?: number | null;
+  creditWithdrawalMinimum?: number | null;
+  creditWithdrawalMinimum_not?: number | null;
+  creditWithdrawalMinimum_in?: number[] | null;
+  creditWithdrawalMinimum_not_in?: number[] | null;
+  creditWithdrawalMinimum_lt?: number | null;
+  creditWithdrawalMinimum_lte?: number | null;
+  creditWithdrawalMinimum_gt?: number | null;
+  creditWithdrawalMinimum_gte?: number | null;
+  freeStreamAllowance?: number | null;
+  freeStreamAllowance_not?: number | null;
+  freeStreamAllowance_in?: number[] | null;
+  freeStreamAllowance_not_in?: number[] | null;
+  freeStreamAllowance_lt?: number | null;
+  freeStreamAllowance_lte?: number | null;
+  freeStreamAllowance_gt?: number | null;
+  freeStreamAllowance_gte?: number | null;
   notifications_every?: ChannelNotificationWhereInput | null;
   notifications_some?: ChannelNotificationWhereInput | null;
   notifications_none?: ChannelNotificationWhereInput | null;

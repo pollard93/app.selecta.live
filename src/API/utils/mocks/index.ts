@@ -2,37 +2,29 @@
 // Reference
 // https://www.apollographql.com/docs/graphql-tools/mocking.html
 
-import { followChannel } from './resolvers/mutation/followChannel/followChannel';
-import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
-import { getConsumerNotifications } from './resolvers/query/getConsumerNotifications/getConsumerNotifications';
+import { cancelStream } from './resolvers/mutation/cancelStream/cancelStream';
+import { getChannelNotifications } from './resolvers/query/getChannelNotifications/getChannelNotifications';
+import { getChannelSelf } from './resolvers/query/getChannelSelf/getChannelSelf';
+import { getChannelSelfs } from './resolvers/query/getChannelSelfs/getChannelSelfs';
+import { getRequestedChannels } from './resolvers/query/getRequestedChannels/getRequestedChannels';
 import { getSelf } from './resolvers/query/getSelf/getSelf';
-import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
-import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
-import { getStreamProfile } from './resolvers/query/getStreamProfile/getStreamProfile';
-import { payForStream } from './resolvers/mutation/payForStream/payForStream';
-import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
-import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
-import { searchChannels } from './resolvers/query/searchChannels/searchChannels';
-import { searchStreams } from './resolvers/query/searchStreams/searchStreams';
-import { updateSelf } from './resolvers/mutation/updateSelf/updateSelf';
+import { getStreamSelf } from './resolvers/query/getStreamSelf/getStreamSelf';
+import { getStreamSelfs } from './resolvers/query/getStreamSelfs/getStreamSelfs';
+import { withdrawFunds } from './resolvers/mutation/withdrawFunds/withdrawFunds';
 
 export default {
   Mutation: () => ({
-    followChannel,
-    payForStream,
-    putStreamMessage,
-    updateSelf,
+    cancelStream,
+    withdrawFunds,
   }),
   Query: () => ({
-    getChannelStreams,
-    getConsumerNotifications,
+    getChannelNotifications,
+    getChannelSelf,
+    getChannelSelfs,
+    getRequestedChannels,
     getSelf,
-    getStreamFeed,
-    getStreamMessages,
-    getStreamProfile,
-    getStreamUrl,
-    searchChannels,
-    searchStreams,
+    getStreamSelf,
+    getStreamSelfs,
   }),
   DateTime: () => new Date(0).toISOString(),
   Url: () => ({
