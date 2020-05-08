@@ -1,5 +1,4 @@
 import { expect, assert } from 'chai';
-import Sinon from 'sinon';
 import mockClient from '../../../../API/utils/mockClient';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from './removeChannelAccessTokenMutation';
 import { removeChannelAccessToken } from './__generated__/removeChannelAccessToken';
@@ -7,7 +6,6 @@ import { putChannelAccessToken, putChannelAccessTokenVariables } from '../putCha
 import { PUT_CHANNEL_ACCESS_TOKEN_MUTATION } from '../putChannelAccessToken/putChannelAccessTokenMutation';
 import { getChannelAccessToken } from '../../query/getChannelAccessToken/__generated__/getChannelAccessToken';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../query/getChannelAccessToken/getChannelAccessTokenQuery';
-import PushNotifications from '../../../../modules/PushNotifications';
 import { store } from '../../../../utils/storage';
 import { LOCAL_CHANNEL_AUTH_KEY } from '../putChannelAccessToken/putChannelAccessToken';
 
@@ -24,9 +22,6 @@ describe('removeChannelAccessToken tests', () => {
         token: 'test',
       },
     });
-
-    // Create spy on Pushnotificatons.disconnect()
-    const spy = Sinon.spy(PushNotifications, 'disconnect');
 
     /**
      * Make request
@@ -50,8 +45,5 @@ describe('removeChannelAccessToken tests', () => {
 
     // Test the token has been stored in async storage
     expect(await store(LOCAL_CHANNEL_AUTH_KEY)).to.equal(null);
-
-    // Test spy called
-    expect(spy.called).to.be.true;
   });
 });

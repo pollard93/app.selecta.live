@@ -100,10 +100,17 @@ const link = split(
  * Define endpoints that require general access token
  */
 const generalTokenEndpoints = [
+  'followChannel',
   'getChannelSelfs',
   'getSelf',
   'loginChannel',
+  'payForStream',
+  'readConsumerNotification',
+  'registerChannel',
+  'reportStream',
   'requestChannelLogin',
+  'requestPasswordReset',
+  'updateSelf',
 ];
 
 

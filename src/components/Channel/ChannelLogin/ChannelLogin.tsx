@@ -8,7 +8,6 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 import { useGetChannelSelfLazyQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { putChannelAccessToken, putChannelAccessTokenVariables } from '../../../ApolloClient/resolvers/mutation/putChannelAccessToken/__generated__/putChannelAccessToken';
 import { PUT_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../../ApolloClient/resolvers/mutation/putChannelAccessToken/putChannelAccessTokenMutation';
-import PushNotifications from '../../../modules/PushNotifications';
 import { goToChannelStack } from '../../../screens/utils';
 
 export interface ChannelLoginProps {
@@ -26,10 +25,7 @@ const ChannelLogin = (props: ChannelLoginProps) => {
    * Get channel self query, binds notifications and navigates home on completion
    */
   const [getChannelSelfQuery] = useGetChannelSelfLazyQuery({
-    onCompleted: ({ getChannelSelf: { id } }) => {
-      // Bind notifications
-      PushNotifications.init(id);
-
+    onCompleted: () => {
       // User is logged in as a channel, go to channel stack
       goToChannelStack();
     },

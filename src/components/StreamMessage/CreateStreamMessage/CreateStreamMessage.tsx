@@ -69,6 +69,12 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
   });
 
 
+  /**
+   * Handle submission
+   */
+  const onSubmit = () => mutation();
+
+
   return (
     <View>
       <TextInput
@@ -83,7 +89,7 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
 
       <Button
         title="Submit"
-        onPress={() => mutation()}
+        onPress={onSubmit}
         disabled={loading || message.length === 0}
       />
     </View>

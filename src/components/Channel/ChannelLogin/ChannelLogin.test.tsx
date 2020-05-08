@@ -21,14 +21,12 @@ describe('<ChannelLogin >', () => {
   const sandbox = sinon.createSandbox();
 
   let toastSpy = sandbox.spy(useToast(), 'push');
-  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
   let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
 
   afterEach(() => {
     sandbox.restore();
 
     toastSpy = sandbox.spy(useToast(), 'push');
-    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
     goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
   });
 
@@ -109,8 +107,7 @@ describe('<ChannelLogin >', () => {
     });
     expect(typeof gcat.getChannelAccessToken).to.equal('string');
 
-    // Push notifications should have been bound, and goToChannelStack called
-    expect(pushNotificationInitSpy.callCount).to.equal(1);
+    // goToChannelStack should have been called
     expect(goToChannelStackSpy.callCount).to.equal(1);
   });
 
