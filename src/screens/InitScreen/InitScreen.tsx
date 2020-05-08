@@ -17,7 +17,7 @@ const InitScreen = () => {
    * Get channel self query
    */
   const [getChannelSelf] = useGetChannelSelfLazyQuery({
-    onCompleted: async ({ getChannelSelf: { id } }) => {
+    onCompleted: async () => {
       // User is logged in as a channel, go to channel stack
       goToChannelStack();
     },

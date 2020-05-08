@@ -6,7 +6,6 @@ import { ApolloProvider } from 'react-apollo';
 import { TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
-import PushNotifications from '../../../modules/PushNotifications';
 import ChannelLogin from './ChannelLogin';
 import * as ScreenUtilsModule from '../../../screens/utils';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
