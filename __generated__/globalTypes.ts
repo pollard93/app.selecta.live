@@ -6,10 +6,6 @@
 // START Enums and Input Objects
 //==============================================================
 
-export enum CHANNEL_NOTIFICATION_TYPE {
-  TEST = "TEST",
-}
-
 export enum ChannelOrderByInput {
   createdAt_ASC = "createdAt_ASC",
   createdAt_DESC = "createdAt_DESC",
@@ -42,6 +38,7 @@ export enum MutationType {
 }
 
 export enum NOTIFICATION_TYPE {
+  CHANNEL_NOTIFICATION_TEST = "CHANNEL_NOTIFICATION_TEST",
   PASSWORD_CHANGED = "PASSWORD_CHANGED",
   REQUESTED_CHANNEL_APPROVED = "REQUESTED_CHANNEL_APPROVED",
 }
@@ -76,69 +73,6 @@ export enum StreamOrderByInput {
   timeTo_DESC = "timeTo_DESC",
   updatedAt_ASC = "updatedAt_ASC",
   updatedAt_DESC = "updatedAt_DESC",
-}
-
-export interface ChannelNotificationWhereInput {
-  id?: string | null;
-  id_not?: string | null;
-  id_in?: string[] | null;
-  id_not_in?: string[] | null;
-  id_lt?: string | null;
-  id_lte?: string | null;
-  id_gt?: string | null;
-  id_gte?: string | null;
-  id_contains?: string | null;
-  id_not_contains?: string | null;
-  id_starts_with?: string | null;
-  id_not_starts_with?: string | null;
-  id_ends_with?: string | null;
-  id_not_ends_with?: string | null;
-  type?: CHANNEL_NOTIFICATION_TYPE | null;
-  type_not?: CHANNEL_NOTIFICATION_TYPE | null;
-  type_in?: CHANNEL_NOTIFICATION_TYPE[] | null;
-  type_not_in?: CHANNEL_NOTIFICATION_TYPE[] | null;
-  channelReceiver?: ChannelWhereInput | null;
-  channelReceiverId?: string | null;
-  channelReceiverId_not?: string | null;
-  channelReceiverId_in?: string[] | null;
-  channelReceiverId_not_in?: string[] | null;
-  channelReceiverId_lt?: string | null;
-  channelReceiverId_lte?: string | null;
-  channelReceiverId_gt?: string | null;
-  channelReceiverId_gte?: string | null;
-  channelReceiverId_contains?: string | null;
-  channelReceiverId_not_contains?: string | null;
-  channelReceiverId_starts_with?: string | null;
-  channelReceiverId_not_starts_with?: string | null;
-  channelReceiverId_ends_with?: string | null;
-  channelReceiverId_not_ends_with?: string | null;
-  readDate?: any | null;
-  readDate_not?: any | null;
-  readDate_in?: any[] | null;
-  readDate_not_in?: any[] | null;
-  readDate_lt?: any | null;
-  readDate_lte?: any | null;
-  readDate_gt?: any | null;
-  readDate_gte?: any | null;
-  createdAt?: any | null;
-  createdAt_not?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
-  createdAt_lt?: any | null;
-  createdAt_lte?: any | null;
-  createdAt_gt?: any | null;
-  createdAt_gte?: any | null;
-  updatedAt?: any | null;
-  updatedAt_not?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  updatedAt_lt?: any | null;
-  updatedAt_lte?: any | null;
-  updatedAt_gt?: any | null;
-  updatedAt_gte?: any | null;
-  AND?: ChannelNotificationWhereInput[] | null;
-  OR?: ChannelNotificationWhereInput[] | null;
-  NOT?: ChannelNotificationWhereInput[] | null;
 }
 
 export interface ChannelWhereInput {
@@ -237,9 +171,9 @@ export interface ChannelWhereInput {
   freeStreamAllowance_lte?: number | null;
   freeStreamAllowance_gt?: number | null;
   freeStreamAllowance_gte?: number | null;
-  notifications_every?: ChannelNotificationWhereInput | null;
-  notifications_some?: ChannelNotificationWhereInput | null;
-  notifications_none?: ChannelNotificationWhereInput | null;
+  notifications_every?: NotificationWhereInput | null;
+  notifications_some?: NotificationWhereInput | null;
+  notifications_none?: NotificationWhereInput | null;
   transactions_every?: CreditTransactionWhereInput | null;
   transactions_some?: CreditTransactionWhereInput | null;
   transactions_none?: CreditTransactionWhereInput | null;
@@ -262,70 +196,6 @@ export interface ChannelWhereInput {
   AND?: ChannelWhereInput[] | null;
   OR?: ChannelWhereInput[] | null;
   NOT?: ChannelWhereInput[] | null;
-}
-
-export interface ConsumerNotificationWhereInput {
-  id?: string | null;
-  id_not?: string | null;
-  id_in?: string[] | null;
-  id_not_in?: string[] | null;
-  id_lt?: string | null;
-  id_lte?: string | null;
-  id_gt?: string | null;
-  id_gte?: string | null;
-  id_contains?: string | null;
-  id_not_contains?: string | null;
-  id_starts_with?: string | null;
-  id_not_starts_with?: string | null;
-  id_ends_with?: string | null;
-  id_not_ends_with?: string | null;
-  type?: NOTIFICATION_TYPE | null;
-  type_not?: NOTIFICATION_TYPE | null;
-  type_in?: NOTIFICATION_TYPE[] | null;
-  type_not_in?: NOTIFICATION_TYPE[] | null;
-  receiver?: UserWhereInput | null;
-  receiverId?: string | null;
-  receiverId_not?: string | null;
-  receiverId_in?: string[] | null;
-  receiverId_not_in?: string[] | null;
-  receiverId_lt?: string | null;
-  receiverId_lte?: string | null;
-  receiverId_gt?: string | null;
-  receiverId_gte?: string | null;
-  receiverId_contains?: string | null;
-  receiverId_not_contains?: string | null;
-  receiverId_starts_with?: string | null;
-  receiverId_not_starts_with?: string | null;
-  receiverId_ends_with?: string | null;
-  receiverId_not_ends_with?: string | null;
-  sender?: UserWhereInput | null;
-  readDate?: any | null;
-  readDate_not?: any | null;
-  readDate_in?: any[] | null;
-  readDate_not_in?: any[] | null;
-  readDate_lt?: any | null;
-  readDate_lte?: any | null;
-  readDate_gt?: any | null;
-  readDate_gte?: any | null;
-  createdAt?: any | null;
-  createdAt_not?: any | null;
-  createdAt_in?: any[] | null;
-  createdAt_not_in?: any[] | null;
-  createdAt_lt?: any | null;
-  createdAt_lte?: any | null;
-  createdAt_gt?: any | null;
-  createdAt_gte?: any | null;
-  updatedAt?: any | null;
-  updatedAt_not?: any | null;
-  updatedAt_in?: any[] | null;
-  updatedAt_not_in?: any[] | null;
-  updatedAt_lt?: any | null;
-  updatedAt_lte?: any | null;
-  updatedAt_gt?: any | null;
-  updatedAt_gte?: any | null;
-  AND?: ConsumerNotificationWhereInput[] | null;
-  OR?: ConsumerNotificationWhereInput[] | null;
-  NOT?: ConsumerNotificationWhereInput[] | null;
 }
 
 export interface CreditTransactionWhereInput {
@@ -438,6 +308,71 @@ export interface FileWhereInput {
   AND?: FileWhereInput[] | null;
   OR?: FileWhereInput[] | null;
   NOT?: FileWhereInput[] | null;
+}
+
+export interface NotificationWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  type?: NOTIFICATION_TYPE | null;
+  type_not?: NOTIFICATION_TYPE | null;
+  type_in?: NOTIFICATION_TYPE[] | null;
+  type_not_in?: NOTIFICATION_TYPE[] | null;
+  receiver?: UserWhereInput | null;
+  receiverId?: string | null;
+  receiverId_not?: string | null;
+  receiverId_in?: string[] | null;
+  receiverId_not_in?: string[] | null;
+  receiverId_lt?: string | null;
+  receiverId_lte?: string | null;
+  receiverId_gt?: string | null;
+  receiverId_gte?: string | null;
+  receiverId_contains?: string | null;
+  receiverId_not_contains?: string | null;
+  receiverId_starts_with?: string | null;
+  receiverId_not_starts_with?: string | null;
+  receiverId_ends_with?: string | null;
+  receiverId_not_ends_with?: string | null;
+  sender?: UserWhereInput | null;
+  channelReceiver?: ChannelWhereInput | null;
+  readDate?: any | null;
+  readDate_not?: any | null;
+  readDate_in?: any[] | null;
+  readDate_not_in?: any[] | null;
+  readDate_lt?: any | null;
+  readDate_lte?: any | null;
+  readDate_gt?: any | null;
+  readDate_gte?: any | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  updatedAt?: any | null;
+  updatedAt_not?: any | null;
+  updatedAt_in?: any[] | null;
+  updatedAt_not_in?: any[] | null;
+  updatedAt_lt?: any | null;
+  updatedAt_lte?: any | null;
+  updatedAt_gt?: any | null;
+  updatedAt_gte?: any | null;
+  AND?: NotificationWhereInput[] | null;
+  OR?: NotificationWhereInput[] | null;
+  NOT?: NotificationWhereInput[] | null;
 }
 
 export interface RequestedChannelWhereInput {
@@ -846,9 +781,9 @@ export interface UserWhereInput {
   password_not_ends_with?: string | null;
   verified?: boolean | null;
   verified_not?: boolean | null;
-  notifications_every?: ConsumerNotificationWhereInput | null;
-  notifications_some?: ConsumerNotificationWhereInput | null;
-  notifications_none?: ConsumerNotificationWhereInput | null;
+  notifications_every?: NotificationWhereInput | null;
+  notifications_some?: NotificationWhereInput | null;
+  notifications_none?: NotificationWhereInput | null;
   credit?: number | null;
   credit_not?: number | null;
   credit_in?: number[] | null;

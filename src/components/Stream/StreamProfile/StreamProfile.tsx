@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import AsyncImage from 'mbp-components-rn-asyncimage';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 

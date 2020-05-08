@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri May 08 2020 09:20:33 GMT+0100 (British Summer Time)
+# timestamp: Fri May 08 2020 11:27:39 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -28,125 +28,15 @@ type Channel {
   creditWithdrawalValue: Int!
   creditWithdrawalMinimum: Int!
   freeStreamAllowance: Int!
-  notifications(where: ChannelNotificationWhereInput, orderBy: ChannelNotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChannelNotification!]
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-enum CHANNEL_NOTIFICATION_TYPE {
-  TEST
-}
-
 type ChannelAuthPayload {
   token: String!
   channel: ChannelSelf
-}
-
-type ChannelNotification {
-  id: ID!
-  type: CHANNEL_NOTIFICATION_TYPE
-  readDate: DateTime
-  createdAt: DateTime
-}
-
-enum ChannelNotificationOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  channelReceiverId_ASC
-  channelReceiverId_DESC
-  readDate_ASC
-  readDate_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ChannelNotificationPreviousValues {
-  id: ID!
-  type: CHANNEL_NOTIFICATION_TYPE!
-  channelReceiverId: String!
-  readDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type ChannelNotificationsPayLoad {
-  notifications: [ChannelNotification!]!
-  count: Int!
-}
-
-type ChannelNotificationSubscriptionPayload {
-  mutation: MutationType!
-  node: ChannelNotification
-  updatedFields: [String!]
-  previousValues: ChannelNotificationPreviousValues
-}
-
-input ChannelNotificationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  type: CHANNEL_NOTIFICATION_TYPE
-  type_not: CHANNEL_NOTIFICATION_TYPE
-  type_in: [CHANNEL_NOTIFICATION_TYPE!]
-  type_not_in: [CHANNEL_NOTIFICATION_TYPE!]
-  channelReceiver: ChannelWhereInput
-  channelReceiverId: String
-  channelReceiverId_not: String
-  channelReceiverId_in: [String!]
-  channelReceiverId_not_in: [String!]
-  channelReceiverId_lt: String
-  channelReceiverId_lte: String
-  channelReceiverId_gt: String
-  channelReceiverId_gte: String
-  channelReceiverId_contains: String
-  channelReceiverId_not_contains: String
-  channelReceiverId_starts_with: String
-  channelReceiverId_not_starts_with: String
-  channelReceiverId_ends_with: String
-  channelReceiverId_not_ends_with: String
-  readDate: DateTime
-  readDate_not: DateTime
-  readDate_in: [DateTime!]
-  readDate_not_in: [DateTime!]
-  readDate_lt: DateTime
-  readDate_lte: DateTime
-  readDate_gt: DateTime
-  readDate_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [ChannelNotificationWhereInput!]
-  OR: [ChannelNotificationWhereInput!]
-  NOT: [ChannelNotificationWhereInput!]
 }
 
 enum ChannelOrderByInput {
@@ -306,9 +196,9 @@ input ChannelWhereInput {
   freeStreamAllowance_lte: Int
   freeStreamAllowance_gt: Int
   freeStreamAllowance_gte: Int
-  notifications_every: ChannelNotificationWhereInput
-  notifications_some: ChannelNotificationWhereInput
-  notifications_none: ChannelNotificationWhereInput
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   transactions_every: CreditTransactionWhereInput
   transactions_some: CreditTransactionWhereInput
   transactions_none: CreditTransactionWhereInput
@@ -331,117 +221,6 @@ input ChannelWhereInput {
   AND: [ChannelWhereInput!]
   OR: [ChannelWhereInput!]
   NOT: [ChannelWhereInput!]
-}
-
-type ConsumerNotification {
-  id: ID!
-  type: NOTIFICATION_TYPE!
-  receiver: User!
-  receiverId: String!
-  sender: User!
-  readDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-enum ConsumerNotificationOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  receiverId_ASC
-  receiverId_DESC
-  readDate_ASC
-  readDate_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type ConsumerNotificationPreviousValues {
-  id: ID!
-  type: NOTIFICATION_TYPE!
-  receiverId: String!
-  readDate: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type ConsumerNotificationsPayLoad {
-  notifications: [ConsumerNotification!]!
-  count: Int!
-}
-
-type ConsumerNotificationSubscriptionPayload {
-  mutation: MutationType!
-  node: ConsumerNotification
-  updatedFields: [String!]
-  previousValues: ConsumerNotificationPreviousValues
-}
-
-input ConsumerNotificationWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  type: NOTIFICATION_TYPE
-  type_not: NOTIFICATION_TYPE
-  type_in: [NOTIFICATION_TYPE!]
-  type_not_in: [NOTIFICATION_TYPE!]
-  receiver: UserWhereInput
-  receiverId: String
-  receiverId_not: String
-  receiverId_in: [String!]
-  receiverId_not_in: [String!]
-  receiverId_lt: String
-  receiverId_lte: String
-  receiverId_gt: String
-  receiverId_gte: String
-  receiverId_contains: String
-  receiverId_not_contains: String
-  receiverId_starts_with: String
-  receiverId_not_starts_with: String
-  receiverId_ends_with: String
-  receiverId_not_ends_with: String
-  sender: UserWhereInput
-  readDate: DateTime
-  readDate_not: DateTime
-  readDate_in: [DateTime!]
-  readDate_not_in: [DateTime!]
-  readDate_lt: DateTime
-  readDate_lte: DateTime
-  readDate_gt: DateTime
-  readDate_gte: DateTime
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [ConsumerNotificationWhereInput!]
-  OR: [ConsumerNotificationWhereInput!]
-  NOT: [ConsumerNotificationWhereInput!]
 }
 
 type CreditTransaction {
@@ -595,27 +374,25 @@ input FileWhereInput {
 scalar Json
 
 type Mutation {
-  deleteConsumerNotification(id: String!): Boolean
   followChannel(id: String!, unfollow: Boolean): ChannelProfile
   payForStream(id: String!): StreamProfile!
-  readConsumerNotification(id: String!, unRead: Boolean): ConsumerNotification!
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
   validateInAppPurchase(receipt: String!): UserSelf!
   cancelStream(id: String!): StreamSelf
-  deleteChannelNotification(id: String!): Boolean
   loginChannel(id: String!, code: String!): ChannelAuthPayload
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload): StreamSelf
-  readChannelNotification(id: String!, unRead: Boolean): ChannelNotification!
   registerChannel(name: String!, description: String!): RequestedChannel
   requestChannelLogin(id: String!): Boolean
   updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload): StreamSelf
   withdrawFunds: ChannelSelf
+  deleteNotification(id: String!): Boolean
   login(email: String!, password: String!): AuthPayload
   loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
   putStreamMessage(id: String!, message: String!): StreamMessageClient
+  readNotification(id: String!, unRead: Boolean): Notification!
   register(email: String!, password: String!): AuthPayload
   requestPasswordReset(email: String!): Boolean
   resetPassword(password: String!): AuthPayload
@@ -627,9 +404,121 @@ enum MutationType {
   DELETED
 }
 
+type Notification {
+  id: ID!
+  type: NOTIFICATION_TYPE
+  receiver: UserProfile
+  sender: UserProfile
+  channelReceiver: ChannelProfile
+  readDate: DateTime
+  createdAt: DateTime
+}
+
 enum NOTIFICATION_TYPE {
   PASSWORD_CHANGED
   REQUESTED_CHANNEL_APPROVED
+  CHANNEL_NOTIFICATION_TEST
+}
+
+enum NotificationOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  receiverId_ASC
+  receiverId_DESC
+  readDate_ASC
+  readDate_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type NotificationPreviousValues {
+  id: ID!
+  type: NOTIFICATION_TYPE!
+  receiverId: String!
+  readDate: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type NotificationsPayLoad {
+  notifications: [Notification!]!
+  count: Int!
+}
+
+type NotificationSubscriptionPayload {
+  mutation: MutationType!
+  node: Notification
+  updatedFields: [String!]
+  previousValues: NotificationPreviousValues
+}
+
+input NotificationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: NOTIFICATION_TYPE
+  type_not: NOTIFICATION_TYPE
+  type_in: [NOTIFICATION_TYPE!]
+  type_not_in: [NOTIFICATION_TYPE!]
+  receiver: UserWhereInput
+  receiverId: String
+  receiverId_not: String
+  receiverId_in: [String!]
+  receiverId_not_in: [String!]
+  receiverId_lt: String
+  receiverId_lte: String
+  receiverId_gt: String
+  receiverId_gte: String
+  receiverId_contains: String
+  receiverId_not_contains: String
+  receiverId_starts_with: String
+  receiverId_not_starts_with: String
+  receiverId_ends_with: String
+  receiverId_not_ends_with: String
+  sender: UserWhereInput
+  channelReceiver: ChannelWhereInput
+  readDate: DateTime
+  readDate_not: DateTime
+  readDate_in: [DateTime!]
+  readDate_not_in: [DateTime!]
+  readDate_lt: DateTime
+  readDate_lte: DateTime
+  readDate_gt: DateTime
+  readDate_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [NotificationWhereInput!]
+  OR: [NotificationWhereInput!]
+  NOT: [NotificationWhereInput!]
 }
 
 enum PLATFORM {
@@ -646,7 +535,6 @@ type Query {
   canViewStream(id: String!): Boolean!
   getChannelProfile(id: String!): ChannelProfile!
   getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
-  getConsumerNotifications(first: Int, after: String): ConsumerNotificationsPayLoad!
   getPaidForStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
   getSelf: UserSelf
@@ -658,12 +546,12 @@ type Query {
   validateResetToken: Boolean
   verifyUser: Boolean
   channelNameExists(name: String!): Boolean!
-  getChannelNotifications(first: Int, after: String): ChannelNotificationsPayLoad!
   getChannelSelf: ChannelSelf!
   getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
   getRequestedChannels(first: Int, after: String): RequestedChannelsPayLoad
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
+  getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
 }
 
@@ -1168,8 +1056,7 @@ input StreamWhereInput {
 }
 
 type Subscription {
-  consumerNotifications: ConsumerNotificationSubscriptionPayload
-  channelNotifications: ChannelNotificationSubscriptionPayload
+  notifications: NotificationSubscriptionPayload
   streamMessages(id: String!): StreamMessageClientSubscriptionPayload
 }
 
@@ -1192,7 +1079,7 @@ type User {
   profilePicture: File
   password: String
   verified: Boolean
-  notifications(where: ConsumerNotificationWhereInput, orderBy: ConsumerNotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ConsumerNotification!]
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   credit: Float!
   channelsFollowing(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
   channelsAdmin(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
@@ -1332,9 +1219,9 @@ input UserWhereInput {
   password_not_ends_with: String
   verified: Boolean
   verified_not: Boolean
-  notifications_every: ConsumerNotificationWhereInput
-  notifications_some: ConsumerNotificationWhereInput
-  notifications_none: ConsumerNotificationWhereInput
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   credit: Float
   credit_not: Float
   credit_in: [Float!]
