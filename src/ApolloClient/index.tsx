@@ -105,6 +105,7 @@ const generalTokenEndpoints = [
   'getSelf',
   'loginChannel',
   'payForStream',
+  'putStreamMessage',
   'readConsumerNotification',
   'registerChannel',
   'reportStream',
@@ -120,6 +121,8 @@ const generalTokenEndpoints = [
  * Attaches the current client-type to headers
  */
 const authMiddleware = setContext(async ({ operationName }, { headers }) => {
+  console.log('authMiddleware -> operationName', operationName);
+  console.log('authMiddleware -> headers', headers);
   /**
    * If access token is required
    * Get either a general or channel access token

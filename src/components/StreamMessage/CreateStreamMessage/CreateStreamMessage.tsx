@@ -6,6 +6,7 @@ import { getStreamMessagesVariables, getStreamMessages } from '../../../API/quer
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { getChannelToken } from '../../../ApolloClient';
 
 interface CreateStreamMessageProps {
   variables: getStreamMessagesVariables; // Variables for query to append to cache
@@ -71,8 +72,18 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
 
   /**
    * Handle submission
+   * Tries to getChannelToken from local state
+   * If no token exists null will be returned and ApolloClient will replace with a general token
    */
-  const onSubmit = () => mutation();
+  const onSubmit = async () => {
+    mutation({
+      context: {
+        headers: {
+          authorization: await getChannelToken(client),
+        },
+      },
+    });
+  };
 
 
   return (
