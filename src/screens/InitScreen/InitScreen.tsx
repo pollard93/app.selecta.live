@@ -2,20 +2,40 @@ import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
-import { goToLogin, goHome, goToRequireUpdateScreen } from '../utils';
-import { getToken } from '../../ApolloClient';
+import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack } from '../utils';
+import { getToken, getChannelToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
-import PushNotifications from '../../modules/PushNotifications';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import { useGetChannelSelfLazyQuery } from '../../API/query/getChannelSelf/getChannelSelf';
+import PushNotifications from '../../modules/PushNotifications';
 
 const InitScreen = () => {
   const client = useApolloClient();
+
+
+  /**
+   * Get channel self query
+   */
+  const [getChannelSelf] = useGetChannelSelfLazyQuery({
+    onCompleted: async () => {
+      // User is logged in as a channel, go to channel stack
+      goToChannelStack();
+    },
+    onError: () => {
+      goHome();
+    },
+    fetchPolicy: 'network-only',
+  });
+
 
   /**
    * Get self query
    */
   const [getSelfQuery] = useGetSelfLazyQuery({
-    onCompleted: ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+      // Bind notifications
+      PushNotifications.init(id);
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
@@ -24,15 +44,21 @@ const InitScreen = () => {
         return;
       }
 
-      // Bind notifications
-      PushNotifications.init(id);
+      // If there's no token go to ChannelSelfs
+      const channelToken = await getChannelToken(client);
+      if (!channelToken) {
+        // Navigate to home now getSelf is cached
+        goHome();
+        return;
+      }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Execute getChannelSelf which will try and use channel token in local storage from ApolloClient on request
+      getChannelSelf();
     },
     onError: () => {
-      goToLogin({});
+      goToLogin();
     },
+    fetchPolicy: 'network-only',
   });
 
 
@@ -44,7 +70,7 @@ const InitScreen = () => {
       // If there's no token go straight to login
       const token = await getToken(client);
       if (!token) {
-        goToLogin({});
+        goToLogin();
         return;
       }
 

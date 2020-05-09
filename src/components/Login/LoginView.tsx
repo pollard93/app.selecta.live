@@ -69,6 +69,12 @@ const LoginView = (props: LoginViewProps) => {
         disabled={props.loading}
       />
 
+      <Button
+        title='Register'
+        onPress={props.onRegister}
+        disabled={props.loading}
+      />
+
       <LoginWithFacebook />
       <LoginWithGoogle />
     </ScrollView>

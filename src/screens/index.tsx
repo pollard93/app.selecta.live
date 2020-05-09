@@ -12,6 +12,9 @@ import HomeScreen from './HomeScreen/HomeScreen';
 import RequireUpdateScreen from './RequireUpdateScreen/RequireUpdateScreen';
 import ResetPasswordScreen from './ResetPasswordScreen/ResetPasswordScreen';
 import RequestResetPasswordScreen from './RequestResetPasswordScreen/RequestResetPasswordScreen';
+import ModalScreen from './ModalScreen/ModalScreen';
+import ChannelScreen from './ChannelScreen/ChannelScreen';
+import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
 
 const wrapContext = (Component) => {
   const wrapped = (props) => (
@@ -38,4 +41,7 @@ export const registerScreens = () => {
   Navigation.registerComponent(RequireUpdateScreen.prototype.ScreenName, () => wrapContext(RequireUpdateScreen));
   Navigation.registerComponent(ResetPasswordScreen.prototype.ScreenName, () => wrapContext(ResetPasswordScreen));
   Navigation.registerComponent(RequestResetPasswordScreen.prototype.ScreenName, () => wrapContext(RequestResetPasswordScreen));
+  Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen));
+  Navigation.registerComponent(ChannelScreen.prototype.ScreenName, () => wrapContext(ChannelScreen));
+  Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen));
 };

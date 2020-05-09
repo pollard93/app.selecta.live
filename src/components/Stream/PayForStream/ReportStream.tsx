@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { useReportStreamMutation } from '../../../API/mutation/reportStream/reportStream';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-import Input from '../../UI/Input/Input';
+// import Input from '../../UI/Input/Input';
 
 interface ReportStreamProps {
   id: string;
@@ -52,23 +52,14 @@ const ReportStream = (props: ReportStreamProps) => {
    */
   return (
     <View>
-      <Input
-        type="text"
-        name="search"
-        required={false}
+      <TextInput
         value={content}
-        onChange={setContent}
-        textInputProps={{
-          placeholder: 'Enter message',
-          blurOnSubmit: true,
-          onSubmitEditing: () => mutation(),
-          returnKeyType: 'send',
-          editable: !loading,
-        }}
-        originalValue={null}
-        originalValid={null}
-        touched={null}
-        changed={null}
+        onChangeText={setContent}
+        placeholder='Enter message'
+        blurOnSubmit={true}
+        onSubmitEditing={() => mutation()}
+        returnKeyType="send"
+        editable={!loading}
       />
 
       <Button

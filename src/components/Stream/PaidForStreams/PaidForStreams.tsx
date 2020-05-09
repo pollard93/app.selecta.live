@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_PAID_FOR_STREAMS_QUERY } from '../../../API/query/getPaidForStreams/getPaidForStreams';
 import { getPaidForStreamsVariables, getPaidForStreams, getPaidForStreams_getPaidForStreams_streams } from '../../../API/query/getPaidForStreams/__generated__/getPaidForStreams';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamListItem from '../StreamListItem/StreamListItem';
-import Input from '../../UI/Input/Input';
 import styles from './PaidForStreams.styles';
 
 class PaidForStreamsFlatList extends ApolloFlatList<getPaidForStreamsVariables, getPaidForStreams, getPaidForStreams_getPaidForStreams_streams> {}
@@ -15,19 +14,11 @@ const PaidForStreams = () => {
 
   return (
     <View>
-      <Input
-        type="text"
-        name="search"
-        required={false}
+      <TextInput
         value={search}
-        onChange={setSearch}
-        textInputProps={{
-          placeholder: 'Search name',
-        }}
-        originalValue={null}
-        originalValid={null}
-        touched={null}
-        changed={null}
+        onChangeText={setSearch}
+        placeholder='Search name'
+        returnKeyType="done"
       />
 
       <PaidForStreamsFlatList
