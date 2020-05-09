@@ -5,6 +5,7 @@ export enum STACK {
   LOGIN = 'LOGIN',
   REQUIRE_UDPATE = 'REQUIRE_UDPATE',
   HOME = 'HOME',
+  CHANNEL = 'CHANNEL',
 }
 
 

@@ -35,7 +35,7 @@ const Login = (props: LoginProps) => {
 
   /**
    * Reset password deep linking
-   * Listens for live.selecta.app.consumer://reset-password/${token}
+   * Listens for live.selecta.app://reset-password/${token}
    * Pushes ResetPasswordScreen with token
    */
   useEffect(() => {
