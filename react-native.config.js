@@ -13,11 +13,5 @@ module.exports = {
         android: null,
       },
     },
-    // not used for ios
-    'react-native-music-control': {
-      platforms: {
-        ios: null,
-      },
-    },
   },
 };
