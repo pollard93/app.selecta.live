@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Button } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
-import { goToLogin } from '../utils';
+import { goToLogin, pushScreen } from '../utils';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import { useGetSelfQuery } from '../../API/query/getSelf/getSelf';
 import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeAccessToken/__generated__/removeAccessToken';
@@ -12,6 +12,8 @@ import ChannelSelfs from '../../components/Channel/ChannelSelfs/ChannelSelfs';
 import { removeChannelAccessToken } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
 import Toast from '../../components/UI/Toast/Toast';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
+import { ScreenProps, STACK } from '../utils/interfaces';
+import { StreamVideoScreenProps, StreamVideoScreenName } from '../StreamVideoScreen/StreamVideoScreen';
 
 export interface HomeScreenProps extends ScreenProps {
   toastMessage?: string;
@@ -65,6 +67,20 @@ const HomeScreen = (props: HomeScreenProps) => {
       >
         <Text>Logout</Text>
       </TouchableOpacity>
+
+      <Button
+        title="Watch video"
+        onPress={() => {
+          pushScreen<StreamVideoScreenProps>(STACK.HOME, {
+            component: {
+              name: StreamVideoScreenName,
+              passProps: {
+                id: 'test-id',
+              },
+            },
+          });
+        }}
+      />
 
       <Text>Channels:</Text>
       <ChannelSelfs />

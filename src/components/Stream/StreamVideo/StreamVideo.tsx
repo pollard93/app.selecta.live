@@ -13,6 +13,7 @@ const StreamVideo = (props: StreamVideoProps) => {
     variables: {
       id: props.data.id,
     },
+    fetchPolicy: 'network-only',
   });
 
 
@@ -29,8 +30,7 @@ const StreamVideo = (props: StreamVideoProps) => {
 
   return (
     <StreamVideoView
-      // url={queryResult.data.getStreamUrl}
-      url="http://192.168.1.19:8080/live/ck9fhvccj001e0712yfzebofu/fZA1SiuYll0FCIzvmJw2Ig/1588169981/test-id.m3u8"
+      url={queryResult.data.getStreamUrl}
       data={props.data}
     />
   );

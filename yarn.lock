@@ -15360,6 +15360,11 @@ react-native-iap@^4.4.3:
   dependencies:
     dooboolab-welcome "^1.1.1"
 
+react-native-music-control@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-music-control/-/react-native-music-control-0.11.0.tgz#571a8907843968478a8d4122d678c991e85cb3f9"
+  integrity sha512-BArIw7kK9eL4mj5jk3RmBFVMmz5rlJmXxD9KHurXYvKae5smdW1UK7RNtZaDfX2vFrGIjnMxCr/o95aBJthCrw==
+
 react-native-navigation@6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-6.4.0.tgz#bc7af1b32cc69143e186c4996b787a58a600776f"

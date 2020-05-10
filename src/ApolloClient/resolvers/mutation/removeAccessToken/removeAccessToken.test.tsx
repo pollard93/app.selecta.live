@@ -10,6 +10,7 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../putAccessToken/putAccessTokenMutat
 import { getAccessToken } from '../../query/getAccessToken/__generated__/getAccessToken';
 import { GET_ACCESS_TOKEN_QUERY } from '../../query/getAccessToken/getAccessTokenQuery';
 import PushNotifications from '../../../../modules/PushNotifications';
+import InAppPurchases from '../../../../modules/InAppPurchases';
 
 const client = mockClient();
 
@@ -26,7 +27,8 @@ describe('removeAccessToken tests', () => {
     });
 
     // Create spy on Pushnotificatons.disconnect()
-    const spy = Sinon.spy(PushNotifications, 'disconnect');
+    const pushNotificationDisconnectSpy = Sinon.stub(PushNotifications, 'disconnect');
+    const inAppPurchasesDisconnectSpy = Sinon.stub(InAppPurchases, 'disconnect');
 
     /**
      * Make request
@@ -52,6 +54,7 @@ describe('removeAccessToken tests', () => {
     expect(await store(LOCAL_AUTH_KEY)).to.equal(null);
 
     // Test spy called
-    expect(spy.called).to.be.true;
+    expect(pushNotificationDisconnectSpy.called).to.be.true;
+    expect(inAppPurchasesDisconnectSpy.called).to.be.true;
   });
 });

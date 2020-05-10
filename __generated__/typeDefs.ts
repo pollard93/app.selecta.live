@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat May 09 2020 12:25:36 GMT+0100 (British Summer Time)
+# timestamp: Sat May 09 2020 13:32:20 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -810,6 +810,7 @@ type StreamProfile {
   name: String
   image: File
   isConsumer: Boolean
+  liveConsumersEdge: Int
 }
 
 type StreamProfilesPayLoad {

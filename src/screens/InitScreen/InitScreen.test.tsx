@@ -14,6 +14,7 @@ import * as AClientModule from '../../ApolloClient';
 import * as ScreenUtilsModule from '../utils';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
 import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<InitScreen >', () => {
   /**
