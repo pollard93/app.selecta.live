@@ -112,6 +112,7 @@ const generalTokenEndpoints = [
   'requestChannelLogin',
   'requestPasswordReset',
   'updateSelf',
+  'getProductConfig',
 ];
 
 

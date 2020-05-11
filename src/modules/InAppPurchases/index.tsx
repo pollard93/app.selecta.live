@@ -44,6 +44,7 @@ class InAppPurchases {
    * This can be anytime after a purchase
    */
   private static async purchaseUpdated(purchase) {
+    console.log('InAppPurchases -> purchaseUpdated -> purchase', purchase);
     /**
      * Get receipt from transaction
      */
