@@ -1,0 +1,41 @@
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: STREAM_SELF_FRAGMENT
+// ====================================================
+
+export interface STREAM_SELF_FRAGMENT_image_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface STREAM_SELF_FRAGMENT_image {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: STREAM_SELF_FRAGMENT_image_url | null;
+}
+
+export interface STREAM_SELF_FRAGMENT {
+  __typename: "StreamSelf";
+  id: string;
+  name: string | null;
+  info: string | null;
+  image: STREAM_SELF_FRAGMENT_image | null;
+  timeFrom: any | null;
+  timeTo: any | null;
+  cost: number | null;
+  cancelled: any | null;
+  password: string | null;
+  creditRevenuePending: number | null;
+  creditRevenue: number | null;
+  consumersEdge: number | null;
+  liveConsumersEdge: number | null;
+  streamKey: string | null;
+  streamUrl: string | null;
+}

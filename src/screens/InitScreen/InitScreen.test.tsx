@@ -12,6 +12,8 @@ import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAc
 import InitScreen from './InitScreen';
 import * as AClientModule from '../../ApolloClient';
 import * as ScreenUtilsModule from '../utils';
+import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
+import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
 import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<InitScreen >', () => {
@@ -22,9 +24,11 @@ describe('<InitScreen >', () => {
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-  let goToLoginSpy = sandbox.stub(ScreenUtilsModule, 'goToLogin');
-  let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-  let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
+  let goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
+  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+  let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
+  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(async () => {
     sandbox.restore();
@@ -32,9 +36,11 @@ describe('<InitScreen >', () => {
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-    goToLoginSpy = sandbox.stub(ScreenUtilsModule, 'goToLogin');
-    goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-    goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
+    goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
+    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
+    goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
+    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
 
@@ -51,7 +57,20 @@ describe('<InitScreen >', () => {
   };
 
 
-  it('should goToLogin with no stored token', async () => {
+  /**
+   * Utility to write getChannelAccessToken query
+   */
+  const writeChannelTokenToCache = (client: ApolloClient<any>) => {
+    client.writeQuery<getChannelAccessToken>({
+      query: GET_CHANNEL_ACCESS_TOKEN_QUERY,
+      data: {
+        getChannelAccessToken: 'token',
+      },
+    });
+  };
+
+
+  it('should goToLogin with no stored general token', async () => {
     const client = mockClient();
 
     const wrapper = mount(
@@ -66,7 +85,7 @@ describe('<InitScreen >', () => {
     expect(goToLoginSpy.callCount).to.equal(1);
   });
 
-  it('should goHome with stored token', async () => {
+  it('should goHome with stored general token', async () => {
     const client = mockClient();
 
     // Store general token
@@ -80,10 +99,34 @@ describe('<InitScreen >', () => {
     wrapper.update();
     await wait(0);
 
+    expect(getTokenSpy.callCount).to.equal(1);
     expect(pushNotificationInitSpy.callCount).to.equal(1);
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
     expect(getTokenSpy.callCount).to.equal(1);
+    expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
+  });
+
+  it('should goToChannelStack with stored general and channel token', async () => {
+    const client = mockClient();
+
+    // Store general and channel token
+    writeGeneralTokenToCache(client);
+    writeChannelTokenToCache(client);
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <InitScreen />
+      </ApolloProvider>,
+    );
+    wrapper.update();
+    await wait(0);
+    await wait(0);
+
+    expect(getTokenSpy.callCount).to.equal(1);
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+    expect(getChannelTokenSpy.callCount).to.equal(1);
+    expect(goToChannelStackSpy.callCount).to.equal(1);
   });
 
   it('should goToLogin with stored expired general token', async () => {
@@ -110,9 +153,43 @@ describe('<InitScreen >', () => {
     await wait(0);
     await wait(0);
     await wait(0);
+    await wait(0);
 
     expect(getTokenSpy.callCount).to.equal(1);
     expect(goToLoginSpy.callCount).to.equal(1);
+  });
+
+  it('should goHome with stored general token and expired channel token', async () => {
+    /**
+     * Create mock client and force getChannelSelf to error
+     */
+    const client = mockClient({
+      Query: () => ({
+        getChannelSelf: () => {
+          throw new Error('');
+        },
+      }),
+    });
+
+    // Store general and channel token
+    writeGeneralTokenToCache(client);
+    writeChannelTokenToCache(client);
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <InitScreen />
+      </ApolloProvider>,
+    );
+    wrapper.update();
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
+
+    expect(getTokenSpy.callCount).to.equal(1);
+    expect(getChannelTokenSpy.callCount).to.equal(1);
+    expect(goHomeSpy.callCount).to.equal(1);
   });
 
   it('should goToRequireUpdateScreen if getSelf.requiresUpdate is true', async () => {
@@ -139,6 +216,10 @@ describe('<InitScreen >', () => {
       </ApolloProvider>,
     );
     wrapper.update();
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
     await wait(0);
 
     // Pushnotifications should have been initialised

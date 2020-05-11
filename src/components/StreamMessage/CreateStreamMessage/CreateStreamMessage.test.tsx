@@ -10,6 +10,7 @@ import mockClient from '../../../API/utils/mockClient';
 import CreateStreamMessage from './CreateStreamMessage';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessages, getStreamMessagesVariables } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
+import * as AClientModule from '../../../ApolloClient';
 
 
 describe('<CreateStreamMessage />', () => {
@@ -18,12 +19,15 @@ describe('<CreateStreamMessage />', () => {
    */
   const sandbox = Sinon.createSandbox();
   let toastSpy = sandbox.spy(useToast(), 'push');
+  let getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
 
   afterEach(() => {
     sandbox.restore();
 
     toastSpy = sandbox.spy(useToast(), 'push');
+    getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
   });
+
 
   test('should succeed', async () => {
     const client = mockClient();
@@ -70,6 +74,7 @@ describe('<CreateStreamMessage />', () => {
 
     // Press button
     wrapper.find(Button).first().props().onPress({} as any);
+    await wait(0);
     wrapper.update();
 
     // Button should now not be disabled as request is loading
@@ -78,6 +83,9 @@ describe('<CreateStreamMessage />', () => {
     // Wait for request
     await wait(0);
     wrapper.update();
+
+    // Test getChannelToken was called
+    expect(getChannelTokenSpy.callCount).to.equal(1);
 
     // Textinput value should have been reset and button should still be disabled
     expect(wrapper.find(TextInput).first().props().value).to.equal('');

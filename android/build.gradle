@@ -7,16 +7,19 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         googlePlayServicesAuthVersion = "16.0.1"
+        RNNKotlinVersion = "1.3.61" // Or any version above 1.3.x
+        RNNKotlinStdlib = "kotlin-stdlib-jdk8"
     }
     repositories {
         google()
+        jcenter()
         mavenLocal()
         mavenCentral()
-        jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.4.2")
-        classpath("com.google.gms:google-services:4.1.0")
+        classpath 'com.google.gms:google-services:4.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61" // Or whatever Kotlin version you've specified above
+        classpath("com.android.tools.build:gradle:3.5.2")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -25,9 +28,7 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         mavenLocal()
-        jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
@@ -36,31 +37,9 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
-        maven { url 'https://jitpack.io' }
 
-    }
-}
-
-subprojects { subproject ->
-    afterEvaluate {
-        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
-            android {
-                compileSdkVersion rootProject.ext.compileSdkVersion
-                buildToolsVersion rootProject.ext.buildToolsVersion
-
-                variantFilter { variant ->
-                    def names = variant.flavors*.name
-                    if (
-                        names.contains("reactNative51") ||
-                        names.contains("reactNative55") ||
-                        names.contains("reactNative56") ||
-                        names.contains("reactNative57") ||
-                        names.contains("reactNative57_5")
-                    ) {
-                        setIgnore(true)
-                    }
-                }
-            }
-        }
+        google()
+        jcenter()
+        maven { url 'https://www.jitpack.io' }
     }
 }

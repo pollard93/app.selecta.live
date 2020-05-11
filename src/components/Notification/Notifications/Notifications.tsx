@@ -1,0 +1,57 @@
+/* eslint-disable max-len */
+import React from 'react';
+import { View, Text } from 'react-native';
+import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
+import { GET_NOTIFICATIONS_QUERY } from '../../../API/query/getNotifications/getNotifications';
+import { getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications } from '../../../API/query/getNotifications/__generated__/getNotifications';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import NotificationListItem from '../NotificationListItem/NotificationListItem';
+import styles from './Notifications.styles';
+import { NOTIFICATIONS_SUBSCRIPTION } from '../../../API/subscription/notifications/notifications';
+import { notifications } from '../../../API/subscription/notifications/__generated__/notifications';
+
+class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
+
+const Notifications = () => (
+  <NotificationsFlatList
+    query={GET_NOTIFICATIONS_QUERY}
+    variables={{
+      first: 5,
+    }}
+    accessor='getNotifications.notifications'
+    renderItem={({ item }) => (
+      <View style={styles.item}>
+        <NotificationListItem data={item} />
+      </View>
+    )}
+    LoadingErrorComponent={(queryResult) => <LoadRetry {...queryResult} />}
+    ListHeaderComponent={() => (
+      <Text>HEADER</Text>
+    )}
+    ListFooterComponent={(moreToLoad) => (
+      <Text>{moreToLoad ? 'LOADING' : 'NO MORE TO LOAD'}</Text>
+    )}
+    subscriptionOptions={{
+      document: NOTIFICATIONS_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        // Only want to insert created nodes
+        if (subscriptionData.data.notifications.mutation !== 'CREATED') return prev;
+
+        try {
+          return {
+            ...prev,
+            getNotifications: {
+              ...prev.getNotifications,
+              notifications: [subscriptionData.data.notifications.node, ...prev.getNotifications.notifications],
+              count: prev.getNotifications.count + 1,
+            },
+          };
+        } catch (e) {
+          return prev;
+        }
+      },
+    }}
+  />
+);
+
+export default Notifications;

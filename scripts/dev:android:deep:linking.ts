@@ -20,5 +20,5 @@ void (async function () {
     process.exit(0);
   }
 
-  await exec(`adb shell am start -W -a android.intent.action.VIEW -d "${url}" live.selecta.app.consumer.debug`);
+  await exec(`adb shell am start -W -a android.intent.action.VIEW -d "${url}" live.selecta.app.debug`);
 }());

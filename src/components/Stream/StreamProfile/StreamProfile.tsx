@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import AsyncImage from 'mbp-components-rn-asyncimage';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 
@@ -35,7 +35,7 @@ const StreamProfile = (props: StreamProfileProps) => {
         splashUrl={getStreamProfile.image?.url?.splash}
         fullUrl={getStreamProfile.image?.url?.full}
         // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icon.jpg')}
+        placeholderImageSource={require('../../../../icons/icon.jpg')}
         containerProps={{
           style: {
             width: 100,

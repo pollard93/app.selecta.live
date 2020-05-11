@@ -18,7 +18,6 @@ void (async function () {
    * Get all @3x images and process
    */
   glob(dir || 'src/assets/images/**/*@3x.png', null, async (err, files) => {
-    console.log('files', files);
     if (err) {
       console.error(err);
       process.exit(0);

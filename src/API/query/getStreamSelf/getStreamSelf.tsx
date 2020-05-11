@@ -1,0 +1,15 @@
+import gql from 'graphql-tag';
+import { useQuery, QueryHookOptions } from 'react-apollo';
+import { getStreamSelf } from './__generated__/getStreamSelf';
+import { STREAM_SELF_FRAGMENT } from '../../fragments/StreamSelf';
+
+export const GET_STREAM_SELF_QUERY = gql`
+  query getStreamSelf($id: String!){
+    getStreamSelf(id: $id){
+      ...STREAM_SELF_FRAGMENT
+    }
+  },
+  ${STREAM_SELF_FRAGMENT}
+`;
+
+export const useGetStreamSelfQuery = (options?: QueryHookOptions<getStreamSelf>) => useQuery(GET_STREAM_SELF_QUERY, options);

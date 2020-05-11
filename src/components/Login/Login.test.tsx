@@ -24,9 +24,7 @@ describe('<Login >', () => {
    */
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
-  let pushNotificationDisconnectSpy = sandbox.stub(PushNotifications, 'disconnect');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let inAppPurchasesDisconnectSpy = sandbox.stub(InAppPurchases, 'disconnect');
   let toastSpy = sandbox.stub(useToast(), 'push');
   let splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
@@ -36,9 +34,7 @@ describe('<Login >', () => {
     sandbox.restore();
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
-    pushNotificationDisconnectSpy = sandbox.stub(PushNotifications, 'disconnect');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    inAppPurchasesDisconnectSpy = sandbox.stub(InAppPurchases, 'disconnect');
     toastSpy = sandbox.stub(useToast(), 'push');
     splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
@@ -153,13 +149,6 @@ describe('<Login >', () => {
      */
 
     expect(toastSpy.callCount).to.equal(1);
-
-
-    /**
-     * Should disconnect pushNotifications and inAppPurchases
-     */
-    expect(pushNotificationDisconnectSpy.callCount).to.equal(1);
-    expect(inAppPurchasesDisconnectSpy.callCount).to.equal(1);
 
 
     /**

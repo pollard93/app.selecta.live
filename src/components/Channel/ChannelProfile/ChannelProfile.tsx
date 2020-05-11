@@ -35,7 +35,7 @@ const ChannelProfile = (props: ChannelProfileProps) => {
         splashUrl={getChannelProfile.profileImage?.url?.splash}
         fullUrl={getChannelProfile.profileImage?.url?.full}
         // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icon.jpg')}
+        placeholderImageSource={require('../../../../icons/icon.jpg')}
         containerProps={{
           style: {
             width: 100,

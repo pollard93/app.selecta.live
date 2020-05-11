@@ -79,7 +79,7 @@ platform :android do
 
     upload_to_play_store(
       track: 'internal',
-      package_name: 'com.madebyprism.mbprncore.beta',
+      package_name: 'live.selecta.app.beta',
       apk: "./app/build/outputs/apk/releaseBeta/app-releaseBeta.apk",
     )
   end
