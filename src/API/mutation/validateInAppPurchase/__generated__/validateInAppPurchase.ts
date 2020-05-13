@@ -17,5 +17,5 @@ export interface validateInAppPurchase {
 }
 
 export interface validateInAppPurchaseVariables {
-  receipt: string;
+  receipt: any;
 }

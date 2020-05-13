@@ -113,6 +113,7 @@ const generalTokenEndpoints = [
   'requestPasswordReset',
   'updateSelf',
   'getProductConfig',
+  'validateInAppPurchase',
 ];
 
 
