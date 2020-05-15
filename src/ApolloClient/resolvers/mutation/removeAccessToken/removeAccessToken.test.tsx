@@ -26,7 +26,7 @@ describe('removeAccessToken tests', () => {
       },
     });
 
-    // Create spy on Pushnotificatons.disconnect()
+    // Create spies
     const pushNotificationDisconnectSpy = Sinon.stub(PushNotifications, 'disconnect');
     const inAppPurchasesDisconnectSpy = Sinon.stub(InAppPurchases, 'disconnect');
 
@@ -54,7 +54,7 @@ describe('removeAccessToken tests', () => {
     expect(await store(LOCAL_AUTH_KEY)).to.equal(null);
 
     // Test spy called
-    expect(pushNotificationDisconnectSpy.called).to.be.true;
-    expect(inAppPurchasesDisconnectSpy.called).to.be.true;
+    expect(pushNotificationDisconnectSpy.callCount).to.equal(1);
+    expect(inAppPurchasesDisconnectSpy.callCount).to.equal(1);
   });
 });

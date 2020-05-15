@@ -14,6 +14,7 @@ import Toast from '../../components/UI/Toast/Toast';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
 import { ScreenProps, STACK } from '../utils/interfaces';
 import { StreamVideoScreenProps, StreamVideoScreenName } from '../StreamVideoScreen/StreamVideoScreen';
+import { PurchasesScreenName } from '../PurchasesScreen/PurchasesScreen';
 
 export interface HomeScreenProps extends ScreenProps {
   toastMessage?: string;
@@ -67,6 +68,17 @@ const HomeScreen = (props: HomeScreenProps) => {
       >
         <Text>Logout</Text>
       </TouchableOpacity>
+
+      <Button
+        title="Purchases"
+        onPress={() => {
+          pushScreen(STACK.HOME, {
+            component: {
+              name: PurchasesScreenName,
+            },
+          });
+        }}
+      />
 
       <Button
         title="Watch video"

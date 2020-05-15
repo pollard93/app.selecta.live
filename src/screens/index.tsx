@@ -15,6 +15,7 @@ import ToastProvider from '../modules/ToastProvider/ToastProvider';
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelScreen from './ChannelScreen/ChannelScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
+import PurchasesScreen from './PurchasesScreen/PurchasesScreen';
 import StreamVideoScreen from './StreamVideoScreen/StreamVideoScreen';
 
 const wrapContext = (screenName, Component) => {
@@ -45,5 +46,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen.prototype.ScreenName, ModalScreen));
   Navigation.registerComponent(ChannelScreen.prototype.ScreenName, () => wrapContext(ChannelScreen.prototype.ScreenName, ChannelScreen));
   Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen.prototype.ScreenName, ChannelLoginScreen));
+  Navigation.registerComponent(PurchasesScreen.prototype.ScreenName, () => wrapContext(PurchasesScreen.prototype.ScreenName, PurchasesScreen));
   Navigation.registerComponent(StreamVideoScreen.prototype.ScreenName, () => wrapContext(StreamVideoScreen.prototype.ScreenName, StreamVideoScreen));
 };

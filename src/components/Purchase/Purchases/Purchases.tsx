@@ -14,7 +14,7 @@ interface Product extends RNIap.Product {
 const Purchases = () => {
   const client = useApolloClient();
   const { data: { getSelf } } = useGetSelfQuery();
-  const [availableProducts, setAvailableProducts] = useState<Product[]>();
+  const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -35,6 +35,7 @@ const Purchases = () => {
        */
       const { data } = await client.query<getProductConfig>({
         query: GET_PRODUCT_CONFIG_QUERY,
+        fetchPolicy: 'network-only',
       });
 
 
@@ -100,7 +101,7 @@ const Purchases = () => {
 
 
   return (
-    <View>
+    <View style={{ backgroundColor: 'white' }}>
       <Text>Current credit: {getSelf.credit}</Text>
       {availableProducts.map((a) => (
         <TouchableOpacity

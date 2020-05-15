@@ -21,6 +21,7 @@
 		508DD67970DE4C61A3C26821 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D5D781BCD421295B36863 /* Inter-Regular.ttf */; };
 		60F3595EB549FB095541DD8F /* libPods-selectaLive-selectaLiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */; };
 		6763E96B58CE73517F23EFBF /* libPods-selectaLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24571C3AD69B927539C0832E /* libPods-selectaLive.a */; };
+		BC2678FC2469665900969C42 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2678FB2469665900969C42 /* StoreKit.framework */; };
 		BC4246E2233F78F200A52916 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4246E1233F78F200A52916 /* NotificationService.m */; };
 		BC4246E6233F78F200A52916 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
@@ -103,6 +104,7 @@
 		9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-selectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		AF518C5256E127C943DD2B61 /* Pods-selectaLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.debug.xcconfig"; sourceTree = "<group>"; };
+		BC2678FB2469665900969C42 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BC4246D9233F78A100A52916 /* selectaLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.entitlements; path = selectaLive/selectaLive.entitlements; sourceTree = "<group>"; };
 		BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4246E0233F78F200A52916 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6763E96B58CE73517F23EFBF /* libPods-selectaLive.a in Frameworks */,
+				BC2678FC2469665900969C42 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +217,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BC2678FB2469665900969C42 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				24571C3AD69B927539C0832E /* libPods-selectaLive.a */,
@@ -886,7 +890,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.debug.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;

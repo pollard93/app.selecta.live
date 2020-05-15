@@ -37,7 +37,7 @@ const InitScreen = () => {
       // Bind notifications
       PushNotifications.init(id);
 
-      // Bind in app purchases
+      // Bind inAppPurchases
       InAppPurchases.init();
 
       /**

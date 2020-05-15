@@ -101,6 +101,8 @@ describe('<InitScreen >', () => {
 
     expect(getTokenSpy.callCount).to.equal(1);
     expect(pushNotificationInitSpy.callCount).to.equal(1);
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+    expect(getTokenSpy.callCount).to.equal(1);
     expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
   });

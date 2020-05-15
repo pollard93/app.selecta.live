@@ -15353,10 +15353,10 @@ react-native-fbsdk@^1.1.2:
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-1.1.2.tgz#4264903add869d05b84ef55ade9ff720c2957781"
   integrity sha512-Sp+oja868QVsB5vpEFbwZkEcCJOSBuZgh7UGJzUhaoTCs/zwSUHA6b4QichM7GiTxtQyKfT/F31DtvLj2N/qAQ==
 
-react-native-iap@^4.4.3:
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.4.3.tgz#16c174b569caf3e401a4c756de249ef64dada7a9"
-  integrity sha512-vywdYj61i/F3Qw+o1U130ap77AYYkyFX3ioDnl5UzOd3xmoo2/uH36FPdlKrFZUmdYdMySoV+AYJDLh5T5ihWw==
+react-native-iap@^4.4.8:
+  version "4.4.8"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.4.8.tgz#34404d844b1c3e203ec25763576ea4f36de665b9"
+  integrity sha512-W4d3XuBFY4hgR/dAEjKR2OqsyhaJo2AdFv+KdYEYR5HntEZBfBHVeZL4sKsaVgEvN4QwPfbOKCZk/eHr5RgppA==
   dependencies:
     dooboolab-welcome "^1.1.1"
 
