@@ -103,6 +103,8 @@ const generalTokenEndpoints = [
   'followChannel',
   'getChannelSelfs',
   'getSelf',
+  'getStreamProfile',
+  'getStreamUrl',
   'loginChannel',
   'payForStream',
   'putStreamMessage',

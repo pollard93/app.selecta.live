@@ -1,19 +1,19 @@
 import React from 'react';
-// import Video from 'react-native-video';
-import Config from 'react-native-config';
 import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import styles from './StreamVideo.styles';
+import StreamVideoView from './StreamVideoView';
+import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 
 interface StreamVideoProps {
-  id: string;
+  data: getStreamProfile_getStreamProfile;
 }
 
 const StreamVideo = (props: StreamVideoProps) => {
   const queryResult = useGetStreamUrlQuery({
     variables: {
-      id: props.id,
+      id: props.data.id,
     },
+    fetchPolicy: 'network-only',
   });
 
 
@@ -28,7 +28,12 @@ const StreamVideo = (props: StreamVideoProps) => {
   }
 
 
-  return null;
+  return (
+    <StreamVideoView
+      url={queryResult.data.getStreamUrl}
+      data={props.data}
+    />
+  );
 };
 
 export default StreamVideo;

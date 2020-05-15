@@ -181,10 +181,6 @@ const Login = (props: LoginProps) => {
       mutation: REMOVE_ACCESS_TOKEN_MUTATION,
     });
 
-    // Disconnect push notifications and in app purchases
-    PushNotifications.disconnect();
-    InAppPurchases.disconnect();
-
     // Hide splash screen
     SplashScreen.hide();
   }, []);

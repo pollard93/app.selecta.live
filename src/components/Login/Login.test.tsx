@@ -275,12 +275,6 @@ describe('<Login >', () => {
     await wait(0);
     wrapper.update();
 
-    // Pushnotifications should have been initialised
-    expect(pushNotificationInitSpy.callCount).to.equal(1);
-
-    // Pushnotifications should have been initialised
-    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
-
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
 
