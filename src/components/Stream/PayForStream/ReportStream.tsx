@@ -4,7 +4,6 @@ import { useToast } from 'mbp-components-rn-toast';
 import { useReportStreamMutation } from '../../../API/mutation/reportStream/reportStream';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-// import Input from '../../UI/Input/Input';
 
 interface ReportStreamProps {
   id: string;

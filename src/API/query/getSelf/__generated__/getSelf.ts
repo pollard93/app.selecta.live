@@ -32,6 +32,7 @@ export interface getSelf_getSelf {
   id: string;
   name: string | null;
   email: string | null;
+  credit: number | null;
   profilePicture: getSelf_getSelf_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: getSelf_getSelf_requiresUpdate | null;

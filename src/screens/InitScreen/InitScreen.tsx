@@ -8,6 +8,7 @@ import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfLazyQuery } from '../../API/query/getChannelSelf/getChannelSelf';
 import PushNotifications from '../../modules/PushNotifications';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 const InitScreen = () => {
   const client = useApolloClient();
@@ -35,6 +36,9 @@ const InitScreen = () => {
     onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
+
+      // Bind inAppPurchases
+      InAppPurchases.init();
 
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen

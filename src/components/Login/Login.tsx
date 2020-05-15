@@ -21,6 +21,7 @@ import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens
 import { RequestPasswordResetScreenName } from '../../screens/RequestResetPasswordScreen/RequestResetPasswordScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 export interface LoginProps {
   toastMessage?: string;
@@ -102,6 +103,9 @@ const Login = (props: LoginProps) => {
       // Bind notifications
       PushNotifications.init(id);
 
+      // Bind in app purchases
+      InAppPurchases.init();
+
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
@@ -177,6 +181,11 @@ const Login = (props: LoginProps) => {
       mutation: REMOVE_ACCESS_TOKEN_MUTATION,
     });
 
+    // Disconnect push notifications and in app purchases
+    PushNotifications.disconnect();
+    InAppPurchases.disconnect();
+
+    // Hide splash screen
     SplashScreen.hide();
   }, []);
 

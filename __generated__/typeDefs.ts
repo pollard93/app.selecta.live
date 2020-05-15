@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri May 08 2020 11:27:39 GMT+0100 (British Summer Time)
+# timestamp: Mon May 11 2020 19:43:31 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -379,7 +379,7 @@ type Mutation {
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
-  validateInAppPurchase(receipt: String!): UserSelf!
+  validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
   loginChannel(id: String!, code: String!): ChannelAuthPayload
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload): StreamSelf
@@ -810,6 +810,7 @@ type StreamProfile {
   name: String
   image: File
   isConsumer: Boolean
+  liveConsumersEdge: Int
 }
 
 type StreamProfilesPayLoad {

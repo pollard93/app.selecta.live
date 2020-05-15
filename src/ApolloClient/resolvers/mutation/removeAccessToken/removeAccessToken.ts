@@ -2,6 +2,7 @@ import { store } from '../../../../utils/storage';
 import { LocalResolver } from '../../types';
 import { LOCAL_AUTH_KEY } from '../putAccessToken/putAccessToken';
 import PushNotifications from '../../../../modules/PushNotifications';
+import InAppPurchases from '../../../../modules/InAppPurchases';
 
 /**
  * Resets cache, thus removing the access token
@@ -17,6 +18,7 @@ const removeAccessToken: LocalResolver<null, boolean> = async (_, args, { cache 
 
   // Disconnect notifications
   PushNotifications.disconnect();
+  InAppPurchases.disconnect();
 
   return true;
 };

@@ -7287,6 +7287,11 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+dooboolab-welcome@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.1.1.tgz#ca2184f6e1f568865d707a6ce3bda7e003550f54"
+  integrity sha512-tQ/9NBCGnalHwKOBjDqTD4t4wQpDfSSbxQGctzkzaLHR3AhN0wCBkIs05JciVtvl/jfLZ+DgAndktAMk3Bu7Vw==
+
 dot-case@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/dot-case/-/dot-case-2.1.1.tgz#34dcf37f50a8e93c2b3bca8bb7fb9155c7da3bee"
@@ -15337,6 +15342,13 @@ react-native-fbsdk@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-1.1.2.tgz#4264903add869d05b84ef55ade9ff720c2957781"
   integrity sha512-Sp+oja868QVsB5vpEFbwZkEcCJOSBuZgh7UGJzUhaoTCs/zwSUHA6b4QichM7GiTxtQyKfT/F31DtvLj2N/qAQ==
+
+react-native-iap@^4.4.8:
+  version "4.4.8"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.4.8.tgz#34404d844b1c3e203ec25763576ea4f36de665b9"
+  integrity sha512-W4d3XuBFY4hgR/dAEjKR2OqsyhaJo2AdFv+KdYEYR5HntEZBfBHVeZL4sKsaVgEvN4QwPfbOKCZk/eHr5RgppA==
+  dependencies:
+    dooboolab-welcome "^1.1.1"
 
 react-native-navigation@6.4.0:
   version "6.4.0"

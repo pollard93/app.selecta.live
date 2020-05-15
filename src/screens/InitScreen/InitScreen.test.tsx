@@ -14,13 +14,15 @@ import * as AClientModule from '../../ApolloClient';
 import * as ScreenUtilsModule from '../utils';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
 import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<InitScreen >', () => {
   /**
    * Define sandbox and spies
    */
   const sandbox = sinon.createSandbox();
-  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+  let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+  let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let getTokenSpy = sandbox.spy(AClientModule, 'getToken');
   let getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
   let goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
@@ -31,7 +33,8 @@ describe('<InitScreen >', () => {
   afterEach(async () => {
     sandbox.restore();
 
-    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
+    pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+    inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     getTokenSpy = sandbox.spy(AClientModule, 'getToken');
     getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
     goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
@@ -98,6 +101,8 @@ describe('<InitScreen >', () => {
 
     expect(getTokenSpy.callCount).to.equal(1);
     expect(pushNotificationInitSpy.callCount).to.equal(1);
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+    expect(getTokenSpy.callCount).to.equal(1);
     expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
   });
@@ -216,6 +221,12 @@ describe('<InitScreen >', () => {
     await wait(0);
     await wait(0);
     await wait(0);
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);

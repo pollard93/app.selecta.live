@@ -15,6 +15,7 @@ import PushNotifications from '../../../../modules/PushNotifications';
 import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import * as ScreenUtilsModule from '../../../../screens/utils';
+import InAppPurchases from '../../../../modules/InAppPurchases';
 
 describe('<LoginWithFacebook />', () => {
   /**
@@ -24,10 +25,11 @@ describe('<LoginWithFacebook />', () => {
   let loginWithPermissionsSpy = sandbox.spy(LoginManager as any, 'logInWithPermissions');
   let logoutSpy = sandbox.spy(LoginManager as any, 'logOut');
   let getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
-  let pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
-  let toastSpy = sandbox.spy(useToast(), 'push');
-  let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-  let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+  let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
+  let toastSpy = sandbox.stub(useToast(), 'push');
+  let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+  let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
     sandbox.restore();
@@ -35,10 +37,11 @@ describe('<LoginWithFacebook />', () => {
     loginWithPermissionsSpy = sandbox.spy(LoginManager as any, 'logInWithPermissions');
     logoutSpy = sandbox.spy(LoginManager as any, 'logOut');
     getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
-    pushNotificationInitSpy = sandbox.spy(PushNotifications, 'init');
-    toastSpy = sandbox.spy(useToast(), 'push');
-    goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-    goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+    inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
+    toastSpy = sandbox.stub(useToast(), 'push');
+    goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+    goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
   it('should succeed', async () => {
@@ -86,7 +89,10 @@ describe('<LoginWithFacebook />', () => {
     expect(typeof gs.getSelf.id).to.equal('string');
 
     // Pushnotifications should have been initialised
-    expect(pushNotificationInitSpy.called).to.be.true;
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
@@ -196,6 +202,12 @@ describe('<LoginWithFacebook />', () => {
     // Wait for response and update
     await wait(0);
     wrapper.update();
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
