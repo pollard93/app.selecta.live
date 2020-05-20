@@ -6,8 +6,14 @@
 // GraphQL query operation: getStreamUrl
 // ====================================================
 
+export interface getStreamUrl_getStreamUrl {
+  __typename: "StreamUrlPayload";
+  audio: string | null;
+  video: string | null;
+}
+
 export interface getStreamUrl {
-  getStreamUrl: string;
+  getStreamUrl: getStreamUrl_getStreamUrl;
 }
 
 export interface getStreamUrlVariables {

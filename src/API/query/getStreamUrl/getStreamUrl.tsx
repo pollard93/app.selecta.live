@@ -4,7 +4,10 @@ import { getStreamUrl } from './__generated__/getStreamUrl';
 
 export const GET_STREAM_URL_QUERY = gql`
   query getStreamUrl($id: String!){
-    getStreamUrl(id: $id)
+    getStreamUrl(id: $id){
+      audio
+      video
+    }
   }
 `;
 

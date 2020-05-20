@@ -33,4 +33,5 @@ export interface STREAM_PROFILE_FRAGMENT {
   name: string | null;
   image: STREAM_PROFILE_FRAGMENT_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
 }

@@ -38,4 +38,5 @@ export interface STREAM_SELF_FRAGMENT {
   liveConsumersEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
+  audioOnly: boolean | null;
 }

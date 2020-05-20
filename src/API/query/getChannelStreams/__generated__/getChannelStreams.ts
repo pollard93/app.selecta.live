@@ -33,6 +33,7 @@ export interface getChannelStreams_getChannelStreams_streams {
   name: string | null;
   image: getChannelStreams_getChannelStreams_streams_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
 }
 
 export interface getChannelStreams_getChannelStreams {

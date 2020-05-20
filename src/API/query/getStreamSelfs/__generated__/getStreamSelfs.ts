@@ -40,6 +40,7 @@ export interface getStreamSelfs_getStreamSelfs_streams {
   liveConsumersEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
+  audioOnly: boolean | null;
 }
 
 export interface getStreamSelfs_getStreamSelfs {

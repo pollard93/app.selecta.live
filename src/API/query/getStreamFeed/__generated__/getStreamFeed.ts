@@ -33,6 +33,7 @@ export interface getStreamFeed_getStreamFeed_streams {
   name: string | null;
   image: getStreamFeed_getStreamFeed_streams_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
 }
 
 export interface getStreamFeed_getStreamFeed {

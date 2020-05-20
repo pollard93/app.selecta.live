@@ -315,6 +315,7 @@
           "getStreamSelfs_getStreamSelfs",
           "getStreamSelfs",
           "getStreamSelfsVariables",
+          "getStreamUrl_getStreamUrl",
           "getStreamUrl",
           "getStreamUrlVariables",
           "searchChannels_searchChannels_channels_profileImage_url",

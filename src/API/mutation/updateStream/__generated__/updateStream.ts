@@ -38,6 +38,7 @@ export interface updateStream_updateStream {
   liveConsumersEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
+  audioOnly: boolean | null;
 }
 
 export interface updateStream {
@@ -52,4 +53,5 @@ export interface updateStreamVariables {
   timeTo?: any | null;
   cost?: number | null;
   image?: any | null;
+  audioOnly?: boolean | null;
 }

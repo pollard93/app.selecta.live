@@ -1,11 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-<<<<<<< HEAD
-# timestamp: Sat May 09 2020 13:32:20 GMT+0100 (British Summer Time)
-=======
-# timestamp: Mon May 11 2020 19:43:31 GMT+0100 (British Summer Time)
->>>>>>> 0.1.0
+# timestamp: Wed May 20 2020 21:34:43 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -386,11 +382,11 @@ type Mutation {
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
   loginChannel(id: String!, code: String!): ChannelAuthPayload
-  putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload): StreamSelf
+  putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
   requestChannelLogin(id: String!): Boolean
   updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload): ChannelSelf
-  updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload): StreamSelf
+  updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean): StreamSelf
   withdrawFunds: ChannelSelf
   deleteNotification(id: String!): Boolean
   login(email: String!, password: String!): AuthPayload
@@ -544,7 +540,7 @@ type Query {
   getSelf: UserSelf
   getStreamFeed(first: Int, after: String): StreamProfilesPayLoad!
   getStreamProfile(id: String!): StreamProfile!
-  getStreamUrl(id: String!): String!
+  getStreamUrl(id: String!): StreamUrlPayload!
   searchChannels(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   searchStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   validateResetToken: Boolean
@@ -673,6 +669,8 @@ type Stream {
   messages(where: StreamMessageWhereInput, orderBy: StreamMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamMessage!]
   userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
   approved: DateTime
+  audioOnly: Boolean
+  vodDays: Int
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -802,6 +800,10 @@ enum StreamOrderByInput {
   creditRevenue_DESC
   approved_ASC
   approved_DESC
+  audioOnly_ASC
+  audioOnly_DESC
+  vodDays_ASC
+  vodDays_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -815,6 +817,7 @@ type StreamProfile {
   image: File
   isConsumer: Boolean
   liveConsumersEdge: Int
+  audioOnly: Boolean
 }
 
 type StreamProfilesPayLoad {
@@ -838,6 +841,7 @@ type StreamSelf {
   liveConsumersEdge: Int
   streamKey: String
   streamUrl: String
+  audioOnly: Boolean
 }
 
 type StreamSelfsPayLoad {
@@ -845,11 +849,18 @@ type StreamSelfsPayLoad {
   count: Int!
 }
 
+type StreamUrlPayload {
+  audio: String
+  video: String
+}
+
 type StreamUserRecord {
   id: ID!
   token: String!
   stream: Stream!
   user: User!
+  stage: String!
+  type: String!
   createdAt: DateTime!
   sessionUpdatedAt: DateTime!
 }
@@ -859,6 +870,10 @@ enum StreamUserRecordOrderByInput {
   id_DESC
   token_ASC
   token_DESC
+  stage_ASC
+  stage_DESC
+  type_ASC
+  type_DESC
   createdAt_ASC
   createdAt_DESC
   sessionUpdatedAt_ASC
@@ -896,6 +911,34 @@ input StreamUserRecordWhereInput {
   token_not_ends_with: String
   stream: StreamWhereInput
   user: UserWhereInput
+  stage: String
+  stage_not: String
+  stage_in: [String!]
+  stage_not_in: [String!]
+  stage_lt: String
+  stage_lte: String
+  stage_gt: String
+  stage_gte: String
+  stage_contains: String
+  stage_not_contains: String
+  stage_starts_with: String
+  stage_not_starts_with: String
+  stage_ends_with: String
+  stage_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1039,6 +1082,16 @@ input StreamWhereInput {
   approved_lte: DateTime
   approved_gt: DateTime
   approved_gte: DateTime
+  audioOnly: Boolean
+  audioOnly_not: Boolean
+  vodDays: Int
+  vodDays_not: Int
+  vodDays_in: [Int!]
+  vodDays_not_in: [Int!]
+  vodDays_lt: Int
+  vodDays_lte: Int
+  vodDays_gt: Int
+  vodDays_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

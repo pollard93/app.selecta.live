@@ -6,7 +6,6 @@ import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen'
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
 
 interface DateTimePickerInputProps {
-  setRef: any;
   defaultValue: string; // ISOString
   value?: string; // ISOString - allows component value to be updated externally
   onChange: (value: string) => void;

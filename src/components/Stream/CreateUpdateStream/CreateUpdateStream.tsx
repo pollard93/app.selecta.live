@@ -5,7 +5,6 @@ import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
 import { EditableAsyncImage } from 'mbp-components-rn-asyncimage';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import { putStreamVariables } from '../../../API/mutation/putStream/__generated__/putStream';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
@@ -19,8 +18,10 @@ type FormData = {
   info: string;
   timeFrom: string;
   timeTo: string;
-  cost: number;
+  isFree: boolean;
+  cost: string;
   image: ReactNativeFile;
+  audioOnly: boolean;
 };
 
 interface CreateUpdateStreamProps {
@@ -29,8 +30,7 @@ interface CreateUpdateStreamProps {
 }
 
 const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
-  const [isFree, setIsFree] = useState(false);
-  const { register, setValue, handleSubmit, getValues, watch, formState: { isValid, dirty, dirtyFields } } = useForm<FormData>({
+  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields } } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: props.data
       ? {
@@ -38,21 +38,24 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
         info: props.data.info,
         timeFrom: props.data.timeFrom,
         timeTo: props.data.timeTo,
-        cost: props.data.cost,
+        isFree: props.data.cost === 0,
+        cost: `${props.data.cost}`,
         image: undefined,
+        audioOnly: props.data.audioOnly,
       }
       : {
         name: '',
         info: '',
         timeFrom: new Date().toISOString(), // now
         timeTo: new Date(Date.now() + 3600000).toISOString(), // 1 hour
-        cost: undefined,
+        isFree: false,
+        cost: `${props.channel.creditMinimumStreamCost}`,
         image: undefined,
+        audioOnly: false,
       },
   });
   const [defaultValues] = useState(getValues());
   const toast = useToast();
-
 
   /**
    * Put stream mutation
@@ -111,16 +114,16 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
 
 
   /**
-   * On Submit execute putStreamMutation with form data
+   * On Submit execute putStreamMutation/updateStreamMutation with form data
    */
-  const onSubmit = (variables: putStreamVariables) => {
+  const onSubmit = (variables: FormData) => {
     if (props.data) {
       /**
        * Map over the form variables and only return
        * varibales the appear in the dirty fields list
        * so we only send up changed fields
       */
-      const changed = Object.entries(variables).reduce((p, [key, value]) => {
+      const changed: Partial<FormData> = Object.entries(variables).reduce((p, [key, value]) => {
         if (dirtyFields.has(key)) {
           return {
             ...p,
@@ -131,20 +134,32 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
         return p;
       }, {});
 
-      const data = {
-        ...changed,
-        id: props.data.id,
-        cost: isFree ? 0 : variables.cost,
-      };
-
       updateStreamMutation({
-        variables: data,
+        variables: {
+          ...changed,
+          cost: changed.cost ? parseInt(variables.cost, 10) : undefined,
+          image: changed.image ? new ReactNativeFile({
+            uri: changed.image.image.uri,
+            name: changed.image.image.filename,
+            type: changed.image.type,
+          }) : undefined,
+          id: props.data.id,
+        },
       });
     } else {
       putStreamMutation({
         variables: {
-          ...variables,
-          cost: isFree ? 0 : variables.cost,
+          name: variables.name,
+          info: variables.info,
+          timeFrom: variables.timeFrom,
+          timeTo: variables.timeTo,
+          cost: parseInt(variables.cost, 10),
+          audioOnly: variables.audioOnly,
+          image: variables.image ? new ReactNativeFile({
+            uri: variables.image.image.uri,
+            name: variables.image.image.filename,
+            type: variables.image.type,
+          }) : undefined,
         },
       });
     }
@@ -156,22 +171,77 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
    */
   const timeFrom = watch('timeFrom');
   const timeTo = watch('timeTo');
+  const isFree = watch('isFree');
+  const cost = watch('cost');
 
+
+  /**
+   * Register form
+   */
   useEffect(() => {
-    if (props.data) {
-      // If the cost is 0 then the stream is free
-      setIsFree(props.data.cost === 0);
-    }
-  }, [props]);
+    register(
+      { name: 'name' },
+      { required: true, validate: (v) => v && v.length },
+    );
+
+    register(
+      { name: 'info' },
+      { required: true, validate: (v) => v && v.length },
+    );
+
+    register({ name: 'timeFrom' }, {
+      required: true,
+      /**
+       * timeFrom must be smaller than timeTo
+      */
+      validate: () => new Date(timeFrom) < new Date(timeTo),
+    });
+
+    register({ name: 'timeTo' }, {
+      required: true,
+      /**
+       * timeTo must be greater than timeFrom
+      */
+      validate: () => new Date(timeTo) > new Date(timeFrom),
+    });
+
+    register({ name: 'isFree' }, {
+      required: false,
+    });
+
+    register({ name: 'cost' }, {
+      required: true,
+      validate: (v) => {
+        /**
+         * If isFree is false, cost must be greater than creditMinimumStreamCost
+         */
+        if (!watch('isFree')) {
+          const n = parseInt(v, 10);
+          // eslint-disable-next-line no-restricted-globals
+          return !isNaN(n) && n >= props.channel.creditMinimumStreamCost;
+        }
+
+        /**
+         * If free is true, this value will be set to 0, and is valid
+         */
+        return true;
+      },
+    });
+
+    register(
+      { name: 'image' },
+      { required: false },
+    );
+
+    register({ name: 'audioOnly' }, {
+      required: false,
+    });
+  }, []);
 
 
   return (
     <ScrollView style={GlobalStyles.PageFill}>
       <TextInput
-        ref={() => register(
-          { name: 'name' },
-          { required: true, validate: (v) => v && v.length },
-        )}
         onChangeText={(text) => setValue('name', text, true)}
         placeholder="Name"
         returnKeyType="next"
@@ -179,10 +249,6 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
       />
 
       <TextInput
-        ref={() => register(
-          { name: 'info' },
-          { required: true, validate: (v) => v && v.length },
-        )}
         onChangeText={(text) => setValue('info', text, true)}
         placeholder="Info"
         returnKeyType="next"
@@ -190,13 +256,6 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
       />
 
       <DateTimePickerInput
-        setRef={() => register({ name: 'timeFrom' }, {
-          required: true,
-          /**
-           * timeFrom must be smaller than timeTo
-          */
-          validate: () => new Date(timeFrom) < new Date(timeTo),
-        })}
         defaultValue={defaultValues.timeFrom}
         onChange={(value) => {
           // Set timeFrom
@@ -216,13 +275,6 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
       />
 
       <DateTimePickerInput
-        setRef={() => register({ name: 'timeTo' }, {
-          required: true,
-          /**
-           * timeTo must be greater than timeFrom
-          */
-          validate: () => new Date(timeTo) > new Date(timeFrom),
-        })}
         defaultValue={defaultValues.timeTo}
         value={timeTo}
         onChange={(value) => setValue('timeTo', value, true)}
@@ -233,33 +285,31 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
         <View>
           <Text>Free Stream?</Text>
           <Switch
-            onValueChange={setIsFree}
+            onValueChange={(value) => {
+              setValue('isFree', value);
+              setValue('cost', value ? '0' : defaultValues.cost, true);
+            }}
             value={isFree}
           />
         </View>
       )}
 
-      {!isFree && (
+      {/* eslint-disable-next-line react-native/no-inline-styles */}
+      <View style={{ display: isFree ? 'none' : 'flex' }}>
         <TextInput
-          ref={() => register({ name: 'cost' }, {
-            required: true,
-            validate: (v) => v && parseInt(v, 10) > 0,
-          })}
-          onChangeText={(text) => setValue('cost', parseInt(text, 10), true)}
+          onChangeText={(value) => {
+            setValue('cost', value, true);
+          }}
           placeholder="Cost"
           returnKeyType="next"
           keyboardType='numeric'
-          defaultValue={defaultValues.cost ? `${defaultValues.cost}` : undefined}
+          defaultValue={defaultValues.cost}
+          value={cost}
         />
-      )}
+        {errors.cost && <Text>Cost must be above or equal to {props.channel.creditMinimumStreamCost}</Text>}
+      </View>
 
       <EditableAsyncImage
-        setRef={
-          register(
-            { name: 'image' },
-            { required: false },
-          )
-        }
         asyncImageProps={{
           /**
            * TODO - add placeholder images
@@ -273,7 +323,7 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
             },
           },
         }}
-        onChange={async (file) => setValue('image', file, true)}
+        onChange={(file) => setValue('image', file, true)}
       >
         {({ selectedAsset, openPicker, onCancel }) => (
           <>
@@ -290,6 +340,12 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
           </>
         )}
       </EditableAsyncImage>
+
+      <Text>Audio Only</Text>
+      <Switch
+        onValueChange={(value) => setValue('audioOnly', value, true)}
+        value={watch('audioOnly')}
+      />
 
       <Button
         title="Submit"

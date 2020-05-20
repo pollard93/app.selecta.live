@@ -20,6 +20,7 @@ export const STREAM_SELF_FRAGMENT = gql`
     liveConsumersEdge
     streamKey
     streamUrl
+    audioOnly
   },
   ${FILE_FRAGMENT}
 `;

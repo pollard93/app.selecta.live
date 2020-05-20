@@ -35,6 +35,7 @@ export interface searchStreams_searchStreams_streams {
   name: string | null;
   image: searchStreams_searchStreams_streams_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
 }
 
 export interface searchStreams_searchStreams {

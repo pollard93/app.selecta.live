@@ -13,12 +13,28 @@ storiesOf('CreateUpdateStream', module)
   .addDecorator((getStory) => <AssetPickerDecorator>{getStory()}</AssetPickerDecorator>)
   .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <GetChannelSelfDecorator>{getStory()}</GetChannelSelfDecorator>)
-  .add('CreateUpdateStream', () => {
+  .add('CreateUpdateStream - Create', () => {
     const TestComponent = () => {
       const { data } = useGetChannelSelfQuery();
 
       return (
         <CreateUpdateStream channel={data.getChannelSelf} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CreateUpdateStream - Create (freeStreamAllowance = 0)', () => {
+    const TestComponent = () => {
+      const { data } = useGetChannelSelfQuery();
+
+      return (
+        <CreateUpdateStream
+          channel={{
+            ...data.getChannelSelf,
+            freeStreamAllowance: 0,
+          }}
+        />
       );
     };
 

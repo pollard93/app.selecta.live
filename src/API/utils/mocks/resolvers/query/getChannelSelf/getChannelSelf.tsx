@@ -6,4 +6,5 @@ export const getChannelSelf = () => ({
   creditMinimumStreamCost: 1,
   creditWithdrawalValue: 100,
   creditWithdrawalMinimum: 1,
+  freeStreamAllowance: 1,
 });
