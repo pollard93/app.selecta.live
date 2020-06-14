@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Wed May 20 2020 21:34:43 GMT+0100 (British Summer Time)
+# timestamp: Sun Jun 14 2020 16:58:48 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -670,7 +670,6 @@ type Stream {
   userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
   approved: DateTime
   audioOnly: Boolean
-  vodDays: Int
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -802,8 +801,6 @@ enum StreamOrderByInput {
   approved_DESC
   audioOnly_ASC
   audioOnly_DESC
-  vodDays_ASC
-  vodDays_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -818,6 +815,7 @@ type StreamProfile {
   isConsumer: Boolean
   liveConsumersEdge: Int
   audioOnly: Boolean
+  position: Float
 }
 
 type StreamProfilesPayLoad {
@@ -859,7 +857,6 @@ type StreamUserRecord {
   token: String!
   stream: Stream!
   user: User!
-  stage: String!
   type: String!
   createdAt: DateTime!
   sessionUpdatedAt: DateTime!
@@ -870,8 +867,6 @@ enum StreamUserRecordOrderByInput {
   id_DESC
   token_ASC
   token_DESC
-  stage_ASC
-  stage_DESC
   type_ASC
   type_DESC
   createdAt_ASC
@@ -911,20 +906,6 @@ input StreamUserRecordWhereInput {
   token_not_ends_with: String
   stream: StreamWhereInput
   user: UserWhereInput
-  stage: String
-  stage_not: String
-  stage_in: [String!]
-  stage_not_in: [String!]
-  stage_lt: String
-  stage_lte: String
-  stage_gt: String
-  stage_gte: String
-  stage_contains: String
-  stage_not_contains: String
-  stage_starts_with: String
-  stage_not_starts_with: String
-  stage_ends_with: String
-  stage_not_ends_with: String
   type: String
   type_not: String
   type_in: [String!]
@@ -1084,14 +1065,6 @@ input StreamWhereInput {
   approved_gte: DateTime
   audioOnly: Boolean
   audioOnly_not: Boolean
-  vodDays: Int
-  vodDays_not: Int
-  vodDays_in: [Int!]
-  vodDays_not_in: [Int!]
-  vodDays_lt: Int
-  vodDays_lte: Int
-  vodDays_gt: Int
-  vodDays_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

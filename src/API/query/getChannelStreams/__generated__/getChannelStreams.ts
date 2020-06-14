@@ -34,6 +34,7 @@ export interface getChannelStreams_getChannelStreams_streams {
   image: getChannelStreams_getChannelStreams_streams_image | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
+  position: number | null;
 }
 
 export interface getChannelStreams_getChannelStreams {

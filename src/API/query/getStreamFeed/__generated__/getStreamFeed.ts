@@ -34,6 +34,7 @@ export interface getStreamFeed_getStreamFeed_streams {
   image: getStreamFeed_getStreamFeed_streams_image | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
+  position: number | null;
 }
 
 export interface getStreamFeed_getStreamFeed {

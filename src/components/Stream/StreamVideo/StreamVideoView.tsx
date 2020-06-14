@@ -3,31 +3,42 @@ import Video from 'selecta.components.react-native-video';
 import { SafeAreaView, Platform, Text, View, Button } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
+import { useApolloClient } from 'react-apollo';
 import styles from './StreamVideo.styles';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
+import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 interface StreamVideoViewProps {
-  url: string;
+  url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile;
+  query: any;
 }
 
 
 /**
  * MusicControl is only used for android
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
- */
+*/
 const StreamVideoView = (props: StreamVideoViewProps) => {
-  const [rate, setRate] = useState(1);
-  const [progress, setProgress] = useState(0);
+  const client = useApolloClient();
+  const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
-  // const [paused, setPaused] = useState(false);
   const player = useRef(null);
 
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
 
+  // Determin url based on disableVideo
+  const [disableVideo, setDisableVideo] = useState<boolean>(false);
+  const url = disableVideo ? props.url.audio : props.url.video;
 
+
+  /**
+   * Now playing controls for android
+   */
   useEffect(() => {
     if (live === null) return undefined;
 
@@ -82,32 +93,64 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
 
   /**
-   * Dynamic controls
+   * Dynamic controls for android
    */
   useEffect(() => {
     if (Platform.OS === 'android') {
       MusicControl.on(Command.skipForward, () => {
-        player.current.seek(progress + 15);
+        player.current.seek(props.data.position + 15);
       });
 
       MusicControl.on(Command.skipBackward, () => {
-        player.current.seek(progress - 15);
+        player.current.seek(props.data.position - 15);
       });
 
       MusicControl.on(Command.seek, (pos) => {
         player.current.seek(pos);
       });
     }
-  }, [progress]);
+  }, [props.data.position]);
+
+
+  /**
+   * Set stream.position in local state
+   */
+  const setProgress = (progress: number) => {
+    try {
+      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+      });
+
+      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+        data: {
+          ...data,
+          position: progress,
+        },
+      });
+    // eslint-disable-next-line no-empty
+    } catch {}
+  };
 
 
   return (
     <SafeAreaView style={[GlobalStyles.PageFill, { paddingVertical: 50 }]}>
       <Video
-        source={{ uri: props.url }}
+        source={{ uri: url }}
+        automaticallyWaitsToMinimizeStalling
         ref={player}
-        onBuffer={console.log} // Callback when remote video is buffering
-        onError={console.log} // Callback when video cannot be loaded
+        onBuffer={(...args) => {
+          console.log('StreamVideoView -> onBuffer', args);
+        }}
+        onError={(...args) => {
+          console.log('StreamVideoView -> onError', args);
+        }}
         style={styles.wrap}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}
@@ -125,9 +168,23 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         }}
 
         /**
-         * ANDROID PROPS
+         * ALL OS PROPS
          * */
         onLoad={(data) => {
+          /**
+           * If there is a position on load then try and seek to it
+           */
+          if (props.data.position) {
+            player.current.seek(props.data.position);
+          }
+
+
+          /**
+           * Set rate to 1 now video is ready to play
+           */
+          setRate(1);
+
+
           /**
            * Set duration and live
            */
@@ -137,6 +194,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             setLive(false);
             setDuration(data.duration);
           }
+
 
           /**
            * On Load (ANDROID)
@@ -164,17 +222,15 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             });
           }
         }}
-        onProgress={!live ? (({ currentTime }) => {
-          /**
-           * Set progress if not live
-           */
+        onProgress={!live ? ((args) => {
+          const { currentTime } = args;
           setProgress(currentTime);
+
 
           /**
            * On Video Progress (ANDROID)
            * Update now playing info
            */
-
           if (Platform.OS === 'android') {
             MusicControl.updatePlayback({
               elapsedTime: currentTime,
@@ -193,6 +249,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
            */
           setRate(0);
           player.current.seek(0);
+          setProgress(0);
 
           if (Platform.OS === 'android') {
             MusicControl.updatePlayback({
@@ -200,6 +257,13 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               elapsedTime: 0,
             });
           }
+        }}
+      />
+
+      <Button
+        title={disableVideo ? 'Enable video' : 'Disable video'}
+        onPress={() => {
+          setDisableVideo(!disableVideo);
         }}
       />
 
@@ -211,7 +275,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               {
                 live === false && (
                   <>
-                    <Text>Progress: {progress.toFixed(2)}</Text>
+                    <Text>Progress: {(props.data.position || 0).toFixed(2)}</Text>
                     <Text>Duration: {duration.toFixed(2)}</Text>
                   </>
                 )

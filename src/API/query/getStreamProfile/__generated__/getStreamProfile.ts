@@ -34,6 +34,7 @@ export interface getStreamProfile_getStreamProfile {
   image: getStreamProfile_getStreamProfile_image | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
+  position: number | null;
 }
 
 export interface getStreamProfile {

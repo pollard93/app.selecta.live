@@ -75,8 +75,6 @@ export enum StreamOrderByInput {
   timeTo_DESC = "timeTo_DESC",
   updatedAt_ASC = "updatedAt_ASC",
   updatedAt_DESC = "updatedAt_DESC",
-  vodDays_ASC = "vodDays_ASC",
-  vodDays_DESC = "vodDays_DESC",
 }
 
 export interface ChannelWhereInput {
@@ -533,20 +531,6 @@ export interface StreamUserRecordWhereInput {
   token_not_ends_with?: string | null;
   stream?: StreamWhereInput | null;
   user?: UserWhereInput | null;
-  stage?: string | null;
-  stage_not?: string | null;
-  stage_in?: string[] | null;
-  stage_not_in?: string[] | null;
-  stage_lt?: string | null;
-  stage_lte?: string | null;
-  stage_gt?: string | null;
-  stage_gte?: string | null;
-  stage_contains?: string | null;
-  stage_not_contains?: string | null;
-  stage_starts_with?: string | null;
-  stage_not_starts_with?: string | null;
-  stage_ends_with?: string | null;
-  stage_not_ends_with?: string | null;
   type?: string | null;
   type_not?: string | null;
   type_in?: string[] | null;
@@ -706,14 +690,6 @@ export interface StreamWhereInput {
   approved_gte?: any | null;
   audioOnly?: boolean | null;
   audioOnly_not?: boolean | null;
-  vodDays?: number | null;
-  vodDays_not?: number | null;
-  vodDays_in?: number[] | null;
-  vodDays_not_in?: number[] | null;
-  vodDays_lt?: number | null;
-  vodDays_lte?: number | null;
-  vodDays_gt?: number | null;
-  vodDays_gte?: number | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
