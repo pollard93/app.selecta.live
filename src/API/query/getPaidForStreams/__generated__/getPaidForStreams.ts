@@ -35,6 +35,8 @@ export interface getPaidForStreams_getPaidForStreams_streams {
   name: string | null;
   image: getPaidForStreams_getPaidForStreams_streams_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
+  position: number | null;
 }
 
 export interface getPaidForStreams_getPaidForStreams {

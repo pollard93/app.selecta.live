@@ -26,6 +26,12 @@ const StreamProfile = (props: StreamProfileProps) => {
     return <LoadRetry {...queryResult} />;
   }
 
+  switch (true) {
+    case queryResult.loading:
+    case !!queryResult.error:
+      return <LoadRetry {...queryResult} />;
+  }
+
 
   const { data: { getStreamProfile } } = queryResult;
   return (
@@ -43,6 +49,7 @@ const StreamProfile = (props: StreamProfileProps) => {
           },
         }}
       />
+      {getStreamProfile.audioOnly && <Text>This stream is audio only</Text>}
     </View>
   );
 };

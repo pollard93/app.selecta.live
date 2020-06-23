@@ -38,6 +38,7 @@ export interface putStream_putStream {
   liveConsumersEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
+  audioOnly: boolean | null;
 }
 
 export interface putStream {
@@ -51,4 +52,5 @@ export interface putStreamVariables {
   timeTo: any;
   cost: number;
   image?: any | null;
+  audioOnly?: boolean | null;
 }

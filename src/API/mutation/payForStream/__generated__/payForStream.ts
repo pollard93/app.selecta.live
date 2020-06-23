@@ -33,6 +33,8 @@ export interface payForStream_payForStream {
   name: string | null;
   image: payForStream_payForStream_image | null;
   isConsumer: boolean | null;
+  audioOnly: boolean | null;
+  position: number | null;
 }
 
 export interface payForStream {

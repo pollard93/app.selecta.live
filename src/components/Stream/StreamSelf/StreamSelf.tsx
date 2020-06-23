@@ -18,9 +18,10 @@ const StreamSelf = (props: StreamSelfProps) => {
     return <LoadRetry {...queryResult} />;
   }
 
+  const { data: { getStreamSelf } } = queryResult;
   return (
     <View>
-      <Text>{queryResult.data.getStreamSelf.name}</Text>
+      <Text>{getStreamSelf.name}</Text>
     </View>
   );
 };

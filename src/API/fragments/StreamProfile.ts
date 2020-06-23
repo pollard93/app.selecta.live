@@ -12,6 +12,8 @@ export const STREAM_PROFILE_FRAGMENT = gql`
       ...FILE_FRAGMENT
     }
     isConsumer
+    audioOnly
+    position
   },
   ${FILE_FRAGMENT}
 `;

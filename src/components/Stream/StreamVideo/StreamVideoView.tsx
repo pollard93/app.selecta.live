@@ -1,30 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { SafeAreaView, Platform } from 'react-native';
+import { SafeAreaView, Platform, Text, View, Button } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
+import { useApolloClient } from 'react-apollo';
 import styles from './StreamVideo.styles';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
+import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 interface StreamVideoViewProps {
-  url: string;
+  url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile;
+  query: any;
 }
 
 
 /**
  * MusicControl is only used for android
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
- */
+*/
 const StreamVideoView = (props: StreamVideoViewProps) => {
+  const client = useApolloClient();
+  const [rate, setRate] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const player = useRef(null);
+
+  // Live is determined from the url given, initial state null
+  const [live, setLive] = useState<boolean>(null);
+
+  // Determin url based on disableVideo
+  const [disableVideo, setDisableVideo] = useState<boolean>(false);
+  const url = disableVideo ? props.url.audio : props.url.video;
+
+
   /**
-   * Paused is used for android only
+   * Now playing controls for android
    */
-  const [paused, setPaused] = useState(false);
-
-
   useEffect(() => {
+    if (live === null) return undefined;
+
+    /**
+     * Android now playing controls
+     */
     if (Platform.OS === 'android') {
       // Basic Controls
       MusicControl.enableControl('play', true);
@@ -34,29 +54,32 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
       MusicControl.enableControl('previousTrack', false);
 
       // Changing track position on lockscreen
-      MusicControl.enableControl('changePlaybackPosition', false);
+      MusicControl.enableControl('changePlaybackPosition', !live);
 
       // Seeking
-      MusicControl.enableControl('seek', false); // Android only
-      MusicControl.enableControl('skipForward', false);
-      MusicControl.enableControl('skipBackward', false);
+      MusicControl.enableControl('seek', !live); // Android only
+      MusicControl.enableControl('skipForward', !live);
+      MusicControl.enableControl('skipBackward', !live);
 
       // Android Specific Options
       MusicControl.enableControl('setRating', false);
       MusicControl.enableControl('volume', true); // Only affected when remoteVolume is enabled
       MusicControl.enableControl('remoteVolume', true);
 
+      /**
+       * Handle events
+       */
       MusicControl.on(Command.play, () => {
-        setPaused(false);
+        setRate(1);
         MusicControl.updatePlayback({
           state: MusicControl.STATE_PLAYING,
         });
       });
 
       MusicControl.on(Command.pause, () => {
-        setPaused(true);
+        setRate(0);
         MusicControl.updatePlayback({
-          state: MusicControl.STATE_STOPPED,
+          state: MusicControl.STATE_PAUSED,
         });
       });
     }
@@ -66,27 +89,125 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         MusicControl.stopControl();
       }
     };
-  }, []);
+  }, [live]);
+
+
+  /**
+   * Dynamic controls for android
+   */
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      MusicControl.on(Command.skipForward, () => {
+        player.current.seek(props.data.position + 15);
+      });
+
+      MusicControl.on(Command.skipBackward, () => {
+        player.current.seek(props.data.position - 15);
+      });
+
+      MusicControl.on(Command.seek, (pos) => {
+        player.current.seek(pos);
+      });
+    }
+  }, [props.data.position]);
+
+
+  /**
+   * Set stream.position in local state
+   */
+  const setProgress = (progress: number) => {
+    try {
+      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+      });
+
+      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+        data: {
+          ...data,
+          position: progress,
+        },
+      });
+    // eslint-disable-next-line no-empty
+    } catch {}
+  };
+
 
   return (
-    <SafeAreaView style={GlobalStyles.PageFill}>
+    <SafeAreaView style={[GlobalStyles.PageFill, { paddingVertical: 50 }]}>
       <Video
-        source={{ uri: props.url }}
-        // ref={(ref) => {
-        //   this.player = ref;
-        // }} // Store reference
-        onBuffer={console.log} // Callback when remote video is buffering
-        onError={console.log} // Callback when video cannot be loaded
+        source={{ uri: url }}
+        automaticallyWaitsToMinimizeStalling
+        ref={player}
+        onBuffer={(...args) => {
+          console.log('StreamVideoView -> onBuffer', args);
+        }}
+        onError={(...args) => {
+          console.log('StreamVideoView -> onError', args);
+        }}
         style={styles.wrap}
-        onReadyForDisplay={() => {
+        ignoreSilentSwitch={'ignore'}
+        playWhenInactive={true}
+        playInBackground={true}
+        resizeMode="contain"
+        rate={rate}
+
+        /**
+         * IOS PROPS
+         * */
+        nowPlayingInfo={{
+          title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
+          artist: props.data.channel.name,
+          artwork: props.data.image.url.small,
+        }}
+
+        /**
+         * ALL OS PROPS
+         * */
+        onLoad={(data) => {
+          /**
+           * If there is a position on load then try and seek to it
+           */
+          if (props.data.position) {
+            player.current.seek(props.data.position);
+          }
+
+
+          /**
+           * Set rate to 1 now video is ready to play
+           */
+          setRate(1);
+
+
+          /**
+           * Set duration and live
+           */
+          if (data.duration <= 0) {
+            setLive(true);
+          } else {
+            setLive(false);
+            setDuration(data.duration);
+          }
+
+
+          /**
+           * On Load (ANDROID)
+           * Set now playing info
+           */
           if (Platform.OS === 'android') {
             MusicControl.setNowPlaying({
-              title: props.data.name,
+              title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
               artwork: props.data.image.url.small,
               artist: props.data.channel.name,
               // album: 'Thriller',
               // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
-              // duration: 294, // (Seconds)
+              duration: data.duration, // (Seconds)
               // description: '', // Android Only
               // color: '0x000000', // Notification Color - Android Only
               // date: '1983-01-02T00:00:00Z', // Release Date (RFC 3339) - Android Only
@@ -94,24 +215,93 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               // notificationIcon: 'icon', // Android Only (String), Android Drawable resource name for a custom notification icon
             });
 
-            // Changes the state to paused
+            // Changes the state to playing
             MusicControl.updatePlayback({
               state: MusicControl.STATE_PLAYING,
+              elapsedTime: data.duration >= 0 ? data.currentTime : undefined,
             });
           }
         }}
-        // controls
-        ignoreSilentSwitch={'ignore'}
-        playWhenInactive={true}
-        playInBackground={true}
-        nowPlayingInfo={{
-          title: props.data.name,
-          artist: props.data.channel.name,
-          artwork: props.data.image.url.small,
+        onProgress={!live ? ((args) => {
+          const { currentTime } = args;
+          setProgress(currentTime);
+
+
+          /**
+           * On Video Progress (ANDROID)
+           * Update now playing info
+           */
+          if (Platform.OS === 'android') {
+            MusicControl.updatePlayback({
+              elapsedTime: currentTime,
+            });
+          }
+        }) : undefined}
+        onPlaybackRateChangeFromNowPlaying={Platform.OS === 'ios' ? (({ playbackRate }) => {
+          /**
+           * Set playback rate on ios to allow the control from lock screen
+           */
+          setRate(playbackRate);
+        }) : undefined}
+        onVideoEnd={() => {
+          /**
+           * Seek to the beginning and stop
+           */
+          setRate(0);
+          player.current.seek(0);
+          setProgress(0);
+
+          if (Platform.OS === 'android') {
+            MusicControl.updatePlayback({
+              state: MusicControl.STATE_STOPPED,
+              elapsedTime: 0,
+            });
+          }
         }}
-        rate={paused ? 0 : 1}
-        resizeMode="contain"
       />
+
+      <Button
+        title={disableVideo ? 'Enable video' : 'Disable video'}
+        onPress={() => {
+          setDisableVideo(!disableVideo);
+        }}
+      />
+
+      {
+        live === null
+          ? <Text>LOADING</Text>
+          : (
+            <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
+              {
+                live === false && (
+                  <>
+                    <Text>Progress: {(props.data.position || 0).toFixed(2)}</Text>
+                    <Text>Duration: {duration.toFixed(2)}</Text>
+                  </>
+                )
+              }
+              {
+                rate === 0
+                  ? (
+                    <Button
+                      title='Play'
+                      onPress={() => {
+                        setRate(1);
+                      }}
+                    />
+                  )
+                  : (
+                    <Button
+                      title={live ? 'Stop' : 'Pause'}
+                      onPress={() => {
+                        setRate(0);
+                      }}
+                    />
+                  )
+              }
+            </View>
+          )
+      }
     </SafeAreaView>
   );
 };

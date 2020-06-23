@@ -51,6 +51,8 @@ export enum SOCIAL_PROVIDER {
 export enum StreamOrderByInput {
   approved_ASC = "approved_ASC",
   approved_DESC = "approved_DESC",
+  audioOnly_ASC = "audioOnly_ASC",
+  audioOnly_DESC = "audioOnly_DESC",
   cancelled_ASC = "cancelled_ASC",
   cancelled_DESC = "cancelled_DESC",
   cost_ASC = "cost_ASC",
@@ -529,6 +531,20 @@ export interface StreamUserRecordWhereInput {
   token_not_ends_with?: string | null;
   stream?: StreamWhereInput | null;
   user?: UserWhereInput | null;
+  type?: string | null;
+  type_not?: string | null;
+  type_in?: string[] | null;
+  type_not_in?: string[] | null;
+  type_lt?: string | null;
+  type_lte?: string | null;
+  type_gt?: string | null;
+  type_gte?: string | null;
+  type_contains?: string | null;
+  type_not_contains?: string | null;
+  type_starts_with?: string | null;
+  type_not_starts_with?: string | null;
+  type_ends_with?: string | null;
+  type_not_ends_with?: string | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
@@ -672,6 +688,8 @@ export interface StreamWhereInput {
   approved_lte?: any | null;
   approved_gt?: any | null;
   approved_gte?: any | null;
+  audioOnly?: boolean | null;
+  audioOnly_not?: boolean | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

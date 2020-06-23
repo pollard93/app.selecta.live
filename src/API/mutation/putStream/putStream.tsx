@@ -4,8 +4,8 @@ import { putStream, putStreamVariables } from './__generated__/putStream';
 import { STREAM_SELF_FRAGMENT } from '../../fragments/StreamSelf';
 
 export const PUT_STREAM_MUTATION = gql`
-  mutation putStream($name: String!, $info: String!, $timeFrom: DateTime!, $timeTo: DateTime!, $cost: Int!, $image: Upload){
-    putStream(name: $name, info: $info, timeFrom: $timeFrom, timeTo: $timeTo, cost: $cost, image: $image){
+  mutation putStream($name: String!, $info: String!, $timeFrom: DateTime!, $timeTo: DateTime!, $cost: Int!, $image: Upload, $audioOnly: Boolean){
+    putStream(name: $name, info: $info, timeFrom: $timeFrom, timeTo: $timeTo, cost: $cost, image: $image, audioOnly: $audioOnly){
       ...STREAM_SELF_FRAGMENT
     }
   },

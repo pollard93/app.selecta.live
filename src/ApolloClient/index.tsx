@@ -102,6 +102,7 @@ const link = split(
 const generalTokenEndpoints = [
   'followChannel',
   'getChannelSelfs',
+  'getProductConfig',
   'getSelf',
   'getStreamProfile',
   'getStreamUrl',
@@ -114,7 +115,7 @@ const generalTokenEndpoints = [
   'requestChannelLogin',
   'requestPasswordReset',
   'updateSelf',
-  'getProductConfig',
+  'updateStreamPosition',
   'validateInAppPurchase',
 ];
 
