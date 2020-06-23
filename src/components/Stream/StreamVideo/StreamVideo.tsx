@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import { useApolloClient } from 'react-apollo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamVideoView from './StreamVideoView';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
+import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
 
 interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile;
 }
 
 const StreamVideo = (props: StreamVideoProps) => {
+  const client = useApolloClient();
+
   /**
    * Get stream url lazy query
    * Lazy as a new url may be required to be retrieved if:
@@ -25,10 +31,43 @@ const StreamVideo = (props: StreamVideoProps) => {
   });
 
 
-  /**
-   * getStreamUrl on mount
-   */
-  useEffect(() => query(), []);
+  useEffect(() => {
+    /**
+     * getStreamUrl on mount
+     */
+    query();
+
+
+    /**
+     * On unmount
+     * Send the last position to server
+     */
+    return async () => {
+      console.log(1);
+      try {
+        const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+          fragmentName: 'STREAM_PROFILE_FRAGMENT',
+          // eslint-disable-next-line no-underscore-dangle
+          id: `${props.data.__typename}:${props.data.id}`,
+          fragment: STREAM_PROFILE_FRAGMENT,
+        });
+        console.log('StreamVideo -> data', data);
+
+        if (data.position) {
+          await client.mutate({
+            mutation: UPDATE_STREAM_POSITION_MUTATION,
+            variables: {
+              id: props.data.id,
+              position: data.position,
+            },
+          });
+        }
+      // eslint-disable-next-line no-empty
+      } catch (e) {
+        console.log('StreamVideo -> e', e);
+      }
+    };
+  }, []);
 
 
   /**
