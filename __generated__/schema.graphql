@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Sun Jun 14 2020 16:58:48 GMT+0100 (British Summer Time)
+# timestamp: Wed Jun 24 2020 09:05:26 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -313,6 +313,24 @@ input CreditTransactionWhereInput {
 
 scalar DateTime
 
+enum FEED_TYPE {
+  VERTICAL
+  HORIZONTAL
+  HORIZONTAL_SMALL
+}
+
+type FeedItem {
+  heading: String!
+  type: FEED_TYPE!
+  query: String!
+  accessor: String!
+  variables: Json
+}
+
+type FeedPayload {
+  items: [FeedItem!]!
+}
+
 type File {
   id: ID
   author: UserProfile
@@ -377,6 +395,7 @@ type Mutation {
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
+  updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
   loginChannel(id: String!, code: String!): ChannelAuthPayload
@@ -532,15 +551,16 @@ type ProductConfig {
 type Query {
   canViewStream(id: String!): Boolean!
   getChannelProfile(id: String!): ChannelProfile!
+  getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
-  getPaidForStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getFeed: FeedPayload
+  getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
   getSelf: UserSelf
-  getStreamFeed(first: Int, after: String): StreamProfilesPayLoad!
   getStreamProfile(id: String!): StreamProfile!
+  getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getStreamUrl(id: String!): StreamUrlPayload!
-  searchChannels(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
-  searchStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   validateResetToken: Boolean
   verifyUser: Boolean
   channelNameExists(name: String!): Boolean!
@@ -668,6 +688,7 @@ type Stream {
   userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
   approved: DateTime
   audioOnly: Boolean
+  positionRecords(where: StreamPositionRecordWhereInput, orderBy: StreamPositionRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamPositionRecord!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -803,6 +824,67 @@ enum StreamOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+type StreamPositionRecord {
+  id: ID!
+  extendedId: String!
+  stream: Stream!
+  user: User!
+  position: Float!
+}
+
+enum StreamPositionRecordOrderByInput {
+  id_ASC
+  id_DESC
+  extendedId_ASC
+  extendedId_DESC
+  position_ASC
+  position_DESC
+}
+
+input StreamPositionRecordWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  extendedId: String
+  extendedId_not: String
+  extendedId_in: [String!]
+  extendedId_not_in: [String!]
+  extendedId_lt: String
+  extendedId_lte: String
+  extendedId_gt: String
+  extendedId_gte: String
+  extendedId_contains: String
+  extendedId_not_contains: String
+  extendedId_starts_with: String
+  extendedId_not_starts_with: String
+  extendedId_ends_with: String
+  extendedId_not_ends_with: String
+  stream: StreamWhereInput
+  user: UserWhereInput
+  position: Float
+  position_not: Float
+  position_in: [Float!]
+  position_not_in: [Float!]
+  position_lt: Float
+  position_lte: Float
+  position_gt: Float
+  position_gte: Float
+  AND: [StreamPositionRecordWhereInput!]
+  OR: [StreamPositionRecordWhereInput!]
+  NOT: [StreamPositionRecordWhereInput!]
 }
 
 type StreamProfile {
@@ -1063,6 +1145,9 @@ input StreamWhereInput {
   approved_gte: DateTime
   audioOnly: Boolean
   audioOnly_not: Boolean
+  positionRecords_every: StreamPositionRecordWhereInput
+  positionRecords_some: StreamPositionRecordWhereInput
+  positionRecords_none: StreamPositionRecordWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

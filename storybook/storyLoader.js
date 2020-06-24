@@ -13,6 +13,7 @@ function loadStories() {
 	require('../src/components/Channel/RegisterChannel/RegisterChannel.stories');
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
+	require('../src/components/Feed/Feed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
 	require('../src/components/Purchase/Purchases/Purchases.stories');
@@ -26,7 +27,6 @@ function loadStories() {
 	require('../src/components/Stream/PayForStream/PayForStream.stories');
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
-	require('../src/components/Stream/StreamFeed/StreamFeed.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/Stream/StreamSelf/StreamSelf.stories');
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
@@ -49,6 +49,7 @@ const stories = [
 	'../src/components/Channel/RegisterChannel/RegisterChannel.stories',
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
+	'../src/components/Feed/Feed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
 	'../src/components/Purchase/Purchases/Purchases.stories',
@@ -62,7 +63,6 @@ const stories = [
 	'../src/components/Stream/PayForStream/PayForStream.stories',
 	'../src/components/Stream/PayForStream/ReportStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
-	'../src/components/Stream/StreamFeed/StreamFeed.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/Stream/StreamSelf/StreamSelf.stories',
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',

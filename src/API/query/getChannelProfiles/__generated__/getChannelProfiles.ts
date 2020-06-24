@@ -5,10 +5,10 @@
 import { ChannelWhereInput, ChannelOrderByInput } from "./../../../../../__generated__/globalTypes";
 
 // ====================================================
-// GraphQL query operation: searchChannels
+// GraphQL query operation: getChannelProfiles
 // ====================================================
 
-export interface searchChannels_searchChannels_channels_profileImage_url {
+export interface getChannelProfiles_getChannelProfiles_channels_profileImage_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
@@ -16,33 +16,33 @@ export interface searchChannels_searchChannels_channels_profileImage_url {
   full: string | null;
 }
 
-export interface searchChannels_searchChannels_channels_profileImage {
+export interface getChannelProfiles_getChannelProfiles_channels_profileImage {
   __typename: "File";
   id: string | null;
   mime: string | null;
-  url: searchChannels_searchChannels_channels_profileImage_url | null;
+  url: getChannelProfiles_getChannelProfiles_channels_profileImage_url | null;
 }
 
-export interface searchChannels_searchChannels_channels {
+export interface getChannelProfiles_getChannelProfiles_channels {
   __typename: "ChannelProfile";
   id: string;
   name: string | null;
-  profileImage: searchChannels_searchChannels_channels_profileImage | null;
+  profileImage: getChannelProfiles_getChannelProfiles_channels_profileImage | null;
   following: boolean | null;
   followersEdge: number | null;
 }
 
-export interface searchChannels_searchChannels {
+export interface getChannelProfiles_getChannelProfiles {
   __typename: "ChannelProfilesPayLoad";
-  channels: searchChannels_searchChannels_channels[];
+  channels: getChannelProfiles_getChannelProfiles_channels[];
   count: number;
 }
 
-export interface searchChannels {
-  searchChannels: searchChannels_searchChannels;
+export interface getChannelProfiles {
+  getChannelProfiles: getChannelProfiles_getChannelProfiles;
 }
 
-export interface searchChannelsVariables {
+export interface getChannelProfilesVariables {
   where?: ChannelWhereInput | null;
   first?: number | null;
   after?: string | null;

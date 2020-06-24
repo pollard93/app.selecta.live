@@ -31,6 +31,12 @@ export enum ChannelOrderByInput {
   verified_DESC = "verified_DESC",
 }
 
+export enum FEED_TYPE {
+  HORIZONTAL = "HORIZONTAL",
+  HORIZONTAL_SMALL = "HORIZONTAL_SMALL",
+  VERTICAL = "VERTICAL",
+}
+
 export enum MutationType {
   CREATED = "CREATED",
   DELETED = "DELETED",
@@ -500,6 +506,50 @@ export interface StreamMessageWhereInput {
   NOT?: StreamMessageWhereInput[] | null;
 }
 
+export interface StreamPositionRecordWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  extendedId?: string | null;
+  extendedId_not?: string | null;
+  extendedId_in?: string[] | null;
+  extendedId_not_in?: string[] | null;
+  extendedId_lt?: string | null;
+  extendedId_lte?: string | null;
+  extendedId_gt?: string | null;
+  extendedId_gte?: string | null;
+  extendedId_contains?: string | null;
+  extendedId_not_contains?: string | null;
+  extendedId_starts_with?: string | null;
+  extendedId_not_starts_with?: string | null;
+  extendedId_ends_with?: string | null;
+  extendedId_not_ends_with?: string | null;
+  stream?: StreamWhereInput | null;
+  user?: UserWhereInput | null;
+  position?: number | null;
+  position_not?: number | null;
+  position_in?: number[] | null;
+  position_not_in?: number[] | null;
+  position_lt?: number | null;
+  position_lte?: number | null;
+  position_gt?: number | null;
+  position_gte?: number | null;
+  AND?: StreamPositionRecordWhereInput[] | null;
+  OR?: StreamPositionRecordWhereInput[] | null;
+  NOT?: StreamPositionRecordWhereInput[] | null;
+}
+
 export interface StreamUserRecordWhereInput {
   id?: string | null;
   id_not?: string | null;
@@ -690,6 +740,9 @@ export interface StreamWhereInput {
   approved_gte?: any | null;
   audioOnly?: boolean | null;
   audioOnly_not?: boolean | null;
+  positionRecords_every?: StreamPositionRecordWhereInput | null;
+  positionRecords_some?: StreamPositionRecordWhereInput | null;
+  positionRecords_none?: StreamPositionRecordWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

@@ -5,15 +5,15 @@
 import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generated__/globalTypes";
 
 // ====================================================
-// GraphQL query operation: searchStreams
+// GraphQL query operation: getStreamProfiles
 // ====================================================
 
-export interface searchStreams_searchStreams_streams_channel {
+export interface getStreamProfiles_getStreamProfiles_streams_channel {
   __typename: "ChannelProfile";
   name: string | null;
 }
 
-export interface searchStreams_searchStreams_streams_image_url {
+export interface getStreamProfiles_getStreamProfiles_streams_image_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
@@ -21,35 +21,35 @@ export interface searchStreams_searchStreams_streams_image_url {
   full: string | null;
 }
 
-export interface searchStreams_searchStreams_streams_image {
+export interface getStreamProfiles_getStreamProfiles_streams_image {
   __typename: "File";
   id: string | null;
   mime: string | null;
-  url: searchStreams_searchStreams_streams_image_url | null;
+  url: getStreamProfiles_getStreamProfiles_streams_image_url | null;
 }
 
-export interface searchStreams_searchStreams_streams {
+export interface getStreamProfiles_getStreamProfiles_streams {
   __typename: "StreamProfile";
   id: string;
-  channel: searchStreams_searchStreams_streams_channel | null;
+  channel: getStreamProfiles_getStreamProfiles_streams_channel | null;
   name: string | null;
-  image: searchStreams_searchStreams_streams_image | null;
+  image: getStreamProfiles_getStreamProfiles_streams_image | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
 }
 
-export interface searchStreams_searchStreams {
+export interface getStreamProfiles_getStreamProfiles {
   __typename: "StreamProfilesPayLoad";
-  streams: searchStreams_searchStreams_streams[];
+  streams: getStreamProfiles_getStreamProfiles_streams[];
   count: number;
 }
 
-export interface searchStreams {
-  searchStreams: searchStreams_searchStreams;
+export interface getStreamProfiles {
+  getStreamProfiles: getStreamProfiles_getStreamProfiles;
 }
 
-export interface searchStreamsVariables {
+export interface getStreamProfilesVariables {
   where?: StreamWhereInput | null;
   first?: number | null;
   after?: string | null;

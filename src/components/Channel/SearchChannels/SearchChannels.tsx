@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
-import { SEARCH_CHANNELS_QUERY } from '../../../API/query/searchChannels/searchChannels';
-import { searchChannelsVariables, searchChannels, searchChannels_searchChannels_channels } from '../../../API/query/searchChannels/__generated__/searchChannels';
+import { GET_CHANNEL_PROFILES_QUERY } from '../../../API/query/getChannelProfiles/getChannelProfiles';
+import { getChannelProfilesVariables, getChannelProfiles, getChannelProfiles_getChannelProfiles_channels } from '../../../API/query/getChannelProfiles/__generated__/getChannelProfiles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import ChannelListItem from '../ChannelListItem/ChannelListItem';
 import styles from './SearchChannels.styles';
 
-class SearchChannelsFlatList extends ApolloFlatList<searchChannelsVariables, searchChannels, searchChannels_searchChannels_channels> {}
+class SearchChannelsFlatList extends ApolloFlatList<getChannelProfilesVariables, getChannelProfiles, getChannelProfiles_getChannelProfiles_channels> {}
 
 const SearchChannels = () => {
   const [search, setSearch] = useState('');
@@ -23,7 +23,7 @@ const SearchChannels = () => {
       />
 
       <SearchChannelsFlatList
-        query={SEARCH_CHANNELS_QUERY}
+        query={GET_CHANNEL_PROFILES_QUERY}
         variables={{
           where: {
             // eslint-disable-next-line camelcase
@@ -31,7 +31,7 @@ const SearchChannels = () => {
           },
           first: 5,
         }}
-        accessor='searchChannels.channels'
+        accessor='getChannelProfiles.channels'
         renderItem={({ item }) => (
           <View style={styles.item}>
             <ChannelListItem data={item} />
