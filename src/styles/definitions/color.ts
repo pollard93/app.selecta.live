@@ -16,13 +16,32 @@ export default {
   // Monochromatic color group
   mono: {
     light: '#fff',
+    lightCover: 'rgba(255, 255, 255, 0.1)',
     dark: '#000',
+    darkCover: 'rgba(0, 0, 0, 0.8)',
+    pale: {
+      light: '#f0f0f0',
+      regular: '#d8d8d8',
+      dark: '#8e8e8e',
+    },
   },
 
 
   // Accented color group
   accent: {
-    primary: '#147efb',
+    primary: '#18a200',
+    secondary: '#000000',
+  },
+
+
+  gradient: {
+    primary: ['#DD247C', '#E40436'],
+  },
+
+
+  // State color group
+  state: {
+    error: '#b4090f',
   },
 
 };

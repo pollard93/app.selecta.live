@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { QueryResult } from 'react-apollo';
-import { Text, ActivityIndicator, View, Button } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import styles from './LoadRetry.style';
+import color from '../../../styles/definitions/color';
+import H4 from '../Typography/components/H4';
+import Button from '../Button/Button';
 
 const LoadRetry = (props: Partial<QueryResult>) => {
   const [refetching, setRefetching] = useState(false);
@@ -10,15 +13,16 @@ const LoadRetry = (props: Partial<QueryResult>) => {
   if (loading) {
     return (
       <View style={styles.wrap}>
-        <ActivityIndicator size="large" color={'red'} />
+        <ActivityIndicator size="large" color={color.mono.dark} />
       </View>
     );
   }
 
   return (
     <View style={styles.wrap}>
-      <Text>Something Went Wrong</Text>
+      <H4>Something Went Wrong</H4>
       <Button
+        style={styles.button}
         title="Retry"
         onPress={async () => {
           setRefetching(true);
@@ -31,7 +35,7 @@ const LoadRetry = (props: Partial<QueryResult>) => {
             setRefetching(false);
           }
         }}
-        disabled={refetching}
+        loading={refetching}
       />
     </View>
   );
