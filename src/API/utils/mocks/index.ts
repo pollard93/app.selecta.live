@@ -12,7 +12,6 @@ import { getFeed } from './resolvers/query/getFeed/getFeed';
 import { getNotifications } from './resolvers/query/getNotifications/getNotifications';
 import { getRequestedChannels } from './resolvers/query/getRequestedChannels/getRequestedChannels';
 import { getSelf } from './resolvers/query/getSelf/getSelf';
-import { getStreamFeed } from './resolvers/query/getStreamFeed/getStreamFeed';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
 import { getStreamProfile } from './resolvers/query/getStreamProfile/getStreamProfile';
 import { getStreamProfiles } from './resolvers/query/getStreamProfiles/getStreamProfiles';
@@ -42,7 +41,6 @@ export default {
     getNotifications,
     getRequestedChannels,
     getSelf,
-    getStreamFeed,
     getStreamMessages,
     getStreamProfile,
     getStreamProfiles,

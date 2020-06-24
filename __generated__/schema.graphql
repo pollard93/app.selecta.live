@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Wed Jun 24 2020 15:10:23 GMT+0100 (British Summer Time)
+# timestamp: Wed Jun 24 2020 15:29:11 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -892,6 +892,8 @@ type StreamProfile {
   channel: ChannelProfile
   name: String
   image: File
+  timeFrom: DateTime
+  timeTo: DateTime
   isConsumer: Boolean
   liveConsumersEdge: Int
   audioOnly: Boolean

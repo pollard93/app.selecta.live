@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-client';
 import { Linking } from 'react-native';
+import moment from 'moment-timezone';
 
 
 /**
@@ -26,4 +27,28 @@ export const openSettings = () => {
   if (Linking.canOpenURL(url)) {
     Linking.openURL(url);
   }
+};
+
+
+/**
+ * Format the given date for the users timezone
+ *
+ * @param {string} date
+ * @param {format} string - A moment format or 'calendar'
+ * @return {Moment}
+ */
+export const formatForTimezone = (date: string, format?: string): string => {
+  const timezone = moment.tz.guess();
+  const formattedDate = moment.tz(date, timezone);
+  if (!formattedDate.isValid()) return null;
+  return format === 'calendar'
+    ? formattedDate.calendar(null, {
+      sameDay: '[Today]',
+      nextDay: '[Tomorrow]',
+      nextWeek: 'dddd',
+      lastDay: '[Yesterday]',
+      lastWeek: '[Last] dddd',
+      sameElse: 'DD/MM/YYYY',
+    })
+    : formattedDate.format(format);
 };

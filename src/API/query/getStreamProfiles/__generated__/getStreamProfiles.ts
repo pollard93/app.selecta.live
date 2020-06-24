@@ -8,11 +8,6 @@ import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generat
 // GraphQL query operation: getStreamProfiles
 // ====================================================
 
-export interface getStreamProfiles_getStreamProfiles_streams_channel {
-  __typename: "ChannelProfile";
-  name: string | null;
-}
-
 export interface getStreamProfiles_getStreamProfiles_streams_image_url {
   __typename: "Url";
   splash: string | null;
@@ -31,9 +26,9 @@ export interface getStreamProfiles_getStreamProfiles_streams_image {
 export interface getStreamProfiles_getStreamProfiles_streams {
   __typename: "StreamProfile";
   id: string;
-  channel: getStreamProfiles_getStreamProfiles_streams_channel | null;
   name: string | null;
   image: getStreamProfiles_getStreamProfiles_streams_image | null;
+  timeFrom: any | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;

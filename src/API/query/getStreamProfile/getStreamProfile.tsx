@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { useQuery, QueryHookOptions } from 'react-apollo';
-import { getStreamProfile } from './__generated__/getStreamProfile';
+import { getStreamProfile, getStreamProfileVariables } from './__generated__/getStreamProfile';
 import { STREAM_PROFILE_FRAGMENT } from '../../fragments/StreamProfile';
 
 export const GET_STREAM_PROFILE_QUERY = gql`
@@ -12,4 +12,4 @@ export const GET_STREAM_PROFILE_QUERY = gql`
   ${STREAM_PROFILE_FRAGMENT}
 `;
 
-export const useGetStreamProfileQuery = (options?: QueryHookOptions<getStreamProfile>) => useQuery(GET_STREAM_PROFILE_QUERY, options);
+export const useGetStreamProfileQuery = (options?: QueryHookOptions<getStreamProfile, getStreamProfileVariables>) => useQuery(GET_STREAM_PROFILE_QUERY, options);
