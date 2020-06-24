@@ -6,7 +6,7 @@ import H4 from '../Typography/components/H4';
 
 export interface ToastProps {
   content: string;
-  type: 'INFO' | 'SUCCESS' | 'ERROR'; // Default INFO
+  type?: 'INFO' | 'SUCCESS' | 'ERROR'; // Default INFO
 }
 
 const Toast: FC<ToastProps> = (props) => {
