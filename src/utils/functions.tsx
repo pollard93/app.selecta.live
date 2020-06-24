@@ -1,13 +1,17 @@
 import { ApolloError } from 'apollo-client';
 
-export const getGQLErrorMessage = (Err: ApolloError, fallback?: string) => {
-  /**
-   * If not a graphql message then use the fallback message
-   */
-  if (!Err.message.includes('GraphQL error:')) {
-    return fallback || 'Something Went wrong';
-  }
 
-  // Return the error
+/**
+ * Gets Graphql error m
+ * @param Err
+ */
+export const getGQLErrorMessage = (Err: ApolloError, fallback = 'Something went wrong') => {
+  if (!Err.message.includes('GraphQL error:')) return fallback;
   return Err.message.replace('GraphQL error: ', '');
 };
+
+
+/**
+ * Parse camel case into string with spaces
+ */
+export const parseCamelCase = (text: string) => text.replace(/([A-Z])/g, ' $1');

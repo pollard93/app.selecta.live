@@ -7,13 +7,8 @@ export default StyleSheet.create({
   wrap: {
     alignSelf: 'stretch',
     backgroundColor: color.mono.pale.light,
-    borderColor: color.mono.pale.light,
-    borderWidth: 1,
-    padding: 1,
   },
-  wrapError: {
-    borderColor: color.state.error,
-  },
+
   TextInput: {
     color: color.mono.dark,
     flexGrow: 1,
@@ -27,6 +22,7 @@ export default StyleSheet.create({
     borderColor: color.mono.pale.regular,
     borderWidth: 1,
     flex: 0,
+    flexGrow: 0,
     // Required for multiline
     paddingTop: spacing.small,
   },
@@ -50,30 +46,5 @@ export default StyleSheet.create({
   },
   errorText: {
     color: color.state.error,
-  },
-
-  // FilterSearch
-  filterSearchWrap: {
-    flexDirection: 'row',
-    padding: spacing.small,
-  },
-  filterSearchWrapDark: {
-    backgroundColor: color.mono.pale.light,
-  },
-  filterSearchWrapTune: {
-    alignItems: 'center',
-    aspectRatio: 1,
-    backgroundColor: color.mono.pale.light,
-    justifyContent: 'center',
-  },
-  filterSearchWrapTuneDark: {
-    backgroundColor: color.mono.light,
-  },
-  filterSearch: {
-    flex: 1,
-    marginLeft: spacing.small,
-  },
-  filterSearchDark: {
-    backgroundColor: color.mono.light,
   },
 });

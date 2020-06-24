@@ -23,7 +23,6 @@ const Button = (props: ButtonProps) => {
       style={[
         Styles.wrap,
         Styles[type],
-        props.style,
       ]}
     >
       <H4 style={[Styles.text, Styles[`text${type}`]]}>{props.title}</H4>
@@ -54,7 +53,10 @@ const Button = (props: ButtonProps) => {
     return (
       <TouchableOpacity
         onPress={props.onPress}
-        style={props.disabled && !props.loading && Styles.disabled}
+        style={[
+          props.disabled && !props.loading && Styles.disabled,
+          props.style,
+        ]}
         disabled={props.disabled || props.loading}
       >
         <Gradient>
@@ -68,7 +70,10 @@ const Button = (props: ButtonProps) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={props.disabled && !props.loading && Styles.disabled}
+      style={[
+        props.disabled && !props.loading && Styles.disabled,
+        props.style,
+      ]}
       disabled={props.disabled || props.loading}
     >
       <Inner />

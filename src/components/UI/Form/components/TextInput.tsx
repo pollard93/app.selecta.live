@@ -36,7 +36,7 @@ const T: FC<TextInputPropsExt> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, errorMessage && Styles.wrapError]}>
+    <View style={Styles.wrap}>
       <TextInput
         placeholderTextColor={color.mono.pale.dark}
         {...props}
