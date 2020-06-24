@@ -6,16 +6,17 @@ import H4 from '../Typography/components/H4';
 
 export interface ToastProps {
   content: string;
-  type: 'INFO' | 'SUCCESS' | 'ERROR';
+  type: 'INFO' | 'SUCCESS' | 'ERROR'; // Default INFO
 }
 
 const Toast: FC<ToastProps> = (props) => {
+  const type = props.type || 'INFO';
   const { safeAreaInsets } = useToast();
 
   return (
-    <View style={[styles.outer, styles[props.type], { paddingBottom: safeAreaInsets.bottom }]}>
+    <View style={[styles.outer, styles[type], { paddingBottom: safeAreaInsets.bottom }]}>
       <View style={styles.inner}>
-        <H4 light={props.type !== 'INFO'}>{props.content}</H4>
+        <H4 light={type !== 'INFO'}>{props.content}</H4>
       </View>
     </View>
   );

@@ -3,7 +3,6 @@ import { ScrollView, TextInput, Button, Switch, View, Text } from 'react-native'
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
-import { EditableAsyncImage } from 'mbp-components-rn-asyncimage';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
@@ -12,6 +11,7 @@ import DateTimePickerInput from '../../UI/DateTimePicker/components/DateTimePick
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
+import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 
 type FormData = {
   name: string;

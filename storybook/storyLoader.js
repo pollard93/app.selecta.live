@@ -39,10 +39,12 @@ function loadStories() {
 	require('../src/components/UI/Form/Form.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
+	require('../src/components/UI/Permission/PermissionsError.stories');
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
+	require('../src/modules/AssetPicker/AssetPicker.stories');
 }
 
 const stories = [
@@ -81,10 +83,12 @@ const stories = [
 	'../src/components/UI/Form/Form.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
+	'../src/components/UI/Permission/PermissionsError.stories',
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
-	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories'
+	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
+	'../src/modules/AssetPicker/AssetPicker.stories'
 ];
 
 module.exports = {

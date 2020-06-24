@@ -3,13 +3,13 @@ import { ScrollView, TextInput, Button } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
-import { EditableAsyncImage } from 'mbp-components-rn-asyncimage';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import { useUpdateChannelMutation } from '../../../API/mutation/updateChannel/updateChannel';
 import { updateChannelVariables } from '../../../API/mutation/updateChannel/__generated__/updateChannel';
+import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 
 type FormData = {
   name: string;

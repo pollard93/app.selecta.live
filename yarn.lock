@@ -12381,13 +12381,13 @@ markdown-to-jsx@^6.9.3:
   version "0.1.4"
   resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#8045f150249c3f9034f45a7a77fc3627a048a1ff"
 
-"mbp-components-rn-assetpicker@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.1.1":
-  version "0.1.1"
-  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#ad1f69a5b8e725b56bcf976276ecd8bc9a393875"
+"mbp-components-rn-assetpicker@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.2.0":
+  version "0.2.0"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#2708fe3cc7a06b23783ad26dc53f101cc018fc89"
 
-"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.2.2":
-  version "0.2.2"
-  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#7142778cd23cf0b37a5ecd2e4d3332001bba4e9c"
+"mbp-components-rn-asyncimage@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.3.2":
+  version "0.3.2"
+  resolved "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#10146e474b21bef3291c56411438a1ef4807e3a4"
 
 "mbp-components-rn-toast@ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.2.2":
   version "0.2.2"
@@ -15395,6 +15395,11 @@ react-native-onesignal@^3.5.0:
   integrity sha512-Ww2d1na7SOpZ0DEVb+8BGpTt5Ty0Nuak/YqjY3YCauHFBdNOdI7Cz5CtSWLJMjKiyniJmWWHkvLu6HDE9zGZng==
   dependencies:
     invariant "^2.2.2"
+
+react-native-permissions@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.1.5.tgz#6cfc4f1ab1590f4952299b7cdc9698525ad540e0"
+  integrity sha512-b9KO/4UEV9qddl+kcSybmdk8nlAifclSDBR2rSvc5KZM06vIaJWJNIzK2ZwPXqDQ5yD3CJLuKTRj7Fz+jM9qyQ==
 
 react-native-rename@^2.4.1:
   version "2.4.1"
