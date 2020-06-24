@@ -139,6 +139,9 @@
       "error",
       {
         "allow": [
+          "CHANNEL_PROFILE_FRAGMENT_SHORT_profileImage_url",
+          "CHANNEL_PROFILE_FRAGMENT_SHORT_profileImage",
+          "CHANNEL_PROFILE_FRAGMENT_SHORT",
           "CHANNEL_PROFILE_FRAGMENT_profileImage_url",
           "CHANNEL_PROFILE_FRAGMENT_profileImage",
           "CHANNEL_PROFILE_FRAGMENT",
@@ -159,6 +162,7 @@
           "STREAM_MESSAGE_FRAGMENT_user_profilePicture",
           "STREAM_MESSAGE_FRAGMENT_user",
           "STREAM_MESSAGE_FRAGMENT",
+          "STREAM_PROFILE_FRAGMENT_SHORT_channel",
           "STREAM_PROFILE_FRAGMENT_SHORT_image_url",
           "STREAM_PROFILE_FRAGMENT_SHORT_image",
           "STREAM_PROFILE_FRAGMENT_SHORT",
@@ -324,6 +328,7 @@
           "getStreamProfile_getStreamProfile",
           "getStreamProfile",
           "getStreamProfileVariables",
+          "getStreamProfiles_getStreamProfiles_streams_channel",
           "getStreamProfiles_getStreamProfiles_streams_image_url",
           "getStreamProfiles_getStreamProfiles_streams_image",
           "getStreamProfiles_getStreamProfiles_streams",

@@ -34,6 +34,7 @@ function loadStories() {
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
 	require('../src/components/UI/Button/Button.stories');
+	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
@@ -79,6 +80,7 @@ const stories = [
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
 	'../src/components/UI/Button/Button.stories',
+	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',

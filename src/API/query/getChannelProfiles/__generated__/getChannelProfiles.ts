@@ -28,8 +28,6 @@ export interface getChannelProfiles_getChannelProfiles_channels {
   id: string;
   name: string | null;
   profileImage: getChannelProfiles_getChannelProfiles_channels_profileImage | null;
-  following: boolean | null;
-  followersEdge: number | null;
 }
 
 export interface getChannelProfiles_getChannelProfiles {

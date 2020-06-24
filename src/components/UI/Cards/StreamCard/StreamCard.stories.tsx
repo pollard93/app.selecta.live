@@ -12,9 +12,7 @@ storiesOf('Cards/StreamCard', module)
   .add('StreamCard - today', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();
-      console.log('TestComponent -> r', r);
       if (r.loading) return null;
-      console.log('TestComponent -> r.data.getStreamProfiles', r.data.getStreamProfiles);
 
       return (
         <StreamCard data={{
@@ -29,9 +27,7 @@ storiesOf('Cards/StreamCard', module)
   .add('StreamCard - tomorrow', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();
-      console.log('TestComponent -> r', r);
       if (r.loading) return null;
-      console.log('TestComponent -> r.data.getStreamProfiles', r.data.getStreamProfiles);
 
       return (
         <StreamCard data={{
@@ -46,9 +42,7 @@ storiesOf('Cards/StreamCard', module)
   .add('StreamCard - next week', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();
-      console.log('TestComponent -> r', r);
       if (r.loading) return null;
-      console.log('TestComponent -> r.data.getStreamProfiles', r.data.getStreamProfiles);
 
       return (
         <StreamCard data={{
@@ -63,9 +57,7 @@ storiesOf('Cards/StreamCard', module)
   .add('StreamCard - last day', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();
-      console.log('TestComponent -> r', r);
       if (r.loading) return null;
-      console.log('TestComponent -> r.data.getStreamProfiles', r.data.getStreamProfiles);
 
       return (
         <StreamCard data={{
@@ -80,9 +72,7 @@ storiesOf('Cards/StreamCard', module)
   .add('StreamCard - last week', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();
-      console.log('TestComponent -> r', r);
       if (r.loading) return null;
-      console.log('TestComponent -> r.data.getStreamProfiles', r.data.getStreamProfiles);
 
       return (
         <StreamCard data={{

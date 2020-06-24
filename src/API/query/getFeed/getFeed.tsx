@@ -8,6 +8,7 @@ export const GET_FEED_QUERY = gql`
       items {
         heading
         type
+        background
         query
         accessor
         variables

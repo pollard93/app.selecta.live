@@ -6,6 +6,11 @@
 // GraphQL fragment: STREAM_PROFILE_FRAGMENT_SHORT
 // ====================================================
 
+export interface STREAM_PROFILE_FRAGMENT_SHORT_channel {
+  __typename: "ChannelProfile";
+  name: string | null;
+}
+
 export interface STREAM_PROFILE_FRAGMENT_SHORT_image_url {
   __typename: "Url";
   splash: string | null;
@@ -25,6 +30,7 @@ export interface STREAM_PROFILE_FRAGMENT_SHORT {
   __typename: "StreamProfile";
   id: string;
   name: string | null;
+  channel: STREAM_PROFILE_FRAGMENT_SHORT_channel | null;
   image: STREAM_PROFILE_FRAGMENT_SHORT_image | null;
   timeFrom: any | null;
   isConsumer: boolean | null;

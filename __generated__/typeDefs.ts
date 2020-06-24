@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Wed Jun 24 2020 15:29:11 GMT+0100 (British Summer Time)
+# timestamp: Wed Jun 24 2020 17:38:00 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -315,6 +315,11 @@ input CreditTransactionWhereInput {
 
 scalar DateTime
 
+enum FEED_BK_TYPE {
+  LIGHT
+  DARK
+}
+
 enum FEED_TYPE {
   VERTICAL
   HORIZONTAL
@@ -323,6 +328,7 @@ enum FEED_TYPE {
 
 type FeedItem {
   heading: String!
+  background: FEED_BK_TYPE!
   type: FEED_TYPE!
   query: String!
   accessor: String!

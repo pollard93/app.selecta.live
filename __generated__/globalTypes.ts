@@ -31,6 +31,11 @@ export enum ChannelOrderByInput {
   verified_DESC = "verified_DESC",
 }
 
+export enum FEED_BK_TYPE {
+  DARK = "DARK",
+  LIGHT = "LIGHT",
+}
+
 export enum FEED_TYPE {
   HORIZONTAL = "HORIZONTAL",
   HORIZONTAL_SMALL = "HORIZONTAL_SMALL",
