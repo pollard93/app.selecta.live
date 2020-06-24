@@ -29,7 +29,7 @@ export default {
 
   // Accented color group
   accent: {
-    primary: '#18a200',
+    primary: '#E40436',
     secondary: '#000000',
   },
 

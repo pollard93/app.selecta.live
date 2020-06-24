@@ -1,9 +1,22 @@
 import { StyleSheet } from 'react-native';
+import shadow from '../../../styles/definitions/shadow';
+import color from '../../../styles/definitions/color';
+import spacing from '../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
-  // eslint-disable-next-line react-native/no-color-literals
-  wrap: {
-    backgroundColor: 'red',
-    height: 50,
+  outer: {
+    ...shadow.regular,
+  },
+  inner: {
+    padding: spacing.base,
+  },
+  INFO: {
+    backgroundColor: color.mono.light,
+  },
+  SUCCESS: {
+    backgroundColor: color.accent.primary,
+  },
+  ERROR: {
+    backgroundColor: color.state.error,
   },
 });

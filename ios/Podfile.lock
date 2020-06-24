@@ -290,6 +290,8 @@ PODS:
   - react-native-onesignal (3.5.0):
     - OneSignal (= 2.11.2)
     - React (< 1.0.0, >= 0.13.0)
+  - react-native-safe-area (0.5.1):
+    - React
   - react-native-slider (2.0.9):
     - React
   - react-native-splash-screen (3.2.0):
@@ -420,6 +422,7 @@ DEPENDENCIES:
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-music-control (from `../node_modules/react-native-music-control`)
   - react-native-onesignal (from `../node_modules/react-native-onesignal`)
+  - react-native-safe-area (from `../node_modules/react-native-safe-area`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-video (from `../node_modules/selecta.components.react-native-video`)
@@ -506,6 +509,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-music-control"
   react-native-onesignal:
     :path: "../node_modules/react-native-onesignal"
+  react-native-safe-area:
+    :path: "../node_modules/react-native-safe-area"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
@@ -587,6 +592,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
   react-native-music-control: a73cc4c0af6ed9b3204649756a33078a87ed2f03
   react-native-onesignal: 663944f5290d758d138b65ab6e60cf7d9c8e8f8f
+  react-native-safe-area: e8230b0017d76c00de6b01e2412dcf86b127c6a3
   react-native-slider: e51492f1264d882a8815b71c5870f8978e52887d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-video: 5d4b15a81113c14c3d6658e873fddf65d773f3f9
