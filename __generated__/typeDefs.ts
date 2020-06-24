@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Wed Jun 24 2020 09:05:26 GMT+0100 (British Summer Time)
+# timestamp: Wed Jun 24 2020 15:10:23 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String

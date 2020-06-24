@@ -33,10 +33,18 @@ function loadStories() {
 	require('../src/components/Stream/StreamUrl/StreamUrl.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
+	require('../src/components/UI/Button/Button.stories');
+	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
+	require('../src/components/UI/Form/Form.stories');
+	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
+	require('../src/components/UI/Permission/PermissionsError.stories');
+	require('../src/components/UI/Toast/Toast.stories');
+	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
+	require('../src/modules/AssetPicker/AssetPicker.stories');
 }
 
 const stories = [
@@ -69,10 +77,18 @@ const stories = [
 	'../src/components/Stream/StreamUrl/StreamUrl.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
+	'../src/components/UI/Button/Button.stories',
+	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
+	'../src/components/UI/Form/Form.stories',
+	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
+	'../src/components/UI/Permission/PermissionsError.stories',
+	'../src/components/UI/Toast/Toast.stories',
+	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
-	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories'
+	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
+	'../src/modules/AssetPicker/AssetPicker.stories'
 ];
 
 module.exports = {

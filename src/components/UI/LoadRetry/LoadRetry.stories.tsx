@@ -5,7 +5,7 @@ import LoadRetry from './LoadRetry';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 
-storiesOf('LoadRetry', module)
+storiesOf('UI/LoadRetry', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('LoadRetry Loading', () => {
     const TestComponent = () => {

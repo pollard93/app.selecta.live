@@ -1,15 +1,25 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { FC } from 'react';
+import { View } from 'react-native';
+import { useToast } from 'mbp-components-rn-toast';
 import styles from './Toast.style';
+import H4 from '../Typography/components/H4';
 
-interface ToastProps {
+export interface ToastProps {
   content: string;
+  type?: 'INFO' | 'SUCCESS' | 'ERROR'; // Default INFO
 }
 
-const Toast = (props: ToastProps) => (
-  <View style={styles.wrap}>
-    <Text>{props.content}</Text>
-  </View>
-);
+const Toast: FC<ToastProps> = (props) => {
+  const type = props.type || 'INFO';
+  const { safeAreaInsets } = useToast();
+
+  return (
+    <View style={[styles.outer, styles[type], { paddingBottom: safeAreaInsets.bottom }]}>
+      <View style={styles.inner}>
+        <H4 light={type !== 'INFO'}>{props.content}</H4>
+      </View>
+    </View>
+  );
+};
 
 export default Toast;

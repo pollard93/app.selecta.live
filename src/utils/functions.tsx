@@ -1,13 +1,29 @@
 import { ApolloError } from 'apollo-client';
+import { Linking } from 'react-native';
 
-export const getGQLErrorMessage = (Err: ApolloError, fallback?: string) => {
-  /**
-   * If not a graphql message then use the fallback message
-   */
-  if (!Err.message.includes('GraphQL error:')) {
-    return fallback || 'Something Went wrong';
-  }
 
-  // Return the error
+/**
+ * Gets Graphql error m
+ * @param Err
+ */
+export const getGQLErrorMessage = (Err: ApolloError, fallback = 'Something went wrong') => {
+  if (!Err.message.includes('GraphQL error:')) return fallback;
   return Err.message.replace('GraphQL error: ', '');
+};
+
+
+/**
+ * Parse camel case into string with spaces
+ */
+export const parseCamelCase = (text: string) => text.replace(/([A-Z])/g, ' $1');
+
+
+/**
+ * Opens device settings
+ */
+export const openSettings = () => {
+  const url = 'app-settings:';
+  if (Linking.canOpenURL(url)) {
+    Linking.openURL(url);
+  }
 };
