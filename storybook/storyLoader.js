@@ -39,6 +39,7 @@ function loadStories() {
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
 	require('../src/components/UI/Form/Form.stories');
+	require('../src/components/UI/Headers/FeedHeader/FeedHeader.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
@@ -85,6 +86,7 @@ const stories = [
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
 	'../src/components/UI/Form/Form.stories',
+	'../src/components/UI/Headers/FeedHeader/FeedHeader.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',
