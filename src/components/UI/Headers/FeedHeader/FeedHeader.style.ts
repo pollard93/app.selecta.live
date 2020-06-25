@@ -11,7 +11,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   logoWrap: {
-    aspectRatio: 626 / 148,
+    aspectRatio: 4.22972972972973,
     maxWidth: scalePx(300),
     width: '40%',
   },

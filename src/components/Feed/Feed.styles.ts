@@ -14,7 +14,7 @@ export default StyleSheet.create({
 
   // outerItem
   outerItemDARK: {
-    backgroundColor: color.mono.pale.regular,
+    backgroundColor: color.mono.pale.light,
   },
   outerItemLIGHT: {
     backgroundColor: color.mono.light,

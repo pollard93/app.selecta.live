@@ -25,17 +25,11 @@ const StreamCard: FC<StreamCardProps> = (props) => (
       <H4>{props.data.name}</H4>
     </View>
 
-    <View style={Styles.item}>
-      <FlatList
-        data={props.data.tags}
-        bounces={false}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <Body>#{item.title}</Body>}
-        keyExtractor={(item) => item.title}
-        ItemSeparatorComponent={() => <View style={Styles.tagSeparator} />}
-      />
-    </View>
+    {props.data.tags.length > 0 && (
+      <View style={Styles.item}>
+        <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
+      </View>
+    )}
 
     <View style={[Styles.item, Styles.lower]}>
       <Chip type="SECONDARY" style={Styles.channelNameChip}>{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}</Chip>
