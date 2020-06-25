@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 import { StyleSheet } from 'react-native';
 import spacing from '../../styles/definitions/spacing';
 import color from '../../styles/definitions/color';
 
 export default StyleSheet.create({
   heading: {
-    paddingHorizontal: spacing.small,
+    paddingHorizontal: spacing.base,
     paddingVertical: spacing.small,
   },
   horizontalSeparator: {
@@ -24,5 +25,23 @@ export default StyleSheet.create({
   flatListContainerHORIZONTAL_SMALL: {
     padding: spacing.base,
     paddingTop: 0,
+  },
+  flatListContainerHORIZONTAL: {
+    paddingHorizontal: spacing.base,
+  },
+
+  // horizontalArrow
+  horizontalArrowWrapHORIZONTAL: {
+    alignItems: 'flex-end',
+    padding: spacing.small,
+  },
+  horizontalArrowWrapHORIZONTAL_SMALL: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    ...StyleSheet.absoluteFillObject,
+    marginRight: spacing.small,
+  },
+  horizontalArrowHORIZONTAL_SMALL: {
+    tintColor: color.mono.light,
   },
 });

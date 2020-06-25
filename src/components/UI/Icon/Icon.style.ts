@@ -30,10 +30,7 @@ export default StyleSheet.create({
     height: scalePx(50),
     width: scalePx(50),
   },
-  LIKE: {
-    tintColor: color.accent.primary,
-  },
-  PLACEHOLDER: {
-    tintColor: color.mono.pale.dark,
+  ARROW_FORWARD: {
+    tintColor: undefined,
   },
 });

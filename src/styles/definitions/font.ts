@@ -9,19 +9,20 @@ export default {
   // Font families
   family: {
     body: fontFamily({
-      name: 'Inter',
+      name: 'Open Sans',
       weights: {
-        regular: {
-          postScriptName: 'Inter-Regular',
-          weight: '400',
+        light: {
+          postScriptName: 'OpenSans-CondensedLight',
+          weight: '300',
         },
-        semibold: {
-          postScriptName: 'Inter-SemiBold',
-          weight: '600',
-        },
+      },
+    }),
+    heading: fontFamily({
+      name: 'Open Sans Condensed',
+      weights: {
         bold: {
-          postScriptName: 'Inter-Bold',
-          weight: '700',
+          postScriptName: 'OpenSans-CondensedBold',
+          weight: 'bold',
         },
       },
     }),
@@ -34,7 +35,7 @@ export default {
     h2: scalePx(30),
     h3: scalePx(24),
     h4: scalePx(18),
-    body: scalePx(14),
+    body: scalePx(16),
     small: scalePx(11),
   },
 

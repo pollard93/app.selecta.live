@@ -30,11 +30,11 @@ const StreamCard: FC<StreamCardProps> = (props) => (
     </View>
 
     <View style={[Styles.item, Styles.lower]}>
-      <Chip type="SECONDARY">{props.data.channel.name}</Chip>
+      <Chip type="SECONDARY" style={Styles.channelNameChip}>{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}</Chip>
 
       <View style={Styles.chips}>
-        <Chip style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
-        <Chip>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
+        <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
+        <Chip bold>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
       </View>
     </View>
   </View>

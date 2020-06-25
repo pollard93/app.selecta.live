@@ -22,10 +22,15 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  channelNameChip: {
+    flex: 1,
+    marginRight: spacing.small,
+  },
   chips: {
     flexDirection: 'row',
   },
   chipLeft: {
     marginRight: spacing.xsmall,
   },
+
 });

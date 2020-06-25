@@ -12,9 +12,9 @@ export default StyleSheet.create({
   TextInput: {
     color: color.mono.dark,
     flexGrow: 1,
-    fontFamily: font.family.body('regular').fontFamily,
+    fontFamily: font.family.body('light').fontFamily,
     fontSize: font.size.body,
-    fontWeight: font.family.body('regular').fontWeight,
+    fontWeight: font.family.body('light').fontWeight,
     padding: spacing.small,
   },
   TextArea: {
