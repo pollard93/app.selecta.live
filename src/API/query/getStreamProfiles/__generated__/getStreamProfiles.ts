@@ -28,6 +28,11 @@ export interface getStreamProfiles_getStreamProfiles_streams_image {
   url: getStreamProfiles_getStreamProfiles_streams_image_url | null;
 }
 
+export interface getStreamProfiles_getStreamProfiles_streams_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface getStreamProfiles_getStreamProfiles_streams {
   __typename: "StreamProfile";
   id: string;
@@ -35,9 +40,7 @@ export interface getStreamProfiles_getStreamProfiles_streams {
   channel: getStreamProfiles_getStreamProfiles_streams_channel | null;
   image: getStreamProfiles_getStreamProfiles_streams_image | null;
   timeFrom: any | null;
-  isConsumer: boolean | null;
-  audioOnly: boolean | null;
-  position: number | null;
+  tags: (getStreamProfiles_getStreamProfiles_streams_tags | null)[] | null;
 }
 
 export interface getStreamProfiles_getStreamProfiles {

@@ -26,9 +26,9 @@ export const getFeed = () => ({
                 }
               }
               timeFrom
-              isConsumer
-              audioOnly
-              position
+              tags {
+                title
+              }
             }
             count
           }
@@ -93,9 +93,9 @@ export const getFeed = () => ({
                 }
               }
               timeFrom
-              isConsumer
-              audioOnly
-              position
+              tags {
+                title
+              }
             }
             count
           }

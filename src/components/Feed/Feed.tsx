@@ -35,7 +35,7 @@ const Feed = () => {
           const itemWidth = (() => {
             switch (item.type) {
               case FEED_TYPE.HORIZONTAL:
-                return windowWidth * 0.9;
+                return windowWidth * 0.8;
               case FEED_TYPE.HORIZONTAL_SMALL:
                 return windowWidth * 0.3;
               default:

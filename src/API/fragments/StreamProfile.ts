@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { FILE_FRAGMENT } from './File';
+import { TAG_PROFILE_FRAGMENT } from './TagProfile';
 
 export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
   fragment STREAM_PROFILE_FRAGMENT_SHORT on StreamProfile {
@@ -12,11 +13,12 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
       ...FILE_FRAGMENT
     }
     timeFrom
-    isConsumer
-    audioOnly
-    position
+    tags {
+      ...TAG_PROFILE_FRAGMENT
+    }
   },
   ${FILE_FRAGMENT}
+  ${TAG_PROFILE_FRAGMENT}
 `;
 
 export const STREAM_PROFILE_FRAGMENT = gql`

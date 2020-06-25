@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
@@ -26,7 +26,15 @@ const StreamCard: FC<StreamCardProps> = (props) => (
     </View>
 
     <View style={Styles.item}>
-      <Body>TODO - Tags</Body>
+      <FlatList
+        data={props.data.tags}
+        bounces={false}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => <Body>#{item.title}</Body>}
+        keyExtractor={(item) => item.title}
+        ItemSeparatorComponent={() => <View style={Styles.tagSeparator} />}
+      />
     </View>
 
     <View style={[Styles.item, Styles.lower]}>

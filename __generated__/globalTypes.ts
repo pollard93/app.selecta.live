@@ -190,6 +190,9 @@ export interface ChannelWhereInput {
   transactions_every?: CreditTransactionWhereInput | null;
   transactions_some?: CreditTransactionWhereInput | null;
   transactions_none?: CreditTransactionWhereInput | null;
+  tags_every?: TagWhereInput | null;
+  tags_some?: TagWhereInput | null;
+  tags_none?: TagWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
@@ -748,6 +751,9 @@ export interface StreamWhereInput {
   positionRecords_every?: StreamPositionRecordWhereInput | null;
   positionRecords_some?: StreamPositionRecordWhereInput | null;
   positionRecords_none?: StreamPositionRecordWhereInput | null;
+  tags_every?: TagWhereInput | null;
+  tags_some?: TagWhereInput | null;
+  tags_none?: TagWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
@@ -767,6 +773,54 @@ export interface StreamWhereInput {
   AND?: StreamWhereInput[] | null;
   OR?: StreamWhereInput[] | null;
   NOT?: StreamWhereInput[] | null;
+}
+
+export interface TagWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  title?: string | null;
+  title_not?: string | null;
+  title_in?: string[] | null;
+  title_not_in?: string[] | null;
+  title_lt?: string | null;
+  title_lte?: string | null;
+  title_gt?: string | null;
+  title_gte?: string | null;
+  title_contains?: string | null;
+  title_not_contains?: string | null;
+  title_starts_with?: string | null;
+  title_not_starts_with?: string | null;
+  title_ends_with?: string | null;
+  title_not_ends_with?: string | null;
+  channels_every?: ChannelWhereInput | null;
+  channels_some?: ChannelWhereInput | null;
+  channels_none?: ChannelWhereInput | null;
+  streams_every?: StreamWhereInput | null;
+  streams_some?: StreamWhereInput | null;
+  streams_none?: StreamWhereInput | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  AND?: TagWhereInput[] | null;
+  OR?: TagWhereInput[] | null;
+  NOT?: TagWhereInput[] | null;
 }
 
 export interface UserWhereInput {

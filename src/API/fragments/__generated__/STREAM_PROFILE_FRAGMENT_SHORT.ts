@@ -26,6 +26,11 @@ export interface STREAM_PROFILE_FRAGMENT_SHORT_image {
   url: STREAM_PROFILE_FRAGMENT_SHORT_image_url | null;
 }
 
+export interface STREAM_PROFILE_FRAGMENT_SHORT_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface STREAM_PROFILE_FRAGMENT_SHORT {
   __typename: "StreamProfile";
   id: string;
@@ -33,7 +38,5 @@ export interface STREAM_PROFILE_FRAGMENT_SHORT {
   channel: STREAM_PROFILE_FRAGMENT_SHORT_channel | null;
   image: STREAM_PROFILE_FRAGMENT_SHORT_image | null;
   timeFrom: any | null;
-  isConsumer: boolean | null;
-  audioOnly: boolean | null;
-  position: number | null;
+  tags: (STREAM_PROFILE_FRAGMENT_SHORT_tags | null)[] | null;
 }

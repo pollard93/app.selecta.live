@@ -14,8 +14,8 @@ export default StyleSheet.create({
     marginTop: spacing.small,
     paddingHorizontal: spacing.small,
   },
-  tags: {
-    paddingHorizontal: spacing.small,
+  tagSeparator: {
+    width: spacing.xxsmall,
   },
   lower: {
     alignItems: 'flex-end',
