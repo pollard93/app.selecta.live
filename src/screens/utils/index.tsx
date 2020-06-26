@@ -11,13 +11,13 @@ import OnboardingWelcomeScreen, { OnboardingWelcomeScreenName } from '../Onboard
 
 
 /**
- * Resets navigation stack to login screen using STACK.LOGIN
+ * Resets navigation stack to login screen using STACK.ONBOARDING
  * @param toastMessage - optional toast message to show on mount of login
  */
 export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
   root: {
     stack: {
-      id: STACK.LOGIN,
+      id: STACK.ONBOARDING,
       children: [
         {
           component: {
@@ -37,7 +37,7 @@ export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
 export const goToOnboarding = () => Navigation.setRoot({
   root: {
     stack: {
-      id: STACK.LOGIN,
+      id: STACK.ONBOARDING,
       children: [
         {
           component: {

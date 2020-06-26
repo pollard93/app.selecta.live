@@ -69,7 +69,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       // Navigate now getSelf is cached
       if (!name) {
         // Carry on onboarding process if user has no name
-        pushScreenV2(STACK.LOGIN, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {

@@ -21,7 +21,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
    * On next screen
    */
   const onNext = () => {
-    pushScreenV2(STACK.LOGIN, OnboardingGetStartedScreen, {});
+    pushScreenV2(STACK.ONBOARDING, OnboardingGetStartedScreen, {});
   };
 
 

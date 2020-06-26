@@ -63,7 +63,7 @@ const Login: FC<LoginProps> = (props) => {
           /**
            * Push resetPasswordScreen
            */
-          pushScreen<ResetPasswordScreenProps>(STACK.LOGIN, {
+          pushScreen<ResetPasswordScreenProps>(STACK.ONBOARDING, {
             component: {
               name: ResetPasswordScreenName,
               passProps: {
@@ -118,7 +118,7 @@ const Login: FC<LoginProps> = (props) => {
       // Navigate now getSelf is cached
       if (!name) {
         // Carry on onboarding process if user has no name
-        pushScreenV2(STACK.LOGIN, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -210,7 +210,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RequestPasswordResetScreen
    */
   const onReset = (defaultEmailValue: string) => {
-    pushScreenV2(STACK.LOGIN, RequestPasswordResetScreen, {
+    pushScreenV2(STACK.ONBOARDING, RequestPasswordResetScreen, {
       defaultEmailValue,
       onCompletion: () => {
         toast.push({
@@ -229,7 +229,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RegisterScreen
    */
   const onRegister = () => {
-    pushScreenV2(STACK.LOGIN, RegisterScreen, {});
+    pushScreenV2(STACK.ONBOARDING, RegisterScreen, {});
   };
 
 

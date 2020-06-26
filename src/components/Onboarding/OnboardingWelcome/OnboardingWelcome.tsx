@@ -38,7 +38,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
    */
   const [mutation, { loading }] = useUpdateSelfMutation({
     onCompleted: () => {
-      pushScreenV2(STACK.LOGIN, OnboardingNotificationsScreen, {});
+      pushScreenV2(STACK.ONBOARDING, OnboardingNotificationsScreen, {});
     },
     onError: (e) => {
       toast.push({
