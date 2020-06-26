@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';

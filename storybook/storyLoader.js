@@ -16,6 +16,8 @@ function loadStories() {
 	require('../src/components/Feed/Feed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
+	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
+	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
 	require('../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories');
 	require('../src/components/Purchase/Purchases/Purchases.stories');
 	require('../src/components/Register/Register.stories');
@@ -65,6 +67,8 @@ const stories = [
 	'../src/components/Feed/Feed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
+	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
+	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
 	'../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories',
 	'../src/components/Purchase/Purchases/Purchases.stories',
 	'../src/components/Register/Register.stories',

@@ -3,7 +3,6 @@ import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
-import { registerVariables } from '../../API/mutation/register/__generated__/register';
 import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
