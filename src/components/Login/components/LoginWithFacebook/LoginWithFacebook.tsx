@@ -3,7 +3,7 @@ import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -14,6 +14,8 @@ import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
+import { STACK } from '../../../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
 interface LoginWithFacebookProps {
   disabled: boolean;
@@ -30,7 +32,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
    * Get self must be executed to cache the result
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, name, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -45,8 +47,15 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!name) {
+        // Carry on onboarding process if user has no name
+        pushScreenV2(STACK.LOGIN, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);

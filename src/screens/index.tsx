@@ -11,7 +11,7 @@ import RegisterScreen from './RegisterScreen/RegisterScreen';
 import HomeScreen from './HomeScreen/HomeScreen';
 import RequireUpdateScreen from './RequireUpdateScreen/RequireUpdateScreen';
 import ResetPasswordScreen from './ResetPasswordScreen/ResetPasswordScreen';
-import RequestResetPasswordScreen from './RequestResetPasswordScreen/RequestResetPasswordScreen';
+import RequestResetPasswordScreen from './RequestPasswordResetScreen/RequestPasswordResetScreen';
 import ToastProvider from '../modules/ToastProvider/ToastProvider';
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelScreen from './ChannelScreen/ChannelScreen';

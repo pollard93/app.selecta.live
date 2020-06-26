@@ -15,7 +15,7 @@ import H4 from '../UI/Typography/components/H4';
 export interface LoginViewProps {
   loading: boolean;
   onSubmit: (variables: FormData) => void;
-  onReset: () => void;
+  onReset: (defaultEmailValue: string) => void;
   onRegister: () => void;
 }
 
@@ -25,7 +25,7 @@ export type FormData = {
 };
 
 const LoginView = (props: LoginViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
   const passwordRef = useRef(null);
 
 
@@ -108,7 +108,7 @@ const LoginView = (props: LoginViewProps) => {
 
         <TouchableOpacity
           style={Styles.forgot}
-          onPress={props.onReset}
+          onPress={() => props.onReset(watch('email'))}
           disabled={props.loading}
         >
           <Body light>Forgotten Password?</Body>

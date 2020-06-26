@@ -18,7 +18,7 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
-import RequestPasswordResetScreen from '../../screens/RequestResetPasswordScreen/RequestResetPasswordScreen';
+import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
@@ -31,7 +31,7 @@ export interface LoginProps extends ScreenProps {
 const Login: FC<LoginProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const context = useToast();
+  const toast = useToast();
 
 
   /**
@@ -50,7 +50,7 @@ const Login: FC<LoginProps> = (props) => {
           const token = uri.replace('reset-password/', '');
           const { exp } = jwtDecode(token);
           if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            context.push({
+            toast.push({
               duration: 1000,
               component: (
                 <Toast content="Link has expired" />
@@ -129,7 +129,7 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={getGQLErrorMessage(e)} />
@@ -160,7 +160,7 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={getGQLErrorMessage(e)} />
@@ -176,7 +176,7 @@ const Login: FC<LoginProps> = (props) => {
    */
   useEffect(() => {
     if (props.toastMessage) {
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={props.toastMessage} />
@@ -209,8 +209,19 @@ const Login: FC<LoginProps> = (props) => {
   /**
    * Navigate to RequestPasswordResetScreen
    */
-  const onReset = () => {
-    pushScreenV2(STACK.LOGIN, RequestPasswordResetScreen, {});
+  const onReset = (defaultEmailValue: string) => {
+    pushScreenV2(STACK.LOGIN, RequestPasswordResetScreen, {
+      defaultEmailValue,
+      onCompletion: () => {
+        toast.push({
+          duration: 1000,
+          component: (
+            <Toast content="Please open your magic link in the email we have just sent you" />
+          ),
+          dismissible: false,
+        });
+      },
+    });
   };
 
 

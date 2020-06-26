@@ -1,50 +1,77 @@
-import React from 'react';
-import { Button, Text, ScrollView, TextInput } from 'react-native';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
-import { requestPasswordResetVariables } from '../../API/mutation/requestPasswordReset/__generated__/requestPasswordReset';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import Styles from './RequestPasswordReset.style';
+import H4 from '../UI/Typography/components/H4';
+import TextInput from '../UI/Form/components/TextInput';
+import Button from '../UI/Button/Button';
+import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 
 export interface RequestPasswordResetViewProps {
-  complete: boolean;
+  defaultEmailValue: string;
   loading: boolean;
-  onSubmit: (variables: requestPasswordResetVariables) => void;
+  onSubmit: (variables: FormData) => void;
+  onPop: () => void;
 }
 
-type FormData = {
+export type FormData = {
   email: string;
 };
 
 const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({
+    mode: 'onChange',
+    defaultValues: {
+      email: props.defaultEmailValue,
+    },
+  });
 
 
-  if (props.complete) {
-    return <Text>Please check your email</Text>;
-  }
+  /**
+   * Register form
+   */
+  useEffect(() => {
+    register(
+      { name: 'email' },
+      { required: true, validate: validateEmail },
+    );
+  }, [register]);
 
 
   return (
-    <ScrollView style={GlobalStyles.PageFill}>
-      <TextInput
-        ref={() => {
-          register({ name: 'email' }, { required: true, validate: validateEmail });
-        }}
-        onChangeText={(text) => setValue('email', text, true)}
-        placeholder="Email"
-        autoCompleteType="email"
-        keyboardType="email-address"
-        returnKeyType="next"
-        onSubmitEditing={handleSubmit(props.onSubmit)}
-      />
-      {errors.email && <Text>This is required.</Text>}
+    <OnboardingPageWrap heading="Reset Password">
+      <View style={Styles.input}>
+        <H4 style={Styles.content}>Enter your email and we'll send you a magic link to reset your password.</H4>
+
+        <TextInput
+          name="email"
+          onChangeText={(text) => {
+            // Validate on change if there's an error, otherwise validate onBlur
+            setValue('email', text, !!errors.email);
+          }}
+          placeholder="Enter your email"
+          autoCompleteType="email"
+          keyboardType="email-address"
+          returnKeyType="done"
+          autoCapitalize="none"
+          errors={errors}
+          onBlur={() => triggerValidation('email')}
+          onSubmitEditing={handleSubmit(props.onSubmit)}
+          defaultValue={props.defaultEmailValue}
+          testID="email"
+          light
+        />
+      </View>
 
       <Button
-        title="Submit"
+        title={props.loading ? 'Requesting reset' : 'Request password reset'}
         onPress={handleSubmit(props.onSubmit)}
-        disabled={props.loading || !isValid || !dirty}
+        disabled={!isValid || (!dirty && !props.defaultEmailValue)}
+        loading={props.loading}
+        testID="submit"
       />
-    </ScrollView>
+    </OnboardingPageWrap>
   );
 };
 

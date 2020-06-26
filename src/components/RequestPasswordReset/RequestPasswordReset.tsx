@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
+import { Navigation } from 'react-native-navigation';
+import { useToast } from 'mbp-components-rn-toast';
 import { useRequestPasswordResetMutation } from '../../API/mutation/requestPasswordReset/requestPasswordReset';
 import RequestPasswordResetView from './RequestPasswordResetView';
-import { requestPasswordResetVariables } from '../../API/mutation/requestPasswordReset/__generated__/requestPasswordReset';
+import { ScreenProps } from '../../screens/utils/interfaces';
+import Toast from '../UI/Toast/Toast';
+import { getGQLErrorMessage } from '../../utils/functions';
+import { FormData } from '../Register/RegisterView';
 
-const RequestPasswordReset = () => {
-  const [complete, setComplete] = useState(false);
+export interface RequestPasswordResetProps extends ScreenProps {
+  onCompletion: () => void;
+  defaultEmailValue?: string;
+}
+
+const RequestPasswordReset: FC<RequestPasswordResetProps> = (props) => {
+  const toast = useToast();
 
 
   /**
@@ -12,10 +22,22 @@ const RequestPasswordReset = () => {
    */
   const [requestPasswordResetMutation, { loading }] = useRequestPasswordResetMutation({
     onCompleted: () => {
-      setComplete(true);
+      /**
+       * Pop this screen and execute props.onCompletion
+       */
+      Navigation.pop(props.componentId).finally(props.onCompletion);
     },
-    onError: () => {
-      setComplete(true);
+    onError: (e) => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
+        ),
+        dismissible: false,
+      });
     },
   });
 
@@ -23,20 +45,27 @@ const RequestPasswordReset = () => {
   /**
    * Form submission
    */
-  const onSubmit = (variables: requestPasswordResetVariables) => {
+  const onSubmit = (variables: FormData) => {
     requestPasswordResetMutation({
-      variables: {
-        ...variables,
-      },
+      variables,
     });
+  };
+
+
+  /**
+   * Pop this screen
+   */
+  const onPop = () => {
+    Navigation.pop(props.componentId);
   };
 
 
   return (
     <RequestPasswordResetView
-      complete={complete}
+      defaultEmailValue={props.defaultEmailValue}
       loading={loading}
       onSubmit={onSubmit}
+      onPop={onPop}
     />
   );
 };

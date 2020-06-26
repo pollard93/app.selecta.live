@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -13,6 +13,8 @@ import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
+import { STACK } from '../../../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
 interface LoginWithGoogleProps {
   disabled: boolean;
@@ -49,7 +51,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
    * Get self must be executed to cache the result
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, requiresUpdate, name } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -64,8 +66,15 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!name) {
+        // Carry on onboarding process if user has no name
+        pushScreenV2(STACK.LOGIN, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);
