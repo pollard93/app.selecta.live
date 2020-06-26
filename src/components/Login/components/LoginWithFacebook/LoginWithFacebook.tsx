@@ -18,7 +18,7 @@ import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
 interface LoginWithFacebookProps {
-  disabled: boolean;
+  disabled?: boolean;
   buttonText: string;
 }
 

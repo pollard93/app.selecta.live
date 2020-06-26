@@ -15,7 +15,8 @@ import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import ResetPasswordView from './ResetPasswordView';
 import * as ScreenUtilsModule from '../../screens/utils';
 import { STACK } from '../../screens/utils/interfaces';
-import OnboardingWhoScreen from '../../screens/Onboarding/OnboardingWhoScreen/OnboardingWhoScreen';
+import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<ResetPassword />', () => {
   /**
@@ -23,6 +24,7 @@ describe('<ResetPassword />', () => {
    */
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+  let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(useToast(), 'push');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
@@ -32,6 +34,7 @@ describe('<ResetPassword />', () => {
     sandbox.restore();
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
+    inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(useToast(), 'push');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
@@ -87,6 +90,9 @@ describe('<ResetPassword />', () => {
 
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
@@ -212,6 +218,9 @@ describe('<ResetPassword />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
 
@@ -219,7 +228,7 @@ describe('<ResetPassword />', () => {
     expect(goHomeSpy.callCount).to.equal(0);
   });
 
-  it('should go to OnboardingWhoScreen if getSelf.verified is false', async () => {
+  it('should go to OnboardingWelcomeScreen if getSelf.name is null', async () => {
     /**
      * Create mock client and force getSelf.requiresUpdate to be true
      */
@@ -227,7 +236,7 @@ describe('<ResetPassword />', () => {
       Query: () => ({
         getSelf: () => ({
           requiresUpdate: null,
-          verified: false,
+          name: null,
         }),
       }),
     });
@@ -255,10 +264,13 @@ describe('<ResetPassword />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Should have gone to OnboardingWhoScreen
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+
+    // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenV2Spy.callCount).to.equal(1);
     expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWhoScreen);
+    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenV2Spy.args[0][2]).to.be.empty;
 
     // Should not have goneHome

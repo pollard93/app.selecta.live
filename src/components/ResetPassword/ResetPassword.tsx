@@ -14,6 +14,7 @@ import { getGQLErrorMessage } from '../../utils/functions';
 import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import { FormData } from '../Register/RegisterView';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import InAppPurchases from '../../modules/InAppPurchases';
 
 export interface ResetPasswordProps extends ScreenProps {
   token: string;
@@ -34,6 +35,9 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
 
       // Bind notifications
       PushNotifications.init(id);
+
+      // Bind in app purchases
+      InAppPurchases.init();
 
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen

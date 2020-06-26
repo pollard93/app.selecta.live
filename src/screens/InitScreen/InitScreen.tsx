@@ -67,7 +67,7 @@ const InitScreen = () => {
       // Execute getChannelSelf which will try and use channel token in local storage from ApolloClient on request
       getChannelSelf();
     },
-    onError: () => {
+    onError: (e) => {
       goToLogin();
     },
     fetchPolicy: 'network-only',

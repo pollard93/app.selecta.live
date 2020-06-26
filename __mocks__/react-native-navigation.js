@@ -3,5 +3,6 @@ jest.mock('react-native-navigation', () => ({
     setRoot: jest.fn(),
     showModal: jest.fn(),
     push: jest.fn(),
+    pop: jest.fn().mockImplementation(() => Promise.resolve()),
   },
 }));

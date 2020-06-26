@@ -104,12 +104,14 @@ const LoginView = (props: LoginViewProps) => {
           onPress={handleSubmit(props.onSubmit)}
           disabled={!isValid || !dirty}
           loading={props.loading}
+          testID="submit"
         />
 
         <TouchableOpacity
           style={Styles.forgot}
           onPress={() => props.onReset(watch('email'))}
           disabled={props.loading}
+          testID="reset"
         >
           <Body light>Forgotten Password?</Body>
         </TouchableOpacity>
@@ -134,6 +136,7 @@ const LoginView = (props: LoginViewProps) => {
           style={Styles.register}
           onPress={props.onRegister}
           disabled={props.loading}
+          testID="register"
         >
           <H4 light>Don't have an account?</H4>
         </TouchableOpacity>

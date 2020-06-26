@@ -99,6 +99,7 @@ const RegisterView = (props: RegisterViewProps) => {
           onPress={handleSubmit(props.onSubmit)}
           disabled={!isValid || !dirty}
           loading={props.loading}
+          testID="submit"
         />
 
         <Separator margin="xlarge" />

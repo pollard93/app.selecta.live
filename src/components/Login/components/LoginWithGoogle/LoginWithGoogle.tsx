@@ -17,7 +17,7 @@ import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
 interface LoginWithGoogleProps {
-  disabled: boolean;
+  disabled?: boolean;
   buttonText: string;
 }
 
