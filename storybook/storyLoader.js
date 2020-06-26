@@ -42,6 +42,7 @@ function loadStories() {
 	require('../src/components/UI/Headers/FeedHeader/FeedHeader.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
+	require('../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
@@ -89,6 +90,7 @@ const stories = [
 	'../src/components/UI/Headers/FeedHeader/FeedHeader.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
+	'../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',
