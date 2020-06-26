@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { validate as validateEmail } from 'email-validator';
-import { loginVariables } from '../../API/mutation/login/__generated__/login';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
@@ -15,12 +14,12 @@ import H4 from '../UI/Typography/components/H4';
 
 export interface LoginViewProps {
   loading: boolean;
-  onSubmit: (variables: loginVariables) => void;
+  onSubmit: (variables: FormData) => void;
   onReset: () => void;
   onRegister: () => void;
 }
 
-type FormData = {
+export type FormData = {
   email: string;
   password: string;
 };
@@ -130,7 +129,7 @@ const LoginView = (props: LoginViewProps) => {
           onPress={props.onRegister}
           disabled={props.loading}
         >
-          <H4 light>Already have an account?</H4>
+          <H4 light>Don't have an account?</H4>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>

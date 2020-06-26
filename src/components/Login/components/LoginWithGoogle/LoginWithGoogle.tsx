@@ -16,6 +16,7 @@ import Button from '../../../UI/Button/Button';
 
 interface LoginWithGoogleProps {
   disabled: boolean;
+  buttonText: string;
 }
 
 const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
@@ -119,7 +120,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
   return (
     <Button
       type="GOOGLE"
-      title="Login with google"
+      title={props.buttonText}
       disabled={props.disabled || loading}
       loading={loading}
       onPress={async () => {

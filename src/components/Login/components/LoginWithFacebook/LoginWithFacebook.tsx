@@ -17,6 +17,7 @@ import Button from '../../../UI/Button/Button';
 
 interface LoginWithFacebookProps {
   disabled: boolean;
+  buttonText: string;
 }
 
 const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
@@ -100,7 +101,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   return (
     <Button
       type="FB"
-      title="Login with facebook"
+      title={props.buttonText}
       disabled={props.disabled || loading}
       loading={loading}
       onPress={() => {

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
 import { useRegisterMutation } from '../../API/mutation/register/register';
-import RegisterView from './RegisterView';
+import RegisterView, { FormData } from './RegisterView';
 import { registerVariables } from '../../API/mutation/register/__generated__/register';
 import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
@@ -91,7 +91,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
   /**
    * Form submission
    */
-  const onSubmit = (variables: registerVariables) => {
+  const onSubmit = (variables: FormData) => {
     setLoading(true);
     registerMutation({
       variables,
