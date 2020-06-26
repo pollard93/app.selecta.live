@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import H2 from '../../Typography/components/H2';
 import Styles from './OnboardingPageWrap.style';
 import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
@@ -20,7 +20,17 @@ const OnboardingPageWrap: FC<OnboardingPageWrapProps> = (props) => (
       </View>
       <H2>{props.heading}</H2>
     </View>
-    {props.children}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[GlobalStyles.PageFill, GlobalStyles.MaxWidth]}
+    >
+      <ScrollView
+        contentContainerStyle={Styles.scrollView}
+        bounces={false}
+      >
+        {props.children}
+      </ScrollView>
+    </KeyboardAvoidingView>
   </View>
 );
 

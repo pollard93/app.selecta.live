@@ -8,6 +8,9 @@ export default StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: color.mono.pale.light,
   },
+  light: {
+    backgroundColor: color.mono.light,
+  },
 
   TextInput: {
     color: color.mono.dark,

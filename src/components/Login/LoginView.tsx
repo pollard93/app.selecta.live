@@ -117,10 +117,16 @@ const LoginView = (props: LoginViewProps) => {
         <Separator margin="xlarge" />
 
         <View style={Styles.input}>
-          <LoginWithFacebook disabled={props.loading} />
+          <LoginWithFacebook
+            disabled={props.loading}
+            buttonText="Login with Facebook"
+          />
         </View>
 
-        <LoginWithGoogle disabled={props.loading} />
+        <LoginWithGoogle
+          disabled={props.loading}
+          buttonText="Login with Google"
+        />
 
         <Separator margin="xlarge" />
 

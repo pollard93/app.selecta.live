@@ -8,6 +8,7 @@ import { parseCamelCase } from '../../../../utils/functions';
 
 interface TextInputPropsExt extends TextInputProps {
   name: string;
+  light?: boolean; // Light background
   setRef?: Ref<any>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
 }
@@ -36,7 +37,7 @@ const TextInput: FC<TextInputPropsExt> = (props) => {
 
 
   return (
-    <View style={Styles.wrap}>
+    <View style={[Styles.wrap, props.light && Styles.light]}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}

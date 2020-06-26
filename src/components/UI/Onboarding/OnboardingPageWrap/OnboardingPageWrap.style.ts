@@ -4,6 +4,11 @@ import color from '../../../../styles/definitions/color';
 import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: spacing.base,
+  },
   wrap: {
     backgroundColor: color.mono.pale.light,
   },
@@ -22,5 +27,8 @@ export default StyleSheet.create({
   logo: {
     maxHeight: '100%',
     maxWidth: '100%',
+  },
+  content: {
+    flex: 1,
   },
 });
