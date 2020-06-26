@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { requestNotifications, PermissionStatus, RESULTS, checkNotifications } from 'react-native-permissions';
 import { View } from 'react-native';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
@@ -7,13 +7,21 @@ import FadeInView from '../../UI/FadeInView/FadeInView';
 import H4 from '../../UI/Typography/components/H4';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Styles from './OnboardingNotifications.style';
+import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
+import { pushScreenV2 } from '../../../screens/utils';
+import OnboardingGetStartedScreen from '../../../screens/OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 
-const OnboardingNotifications = () => {
+export interface OnboardingNotificationsProps extends ScreenProps {}
+
+const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus | 'unknown'>(null);
 
 
+  /**
+   * On next screen
+   */
   const onNext = () => {
-    // TODO
+    pushScreenV2(STACK.LOGIN, OnboardingGetStartedScreen, {});
   };
 
 

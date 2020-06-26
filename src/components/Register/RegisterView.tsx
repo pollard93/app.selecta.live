@@ -13,6 +13,7 @@ import H4 from '../UI/Typography/components/H4';
 
 export interface RegisterViewProps {
   loading: boolean,
+  onLogin: () => void;
   onSubmit: (variables: FormData) => void;
 }
 
@@ -28,6 +29,7 @@ const RegisterView = (props: RegisterViewProps) => {
 
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
+    register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
   }, []);
 
 
@@ -93,7 +95,7 @@ const RegisterView = (props: RegisterViewProps) => {
         </View>
 
         <Button
-          title={props.loading ? 'Signing up' : 'Next'}
+          title={props.loading ? 'Signing up' : 'Sign up'}
           onPress={handleSubmit(props.onSubmit)}
           disabled={!isValid || !dirty}
           loading={props.loading}
@@ -125,47 +127,6 @@ const RegisterView = (props: RegisterViewProps) => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-
-  // return (
-  //   <ScrollView style={GlobalStyles.PageFill}>
-  //     <TextInput
-  //       ref={() => {
-  //         register({ name: 'email' }, { required: true, validate: validateEmail });
-  //       }}
-  //       onChangeText={(text) => setValue('email', text, true)}
-  //       placeholder="Email"
-  //       autoCompleteType="email"
-  //       keyboardType="email-address"
-  //       returnKeyType="next"
-  //       onSubmitEditing={() => {
-  //         // eslint-disable-next-line no-unused-expressions
-  //         passwordRef.current?.focus();
-  //       }}
-  //     />
-  //     {errors.email && <Text>This is required.</Text>}
-
-  //     <TextInput
-  //       ref={(e) => {
-  //         register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
-  //         passwordRef.current = e;
-  //       }}
-  //       onChangeText={(text) => setValue('password', text, true)}
-  //       placeholder="Password"
-  //       secureTextEntry
-  //       autoCompleteType="email"
-  //       keyboardType="email-address"
-  //       returnKeyType="done"
-  //       onSubmitEditing={handleSubmit(props.onSubmit)}
-  //     />
-  //     {errors.password && <Text>This is required.</Text>}
-
-  //     <Button
-  //       title="Submit"
-  //       onPress={handleSubmit(props.onSubmit)}
-  //       disabled={props.loading || !isValid || !dirty}
-  //     />
-  //   </ScrollView>
-  // );
 };
 
 export default RegisterView;

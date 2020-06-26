@@ -34,7 +34,7 @@ const LoginView = (props: LoginViewProps) => {
    */
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
-    register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+    register({ name: 'password' }, { required: true });
   }, []);
 
 
@@ -62,7 +62,7 @@ const LoginView = (props: LoginViewProps) => {
               // Validate on change if there's an error, otherwise validate onBlur
               setValue('email', text, !!errors.email);
             }}
-            placeholder="Email"
+            placeholder="Login with email"
             autoCompleteType="email"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -87,7 +87,7 @@ const LoginView = (props: LoginViewProps) => {
               // Validate on change if there's an error, otherwise validate onBlur
               setValue('password', text, !!errors.password);
             }}
-            placeholder="Password"
+            placeholder="Login with password"
             secureTextEntry
             autoCompleteType="password"
             autoCapitalize="none"

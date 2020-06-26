@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
-import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack } from '../utils';
+import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack, goToOnboarding } from '../utils';
 import { getToken, getChannelToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
@@ -33,7 +33,7 @@ const InitScreen = () => {
    * Get self query
    */
   const [getSelfQuery] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, name, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -45,6 +45,14 @@ const InitScreen = () => {
        */
       if (requiresUpdate) {
         goToRequireUpdateScreen();
+        return;
+      }
+
+      /**
+       * If no name is set, send user to welcome screen
+       */
+      if (!name) {
+        goToOnboarding();
         return;
       }
 

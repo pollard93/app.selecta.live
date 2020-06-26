@@ -1,5 +1,5 @@
 import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle } from 'react-native-navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
 import { HomeScreenName, HomeScreenProps } from '../HomeScreen/HomeScreen';
 import { LoginProps } from '../../components/Login/Login';
@@ -7,6 +7,7 @@ import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScr
 import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
+import OnboardingWelcomeScreen, { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
 
 /**
@@ -22,6 +23,25 @@ export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
           component: {
             name: LoginScreenName,
             passProps,
+          },
+        },
+      ],
+    },
+  },
+});
+
+
+/**
+ * Resets navigation stack to require update screen using STACK.REQUIRE_UDPATE
+ */
+export const goToOnboarding = () => Navigation.setRoot({
+  root: {
+    stack: {
+      id: STACK.LOGIN,
+      children: [
+        {
+          component: {
+            name: OnboardingWelcomeScreenName,
           },
         },
       ],

@@ -1,19 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
+import { useToast } from 'mbp-components-rn-toast';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import TextInput from '../../UI/Form/components/TextInput';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
 import Button from '../../UI/Button/Button';
 import Styles from './OnboardingWelcome.style';
 import H4 from '../../UI/Typography/components/H4';
+import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
+import { pushScreenV2 } from '../../../screens/utils';
+import OnboardingNotificationsScreen from '../../../screens/OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
+import { getGQLErrorMessage } from '../../../utils/functions';
+import Toast from '../../UI/Toast/Toast';
 
-export type FormData = {
+export interface OnboardingWelcomeProps extends ScreenProps {}
+
+type FormData = {
   name: string;
 };
 
-const OnboardingWelcome = () => {
+const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
   const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const toast = useToast();
 
 
   /**
@@ -27,7 +36,20 @@ const OnboardingWelcome = () => {
   /**
    * Update self mutation
    */
-  const [mutation, { loading }] = useUpdateSelfMutation();
+  const [mutation, { loading }] = useUpdateSelfMutation({
+    onCompleted: () => {
+      pushScreenV2(STACK.LOGIN, OnboardingNotificationsScreen, {});
+    },
+    onError: (e) => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
+    },
+  });
 
 
   /**
@@ -57,9 +79,8 @@ const OnboardingWelcome = () => {
           autoCapitalize="none"
           returnKeyType="done"
           errors={errors}
-          onBlur={() => triggerValidation('password')}
+          onBlur={() => triggerValidation('name')}
           onSubmitEditing={handleSubmit(onSubmit)}
-          testID="password"
         />
       </View>
 
