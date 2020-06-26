@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
-import { Button } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { useToast } from 'mbp-components-rn-toast';
 import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
@@ -13,8 +12,13 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mu
 import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
+import Button from '../../../UI/Button/Button';
 
-const LoginWithGoogle = () => {
+interface LoginWithGoogleProps {
+  disabled: boolean;
+}
+
+const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const context = useToast();
@@ -114,8 +118,10 @@ const LoginWithGoogle = () => {
 
   return (
     <Button
+      type="GOOGLE"
       title="Login with google"
-      disabled={loading}
+      disabled={props.disabled || loading}
+      loading={loading}
       onPress={async () => {
         setLoading(true);
 

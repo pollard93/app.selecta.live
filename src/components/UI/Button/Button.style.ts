@@ -22,6 +22,12 @@ export default StyleSheet.create({
   LIGHT: {
     backgroundColor: color.mono.light,
   },
+  FB: {
+    backgroundColor: color.brands.facebook,
+  },
+  GOOGLE: {
+    backgroundColor: color.brands.google,
+  },
 
 
   /**

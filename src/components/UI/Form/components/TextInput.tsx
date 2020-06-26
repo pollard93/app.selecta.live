@@ -1,5 +1,5 @@
 import React, { FC, Ref } from 'react';
-import { TextInput, TextInputProps, View } from 'react-native';
+import { TextInput as TextInputRN, TextInputProps, View } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
 import Styles from '../Form.style';
 import color from '../../../../styles/definitions/color';
@@ -12,7 +12,7 @@ interface TextInputPropsExt extends TextInputProps {
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
 }
 
-const T: FC<TextInputPropsExt> = (props) => {
+const TextInput: FC<TextInputPropsExt> = (props) => {
   /**
    * Get error message from props.errors
    * Checks react-hook-forms error object for an error using props.name
@@ -37,7 +37,7 @@ const T: FC<TextInputPropsExt> = (props) => {
 
   return (
     <View style={Styles.wrap}>
-      <TextInput
+      <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
         ref={props.setRef}
@@ -52,4 +52,4 @@ const T: FC<TextInputPropsExt> = (props) => {
   );
 };
 
-export default T;
+export default TextInput;

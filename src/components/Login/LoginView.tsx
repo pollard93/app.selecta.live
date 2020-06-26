@@ -1,11 +1,17 @@
-import React, { useRef } from 'react';
-import { TextInput, Button, Text, ScrollView } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { validate as validateEmail } from 'email-validator';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
+import Styles from './Login.style';
+import TextInput from '../UI/Form/components/TextInput';
+import Button from '../UI/Button/Button';
+import Separator from '../UI/Separator/Separator';
+import Body from '../UI/Typography/components/Body';
+import H4 from '../UI/Typography/components/H4';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -20,64 +26,114 @@ type FormData = {
 };
 
 const LoginView = (props: LoginViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
   const passwordRef = useRef(null);
 
+
+  /**
+   * Register form
+   */
+  useEffect(() => {
+    register({ name: 'email' }, { required: true, validate: validateEmail });
+    register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+  }, []);
+
+
   return (
-    <ScrollView style={GlobalStyles.PageFill}>
-      <TextInput
-        ref={() => {
-          register({ name: 'email' }, { required: true, validate: validateEmail });
-        }}
-        onChangeText={(text) => setValue('email', text, true)}
-        placeholder="Email"
-        autoCompleteType="email"
-        keyboardType="email-address"
-        returnKeyType="next"
-        onSubmitEditing={() => {
-          if (passwordRef.current) {
-            passwordRef.current.focus();
-          }
-        }}
-      />
-      {errors.email && <Text>This is required.</Text>}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[GlobalStyles.PageFill, GlobalStyles.MaxWidth]}
+    >
+      <ScrollView
+        contentContainerStyle={Styles.scrollView}
+        bounces={false}
+      >
+        <View style={Styles.logoWrap}>
+          <Image
+            source={require('../../assets/images/logo-with-strap-light.png')}
+            style={Styles.logo}
+            resizeMode="contain"
+          />
+        </View>
 
-      <TextInput
-        ref={(e) => {
-          register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
-          passwordRef.current = e;
-        }}
-        onChangeText={(text) => setValue('password', text, true)}
-        placeholder="Password"
-        secureTextEntry
-        autoCompleteType="email"
-        keyboardType="email-address"
-        returnKeyType="done"
-        onSubmitEditing={handleSubmit(props.onSubmit)}
-      />
-      {errors.password && <Text>This is required.</Text>}
+        <View style={Styles.input}>
+          <TextInput
+            name="email"
+            onChangeText={(text) => {
+              // Validate on change if there's an error, otherwise validate onBlur
+              setValue('email', text, !!errors.email);
+            }}
+            placeholder="Email"
+            autoCompleteType="email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            returnKeyType="next"
+            errors={errors}
+            onBlur={() => triggerValidation('email')}
+            onSubmitEditing={() => {
+              // eslint-disable-next-line no-unused-expressions
+              passwordRef.current?.focus();
+            }}
+            testID="email"
+          />
+        </View>
 
-      <Button
-        title="Submit"
-        onPress={handleSubmit(props.onSubmit)}
-        disabled={props.loading || !isValid || !dirty}
-      />
+        <View style={Styles.input}>
+          <TextInput
+            name="password"
+            setRef={(e) => {
+              passwordRef.current = e;
+            }}
+            onChangeText={(text) => {
+              // Validate on change if there's an error, otherwise validate onBlur
+              setValue('password', text, !!errors.password);
+            }}
+            placeholder="Password"
+            secureTextEntry
+            autoCompleteType="password"
+            autoCapitalize="none"
+            returnKeyType="done"
+            errors={errors}
+            onBlur={() => triggerValidation('password')}
+            onSubmitEditing={handleSubmit(props.onSubmit)}
+            testID="password"
+          />
+        </View>
 
-      <Button
-        title='Forgotten Password?'
-        onPress={props.onReset}
-        disabled={props.loading}
-      />
+        <Button
+          title={props.loading ? 'Logging in' : 'Login'}
+          onPress={handleSubmit(props.onSubmit)}
+          disabled={!isValid || !dirty}
+          loading={props.loading}
+        />
 
-      <Button
-        title='Register'
-        onPress={props.onRegister}
-        disabled={props.loading}
-      />
+        <TouchableOpacity
+          style={Styles.forgot}
+          onPress={props.onReset}
+          disabled={props.loading}
+        >
+          <Body light>Forgotten Password?</Body>
+        </TouchableOpacity>
 
-      <LoginWithFacebook />
-      <LoginWithGoogle />
-    </ScrollView>
+        <Separator margin="xlarge" />
+
+        <View style={Styles.input}>
+          <LoginWithFacebook disabled={props.loading} />
+        </View>
+
+        <LoginWithGoogle disabled={props.loading} />
+
+        <Separator margin="xlarge" />
+
+        <TouchableOpacity
+          style={Styles.register}
+          onPress={props.onRegister}
+          disabled={props.loading}
+        >
+          <H4 light>Already have an account?</H4>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

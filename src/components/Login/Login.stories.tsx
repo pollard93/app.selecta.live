@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import Login from './Login';
 import LoginView from './LoginView';
-import CenterView from '../../../storybook/Decorators/CenterView/CenterView';
+import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 
-storiesOf('Login', module)
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
+storiesOf('Onboarding/Login', module)
+  .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
   .add('Login', () => (
     <Login />
   ))

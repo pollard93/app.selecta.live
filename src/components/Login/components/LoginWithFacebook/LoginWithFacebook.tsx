@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { Button, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
@@ -13,8 +13,13 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mu
 import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
+import Button from '../../../UI/Button/Button';
 
-const LoginWithFacebook = () => {
+interface LoginWithFacebookProps {
+  disabled: boolean;
+}
+
+const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const context = useToast();
@@ -94,8 +99,10 @@ const LoginWithFacebook = () => {
 
   return (
     <Button
+      type="FB"
       title="Login with facebook"
-      disabled={loading}
+      disabled={props.disabled || loading}
+      loading={loading}
       onPress={() => {
         setLoading(true);
 

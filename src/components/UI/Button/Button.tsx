@@ -8,7 +8,7 @@ import Gradient from '../Gradient/Gradient';
 
 
 export interface ButtonProps extends BaseProps {
-  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT'; // Default PRIMARY
+  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'FB' | 'GOOGLE'; // Default PRIMARY
   icon?: ICON;
   loading?: boolean;
   style?: TouchableOpacityProps['style'],
