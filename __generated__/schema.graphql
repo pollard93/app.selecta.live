@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Thu Jun 25 2020 13:05:03 GMT+0100 (British Summer Time)
+# timestamp: Sat Jun 27 2020 15:08:56 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -406,7 +406,7 @@ type Mutation {
   payForStream(id: String!): StreamProfile!
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
-  updateSelf(name: String, profilePicture: Upload): UserSelf
+  updateSelf(username: String, profilePicture: Upload): UserSelf
   updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
@@ -569,12 +569,16 @@ type Query {
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
+  getRecommendedChannelProfiles(first: Int, page: Int): RecommendedChannelsPayload
+  getRecommendedStreamProfiles(first: Int, page: Int): RecommendedStreamsPayload!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getStreamUrl(id: String!): StreamUrlPayload!
+  isUsernameUnique(username: String!): Boolean
   validateResetToken: Boolean
   verifyUser: Boolean
+  test: Boolean
   channelNameExists(name: String!): Boolean!
   getChannelSelf: ChannelSelf!
   getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
@@ -584,6 +588,18 @@ type Query {
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
   getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
+}
+
+type RecommendedChannelsPayload {
+  channels: [ChannelProfile!]!
+  count: Int!
+  nextPage: Int!
+}
+
+type RecommendedStreamsPayload {
+  streams: [StreamProfile!]!
+  count: Int!
+  nextPage: Int!
 }
 
 type RequestedChannel {
@@ -1282,7 +1298,7 @@ type Url {
 
 type User {
   id: ID!
-  name: String
+  username: String
   email: String!
   facebookId: String
   googleId: String
@@ -1303,8 +1319,8 @@ type User {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  username_ASC
+  username_DESC
   email_ASC
   email_DESC
   facebookId_ASC
@@ -1325,13 +1341,13 @@ enum UserOrderByInput {
 
 type UserProfile {
   id: ID!
-  name: String
+  username: String
   profilePicture: File
 }
 
 type UserSelf {
   id: ID!
-  name: String
+  username: String
   email: String
   profilePicture: File
   unreadNotificationCount: Int
@@ -1356,20 +1372,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   email: String
   email_not: String
   email_in: [String!]

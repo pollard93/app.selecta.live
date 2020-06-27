@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
 import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack, goToOnboarding } from '../utils';
@@ -9,6 +9,7 @@ import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfLazyQuery } from '../../API/query/getChannelSelf/getChannelSelf';
 import PushNotifications from '../../modules/PushNotifications';
 import InAppPurchases from '../../modules/InAppPurchases';
+import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
 
 const InitScreen = () => {
   const client = useApolloClient();
@@ -33,7 +34,7 @@ const InitScreen = () => {
    * Get self query
    */
   const [getSelfQuery] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, name, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -49,9 +50,9 @@ const InitScreen = () => {
       }
 
       /**
-       * If no name is set, send user to welcome screen
+       * If no username is set, send user to welcome screen
        */
-      if (!name) {
+      if (!username) {
         goToOnboarding();
         return;
       }
@@ -94,7 +95,7 @@ const InitScreen = () => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Text>Loading</Text>
+      <LoadRetry loading />
     </View>
   );
 };

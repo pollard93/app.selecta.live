@@ -12,6 +12,7 @@ export default StyleSheet.create({
     backgroundColor: color.mono.light,
   },
 
+  // Inputs
   TextInput: {
     color: color.mono.dark,
     flexGrow: 1,
@@ -37,6 +38,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: spacing.small,
   },
+
+  // Error
   error: {
     backgroundColor: color.mono.pale.light,
     bottom: 0,
@@ -46,6 +49,9 @@ export default StyleSheet.create({
     position: 'absolute',
     right: spacing.small,
     top: 0,
+  },
+  errorLight: {
+    backgroundColor: color.mono.light,
   },
   errorText: {
     color: color.state.error,

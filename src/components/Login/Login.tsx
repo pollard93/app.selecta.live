@@ -100,7 +100,7 @@ const Login: FC<LoginProps> = (props) => {
    * Get self query, binds notifications and navigates home on completion
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, name, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -116,13 +116,13 @@ const Login: FC<LoginProps> = (props) => {
       }
 
       // Navigate now getSelf is cached
-      if (!name) {
-        // Carry on onboarding process if user has no name
+      if (!username) {
+        // Carry on onboarding process if user has no username
         pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
-        // Go home if name is set
+        // Go home if username is set
         goHome();
       }
     },

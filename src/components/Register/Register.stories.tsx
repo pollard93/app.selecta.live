@@ -14,12 +14,14 @@ storiesOf('Onboarding/Register', module)
   .add('RegisterView Default', () => (
     <RegisterView
       loading={false}
-      onSubmit={action('onSubmit')}
+      onSubmit={console.log}
+      onLogin={console.log}
     />
   ))
   .add('RegisterView Loading', () => (
     <RegisterView
       loading={true}
-      onSubmit={action('onSubmit')}
+      onSubmit={console.log}
+      onLogin={console.log}
     />
   ));

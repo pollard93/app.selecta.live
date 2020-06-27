@@ -30,9 +30,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
    * Get self query, binds notifications and navigates home on completion
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: getSelfData }) => {
-      const { id, name, requiresUpdate } = getSelfData;
-
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -48,7 +46,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       }
 
       // Navigate now getSelf is cached
-      if (!name) {
+      if (!username) {
         // Carry on onboarding process if user has no name
         pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);

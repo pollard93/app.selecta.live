@@ -30,7 +30,7 @@ export interface USER_SELF_FRAGMENT_requiresUpdate {
 export interface USER_SELF_FRAGMENT {
   __typename: "UserSelf";
   id: string;
-  name: string | null;
+  username: string | null;
   email: string | null;
   credit: number | null;
   profilePicture: USER_SELF_FRAGMENT_profilePicture | null;

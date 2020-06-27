@@ -44,7 +44,7 @@ const Register: FC<RegisterProps> = (props) => {
 
       // Navigate now getSelf is cached
       // Carry on onboarding process
-      pushScreenV2(props.componentId, OnboardingWelcomeScreen, {}).finally(() => {
+      pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
         setLoading(false);
       });
     },

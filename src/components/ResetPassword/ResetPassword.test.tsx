@@ -228,7 +228,7 @@ describe('<ResetPassword />', () => {
     expect(goHomeSpy.callCount).to.equal(0);
   });
 
-  it('should go to OnboardingWelcomeScreen if getSelf.name is null', async () => {
+  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
     /**
      * Create mock client and force getSelf.requiresUpdate to be true
      */
@@ -236,7 +236,7 @@ describe('<ResetPassword />', () => {
       Query: () => ({
         getSelf: () => ({
           requiresUpdate: null,
-          name: null,
+          username: null,
         }),
       }),
     });

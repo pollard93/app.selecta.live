@@ -106,6 +106,7 @@ const generalTokenEndpoints = [
   'getSelf',
   'getStreamProfile',
   'getStreamUrl',
+  'isUsernameUnique',
   'loginChannel',
   'payForStream',
   'putStreamMessage',

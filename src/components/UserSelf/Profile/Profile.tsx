@@ -8,7 +8,7 @@ const Profile = () => {
 
   return (
     <View>
-      <Text>{getSelf.name}</Text>
+      <Text>{getSelf.username}</Text>
       <Text>{getSelf.email}</Text>
 
       <AsyncImage

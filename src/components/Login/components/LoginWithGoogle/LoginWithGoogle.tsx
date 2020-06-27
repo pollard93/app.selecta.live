@@ -51,7 +51,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
    * Get self must be executed to cache the result
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate, name } }) => {
+    onCompleted: async ({ getSelf: { id, requiresUpdate, username } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -67,8 +67,8 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       }
 
       // Navigate now getSelf is cached
-      if (!name) {
-        // Carry on onboarding process if user has no name
+      if (!username) {
+        // Carry on onboarding process if user has no username
         pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });

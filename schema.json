@@ -336,6 +336,76 @@
             "deprecationReason": null
           },
           {
+            "name": "getRecommendedChannelProfiles",
+            "description": null,
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "RecommendedChannelsPayload",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "getRecommendedStreamProfiles",
+            "description": null,
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "page",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "RecommendedStreamsPayload",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getSelf",
             "description": null,
             "args": [],
@@ -467,6 +537,33 @@
             "deprecationReason": null
           },
           {
+            "name": "isUsernameUnique",
+            "description": null,
+            "args": [
+              {
+                "name": "username",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "validateResetToken",
             "description": null,
             "args": [],
@@ -480,6 +577,18 @@
           },
           {
             "name": "verifyUser",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "test",
             "description": null,
             "args": [],
             "type": {
@@ -1096,7 +1205,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "username",
             "description": null,
             "args": [],
             "type": {
@@ -3364,7 +3473,7 @@
             "defaultValue": null
           },
           {
-            "name": "name",
+            "name": "username",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3374,7 +3483,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_not",
+            "name": "username_not",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3384,7 +3493,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_in",
+            "name": "username_in",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -3402,7 +3511,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_not_in",
+            "name": "username_not_in",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -3420,7 +3529,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_lt",
+            "name": "username_lt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3430,7 +3539,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_lte",
+            "name": "username_lte",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3440,7 +3549,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_gt",
+            "name": "username_gt",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3450,7 +3559,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_gte",
+            "name": "username_gte",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3460,7 +3569,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_contains",
+            "name": "username_contains",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3470,7 +3579,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_not_contains",
+            "name": "username_not_contains",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3480,7 +3589,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_starts_with",
+            "name": "username_starts_with",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3490,7 +3599,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_not_starts_with",
+            "name": "username_not_starts_with",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3500,7 +3609,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_ends_with",
+            "name": "username_ends_with",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -3510,7 +3619,7 @@
             "defaultValue": null
           },
           {
-            "name": "name_not_ends_with",
+            "name": "username_not_ends_with",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -11901,6 +12010,140 @@
       },
       {
         "kind": "OBJECT",
+        "name": "RecommendedChannelsPayload",
+        "description": null,
+        "fields": [
+          {
+            "name": "channels",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ChannelProfile",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "count",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nextPage",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "RecommendedStreamsPayload",
+        "description": null,
+        "fields": [
+          {
+            "name": "streams",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "StreamProfile",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "count",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nextPage",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "UserSelf",
         "description": null,
         "fields": [
@@ -11921,7 +12164,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "username",
             "description": null,
             "args": [],
             "type": {
@@ -13221,7 +13464,7 @@
             "description": null,
             "args": [
               {
-                "name": "name",
+                "name": "username",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -16216,13 +16459,13 @@
             "deprecationReason": null
           },
           {
-            "name": "name_ASC",
+            "name": "username_ASC",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "name_DESC",
+            "name": "username_DESC",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -16348,7 +16591,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "username",
             "description": null,
             "args": [],
             "type": {

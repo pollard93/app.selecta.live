@@ -9,7 +9,6 @@ import Button from '../UI/Button/Button';
 import Separator from '../UI/Separator/Separator';
 import LoginWithFacebook from '../Login/components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from '../Login/components/LoginWithGoogle/LoginWithGoogle';
-import H4 from '../UI/Typography/components/H4';
 import Body from '../UI/Typography/components/Body';
 
 export interface RegisterViewProps {
