@@ -2,6 +2,7 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../styles/definitions/spacing';
 import color from '../../styles/definitions/color';
+import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
 
 export default StyleSheet.create({
   heading: {
@@ -12,11 +13,15 @@ export default StyleSheet.create({
     width: spacing.small,
   },
 
-  // outerItem
-  outerItemDARK: {
+  flatlistContainer: {
+    paddingTop: headerHeight,
+  },
+
+  // background
+  backgroundDARK: {
     backgroundColor: color.mono.pale.light,
   },
-  outerItemLIGHT: {
+  backgroundLIGHT: {
     backgroundColor: color.mono.light,
   },
 

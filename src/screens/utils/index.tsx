@@ -8,6 +8,7 @@ import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import { FeedScreenName } from '../FeedScreen/FeedScreen';
 
 
 /**
@@ -53,15 +54,27 @@ export const goToOnboarding = () => Navigation.setRoot({
 /**
  * Resets navigation stack to home screen using STACK.HOME
  */
-export const goHome = (passProps: HomeScreenProps = {}) => Navigation.setRoot({
+export const goHome = () => Navigation.setRoot({
   root: {
-    stack: {
+    bottomTabs: {
       id: STACK.HOME,
       children: [
         {
-          component: {
-            name: HomeScreenName,
-            passProps,
+          stack: {
+            id: STACK.TAB_FEED,
+            children: [
+              {
+                component: {
+                  name: FeedScreenName,
+                },
+              },
+            ],
+            options: {
+              bottomTab: {
+                // TODO - update icon
+                icon: require('../../assets/images/icons/search.png'),
+              },
+            },
           },
         },
       ],

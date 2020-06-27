@@ -3,4 +3,5 @@ export const getSelf = () => ({
   requiresUpdate: null,
   username: 'username',
   email: 'dev@madebyprism.com',
+  credit: 0,
 });

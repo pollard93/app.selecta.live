@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import React, { useMemo } from 'react';
-import { View, FlatList, Dimensions } from 'react-native';
+import React, { FC, useRef } from 'react';
+import { View, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
 import Styles from './Feed.styles';
@@ -12,14 +12,20 @@ import ChannelCard from '../UI/Cards/ChannelCard/ChannelCard';
 import { FEED_TYPE } from '../../../__generated__/globalTypes';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import FeedHeader from '../UI/Headers/FeedHeader/FeedHeader';
+import { ScreenProps } from '../../screens/utils/interfaces';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
 
-const Feed = () => {
+export interface FeedProps extends ScreenProps {}
+
+const Feed: FC<FeedProps> = () => {
   const queryResult = useGetFeedQuery();
-  const windowWidth = useMemo(() => Dimensions.get('window').width, []);
+  const windowWidth = useRef(Dimensions.get('window').width);
 
   return (
-    <View>
+    <View style={GlobalStyles.PageFill}>
       <FeedHeader />
+      <SafeAreaView />
 
       {
         queryResult.loading || queryResult.error
@@ -29,6 +35,7 @@ const Feed = () => {
               data={queryResult.data.getFeed.items}
               bounces={false}
               showsVerticalScrollIndicator={false}
+              contentContainerStyle={[Styles.flatlistContainer, Styles[`background${queryResult.data.getFeed.items[0].background}`]]}
               renderItem={({ item }) => {
                 /**
                  * Get item width based on item.type
@@ -36,17 +43,17 @@ const Feed = () => {
                 const itemWidth = (() => {
                   switch (item.type) {
                     case FEED_TYPE.HORIZONTAL:
-                      return windowWidth * 0.8;
+                      return windowWidth.current * 0.8;
                     case FEED_TYPE.HORIZONTAL_SMALL:
-                      return windowWidth * 0.3;
+                      return windowWidth.current * 0.3;
                     default:
-                      return windowWidth;
+                      return windowWidth.current;
                   }
                 })();
 
 
                 return (
-                  <View style={Styles[`outerItem${item.background}`]}>
+                  <View style={Styles[`background${item.background}`]}>
                     <H3 style={Styles.heading}>{item.heading}</H3>
 
                     <View style={Styles[`item${item.type}`]}>
@@ -82,7 +89,7 @@ const Feed = () => {
                       />
 
                       {[FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(item.type) && (
-                        <View style={Styles[`horizontalArrowWrap${item.type}`]}>
+                        <View style={Styles[`horizontalArrowWrap${item.type}`]} pointerEvents="none">
                           <Icon
                             style={Styles[`horizontalArrow${item.type}`]}
                             name={ICON.ARROW_FORWARD}

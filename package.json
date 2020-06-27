@@ -124,6 +124,7 @@
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
     "jimp": "^0.8.5",
+    "lorem-ipsum": "^2.0.3",
     "metro-react-native-babel-preset": "^0.58.0",
     "mobx": "^5.15.0",
     "mock-async-storage": "^2.2.0",

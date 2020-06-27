@@ -8,7 +8,7 @@ export default StyleSheet.create({
     paddingBottom: spacing.small,
   },
   image: {
-    aspectRatio: 1.8,
+    aspectRatio: 1.7777777778,
   },
   item: {
     marginTop: spacing.small,
@@ -23,7 +23,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   channelNameChip: {
-    flex: 1,
     marginRight: spacing.small,
   },
   chips: {
