@@ -7,7 +7,7 @@ class PushNotifications {
    * Init will user id, will bind the setExternalUserId in onesignal for targetting via api
    */
   public static init(id: string) {
-    OneSignal.init(Config.REACT_APP_ONESIGNAL_APPID);
+    OneSignal.init(Config.REACT_APP_ONESIGNAL_APPID, { kOSSettingsKeyAutoPrompt: false });
     OneSignal.addEventListener('received', PushNotifications.onReceived);
     OneSignal.addEventListener('opened', PushNotifications.onOpened);
     OneSignal.setExternalUserId(id);

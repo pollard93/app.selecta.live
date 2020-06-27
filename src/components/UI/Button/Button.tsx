@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, ButtonProps as BaseProps, ActivityIndicator, TouchableOpacityProps, View } from 'react-native';
 import Styles from './Button.style';
-import H4 from '../Typography/components/H4';
+import Body from '../Typography/components/Body';
 import Icon, { ICON } from '../Icon/Icon';
 import color from '../../../styles/definitions/color';
 import Gradient from '../Gradient/Gradient';
@@ -25,7 +25,7 @@ const Button = (props: ButtonProps) => {
         Styles[type],
       ]}
     >
-      <H4 style={[Styles.text, Styles[`text${type}`]]}>{props.title}</H4>
+      <Body bold style={[Styles.text, Styles[`text${type}`]]}>{props.title}</Body>
 
       {props.icon && !props.loading && (
         <Icon

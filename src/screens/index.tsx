@@ -31,7 +31,9 @@ const wrapContext = (Component) => {
     const wrapped = (props) => (
       <ApolloProvider client={ApolloClient}>
         <ToastProvider screenName={Component.prototype.ScreenName}>
-          <Component {...props} />
+          <View style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || color.mono.light }}>
+            <Component {...props} />
+          </View>
         </ToastProvider>
       </ApolloProvider>
     );

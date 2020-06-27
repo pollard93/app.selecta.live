@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { validate as validateEmail } from 'email-validator';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
@@ -10,7 +10,6 @@ import TextInput from '../UI/Form/components/TextInput';
 import Button from '../UI/Button/Button';
 import Separator from '../UI/Separator/Separator';
 import Body from '../UI/Typography/components/Body';
-import H4 from '../UI/Typography/components/H4';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -41,106 +40,114 @@ const LoginView = (props: LoginViewProps) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[GlobalStyles.PageFill, GlobalStyles.MaxWidth]}
+      style={GlobalStyles.PageFill}
     >
-      <ScrollView
-        contentContainerStyle={Styles.scrollView}
-        bounces={false}
-      >
-        <View style={Styles.logoWrap}>
-          <Image
-            source={require('../../assets/images/logo-with-strap-light.png')}
-            style={Styles.logo}
-            resizeMode="contain"
-          />
-        </View>
+      <Image
+        source={require('../../assets/images/auth-background.jpeg')}
+        style={Styles.background}
+        resizeMode="contain"
+      />
 
-        <View style={Styles.input}>
-          <TextInput
-            name="email"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('email', text, !!errors.email);
-            }}
-            placeholder="Login with email"
-            autoCompleteType="email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            returnKeyType="next"
-            errors={errors}
-            onBlur={() => triggerValidation('email')}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              passwordRef.current?.focus();
-            }}
-            testID="email"
-          />
-        </View>
-
-        <View style={Styles.input}>
-          <TextInput
-            name="password"
-            setRef={(e) => {
-              passwordRef.current = e;
-            }}
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('password', text, !!errors.password);
-            }}
-            placeholder="Login with password"
-            secureTextEntry
-            autoCompleteType="password"
-            autoCapitalize="none"
-            returnKeyType="done"
-            errors={errors}
-            onBlur={() => triggerValidation('password')}
-            onSubmitEditing={handleSubmit(props.onSubmit)}
-            testID="password"
-          />
-        </View>
-
-        <Button
-          title={props.loading ? 'Logging in' : 'Login'}
-          onPress={handleSubmit(props.onSubmit)}
-          disabled={!isValid || !dirty}
-          loading={props.loading}
-          testID="submit"
-        />
-
-        <TouchableOpacity
-          style={Styles.forgot}
-          onPress={() => props.onReset(watch('email'))}
-          disabled={props.loading}
-          testID="reset"
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <ScrollView
+          contentContainerStyle={[Styles.scrollView, GlobalStyles.MaxWidth]}
+          bounces={false}
         >
-          <Body light>Forgotten Password?</Body>
-        </TouchableOpacity>
+          <View style={Styles.logoWrap}>
+            <Image
+              source={require('../../assets/images/logo-with-strap-light.png')}
+              style={Styles.logo}
+              resizeMode="contain"
+            />
+          </View>
 
-        <Separator margin="xlarge" />
+          <View style={Styles.input}>
+            <TextInput
+              name="email"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('email', text, !!errors.email);
+              }}
+              placeholder="Login with email"
+              autoCompleteType="email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              returnKeyType="next"
+              errors={errors}
+              onBlur={() => triggerValidation('email')}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                passwordRef.current?.focus();
+              }}
+              testID="email"
+            />
+          </View>
 
-        <View style={Styles.input}>
-          <LoginWithFacebook
+          <View style={Styles.input}>
+            <TextInput
+              name="password"
+              setRef={(e) => {
+                passwordRef.current = e;
+              }}
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('password', text, !!errors.password);
+              }}
+              placeholder="Login with password"
+              secureTextEntry
+              autoCompleteType="password"
+              autoCapitalize="none"
+              returnKeyType="done"
+              errors={errors}
+              onBlur={() => triggerValidation('password')}
+              onSubmitEditing={handleSubmit(props.onSubmit)}
+              testID="password"
+            />
+          </View>
+
+          <Button
+            title={props.loading ? 'Logging in' : 'Login'}
+            onPress={handleSubmit(props.onSubmit)}
+            disabled={!isValid || !dirty}
+            loading={props.loading}
+            testID="submit"
+          />
+
+          <TouchableOpacity
+            style={Styles.forgot}
+            onPress={() => props.onReset(watch('email'))}
             disabled={props.loading}
-            buttonText="Login with Facebook"
+            testID="reset"
+          >
+            <Body light>Forgotten Password?</Body>
+          </TouchableOpacity>
+
+          <Separator margin="large" />
+
+          <View style={Styles.input}>
+            <LoginWithFacebook
+              disabled={props.loading}
+              buttonText="Login with Facebook"
+            />
+          </View>
+
+          <LoginWithGoogle
+            disabled={props.loading}
+            buttonText="Login with Google"
           />
-        </View>
 
-        <LoginWithGoogle
-          disabled={props.loading}
-          buttonText="Login with Google"
-        />
+          <Separator margin="large" />
 
-        <Separator margin="xlarge" />
-
-        <TouchableOpacity
-          style={Styles.register}
-          onPress={props.onRegister}
-          disabled={props.loading}
-          testID="register"
-        >
-          <H4 light>Don't have an account?</H4>
-        </TouchableOpacity>
-      </ScrollView>
+          <TouchableOpacity
+            style={Styles.register}
+            onPress={props.onRegister}
+            disabled={props.loading}
+            testID="register"
+          >
+            <Body bold light>Don't have an account?</Body>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

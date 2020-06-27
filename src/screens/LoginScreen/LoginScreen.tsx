@@ -31,8 +31,8 @@ LoginScreen.prototype.ScreenName = 'LoginScreen';
 /**
  * Set screen color options (default white)
  */
-// LoginScreen.prototype.fullScreen = true;
-LoginScreen.prototype.statusBarColor = color.mono.dark;
+LoginScreen.prototype.fullScreen = true;
+// LoginScreen.prototype.statusBarColor = color.mono.dark;
 LoginScreen.prototype.backgroundColor = color.mono.dark;
 
 /**

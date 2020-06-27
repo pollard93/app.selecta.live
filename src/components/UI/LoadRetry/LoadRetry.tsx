@@ -13,7 +13,7 @@ const LoadRetry = (props: Partial<QueryResult>) => {
   if (loading) {
     return (
       <View style={styles.wrap}>
-        <ActivityIndicator size="large" color={color.mono.dark} />
+        <ActivityIndicator size="large" color={color.accent.primary} />
       </View>
     );
   }

@@ -2,6 +2,7 @@ import React, { useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useToast } from 'mbp-components-rn-toast';
+import SplashScreen from 'react-native-splash-screen';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import TextInput from '../../UI/Form/components/TextInput';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
@@ -26,9 +27,11 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
 
 
   /**
+   * Remove splash
    * Register form
    */
   useEffect(() => {
+    SplashScreen.hide();
     register({ name: 'name' }, { required: true, pattern: /^.{3,}$/ });
   }, []);
 

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.xsmall,
     paddingVertical: spacing.small,
   },
   disabled: {

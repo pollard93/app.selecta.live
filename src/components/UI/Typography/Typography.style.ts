@@ -36,4 +36,8 @@ export default StyleSheet.create({
   light: {
     color: color.mono.light,
   },
+  bold: {
+    fontFamily: font.family.heading('bold').fontFamily,
+    fontWeight: font.family.heading('bold').fontWeight,
+  },
 });

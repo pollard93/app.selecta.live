@@ -30,8 +30,8 @@ RegisterScreen.prototype.ScreenName = 'RegisterScreen';
 /**
  * Set screen color options (default white)
  */
-// RegisterScreen.prototype.fullScreen = true;
-RegisterScreen.prototype.statusBarColor = color.mono.dark;
+RegisterScreen.prototype.fullScreen = true;
+// RegisterScreen.prototype.statusBarColor = color.mono.dark;
 RegisterScreen.prototype.backgroundColor = color.mono.dark;
 
 /**

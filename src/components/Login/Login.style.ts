@@ -6,11 +6,12 @@ export default StyleSheet.create({
   scrollView: {
     flexGrow: 1,
     justifyContent: 'center',
+    paddingVertical: spacing.xlarge,
   },
   logoWrap: {
     alignSelf: 'center',
     aspectRatio: 2.7058823529411766,
-    marginBottom: spacing.xxlarge,
+    marginBottom: spacing.xlarge,
     maxWidth: scalePx(300),
     width: '80%',
   },
@@ -28,5 +29,9 @@ export default StyleSheet.create({
   },
   register: {
     alignSelf: 'center',
+  },
+  background: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.3,
   },
 });

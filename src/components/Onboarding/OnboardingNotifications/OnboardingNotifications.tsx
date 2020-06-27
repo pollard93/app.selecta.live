@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
 import { requestNotifications, PermissionStatus, RESULTS, checkNotifications } from 'react-native-permissions';
-import { View } from 'react-native';
+import { View, AppState } from 'react-native';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Button from '../../UI/Button/Button';
 import FadeInView from '../../UI/FadeInView/FadeInView';
@@ -10,6 +10,8 @@ import Styles from './OnboardingNotifications.style';
 import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { pushScreenV2 } from '../../../screens/utils';
 import OnboardingGetStartedScreen from '../../../screens/OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
+import { openSettings } from '../../../utils/functions';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 
 export interface OnboardingNotificationsProps extends ScreenProps {}
 
@@ -26,23 +28,40 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
 
 
   /**
-   * On mount check notification permissions
-   * Set state
-   * If error set to unknown to show ui regardless
+   * Check status of notification permission
+   * If granted `onNext`
+   * If failed set in state
+   */
+  const checkPermissions = async () => {
+    /**
+     * Only check when active
+     */
+    if (AppState.currentState !== 'active') return;
+
+
+    try {
+      const { status } = await checkNotifications();
+      if (status === RESULTS.GRANTED) {
+        onNext();
+      } else {
+        setPermissionStatus(status);
+      }
+    } catch {
+      setPermissionStatus('unknown');
+    }
+  };
+
+
+  /**
+   * On mount get permissiom status
+   * Bind app state listener
    */
   useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await checkNotifications();
-        if (status === RESULTS.GRANTED) {
-          onNext();
-        } else {
-          setPermissionStatus(status);
-        }
-      } catch {
-        setPermissionStatus('unknown');
-      }
-    })();
+    checkPermissions();
+    AppState.addEventListener('change', checkPermissions);
+    return () => {
+      AppState.removeEventListener('change', checkPermissions);
+    };
   }, []);
 
 
@@ -62,31 +81,36 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
   };
 
 
-  const canGoNext = [RESULTS.GRANTED, 'unknown'].includes(permissionStatus);
+  /**
+   * Permission is requestable
+   */
+  const canRequest = [RESULTS.DENIED, 'unknown'].includes(permissionStatus);
 
 
   return (
     <OnboardingPageWrap heading="Notifications">
-      {permissionStatus !== null && (
-        <FadeInView style={GlobalStyles.PageFill}>
-          <View style={Styles.content}>
-            <H4>We’d like to keep you updated about the latest streams from your favourite artists and when new and upcoming events are announced.</H4>
-            <H4>Please enable notifications.</H4>
-          </View>
+      {
+        permissionStatus === null
+          ? <LoadRetry loading />
+          : (
+            <FadeInView style={GlobalStyles.PageFill}>
+              <View style={Styles.content}>
+                <H4>We’d like to keep you updated about the latest streams from your favourite artists and when new and upcoming events are announced.</H4>
+                <H4>Please enable notifications.</H4>
+              </View>
 
-          <Button
-            title={!canGoNext ? 'Enable Notifications' : 'Next'}
-            onPress={!canGoNext ? requestPermission : onNext}
-          />
-          {!canGoNext && (
-            <Button
-              type="SECONDARY"
-              title="No thanks"
-              onPress={onNext}
-            />
-          )}
-        </FadeInView>
-      )}
+              <Button
+                title='Enable Notifications'
+                onPress={canRequest ? requestPermission : openSettings}
+              />
+              <Button
+                type="SECONDARY"
+                title="No thanks"
+                onPress={onNext}
+              />
+            </FadeInView>
+          )
+      }
     </OnboardingPageWrap>
   );
 };
