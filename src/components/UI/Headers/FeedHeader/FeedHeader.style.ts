@@ -4,7 +4,7 @@ import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
 
-export const headerHeight = scalePx(50);
+export const headerHeight = scalePx(55);
 
 export default StyleSheet.create({
   outer: {
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     height: headerHeight,
     justifyContent: 'space-between',
     paddingHorizontal: spacing.base,
-    paddingVertical: spacing.xsmall,
+    paddingVertical: spacing.small,
   },
   right: {
     alignItems: 'center',
@@ -50,8 +50,8 @@ export default StyleSheet.create({
   },
   profilePicture: {
     aspectRatio: 1,
-    borderRadius: (headerHeight - spacing.base) / 2,
+    borderRadius: (headerHeight - spacing.large) / 2,
     overflow: 'hidden',
-    width: (headerHeight - spacing.base),
+    width: (headerHeight - spacing.large),
   },
 });

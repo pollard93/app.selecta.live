@@ -43,7 +43,8 @@ const Feed: FC<FeedProps> = () => {
                 const itemWidth = (() => {
                   switch (item.type) {
                     case FEED_TYPE.HORIZONTAL:
-                      return windowWidth.current * 0.8;
+                      return windowWidth.current * 0.85;
+                      // return windowWidth.current;
                     case FEED_TYPE.HORIZONTAL_SMALL:
                       return windowWidth.current * 0.3;
                     default:
@@ -56,20 +57,25 @@ const Feed: FC<FeedProps> = () => {
                   <View style={Styles[`background${item.background}`]}>
                     <H3 style={Styles.heading}>{item.heading}</H3>
 
-                    <View style={Styles[`item${item.type}`]}>
+                    <View>
                       <ApolloFlatList
                         query={gql(item.query)}
                         variables={item.variables}
                         accessor={item.accessor}
                         debug
                         FlatListProps={{
+                          style: [
+                            Styles[`flatList${item.type}`],
+                            item.type === FEED_TYPE.HORIZONTAL && { width: itemWidth, overflow: 'visible' },
+                          ],
                           contentContainerStyle: Styles[`flatListContainer${item.type}`],
                           showsHorizontalScrollIndicator: false,
                           horizontal: [FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(item.type),
-                          ItemSeparatorComponent: () => <View style={Styles.horizontalSeparator} />,
+                          pagingEnabled: item.type === FEED_TYPE.HORIZONTAL,
+                          ItemSeparatorComponent: () => item.type === FEED_TYPE.HORIZONTAL_SMALL && <View style={Styles.horizontalSeparator} />,
                         }}
                         renderItem={(args) => (
-                          <View style={{ width: itemWidth }}>
+                          <View style={[Styles[`item${item.type}`], { width: itemWidth }]}>
                             {(() => {
                               switch (item.accessor.split('.').pop()) {
                                 case 'streams':

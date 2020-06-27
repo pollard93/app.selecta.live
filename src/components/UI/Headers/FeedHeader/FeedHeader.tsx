@@ -18,6 +18,7 @@ const FeedHeader: FC<FeedHeaderProps> = () => {
     <View style={Styles.outer}>
       <View style={Styles.wrap}>
         <SafeAreaView />
+
         <View style={Styles.inner}>
           <View style={Styles.logoWrap}>
             <Image

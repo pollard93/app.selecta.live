@@ -29,7 +29,7 @@ FeedScreen.prototype.ScreenName = 'FeedScreen';
 /**
  * Set screen color options (default white)
  */
-// FeedScreen.prototype.fullScreen = true;
+FeedScreen.prototype.fullScreen = true;
 // FeedScreen.prototype.statusBarColor = color.mono.dark;
 // FeedScreen.prototype.backgroundColor = color.mono.dark;
 
