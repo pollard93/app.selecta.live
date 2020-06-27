@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/react-native';
 import { useGetStreamProfilesQuery } from '../../../../API/query/getStreamProfiles/getStreamProfiles';
 import StreamCard from './StreamCard';
 import SafeAreaViewDecorator from '../../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import StreamCardSkeleton from './StreamCardSkeleton';
 
 storiesOf('Cards/StreamCard', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
@@ -83,4 +84,5 @@ storiesOf('Cards/StreamCard', module)
     };
 
     return <TestComponent />;
-  });
+  })
+  .add('StreamCardSkeleton', () => <StreamCardSkeleton />);

@@ -59,4 +59,8 @@ export default StyleSheet.create({
   itemHORIZONTAL: {
     paddingRight: spacing.small,
   },
+
+  loadingHorizontal: {
+    flexDirection: 'row',
+  },
 });

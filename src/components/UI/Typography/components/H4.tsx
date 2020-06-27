@@ -5,12 +5,13 @@ import Styles from '../Typography.style';
 interface TextPropsExt extends TextProps {
   children: any;
   light?: boolean;
+  skeleton?: boolean;
 }
 
 const H4 = (props: TextPropsExt) => (
   <Text
     {...props}
-    style={[Styles.H4, props.light && Styles.light, props.style]}
+    style={[Styles.H4, props.light && Styles.light, props.skeleton && Styles.skeleton, props.style]}
   />
 );
 

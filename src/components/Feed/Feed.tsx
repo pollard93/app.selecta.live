@@ -1,8 +1,9 @@
 /* eslint-disable max-classes-per-file */
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { View, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
+import SplashScreen from 'react-native-splash-screen';
 import Styles from './Feed.styles';
 import { useGetFeedQuery } from '../../API/query/getFeed/getFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
@@ -14,13 +15,25 @@ import Icon, { ICON } from '../UI/Icon/Icon';
 import FeedHeader from '../UI/Headers/FeedHeader/FeedHeader';
 import { ScreenProps } from '../../screens/utils/interfaces';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
-import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
+import StreamCardSkeleton from '../UI/Cards/StreamCard/StreamCardSkeleton';
+import ChannelCardSkeleton from '../UI/Cards/ChannelCard/ChannelCardSkeleton';
+import spacing from '../../styles/definitions/spacing';
+import FadeInView from '../UI/FadeInView/FadeInView';
 
 export interface FeedProps extends ScreenProps {}
 
 const Feed: FC<FeedProps> = () => {
   const queryResult = useGetFeedQuery();
   const windowWidth = useRef(Dimensions.get('window').width);
+
+
+  /**
+   * Remove splash
+   */
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
 
   return (
     <View style={GlobalStyles.PageFill}>
@@ -74,8 +87,79 @@ const Feed: FC<FeedProps> = () => {
                           pagingEnabled: item.type === FEED_TYPE.HORIZONTAL,
                           ItemSeparatorComponent: () => item.type === FEED_TYPE.HORIZONTAL_SMALL && <View style={Styles.horizontalSeparator} />,
                         }}
+                        ListHeaderComponent={(args) => {
+                          /**
+                           * Handle initial load and error
+                           */
+                          switch (item.type) {
+                            case FEED_TYPE.VERTICAL:
+                              if (args.queryResult.loading || args.queryResult.error) {
+                                return (
+                                  <View style={[Styles[`item${item.type}`], { width: itemWidth }]}>
+                                    {Array(item.variables.first).fill(0).map(() => {
+                                      switch (item.accessor.split('.').pop()) {
+                                        case 'streams':
+                                          return <StreamCardSkeleton />;
+
+                                        case 'channels':
+                                          return <ChannelCardSkeleton />;
+
+                                        default:
+                                          return null;
+                                      }
+                                    })}
+
+                                    {args.queryResult.error && <LoadRetry cover {...args.queryResult} />}
+                                  </View>
+                                );
+                              }
+                              return null;
+
+                            case FEED_TYPE.HORIZONTAL:
+                            case FEED_TYPE.HORIZONTAL_SMALL:
+                              if (args.queryResult.error) {
+                                return (
+                                  <View style={{ width: windowWidth.current - spacing.base * 2 }}>
+                                    <LoadRetry {...args.queryResult} />
+                                  </View>
+                                );
+                              }
+
+                              if (args.queryResult.loading) {
+                                return (
+                                  <View style={Styles.loadingHorizontal}>
+                                    {Array(item.variables.first).fill(0).map(() => (
+                                      <>
+                                        <View style={[Styles[`item${item.type}`], { width: itemWidth }]}>
+                                          {(() => {
+                                            switch (item.accessor.split('.').pop()) {
+                                              case 'streams':
+                                                return <StreamCardSkeleton />;
+
+                                              case 'channels':
+                                                return <ChannelCardSkeleton />;
+
+                                              default:
+                                                return null;
+                                            }
+                                          })()}
+
+                                        </View>
+                                        <View style={Styles.horizontalSeparator} />
+                                      </>
+                                    ))}
+
+                                  </View>
+                                );
+                              }
+                              return null;
+
+                            default:
+                              return null;
+                          }
+                        }}
                         renderItem={(args) => (
-                          <View style={[Styles[`item${item.type}`], { width: itemWidth }]}>
+                          <FadeInView style={[Styles[`item${item.type}`], { width: itemWidth }]}>
                             {(() => {
                               switch (item.accessor.split('.').pop()) {
                                 case 'streams':
@@ -88,12 +172,17 @@ const Feed: FC<FeedProps> = () => {
                                   return null;
                               }
                             })()}
-                          </View>
+                          </FadeInView>
                         )}
-                        disableRefresh
+                        disableRefresh={item.type === FEED_TYPE.VERTICAL}
                         disablePagination={item.type === FEED_TYPE.VERTICAL}
                       />
 
+                      {
+                      /**
+                       * Arrows
+                       */
+                      }
                       {[FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(item.type) && (
                         <View style={Styles[`horizontalArrowWrap${item.type}`]} pointerEvents="none">
                           <Icon

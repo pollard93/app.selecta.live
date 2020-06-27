@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, ViewStyle, StyleProp, TextStyle } from 'react-native';
 import Styles from './Chip.style';
 import Gradient from '../Gradient/Gradient';
 import Body from '../Typography/components/Body';
 
 export interface ChipProps {
-  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT'; // Default PRIMARY
+  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'SKELETON'; // Default PRIMARY
   bold?: boolean;
-  style?: ViewStyle,
+  style?: StyleProp<ViewStyle>,
+  textStyle?: StyleProp<TextStyle>;
 }
 
 const Chip: FC<ChipProps> = (props) => {
@@ -39,7 +40,7 @@ const Chip: FC<ChipProps> = (props) => {
       <Body
         numberOfLines={1}
         ellipsizeMode='tail'
-        style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}
+        style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold, props.textStyle]}
       >
         {props.children}
       </Body>

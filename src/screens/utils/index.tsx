@@ -1,7 +1,6 @@
 import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
-import { HomeScreenName, HomeScreenProps } from '../HomeScreen/HomeScreen';
 import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
 import { STACK } from './interfaces';

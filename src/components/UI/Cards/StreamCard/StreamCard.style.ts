@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../../../styles/definitions/spacing';
 import color from '../../../../styles/definitions/color';
+import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {
@@ -32,4 +33,19 @@ export default StyleSheet.create({
     marginRight: spacing.xsmall,
   },
 
+  // Skeleton
+  skeletonImageWrap: {
+    alignItems: 'center',
+    backgroundColor: color.mono.pale.light,
+    justifyContent: 'center',
+  },
+  skeletonImage: {
+    height: scalePx(50),
+    opacity: 0.1,
+    tintColor: color.mono.pale.dark,
+    width: scalePx(50),
+  },
+  skeletonTags: {
+    alignSelf: 'flex-start',
+  },
 });

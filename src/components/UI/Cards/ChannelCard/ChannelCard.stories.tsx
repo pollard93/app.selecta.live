@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/react-native';
 import ChannelCard from './ChannelCard';
 import SafeAreaViewDecorator from '../../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetChannelProfilesQuery } from '../../../../API/query/getChannelProfiles/getChannelProfiles';
+import ChannelCardSekelelton from './ChannelCardSkeleton';
 
 storiesOf('Cards/ChannelCard', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
@@ -20,4 +21,5 @@ storiesOf('Cards/ChannelCard', module)
     };
 
     return <TestComponent />;
-  });
+  })
+  .add('ChannelCardSkeleton', () => <ChannelCardSekelelton />);
