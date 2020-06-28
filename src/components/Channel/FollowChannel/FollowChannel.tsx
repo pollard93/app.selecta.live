@@ -1,13 +1,19 @@
-import React from 'react';
-import { View, Button } from 'react-native';
+import React, { FC } from 'react';
+import { TouchableOpacity, Animated, ViewStyle, StyleProp, ImageStyle } from 'react-native';
 import { useFollowChannelMutation } from '../../../API/mutation/followChannel/followChannel';
 import { CHANNEL_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT';
+import Body from '../../UI/Typography/components/Body';
+import Styles from './FollowChannel.styles';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 interface FollowChannelProps {
   data: CHANNEL_PROFILE_FRAGMENT;
+  wrapStyle?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
+  textStyle?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
+  iconStyle?: Animated.WithAnimatedValue<StyleProp<ImageStyle>>;
 }
 
-const FollowChannel = (props: FollowChannelProps) => {
+const FollowChannel: FC<FollowChannelProps> = (props) => {
   const [mutation, { loading }] = useFollowChannelMutation({
     variables: {
       id: props.data.id,
@@ -16,13 +22,31 @@ const FollowChannel = (props: FollowChannelProps) => {
   });
 
   return (
-    <View>
-      <Button
-        title={props.data.following ? 'UNFOLLOW' : 'FOLLOW'}
-        onPress={() => mutation()}
-        disabled={loading}
-      />
-    </View>
+    <TouchableOpacity
+      onPress={() => mutation()}
+      disabled={loading}
+    >
+      <Animated.View
+        style={[
+          Styles.wrap,
+          props.wrapStyle,
+        ]}
+      >
+        <Animated.Text style={props.textStyle}>
+          <Body bold>{props.data.following ? 'Unfollow' : 'Follow'}</Body>
+        </Animated.Text>
+
+        <Icon
+          name={ICON.SEARCH}
+          size="xsmall"
+          style={[
+            Styles.icon,
+            props.iconStyle,
+          ]}
+          animated
+        />
+      </Animated.View>
+    </TouchableOpacity>
   );
 };
 

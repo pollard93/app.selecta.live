@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Jun 27 2020 15:08:56 GMT+0100 (British Summer Time)
+# timestamp: Sun Jun 28 2020 12:30:39 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -68,6 +68,7 @@ enum ChannelOrderByInput {
 type ChannelProfile {
   id: ID!
   name: String
+  coverImage: File
   profileImage: File
   following: Boolean
   followersEdge: Int
@@ -347,7 +348,6 @@ type FeedPayload {
 
 type File {
   id: ID
-  author: UserProfile
   mime: String
   url: Url
 }
@@ -367,7 +367,6 @@ input FileWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  author: UserWhereInput
   mime: String
   mime_not: String
   mime_in: [String!]
