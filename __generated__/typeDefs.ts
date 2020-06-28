@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sun Jun 28 2020 12:30:39 GMT+0100 (British Summer Time)
+# timestamp: Sun Jun 28 2020 16:23:50 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -68,6 +68,7 @@ enum ChannelOrderByInput {
 type ChannelProfile {
   id: ID!
   name: String
+  description: String
   coverImage: File
   profileImage: File
   following: Boolean
@@ -563,9 +564,10 @@ type ProductConfig {
 
 type Query {
   canViewStream(id: String!): Boolean!
+  getChannelFeed(id: String!): FeedPayload
   getChannelProfile(id: String!): ChannelProfile!
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
-  getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
+  getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!

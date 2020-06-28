@@ -7,7 +7,7 @@ import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { FeedScreenName } from '../FeedScreen/FeedScreen';
+import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 
 
 /**
@@ -60,11 +60,11 @@ export const goHome = () => Navigation.setRoot({
       children: [
         {
           stack: {
-            id: STACK.TAB_FEED,
+            id: STACK.TAB_HOME,
             children: [
               {
                 component: {
-                  name: FeedScreenName,
+                  name: HomeFeedScreenName,
                 },
               },
             ],

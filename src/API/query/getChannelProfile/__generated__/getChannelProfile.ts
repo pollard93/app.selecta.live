@@ -40,6 +40,7 @@ export interface getChannelProfile_getChannelProfile {
   __typename: "ChannelProfile";
   id: string;
   name: string | null;
+  description: string | null;
   coverImage: getChannelProfile_getChannelProfile_coverImage | null;
   profileImage: getChannelProfile_getChannelProfile_profileImage | null;
   following: boolean | null;

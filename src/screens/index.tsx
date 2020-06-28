@@ -22,7 +22,7 @@ import color from '../styles/definitions/color';
 import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
-import FeedScreen from './FeedScreen/FeedScreen';
+import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -84,5 +84,5 @@ export const registerScreens = () => {
   Navigation.registerComponent(OnboardingWelcomeScreen.prototype.ScreenName, () => wrapContext(OnboardingWelcomeScreen));
   Navigation.registerComponent(OnboardingNotificationsScreen.prototype.ScreenName, () => wrapContext(OnboardingNotificationsScreen));
   Navigation.registerComponent(OnboardingGetStartedScreen.prototype.ScreenName, () => wrapContext(OnboardingGetStartedScreen));
-  Navigation.registerComponent(FeedScreen.prototype.ScreenName, () => wrapContext(FeedScreen));
+  Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
 };

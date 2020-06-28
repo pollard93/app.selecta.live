@@ -13,7 +13,8 @@ function loadStories() {
 	require('../src/components/Channel/RegisterChannel/RegisterChannel.stories');
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
-	require('../src/components/Feed/Feed.stories');
+	require('../src/components/ChannelFeed/ChannelFeed.stories');
+	require('../src/components/HomeFeed/HomeFeed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
 	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
@@ -44,7 +45,6 @@ function loadStories() {
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
 	require('../src/components/UI/Form/Form.stories');
-	require('../src/components/UI/Headers/ChannelHeader/ChannelHeader.stories');
 	require('../src/components/UI/Headers/FeedHeader/FeedHeader.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
@@ -67,7 +67,8 @@ const stories = [
 	'../src/components/Channel/RegisterChannel/RegisterChannel.stories',
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
-	'../src/components/Feed/Feed.stories',
+	'../src/components/ChannelFeed/ChannelFeed.stories',
+	'../src/components/HomeFeed/HomeFeed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
 	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
@@ -98,7 +99,6 @@ const stories = [
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
 	'../src/components/UI/Form/Form.stories',
-	'../src/components/UI/Headers/ChannelHeader/ChannelHeader.stories',
 	'../src/components/UI/Headers/FeedHeader/FeedHeader.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',

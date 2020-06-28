@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
-import scalePx from '../../../../utils/scalePx';
-import color from '../../../../styles/definitions/color';
-import spacing from '../../../../styles/definitions/spacing';
-import shadow from '../../../../styles/definitions/shadow';
+import scalePx from '../../../utils/scalePx';
+import color from '../../../styles/definitions/color';
+import spacing from '../../../styles/definitions/spacing';
 
 export const headerHeight = scalePx(55);
 
@@ -63,5 +62,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     maxWidth: '60%',
     paddingVertical: spacing.xsmall,
+  },
+  description: {
+    paddingHorizontal: spacing.small,
   },
 });

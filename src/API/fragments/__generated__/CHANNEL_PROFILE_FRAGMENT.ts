@@ -40,6 +40,7 @@ export interface CHANNEL_PROFILE_FRAGMENT {
   __typename: "ChannelProfile";
   id: string;
   name: string | null;
+  description: string | null;
   coverImage: CHANNEL_PROFILE_FRAGMENT_coverImage | null;
   profileImage: CHANNEL_PROFILE_FRAGMENT_profileImage | null;
   following: boolean | null;
