@@ -14,8 +14,9 @@ import ChannelFeed from '../../ChannelFeed/ChannelFeed';
 import FeedHeader from '../../UI/Headers/FeedHeader/FeedHeader';
 import { headerHeight } from '../../UI/Headers/FeedHeader/FeedHeader.style';
 import Body from '../../UI/Typography/components/Body';
+import { ScreenProps } from '../../../screens/utils/interfaces';
 
-interface ChannelProfileProps {
+export interface ChannelProfileProps extends ScreenProps {
   id: string;
 }
 

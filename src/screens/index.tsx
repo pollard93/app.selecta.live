@@ -23,6 +23,7 @@ import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen
 import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
+import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -85,4 +86,5 @@ export const registerScreens = () => {
   Navigation.registerComponent(OnboardingNotificationsScreen.prototype.ScreenName, () => wrapContext(OnboardingNotificationsScreen));
   Navigation.registerComponent(OnboardingGetStartedScreen.prototype.ScreenName, () => wrapContext(OnboardingGetStartedScreen));
   Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
+  Navigation.registerComponent(ChannelProfileScreen.prototype.ScreenName, () => wrapContext(ChannelProfileScreen));
 };

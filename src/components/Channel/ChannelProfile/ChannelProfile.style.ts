@@ -8,6 +8,7 @@ export const headerHeight = scalePx(55);
 export default StyleSheet.create({
   wrap: {
     backgroundColor: color.mono.pale.light,
+    flex: 1,
   },
   coverImageWrap: {
     left: 0,

@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react';
-import { FlatList, View, Dimensions, StyleProp, ViewStyle, FlatListProps } from 'react-native';
+import { FlatList, View, Dimensions, FlatListProps } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
 import { FEED_PAYLOAD_FRAGMENT } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
@@ -31,7 +31,6 @@ const Feed: FC<FeedProps> = (props) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={[Styles[`background${props.data.items[0].background}`], props.flatListProps?.contentContainerStyle]}
       renderItem={({ item }) => {
-        console.log(item);
         /**
          * Get item width based on item.type
          */

@@ -1,13 +1,11 @@
 /* eslint-disable max-classes-per-file */
 import React, { FC } from 'react';
-import { View, FlatListProps } from 'react-native';
+import { FlatListProps, SafeAreaView } from 'react-native';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
-import FeedHeader from '../UI/Headers/FeedHeader/FeedHeader';
 import { ScreenProps } from '../../screens/utils/interfaces';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
-import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
 import { useGetChannelFeedQuery } from '../../API/query/getChannelFeed/getChannelFeed';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface ChannelFeedProps extends ScreenProps {
   id: string;
@@ -20,17 +18,21 @@ const ChannelFeed: FC<ChannelFeedProps> = (props) => {
       id: props.id,
     },
   });
-  console.log('queryResult', queryResult);
 
-  return queryResult.loading || queryResult.error
-    ? <LoadRetry {...queryResult} />
-    : (
-      <Feed
-        data={queryResult.data.getChannelFeed}
-        flatListProps={props.flatListProps}
-        // flatListContainerStyle={{ paddingTop: headerHeight }}
-      />
-    );
+  return (
+    <SafeAreaView style={GlobalStyles.PageFill}>
+      {
+        queryResult.loading || queryResult.error
+          ? <LoadRetry cover {...queryResult} />
+          : (
+            <Feed
+              data={queryResult.data.getChannelFeed}
+              flatListProps={props.flatListProps}
+            />
+          )
+      }
+    </SafeAreaView>
+  );
 };
 
 export default ChannelFeed;
