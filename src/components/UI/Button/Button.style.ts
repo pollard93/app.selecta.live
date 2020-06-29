@@ -7,6 +7,7 @@ export default StyleSheet.create({
    * Wrap
    */
   wrap: {
+    alignItems: 'center',
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',

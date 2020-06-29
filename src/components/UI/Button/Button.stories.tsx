@@ -38,6 +38,14 @@ storiesOf('UI/Button', module)
       onPress={console.log}
     />
   ))
+  .add('Button - secondary - loading', () => (
+    <Button
+      title="Secondary"
+      type="SECONDARY"
+      onPress={console.log}
+      loading
+    />
+  ))
   .add('Button - secondary - disabled', () => (
     <Button
       title="Secondary"
@@ -51,6 +59,14 @@ storiesOf('UI/Button', module)
       title="Light"
       type="LIGHT"
       onPress={console.log}
+    />
+  ))
+  .add('Button - light - loading', () => (
+    <Button
+      title="Light"
+      type="LIGHT"
+      onPress={console.log}
+      loading
     />
   ))
   .add('Button - light - disabled', () => (

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppRegistry } from 'react-native';
 import { getStorybookUI, configure, addDecorator } from '@storybook/react-native';
 import { ApolloProvider } from 'react-apollo';
@@ -51,11 +51,17 @@ addDecorator((getStory) => (
  * Add safe area insets
  */
 const SafeAreaInsetDecorator = (props) => {
+  const [, setState] = useState({});
+
   useEffect(() => {
     if (!global.safeAreaInsets) {
-      setSafeArea();
+      (async () => {
+        await setSafeArea();
+        setState({});
+      })();
     }
   }, []);
+
   return global.safeAreaInsets ? props.children : null;
 };
 

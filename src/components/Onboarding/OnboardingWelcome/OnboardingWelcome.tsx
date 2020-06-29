@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useToast } from 'mbp-components-rn-toast';
 import SplashScreen from 'react-native-splash-screen';
@@ -15,7 +15,7 @@ import OnboardingNotificationsScreen from '../../../screens/OnboardingScreens/On
 import { getGQLErrorMessage, useDebounce } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
 import { useIsUsernameUniqueLazyQuery } from '../../../API/query/isUsernameUnique/isUsernameUnique';
-import color from '../../../styles/definitions/color';
+import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
 
 export interface OnboardingWelcomeProps extends ScreenProps {}
 
@@ -62,7 +62,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
           }
 
           if (queryResult.loading) {
-            return <ActivityIndicator size="small" color={color.accent.primary} />;
+            return <LoadingIcon size="small" />;
           }
 
           if (queryResult.error || !queryResult.data?.isUsernameUnique) {

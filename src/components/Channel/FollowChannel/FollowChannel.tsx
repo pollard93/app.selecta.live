@@ -38,7 +38,6 @@ const FollowChannel: FC<FollowChannelProps> = (props) => {
 
         <Icon
           name={ICON.PLUS}
-          size="xsmall"
           style={[
             Styles.icon,
             props.iconStyle,
