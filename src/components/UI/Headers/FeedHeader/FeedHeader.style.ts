@@ -28,6 +28,13 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.small,
   },
+  left: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  back: {
+    marginRight: spacing.small,
+  },
   right: {
     alignItems: 'center',
     flexDirection: 'row',

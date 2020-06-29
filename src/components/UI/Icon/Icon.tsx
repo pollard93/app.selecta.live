@@ -7,6 +7,7 @@ import Styles from './Icon.style';
 export enum ICON {
   SEARCH = 'SEARCH',
   ARROW_FORWARD = 'ARROW_FORWARD',
+  ARROW_BACKWARD = 'ARROW_BACKWARD',
 }
 
 interface IconProps {
@@ -25,6 +26,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.ARROW_FORWARD:
         return require('../../../assets/images/icons/arrow-forward.png');
+
+      case ICON.ARROW_BACKWARD:
+        return require('../../../assets/images/icons/arrow-backward.png');
 
       default:
         return null;

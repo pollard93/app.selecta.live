@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
+import SafeArea from 'react-native-safe-area';
 import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack, goToOnboarding } from '../utils';
 import { getToken, getChannelToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
@@ -10,6 +11,7 @@ import { useGetChannelSelfLazyQuery } from '../../API/query/getChannelSelf/getCh
 import PushNotifications from '../../modules/PushNotifications';
 import InAppPurchases from '../../modules/InAppPurchases';
 import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
+import { setSafeArea } from '../../modules/SafeAreaInsets/SafeAreaInsets';
 
 const InitScreen = () => {
   const client = useApolloClient();
@@ -80,6 +82,8 @@ const InitScreen = () => {
    */
   useEffect(() => {
     (async () => {
+      await setSafeArea();
+
       // If there's no token go straight to login
       const token = await getToken(client);
       if (!token) {
