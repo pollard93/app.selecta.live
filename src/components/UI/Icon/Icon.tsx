@@ -8,6 +8,10 @@ export enum ICON {
   SEARCH = 'SEARCH',
   ARROW_FORWARD = 'ARROW_FORWARD',
   ARROW_BACKWARD = 'ARROW_BACKWARD',
+  PROFILE = 'PROFILE',
+  WALLET = 'WALLET',
+  SHARE = 'SHARE',
+  PLUS = 'PLUS',
 }
 
 interface IconProps {
@@ -29,6 +33,18 @@ const Icon = (props: IconProps) => {
 
       case ICON.ARROW_BACKWARD:
         return require('../../../assets/images/icons/arrow-backward.png');
+
+      case ICON.PROFILE:
+        return require('../../../assets/images/icons/profile.png');
+
+      case ICON.WALLET:
+        return require('../../../assets/images/icons/wallet.png');
+
+      case ICON.SHARE:
+        return require('../../../assets/images/icons/share.png');
+
+      case ICON.PLUS:
+        return require('../../../assets/images/icons/plus.png');
 
       default:
         return null;

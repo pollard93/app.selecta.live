@@ -237,7 +237,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
                       style={Styles.headerTopContent}
                     >
                       <Icon
-                        name={ICON.SEARCH}
+                        name={ICON.SHARE}
                         size="small"
                         style={[
                           Styles.headerTopContentIcon,

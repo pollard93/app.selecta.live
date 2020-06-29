@@ -37,7 +37,7 @@ const FollowChannel: FC<FollowChannelProps> = (props) => {
         </Animated.Text>
 
         <Icon
-          name={ICON.SEARCH}
+          name={ICON.PLUS}
           size="xsmall"
           style={[
             Styles.icon,

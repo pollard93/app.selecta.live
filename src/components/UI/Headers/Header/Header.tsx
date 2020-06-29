@@ -43,23 +43,31 @@ const Header: FC<HeaderProps> = (props) => {
 
           <View style={Styles.right}>
             <View style={Styles.wallet}>
-              {/* TODO - icon */}
-              <Icon style={Styles.walletIcon} name={ICON.SEARCH} size="small" />
+              <Icon style={Styles.walletIcon} name={ICON.WALLET} size="small" />
               <Body>{self.credit > 999 ? `${credit}+` : credit}</Body>
             </View>
-            {
-              self.profilePicture
-                ? (
-                  <AsyncImage
-                    splashUrl={self.profilePicture.url.splash}
-                    fullUrl={self.profilePicture.url.small}
-                    containerProps={{
-                      style: Styles.profilePicture,
-                    }}
-                  />
-                )
-                : <Icon name={ICON.SEARCH} size="small" /> /* TODO - icon */
-            }
+
+            <View style={Styles.profilePicture}>
+              {
+                self.profilePicture
+                  ? (
+                    <AsyncImage
+                      splashUrl={self.profilePicture.url.splash}
+                      fullUrl={self.profilePicture.url.small}
+                      containerProps={{
+                        style: Styles.profilePictureInner,
+                      }}
+                    />
+                  )
+                  : (
+                    <Icon
+                      name={ICON.PROFILE}
+                      size="regular"
+                      style={Styles.profilePictureIcon}
+                    />
+                  )
+              }
+            </View>
           </View>
         </View>
       </View>
