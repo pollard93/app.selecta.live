@@ -13,9 +13,9 @@ import FollowChannel from '../FollowChannel/FollowChannel';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import ChannelFeed from '../../ChannelFeed/ChannelFeed';
 import Header from '../../UI/Headers/Header/Header';
-import { headerHeight } from '../../UI/Headers/Header/Header.style';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
+import { headerHeight } from '../../UI/Headers/Header/Header.style';
 
 export interface ChannelProfileProps extends ScreenProps {
   id: string;

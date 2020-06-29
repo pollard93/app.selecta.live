@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
-import SafeArea from 'react-native-safe-area';
 import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack, goToOnboarding } from '../utils';
 import { getToken, getChannelToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';

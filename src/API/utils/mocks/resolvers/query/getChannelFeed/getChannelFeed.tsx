@@ -56,7 +56,7 @@ export const getChannelFeed = (_, args) => {
   items.push({
     heading: 'New Streams',
     type: 'HORIZONTAL',
-    background: 'LIGHT',
+    background: 'DARK',
     query: `
       query getChannelStreams($id: String!, $where: StreamWhereInput, $first: Int, $after: String, $orderBy: StreamOrderByInput){
         getChannelStreams(id: $id, where: $where, first: $first, after: $after, orderBy: $orderBy){

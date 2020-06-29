@@ -1,13 +1,9 @@
 import { StyleSheet } from 'react-native';
-import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
 
-export const headerHeight = scalePx(55);
-
 export default StyleSheet.create({
   wrap: {
-    backgroundColor: color.mono.pale.light,
     flex: 1,
   },
   coverImageWrap: {
