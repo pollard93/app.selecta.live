@@ -13,6 +13,7 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
       ...FILE_FRAGMENT
     }
     timeFrom
+    timeTo
     tags {
       ...TAG_PROFILE_FRAGMENT
     }

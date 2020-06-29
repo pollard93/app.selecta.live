@@ -85,4 +85,20 @@ storiesOf('Cards/StreamCard', module)
 
     return <TestComponent />;
   })
+  .add('StreamCard - live now', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfilesQuery();
+      if (r.loading) return null;
+
+      return (
+        <StreamCard data={{
+          ...r.data.getStreamProfiles.streams[0],
+          timeFrom: new Date(Date.now()).toISOString(),
+          timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
+        }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
   .add('StreamCardSkeleton', () => <StreamCardSkeleton />);
