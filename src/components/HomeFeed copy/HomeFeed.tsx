@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import React, { FC, useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useGetFeedQuery } from '../../API/query/getFeed/getFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
@@ -28,20 +28,18 @@ const HomeFeed: FC<HomeFeedProps> = () => {
     <View style={GlobalStyles.PageFill}>
       <Header />
 
-      <SafeAreaView style={GlobalStyles.PageFill}>
-        {
-          queryResult.loading || queryResult.error
-            ? <LoadRetry cover {...queryResult} />
-            : (
-                <Feed
-                  data={queryResult.data.getFeed}
-                  flatListProps={{
-                    contentContainerStyle: { paddingTop: headerHeight },
-                  }}
-                />
-            )
-        }
-      </SafeAreaView>
+      {
+        queryResult.loading || queryResult.error
+          ? <LoadRetry {...queryResult} />
+          : (
+            <Feed
+              data={queryResult.data.getFeed}
+              flatListProps={{
+                contentContainerStyle: { paddingTop: headerHeight }
+              }}
+            />
+          )
+      }
     </View>
   );
 };

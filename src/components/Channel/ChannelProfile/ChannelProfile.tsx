@@ -12,8 +12,8 @@ import color from '../../../styles/definitions/color';
 import FollowChannel from '../FollowChannel/FollowChannel';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import ChannelFeed from '../../ChannelFeed/ChannelFeed';
-import FeedHeader from '../../UI/Headers/FeedHeader/FeedHeader';
-import { headerHeight } from '../../UI/Headers/FeedHeader/FeedHeader.style';
+import Header from '../../UI/Headers/Header/Header';
+import { headerHeight } from '../../UI/Headers/Header/Header.style';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 
@@ -141,7 +141,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <FeedHeader onPop={() => Navigation.pop(props.componentId)} />
+      <Header onPop={() => Navigation.pop(props.componentId)} />
       <SafeAreaView />
 
       {

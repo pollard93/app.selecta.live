@@ -1,20 +1,19 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React, { FC } from 'react';
-import { Image, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Image, View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { useToast } from 'mbp-components-rn-toast';
-import Styles from './FeedHeader.style';
+import Styles from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
 
-interface FeedHeaderProps {
+interface HeaderProps {
   onPop?: () => void;
 }
 
-const FeedHeader: FC<FeedHeaderProps> = (props) => {
+const Header: FC<HeaderProps> = (props) => {
   const safeAreaInsets = useSafeArea();
   const self = useGetSelf();
   const credit = Math.min(999, self.credit);
@@ -68,4 +67,4 @@ const FeedHeader: FC<FeedHeaderProps> = (props) => {
   );
 };
 
-export default FeedHeader;
+export default Header;
