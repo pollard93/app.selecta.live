@@ -2,21 +2,28 @@ import React, { useRef, useEffect, FC } from 'react';
 import { View, Animated, StyleProp, ViewStyle } from 'react-native';
 import color from '../../../styles/definitions/color';
 import Styles from './LoadingIcon.style';
+import scalePx from '../../../utils/scalePx';
 
 interface LoadingIconProps {
   style?: StyleProp<ViewStyle>;
-  size?: 'small' | 'regular'; // Default regular
+  size?: 'small' | 'regular' | number; // Defaults to regular
   type?: 'PRIMARY' | 'LIGHT'; // Default PRIMARY
+  animating?: boolean; // Default true
 }
 
 const LoadingIcon: FC<LoadingIconProps> = (props) => {
+  const timeout = useRef<number>();
   const value = useRef(new Animated.Value(0));
   const outerWidthFixed = useRef((() => {
+    if (typeof props.size === 'number') {
+      return props.size;
+    }
+
     switch (props.size) {
       case 'small':
-        return 20;
+        return scalePx(20);
       default:
-        return 40;
+        return scalePx(40);
     }
   })());
   const innerWidthFixed = useRef(outerWidthFixed.current / 2);
@@ -30,17 +37,23 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
   })());
 
 
+  const animation = useRef(Animated.timing(value.current, {
+    toValue: 1,
+    duration: 700,
+    useNativeDriver: false,
+  })).current;
+
+
   /**
    * Run animation on loop
    */
   const run = () => {
+    clearTimeout(timeout.current);
     value.current.setValue(0);
-    Animated.timing(value.current, {
-      toValue: 1,
-      duration: 700,
-      useNativeDriver: false,
-    }).start(() => {
-      setTimeout(() => {
+
+    animation.start(() => {
+      console.log('end');
+      timeout.current = setTimeout(() => {
         run();
       }, 500);
     });
@@ -51,8 +64,26 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
    * Run animation on mount
    */
   useEffect(() => {
+    animation.stop();
+    clearTimeout(timeout.current);
+    value.current.setValue(0);
+
+
+    /**
+     * If props.animating is set to false
+     * Stop the animation
+     * clear the timeout and reset animated value
+     */
+    if (props.animating === false) {
+      value.current.setValue(0);
+      return;
+    }
+
+    /**
+     * Stop and start animation
+     */
     run();
-  }, []);
+  }, [props.animating]);
 
 
   /**

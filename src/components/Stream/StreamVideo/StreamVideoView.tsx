@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { SafeAreaView, Platform, Text, View, Button, StyleSheet } from 'react-native';
+import { Platform, View, StyleSheet } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { useApolloClient } from 'react-apollo';
-import Slider, { SliderBase } from '@react-native-community/slider';
-import styles from './StreamVideo.styles';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import StreamControls from './components/StreamControls/StreamControls';
+import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
+import color from '../../../styles/definitions/color';
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
@@ -28,6 +27,9 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
   const client = useApolloClient();
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [playableDuration, setPlayableDuration] = useState(0);
+  const [buffering, setBuffering] = useState(true);
+  console.log('StreamVideoView -> buffering', buffering);
   const player = useRef(null);
 
   // Live is determined from the url given, initial state null
@@ -148,8 +150,14 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         source={{ uri: url }}
         automaticallyWaitsToMinimizeStalling
         ref={player}
-        onBuffer={(...args) => {
-          console.log('StreamVideoView -> onBuffer', args);
+        onBuffer={({ isBuffering }) => {
+          if (!isBuffering && buffering) {
+            setBuffering(false);
+            return;
+          }
+          if (isBuffering && !buffering) {
+            setBuffering(true);
+          }
         }}
         onError={(...args) => {
           console.log('StreamVideoView -> onError', args);
@@ -185,7 +193,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
           /**
            * Set rate to 1 now video is ready to play
            */
-          setRate(1);
+          // setRate(1);
 
 
           /**
@@ -228,6 +236,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         onProgress={!live ? ((args) => {
           const { currentTime } = args;
           setProgress(currentTime);
+          setPlayableDuration(args.playableDuration);
 
 
           /**
@@ -263,13 +272,19 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         }}
       />
 
+
       <StreamControls
+        isPlaying={rate === 1}
+        onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
+        isBuffering={buffering}
+        playableDuration={playableDuration}
         initialPosition={props.data.position}
         onSeek={(position) => {
           player.current.seek(position);
         }}
       />
+
 
       {/* <Button
         title={disableVideo ? 'Enable video' : 'Disable video'}
@@ -277,42 +292,6 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
           setDisableVideo(!disableVideo);
         }}
       /> */}
-
-      {/* {
-        live === null
-          ? <Text>LOADING</Text>
-          : (
-            <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-              {
-                live === false && (
-                  <>
-                    <Text>Progress: {(props.data.position || 0).toFixed(2)}</Text>
-                    <Text>Duration: {duration.toFixed(2)}</Text>
-                  </>
-                )
-              }
-              {
-                rate === 0
-                  ? (
-                    <Button
-                      title='Play'
-                      onPress={() => {
-                        setRate(1);
-                      }}
-                    />
-                  )
-                  : (
-                    <Button
-                      title={live ? 'Stop' : 'Pause'}
-                      onPress={() => {
-                        setRate(0);
-                      }}
-                    />
-                  )
-              }
-            </View>
-          )
-      } */}
     </View>
   );
 };

@@ -89,3 +89,19 @@ export const useDebounce = (fn: Function, delay: number, watch = []) => useCallb
   }, delay),
   watch,
 );
+
+
+/**
+ * Maps given value against 2 inputs and 2 outputs
+ */
+export const mapRange = (num, inMin, inMax, outMin, outMax): number => {
+  try {
+    // eslint-disable-next-line no-mixed-operators
+    const value = (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(value)) return null;
+    return value;
+  } catch {
+    return null;
+  }
+};

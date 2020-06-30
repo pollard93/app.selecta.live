@@ -52,6 +52,7 @@ function loadStories() {
 	require('../src/components/UI/LoadingIcon/LoadingIcon.stories');
 	require('../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
+	require('../src/components/UI/Slider/Slider.stories');
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
@@ -108,6 +109,7 @@ const stories = [
 	'../src/components/UI/LoadingIcon/LoadingIcon.stories',
 	'../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',
+	'../src/components/UI/Slider/Slider.stories',
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',

@@ -5,12 +5,13 @@ import Styles from '../Typography.style';
 interface TextPropsExt extends TextProps {
   children: any;
   light?: boolean;
+  bold?: boolean;
 }
 
 const Small = (props: TextPropsExt) => (
   <Text
     {...props}
-    style={[Styles.Small, props.light && Styles.light, props.style]}
+    style={[Styles.Small, props.light && Styles.light, props.bold && Styles.bold, props.style]}
   />
 );
 

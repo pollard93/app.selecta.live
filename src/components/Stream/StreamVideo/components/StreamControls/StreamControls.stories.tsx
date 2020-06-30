@@ -33,4 +33,14 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       duration={7200}
       onSeek={console.log}
     />
+  ))
+  .add('StreamControls - buffering', () => (
+    <StreamControls
+      isBuffering={true}
+      isPlaying={false}
+      onPlayPause={console.log}
+      initialPosition={0}
+      duration={7200}
+      onSeek={console.log}
+    />
   ));

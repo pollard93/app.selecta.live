@@ -1,14 +1,18 @@
 import React, { FC, useState, useEffect, useMemo, useRef } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, TouchableOpacity } from 'react-native';
-import Slider from '@react-native-community/slider';
-import Body from '../../../../UI/Typography/components/Body';
+import { View, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { formatTime } from '../../../../../utils/functions';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
+import color from '../../../../../styles/definitions/color';
+import Small from '../../../../UI/Typography/components/Small';
+import spacing from '../../../../../styles/definitions/spacing';
+import Slider from '../../../../UI/Slider/Slider';
 
 interface StreamControlsProps {
   isPlaying: boolean;
   onPlayPause: () => void;
+  isBuffering?: boolean
   duration?: number; // Seconds
+  playableDuration?: number;
   initialPosition?: number;
   onSeek?: (position: number) => void;
 }
@@ -18,7 +22,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    *
    */
   const hideControlsTimeout = useRef<number>(null);
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
 
   /**
@@ -73,7 +77,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    * Increment videoPosition by 1 every second
    */
   useEffect(() => {
-    if (videoPosition >= props.duration) {
+    if (!props.isPlaying || videoPosition >= props.duration) {
       clearInterval(videoPositionInterval.current);
       return undefined;
     }
@@ -83,13 +87,14 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
     }, 1000);
 
     return () => clearInterval(videoPositionInterval.current);
-  }, [videoPosition]);
+  }, [props.isPlaying, videoPosition, props.duration]);
 
 
   /**
    * Format duration when props.duration changes
    */
   const duration = useMemo(() => formatTime(props.duration), [props.duration]);
+  const controlPosition = seekingPosition !== null ? seekingPosition : videoPosition;
 
 
   return (
@@ -105,32 +110,69 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
          */
         hideControls();
       }}
-      style={[StyleSheet.absoluteFillObject, { backgroundColor: 'red', justifyContent: 'flex-end' }]}
+      style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end' }]}
     >
       <Animated.View
-        style={[StyleSheet.absoluteFillObject, { backgroundColor: 'red', justifyContent: 'flex-end', opacity: fadeAnim }]}
+        style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', opacity: fadeAnim, backgroundColor: color.mono.darkCover }]}
       >
         <View style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center' }]}>
           <TouchableOpacity
             onPress={() => {
-              props.onPlayPause();
-              hideControls();
+              // eslint-disable-next-line no-underscore-dangle
+              if ((fadeAnim as any)._value < 1) {
+                showControls();
+              } else {
+                props.onPlayPause();
+                hideControls();
+              }
             }}
           >
             <Icon name={props.isPlaying ? ICON.PAUSE : ICON.PLAY} size="large" style={{ tintColor: 'white' }} />
           </TouchableOpacity>
         </View>
 
-        <Body>{formatTime(seekingPosition !== null ? seekingPosition : videoPosition)}</Body>
-        <Body>{duration}</Body>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: spacing.small }}>
+          <Small bold light>{formatTime(controlPosition)}</Small>
+          <Small bold light>{duration}</Small>
+        </View>
+
+        {/*
         <Slider
-          style={{ width: '100%', height: 40 }}
+          style={{ height: 2, marginLeft: -5, marginRight: -5 }}
           step={1}
-          value={seekingPosition !== null ? undefined : videoPosition}
+          value={controlPosition}
           minimumValue={0}
           maximumValue={props.duration}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
+          minimumTrackTintColor={color.accent.primary}
+          maximumTrackTintColor={color.mono.light}
+          onValueChange={(v) => {
+            /**
+             * When the value changes, update the seekingPosition state
+             * So the ui can show the position of the slider handle, not the video
+             *
+            setSeekingPosition(v);
+            showControls();
+          }}
+          onSlidingComplete={(v) => {
+            /**
+             * When sliding is complete
+             * Execute on seek for the video
+             * Set the video position
+             * Remove the seeking state so the ui will now reflect the video position
+             *
+            props.onSeek(v);
+            setVideoPosition(v);
+            setSeekingPosition(null);
+            hideControls();
+          }}
+          thumbTintColor={color.accent.primary}
+        />
+        */}
+
+        <Slider
+          value={controlPosition}
+          minimumValue={0}
+          maximumValue={props.duration}
           onValueChange={(v) => {
             /**
              * When the value changes, update the seekingPosition state
@@ -151,6 +193,12 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             setSeekingPosition(null);
             hideControls();
           }}
+          tracks={[
+            { color: 'rgba(255, 255, 255, 0.7)', width: 1 }, // Base
+            { color: color.mono.dark, width: props.playableDuration / props.duration }, // Buffer
+            { color: color.accent.primary, width: controlPosition / props.duration }, // Position
+          ]}
+          loading={props.isBuffering}
         />
       </Animated.View>
     </View>
