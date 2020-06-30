@@ -6,7 +6,7 @@ import StreamVideoView from './StreamVideoView';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 
-storiesOf('StreamVideo', module)
+storiesOf('Stream/StreamVideo', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('StreamVideo', () => {
     const TestComponent = () => {

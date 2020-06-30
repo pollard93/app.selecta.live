@@ -5,9 +5,12 @@ export const getStreamProfile = (_, variables) => {
     case 'IS_NOT_CONSUMER':
       return ({
         isConsumer: false,
+        position: 0,
       });
 
     default:
-      return ({});
+      return ({
+        position: 0,
+      });
   }
 };

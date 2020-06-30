@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, Text } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { Navigation } from 'react-native-navigation';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { ScreenProps } from '../../../screens/utils/interfaces';
+import StreamVideo from '../StreamVideo/StreamVideo';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
+import Header from '../../UI/Headers/Header/Header';
+import { headerHeight } from '../../UI/Headers/Header/Header.style';
 
-interface StreamProfileProps {
+export interface StreamProfileProps extends ScreenProps {
   id: string;
 }
 
-const StreamProfile = (props: StreamProfileProps) => {
+const StreamProfile: FC<StreamProfileProps> = (props) => {
   /**
    * Query
    */
@@ -34,9 +41,18 @@ const StreamProfile = (props: StreamProfileProps) => {
 
 
   const { data: { getStreamProfile } } = queryResult;
+  // console.log('getStreamProfile', getStreamProfile);
   return (
-    <View>
-      <Text>{getStreamProfile.name}</Text>
+    <View style={GlobalStyles.PageFill}>
+      <Header onPop={() => Navigation.pop(props.componentId)} />
+      <View style={{ paddingTop: headerHeight }}>
+        <View>
+          <StreamCard data={getStreamProfile} />
+          <StreamVideo data={getStreamProfile} />
+        </View>
+      </View>
+
+      {/* <Text>{getStreamProfile.name}</Text>
       <AsyncImage
         splashUrl={getStreamProfile.image?.url?.splash}
         fullUrl={getStreamProfile.image?.url?.full}
@@ -50,6 +66,10 @@ const StreamProfile = (props: StreamProfileProps) => {
         }}
       />
       {getStreamProfile.audioOnly && <Text>This stream is audio only</Text>}
+
+      <View style={{ flex: 1 }}>
+        <StreamVideo data={getStreamProfile} />
+      </View> */}
     </View>
   );
 };

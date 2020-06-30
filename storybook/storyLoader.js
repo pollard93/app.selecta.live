@@ -38,6 +38,7 @@ function loadStories() {
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
 	require('../src/components/Stream/StreamUrl/StreamUrl.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
+	require('../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
 	require('../src/components/UI/Button/Button.stories');
 	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
@@ -93,6 +94,7 @@ const stories = [
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',
 	'../src/components/Stream/StreamUrl/StreamUrl.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
+	'../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
 	'../src/components/UI/Button/Button.stories',
 	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',

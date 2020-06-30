@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { SafeAreaView, Platform, Text, View, Button } from 'react-native';
+import { SafeAreaView, Platform, Text, View, Button, StyleSheet } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { useApolloClient } from 'react-apollo';
+import Slider, { SliderBase } from '@react-native-community/slider';
 import styles from './StreamVideo.styles';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import StreamControls from './components/StreamControls/StreamControls';
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
@@ -34,6 +36,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
   // Determin url based on disableVideo
   const [disableVideo, setDisableVideo] = useState<boolean>(false);
   const url = disableVideo ? props.url.audio : props.url.video;
+  // console.log('StreamVideoView -> url', url);
 
 
   /**
@@ -140,7 +143,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
 
   return (
-    <SafeAreaView style={[GlobalStyles.PageFill, { paddingVertical: 50 }]}>
+    <View style={{ position: 'absolute', width: '100%', aspectRatio: 1.777777777777778 }}>
       <Video
         source={{ uri: url }}
         automaticallyWaitsToMinimizeStalling
@@ -151,7 +154,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         onError={(...args) => {
           console.log('StreamVideoView -> onError', args);
         }}
-        style={styles.wrap}
+        style={{ width: '100%', height: '100%', position: 'absolute' }}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}
         playInBackground={true}
@@ -260,14 +263,22 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         }}
       />
 
-      <Button
+      <StreamControls
+        duration={duration}
+        initialPosition={props.data.position}
+        onSeek={(position) => {
+          player.current.seek(position);
+        }}
+      />
+
+      {/* <Button
         title={disableVideo ? 'Enable video' : 'Disable video'}
         onPress={() => {
           setDisableVideo(!disableVideo);
         }}
-      />
+      /> */}
 
-      {
+      {/* {
         live === null
           ? <Text>LOADING</Text>
           : (
@@ -301,8 +312,8 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               }
             </View>
           )
-      }
-    </SafeAreaView>
+      } */}
+    </View>
   );
 };
 

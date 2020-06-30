@@ -4,7 +4,7 @@ import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
 
-export const headerHeight = scalePx(55);
+export const headerHeight = scalePx(50);
 
 export default StyleSheet.create({
   outer: {

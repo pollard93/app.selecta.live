@@ -24,17 +24,11 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
 
 export const STREAM_PROFILE_FRAGMENT = gql`
   fragment STREAM_PROFILE_FRAGMENT on StreamProfile {
-    id
-    channel {
-      name
-    }
-    name
-    image {
-      ...FILE_FRAGMENT
-    }
+    ...STREAM_PROFILE_FRAGMENT_SHORT
     isConsumer
     audioOnly
     position
   },
+  ${STREAM_PROFILE_FRAGMENT_SHORT}
   ${FILE_FRAGMENT}
 `;

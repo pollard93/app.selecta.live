@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import StreamProfile from './StreamProfile';
-import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('StreamProfile', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
+storiesOf('Stream/StreamProfile', module)
+  .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('StreamProfile', () => (
     <StreamProfile id="test" />
   ));

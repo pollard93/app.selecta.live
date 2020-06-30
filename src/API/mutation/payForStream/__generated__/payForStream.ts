@@ -26,12 +26,20 @@ export interface payForStream_payForStream_image {
   url: payForStream_payForStream_image_url | null;
 }
 
+export interface payForStream_payForStream_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface payForStream_payForStream {
   __typename: "StreamProfile";
   id: string;
-  channel: payForStream_payForStream_channel | null;
   name: string | null;
+  channel: payForStream_payForStream_channel | null;
   image: payForStream_payForStream_image | null;
+  timeFrom: any | null;
+  timeTo: any | null;
+  tags: (payForStream_payForStream_tags | null)[] | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useApolloClient } from 'react-apollo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
@@ -14,7 +14,7 @@ interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile;
 }
 
-const StreamVideo = (props: StreamVideoProps) => {
+const StreamVideo: FC<StreamVideoProps> = (props) => {
   const client = useApolloClient();
 
   /**
@@ -76,42 +76,42 @@ const StreamVideo = (props: StreamVideoProps) => {
    * setTimeout to 1 minute before the expiry to get a new url
    * This is an edge case, users are given ample time with one url and this should rarely be used in production
    */
-  useEffect(() => {
-    /**
-     * Use the audio url as is always returned
-     */
-    const url = queryResult.data?.getStreamUrl?.video || queryResult.data?.getStreamUrl?.audio;
-    if (url) {
-      /**
-       * Get the expiry
-       */
-      const parts = url.split('/');
-      const expiry = parseInt(parts[parts.length - 2], 10);
-      const expiryDate = new Date(expiry * 1000);
+  // useEffect(() => {
+  //   /**
+  //    * Use the audio url as is always returned
+  //    */
+  //   const url = queryResult.data?.getStreamUrl?.video || queryResult.data?.getStreamUrl?.audio;
+  //   if (url) {
+  //     /**
+  //      * Get the expiry
+  //      */
+  //     const parts = url.split('/');
+  //     const expiry = parseInt(parts[parts.length - 2], 10);
+  //     const expiryDate = new Date(expiry * 1000);
 
-      /**
-       * Get how long until expiry - 1 minute
-       */
-      const now = new Date();
-      const timeToExpiry = expiryDate.getTime() - now.getTime() - 60000;
+  //     /**
+  //      * Get how long until expiry - 1 minute
+  //      */
+  //     const now = new Date();
+  //     const timeToExpiry = expiryDate.getTime() - now.getTime() - 60000;
 
-      /**
-       * setTimeout to refetch stream url
-       */
-      const id = setTimeout(() => {
-        query();
-      }, timeToExpiry);
+  //     /**
+  //      * setTimeout to refetch stream url
+  //      */
+  //     const id = setTimeout(() => {
+  //       query();
+  //     }, timeToExpiry);
 
-      /**
-       * Clear timeout on cleanup
-       */
-      return () => {
-        clearTimeout(id);
-      };
-    }
+  //     /**
+  //      * Clear timeout on cleanup
+  //      */
+  //     return () => {
+  //       clearTimeout(id);
+  //     };
+  //   }
 
-    return undefined;
-  }, [queryResult.data?.getStreamUrl?.audio]);
+  //   return undefined;
+  // }, [queryResult.data?.getStreamUrl?.audio]);
 
 
   /**
@@ -126,13 +126,11 @@ const StreamVideo = (props: StreamVideoProps) => {
 
 
   return (
-    <View style={GlobalStyles.PageFill}>
-      <StreamVideoView
-        url={queryResult.data.getStreamUrl}
-        data={props.data}
-        query={query}
-      />
-    </View>
+    <StreamVideoView
+      url={queryResult.data.getStreamUrl}
+      data={props.data}
+      query={query}
+    />
   );
 };
 
