@@ -12,6 +12,8 @@ export enum ICON {
   WALLET = 'WALLET',
   SHARE = 'SHARE',
   PLUS = 'PLUS',
+  PLAY = 'PLAY',
+  PAUSE = 'PAUSE',
 }
 
 interface IconProps {
@@ -45,6 +47,12 @@ const Icon = (props: IconProps) => {
 
       case ICON.PLUS:
         return require('../../../assets/images/icons/plus.png');
+
+      case ICON.PLAY:
+        return require('../../../assets/images/icons/play.png');
+
+      case ICON.PAUSE:
+        return require('../../../assets/images/icons/pause.png');
 
       default:
         return null;

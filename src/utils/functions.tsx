@@ -56,7 +56,6 @@ export const formatForTimezone = (date: string, format?: string): string => {
 
 
 export const formatTime = (timeInSeconds: number) => {
-  console.log('formatTime -> timeInSeconds', timeInSeconds);
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds - minutes * 60;
   return `${`${minutes}`.padStart(2, '0')}:${seconds.toFixed(0).padStart(2, '0')}`;
