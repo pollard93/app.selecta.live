@@ -28,7 +28,7 @@ const HomeFeed: FC<HomeFeedProps> = () => {
     <View style={GlobalStyles.PageFill}>
       <Header />
 
-      <SafeAreaView style={[GlobalStyles.PageFill, { marginTop: headerHeight }]}>
+      <SafeAreaView style={GlobalStyles.PageFill}>
         {
           queryResult.loading || queryResult.error
             ? <LoadRetry cover {...queryResult} />

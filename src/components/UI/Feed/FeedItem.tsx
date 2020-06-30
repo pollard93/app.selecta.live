@@ -24,7 +24,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
   const itemWidth = useRef((() => {
     switch (props.item.type) {
       case FEED_TYPE.HORIZONTAL:
-        return windowWidth.current * 0.8;
+        return windowWidth.current * 0.9;
       case FEED_TYPE.HORIZONTAL_SMALL:
         return windowWidth.current * 0.3;
       default:
