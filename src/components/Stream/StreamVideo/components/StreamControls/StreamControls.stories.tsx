@@ -67,4 +67,16 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       duration={0}
       onSeek={console.log}
     />
+  ))
+  .add('StreamControls - live', () => (
+    <StreamControls
+      isError={false}
+      isBuffering={true}
+      isPlaying={false}
+      onPlayPause={console.log}
+      initialPosition={7200 / 2}
+      duration={0}
+      onSeek={console.log}
+      isLive={true}
+    />
   ));

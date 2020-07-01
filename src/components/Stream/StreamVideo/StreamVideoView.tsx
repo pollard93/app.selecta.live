@@ -32,11 +32,12 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
+  console.log('StreamVideoView -> live', live);
 
   // Determin url based on disableVideo
   const [disableVideo, setDisableVideo] = useState<boolean>(false);
   const url = disableVideo ? props.url.audio : props.url.video;
-  // console.log('StreamVideoView -> url', url);
+  console.log('StreamVideoView -> url', url);
 
 
   /**
@@ -158,6 +159,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
           }
         }}
         onError={(...args) => {
+          console.log('StreamVideoView -> args', args);
           setError(true);
         }}
         style={{ width: '100%', height: '100%', position: 'absolute' }}
@@ -232,22 +234,24 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             });
           }
         }}
-        onProgress={!live ? ((args) => {
-          const { currentTime } = args;
-          setProgress(currentTime);
-          setPlayableDuration(args.playableDuration);
+        onProgress={((args) => {
+          if (live === false) {
+            const { currentTime } = args;
+            setProgress(currentTime);
+            setPlayableDuration(args.playableDuration);
 
 
-          /**
-           * On Video Progress (ANDROID)
-           * Update now playing info
-           */
-          if (Platform.OS === 'android') {
-            MusicControl.updatePlayback({
-              elapsedTime: currentTime,
-            });
+            /**
+             * On Video Progress (ANDROID)
+             * Update now playing info
+             */
+            if (Platform.OS === 'android') {
+              MusicControl.updatePlayback({
+                elapsedTime: currentTime,
+              });
+            }
           }
-        }) : undefined}
+        })}
         onPlaybackRateChangeFromNowPlaying={Platform.OS === 'ios' ? (({ playbackRate }) => {
           /**
            * Set playback rate on ios to allow the control from lock screen
@@ -278,6 +282,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         duration={duration}
         isBuffering={buffering}
         isError={error}
+        isLive={live}
         playableDuration={playableDuration}
         initialPosition={props.data.position}
         onSeek={(position) => {

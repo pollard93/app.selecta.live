@@ -6,11 +6,27 @@ import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/ge
 
 storiesOf('Stream/StreamVideo', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('StreamVideo', () => {
+  .add('StreamVideo - VOD', () => {
     const TestComponent = () => {
       const queryResult = useGetStreamProfileQuery({
         variables: {
-          id: 'test-id',
+          id: 'VOD',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <StreamVideo data={queryResult.data.getStreamProfile} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamVideo - LIVE', () => {
+    const TestComponent = () => {
+      const queryResult = useGetStreamProfileQuery({
+        variables: {
+          id: 'LIVE',
         },
       });
       if (queryResult.loading) return null;
