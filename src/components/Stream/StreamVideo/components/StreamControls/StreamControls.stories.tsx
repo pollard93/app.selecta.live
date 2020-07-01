@@ -2,13 +2,13 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import CenterView from '../../../../../../storybook/Decorators/CenterView/CenterView';
 import StreamControls from './StreamControls';
 
 storiesOf('Stream/StreamVideo/StreamControls', module)
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .addDecorator((getStory) => <View style={{ width: '100%', aspectRatio: 1.8 }}>{getStory()}</View>)
+  .addDecorator((getStory) => <View style={{ width: '100%', aspectRatio: 1.7777777778 }}>{getStory()}</View>)
+  .addDecorator((getStory) => <CenterView style={{ alignItems: 'center' }}>{getStory()}</CenterView>)
   .add('StreamControls - isPlaying false', () => (
     <StreamControls
       isPlaying={false}
@@ -21,6 +21,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - isPlaying true', () => (
@@ -35,6 +37,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - buffering', () => (
@@ -49,6 +53,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - initialPosition', () => (
@@ -63,6 +69,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - loading', () => (
@@ -77,6 +85,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - error', () => (
@@ -91,6 +101,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={true}
       isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - live', () => (
@@ -105,6 +117,8 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={true}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
     />
   ))
   .add('StreamControls - live buffering', () => (
@@ -119,5 +133,39 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={true}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
+    />
+  ))
+  .add('StreamControls - isFullScreen', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={true}
+      isError={false}
+      isLive={false}
+      toggleFullScreen={console.log}
+      isFullScreen={true}
+    />
+  ))
+  .add('StreamControls - isFullScreen - live', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={true}
+      isError={false}
+      isLive={true}
+      toggleFullScreen={console.log}
+      isFullScreen={true}
     />
   ));

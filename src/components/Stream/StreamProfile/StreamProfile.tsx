@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -37,12 +37,14 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(props.componentId)} />
-      <View style={{ paddingTop: headerHeight }}>
-        <View>
+
+      <SafeAreaView>
+        <View style={{ paddingTop: headerHeight / 2 }}>
           <StreamCard data={getStreamProfile} />
-          <StreamVideo data={getStreamProfile} />
         </View>
-      </View>
+      </SafeAreaView>
+
+      <StreamVideo data={getStreamProfile} />
     </View>
   );
 };

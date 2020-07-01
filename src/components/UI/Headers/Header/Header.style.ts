@@ -5,6 +5,7 @@ import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
 
 export const headerHeight = scalePx(50);
+export const headerZindex = 100;
 
 export default StyleSheet.create({
   outer: {
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-    zIndex: 100,
+    zIndex: headerZindex,
   },
   wrap: {
     backgroundColor: color.mono.light,

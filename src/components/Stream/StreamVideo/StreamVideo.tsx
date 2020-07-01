@@ -7,6 +7,7 @@ import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamP
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
+import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
 
 interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile;
@@ -168,12 +169,18 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
 
 
   return (
-    <StreamVideoView
-      url={queryResult.data.getStreamUrl}
-      data={props.data}
-      query={query}
-      updatePosition={updatePosition}
-    />
+    <FullScreenWrap>
+      {({ toggleFullScreen, isFullScreen }) => (
+        <StreamVideoView
+          url={queryResult.data.getStreamUrl}
+          data={props.data}
+          query={query}
+          updatePosition={updatePosition}
+          toggleFullScreen={toggleFullScreen}
+          isFullScreen={isFullScreen}
+        />
+      )}
+    </FullScreenWrap>
   );
 };
 

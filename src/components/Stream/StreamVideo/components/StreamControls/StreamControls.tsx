@@ -20,6 +20,8 @@ interface StreamControlsProps {
   isBuffering: boolean; // Sets Slider.loading
   isError: boolean; // Shows error ui
   isLive: boolean; // Hides all ui except play/pause
+  toggleFullScreen: () => void;
+  isFullScreen: boolean;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -85,6 +87,14 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
   const videoPositionInterval = useRef<number>(null);
 
 
+  useEffect(() => {
+    const newPosition = Math.floor(props.initialPosition);
+    if (videoPosition !== newPosition) {
+      setVideoPosition(newPosition);
+    }
+  }, [props.initialPosition]);
+
+
   /**
    * Increment videoPosition by 1 every second
    */
@@ -95,7 +105,6 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
      */
     if (!props.isPlaying || videoPosition >= props.duration || props.isLive) {
       clearInterval(videoPositionInterval.current);
-      console.log(1, videoPosition, props.duration);
       if (videoPosition >= props.duration) {
         setVideoPosition(0);
       }
@@ -146,6 +155,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
     <View
       onStartShouldSetResponder={() => true}
       onResponderGrant={() => {
+        console.log(1);
         // eslint-disable-next-line no-underscore-dangle
         if ((fadeAnim as any)._value < 1) {
           showControls();
@@ -153,12 +163,16 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
           hideControls(0);
         }
       }}
-      style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end' }]}
+      style={StyleSheet.absoluteFillObject}
     >
       <Animated.View
-        style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', opacity: fadeAnim, backgroundColor: color.mono.darkCover }]}
+        style={[StyleSheet.absoluteFillObject, { opacity: fadeAnim, backgroundColor: color.mono.darkCover }]}
       >
-        <View style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center' }]}>
+        {/* Play/Pause button */}
+        <View
+          style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center' }]}
+          pointerEvents="box-none"
+        >
           <TouchableOpacity
             onPress={() => {
               // eslint-disable-next-line no-underscore-dangle
@@ -189,57 +203,99 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
           </TouchableOpacity>
         </View>
 
+
+        {/* Full screen button */}
+        <View
+          style={[StyleSheet.absoluteFillObject, { alignItems: 'flex-end', marginRight: spacing.large, marginTop: spacing.large }]}
+          pointerEvents="box-none"
+        >
+          <TouchableOpacity
+            onPress={() => {
+              // eslint-disable-next-line no-underscore-dangle
+              if ((fadeAnim as any)._value < 1) {
+                /**
+                 * If controls not shown assume this touch is to show controls
+                 */
+                showControls();
+              } else {
+                props.toggleFullScreen();
+              }
+            }}
+          >
+            <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={{ tintColor: 'white' }} />
+          </TouchableOpacity>
+        </View>
+
+
+        {/* Time and track slider */}
         {
           !props.isLive
             ? (
-              <>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: spacing.small }}>
+              <View
+                style={[
+                  { ...StyleSheet.absoluteFillObject, justifyContent: 'flex-end' },
+                  props.isFullScreen && { padding: spacing.base },
+                ]}
+                pointerEvents="box-none"
+              >
+                <View
+                  style={[
+                    { flexDirection: 'row', justifyContent: 'space-between', padding: spacing.small },
+                    props.isFullScreen && { paddingHorizontal: 0 },
+                  ]}
+                >
                   <Small bold light>{formatTime(controlPosition)}</Small>
                   <Small bold light>{duration}</Small>
                 </View>
 
-                <Slider
-                  value={controlPosition}
-                  minimumValue={0}
-                  maximumValue={props.duration}
-                  onValueChange={(v) => {
-                    clearTimeout(hideControlsTimeout.current);
-                    /**
-                     * When the value changes, update the seekingPosition state
-                     * So the ui can show the position of the slider handle, not the video
-                     */
-                    setSeekingPosition(v);
-                  }}
-                  onSlidingComplete={(v) => {
-                    /**
-                     * When sliding is complete
-                     * Execute on seek for the video
-                     * Set the video position
-                     * Remove the seeking state so the ui will now reflect the video position
-                     */
-                    props.onSeek(v);
-                    setVideoPosition(v);
-                    setSeekingPosition(null);
+                <View>
+                  <Slider
+                    value={controlPosition}
+                    minimumValue={0}
+                    maximumValue={props.duration}
+                    onValueChange={(v) => {
+                      clearTimeout(hideControlsTimeout.current);
+                      /**
+                       * When the value changes, update the seekingPosition state
+                       * So the ui can show the position of the slider handle, not the video
+                       */
+                      setSeekingPosition(v);
+                    }}
+                    onSlidingComplete={(v) => {
+                      console.log('v', v);
+                      /**
+                       * When sliding is complete
+                       * Execute on seek for the video
+                       * Set the video position
+                       * Remove the seeking state so the ui will now reflect the video position
+                       */
+                      props.onSeek(v);
+                      setVideoPosition(v);
+                      setSeekingPosition(null);
 
-                    // If playing, hide controls
-                    if (props.isPlaying) {
-                      hideControls();
-                    }
-                  }}
-                  tracks={[
-                    { color: 'rgba(255, 255, 255, 0.7)', width: 1 }, // Base
-                    { color: color.mono.dark, width: props.playableDuration / props.duration }, // Buffer
-                    { color: color.accent.primary, width: controlPosition / props.duration }, // Position
-                  ]}
-                  loading={props.isBuffering}
-                />
-              </>
+                      // If playing, hide controls
+                      if (props.isPlaying) {
+                        hideControls();
+                      }
+                    }}
+                    tracks={[
+                      { color: color.mono.dark, width: props.playableDuration / props.duration }, // Buffer
+                    ]}
+                    loading={props.isBuffering}
+                  />
+                </View>
+              </View>
             )
             : (
-              <View style={{ flexDirection: 'row', alignItems: 'center', padding: spacing.small }}>
-                <LoadingIcon size="small" />
-                <Small bold light style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
-                {props.isBuffering && <Small bold light style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}
+              <View
+                style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'flex-end' }}
+                pointerEvents="box-none"
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', padding: spacing.small }}>
+                  <LoadingIcon size="small" />
+                  <Small bold light style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
+                  {props.isBuffering && <Small bold light style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}
+                </View>
               </View>
             )
         }

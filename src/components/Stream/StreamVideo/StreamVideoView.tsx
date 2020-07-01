@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { Platform, View } from 'react-native';
+import { Platform, View, Dimensions, StyleSheet, Animated } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { QueryHookOptions } from 'react-apollo';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import color from '../../../styles/definitions/color';
+import { headerHeight, headerZindex } from '../../UI/Headers/Header/Header.style';
 
 
 interface StreamVideoViewProps {
@@ -14,6 +17,8 @@ interface StreamVideoViewProps {
   data: getStreamProfile_getStreamProfile;
   query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
   updatePosition: (position: number) => void;
+  toggleFullScreen: () => void;
+  isFullScreen: boolean;
 }
 
 
@@ -131,7 +136,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
 
 
   return (
-    <View style={{ position: 'absolute', width: '100%', aspectRatio: 1.777777777777778 }}>
+    <>
       <Video
         source={{ uri: url }}
         automaticallyWaitsToMinimizeStalling
@@ -200,6 +205,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
            * Set now playing info
            */
           if (Platform.OS === 'android') {
+            setLoading(false);
             MusicControl.setNowPlaying({
               title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
               artwork: props.data.image.url.small,
@@ -271,6 +277,24 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             props.query();
           }
         }}
+        onFullscreenPlayerWillPresent={() => {
+          console.log('onFullscreenPlayerWillPresent');
+          /**
+           * Set rate to 0 as full screen will take over
+           */
+          // if(rate === 1){
+          //   setRate(0);
+          // }
+        }}
+        onFullscreenPlayerWillDismiss={() => {
+          console.log('onFullscreenPlayerWillDismiss');
+          /**
+           * Update this player to the current position
+           */
+          console.log(currentPosition.current);
+          setRate(0);
+          props.updatePosition(currentPosition.current);
+        }}
       />
 
 
@@ -278,25 +302,21 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
+        initialPosition={props.data.position}
         onSeek={(position) => {
           player.current.seek(position);
         }}
         playableDuration={playableDuration}
-        initialPosition={props.data.position}
         isLoading={loading}
         isBuffering={buffering}
         isError={error}
         isLive={live}
-      />
-
-
-      {/* <Button
-        title={disableVideo ? 'Enable video' : 'Disable video'}
-        onPress={() => {
-          setDisableVideo(!disableVideo);
+        toggleFullScreen={() => {
+          props.toggleFullScreen();
         }}
-      /> */}
-    </View>
+        isFullScreen={props.isFullScreen}
+      />
+    </>
   );
 };
 
