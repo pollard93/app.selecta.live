@@ -1,7 +1,6 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
 import { Animated, View, TouchableHighlight } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import { assertNonNullType } from 'graphql';
 import Styles from './Slider.style';
 import scalePx from '../../../utils/scalePx';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
@@ -56,7 +55,6 @@ const Slider: FC<SliderProps> = (props) => {
      */
     if (currentState.current !== State.ACTIVE) {
       const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, wrapWidth);
-      console.log('value', value);
       // eslint-disable-next-line no-restricted-globals
       if (value != null) {
         touchX.setValue(value);

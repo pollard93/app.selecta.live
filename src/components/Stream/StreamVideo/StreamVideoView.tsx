@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, FC } from 'react';
 import Video from 'selecta.components.react-native-video';
 import { Platform, View } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
-import { useApolloClient } from 'react-apollo';
+import { QueryHookOptions } from 'react-apollo';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
-import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
-import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
-import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';
+
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile;
-  query: any;
+  query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
+  updatePosition: (position: number) => void;
 }
 
 
@@ -21,8 +21,7 @@ interface StreamVideoViewProps {
  * MusicControl is only used for android
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
 */
-const StreamVideoView = (props: StreamVideoViewProps) => {
-  const client = useApolloClient();
+const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playableDuration, setPlayableDuration] = useState(0);
@@ -36,7 +35,6 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
   // Determin url based on disableVideo
   const [disableVideo, setDisableVideo] = useState<boolean>(false);
   const url = disableVideo ? props.url.audio : props.url.video;
-  console.log('StreamVideoView -> url', url);
 
 
   /**
@@ -116,30 +114,19 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
 
   /**
-   * Set stream.position in local state
+   * On unmount
+   * If the video is not live
+   * updatePosition
    */
-  const setProgress = (progress: number) => {
-    try {
-      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-      });
-
-      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-        data: {
-          ...data,
-          position: progress,
-        },
-      });
-    // eslint-disable-next-line no-empty
-    } catch {}
-  };
+  const currentPosition = useRef(0);
+  useEffect(() => {
+    if (!live) return undefined;
+    return () => {
+      if (currentPosition.current) {
+        props.updatePosition(currentPosition.current);
+      }
+    };
+  }, [live]);
 
 
   return (
@@ -236,7 +223,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         onProgress={((args) => {
           if (live === false) {
             const { currentTime } = args;
-            // setProgress(currentTime);
+            currentPosition.current = currentTime;
             setPlayableDuration(args.playableDuration);
 
 
@@ -257,14 +244,14 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
            */
           setRate(playbackRate);
         }) : undefined}
-        onVideoEnd={(...args) => {
-          console.log('onVideoEnd', args);
+        onVideoEnd={() => {
           /**
            * Seek to the beginning and stop
            */
           setRate(0);
           player.current.seek(0);
-          setProgress(0);
+          currentPosition.current = 0;
+          props.updatePosition(0);
 
           if (Platform.OS === 'android') {
             MusicControl.updatePlayback({

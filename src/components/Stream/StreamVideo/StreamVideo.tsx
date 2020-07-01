@@ -121,11 +121,58 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
   }
 
 
+  /**
+   * Updates stream.position with the last known position
+   * Updates cache and server
+   */
+  const updatePosition = async (position: number) => {
+    try {
+      /**
+       * Update cache
+       */
+      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+      });
+
+      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+        data: {
+          ...data,
+          position,
+        },
+      });
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+
+
+    /**
+     * Update server
+     */
+    try {
+      await client.mutate({
+        mutation: UPDATE_STREAM_POSITION_MUTATION,
+        variables: {
+          id: props.data.id,
+          position,
+        },
+      });
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+  };
+
+
   return (
     <StreamVideoView
       url={queryResult.data.getStreamUrl}
       data={props.data}
       query={query}
+      updatePosition={updatePosition}
     />
   );
 };
