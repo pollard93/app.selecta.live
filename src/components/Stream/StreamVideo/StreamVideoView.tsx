@@ -24,6 +24,7 @@ interface StreamVideoViewProps {
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [playableDuration, setPlayableDuration] = useState(0);
   const [buffering, setBuffering] = useState(true);
   const [error, setError] = useState(false);
@@ -220,6 +221,9 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             });
           }
         }}
+        onReadyForDisplay={() => {
+          setLoading(false);
+        }}
         onProgress={((args) => {
           if (live === false) {
             const { currentTime } = args;
@@ -274,14 +278,15 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
-        isBuffering={buffering}
-        isError={error}
-        isLive={live}
-        playableDuration={playableDuration}
-        initialPosition={props.data.position}
         onSeek={(position) => {
           player.current.seek(position);
         }}
+        playableDuration={playableDuration}
+        initialPosition={props.data.position}
+        isLoading={loading}
+        isBuffering={buffering}
+        isError={error}
+        isLive={live}
       />
 
 

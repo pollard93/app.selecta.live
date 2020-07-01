@@ -12,13 +12,14 @@ import H4 from '../../../../UI/Typography/components/H4';
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
   onPlayPause: () => void; // Send play/pause up to parent
-  duration?: number; // Length of video in seconds - pass 0 while loading
-  onSeek?: (position: number) => void;
-  playableDuration?: number; // Buffer length in seconds
-  initialPosition?: number; // Start position, 0 should be given to play from start
-  isBuffering?: boolean; // Sets Slider.loading
-  isError?: boolean; // Shows error ui
-  isLive?: boolean; // Hides all ui except play/pause
+  duration: number; // Length of video in seconds - pass 0 while loading|live
+  onSeek: (position: number) => void;
+  playableDuration: number; // Buffer length in seconds
+  initialPosition: number; // Start position, 0 should be given to play from start
+  isLoading: boolean;
+  isBuffering: boolean; // Sets Slider.loading
+  isError: boolean; // Shows error ui
+  isLive: boolean; // Hides all ui except play/pause
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -132,7 +133,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    * If duration is 0 - video is loading
    * Except if it's live
    */
-  if (props.duration === 0 && !props.isLive) {
+  if (props.isLoading) {
     return (
       <View style={[StyleSheet.absoluteFillObject, { justifyContent: 'center', alignItems: 'center', backgroundColor: color.mono.darkCover }]}>
         <LoadingIcon />
@@ -238,6 +239,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               <View style={{ flexDirection: 'row', alignItems: 'center', padding: spacing.small }}>
                 <LoadingIcon size="small" />
                 <Small bold light style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
+                {props.isBuffering && <Small bold light style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}
               </View>
             )
         }

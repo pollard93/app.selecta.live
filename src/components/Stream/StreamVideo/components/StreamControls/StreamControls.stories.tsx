@@ -13,70 +13,111 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
     <StreamControls
       isPlaying={false}
       onPlayPause={console.log}
-      initialPosition={0}
       duration={7200}
+      initialPosition={0}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
     />
   ))
   .add('StreamControls - isPlaying true', () => (
     <StreamControls
       isPlaying={true}
       onPlayPause={console.log}
-      initialPosition={0}
       duration={7200}
+      initialPosition={0}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
     />
   ))
   .add('StreamControls - buffering', () => (
     <StreamControls
-      isBuffering={true}
       isPlaying={false}
       onPlayPause={console.log}
-      initialPosition={0}
       duration={7200}
+      initialPosition={3000}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={true}
+      isError={false}
+      isLive={false}
     />
   ))
   .add('StreamControls - initialPosition', () => (
     <StreamControls
-      isBuffering={true}
       isPlaying={false}
       onPlayPause={console.log}
-      initialPosition={7200 / 2}
       duration={7200}
+      initialPosition={7200 / 2}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
     />
   ))
-  .add('StreamControls - loading (no duration)', () => (
+  .add('StreamControls - loading', () => (
     <StreamControls
-      isBuffering={true}
       isPlaying={false}
       onPlayPause={console.log}
+      duration={7200}
       initialPosition={7200 / 2}
-      duration={0}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={true}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
     />
   ))
   .add('StreamControls - error', () => (
     <StreamControls
-      isError={true}
-      isBuffering={true}
       isPlaying={false}
       onPlayPause={console.log}
+      duration={7200}
       initialPosition={7200 / 2}
-      duration={0}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={true}
+      isLive={false}
     />
   ))
   .add('StreamControls - live', () => (
     <StreamControls
-      isError={false}
-      isBuffering={true}
       isPlaying={false}
       onPlayPause={console.log}
+      duration={7200}
       initialPosition={7200 / 2}
-      duration={0}
       onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={true}
+    />
+  ))
+  .add('StreamControls - live buffering', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={true}
+      isError={false}
       isLive={true}
     />
   ));

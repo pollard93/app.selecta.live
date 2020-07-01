@@ -55,6 +55,7 @@ const Slider: FC<SliderProps> = (props) => {
      */
     if (currentState.current !== State.ACTIVE) {
       const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, wrapWidth);
+      console.log('value', value);
       // eslint-disable-next-line no-restricted-globals
       if (value != null) {
         touchX.setValue(value);
