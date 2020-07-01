@@ -32,7 +32,6 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
-  console.log('StreamVideoView -> live', live);
 
   // Determin url based on disableVideo
   const [disableVideo, setDisableVideo] = useState<boolean>(false);
@@ -204,7 +203,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             setLive(true);
           } else {
             setLive(false);
-            setDuration(data.duration);
+            setDuration(Math.floor(data.duration));
           }
 
 
@@ -237,7 +236,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         onProgress={((args) => {
           if (live === false) {
             const { currentTime } = args;
-            setProgress(currentTime);
+            // setProgress(currentTime);
             setPlayableDuration(args.playableDuration);
 
 
@@ -258,7 +257,8 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
            */
           setRate(playbackRate);
         }) : undefined}
-        onVideoEnd={() => {
+        onVideoEnd={(...args) => {
+          console.log('onVideoEnd', args);
           /**
            * Seek to the beginning and stop
            */
@@ -271,6 +271,13 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               state: MusicControl.STATE_STOPPED,
               elapsedTime: 0,
             });
+          }
+
+          /**
+           * If live, get a new url to reset the view as VOD
+           */
+          if (live) {
+            props.query();
           }
         }}
       />

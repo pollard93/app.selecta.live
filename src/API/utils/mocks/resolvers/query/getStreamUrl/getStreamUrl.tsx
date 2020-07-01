@@ -3,8 +3,8 @@ import Config from 'react-native-config';
 export const getStreamUrl = (_, args) => {
   if (args.id === 'LIVE') {
     return ({
-      video: Config.REACT_APP_API_URL,
-      audio: Config.REACT_APP_API_URL,
+      video: Config.REACT_APP_LIVE_VIDEO_URL,
+      audio: Config.REACT_APP_LIVE_AUDIO_URL,
     });
   }
 

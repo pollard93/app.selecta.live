@@ -300,10 +300,10 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-video (4.4.6):
+  - react-native-video (4.4.6-0):
     - React
-    - react-native-video/Video (= 4.4.6)
-  - react-native-video/Video (4.4.6):
+    - react-native-video/Video (= 4.4.6-0)
+  - react-native-video/Video (4.4.6-0):
     - React
   - React-RCTActionSheet (0.62.2):
     - React-Core/RCTActionSheetHeaders (= 0.62.2)
@@ -617,7 +617,7 @@ SPEC CHECKSUMS:
   react-native-safe-area: e8230b0017d76c00de6b01e2412dcf86b127c6a3
   react-native-slider: e51492f1264d882a8815b71c5870f8978e52887d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-video: 5d4b15a81113c14c3d6658e873fddf65d773f3f9
+  react-native-video: cc1beedeb4749cb4e180524836579bb07d34ef85
   React-RCTActionSheet: f41ea8a811aac770e0cc6e0ad6b270c644ea8b7c
   React-RCTAnimation: 49ab98b1c1ff4445148b72a3d61554138565bad0
   React-RCTBlob: a332773f0ebc413a0ce85942a55b064471587a71

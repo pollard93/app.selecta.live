@@ -16440,9 +16440,9 @@ select@^1.1.2:
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.2.tgz#0e7350acdec80b1108528786ec1d4418d11b396d"
   integrity sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=
 
-"selecta.components.react-native-video@ssh://git@bitbucket.org:madebyprism/selecta.components.react-native-video.git#4.4.6":
-  version "4.4.6"
-  resolved "ssh://git@bitbucket.org:madebyprism/selecta.components.react-native-video.git#19fd3f3cdb40ce3eb8d1ee88246c96bff4419a05"
+"selecta.components.react-native-video@ssh://git@bitbucket.org:madebyprism/selecta.components.react-native-video.git#4.4.6-0":
+  version "4.4.6-0"
+  resolved "ssh://git@bitbucket.org:madebyprism/selecta.components.react-native-video.git#ea63172918efa08cc715c028c16b60bf6ee5b3ed"
   dependencies:
     keymirror "^0.1.1"
     prop-types "^15.5.10"

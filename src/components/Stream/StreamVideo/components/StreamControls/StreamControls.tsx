@@ -79,7 +79,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    * Position of the slider must be done within this state
    * Not controlled from outside to mitigate the cursor jumping
    */
-  const [videoPosition, setVideoPosition] = useState(props.initialPosition);
+  const [videoPosition, setVideoPosition] = useState(Math.floor(props.initialPosition));
   const [seekingPosition, setSeekingPosition] = useState(null);
   const videoPositionInterval = useRef<number>(null);
 
@@ -94,6 +94,10 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
      */
     if (!props.isPlaying || videoPosition >= props.duration || props.isLive) {
       clearInterval(videoPositionInterval.current);
+      console.log(1, videoPosition, props.duration);
+      if (videoPosition >= props.duration) {
+        setVideoPosition(0);
+      }
       return undefined;
     }
 
