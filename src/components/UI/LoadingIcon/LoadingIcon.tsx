@@ -9,6 +9,7 @@ interface LoadingIconProps {
   size?: 'small' | 'regular' | number; // Defaults to regular
   type?: 'PRIMARY' | 'LIGHT'; // Default PRIMARY
   animating?: boolean; // Default true
+  hideOuterRing?: boolean;
 }
 
 const LoadingIcon: FC<LoadingIconProps> = (props) => {
@@ -52,7 +53,6 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
     value.current.setValue(0);
 
     animation.start(() => {
-      console.log('end');
       timeout.current = setTimeout(() => {
         run();
       }, 500);
@@ -108,19 +108,21 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
 
   return (
     <View style={[props.style, { width: outerWidthFixed.current, height: outerWidthFixed.current }]}>
-      <View style={Styles.item}>
-        <View
-          style={[
-            Styles.borderRadius,
-            {
-              borderWidth: outerWidthFixed.current * 0.08,
-              borderColor: baseColor.current,
-              height: outerWidthFixed.current,
-              width: outerWidthFixed.current,
-            },
-          ]}
-        />
-      </View>
+      {!props.hideOuterRing && (
+        <View style={Styles.item}>
+          <View
+            style={[
+              Styles.borderRadius,
+              {
+                borderWidth: outerWidthFixed.current * 0.08,
+                borderColor: baseColor.current,
+                height: outerWidthFixed.current,
+                width: outerWidthFixed.current,
+              },
+            ]}
+          />
+        </View>
+      )}
 
       <View style={Styles.item}>
         <Animated.View

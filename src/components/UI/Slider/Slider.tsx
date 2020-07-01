@@ -1,5 +1,5 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
-import { Animated, View, Dimensions } from 'react-native';
+import { Animated, View, TouchableHighlight } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Styles from './Slider.style';
 import scalePx from '../../../utils/scalePx';
@@ -60,13 +60,14 @@ const Slider: FC<SliderProps> = (props) => {
         touchX.setValue(value);
       }
     }
-  }, [props.value, wrapWidth]);
+  }, [props.value, wrapWidth, props.maximumValue]);
 
 
   return (
     <PanGestureHandler
       onGestureEvent={Animated.event([{ nativeEvent: { x: touchX } }], { useNativeDriver: true, listener: onPan })}
-      onHandlerStateChange={({ nativeEvent }) => {
+      onHandlerStateChange={(event) => {
+        const { nativeEvent } = event;
         currentState.current = nativeEvent.state;
         switch (nativeEvent.state) {
           case State.BEGAN:
@@ -91,30 +92,32 @@ const Slider: FC<SliderProps> = (props) => {
            */
           if (!wrapWidth) {
             setWrapWidth(event.nativeEvent.layout.width);
-            const value = mapRange(props.value, 0, event.nativeEvent.layout.width, props.minimumValue, props.maximumValue);
-            if (value) {
-              touchX.setValue(value);
-            }
           }
         }}
+        // pointerEvents="none"
       >
         {props.tracks.map((t, i) => (
           <View key={i} style={[Styles.track, { backgroundColor: t.color, width: `${t.width * 100}%` }]} />
         ))}
 
         {wrapWidth !== 0 && (
-          <Animated.View
-            style={{
-              transform: [{
-                translateX: Animated.add(touchX, new Animated.Value(-(outerWidth / 2))),
-              }],
-            }}
-          >
-            <LoadingIcon
-              size={outerWidth}
-              animating={!!props.loading}
-            />
-          </Animated.View>
+          <TouchableHighlight underlayColor="transparent">
+            {/* TouchableHighlight to stop propopgration of touch event */}
+            <Animated.View
+              style={{
+                transform: [{
+                  translateX: Animated.add(touchX, new Animated.Value(-(outerWidth / 2))),
+                }],
+              }}
+              pointerEvents="none"
+            >
+              <LoadingIcon
+                size={outerWidth}
+                animating={!!props.loading}
+                hideOuterRing
+              />
+            </Animated.View>
+          </TouchableHighlight>
         )}
       </Animated.View>
     </PanGestureHandler>

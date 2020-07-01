@@ -99,7 +99,7 @@ export const mapRange = (num, inMin, inMax, outMin, outMax): number => {
     // eslint-disable-next-line no-mixed-operators
     const value = (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     // eslint-disable-next-line no-restricted-globals
-    if (isNaN(value)) return null;
+    if (isNaN(value) || value === Infinity) return null;
     return value;
   } catch {
     return null;

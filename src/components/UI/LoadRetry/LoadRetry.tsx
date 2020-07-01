@@ -12,9 +12,9 @@ interface LoadRetryProps extends Partial<QueryResult> {
 
 const LoadRetry: FC<LoadRetryProps> = (props) => {
   const [refetching, setRefetching] = useState(false);
-  const { loading, refetch } = props;
+  const { loading, called, refetch } = props;
 
-  if (loading) {
+  if (loading || !called) {
     return (
       <View style={[styles.wrap, props.cover && styles.cover]}>
         <LoadingIcon />

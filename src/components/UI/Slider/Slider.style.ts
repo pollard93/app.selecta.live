@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native';
-import spacing from '../../../styles/definitions/spacing';
-import color from '../../../styles/definitions/color';
 
 export default StyleSheet.create({
   wrap: {

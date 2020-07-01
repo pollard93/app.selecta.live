@@ -85,13 +85,13 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                 if (args.queryResult.loading || args.queryResult.error) {
                   return (
                     <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
-                      {Array(props.item.variables.first).fill(0).map(() => {
+                      {Array(props.item.variables.first).fill(0).map((_, i) => {
                         switch (props.item.accessor.split('.').pop()) {
                           case 'streams':
-                            return <StreamCardSkeleton />;
+                            return <StreamCardSkeleton key={i} />;
 
                           case 'channels':
-                            return <ChannelCardSkeleton />;
+                            return <ChannelCardSkeleton key={i} />;
 
                           default:
                             return null;

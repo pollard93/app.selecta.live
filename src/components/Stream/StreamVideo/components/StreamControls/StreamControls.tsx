@@ -6,50 +6,29 @@ import color from '../../../../../styles/definitions/color';
 import Small from '../../../../UI/Typography/components/Small';
 import spacing from '../../../../../styles/definitions/spacing';
 import Slider from '../../../../UI/Slider/Slider';
+import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
+import H4 from '../../../../UI/Typography/components/H4';
 
 interface StreamControlsProps {
-  isPlaying: boolean;
-  onPlayPause: () => void;
-  isBuffering?: boolean
-  duration?: number; // Seconds
-  playableDuration?: number;
-  initialPosition?: number;
+  isPlaying: boolean; // Stops and starts internal position interval
+  onPlayPause: () => void; // Send play/pause up to parent
+  duration?: number; // Length of video in seconds - pass 0 while loading
   onSeek?: (position: number) => void;
+  playableDuration?: number; // Buffer length in seconds
+  initialPosition?: number; // Start position, 0 should be given to play from start
+  isBuffering?: boolean; // Sets Slider.loading
+  isError?: boolean; // Shows error ui
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
-  /**
-   *
-   */
   const hideControlsTimeout = useRef<number>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
 
   /**
-   * Fade in controls
-   * Controls are faded in on touch of outmost view
-   * hideControls must be called to hide them
-   */
-  const showControls = () => {
-    // Hidecontrols timeout should be cleared here
-    // Making this function suitable to call to keep the controls shown
-    clearTimeout(hideControlsTimeout.current);
-
-    Animated.timing(
-      fadeAnim,
-      {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-      },
-    ).start();
-  };
-
-
-  /**
    * Clear and set timeout to hide controls
    */
-  const hideControls = () => {
+  const hideControls = (timeout = 1000) => {
     clearTimeout(hideControlsTimeout.current);
     hideControlsTimeout.current = setTimeout(() => {
       Animated.timing(
@@ -60,7 +39,38 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
           useNativeDriver: false,
         },
       ).start();
-    }, 2000);
+    }, timeout);
+  };
+
+
+  /**
+   * If is playing on mount, hide controls
+   */
+  useEffect(() => {
+    if (props.isPlaying) {
+      hideControls(2000);
+    }
+  }, []);
+
+
+  /**
+   * Fade in controls
+   * Controls are faded in on touch of outmost view
+   * hideControls must be called to hide them
+   */
+  const showControls = () => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      },
+    ).start();
+
+    if (props.isPlaying) {
+      hideControls(2300);
+    }
   };
 
 
@@ -77,6 +87,10 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    * Increment videoPosition by 1 every second
    */
   useEffect(() => {
+    /**
+     * When video is not playing or video ends
+     * Clear the interval
+     */
     if (!props.isPlaying || videoPosition >= props.duration) {
       clearInterval(videoPositionInterval.current);
       return undefined;
@@ -97,18 +111,40 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
   const controlPosition = seekingPosition !== null ? seekingPosition : videoPosition;
 
 
+  /**
+   * Handle error
+   */
+  if (props.isError) {
+    return (
+      <View style={[StyleSheet.absoluteFillObject, { justifyContent: 'center', alignItems: 'center', backgroundColor: color.mono.darkCover }]}>
+        <H4 light>There has been an error</H4>
+      </View>
+    );
+  }
+
+
+  /**
+   * If duration is 0 - video is loading
+   */
+  if (props.duration === 0) {
+    return (
+      <View style={[StyleSheet.absoluteFillObject, { justifyContent: 'center', alignItems: 'center', backgroundColor: color.mono.darkCover }]}>
+        <LoadingIcon />
+      </View>
+    );
+  }
+
+
   return (
     <View
       onStartShouldSetResponder={() => true}
       onResponderGrant={() => {
-        showControls();
-      }}
-      onResponderRelease={() => {
-        /**
-         * On release, hide the controls
-         * To prevent these from hiding, any interaction with child elements should execute showControls()
-         */
-        hideControls();
+        // eslint-disable-next-line no-underscore-dangle
+        if ((fadeAnim as any)._value < 1) {
+          showControls();
+        } else {
+          hideControls(0);
+        }
       }}
       style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end' }]}
     >
@@ -120,10 +156,25 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             onPress={() => {
               // eslint-disable-next-line no-underscore-dangle
               if ((fadeAnim as any)._value < 1) {
+                /**
+                 * If controls not shown assume this touch is to show controls
+                 */
                 showControls();
               } else {
+                /**
+                 * If controls shown, play/pause
+                 */
                 props.onPlayPause();
-                hideControls();
+
+                /**
+                 * If video is now playing
+                 * Hide controls
+                 */
+                if (!props.isPlaying) {
+                  hideControls(0);
+                } else {
+                  clearTimeout(hideControlsTimeout.current);
+                }
               }
             }}
           >
@@ -136,22 +187,17 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
           <Small bold light>{duration}</Small>
         </View>
 
-        {/*
         <Slider
-          style={{ height: 2, marginLeft: -5, marginRight: -5 }}
-          step={1}
           value={controlPosition}
           minimumValue={0}
           maximumValue={props.duration}
-          minimumTrackTintColor={color.accent.primary}
-          maximumTrackTintColor={color.mono.light}
           onValueChange={(v) => {
+            clearTimeout(hideControlsTimeout.current);
             /**
              * When the value changes, update the seekingPosition state
              * So the ui can show the position of the slider handle, not the video
-             *
+             */
             setSeekingPosition(v);
-            showControls();
           }}
           onSlidingComplete={(v) => {
             /**
@@ -159,39 +205,15 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
              * Execute on seek for the video
              * Set the video position
              * Remove the seeking state so the ui will now reflect the video position
-             *
+             */
             props.onSeek(v);
             setVideoPosition(v);
             setSeekingPosition(null);
-            hideControls();
-          }}
-          thumbTintColor={color.accent.primary}
-        />
-        */}
 
-        <Slider
-          value={controlPosition}
-          minimumValue={0}
-          maximumValue={props.duration}
-          onValueChange={(v) => {
-            /**
-             * When the value changes, update the seekingPosition state
-             * So the ui can show the position of the slider handle, not the video
-             */
-            setSeekingPosition(v);
-            showControls();
-          }}
-          onSlidingComplete={(v) => {
-            /**
-             * When sliding is complete
-             * Execute on seek for the video
-             * Set the video position
-             * Remove the seeking state so the ui will now reflect the video position
-             */
-            props.onSeek(v);
-            setVideoPosition(v);
-            setSeekingPosition(null);
-            hideControls();
+            // If playing, hide controls
+            if (props.isPlaying) {
+              hideControls();
+            }
           }}
           tracks={[
             { color: 'rgba(255, 255, 255, 0.7)', width: 1 }, // Base

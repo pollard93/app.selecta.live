@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
-import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -33,15 +32,8 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
     return <LoadRetry {...queryResult} />;
   }
 
-  switch (true) {
-    case queryResult.loading:
-    case !!queryResult.error:
-      return <LoadRetry {...queryResult} />;
-  }
-
 
   const { data: { getStreamProfile } } = queryResult;
-  // console.log('getStreamProfile', getStreamProfile);
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(props.componentId)} />
@@ -51,25 +43,6 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
           <StreamVideo data={getStreamProfile} />
         </View>
       </View>
-
-      {/* <Text>{getStreamProfile.name}</Text>
-      <AsyncImage
-        splashUrl={getStreamProfile.image?.url?.splash}
-        fullUrl={getStreamProfile.image?.url?.full}
-        // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icons/icon.jpg')}
-        containerProps={{
-          style: {
-            width: 100,
-            height: 100,
-          },
-        }}
-      />
-      {getStreamProfile.audioOnly && <Text>This stream is audio only</Text>}
-
-      <View style={{ flex: 1 }}>
-        <StreamVideo data={getStreamProfile} />
-      </View> */}
     </View>
   );
 };

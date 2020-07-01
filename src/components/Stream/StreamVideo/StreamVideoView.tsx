@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { Platform, View, StyleSheet } from 'react-native';
+import { Platform, View } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { useApolloClient } from 'react-apollo';
@@ -9,8 +9,6 @@ import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__gen
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import StreamControls from './components/StreamControls/StreamControls';
-import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
-import color from '../../../styles/definitions/color';
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
@@ -29,7 +27,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
   const [duration, setDuration] = useState(0);
   const [playableDuration, setPlayableDuration] = useState(0);
   const [buffering, setBuffering] = useState(true);
-  console.log('StreamVideoView -> buffering', buffering);
+  const [error, setError] = useState(false);
   const player = useRef(null);
 
   // Live is determined from the url given, initial state null
@@ -160,7 +158,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
           }
         }}
         onError={(...args) => {
-          console.log('StreamVideoView -> onError', args);
+          setError(true);
         }}
         style={{ width: '100%', height: '100%', position: 'absolute' }}
         ignoreSilentSwitch={'ignore'}
@@ -192,6 +190,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
 
           /**
            * Set rate to 1 now video is ready to play
+           * Uncomment to autoPlay
            */
           // setRate(1);
 
@@ -278,6 +277,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
         isBuffering={buffering}
+        isError={error}
         playableDuration={playableDuration}
         initialPosition={props.data.position}
         onSeek={(position) => {
