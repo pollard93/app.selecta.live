@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { Platform } from 'react-native';
+import { Platform, AppState } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { QueryHookOptions } from 'react-apollo';
@@ -42,6 +42,29 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
    */
   const [videoEnabled, setVideoEnabled] = useState<boolean>(!props.data.audioOnly);
   const url = !videoEnabled ? props.url.audio : props.url.video;
+
+
+  /**
+   * If the stream is not audioOnly
+   * And the app state is going from active to not active
+   * Set videoEnabled to false
+   */
+  const [appState, setAppState] = useState(AppState.currentState);
+  useEffect(() => {
+    if (props.data.audioOnly) return undefined;
+
+    const handleAppStateChange = (nextAppState) => {
+      setAppState(nextAppState);
+      if (videoEnabled && nextAppState === 'background') {
+        setVideoEnabled(false);
+      }
+    };
+
+    AppState.addEventListener('change', handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, [appState]);
 
 
   /**
