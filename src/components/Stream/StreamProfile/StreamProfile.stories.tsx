@@ -10,4 +10,7 @@ storiesOf('Stream/StreamProfile', module)
   ))
   .add('StreamProfile - LIVE', () => (
     <StreamProfile id="LIVE" />
+  ))
+  .add('StreamProfile - AUDIO_ONLY', () => (
+    <StreamProfile id="AUDIO_ONLY" />
   ));

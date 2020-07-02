@@ -24,6 +24,7 @@ interface StreamVideoViewProps {
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
+  console.log('props', props);
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -35,9 +36,14 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
 
-  // Determin url based on disableVideo
-  const [disableVideo, setDisableVideo] = useState<boolean>(false);
-  const url = disableVideo ? props.url.audio : props.url.video;
+  /**
+   * Determin url based on videoEnabled
+   * If audioOnly, this will be default false, otherwise true
+   */
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(!props.data.audioOnly);
+  console.log('videoEnabled', videoEnabled);
+  const url = !videoEnabled ? props.url.audio : props.url.video;
+  console.log('url', url);
 
 
   /**
@@ -132,6 +138,16 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   }, [live]);
 
 
+  /**
+   * Toggle video enabled, set the current position before updating state
+   * When the new url is loaded, it will seek to that position
+   */
+  const toggleVideoEnabled = () => {
+    props.updatePosition(currentPosition.current);
+    setVideoEnabled(!videoEnabled);
+  };
+
+
   return (
     <>
       <Video
@@ -171,12 +187,15 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
          * ALL OS PROPS
          * */
         onLoad={(data) => {
+          console.log('data', data);
           /**
            * If there is a position on load then try and seek to it
            */
           if (props.data.position) {
+            console.log(1, props.data.position);
             player.current.seek(props.data.position);
           }
+          console.log(2);
 
 
           /**
@@ -194,6 +213,15 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
           } else {
             setLive(false);
             setDuration(Math.floor(data.duration));
+          }
+
+
+          /**
+           * If video is not enabled set loading false here
+           * Otherwise this should be handled in onReadyForDisplay
+           */
+          if (!videoEnabled) {
+            setLoading(false);
           }
 
 
@@ -274,28 +302,6 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             props.query();
           }
         }}
-        // onFullscreenPlayerWillPresent={() => {
-        //   console.log('onFullscreenPlayerWillPresent');
-        //   /**
-        //    * Set rate to 0 as full screen will take over
-        //    */
-        //   // if(rate === 1){
-        //   //   setRate(0);
-        //   // }
-        // }}
-        // onFullscreenPlayerWillDismiss={() => {
-        //   console.log('onFullscreenPlayerWillDismiss');
-        //   /**
-        //    * Update this player to the current position
-        //    */
-        //   console.log(currentPosition.current);
-        //   setRate(0);
-        //   props.updatePosition(currentPosition.current);
-
-        //   if (Platform.OS === 'android') {
-        //     player.current.dismissFullscreenPlayer();
-        //   }
-        // }}
       />
 
 
@@ -304,22 +310,17 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
         initialPosition={props.data.position}
-        onSeek={(position) => {
-          player.current.seek(position);
-        }}
+        onSeek={(position) => player.current?.seek(position)}
         playableDuration={playableDuration}
         isLoading={loading}
         isBuffering={buffering}
         isError={error}
         isLive={live}
-        toggleFullScreen={() => {
-          props.toggleFullScreen();
-
-          if (Platform.OS === 'android') {
-            // player.current[!props.isFullScreen ? 'presentFullscreenPlayer' : 'dismissFullscreenPlayer']();
-          }
-        }}
+        isAudioOnly={props.data.audioOnly}
+        toggleFullScreen={() => props.toggleFullScreen()}
         isFullScreen={props.isFullScreen}
+        toggleVideoEnabled={toggleVideoEnabled}
+        isVideoEnabled={videoEnabled}
       />
     </>
   );

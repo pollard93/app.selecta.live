@@ -21,8 +21,12 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - isPlaying true', () => (
@@ -37,8 +41,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - buffering', () => (
@@ -53,8 +60,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - initialPosition', () => (
@@ -69,8 +79,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - loading', () => (
@@ -85,8 +98,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - error', () => (
@@ -101,8 +117,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={true}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - live', () => (
@@ -117,8 +136,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={false}
       isError={false}
       isLive={true}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - live buffering', () => (
@@ -133,8 +155,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={true}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - isFullScreen', () => (
@@ -149,8 +174,11 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={false}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={true}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ))
   .add('StreamControls - isFullScreen - live', () => (
@@ -165,7 +193,67 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isBuffering={true}
       isError={false}
       isLive={true}
+      isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={true}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
+    />
+  ))
+  .add('StreamControls - isAudioOnly', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
+      isAudioOnly={true}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={true}
+    />
+  ))
+  .add('StreamControls - isVideoEnabled - true', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
+      isAudioOnly={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
+    />
+  ))
+  .add('StreamControls - isVideoEnabled - false', () => (
+    <StreamControls
+      isPlaying={false}
+      onPlayPause={console.log}
+      duration={7200}
+      initialPosition={7200 / 2}
+      onSeek={console.log}
+      playableDuration={3000}
+      isLoading={false}
+      isBuffering={false}
+      isError={false}
+      isLive={false}
+      isAudioOnly={false}
+      toggleFullScreen={console.log}
+      isFullScreen={false}
+      toggleVideoEnabled={console.log}
+      isVideoEnabled={false}
     />
   ));

@@ -8,6 +8,7 @@ import spacing from '../../../../../styles/definitions/spacing';
 import Slider from '../../../../UI/Slider/Slider';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
+import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
@@ -20,11 +21,15 @@ interface StreamControlsProps {
   isBuffering: boolean; // Sets Slider.loading
   isError: boolean; // Shows error ui
   isLive: boolean; // Hides all ui except play/pause
+  isAudioOnly?: boolean; // Hides full screen and enable video controls
   toggleFullScreen: () => void;
   isFullScreen: boolean;
+  toggleVideoEnabled: () => void;
+  isVideoEnabled: boolean;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
+  const { headerHeight } = useHeaderStyles();
   const hideControlsTimeout = useRef<number>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -211,27 +216,47 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
         </View>
 
 
-        {/* Full screen button */}
-        <View
-          style={[StyleSheet.absoluteFillObject, { alignItems: 'flex-end', marginRight: spacing.large, marginTop: spacing.large }]}
-          pointerEvents="box-none"
-        >
-          <TouchableOpacity
-            onPress={() => {
-              // eslint-disable-next-line no-underscore-dangle
-              if ((fadeAnim as any)._value < 1) {
-                /**
-                 * If controls not shown assume this touch is to show controls
-                 */
-                showControls();
-              } else {
-                props.toggleFullScreen();
-              }
-            }}
+        {/* Toggle fullscreen / toggle enable video button */}
+        {!props.isAudioOnly && (
+          <View
+            style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', alignItems: 'flex-start', flexDirection: 'row', marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
+            pointerEvents="box-none"
           >
-            <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={{ tintColor: 'white' }} />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => {
+                // eslint-disable-next-line no-underscore-dangle
+                if ((fadeAnim as any)._value < 1) {
+                  /**
+                   * If controls not shown assume this touch is to show controls
+                   */
+                  showControls();
+                } else {
+                  props.toggleVideoEnabled();
+                }
+              }}
+              style={{ padding: spacing.small }}
+            >
+              <Icon name={!props.isVideoEnabled ? ICON.VIDEO_ENABLED : ICON.VIDEO_DISABLED} size="small" style={{ tintColor: 'white' }} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                // eslint-disable-next-line no-underscore-dangle
+                if ((fadeAnim as any)._value < 1) {
+                  /**
+                   * If controls not shown assume this touch is to show controls
+                   */
+                  showControls();
+                } else {
+                  props.toggleFullScreen();
+                }
+              }}
+              style={{ padding: spacing.small }}
+            >
+              <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={{ tintColor: 'white' }} />
+            </TouchableOpacity>
+          </View>
+        )}
 
 
         {/* Time and track slider */}

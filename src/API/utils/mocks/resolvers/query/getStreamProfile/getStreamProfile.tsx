@@ -9,9 +9,18 @@ export const getStreamProfile = (_, variables) => {
         position: 0,
       });
 
+    case 'AUDIO_ONLY':
+      return ({
+        id: variables.id,
+        isConsumer: true,
+        audioOnly: true,
+        position: 0,
+      });
+
     default:
       return ({
         id: variables.id,
+        audioOnly: false,
         position: 0,
       });
   }
