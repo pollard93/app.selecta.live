@@ -117,8 +117,8 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
 
 
   return (
-    <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }}>
-      <View style={{ ...StyleSheet.absoluteFillObject, marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom, alignItems: 'center' }}>
+    <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }} pointerEvents="box-none">
+      <View style={{ ...StyleSheet.absoluteFillObject, marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom, alignItems: 'center' }} pointerEvents="box-none">
         <Animated.View
           style={[
             { width: fullScreenWidthInter, aspectRatio: 1.777777777777778 },
@@ -129,6 +129,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
               ],
             },
           ]}
+          pointerEvents="box-none"
         >
           {props.children({
             toggleFullScreen,

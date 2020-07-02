@@ -8,6 +8,7 @@ import StreamVideo from '../StreamVideo/StreamVideo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
+import StreamMessages from '../../StreamMessage/StreamMessages/StreamMessages';
 
 export interface StreamProfileProps extends ScreenProps {
   id: string;
@@ -39,9 +40,10 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(props.componentId)} />
 
-      <SafeAreaView>
-        <View style={{ paddingTop: headerHeight / 2 }}>
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <View style={{ paddingTop: headerHeight / 2, flex: 1 }}>
           <StreamCard data={getStreamProfile} />
+          <StreamMessages id={getStreamProfile.id} />
         </View>
       </SafeAreaView>
 

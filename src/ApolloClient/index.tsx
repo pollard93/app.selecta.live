@@ -72,11 +72,12 @@ const wsLink = new WebSocketLink({
     reconnect: true,
     reconnectionAttempts: 3,
     connectionParams: async () => ({
-      authorization: `Bearer ${await getChannelToken(AClient)}`,
+      authorization: `Bearer ${await getToken(AClient)}`,
       credentials: 'include',
     }),
-    // connectionCallback: err => {
-    //   if(err){
+    // connectionCallback: (err) => {
+    //   console.log('err', err);
+    //   if (err) {
     //     console.log('Error Connecting to Subscriptions Server', err);
     //   }
     // },
@@ -111,6 +112,7 @@ const generalTokenEndpoints = [
   'getFollowingChannelProfiles',
   'getProductConfig',
   'getSelf',
+  'getStreamMessages',
   'getStreamProfile',
   'getStreamProfiles',
   'getStreamUrl',

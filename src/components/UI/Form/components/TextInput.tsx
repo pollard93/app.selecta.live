@@ -1,5 +1,5 @@
 import React, { FC, Ref, useMemo } from 'react';
-import { TextInput as TextInputRN, TextInputProps, View } from 'react-native';
+import { TextInput as TextInputRN, TextInputProps, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
 import Styles from '../Form.style';
 import color from '../../../../styles/definitions/color';
@@ -11,6 +11,7 @@ interface TextInputPropsExt extends TextInputProps {
   light?: boolean; // Light background
   setRef?: Ref<any>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
+  wrapStyle?: StyleProp<ViewStyle>;
 }
 
 const TextInput: FC<TextInputPropsExt> = (props) => {
@@ -42,7 +43,7 @@ const TextInput: FC<TextInputPropsExt> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, props.light && Styles.light]}>
+    <View style={[Styles.wrap, props.wrapStyle, props.light && Styles.light]}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}

@@ -116,10 +116,14 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
    * Loading | Error
    * TODO - handle error messages
    */
-  if (!queryResult.called || queryResult.loading || queryResult.error) {
+  if (!queryResult.called || queryResult.loading) {
     return (
       <LoadRetry {...queryResult} />
     );
+  }
+
+  if (queryResult.error) {
+    return null;
   }
 
 
