@@ -12,6 +12,7 @@ export default StyleSheet.create({
   },
   wrap: {
     backgroundColor: color.mono.light,
+    opacity: 0.5,
     ...shadow.regular,
   },
   inner: {

@@ -1,10 +1,12 @@
 import React, { useRef, ReactNode, useState } from 'react';
 import { Dimensions, Animated, View, StyleSheet } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
+import { ScreenProps } from '../../../../../screens/utils/interfaces';
 
 
-interface FullScreenWrapProps {
+interface FullScreenWrapProps extends ScreenProps {
   children: (args: {
     toggleFullScreen: () => void;
     isFullScreen: boolean;
@@ -15,63 +17,102 @@ interface FullScreenWrapProps {
 const FullScreenWrap = (props: FullScreenWrapProps) => {
   const window = useRef(Dimensions.get('window')).current;
   const safeAreaInsets = useSafeArea();
-  const fullScreenAnimValue = useRef(new Animated.Value(0)).current;
+  const animValue = useRef(new Animated.Value(0)).current;
   const [isFullScreen, setFullScreen] = useState(false);
   const { headerHeight, headerZindex } = useHeaderStyles();
 
+
+  /**
+   * Toggles full screen
+   */
   const toggleFullScreen = () => {
-    if (fullScreenAnimValue._value === 0) {
+    // eslint-disable-next-line no-underscore-dangle
+    if ((animValue as any)._value === 0) {
       setFullScreen(true);
-      Animated.timing(fullScreenAnimValue, {
+
+      /**
+       * Animate from 0 - 1
+       */
+      Animated.timing(animValue, {
         toValue: 1,
         duration: 700,
         useNativeDriver: false,
       }).start();
+
+      /**
+       * Change status bar color (android)
+       * Hide bottom tabs
+       */
+      Navigation.mergeOptions(props.componentId, {
+        statusBar: {
+          backgroundColor: 'black',
+        },
+        bottomTabs: { visible: false, animate: true },
+      });
     }
 
-    if (fullScreenAnimValue._value === 1) {
+    // eslint-disable-next-line no-underscore-dangle
+    if ((animValue as any)._value === 1) {
       setFullScreen(false);
-      Animated.timing(fullScreenAnimValue, {
+
+      /**
+       * Animate from 1 - 0
+       */
+      Animated.timing(animValue, {
         toValue: 0,
         duration: 700,
         useNativeDriver: false,
       }).start();
+
+      /**
+       * Change status bar color (android)
+       * Show bottom tabs
+       */
+      Navigation.mergeOptions(props.componentId, {
+        statusBar: {
+          backgroundColor: 'white',
+        },
+        bottomTabs: { visible: true, animate: true },
+      });
     }
   };
-  console.log('toggleFullScreen -> toggleFullScreen', toggleFullScreen);
 
-  // const fullScreenWidth = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom).current;
-  const fullScreenWidth = useRef(window.width * 1.777777777777778).current;
-  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight).current;
-  const fullScreenWidthInter = useRef(fullScreenAnimValue.interpolate({
+
+  /**
+   * Get window height and work out the width to set the element when in full screen mode
+   * Fit's 16/9 component within landscape screen
+   */
+  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - (safeAreaInsets.top === 0 ? headerHeight : headerHeight / 2)).current;
+  const fullScreenWidth = useRef(Math.min(window.width * 1.777777777777778, windowHeight)).current;
+
+
+  /**
+   * Define interpolations needed
+   */
+  const fullScreenWidthInter = useRef(animValue.interpolate({
     inputRange: [0, 1],
     outputRange: [window.width, fullScreenWidth],
     extrapolate: 'clamp',
-    // useNativeDriver: true,
   })).current;
-  const fullScreenTranslateXInter = useRef(fullScreenAnimValue.interpolate({
+  const fullScreenTranslateXInter = useRef(animValue.interpolate({
     inputRange: [0, 1],
     outputRange: [0, (windowHeight / 2) - ((fullScreenWidth / 1.777777777777778) / 2)],
     extrapolate: 'clamp',
-    // useNativeDriver: true,
   })).current;
-  const fullScreenRotateInter = useRef(fullScreenAnimValue.interpolate({
+  const fullScreenRotateInter = useRef(animValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '90deg'],
     extrapolate: 'clamp',
-    // useNativeDriver: true,
   })).current;
-  const fullScreenBackgroundColor = useRef(fullScreenAnimValue.interpolate({
+  const fullScreenBackgroundColor = useRef(animValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['rgba(0,0,0,0)', 'rgba(0,0,0,1)'],
     extrapolate: 'clamp',
-    // useNativeDriver: true,
   })).current;
-  const fullScreenZIndex = useRef(fullScreenAnimValue.interpolate({
+  const fullScreenZIndex = useRef(animValue.interpolate({
     inputRange: [0, 1],
     outputRange: [headerZindex - 1, headerZindex + 1],
     extrapolate: 'clamp',
-    // useNativeDriver: true,
   })).current;
 
 
@@ -80,7 +121,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
       <View style={{ ...StyleSheet.absoluteFillObject, marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom, alignItems: 'center' }}>
         <Animated.View
           style={[
-            { width: fullScreenWidthInter, aspectRatio: 1.777777777777778, backgroundColor: 'green', zIndex: 200 },
+            { width: fullScreenWidthInter, aspectRatio: 1.777777777777778 },
             {
               transform: [
                 { translateY: fullScreenTranslateXInter },

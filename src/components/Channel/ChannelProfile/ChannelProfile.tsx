@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, FC } from 'react';
-import { View, Animated, Dimensions, LayoutRectangle, SafeAreaView } from 'react-native';
+import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';

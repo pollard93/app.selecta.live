@@ -15,7 +15,6 @@ export interface StreamProfileProps extends ScreenProps {
 
 const StreamProfile: FC<StreamProfileProps> = (props) => {
   const { headerHeight } = useHeaderStyles();
-  console.log('headerHeight', headerHeight);
 
   /**
    * Query
@@ -46,7 +45,7 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
         </View>
       </SafeAreaView>
 
-      <StreamVideo data={getStreamProfile} />
+      <StreamVideo {...props} data={getStreamProfile} />
     </View>
   );
 };

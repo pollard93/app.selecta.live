@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { Platform, View, Dimensions, StyleSheet, Animated } from 'react-native';
+import { Platform } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { QueryHookOptions } from 'react-apollo';
+import { Navigation } from 'react-native-navigation';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
-import color from '../../../styles/definitions/color';
-import { headerHeight, headerZindex } from '../../UI/Headers/Header/Header.style';
 
 
 interface StreamVideoViewProps {
@@ -277,24 +275,28 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             props.query();
           }
         }}
-        onFullscreenPlayerWillPresent={() => {
-          console.log('onFullscreenPlayerWillPresent');
-          /**
-           * Set rate to 0 as full screen will take over
-           */
-          // if(rate === 1){
-          //   setRate(0);
-          // }
-        }}
-        onFullscreenPlayerWillDismiss={() => {
-          console.log('onFullscreenPlayerWillDismiss');
-          /**
-           * Update this player to the current position
-           */
-          console.log(currentPosition.current);
-          setRate(0);
-          props.updatePosition(currentPosition.current);
-        }}
+        // onFullscreenPlayerWillPresent={() => {
+        //   console.log('onFullscreenPlayerWillPresent');
+        //   /**
+        //    * Set rate to 0 as full screen will take over
+        //    */
+        //   // if(rate === 1){
+        //   //   setRate(0);
+        //   // }
+        // }}
+        // onFullscreenPlayerWillDismiss={() => {
+        //   console.log('onFullscreenPlayerWillDismiss');
+        //   /**
+        //    * Update this player to the current position
+        //    */
+        //   console.log(currentPosition.current);
+        //   setRate(0);
+        //   props.updatePosition(currentPosition.current);
+
+        //   if (Platform.OS === 'android') {
+        //     player.current.dismissFullscreenPlayer();
+        //   }
+        // }}
       />
 
 
@@ -313,6 +315,10 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isLive={live}
         toggleFullScreen={() => {
           props.toggleFullScreen();
+
+          if (Platform.OS === 'android') {
+            // player.current[!props.isFullScreen ? 'presentFullscreenPlayer' : 'dismissFullscreenPlayer']();
+          }
         }}
         isFullScreen={props.isFullScreen}
       />

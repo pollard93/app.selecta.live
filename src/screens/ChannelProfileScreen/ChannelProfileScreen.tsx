@@ -25,6 +25,7 @@ ChannelProfileScreen.prototype.ScreenName = 'ChannelProfileScreen';
   },
   statusBar: {
     style: 'dark',
+    backgroundColor: 'white',
   },
 };
 

@@ -25,6 +25,7 @@ HomeFeedScreen.prototype.ScreenName = 'HomeFeedScreen';
   },
   statusBar: {
     style: 'dark',
+    backgroundColor: 'white',
   },
 };
 

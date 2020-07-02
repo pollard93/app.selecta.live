@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import StreamProfile, { StreamProfileProps } from '../../components/Stream/StreamProfile/StreamProfile';
+import color from '../../styles/definitions/color';
 
 interface StreamProfileScreenProps extends StreamProfileProps {}
 
@@ -24,6 +25,7 @@ StreamProfileScreen.prototype.ScreenName = 'StreamProfileScreen';
   },
   statusBar: {
     style: 'dark',
+    backgroundColor: 'white',
   },
 };
 
