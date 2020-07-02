@@ -52,7 +52,12 @@ const Slider: FC<SliderProps> = (props) => {
         }
       }
     });
-    return () => touchX.removeListener(id);
+
+    return () => {
+      clearTimeout(trackWidthTimeout.current);
+      clearTimeout(valueChangeTimeout.current);
+      touchX.removeListener(id);
+    };
   }, [trackWidth]);
 
 

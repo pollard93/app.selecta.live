@@ -79,6 +79,14 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
 
 
   /**
+   * Clear tinmeout on unmount
+   */
+  useEffect(() => () => {
+    clearTimeout(hideControlsTimeout.current);
+  }, []);
+
+
+  /**
    * Position of the slider must be done within this state
    * Not controlled from outside to mitigate the cursor jumping
    */

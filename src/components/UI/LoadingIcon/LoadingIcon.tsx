@@ -76,13 +76,17 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
      */
     if (props.animating === false) {
       value.current.setValue(0);
-      return;
+      return undefined;
     }
 
     /**
      * Stop and start animation
      */
     run();
+
+    return () => {
+      clearTimeout(timeout.current);
+    };
   }, [props.animating]);
 
 
