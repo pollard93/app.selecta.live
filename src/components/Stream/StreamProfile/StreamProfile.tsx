@@ -7,14 +7,16 @@ import { ScreenProps } from '../../../screens/utils/interfaces';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
-import Header from '../../UI/Headers/Header/Header';
-import { headerHeight } from '../../UI/Headers/Header/Header.style';
+import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 
 export interface StreamProfileProps extends ScreenProps {
   id: string;
 }
 
 const StreamProfile: FC<StreamProfileProps> = (props) => {
+  const { headerHeight } = useHeaderStyles();
+  console.log('headerHeight', headerHeight);
+
   /**
    * Query
    */

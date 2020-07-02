@@ -1,7 +1,7 @@
 import React, { useRef, ReactNode, useState } from 'react';
 import { Dimensions, Animated, View, StyleSheet } from 'react-native';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
-import { headerHeight, headerZindex } from '../../../../UI/Headers/Header/Header.style';
+import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 
 
 interface FullScreenWrapProps {
@@ -17,6 +17,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
   const safeAreaInsets = useSafeArea();
   const fullScreenAnimValue = useRef(new Animated.Value(0)).current;
   const [isFullScreen, setFullScreen] = useState(false);
+  const { headerHeight, headerZindex } = useHeaderStyles();
 
   const toggleFullScreen = () => {
     if (fullScreenAnimValue._value === 0) {

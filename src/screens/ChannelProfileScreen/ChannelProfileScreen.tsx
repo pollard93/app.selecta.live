@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import ChannelProfile, { ChannelProfileProps } from '../../components/Channel/ChannelProfile/ChannelProfile';
+import color from '../../styles/definitions/color';
 
 interface ChannelProfileScreenProps extends ChannelProfileProps {}
 
@@ -23,7 +24,7 @@ ChannelProfileScreen.prototype.ScreenName = 'ChannelProfileScreen';
     visible: false,
   },
   statusBar: {
-    style: 'light',
+    style: 'dark',
   },
 };
 

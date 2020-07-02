@@ -23,7 +23,7 @@ StreamProfileScreen.prototype.ScreenName = 'StreamProfileScreen';
     visible: false,
   },
   statusBar: {
-    style: 'light',
+    style: 'dark',
   },
 };
 

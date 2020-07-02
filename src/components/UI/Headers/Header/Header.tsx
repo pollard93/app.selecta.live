@@ -8,20 +8,52 @@ import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
+import scalePx from '../../../../utils/scalePx';
+import spacing from '../../../../styles/definitions/spacing';
 
 interface HeaderProps {
   onPop?: () => void;
 }
 
+
+/**
+ * If ther is a safe area inset at the top of the screen
+ * Header height will be smaller as padding top is not required
+ */
+export const useHeaderStyles = () => {
+  const safeAreaInsets = useSafeArea();
+  return ({
+    headerHeight: safeAreaInsets.top === 0 ? scalePx(50) : scalePx(35),
+    headerZindex: 100,
+  });
+};
+
+
 const Header: FC<HeaderProps> = (props) => {
   const safeAreaInsets = useSafeArea();
+  const { headerHeight, headerZindex } = useHeaderStyles();
   const self = useGetSelf();
   const credit = Math.min(999, self.credit);
 
   return (
-    <View style={Styles.outer}>
-      <View style={[Styles.wrap, { paddingTop: safeAreaInsets.top }]}>
-        <View style={Styles.inner}>
+    <View style={[Styles.outer, { zIndex: headerZindex }]}>
+      <View
+        style={[
+          Styles.wrap,
+          {
+            paddingTop: safeAreaInsets.top,
+            borderBottomLeftRadius: headerHeight / 2,
+            borderBottomRightRadius: headerHeight / 2,
+          },
+        ]}
+      >
+        <View
+          style={[
+            Styles.inner,
+            safeAreaInsets.top === 0 && Styles.noSafeArea,
+            { height: headerHeight },
+          ]}
+        >
           <View style={Styles.left}>
             {props.onPop && (
               <TouchableOpacity
