@@ -9,7 +9,6 @@ import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import scalePx from '../../../../utils/scalePx';
-import spacing from '../../../../styles/definitions/spacing';
 
 interface HeaderProps {
   onPop?: () => void;

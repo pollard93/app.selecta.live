@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import CenterView from '../../../../../../storybook/Decorators/CenterView/CenterView';
 import StreamControls from './StreamControls';
 

@@ -4,7 +4,6 @@ import { Platform } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
 import { QueryHookOptions } from 'react-apollo';
-import { Navigation } from 'react-native-navigation';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';

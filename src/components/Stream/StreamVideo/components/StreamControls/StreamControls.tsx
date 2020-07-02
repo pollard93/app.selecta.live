@@ -155,7 +155,6 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
     <View
       onStartShouldSetResponder={() => true}
       onResponderGrant={() => {
-        console.log(1);
         // eslint-disable-next-line no-underscore-dangle
         if ((fadeAnim as any)._value < 1) {
           showControls();
@@ -262,7 +261,6 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                       setSeekingPosition(v);
                     }}
                     onSlidingComplete={(v) => {
-                      console.log('v', v);
                       /**
                        * When sliding is complete
                        * Execute on seek for the video

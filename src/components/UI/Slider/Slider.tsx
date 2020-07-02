@@ -25,154 +25,61 @@ const Slider: FC<SliderProps> = (props) => {
   const thumbWidth = useRef(scalePx(20)).current;
   const currentState = useRef<State>(null);
   const trackWidthTimeout = useRef<number>();
-
-
-  // /**
-  //  * Get the difference between the window width and the track
-  //  * Pan gesture will use the full screen width and ignore track
-  //  */
-  // const trackDiff = useMemo(() => windowWidth - trackWidth, [trackWidth]);
-  // console.log('trackDiff', trackDiff);
-
-
-  // /**
-  //  * Gets the mapped value using props.minimumValue and props.maximumValue
-  //  * @param absoluteX - the x position of the thumb
-  //  */
-  // const getMappedValue = (absoluteX: number) => mapRange(absoluteX - (trackDiff / 2), 0, trackWidth, props.minimumValue, props.maximumValue);
-
-
-  // /**
-  //  * Is called continuously on pan
-  //  * Executes props.onValueChange if given
-  //  */
-  // const onPan = ({ nativeEvent }) => {
-  //   // // Only update the value if within the clamped trackDiff
-  //   // console.log('onPan -> nativeEvent.absoluteX', nativeEvent.absoluteX, (trackDiff / 2), windowWidth - (trackDiff / 2));
-  //   // if (
-  //   //   props.onValueChange
-  //   //   && nativeEvent.absoluteX >= (trackDiff / 2)
-  //   //   && nativeEvent.absoluteX <= windowWidth - (trackDiff / 2)
-  //   // ) {
-  //   //   /**
-  //   //    * TODO - debounce
-  //   //    */
-  //   //   props.onValueChange(getMappedValue(nativeEvent.absoluteX));
-  //   // }
-  // };
-
-
-  // /**
-  //  * When props.value or the trackWidth changes
-  //  * Set the value of touchX
-  //  */
-  // useEffect(() => {
-  //   /**
-  //    * Do not update the value if the current gesture state is active
-  //    */
-  //   if (currentState.current !== State.ACTIVE) {
-  //     const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidth);
-  //     // eslint-disable-next-line no-restricted-globals
-  //     if (value != null) {
-  //       touchX.setValue(value);
-  //     }
-  //   }
-  // }, [props.value, props.maximumValue]);
-
-
-  // /**
-  //  * When trackWidth changes
-  //  * Animate the value of touchX
-  //  */
-  // useEffect(() => {
-  //   /**
-  //    * Do not update the value if the current gesture state is active
-  //    */
-  //   if (currentState.current !== State.ACTIVE) {
-  //     const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidth);
-  //     // eslint-disable-next-line no-restricted-globals
-  //     if (value != null) {
-  //       Animated.timing(touchX, {
-  //         toValue: value,
-  //         duration: 300,
-  //         useNativeDriver: true,
-  //       }).start();
-  //     }
-  //   }
-  // }, [trackWidth]);
+  const valueChangeTimeout = useRef<number>();
+  const touchX = useRef(new Animated.Value(0)).current;
+  const [trackWidth, setTrackWidth] = useState(0);
 
 
   /**
-   * Clamps touchX value on the track path
-   * Without it's possible to drag thumb outside of the track
+   * When trackWidth is set or changes
+   * Assign a listener to the animated value
+   * When this value changes send it to the
    */
-  // const clampThumb = useMemo(() => touchX.interpolate({
-  //   inputRange: [0, windowWidth - trackDiff],
-  //   outputRange: [0, windowWidth - trackDiff],
-  //   extrapolate: 'clamp',
-  // }), [trackDiff]);
-
-
-  // /**
-  //  * Clamps touchX value on the track path
-  //  * Without it's possible to drag thumb outside of the track
-  //  */
-  // const mainTrackWidth = useMemo(() => touchX.interpolate({
-  //   inputRange: [0, windowWidth - trackDiff],
-  //   outputRange: [-trackWidth, 0],
-  //   extrapolate: 'clamp',
-  // }), [trackDiff]);
-
-
-  /**
-   * NEW
-   */
-  const touchXNEW = useRef(new Animated.Value(0)).current;
-  const [trackWidthNEW, setTrackWidthNEW] = useState(0);
-
   useEffect(() => {
-    console.log(1);
-    if (!trackWidthNEW) return undefined;
+    if (!trackWidth) return undefined;
 
-    const id = touchXNEW.addListener((x) => {
+    const id = touchX.addListener((x) => {
       /**
-       * TODO - debounce
+       * Only execute onValueChange if active
        */
       if (currentState.current === State.ACTIVE) {
-        const value = mapRange(x.value, 0, trackWidthNEW, props.minimumValue, props.maximumValue);
+        const value = mapRange(x.value, 0, trackWidth, props.minimumValue, props.maximumValue);
         if (value >= props.minimumValue && value <= props.maximumValue) {
-          props.onValueChange(value);
+          clearTimeout(valueChangeTimeout.current);
+          valueChangeTimeout.current = setTimeout(() => {
+            props.onValueChange(value);
+          }, 10);
         }
       }
     });
-    return () => touchXNEW.removeListener(id);
-  }, [trackWidthNEW]);
+    return () => touchX.removeListener(id);
+  }, [trackWidth]);
 
 
   /**
    * When trackWidth changes
-   * Animate the value of touchX
+   * Animate the value of touchX to match trackWidth new value
    */
   useEffect(() => {
     /**
      * Do not update the value if the current gesture state is active
      */
     if (currentState.current !== State.ACTIVE) {
-      const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidthNEW);
+      const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidth);
       // eslint-disable-next-line no-restricted-globals
       if (value != null) {
-        Animated.timing(touchXNEW, {
+        Animated.timing(touchX, {
           toValue: value,
           duration: 300,
           useNativeDriver: true,
         }).start();
       }
     }
-  }, [trackWidthNEW]);
+  }, [trackWidth]);
 
 
   /**
-   * When props.value or the trackWidth changes
+   * When props.value or props.maximumValue changes
    * Set the value of touchX
    */
   useEffect(() => {
@@ -180,40 +87,39 @@ const Slider: FC<SliderProps> = (props) => {
      * Do not update the value if the current gesture state is active
      */
     if (currentState.current !== State.ACTIVE) {
-      const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidthNEW);
+      const value = mapRange(props.value, props.minimumValue, props.maximumValue, 0, trackWidth);
       // eslint-disable-next-line no-restricted-globals
       if (value != null) {
-        touchXNEW.setValue(value);
+        touchX.setValue(value);
       }
     }
   }, [props.value, props.maximumValue]);
 
 
   /**
-   * Clamps touchXNEW value on the track path
+   * Clamps touchX value on the track path
    * Without it's possible to drag thumb outside of the track
    */
-  const clampThumbNEW = useMemo(() => touchXNEW.interpolate({
-    inputRange: [0, trackWidthNEW],
-    outputRange: [0, trackWidthNEW],
+  const clampThumb = useMemo(() => touchX.interpolate({
+    inputRange: [0, trackWidth],
+    outputRange: [0, trackWidth],
     extrapolate: 'clamp',
-  }), [trackWidthNEW]);
+  }), [trackWidth]);
 
 
   /**
-   * Clamps touchXNEW value on the track path
-   * Without it's possible to drag thumb outside of the track
+   * Main track offset value
    */
-  const mainTrackWidthNEW = useMemo(() => clampThumbNEW.interpolate({
-    inputRange: [0, trackWidthNEW],
-    outputRange: [-trackWidthNEW, 0],
+  const mainTrackWidth = useMemo(() => clampThumb.interpolate({
+    inputRange: [0, trackWidth],
+    outputRange: [-trackWidth, 0],
     extrapolate: 'clamp',
-  }), [trackWidthNEW]);
+  }), [trackWidth]);
 
 
   return (
     <PanGestureHandler
-      onGestureEvent={Animated.event([{ nativeEvent: { x: touchXNEW } }], { useNativeDriver: true })}
+      onGestureEvent={Animated.event([{ nativeEvent: { x: touchX } }], { useNativeDriver: true })}
       onHandlerStateChange={(event) => {
         const { nativeEvent } = event;
         currentState.current = nativeEvent.state;
@@ -226,9 +132,8 @@ const Slider: FC<SliderProps> = (props) => {
 
           case State.END:
             if (props.onSlidingComplete) {
-              console.log('HERE - touchXNEW._value', touchXNEW._value);
-              const value = mapRange(touchXNEW._value, 0, trackWidthNEW, props.minimumValue, props.maximumValue);
-              console.log('HERE - value', value);
+              // eslint-disable-next-line no-underscore-dangle
+              const value = mapRange((touchX as any)._value, 0, trackWidth, props.minimumValue, props.maximumValue);
               if (value != null) {
                 props.onSlidingComplete(value);
               }
@@ -240,11 +145,11 @@ const Slider: FC<SliderProps> = (props) => {
       <Animated.View
         style={Styles.wrap}
         onLayout={(event) => {
-          if (!trackWidthNEW) {
+          if (!trackWidth) {
             /**
-             * Set the trackWidthNEW on mount
+             * Set the trackWidth on mount
              */
-            setTrackWidthNEW(event.nativeEvent.layout.width);
+            setTrackWidth(event.nativeEvent.layout.width);
           } else {
             /**
              * If this value is updated, update it on a timeout
@@ -253,7 +158,7 @@ const Slider: FC<SliderProps> = (props) => {
             clearTimeout(trackWidthTimeout.current);
             event.persist();
             trackWidthTimeout.current = setTimeout(() => {
-              setTrackWidthNEW(event.nativeEvent.layout.width);
+              setTrackWidth(event.nativeEvent.layout.width);
             }, 100);
           }
         }}
@@ -267,22 +172,22 @@ const Slider: FC<SliderProps> = (props) => {
           <Animated.View
             style={{
               backgroundColor: color.accent.primary,
-              width: trackWidthNEW,
+              width: trackWidth,
               height: 2,
               transform: [{
-                translateX: mainTrackWidthNEW,
+                translateX: mainTrackWidth,
               }],
             }}
           />
         </View>
 
-        {trackWidthNEW !== 0 && (
+        {trackWidth !== 0 && (
           <TouchableHighlight underlayColor="transparent">
             {/* TouchableHighlight to stop propopgration of touch event */}
             <Animated.View
               style={{
                 transform: [{
-                  translateX: Animated.add(clampThumbNEW, new Animated.Value(-(thumbWidth / 2))),
+                  translateX: Animated.add(clampThumb, new Animated.Value(-(thumbWidth / 2))),
                 }],
               }}
               pointerEvents="none"
