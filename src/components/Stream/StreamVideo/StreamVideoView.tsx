@@ -24,7 +24,6 @@ interface StreamVideoViewProps {
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
-  console.log('props', props);
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -36,14 +35,36 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
 
+
   /**
    * Determin url based on videoEnabled
    * If audioOnly, this will be default false, otherwise true
    */
   const [videoEnabled, setVideoEnabled] = useState<boolean>(!props.data.audioOnly);
-  console.log('videoEnabled', videoEnabled);
   const url = !videoEnabled ? props.url.audio : props.url.video;
-  console.log('url', url);
+
+
+  /**
+   * Current position is held in state
+   * A ref is required for props.updatePosition below
+   */
+  const [currentPosition, setCurrentPosition] = useState(props.data.position);
+  const currentPositionRef = useRef(currentPosition);
+
+
+  /**
+   * On unmount
+   * If the video is not live
+   * updatePosition
+   */
+  useEffect(() => {
+    if (live) return undefined;
+    return () => {
+      if (currentPositionRef.current != null) {
+        props.updatePosition(currentPositionRef.current);
+      }
+    };
+  }, [live]);
 
 
   /**
@@ -108,34 +129,18 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       MusicControl.on(Command.skipForward, () => {
-        player.current.seek(props.data.position + 15);
+        player.current.seek(currentPosition + 15);
       });
 
       MusicControl.on(Command.skipBackward, () => {
-        player.current.seek(props.data.position - 15);
+        player.current.seek(currentPosition - 15);
       });
 
       MusicControl.on(Command.seek, (pos) => {
         player.current.seek(pos);
       });
     }
-  }, [props.data.position]);
-
-
-  /**
-   * On unmount
-   * If the video is not live
-   * updatePosition
-   */
-  const currentPosition = useRef(0);
-  useEffect(() => {
-    if (!live) return undefined;
-    return () => {
-      if (currentPosition.current) {
-        props.updatePosition(currentPosition.current);
-      }
-    };
-  }, [live]);
+  }, [currentPosition]);
 
 
   /**
@@ -143,7 +148,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
    * When the new url is loaded, it will seek to that position
    */
   const toggleVideoEnabled = () => {
-    props.updatePosition(currentPosition.current);
+    props.updatePosition(currentPosition);
     setVideoEnabled(!videoEnabled);
   };
 
@@ -187,15 +192,12 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
          * ALL OS PROPS
          * */
         onLoad={(data) => {
-          console.log('data', data);
           /**
            * If there is a position on load then try and seek to it
            */
-          if (props.data.position) {
-            console.log(1, props.data.position);
-            player.current.seek(props.data.position);
+          if (currentPosition) {
+            player.current.seek(currentPosition);
           }
-          console.log(2);
 
 
           /**
@@ -258,7 +260,8 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         onProgress={((args) => {
           if (live === false) {
             const { currentTime } = args;
-            currentPosition.current = currentTime;
+            setCurrentPosition(currentTime);
+            currentPositionRef.current = currentTime;
             setPlayableDuration(args.playableDuration);
 
 
@@ -285,7 +288,8 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
            */
           setRate(0);
           player.current.seek(0);
-          currentPosition.current = 0;
+          setCurrentPosition(0);
+          currentPositionRef.current = 0;
           props.updatePosition(0);
 
           if (Platform.OS === 'android') {
@@ -309,7 +313,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
-        initialPosition={props.data.position}
+        position={currentPosition}
         onSeek={(position) => player.current?.seek(position)}
         playableDuration={playableDuration}
         isLoading={loading}

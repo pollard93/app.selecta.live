@@ -14,14 +14,13 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={0}
+      position={0}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
       isBuffering={false}
       isError={false}
       isLive={false}
-      isAudioOnly={false}
       isAudioOnly={false}
       toggleFullScreen={console.log}
       isFullScreen={false}
@@ -34,7 +33,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={true}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={0}
+      position={0}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -53,7 +52,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={3000}
+      position={3000}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -67,12 +66,12 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isVideoEnabled={false}
     />
   ))
-  .add('StreamControls - initialPosition', () => (
+  .add('StreamControls - position', () => (
     <StreamControls
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -91,7 +90,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={true}
@@ -110,7 +109,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -129,7 +128,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -148,7 +147,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -167,7 +166,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -186,7 +185,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -205,7 +204,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -224,7 +223,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}
@@ -235,7 +234,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       toggleFullScreen={console.log}
       isFullScreen={false}
       toggleVideoEnabled={console.log}
-      isVideoEnabled={false}
+      isVideoEnabled={true}
     />
   ))
   .add('StreamControls - isVideoEnabled - false', () => (
@@ -243,7 +242,7 @@ storiesOf('Stream/StreamVideo/StreamControls', module)
       isPlaying={false}
       onPlayPause={console.log}
       duration={7200}
-      initialPosition={7200 / 2}
+      position={7200 / 2}
       onSeek={console.log}
       playableDuration={3000}
       isLoading={false}

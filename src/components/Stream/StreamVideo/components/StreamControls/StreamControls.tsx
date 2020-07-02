@@ -16,7 +16,7 @@ interface StreamControlsProps {
   duration: number; // Length of video in seconds - pass 0 while loading|live
   onSeek: (position: number) => void;
   playableDuration: number; // Buffer length in seconds
-  initialPosition: number; // Start position, 0 should be given to play from start
+  position: number; // Position of thumb
   isLoading: boolean;
   isBuffering: boolean; // Sets Slider.loading
   isError: boolean; // Shows error ui
@@ -95,41 +95,18 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    * Position of the slider must be done within this state
    * Not controlled from outside to mitigate the cursor jumping
    */
-  const [videoPosition, setVideoPosition] = useState(Math.floor(props.initialPosition));
+  const [videoPosition, setVideoPosition] = useState(Math.floor(props.position));
   const [seekingPosition, setSeekingPosition] = useState(null);
-  const videoPositionInterval = useRef<number>(null);
 
 
   useEffect(() => {
-    const newPosition = Math.floor(props.initialPosition);
+    if (seekingPosition != null) return;
+
+    const newPosition = Math.floor(props.position);
     if (videoPosition !== newPosition) {
       setVideoPosition(newPosition);
     }
-  }, [props.initialPosition]);
-
-
-  /**
-   * Increment videoPosition by 1 every second
-   */
-  useEffect(() => {
-    /**
-     * When video is not playing or video ends or video is live
-     * Clear the videoPosition interval
-     */
-    if (!props.isPlaying || videoPosition >= props.duration || props.isLive) {
-      clearInterval(videoPositionInterval.current);
-      if (videoPosition >= props.duration) {
-        setVideoPosition(0);
-      }
-      return undefined;
-    }
-
-    videoPositionInterval.current = setInterval(() => {
-      setVideoPosition(videoPosition + 1);
-    }, 1000);
-
-    return () => clearInterval(videoPositionInterval.current);
-  }, [props.isPlaying, videoPosition, props.duration]);
+  }, [props.position]);
 
 
   /**
@@ -285,6 +262,9 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                     value={controlPosition}
                     minimumValue={0}
                     maximumValue={props.duration}
+                    onSlidingStarted={() => {
+                      showControls();
+                    }}
                     onValueChange={(v) => {
                       clearTimeout(hideControlsTimeout.current);
                       /**
