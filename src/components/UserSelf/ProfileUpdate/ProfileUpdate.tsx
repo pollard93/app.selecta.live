@@ -3,7 +3,6 @@ import { Button, ScrollView, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
-import { EditableAsyncImage } from 'mbp-components-rn-asyncimage';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
@@ -11,6 +10,7 @@ import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { updateSelfVariables } from '../../../API/mutation/updateSelf/__generated__/updateSelf';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 
 type FormData = {
   name: string;

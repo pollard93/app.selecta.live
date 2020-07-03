@@ -30,11 +30,12 @@ export default {
 
   // Font sizes
   size: {
-    body: scalePx(18),
-    h1: scalePx(54),
-    h2: scalePx(36),
+    h1: scalePx(40),
+    h2: scalePx(30),
     h3: scalePx(24),
     h4: scalePx(18),
+    body: scalePx(14),
+    small: scalePx(11),
   },
 
 };

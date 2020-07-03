@@ -111,7 +111,20 @@
     "import/prefer-default-export": "off",
     "react-native/no-color-literals": 2,
     "react-native/no-inline-styles": 2,
-    "react-native/no-raw-text": 2,
+    "react-native/no-raw-text": [
+      "error",
+      {
+        "skip": [
+          "H1",
+          "H2",
+          "H3",
+          "H4",
+          "Body",
+          "Small",
+          "Chip"
+        ]
+      }
+    ],
     "react-native/no-single-element-style-arrays": 2,
     "react-native/no-unused-styles": 2,
     "react-native/sort-styles": [

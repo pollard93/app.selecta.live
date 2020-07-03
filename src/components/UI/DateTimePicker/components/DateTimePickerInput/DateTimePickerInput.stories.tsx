@@ -11,7 +11,7 @@ type FormData = {
   dateTime: string;
 };
 
-storiesOf('DateTimePickerInput', module)
+storiesOf('UI/DateTimePickerInput', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('DateTimePickerInput - unpopulated', () => {

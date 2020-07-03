@@ -3,10 +3,39 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { getStorybookUI, configure, addDecorator } from '@storybook/react-native';
 import { ApolloProvider } from 'react-apollo';
+import Sinon from 'sinon';
+import { Navigation } from 'react-native-navigation';
 import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
+import * as ScreenUtils from '../src/screens/utils';
 
 import './rn-addons';
+
+
+/**
+ * Stub Navigation
+ */
+try {
+  Sinon.stub(Navigation, 'popTo').returns({ finally() {} });
+  Sinon.stub(Navigation, 'pop').returns({ finally() {} });
+  Sinon.stub(Navigation, 'popToRoot').returns({ finally() {} });
+  Sinon.stub(Navigation, 'push').returns({ finally() {} });
+  Sinon.stub(Navigation, 'setDefaultOptions').returns({ finally() {} });
+  Sinon.stub(Navigation, 'setStackRoot').returns({ finally() {} });
+  Sinon.stub(Navigation, 'showOverlay').returns({ finally() {} });
+  Sinon.stub(Navigation, 'updateProps').returns({ finally() {} });
+  Sinon.stub(ScreenUtils, 'goToLogin').returns({ finally() {} });
+  Sinon.stub(ScreenUtils, 'goHome').returns({ finally() {} });
+  Sinon.stub(ScreenUtils, 'goToRequireUpdateScreen').returns({ finally() {} });
+  Sinon.stub(ScreenUtils, 'pushScreen').returns({ finally() {} });
+  Sinon.stub(ScreenUtils, 'pushScreenV2').returns({ finally() {} });
+// eslint-disable-next-line no-empty
+} catch (e) {}
+
+
+/**
+ * Mock apollo client
+ */
 
 const client = mockClient();
 
@@ -16,7 +45,10 @@ addDecorator((getStory) => (
   </ApolloProvider>
 ));
 
-// import stories
+
+/**
+ * import stories
+ */
 configure(() => {
   loadStories();
 }, module);
@@ -24,7 +56,7 @@ configure(() => {
 // Refer to https://github.com/storybooks/storybook/tree/master/app/react-native#start-command-parameters
 // To find allowed options for getStorybookUI
 const StorybookUIRoot = getStorybookUI({
-  // onDeviceUI: false,
+  onDeviceUI: false,
 });
 
 // If you are using React Native vanilla and after installation you don't see your app name here, write it manually.
