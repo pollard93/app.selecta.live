@@ -16,8 +16,9 @@ export enum ICON {
   PAUSE = 'PAUSE',
   FULLSCREEN = 'FULLSCREEN',
   CLOSE_FULLSCREEN = 'CLOSE_FULLSCREEN',
-  VIDEO_ENABLED = 'VIDEO_DISABLED',
-  VIDEO_DISABLED = 'VIDEO_ENABLED',
+  VIDEO_ENABLED = 'VIDEO_ENABLED',
+  VIDEO_DISABLED = 'VIDEO_DISABLED',
+  DRAWER_ARROW = 'DRAWER_ARROW',
 }
 
 interface IconProps {
@@ -69,6 +70,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.VIDEO_DISABLED:
         return require('../../../assets/images/icons/videoDisabled.png');
+
+      case ICON.DRAWER_ARROW:
+        return require('../../../assets/images/icons/drawerArrow.png');
 
       default:
         return null;

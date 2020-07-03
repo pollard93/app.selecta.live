@@ -47,6 +47,7 @@ function loadStories() {
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
+	require('../src/components/UI/Drawer/Drawer.stories');
 	require('../src/components/UI/Form/Form.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
 	require('../src/components/UI/Icon/Icon.stories');
@@ -106,6 +107,7 @@ const stories = [
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
+	'../src/components/UI/Drawer/Drawer.stories',
 	'../src/components/UI/Form/Form.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
 	'../src/components/UI/Icon/Icon.stories',

@@ -111,7 +111,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
   })).current;
   const fullScreenZIndex = useRef(animValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [headerZindex - 1, headerZindex + 1],
+    outputRange: [headerZindex - 1, headerZindex + 10],
     extrapolate: 'clamp',
   })).current;
 
