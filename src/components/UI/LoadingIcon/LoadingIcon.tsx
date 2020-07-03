@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, FC } from 'react';
+import React, { useRef, useEffect, FC, memo } from 'react';
 import { View, Animated, StyleProp, ViewStyle } from 'react-native';
 import color from '../../../styles/definitions/color';
 import Styles from './LoadingIcon.style';
@@ -158,4 +158,4 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
   );
 };
 
-export default LoadingIcon;
+export default memo(LoadingIcon, (pr, np) => pr.animating === np.animating);
