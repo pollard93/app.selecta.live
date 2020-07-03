@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
@@ -7,9 +7,6 @@ import H4 from '../../Typography/components/H4';
 import Chip from '../../Chip/Chip';
 import Styles from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
-import { pushScreenV2 } from '../../../../screens/utils';
-import { STACK } from '../../../../screens/utils/interfaces';
-import StreamProfileScreen from '../../../../screens/StreamProfileScreen/StreamProfileScreen';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT;
@@ -18,12 +15,7 @@ interface StreamCardProps {
 const StreamCard: FC<StreamCardProps> = (props) => {
   const now = new Date();
   return (
-    <TouchableOpacity
-      style={Styles.wrap}
-      onPress={() => {
-        pushScreenV2(STACK.TAB_HOME, StreamProfileScreen, { id: props.data.id });
-      }}
-    >
+    <View style={Styles.wrap}>
       <AsyncImage
         splashUrl={props.data.image?.url.splash}
         fullUrl={props.data.image?.url.large}
@@ -59,7 +51,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           }
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
