@@ -1,4 +1,4 @@
-import React, { FC, useRef, useMemo, useEffect } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Styles from './Drawer.styles';
@@ -11,7 +11,6 @@ interface DrawerProps {
 }
 
 const Drawer: FC<DrawerProps> = (props) => {
-  console.log('props', props);
   const windowHeight = useRef(Dimensions.get('window').height).current;
   const touchY = useRef(new Animated.Value(-100)).current;
   const touchYValue = useRef(0);
@@ -87,10 +86,6 @@ const Drawer: FC<DrawerProps> = (props) => {
         onHandlerStateChange={(event) => {
           const { nativeEvent } = event;
           switch (nativeEvent.state) {
-            case State.BEGAN:
-
-              break;
-
             case State.END:
               onDragEnd();
               break;

@@ -1,9 +1,10 @@
 import React, { useRef, ReactNode, useState } from 'react';
-import { Dimensions, Animated, View, StyleSheet } from 'react-native';
+import { Dimensions, Animated, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import { ScreenProps } from '../../../../../screens/utils/interfaces';
+import Styles from './FullScreenWrap.style';
 
 
 interface FullScreenWrapProps extends ScreenProps {
@@ -117,12 +118,13 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
 
 
   return (
-    <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }} pointerEvents="box-none">
-      <View style={{ ...StyleSheet.absoluteFillObject, marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom, alignItems: 'center' }} pointerEvents="box-none">
+    <Animated.View style={[Styles.wrap, { backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }]} pointerEvents="box-none">
+      <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
         <Animated.View
           style={[
-            { width: fullScreenWidthInter, aspectRatio: 1.777777777777778 },
+            Styles.video,
             {
+              width: fullScreenWidthInter,
               transform: [
                 { translateY: fullScreenTranslateXInter },
                 { rotate: fullScreenRotateInter },

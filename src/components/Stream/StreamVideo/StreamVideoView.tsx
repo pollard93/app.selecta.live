@@ -7,6 +7,7 @@ import { QueryHookOptions } from 'react-apollo';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';
+import Styles from './StreamVideo.styles';
 
 
 interface StreamVideoViewProps {
@@ -195,7 +196,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
           console.log('StreamVideoView -> args', args);
           setError(true);
         }}
-        style={{ width: '100%', height: '100%', position: 'absolute' }}
+        style={Styles.video}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}
         playInBackground={true}

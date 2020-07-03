@@ -31,6 +31,7 @@ export const getToken = async (client: ApolloClient<any>) => {
     const res = await client.query<getAccessToken>({
       query: GET_ACCESS_TOKEN_QUERY,
     });
+    console.log('getToken -> res', res);
     return res.data.getAccessToken;
   } catch (e) {
     return null;
@@ -178,6 +179,7 @@ const tokenAfterware = new ApolloLink((operation, forward) => forward(operation)
   if (headers) {
     // If general token is returned in headers, execute PUT_ACCESS_TOKEN_MUTATION with new token
     const generalToken = headers.get('general_token');
+    console.log('generalToken', generalToken);
     if (generalToken) {
       // eslint-disable-next-line no-use-before-define
       AClient

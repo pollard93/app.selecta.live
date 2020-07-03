@@ -10,7 +10,6 @@ import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMe
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import query from '../../../ApolloClient/resolvers/query';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
@@ -76,6 +75,9 @@ const StreamMessages = (props: StreamMessagesProps) => {
             } catch (e) {
               return prev;
             }
+          },
+          onError: (...args) => {
+            console.log('SUB ERROR', args);
           },
         }}
       />

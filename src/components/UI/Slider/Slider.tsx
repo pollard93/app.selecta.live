@@ -5,7 +5,6 @@ import Styles from './Slider.style';
 import scalePx from '../../../utils/scalePx';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 import { mapRange } from '../../../utils/functions';
-import color from '../../../styles/definitions/color';
 
 export interface SliderProps {
   value: number;
@@ -168,21 +167,22 @@ const Slider: FC<SliderProps> = (props) => {
           }
         }}
       >
-        <View style={[Styles.track, { overflow: 'hidden' }]}>
+        <View style={Styles.track}>
           {props.tracks.map((t, i) => (
             <View key={i} style={[Styles.track, { backgroundColor: t.color, width: `${t.width * 100}%` }]} />
           ))}
 
           {/* Main track */}
           <Animated.View
-            style={{
-              backgroundColor: color.accent.primary,
-              width: trackWidth,
-              height: 2,
-              transform: [{
-                translateX: mainTrackWidth,
-              }],
-            }}
+            style={[
+              Styles.mainTrack,
+              {
+                width: trackWidth,
+                transform: [{
+                  translateX: mainTrackWidth,
+                }],
+              },
+            ]}
           />
         </View>
 

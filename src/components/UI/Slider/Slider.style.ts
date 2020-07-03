@@ -7,7 +7,14 @@ export default StyleSheet.create({
     height: 2,
     justifyContent: 'center',
   },
-  track: StyleSheet.absoluteFillObject,
+  track: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+  },
+  mainTrack: {
+    backgroundColor: color.accent.primary,
+    height: 2,
+  },
   borderRadius: {
     borderRadius: 500,
   },

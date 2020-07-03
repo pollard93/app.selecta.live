@@ -9,6 +9,7 @@ import Slider from '../../../../UI/Slider/Slider';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
+import Styles from './StreamControls.style';
 
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
@@ -121,7 +122,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    */
   if (props.isError) {
     return (
-      <View style={[StyleSheet.absoluteFillObject, { justifyContent: 'center', alignItems: 'center', backgroundColor: color.mono.darkCover }]}>
+      <View style={[StyleSheet.absoluteFillObject, Styles.cover]}>
         <H4 light>There has been an error</H4>
       </View>
     );
@@ -134,7 +135,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
    */
   if (props.isLoading) {
     return (
-      <View style={[StyleSheet.absoluteFillObject, { justifyContent: 'center', alignItems: 'center', backgroundColor: color.mono.darkCover }]}>
+      <View style={[StyleSheet.absoluteFillObject, Styles.cover]}>
         <LoadingIcon />
       </View>
     );
@@ -159,7 +160,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
       >
         {/* Play/Pause button */}
         <View
-          style={[StyleSheet.absoluteFillObject, { alignItems: 'center', justifyContent: 'center' }]}
+          style={[StyleSheet.absoluteFillObject, Styles.playPause]}
           pointerEvents="box-none"
         >
           <TouchableOpacity
@@ -196,7 +197,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
         {/* Toggle fullscreen / toggle enable video button */}
         {!props.isAudioOnly && (
           <View
-            style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', alignItems: 'flex-start', flexDirection: 'row', marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
+            style={[StyleSheet.absoluteFillObject, Styles.videoEnabled, { marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
             pointerEvents="box-none"
           >
             <TouchableOpacity
@@ -213,7 +214,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               }}
               style={{ padding: spacing.small }}
             >
-              <Icon name={!props.isVideoEnabled ? ICON.VIDEO_ENABLED : ICON.VIDEO_DISABLED} size="small" style={{ tintColor: 'white' }} />
+              <Icon name={!props.isVideoEnabled ? ICON.VIDEO_ENABLED : ICON.VIDEO_DISABLED} size="small" style={Styles.icon} />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -230,7 +231,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               }}
               style={{ padding: spacing.small }}
             >
-              <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={{ tintColor: 'white' }} />
+              <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={Styles.icon} />
             </TouchableOpacity>
           </View>
         )}
@@ -242,15 +243,15 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             ? (
               <View
                 style={[
-                  { ...StyleSheet.absoluteFillObject, justifyContent: 'flex-end' },
-                  props.isFullScreen && { padding: spacing.base },
+                  Styles.bottomWrap,
+                  props.isFullScreen && Styles.bottomWrapFullScreen,
                 ]}
                 pointerEvents="box-none"
               >
                 <View
                   style={[
-                    { flexDirection: 'row', justifyContent: 'space-between', padding: spacing.small },
-                    props.isFullScreen && { paddingHorizontal: 0 },
+                    Styles.times,
+                    props.isFullScreen && Styles.timesFullScreen,
                   ]}
                 >
                   <Small bold light>{formatTime(controlPosition)}</Small>
@@ -299,10 +300,10 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             )
             : (
               <View
-                style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'flex-end' }}
+                style={Styles.liveWrap}
                 pointerEvents="box-none"
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center', padding: spacing.small }}>
+                <View style={Styles.live}>
                   <LoadingIcon size="small" />
                   <Small bold light style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
                   {props.isBuffering && <Small bold light style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}

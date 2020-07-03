@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  wrap: {
-    bottom: 0,
-    left: 0,
+  video: {
+    height: '100%',
     position: 'absolute',
-    right: 0,
-    top: 0,
+    width: '100%',
   },
 });
