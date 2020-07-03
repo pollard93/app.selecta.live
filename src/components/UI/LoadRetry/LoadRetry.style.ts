@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    marginTop: spacing.large,
+    marginTop: spacing.small,
     width: '80%',
   },
 });

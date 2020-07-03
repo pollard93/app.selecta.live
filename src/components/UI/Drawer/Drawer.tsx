@@ -11,6 +11,7 @@ interface DrawerProps {
 }
 
 const Drawer: FC<DrawerProps> = (props) => {
+  console.log('props', props);
   const windowHeight = useRef(Dimensions.get('window').height).current;
   const touchY = useRef(new Animated.Value(-100)).current;
   const touchYValue = useRef(0);

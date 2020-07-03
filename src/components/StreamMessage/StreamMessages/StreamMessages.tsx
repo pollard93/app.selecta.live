@@ -9,6 +9,8 @@ import styles from './StreamMessages.styles';
 import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMessages/streamMessages';
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import query from '../../../ApolloClient/resolvers/query';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
@@ -36,6 +38,15 @@ const StreamMessages = (props: StreamMessagesProps) => {
           inverted: true,
           ItemSeparatorComponent: () => <View style={styles.separator} />,
           contentContainerStyle: styles.contentContainer,
+        }}
+        ListFooterComponent={({ queryResult }) => {
+          if (queryResult.loading || queryResult.error) {
+            return (
+              <LoadRetry {...queryResult} />
+            );
+          }
+
+          return null;
         }}
         debug
         subscriptionOptions={{
