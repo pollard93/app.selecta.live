@@ -45,6 +45,7 @@ export interface getChannelStreams_getChannelStreams_streams {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }
 
 export interface getChannelStreams_getChannelStreams {

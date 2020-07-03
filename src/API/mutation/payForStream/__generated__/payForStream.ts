@@ -43,6 +43,7 @@ export interface payForStream_payForStream {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }
 
 export interface payForStream {

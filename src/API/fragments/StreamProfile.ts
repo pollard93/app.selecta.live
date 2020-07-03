@@ -28,6 +28,7 @@ export const STREAM_PROFILE_FRAGMENT = gql`
     isConsumer
     audioOnly
     position
+    cancelled
   },
   ${STREAM_PROFILE_FRAGMENT_SHORT}
   ${FILE_FRAGMENT}

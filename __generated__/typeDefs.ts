@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Jun 30 2020 12:04:36 GMT+0100 (British Summer Time)
+# timestamp: Fri Jul 03 2020 15:00:57 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -929,6 +929,7 @@ type StreamProfile {
   timeTo: DateTime
   isConsumer: Boolean
   liveConsumersEdge: Int
+  cancelled: DateTime
   audioOnly: Boolean
   position: Float
   tags: [TagProfile]

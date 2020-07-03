@@ -51,7 +51,17 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
       return <LoadRetry {...queryResult} />;
     }
 
+
     const { data: { getStreamProfile } } = queryResult;
+
+
+    /**
+     * Should only load video if user is a consumer and it hasn't been cancelled
+     * If the stream is yet to start, this will be handled in <StreamVideo />
+     */
+    const shouldLoadVideo = () => getStreamProfile.isConsumer && getStreamProfile.cancelled !== null;
+
+
     return (
       <>
         <SafeAreaView style={GlobalStyles.PageFill}>
@@ -86,7 +96,9 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
           </FadeInView>
         )}
 
-        <StreamVideo {...props} data={getStreamProfile} />
+        {shouldLoadVideo && (
+          <StreamVideo {...props} data={getStreamProfile} />
+        )}
       </>
     );
   };

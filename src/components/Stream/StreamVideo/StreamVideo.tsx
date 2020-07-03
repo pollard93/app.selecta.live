@@ -1,7 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamVideoView from './StreamVideoView';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
@@ -113,8 +112,37 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
 
 
   /**
+   * If stream has not yet started
+   * Get the time is does start and set a timeout to refresh the view when it does
+   */
+  useEffect(() => {
+    const now = new Date();
+    const startTime = new Date(props.data.timeFrom);
+    if (new Date(props.data.timeFrom) < now) return undefined;
+
+    /**
+     * Get how long until start time
+     */
+    const timeToStart = startTime.getTime() - now.getTime();
+
+    /**
+     * setTimeout to refetch stream url
+     */
+    const id = setTimeout(() => {
+      query();
+    }, timeToStart);
+
+    /**
+     * Clear timeout on cleanup
+     */
+    return () => {
+      clearTimeout(id);
+    };
+  }, []);
+
+
+  /**
    * Loading | Error
-   * TODO - handle error messages
    */
   if (!queryResult.called || queryResult.loading || queryResult.error) {
     return null;

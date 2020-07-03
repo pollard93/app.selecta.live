@@ -43,6 +43,7 @@ export interface getStreamProfile_getStreamProfile {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }
 
 export interface getStreamProfile {

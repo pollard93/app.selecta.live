@@ -43,4 +43,5 @@ export interface STREAM_PROFILE_FRAGMENT {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }
