@@ -74,9 +74,8 @@
 	<string>Selecta would like access to your camera roll</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-Bold.ttf</string>
-		<string>Inter-Regular.ttf</string>
-		<string>Inter-Semibold.ttf</string>
+		<string>OpenSans-CondBold.ttf</string>
+		<string>OpenSans-CondLight.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

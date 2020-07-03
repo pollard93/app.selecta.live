@@ -13,6 +13,7 @@ function loadStories() {
 	require('../src/components/Channel/RegisterChannel/RegisterChannel.stories');
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
+	require('../src/components/Feed/Feed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
 	require('../src/components/Purchase/Purchases/Purchases.stories');
@@ -26,7 +27,6 @@ function loadStories() {
 	require('../src/components/Stream/PayForStream/PayForStream.stories');
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
-	require('../src/components/Stream/StreamFeed/StreamFeed.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/Stream/StreamSelf/StreamSelf.stories');
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
@@ -34,9 +34,12 @@ function loadStories() {
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
 	require('../src/components/UI/Button/Button.stories');
+	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
+	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
 	require('../src/components/UI/Form/Form.stories');
+	require('../src/components/UI/Headers/FeedHeader/FeedHeader.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
@@ -57,6 +60,7 @@ const stories = [
 	'../src/components/Channel/RegisterChannel/RegisterChannel.stories',
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
+	'../src/components/Feed/Feed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
 	'../src/components/Purchase/Purchases/Purchases.stories',
@@ -70,7 +74,6 @@ const stories = [
 	'../src/components/Stream/PayForStream/PayForStream.stories',
 	'../src/components/Stream/PayForStream/ReportStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
-	'../src/components/Stream/StreamFeed/StreamFeed.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/Stream/StreamSelf/StreamSelf.stories',
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',
@@ -78,9 +81,12 @@ const stories = [
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
 	'../src/components/UI/Button/Button.stories',
+	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',
+	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
 	'../src/components/UI/Form/Form.stories',
+	'../src/components/UI/Headers/FeedHeader/FeedHeader.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',

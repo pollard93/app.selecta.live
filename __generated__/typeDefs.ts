@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sun Jun 14 2020 16:58:48 GMT+0100 (British Summer Time)
+# timestamp: Thu Jun 25 2020 13:05:03 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -30,6 +30,7 @@ type Channel {
   freeStreamAllowance: Int!
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -70,6 +71,7 @@ type ChannelProfile {
   profileImage: File
   following: Boolean
   followersEdge: Int
+  tags: [TagProfile]
 }
 
 type ChannelProfilesPayLoad {
@@ -93,6 +95,7 @@ type ChannelSelf {
   creditWithdrawalValue: Int
   creditWithdrawalMinimum: Int
   freeStreamAllowance: Int
+  tags: [TagProfile]
 }
 
 type ChannelSelfsPayLoad {
@@ -202,6 +205,9 @@ input ChannelWhereInput {
   transactions_every: CreditTransactionWhereInput
   transactions_some: CreditTransactionWhereInput
   transactions_none: CreditTransactionWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -315,6 +321,30 @@ input CreditTransactionWhereInput {
 
 scalar DateTime
 
+enum FEED_BK_TYPE {
+  LIGHT
+  DARK
+}
+
+enum FEED_TYPE {
+  VERTICAL
+  HORIZONTAL
+  HORIZONTAL_SMALL
+}
+
+type FeedItem {
+  heading: String!
+  background: FEED_BK_TYPE!
+  type: FEED_TYPE!
+  query: String!
+  accessor: String!
+  variables: Json
+}
+
+type FeedPayload {
+  items: [FeedItem!]!
+}
+
 type File {
   id: ID
   author: UserProfile
@@ -379,14 +409,15 @@ type Mutation {
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(name: String, profilePicture: Upload): UserSelf
+  updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
   loginChannel(id: String!, code: String!): ChannelAuthPayload
-  putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean): StreamSelf
+  putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
   requestChannelLogin(id: String!): Boolean
-  updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload): ChannelSelf
-  updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean): StreamSelf
+  updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload, tags: [String!]): ChannelSelf
+  updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
   deleteNotification(id: String!): Boolean
   login(email: String!, password: String!): AuthPayload
@@ -534,15 +565,16 @@ type ProductConfig {
 type Query {
   canViewStream(id: String!): Boolean!
   getChannelProfile(id: String!): ChannelProfile!
+  getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
-  getPaidForStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getFeed: FeedPayload
+  getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
   getSelf: UserSelf
-  getStreamFeed(first: Int, after: String): StreamProfilesPayLoad!
   getStreamProfile(id: String!): StreamProfile!
+  getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getStreamUrl(id: String!): StreamUrlPayload!
-  searchChannels(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
-  searchStreams(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   validateResetToken: Boolean
   verifyUser: Boolean
   channelNameExists(name: String!): Boolean!
@@ -551,6 +583,7 @@ type Query {
   getRequestedChannels(first: Int, after: String): RequestedChannelsPayLoad
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
+  getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
   getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
 }
@@ -670,6 +703,8 @@ type Stream {
   userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
   approved: DateTime
   audioOnly: Boolean
+  positionRecords(where: StreamPositionRecordWhereInput, orderBy: StreamPositionRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamPositionRecord!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -807,15 +842,79 @@ enum StreamOrderByInput {
   updatedAt_DESC
 }
 
+type StreamPositionRecord {
+  id: ID!
+  extendedId: String!
+  stream: Stream!
+  user: User!
+  position: Float!
+}
+
+enum StreamPositionRecordOrderByInput {
+  id_ASC
+  id_DESC
+  extendedId_ASC
+  extendedId_DESC
+  position_ASC
+  position_DESC
+}
+
+input StreamPositionRecordWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  extendedId: String
+  extendedId_not: String
+  extendedId_in: [String!]
+  extendedId_not_in: [String!]
+  extendedId_lt: String
+  extendedId_lte: String
+  extendedId_gt: String
+  extendedId_gte: String
+  extendedId_contains: String
+  extendedId_not_contains: String
+  extendedId_starts_with: String
+  extendedId_not_starts_with: String
+  extendedId_ends_with: String
+  extendedId_not_ends_with: String
+  stream: StreamWhereInput
+  user: UserWhereInput
+  position: Float
+  position_not: Float
+  position_in: [Float!]
+  position_not_in: [Float!]
+  position_lt: Float
+  position_lte: Float
+  position_gt: Float
+  position_gte: Float
+  AND: [StreamPositionRecordWhereInput!]
+  OR: [StreamPositionRecordWhereInput!]
+  NOT: [StreamPositionRecordWhereInput!]
+}
+
 type StreamProfile {
   id: ID!
   channel: ChannelProfile
   name: String
   image: File
+  timeFrom: DateTime
+  timeTo: DateTime
   isConsumer: Boolean
   liveConsumersEdge: Int
   audioOnly: Boolean
   position: Float
+  tags: [TagProfile]
 }
 
 type StreamProfilesPayLoad {
@@ -840,6 +939,7 @@ type StreamSelf {
   streamKey: String
   streamUrl: String
   audioOnly: Boolean
+  tags: [TagProfile]
 }
 
 type StreamSelfsPayLoad {
@@ -1065,6 +1165,12 @@ input StreamWhereInput {
   approved_gte: DateTime
   audioOnly: Boolean
   audioOnly_not: Boolean
+  positionRecords_every: StreamPositionRecordWhereInput
+  positionRecords_some: StreamPositionRecordWhereInput
+  positionRecords_none: StreamPositionRecordWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1089,6 +1195,81 @@ input StreamWhereInput {
 type Subscription {
   notifications: NotificationSubscriptionPayload
   streamMessages(id: String!): StreamMessageClientSubscriptionPayload
+}
+
+type Tag {
+  id: ID!
+  title: String!
+  channels(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
+  streams(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
+  createdAt: DateTime!
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TagProfile {
+  id: ID!
+  title: String
+}
+
+type TagProfilesPayload {
+  tags: [TagProfile]
+  count: Int!
+}
+
+input TagWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  channels_every: ChannelWhereInput
+  channels_some: ChannelWhereInput
+  channels_none: ChannelWhereInput
+  streams_every: StreamWhereInput
+  streams_some: StreamWhereInput
+  streams_none: StreamWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  NOT: [TagWhereInput!]
 }
 
 """The \`Upload\` scalar type represents a file upload."""

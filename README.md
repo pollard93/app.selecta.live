@@ -279,7 +279,7 @@ const font = {
 };
 
 // Usage
-font.family.body('regular');
+font.family.body('light');
 font.family.body('bold');
 ```
 

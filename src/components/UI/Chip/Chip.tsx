@@ -19,9 +19,15 @@ const Chip: FC<ChipProps> = (props) => {
    */
   if (type === 'PRIMARY') {
     return (
-      <View style={[Styles.wrap, Styles[`text${type}`]]}>
+      <View style={[Styles.wrap, Styles[`text${type}`], props.style]}>
         <Gradient>
-          <Body style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}>{props.children}</Body>
+          <Body
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}
+          >
+            {props.children}
+          </Body>
         </Gradient>
       </View>
     );
@@ -29,8 +35,14 @@ const Chip: FC<ChipProps> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, Styles[`wrap${type}`]]}>
-      <Body style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}>{props.children}</Body>
+    <View style={[Styles.wrap, Styles[`wrap${type}`], props.style]}>
+      <Body
+        numberOfLines={1}
+        ellipsizeMode='tail'
+        style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}
+      >
+        {props.children}
+      </Body>
     </View>
   );
 };

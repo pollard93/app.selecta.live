@@ -6,6 +6,7 @@ import Styles from './Icon.style';
 
 export enum ICON {
   SEARCH = 'SEARCH',
+  ARROW_FORWARD = 'ARROW_FORWARD',
 }
 
 interface IconProps {
@@ -20,6 +21,9 @@ const Icon = (props: IconProps) => {
     switch (props.name) {
       case ICON.SEARCH:
         return require('../../../assets/images/icons/search.png');
+
+      case ICON.ARROW_FORWARD:
+        return require('../../../assets/images/icons/arrow-forward.png');
 
       default:
         return null;

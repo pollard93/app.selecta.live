@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
-import { SEARCH_STREAMS_QUERY } from '../../../API/query/searchStreams/searchStreams';
-import { searchStreamsVariables, searchStreams, searchStreams_searchStreams_streams } from '../../../API/query/searchStreams/__generated__/searchStreams';
+import { GET_STREAM_PROFILES_QUERY } from '../../../API/query/getStreamProfiles/getStreamProfiles';
+import { getStreamProfilesVariables, getStreamProfiles, getStreamProfiles_getStreamProfiles_streams } from '../../../API/query/getStreamProfiles/__generated__/getStreamProfiles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamListItem from '../StreamListItem/StreamListItem';
 import styles from './SearchStreams.styles';
 
-class SearchStreamsFlatList extends ApolloFlatList<searchStreamsVariables, searchStreams, searchStreams_searchStreams_streams> {}
+class SearchStreamsFlatList extends ApolloFlatList<getStreamProfilesVariables, getStreamProfiles, getStreamProfiles_getStreamProfiles_streams> {}
 
 const SearchStreams = () => {
   const [search, setSearch] = useState('');
@@ -23,7 +23,7 @@ const SearchStreams = () => {
       />
 
       <SearchStreamsFlatList
-        query={SEARCH_STREAMS_QUERY}
+        query={GET_STREAM_PROFILES_QUERY}
         variables={{
           where: {
             // eslint-disable-next-line camelcase
@@ -31,7 +31,7 @@ const SearchStreams = () => {
           },
           first: 5,
         }}
-        accessor='searchStreams.streams'
+        accessor='getStreamProfiles.streams'
         renderItem={({ item }) => (
           <View style={styles.item}>
             <StreamListItem data={item} />
