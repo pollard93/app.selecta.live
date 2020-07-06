@@ -1342,7 +1342,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.beta.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1425,7 +1425,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta;
 				PRODUCT_NAME = selectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.beta";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
