@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.xsmall,
     paddingVertical: spacing.small,
   },
   disabled: {
@@ -21,6 +21,12 @@ export default StyleSheet.create({
   },
   LIGHT: {
     backgroundColor: color.mono.light,
+  },
+  FB: {
+    backgroundColor: color.brands.facebook,
+  },
+  GOOGLE: {
+    backgroundColor: color.brands.google,
   },
 
 

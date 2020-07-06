@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import { Button, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -13,8 +13,16 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mu
 import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
+import Button from '../../../UI/Button/Button';
+import { STACK } from '../../../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
-const LoginWithFacebook = () => {
+interface LoginWithFacebookProps {
+  disabled?: boolean;
+  buttonText: string;
+}
+
+const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const context = useToast();
@@ -24,7 +32,7 @@ const LoginWithFacebook = () => {
    * Get self must be executed to cache the result
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -39,8 +47,15 @@ const LoginWithFacebook = () => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!username) {
+        // Carry on onboarding process if user has no username
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);
@@ -94,8 +109,10 @@ const LoginWithFacebook = () => {
 
   return (
     <Button
-      title="Login with facebook"
-      disabled={loading}
+      type="FB"
+      title={props.buttonText}
+      disabled={props.disabled || loading}
+      loading={loading}
       onPress={() => {
         setLoading(true);
 

@@ -31,6 +31,7 @@
         ]
       }
     ],
+    "global-require": "off",
     "react/jsx-uses-react": [
       "error"
     ],
@@ -175,6 +176,9 @@
           "STREAM_SELF_FRAGMENT_image",
           "STREAM_SELF_FRAGMENT",
           "TAG_PROFILE_FRAGMENT",
+          "USER_PROFILE_FRAGMENT_profilePicture_url",
+          "USER_PROFILE_FRAGMENT_profilePicture",
+          "USER_PROFILE_FRAGMENT",
           "USER_SELF_FRAGMENT_profilePicture_url",
           "USER_SELF_FRAGMENT_profilePicture",
           "USER_SELF_FRAGMENT_requiresUpdate",
@@ -352,6 +356,8 @@
           "getStreamUrl_getStreamUrl",
           "getStreamUrl",
           "getStreamUrlVariables",
+          "isUsernameUnique",
+          "isUsernameUniqueVariables",
           "notifications_notifications_node_sender_profilePicture_url",
           "notifications_notifications_node_sender_profilePicture",
           "notifications_notifications_node_sender",

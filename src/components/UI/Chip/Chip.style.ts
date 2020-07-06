@@ -17,6 +17,9 @@ export default StyleSheet.create({
   wrapLIGHT: {
     backgroundColor: color.mono.light,
   },
+  wrapSKELETON: {
+    backgroundColor: color.mono.pale.light,
+  },
 
 
   /**
@@ -34,6 +37,9 @@ export default StyleSheet.create({
   },
   textLIGHT: {
     color: color.mono.dark,
+  },
+  textSKELETON: {
+    color: color.mono.pale.light,
   },
   bold: {
     fontFamily: font.family.heading('bold').fontFamily,

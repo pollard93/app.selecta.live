@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
@@ -32,7 +32,7 @@ const StreamCard: FC<StreamCardProps> = (props) => (
     )}
 
     <View style={[Styles.item, Styles.lower]}>
-      <Chip type="SECONDARY" style={Styles.channelNameChip}>{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}{props.data.channel.name}</Chip>
+      <Chip type="SECONDARY" style={Styles.channelNameChip}>{props.data.channel.name}</Chip>
 
       <View style={Styles.chips}>
         <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>

@@ -4,8 +4,8 @@ import { updateSelfVariables, updateSelf } from './__generated__/updateSelf';
 import { USER_SELF_FRAGMENT } from '../../fragments/UserSelf';
 
 export const UPDATE_SELF_PROFILE = gql`
-  mutation updateSelf($name: String, $profilePicture: Upload){
-    updateSelf(name: $name, profilePicture: $profilePicture){
+  mutation updateSelf($username: String, $profilePicture: Upload){
+    updateSelf(username: $username, profilePicture: $profilePicture){
       ...USER_SELF_FRAGMENT
     }
   },

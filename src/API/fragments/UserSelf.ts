@@ -4,7 +4,7 @@ import { FILE_FRAGMENT } from './File';
 export const USER_SELF_FRAGMENT = gql`
   fragment USER_SELF_FRAGMENT on UserSelf {
     id
-    name
+    username
     email
     credit
     profilePicture {

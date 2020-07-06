@@ -1,4 +1,3 @@
-import { Button, TextInput } from 'react-native';
 import React from 'react';
 import { mount } from 'enzyme';
 import wait from 'waait';
@@ -15,6 +14,8 @@ import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import ResetPasswordView from './ResetPasswordView';
 import * as ScreenUtilsModule from '../../screens/utils';
+import { STACK } from '../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
 
 describe('<ResetPassword />', () => {
@@ -26,6 +27,7 @@ describe('<ResetPassword />', () => {
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(useToast(), 'push');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+  let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
@@ -35,6 +37,7 @@ describe('<ResetPassword />', () => {
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(useToast(), 'push');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
+    pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
@@ -48,29 +51,30 @@ describe('<ResetPassword />', () => {
     );
 
     // Test password is secure
-    expect(wrapper.find(TextInput).first().props().secureTextEntry).to.equal(true);
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Login Button is disabled as default
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    // Submit Button is disabled as default
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
 
     // Test text change
-    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
     await wait(0);
     wrapper.update();
 
     // Form should now be valid
-    expect(wrapper.find(Button).first().props().disabled).to.be.false;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
-    await wrapper.find(Button).first().props().onPress({
+    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
       preventDefault: jest.fn,
       persist: jest.fn,
     } as any);
     await wait(0);
     wrapper.update();
 
-    // Button is now disabled as loading
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    // Button is now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -93,9 +97,9 @@ describe('<ResetPassword />', () => {
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
 
-    // Update - button should not return to enabled as no errors
+    // Update - button should not return to default state as no errors
     wrapper.update();
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
   it('should fail to resetPassword', async () => {
@@ -117,11 +121,11 @@ describe('<ResetPassword />', () => {
     );
 
     // Test text change
-    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
     wrapper.update();
 
     // Submit and update
-    await wrapper.find(Button).first().props().onPress({
+    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
       preventDefault: jest.fn,
       persist: jest.fn,
     } as any);
@@ -156,11 +160,11 @@ describe('<ResetPassword />', () => {
     );
 
     // Test text change
-    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
     wrapper.update();
 
     // Submit and update
-    await wrapper.find(Button).first().props().onPress({
+    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
       preventDefault: jest.fn,
       persist: jest.fn,
     } as any);
@@ -198,11 +202,11 @@ describe('<ResetPassword />', () => {
     );
 
     // Test text change
-    wrapper.find(TextInput).first().props().onChangeText('password');
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
     wrapper.update();
 
     // Submit
-    await wrapper.find(Button).first().props().onPress({
+    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
       preventDefault: jest.fn,
       persist: jest.fn,
     } as any);
@@ -219,6 +223,55 @@ describe('<ResetPassword />', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
+
+    // Should not have goneHome
+    expect(goHomeSpy.callCount).to.equal(0);
+  });
+
+  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
+    /**
+     * Create mock client and force getSelf.requiresUpdate to be true
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => ({
+          requiresUpdate: null,
+          username: null,
+        }),
+      }),
+    });
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <ResetPassword token="string" />
+      </ApolloProvider>,
+    );
+
+    // Test text change
+    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
+    wrapper.update();
+
+    // Submit
+    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
+      preventDefault: jest.fn,
+      persist: jest.fn,
+    } as any);
+
+    // Wait for response and update
+    await wait(0);
+    wrapper.update();
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+
+    // Should have gone to OnboardingWelcomeScreen
+    expect(pushScreenV2Spy.callCount).to.equal(1);
+    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
+    expect(pushScreenV2Spy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

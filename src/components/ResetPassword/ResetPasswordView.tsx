@@ -1,44 +1,68 @@
-import { Button, ScrollView, TextInput, Text } from 'react-native';
-import React from 'react';
+import { View } from 'react-native';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { resetPasswordVariables } from '../../API/mutation/resetPassword/__generated__/resetPassword';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import Button from '../UI/Button/Button';
+import TextInput from '../UI/Form/components/TextInput';
+import Styles from './ResetPassword.style';
+import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
+import H4 from '../UI/Typography/components/H4';
 
 export interface ResetPasswordViewProps {
   loading: boolean;
-  onSubmit: (variables: resetPasswordVariables) => void;
+  onSubmit: (variables: FormData) => void;
+  onPop: () => void;
 }
 
-type FormData = {
+export type FormData = {
   password: string;
 };
 
 const ResetPasswordView = (props: ResetPasswordViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({
+    mode: 'onChange',
+  });
+
+
+  /**
+   * Register form
+   */
+  useEffect(() => {
+    register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+  }, [register]);
 
 
   return (
-    <ScrollView style={GlobalStyles.PageFill}>
-      <TextInput
-        ref={() => {
-          register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
-        }}
-        onChangeText={(text) => setValue('password', text, true)}
-        placeholder="Password"
-        secureTextEntry
-        autoCompleteType="email"
-        keyboardType="email-address"
-        returnKeyType="done"
-        onSubmitEditing={handleSubmit(props.onSubmit)}
-      />
-      {errors.password && <Text>This is required.</Text>}
+    <OnboardingPageWrap heading="Reset Password">
+      <View style={Styles.input}>
+        <H4 style={Styles.content}>Enter your new password</H4>
+
+        <TextInput
+          name="password"
+          onChangeText={(text) => {
+            // Validate on change if there's an error, otherwise validate onBlur
+            setValue('password', text, !!errors.password);
+          }}
+          placeholder="Enter new password"
+          secureTextEntry
+          autoCompleteType="password"
+          autoCapitalize="none"
+          returnKeyType="done"
+          errors={errors}
+          onBlur={() => triggerValidation('password')}
+          onSubmitEditing={handleSubmit(props.onSubmit)}
+          testID="password"
+          light
+        />
+      </View>
 
       <Button
-        title="Submit"
+        title={props.loading ? 'Resetting password' : 'Reset password'}
         onPress={handleSubmit(props.onSubmit)}
-        disabled={props.loading || !isValid || !dirty}
+        disabled={!isValid || !dirty}
+        loading={props.loading}
+        testID="submit"
       />
-    </ScrollView>
+    </OnboardingPageWrap>
   );
 };
 

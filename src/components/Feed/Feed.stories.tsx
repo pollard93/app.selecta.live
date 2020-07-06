@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import Feed from './Feed';
-import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import GetSelfDecorator from '../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
 storiesOf('Feed', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
+  .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('Feed', () => (
     <Feed />
   ));

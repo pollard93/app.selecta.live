@@ -36,4 +36,12 @@ export default StyleSheet.create({
   light: {
     color: color.mono.light,
   },
+  skeleton: {
+    backgroundColor: color.mono.pale.light,
+    color: color.mono.pale.light,
+  },
+  bold: {
+    fontFamily: font.family.heading('bold').fontFamily,
+    fontWeight: font.family.heading('bold').fontWeight,
+  },
 });

@@ -31,11 +31,19 @@ class InAppPurchases {
    */
   public static disconnect() {
     if (global.purchaseUpdateSubscription) {
-      global.purchaseUpdateSubscription.remove();
+      try {
+        global.purchaseUpdateSubscription.remove();
+        global.purchaseUpdateSubscription = null;
+        // eslint-disable-next-line no-empty
+      } catch {}
     }
 
     if (global.purchaseErrorSubscription) {
-      global.purchaseErrorSubscription.remove();
+      try {
+        global.purchaseErrorSubscription.remove();
+        global.purchaseErrorSubscription = null;
+        // eslint-disable-next-line no-empty
+      } catch {}
     }
   }
 

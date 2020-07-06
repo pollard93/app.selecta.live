@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import SplashScreen from 'react-native-splash-screen';
 import { Linking, Platform } from 'react-native';
@@ -6,31 +6,32 @@ import jwtDecode from 'jwt-decode';
 import Config from 'react-native-config';
 import { useToast } from 'mbp-components-rn-toast';
 import LoginView from './LoginView';
-import { goHome, pushScreen, goToRequireUpdateScreen } from '../../screens/utils';
+import { goHome, pushScreen, goToRequireUpdateScreen, pushScreenV2 } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
-import { RegisterScreenProps, RegisterScreenName } from '../../screens/RegisterScreen/RegisterScreen';
+import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { REMOVE_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeAccessToken/removeAccessTokenMutation';
 import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeAccessToken/__generated__/removeAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { STACK } from '../../screens/utils/interfaces';
+import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
-import { RequestPasswordResetScreenName } from '../../screens/RequestResetPasswordScreen/RequestResetPasswordScreen';
+import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
+import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
-export interface LoginProps {
+export interface LoginProps extends ScreenProps {
   toastMessage?: string;
 }
 
-const Login = (props: LoginProps) => {
+const Login: FC<LoginProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const context = useToast();
+  const toast = useToast();
 
 
   /**
@@ -49,7 +50,7 @@ const Login = (props: LoginProps) => {
           const token = uri.replace('reset-password/', '');
           const { exp } = jwtDecode(token);
           if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            context.push({
+            toast.push({
               duration: 1000,
               component: (
                 <Toast content="Link has expired" />
@@ -62,7 +63,7 @@ const Login = (props: LoginProps) => {
           /**
            * Push resetPasswordScreen
            */
-          pushScreen<ResetPasswordScreenProps>(STACK.LOGIN, {
+          pushScreen<ResetPasswordScreenProps>(STACK.ONBOARDING, {
             component: {
               name: ResetPasswordScreenName,
               passProps: {
@@ -99,7 +100,7 @@ const Login = (props: LoginProps) => {
    * Get self query, binds notifications and navigates home on completion
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -114,13 +115,21 @@ const Login = (props: LoginProps) => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!username) {
+        // Carry on onboarding process if user has no username
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        // Go home if username is set
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={getGQLErrorMessage(e)} />
@@ -151,7 +160,7 @@ const Login = (props: LoginProps) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={getGQLErrorMessage(e)} />
@@ -167,7 +176,7 @@ const Login = (props: LoginProps) => {
    */
   useEffect(() => {
     if (props.toastMessage) {
-      context.push({
+      toast.push({
         duration: 1000,
         component: (
           <Toast content={props.toastMessage} />
@@ -200,10 +209,17 @@ const Login = (props: LoginProps) => {
   /**
    * Navigate to RequestPasswordResetScreen
    */
-  const onReset = () => {
-    pushScreen(STACK.LOGIN, {
-      component: {
-        name: RequestPasswordResetScreenName,
+  const onReset = (defaultEmailValue: string) => {
+    pushScreenV2(STACK.ONBOARDING, RequestPasswordResetScreen, {
+      defaultEmailValue,
+      onCompletion: () => {
+        toast.push({
+          duration: 1000,
+          component: (
+            <Toast content="Please open your magic link in the email we have just sent you" />
+          ),
+          dismissible: false,
+        });
       },
     });
   };
@@ -213,11 +229,7 @@ const Login = (props: LoginProps) => {
    * Navigate to RegisterScreen
    */
   const onRegister = () => {
-    pushScreen<RegisterScreenProps>(STACK.LOGIN, {
-      component: {
-        name: RegisterScreenName,
-      },
-    });
+    pushScreenV2(STACK.ONBOARDING, RegisterScreen, {});
   };
 
 

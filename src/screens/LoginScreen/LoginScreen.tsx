@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import Login, { LoginProps } from '../../components/Login/Login';
-import { ScreenProps } from '../utils/interfaces';
+import color from '../../styles/definitions/color';
 
-interface LoginScreenProps extends ScreenProps {}
-interface LoginScreenProps extends LoginProps {}
+export interface LoginScreenProps extends LoginProps {}
 
-const LoginScreen = (props: LoginScreenProps) => (
+const LoginScreen: FC<LoginScreenProps> = (props) => (
   <Login {...props} />
 );
 
@@ -24,7 +23,17 @@ LoginScreen.prototype.ScreenName = 'LoginScreen';
   topBar: {
     visible: false,
   },
+  statusBar: {
+    style: 'light',
+  },
 };
+
+/**
+ * Set screen color options (default white)
+ */
+LoginScreen.prototype.fullScreen = true;
+// LoginScreen.prototype.statusBarColor = color.mono.dark;
+LoginScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default

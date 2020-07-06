@@ -30,7 +30,7 @@ export interface updateSelf_updateSelf_requiresUpdate {
 export interface updateSelf_updateSelf {
   __typename: "UserSelf";
   id: string;
-  name: string | null;
+  username: string | null;
   email: string | null;
   credit: number | null;
   profilePicture: updateSelf_updateSelf_profilePicture | null;
@@ -43,6 +43,6 @@ export interface updateSelf {
 }
 
 export interface updateSelfVariables {
-  name?: string | null;
+  username?: string | null;
   profilePicture?: any | null;
 }

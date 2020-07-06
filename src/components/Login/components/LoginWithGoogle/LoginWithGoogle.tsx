@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
-import { Button } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -13,8 +12,16 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../../../ApolloClient/resolvers/mu
 import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
+import Button from '../../../UI/Button/Button';
+import { STACK } from '../../../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
-const LoginWithGoogle = () => {
+interface LoginWithGoogleProps {
+  disabled?: boolean;
+  buttonText: string;
+}
+
+const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const context = useToast();
@@ -44,7 +51,7 @@ const LoginWithGoogle = () => {
    * Get self must be executed to cache the result
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, requiresUpdate, username } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -59,8 +66,15 @@ const LoginWithGoogle = () => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!username) {
+        // Carry on onboarding process if user has no username
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);
@@ -114,8 +128,10 @@ const LoginWithGoogle = () => {
 
   return (
     <Button
-      title="Login with google"
-      disabled={loading}
+      type="GOOGLE"
+      title={props.buttonText}
+      disabled={props.disabled || loading}
+      loading={loading}
       onPress={async () => {
         setLoading(true);
 

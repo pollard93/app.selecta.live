@@ -24,6 +24,7 @@ export interface putStreamMessage_putStreamMessage_user_profilePicture {
 export interface putStreamMessage_putStreamMessage_user {
   __typename: "UserProfile";
   id: string;
+  username: string | null;
   profilePicture: putStreamMessage_putStreamMessage_user_profilePicture | null;
 }
 

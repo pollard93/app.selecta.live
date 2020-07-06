@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
+import { Navigation } from 'react-native-navigation';
 import ResetPasswordView from './ResetPasswordView';
-import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { useResetPasswordMutation } from '../../API/mutation/resetPassword/resetPassword';
-import { resetPasswordVariables } from '../../API/mutation/resetPassword/__generated__/resetPassword';
 import Toast from '../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
+import { STACK, ScreenProps } from '../../screens/utils/interfaces';
+import { FormData } from '../Register/RegisterView';
+import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
 
-export interface ResetPasswordProps {
+export interface ResetPasswordProps extends ScreenProps {
   token: string;
 }
 
-const ResetPassword = (props: ResetPasswordProps) => {
+const ResetPassword: FC<ResetPasswordProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const context = useToast();
@@ -27,7 +30,7 @@ const ResetPassword = (props: ResetPasswordProps) => {
    * Get self query, binds notifications and navigates home on completion
    */
   const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
       // Bind notifications
       PushNotifications.init(id);
 
@@ -42,8 +45,16 @@ const ResetPassword = (props: ResetPasswordProps) => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      if (!username) {
+        // Carry on onboarding process if user has no name
+        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+          setLoading(false);
+        });
+      } else {
+        // Go home if name is set
+        goHome();
+      }
     },
     onError: (e) => {
       setLoading(false);
@@ -51,7 +62,10 @@ const ResetPassword = (props: ResetPasswordProps) => {
       context.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -87,7 +101,10 @@ const ResetPassword = (props: ResetPasswordProps) => {
       context.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -98,7 +115,7 @@ const ResetPassword = (props: ResetPasswordProps) => {
   /**
    * Form submission
    */
-  const onSubmit = (variables: resetPasswordVariables) => {
+  const onSubmit = (variables: FormData) => {
     setLoading(true);
     resetPasswordMutation({
       variables,
@@ -106,10 +123,19 @@ const ResetPassword = (props: ResetPasswordProps) => {
   };
 
 
+  /**
+   * Pop this screen
+   */
+  const onPop = () => {
+    Navigation.pop(props.componentId);
+  };
+
+
   return (
     <ResetPasswordView
       loading={loading}
       onSubmit={onSubmit}
+      onPop={onPop}
     />
   );
 };

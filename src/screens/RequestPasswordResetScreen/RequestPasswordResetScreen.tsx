@@ -1,8 +1,8 @@
-import React from 'react';
-import RequestPasswordReset from '../../components/RequestPasswordReset/RequestPasswordReset';
+import React, { FC } from 'react';
+import RequestPasswordReset, { RequestPasswordResetProps } from '../../components/RequestPasswordReset/RequestPasswordReset';
 
-const RequestPasswordResetScreen = () => (
-  <RequestPasswordReset />
+const RequestPasswordResetScreen: FC<RequestPasswordResetProps> = (props) => (
+  <RequestPasswordReset {...props} />
 );
 
 export default RequestPasswordResetScreen;

@@ -44,4 +44,10 @@ export default {
     error: '#b4090f',
   },
 
+  // Specific brand colors
+  brands: {
+    facebook: '#3b5998',
+    google: '#db3236',
+  },
+
 };

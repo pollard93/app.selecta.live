@@ -30,7 +30,7 @@ export interface getSelf_getSelf_requiresUpdate {
 export interface getSelf_getSelf {
   __typename: "UserSelf";
   id: string;
-  name: string | null;
+  username: string | null;
   email: string | null;
   credit: number | null;
   profilePicture: getSelf_getSelf_profilePicture | null;

@@ -24,6 +24,7 @@ export interface STREAM_MESSAGE_FRAGMENT_user_profilePicture {
 export interface STREAM_MESSAGE_FRAGMENT_user {
   __typename: "UserProfile";
   id: string;
+  username: string | null;
   profilePicture: STREAM_MESSAGE_FRAGMENT_user_profilePicture | null;
 }
 

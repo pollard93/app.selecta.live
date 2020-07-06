@@ -16,9 +16,14 @@ function loadStories() {
 	require('../src/components/Feed/Feed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
+	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
+	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
+	require('../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories');
 	require('../src/components/Purchase/Purchases/Purchases.stories');
 	require('../src/components/Register/Register.stories');
+	require('../src/components/RequestPasswordReset/RequestPasswordReset.stories');
 	require('../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories');
+	require('../src/components/ResetPassword/ResetPassword.stories');
 	require('../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories');
 	require('../src/components/Stream/CancelStream/CancelStream.stories');
 	require('../src/components/Stream/ChannelStreams/ChannelStreams.stories');
@@ -42,6 +47,7 @@ function loadStories() {
 	require('../src/components/UI/Headers/FeedHeader/FeedHeader.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
+	require('../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
@@ -63,9 +69,14 @@ const stories = [
 	'../src/components/Feed/Feed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
+	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
+	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
+	'../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories',
 	'../src/components/Purchase/Purchases/Purchases.stories',
 	'../src/components/Register/Register.stories',
+	'../src/components/RequestPasswordReset/RequestPasswordReset.stories',
 	'../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories',
+	'../src/components/ResetPassword/ResetPassword.stories',
 	'../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories',
 	'../src/components/Stream/CancelStream/CancelStream.stories',
 	'../src/components/Stream/ChannelStreams/ChannelStreams.stories',
@@ -89,6 +100,7 @@ const stories = [
 	'../src/components/UI/Headers/FeedHeader/FeedHeader.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
+	'../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',

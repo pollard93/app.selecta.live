@@ -2,6 +2,7 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../styles/definitions/spacing';
 import color from '../../styles/definitions/color';
+import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
 
 export default StyleSheet.create({
   heading: {
@@ -12,21 +13,29 @@ export default StyleSheet.create({
     width: spacing.small,
   },
 
-  // outerItem
-  outerItemDARK: {
+  flatlistContainer: {
+    paddingTop: headerHeight,
+  },
+
+  // background
+  backgroundDARK: {
     backgroundColor: color.mono.pale.light,
   },
-  outerItemLIGHT: {
+  backgroundLIGHT: {
     backgroundColor: color.mono.light,
+  },
+
+  // flatList
+  flatListHORIZONTAL: {
+    paddingLeft: spacing.base,
+  },
+  flatListHORIZONTAL_SMALL: {
+    marginBottom: spacing.base,
   },
 
   // flatListContainer
   // eslint-disable-next-line camelcase
   flatListContainerHORIZONTAL_SMALL: {
-    padding: spacing.base,
-    paddingTop: 0,
-  },
-  flatListContainerHORIZONTAL: {
     paddingHorizontal: spacing.base,
   },
 
@@ -38,10 +47,20 @@ export default StyleSheet.create({
   horizontalArrowWrapHORIZONTAL_SMALL: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    ...StyleSheet.absoluteFillObject,
+    marginBottom: spacing.small,
     marginRight: spacing.small,
+    ...StyleSheet.absoluteFillObject,
   },
   horizontalArrowHORIZONTAL_SMALL: {
     tintColor: color.mono.light,
+  },
+
+  // item
+  itemHORIZONTAL: {
+    paddingRight: spacing.small,
+  },
+
+  loadingHorizontal: {
+    flexDirection: 'row',
   },
 });

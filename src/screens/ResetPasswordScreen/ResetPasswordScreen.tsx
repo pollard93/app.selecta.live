@@ -2,7 +2,7 @@ import React from 'react';
 import { ScreenProps } from '../utils/interfaces';
 import ResetPassword, { ResetPasswordProps } from '../../components/ResetPassword/ResetPassword';
 
-interface ResetPasswordScreenPropsE extends Partial<ScreenProps> {}
+interface ResetPasswordScreenPropsE extends ScreenProps {}
 interface ResetPasswordScreenPropsE extends ResetPasswordProps {}
 export interface ResetPasswordScreenProps extends ResetPasswordScreenPropsE {}
 

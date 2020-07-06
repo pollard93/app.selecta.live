@@ -1,6 +1,7 @@
 import { ApolloError } from 'apollo-client';
 import { Linking } from 'react-native';
 import moment from 'moment-timezone';
+import { useCallback } from 'react';
 
 
 /**
@@ -52,3 +53,32 @@ export const formatForTimezone = (date: string, format?: string): string => {
     })
     : formattedDate.format(format);
 };
+
+
+/**
+ * Debounces a function and
+ * @param fn - function to debounce
+ * @param delay - delay of debounce
+ */
+const debounce = (fn, delay) => {
+  let timeoutId;
+  // eslint-disable-next-line func-names
+  return function (...args) {
+    clearInterval(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), delay);
+  };
+};
+
+
+/**
+ * Wraps the above function in a useCallback to be used in a functional component
+ * @param fn - function to debounce
+ * @param delay - delay of debounce
+ * @return function - the function to be executed on change etc
+ */
+export const useDebounce = (fn: Function, delay: number, watch = []) => useCallback(
+  debounce((...value) => {
+    fn(...value);
+  }, delay),
+  watch,
+);

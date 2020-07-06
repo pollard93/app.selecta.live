@@ -24,6 +24,7 @@ export interface getStreamMessages_getStreamMessages_messages_user_profilePictur
 export interface getStreamMessages_getStreamMessages_messages_user {
   __typename: "UserProfile";
   id: string;
+  username: string | null;
   profilePicture: getStreamMessages_getStreamMessages_messages_user_profilePicture | null;
 }
 

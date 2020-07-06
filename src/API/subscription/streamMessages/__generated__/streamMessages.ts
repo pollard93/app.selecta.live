@@ -26,6 +26,7 @@ export interface streamMessages_streamMessages_node_user_profilePicture {
 export interface streamMessages_streamMessages_node_user {
   __typename: "UserProfile";
   id: string;
+  username: string | null;
   profilePicture: streamMessages_streamMessages_node_user_profilePicture | null;
 }
 

@@ -5,4 +5,8 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
   },
+  MaxWidth: {
+    alignSelf: 'center',
+    width: '90%',
+  },
 });

@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
+import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
-import RegisterView from './RegisterView';
-import { registerVariables } from '../../API/mutation/register/__generated__/register';
-import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
+import RegisterView, { FormData } from './RegisterView';
+import { pushScreenV2, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
@@ -12,10 +12,12 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
+import { ScreenProps, STACK } from '../../screens/utils/interfaces';
+import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 
-export interface RegisterProps {}
+export interface RegisterProps extends ScreenProps {}
 
-const Register: FunctionComponent<RegisterProps> = () => {
+const Register: FC<RegisterProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const context = useToast();
@@ -40,8 +42,11 @@ const Register: FunctionComponent<RegisterProps> = () => {
         return;
       }
 
-      // Navigate to home now getSelf is cached
-      goHome();
+      // Navigate now getSelf is cached
+      // Carry on onboarding process
+      pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        setLoading(false);
+      });
     },
     onError: (e) => {
       setLoading(false);
@@ -91,7 +96,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
   /**
    * Form submission
    */
-  const onSubmit = (variables: registerVariables) => {
+  const onSubmit = (variables: FormData) => {
     setLoading(true);
     registerMutation({
       variables,
@@ -99,9 +104,18 @@ const Register: FunctionComponent<RegisterProps> = () => {
   };
 
 
+  /**
+   * Form submission
+   */
+  const onLogin = () => {
+    Navigation.pop(props.componentId);
+  };
+
+
   return (
     <RegisterView
       onSubmit={onSubmit}
+      onLogin={onLogin}
       loading={loading}
     />
   );

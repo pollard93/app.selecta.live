@@ -7,6 +7,7 @@ import Styles from './PermissionsError.style';
 import { openSettings } from '../../../utils/functions';
 import Button from '../Button/Button';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import Body from '../Typography/components/Body';
 // import Icon, { ICON } from '../Icon/Icon';
 
 interface PermissionsErrorProps {

@@ -13,7 +13,7 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 
 type FormData = {
-  name: string;
+  username: string;
   profilePicture: PhotoIdentifier['node'];
 };
 
@@ -22,7 +22,7 @@ const ProfileUpdate = () => {
   const { register, setValue, handleSubmit, reset, formState: { isValid, dirty } } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
-      name: undefined,
+      username: undefined,
       profilePicture: undefined,
     },
   });
@@ -38,7 +38,7 @@ const ProfileUpdate = () => {
        * Reset form
        */
       reset({
-        name: undefined,
+        username: undefined,
         profilePicture: undefined,
       });
 
@@ -87,14 +87,14 @@ const ProfileUpdate = () => {
       <TextInput
         ref={
           register(
-            { name: 'name' },
+            { name: 'username' },
             { required: false },
           )
         }
-        onChangeText={(text) => setValue('name', text, true)}
+        onChangeText={(text) => setValue('username', text, true)}
         placeholder="Name"
         returnKeyType="next"
-        defaultValue={getSelf.name}
+        defaultValue={getSelf.username}
       />
 
       <EditableAsyncImage

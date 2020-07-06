@@ -20,7 +20,7 @@ storiesOf('UI/Button', module)
     <Button
       title="Primary"
       onPress={console.log}
-      icon={ICON.IMAGE}
+      icon={ICON.SEARCH}
       loading
     />
   ))

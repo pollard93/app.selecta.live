@@ -1,22 +1,23 @@
 import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle } from 'react-native-navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
-import { HomeScreenName, HomeScreenProps } from '../HomeScreen/HomeScreen';
 import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
 import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
+import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import { FeedScreenName } from '../FeedScreen/FeedScreen';
 
 
 /**
- * Resets navigation stack to login screen using STACK.LOGIN
+ * Resets navigation stack to login screen using STACK.ONBOARDING
  * @param toastMessage - optional toast message to show on mount of login
  */
 export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
   root: {
     stack: {
-      id: STACK.LOGIN,
+      id: STACK.ONBOARDING,
       children: [
         {
           component: {
@@ -31,17 +32,48 @@ export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
 
 
 /**
- * Resets navigation stack to home screen using STACK.HOME
+ * Resets navigation stack to require update screen using STACK.REQUIRE_UDPATE
  */
-export const goHome = (passProps: HomeScreenProps = {}) => Navigation.setRoot({
+export const goToOnboarding = () => Navigation.setRoot({
   root: {
     stack: {
-      id: STACK.HOME,
+      id: STACK.ONBOARDING,
       children: [
         {
           component: {
-            name: HomeScreenName,
-            passProps,
+            name: OnboardingWelcomeScreenName,
+          },
+        },
+      ],
+    },
+  },
+});
+
+
+/**
+ * Resets navigation stack to home screen using STACK.HOME
+ */
+export const goHome = () => Navigation.setRoot({
+  root: {
+    bottomTabs: {
+      id: STACK.HOME,
+      children: [
+        {
+          stack: {
+            id: STACK.TAB_FEED,
+            children: [
+              {
+                component: {
+                  name: FeedScreenName,
+                },
+              },
+            ],
+            options: {
+              bottomTab: {
+                // TODO - update icon
+                icon: require('../../assets/images/icons/search.png'),
+              },
+            },
           },
         },
       ],

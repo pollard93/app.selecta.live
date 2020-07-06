@@ -2,9 +2,10 @@
  * Add stacks here, so they can be easily imported and used where needed
  */
 export enum STACK {
-  LOGIN = 'LOGIN',
+  ONBOARDING = 'ONBOARDING',
   REQUIRE_UDPATE = 'REQUIRE_UDPATE',
   HOME = 'HOME',
+  TAB_FEED = 'TAB_FEED',
   CHANNEL = 'CHANNEL',
 }
 

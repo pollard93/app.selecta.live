@@ -4,7 +4,7 @@ import { useGetStreamProfileQuery } from '../../API/query/getStreamProfile/getSt
 import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
 import StreamVideo from '../../components/Stream/StreamVideo/StreamVideo';
 
-interface StreamVideoScreenPropsE extends Partial<ScreenProps> {
+interface StreamVideoScreenPropsE extends ScreenProps {
   id: string;
 }
 export interface StreamVideoScreenProps extends StreamVideoScreenPropsE {}

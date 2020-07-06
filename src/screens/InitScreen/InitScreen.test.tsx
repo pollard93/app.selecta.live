@@ -29,6 +29,7 @@ describe('<InitScreen >', () => {
   let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
   let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
   let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
 
   afterEach(async () => {
     sandbox.restore();
@@ -41,6 +42,7 @@ describe('<InitScreen >', () => {
     goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
     goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
     goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
   });
 
 
@@ -230,6 +232,47 @@ describe('<InitScreen >', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
+
+    // Should not have goneHome
+    expect(goHomeSpy.callCount).to.equal(0);
+  });
+
+  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
+    /**
+     * Create mock client and force getSelf.requiresUpdate to be true
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => ({
+          requiresUpdate: null,
+          username: null,
+        }),
+      }),
+    });
+
+    // Store general token
+    writeGeneralTokenToCache(client);
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <InitScreen />
+      </ApolloProvider>,
+    );
+    wrapper.update();
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
+
+    // Pushnotifications should have been initialised
+    expect(pushNotificationInitSpy.callCount).to.equal(1);
+
+    // Pushnotifications should have been initialised
+    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
+
+    // Should have gone to OnboardingWelcomeScreen
+    expect(goToOnboardingSpy.callCount).to.equal(1);
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

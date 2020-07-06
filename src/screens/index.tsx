@@ -1,7 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { ApolloProvider } from 'react-apollo';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import ApolloClient from '../ApolloClient';
 import InitScreen from './InitScreen/InitScreen';
 import GlobalStyles from '../styles/stylesheets/GlobalStyles';
@@ -10,23 +11,55 @@ import RegisterScreen from './RegisterScreen/RegisterScreen';
 import HomeScreen from './HomeScreen/HomeScreen';
 import RequireUpdateScreen from './RequireUpdateScreen/RequireUpdateScreen';
 import ResetPasswordScreen from './ResetPasswordScreen/ResetPasswordScreen';
-import RequestResetPasswordScreen from './RequestResetPasswordScreen/RequestResetPasswordScreen';
+import RequestResetPasswordScreen from './RequestPasswordResetScreen/RequestPasswordResetScreen';
 import ToastProvider from '../modules/ToastProvider/ToastProvider';
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelScreen from './ChannelScreen/ChannelScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
 import PurchasesScreen from './PurchasesScreen/PurchasesScreen';
 import StreamVideoScreen from './StreamVideoScreen/StreamVideoScreen';
+import color from '../styles/definitions/color';
+import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
+import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
+import FeedScreen from './FeedScreen/FeedScreen';
 
-const wrapContext = (screenName, Component) => {
-  const wrapped = (props) => (
-    <SafeAreaView style={GlobalStyles.PageFill}>
+const wrapContext = (Component) => {
+  /**
+   * Wrap without SafeArea
+   */
+  if (Component.prototype.fullScreen) {
+    const wrapped = (props) => (
       <ApolloProvider client={ApolloClient}>
-        <ToastProvider screenName={screenName}>
-          <Component {...props} />
+        <ToastProvider screenName={Component.prototype.ScreenName}>
+          <View style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || color.mono.light }}>
+            <Component {...props} />
+          </View>
         </ToastProvider>
       </ApolloProvider>
-    </SafeAreaView>
+    );
+
+    // Allows static options to be called for react-native-navigation
+    (wrapped as any).options = Component.prototype.options;
+
+    return wrapped;
+  }
+
+
+  /**
+   * Wrap with SafeArea
+   */
+  const wrapped = (props) => (
+    <ApolloProvider client={ApolloClient}>
+      <ToastProvider screenName={Component.prototype.ScreenName}>
+        <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || color.mono.light }} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || color.mono.light }}>
+          <View style={GlobalStyles.PageFill}>
+            <Component {...props} />
+          </View>
+        </SafeAreaView>
+      </ToastProvider>
+    </ApolloProvider>
   );
 
   // Allows static options to be called for react-native-navigation
@@ -36,16 +69,20 @@ const wrapContext = (screenName, Component) => {
 };
 
 export const registerScreens = () => {
-  Navigation.registerComponent(InitScreen.prototype.ScreenName, () => wrapContext(InitScreen.prototype.ScreenName, InitScreen));
-  Navigation.registerComponent(LoginScreen.prototype.ScreenName, () => wrapContext(LoginScreen.prototype.ScreenName, LoginScreen));
-  Navigation.registerComponent(RegisterScreen.prototype.ScreenName, () => wrapContext(RegisterScreen.prototype.ScreenName, RegisterScreen));
-  Navigation.registerComponent(HomeScreen.prototype.ScreenName, () => wrapContext(HomeScreen.prototype.ScreenName, HomeScreen));
-  Navigation.registerComponent(RequireUpdateScreen.prototype.ScreenName, () => wrapContext(RequireUpdateScreen.prototype.ScreenName, RequireUpdateScreen));
-  Navigation.registerComponent(ResetPasswordScreen.prototype.ScreenName, () => wrapContext(ResetPasswordScreen.prototype.ScreenName, ResetPasswordScreen));
-  Navigation.registerComponent(RequestResetPasswordScreen.prototype.ScreenName, () => wrapContext(RequestResetPasswordScreen.prototype.ScreenName, RequestResetPasswordScreen));
-  Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen.prototype.ScreenName, ModalScreen));
-  Navigation.registerComponent(ChannelScreen.prototype.ScreenName, () => wrapContext(ChannelScreen.prototype.ScreenName, ChannelScreen));
-  Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen.prototype.ScreenName, ChannelLoginScreen));
-  Navigation.registerComponent(PurchasesScreen.prototype.ScreenName, () => wrapContext(PurchasesScreen.prototype.ScreenName, PurchasesScreen));
-  Navigation.registerComponent(StreamVideoScreen.prototype.ScreenName, () => wrapContext(StreamVideoScreen.prototype.ScreenName, StreamVideoScreen));
+  Navigation.registerComponent(InitScreen.prototype.ScreenName, () => wrapContext(InitScreen));
+  Navigation.registerComponent(LoginScreen.prototype.ScreenName, () => wrapContext(LoginScreen));
+  Navigation.registerComponent(RegisterScreen.prototype.ScreenName, () => wrapContext(RegisterScreen));
+  Navigation.registerComponent(HomeScreen.prototype.ScreenName, () => wrapContext(HomeScreen));
+  Navigation.registerComponent(RequireUpdateScreen.prototype.ScreenName, () => wrapContext(RequireUpdateScreen));
+  Navigation.registerComponent(ResetPasswordScreen.prototype.ScreenName, () => wrapContext(ResetPasswordScreen));
+  Navigation.registerComponent(RequestResetPasswordScreen.prototype.ScreenName, () => wrapContext(RequestResetPasswordScreen));
+  Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen));
+  Navigation.registerComponent(ChannelScreen.prototype.ScreenName, () => wrapContext(ChannelScreen));
+  Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen));
+  Navigation.registerComponent(PurchasesScreen.prototype.ScreenName, () => wrapContext(PurchasesScreen));
+  Navigation.registerComponent(StreamVideoScreen.prototype.ScreenName, () => wrapContext(StreamVideoScreen));
+  Navigation.registerComponent(OnboardingWelcomeScreen.prototype.ScreenName, () => wrapContext(OnboardingWelcomeScreen));
+  Navigation.registerComponent(OnboardingNotificationsScreen.prototype.ScreenName, () => wrapContext(OnboardingNotificationsScreen));
+  Navigation.registerComponent(OnboardingGetStartedScreen.prototype.ScreenName, () => wrapContext(OnboardingGetStartedScreen));
+  Navigation.registerComponent(FeedScreen.prototype.ScreenName, () => wrapContext(FeedScreen));
 };
