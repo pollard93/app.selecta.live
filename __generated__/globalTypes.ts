@@ -292,7 +292,6 @@ export interface FileWhereInput {
   id_not_starts_with?: string | null;
   id_ends_with?: string | null;
   id_not_ends_with?: string | null;
-  author?: UserWhereInput | null;
   mime?: string | null;
   mime_not?: string | null;
   mime_in?: string[] | null;

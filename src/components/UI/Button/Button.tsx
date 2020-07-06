@@ -1,10 +1,11 @@
-import React from 'react';
-import { TouchableOpacity, ButtonProps as BaseProps, ActivityIndicator, TouchableOpacityProps, View } from 'react-native';
+import React, { FC } from 'react';
+import { TouchableOpacity, ButtonProps as BaseProps, TouchableOpacityProps, View } from 'react-native';
 import Styles from './Button.style';
 import Body from '../Typography/components/Body';
 import Icon, { ICON } from '../Icon/Icon';
-import color from '../../../styles/definitions/color';
 import Gradient from '../Gradient/Gradient';
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import spacing from '../../../styles/definitions/spacing';
 
 
 export interface ButtonProps extends BaseProps {
@@ -14,7 +15,7 @@ export interface ButtonProps extends BaseProps {
   style?: TouchableOpacityProps['style'],
 }
 
-const Button = (props: ButtonProps) => {
+const Button: FC<ButtonProps> = (props) => {
   const type = props.type || 'PRIMARY';
 
 
@@ -36,11 +37,20 @@ const Button = (props: ButtonProps) => {
       )}
 
       {props.loading && (
-        <ActivityIndicator
-          size="small"
-          color={color.mono.light}
-          style={Styles.loading}
-        />
+        (
+          <LoadingIcon
+            size="small"
+            type={(() => {
+              switch (props.type) {
+                case 'LIGHT':
+                  return 'PRIMARY';
+                default:
+                  return 'LIGHT';
+              }
+            })()}
+            style={Styles.loading}
+          />
+        )
       )}
     </View>
   );

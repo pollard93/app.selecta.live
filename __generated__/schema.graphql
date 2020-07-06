@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Sat Jun 27 2020 15:08:56 GMT+0100 (British Summer Time)
+# timestamp: Mon Jun 29 2020 14:20:26 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -66,6 +66,8 @@ enum ChannelOrderByInput {
 type ChannelProfile {
   id: ID!
   name: String
+  description: String
+  coverImage: File
   profileImage: File
   following: Boolean
   followersEdge: Int
@@ -345,7 +347,6 @@ type FeedPayload {
 
 type File {
   id: ID
-  author: UserProfile
   mime: String
   url: Url
 }
@@ -365,7 +366,6 @@ input FileWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  author: UserWhereInput
   mime: String
   mime_not: String
   mime_in: [String!]
@@ -562,9 +562,10 @@ type ProductConfig {
 
 type Query {
   canViewStream(id: String!): Boolean!
+  getChannelFeed(id: String!): FeedPayload
   getChannelProfile(id: String!): ChannelProfile!
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
-  getChannelStreams(id: String!, first: Int, after: String): StreamProfilesPayLoad!
+  getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!

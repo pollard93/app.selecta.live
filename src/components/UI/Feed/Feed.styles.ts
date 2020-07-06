@@ -1,20 +1,15 @@
 /* eslint-disable camelcase */
 import { StyleSheet } from 'react-native';
-import spacing from '../../styles/definitions/spacing';
-import color from '../../styles/definitions/color';
-import { headerHeight } from '../UI/Headers/FeedHeader/FeedHeader.style';
+import spacing from '../../../styles/definitions/spacing';
+import color from '../../../styles/definitions/color';
 
 export default StyleSheet.create({
   heading: {
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.small,
     paddingVertical: spacing.small,
   },
   horizontalSeparator: {
     width: spacing.small,
-  },
-
-  flatlistContainer: {
-    paddingTop: headerHeight,
   },
 
   // background
@@ -27,16 +22,16 @@ export default StyleSheet.create({
 
   // flatList
   flatListHORIZONTAL: {
-    paddingLeft: spacing.base,
+    paddingLeft: spacing.small,
   },
   flatListHORIZONTAL_SMALL: {
-    marginBottom: spacing.base,
+    marginBottom: spacing.small,
   },
 
   // flatListContainer
   // eslint-disable-next-line camelcase
   flatListContainerHORIZONTAL_SMALL: {
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.small,
   },
 
   // horizontalArrow

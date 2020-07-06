@@ -1,19 +1,25 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React from 'react';
-import { Image, ImageStyle, ImageProps, StyleProp } from 'react-native';
+import { Image, ImageStyle, ImageProps, StyleProp, Animated } from 'react-native';
 import Styles from './Icon.style';
 
 export enum ICON {
   SEARCH = 'SEARCH',
   ARROW_FORWARD = 'ARROW_FORWARD',
+  ARROW_BACKWARD = 'ARROW_BACKWARD',
+  PROFILE = 'PROFILE',
+  WALLET = 'WALLET',
+  SHARE = 'SHARE',
+  PLUS = 'PLUS',
 }
 
 interface IconProps {
   name: ICON;
   size: 'xxsmall' | 'xsmall' | 'small' | 'regular' | 'large' | 'xlarge';
-  style?: StyleProp<ImageStyle>;
+  style?: Animated.WithAnimatedValue<StyleProp<ImageStyle>>;
   resizeMode?: ImageProps['resizeMode'];
+  animated?: boolean;
 }
 
 const Icon = (props: IconProps) => {
@@ -25,10 +31,35 @@ const Icon = (props: IconProps) => {
       case ICON.ARROW_FORWARD:
         return require('../../../assets/images/icons/arrow-forward.png');
 
+      case ICON.ARROW_BACKWARD:
+        return require('../../../assets/images/icons/arrow-backward.png');
+
+      case ICON.PROFILE:
+        return require('../../../assets/images/icons/profile.png');
+
+      case ICON.WALLET:
+        return require('../../../assets/images/icons/wallet.png');
+
+      case ICON.SHARE:
+        return require('../../../assets/images/icons/share.png');
+
+      case ICON.PLUS:
+        return require('../../../assets/images/icons/plus.png');
+
       default:
         return null;
     }
   })();
+
+  if (props.animated) {
+    return (
+      <Animated.Image
+        source={source}
+        resizeMode={props.resizeMode || 'contain'}
+        style={[Styles.base, Styles[props.name], Styles[props.size], props.style]}
+      />
+    );
+  }
 
   return (
     <Image

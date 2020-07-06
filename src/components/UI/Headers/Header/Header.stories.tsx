@@ -3,19 +3,19 @@
 import React, { useEffect } from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { View } from 'react-native';
-import FeedHeader from './FeedHeader';
+import Header from './Header';
 import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
 import { useGetSelfQuery, GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import GetSelfDecorator from '../../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('UI/Headers/FeedHeader', module)
+storiesOf('UI/Headers/Header', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]}>{getStory()}</View>)
-  .add('FeedHeader', () => (
-    <FeedHeader />
+  .add('Header', () => (
+    <Header />
   ))
-  .add('FeedHeader - no profile picture', () => {
+  .add('Header - no profile picture', () => {
     const TestComponent = () => {
       const { loading, error, data, client } = useGetSelfQuery();
 
@@ -39,14 +39,14 @@ storiesOf('UI/Headers/FeedHeader', module)
 
       if (loading || error || data.getSelf.profilePicture) return null;
 
-      return <FeedHeader />;
+      return <Header />;
     };
 
     return (
       <TestComponent />
     );
   })
-  .add('FeedHeader - 1000 credits', () => {
+  .add('Header - 1000 credits', () => {
     const TestComponent = () => {
       const { loading, error, data, client } = useGetSelfQuery();
 
@@ -70,7 +70,7 @@ storiesOf('UI/Headers/FeedHeader', module)
 
       if (loading || error || data.getSelf.credit < 1000) return null;
 
-      return <FeedHeader />;
+      return <Header />;
     };
 
     return (

@@ -1,10 +1,10 @@
 import React, { useState, FC } from 'react';
 import { QueryResult } from 'react-apollo';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 import styles from './LoadRetry.style';
-import color from '../../../styles/definitions/color';
 import H4 from '../Typography/components/H4';
 import Button from '../Button/Button';
+import LoadingIcon from '../LoadingIcon/LoadingIcon';
 
 interface LoadRetryProps extends Partial<QueryResult> {
   cover?: boolean; // Absolutely fills parent
@@ -17,7 +17,7 @@ const LoadRetry: FC<LoadRetryProps> = (props) => {
   if (loading) {
     return (
       <View style={[styles.wrap, props.cover && styles.cover]}>
-        <ActivityIndicator size="large" color={color.accent.primary} />
+        <LoadingIcon />
       </View>
     );
   }

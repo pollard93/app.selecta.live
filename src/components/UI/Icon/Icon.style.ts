@@ -33,4 +33,7 @@ export default StyleSheet.create({
   ARROW_FORWARD: {
     tintColor: undefined,
   },
+  ARROW_BACKWARD: {
+    tintColor: undefined,
+  },
 });

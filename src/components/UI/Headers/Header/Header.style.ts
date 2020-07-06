@@ -28,6 +28,13 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.small,
   },
+  left: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  back: {
+    marginRight: spacing.small,
+  },
   right: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -50,8 +57,16 @@ export default StyleSheet.create({
   },
   profilePicture: {
     aspectRatio: 1,
-    borderRadius: (headerHeight - spacing.large) / 2,
-    overflow: 'hidden',
     width: (headerHeight - spacing.large),
+  },
+  profilePictureInner: {
+    borderRadius: (headerHeight - spacing.large) / 2,
+    height: '100%',
+    overflow: 'hidden',
+    width: '100%',
+  },
+  profilePictureIcon: {
+    height: '100%',
+    width: '100%',
   },
 });

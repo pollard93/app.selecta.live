@@ -1,4 +1,4 @@
-import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle } from 'react-native-navigation';
+import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle, Options } from 'react-native-navigation';
 import { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
 import { LoginProps } from '../../components/Login/Login';
@@ -7,7 +7,7 @@ import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { FeedScreenName } from '../FeedScreen/FeedScreen';
+import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 
 
 /**
@@ -60,11 +60,11 @@ export const goHome = () => Navigation.setRoot({
       children: [
         {
           stack: {
-            id: STACK.TAB_FEED,
+            id: STACK.TAB_HOME,
             children: [
               {
                 component: {
-                  name: FeedScreenName,
+                  name: HomeFeedScreenName,
                 },
               },
             ],
@@ -134,7 +134,7 @@ export const pushScreen = <Props extends {}>(stack: STACK, layout: Layout<Props>
  * @param props - Props of screen class
  */
 type ExtractProps<P> = P extends FC<infer L> ? L : null;
-export const pushScreenV2 = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.push<ExtractProps<T>>(stack, {
+export const pushScreenV2 = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push<ExtractProps<T>>(stack, {
   component: {
     name: screen.prototype.ScreenName,
     passProps: props,
@@ -144,6 +144,7 @@ export const pushScreenV2 = <T extends FC>(stack: STACK, screen: T, props: Extra
           waitForRender: true,
         },
       },
+      ...options,
     },
   },
 });

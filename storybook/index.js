@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppRegistry } from 'react-native';
 import { getStorybookUI, configure, addDecorator } from '@storybook/react-native';
 import { ApolloProvider } from 'react-apollo';
@@ -8,6 +8,7 @@ import { Navigation } from 'react-native-navigation';
 import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
 import * as ScreenUtils from '../src/screens/utils';
+import { setSafeArea } from '../src/modules/SafeAreaInsets/SafeAreaInsets';
 
 import './rn-addons';
 
@@ -43,6 +44,31 @@ addDecorator((getStory) => (
   <ApolloProvider client={client}>
     {getStory()}
   </ApolloProvider>
+));
+
+
+/**
+ * Add safe area insets
+ */
+const SafeAreaInsetDecorator = (props) => {
+  const [, setState] = useState({});
+
+  useEffect(() => {
+    if (!global.safeAreaInsets) {
+      (async () => {
+        await setSafeArea();
+        setState({});
+      })();
+    }
+  }, []);
+
+  return global.safeAreaInsets ? props.children : null;
+};
+
+addDecorator((getStory) => (
+  <SafeAreaInsetDecorator>
+    {getStory()}
+  </SafeAreaInsetDecorator>
 ));
 
 

@@ -4,6 +4,7 @@
 
 import { cancelStream } from './resolvers/mutation/cancelStream/cancelStream';
 import { followChannel } from './resolvers/mutation/followChannel/followChannel';
+import { getChannelFeed } from './resolvers/query/getChannelFeed/getChannelFeed';
 import { getChannelProfiles } from './resolvers/query/getChannelProfiles/getChannelProfiles';
 import { getChannelSelf } from './resolvers/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfs } from './resolvers/query/getChannelSelfs/getChannelSelfs';
@@ -33,6 +34,7 @@ export default {
     withdrawFunds,
   }),
   Query: () => ({
+    getChannelFeed,
     getChannelProfiles,
     getChannelSelf,
     getChannelSelfs,

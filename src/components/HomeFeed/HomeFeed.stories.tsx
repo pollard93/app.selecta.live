@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import Feed from './Feed';
+import HomeFeed from './HomeFeed';
 import GetSelfDecorator from '../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('Feed', module)
+storiesOf('HomeFeed', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .add('Feed', () => (
-    <Feed />
+  .add('HomeFeed', () => (
+    <HomeFeed />
   ));

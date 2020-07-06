@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generated__/globalTypes";
+
 // ====================================================
 // GraphQL query operation: getChannelStreams
 // ====================================================
@@ -49,6 +51,8 @@ export interface getChannelStreams {
 
 export interface getChannelStreamsVariables {
   id: string;
+  where?: StreamWhereInput | null;
   first?: number | null;
   after?: string | null;
+  orderBy?: StreamOrderByInput | null;
 }

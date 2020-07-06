@@ -15,6 +15,7 @@ import * as ScreenUtilsModule from '../utils';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
 import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
 import InAppPurchases from '../../modules/InAppPurchases';
+import * as SafeAreaInsetsModule from '../../modules/SafeAreaInsets/SafeAreaInsets';
 
 describe('<InitScreen >', () => {
   /**
@@ -30,6 +31,7 @@ describe('<InitScreen >', () => {
   let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
   let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   let goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
+  let setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
 
   afterEach(async () => {
     sandbox.restore();
@@ -43,6 +45,7 @@ describe('<InitScreen >', () => {
     goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
     goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
     goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
+    setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
   });
 
 
@@ -85,6 +88,13 @@ describe('<InitScreen >', () => {
 
     expect(getTokenSpy.callCount).to.equal(1);
     expect(goToLoginSpy.callCount).to.equal(1);
+
+    /**
+     * Get safearea should always be called
+     */
+    expect(global.safeAreaInsets).to.be.undefined;
+    expect(setSafeAreaSpy.callCount).to.equal(1);
+    expect(global.safeAreaInsets).to.not.be.null;
   });
 
   it('should goHome with stored general token', async () => {

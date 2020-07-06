@@ -40,6 +40,7 @@ export interface getStreamProfiles_getStreamProfiles_streams {
   channel: getStreamProfiles_getStreamProfiles_streams_channel | null;
   image: getStreamProfiles_getStreamProfiles_streams_image | null;
   timeFrom: any | null;
+  timeTo: any | null;
   tags: (getStreamProfiles_getStreamProfiles_streams_tags | null)[] | null;
 }
 
