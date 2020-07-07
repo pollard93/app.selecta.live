@@ -4,7 +4,7 @@ import spacing from '../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   wrap: {
-    backgroundColor: 'yellow',
+    backgroundColor: color.mono.pale.light,
     flex: 1,
   },
   separator: {

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
@@ -17,7 +17,7 @@ interface StreamMessagesProps {
   id: string;
 }
 
-const StreamMessages = (props: StreamMessagesProps) => {
+const StreamMessages: FC<StreamMessagesProps> = (props) => {
   const variables = {
     id: props.id,
     first: 10,
@@ -76,8 +76,8 @@ const StreamMessages = (props: StreamMessagesProps) => {
               return prev;
             }
           },
-          onError: (...args) => {
-            console.log('SUB ERROR', args);
+          onError: () => {
+            // Die silently
           },
         }}
       />

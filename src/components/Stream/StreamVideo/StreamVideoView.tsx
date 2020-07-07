@@ -16,7 +16,6 @@ interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile;
   query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
-  updatePosition: (position: number) => void;
   toggleFullScreen: () => void;
   isFullScreen: boolean;
 }
@@ -73,26 +72,35 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
 
 
   /**
-   * Current position is held in state
-   * A ref is required for props.updatePosition below
+   * Updates STREAM_PROFILE_FRAGMENT stream.position value
+   * Used for slider position and other components to listen to the changes in position
    */
-  const [currentPosition, setCurrentPosition] = useState(props.data.position);
-  const currentPositionRef = useRef(currentPosition);
+  const updateLocalPosition = (position: number) => {
+    const currentCachedPosition = props.data.position;
+    const newPosition = Math.round(position);
+    if (currentCachedPosition !== newPosition) {
+      /**
+       * Update cache
+       */
+      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+      });
 
-
-  /**
-   * On unmount
-   * If the video is not live
-   * updatePosition
-   */
-  useEffect(() => {
-    if (live) return undefined;
-    return () => {
-      if (currentPositionRef.current != null) {
-        props.updatePosition(currentPositionRef.current);
-      }
-    };
-  }, [live]);
+      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+        data: {
+          ...data,
+          position: newPosition,
+        },
+      });
+    }
+  };
 
 
   /**
@@ -157,18 +165,18 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       MusicControl.on(Command.skipForward, () => {
-        player.current.seek(currentPosition + 15);
+        player.current.seek(props.data.position + 15);
       });
 
       MusicControl.on(Command.skipBackward, () => {
-        player.current.seek(currentPosition - 15);
+        player.current.seek(props.data.position - 15);
       });
 
       MusicControl.on(Command.seek, (pos) => {
         player.current.seek(pos);
       });
     }
-  }, [currentPosition]);
+  }, [props.data.position]);
 
 
   /**
@@ -176,7 +184,6 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
    * When the new url is loaded, it will seek to that position
    */
   const toggleVideoEnabled = () => {
-    props.updatePosition(currentPosition);
     setVideoEnabled(!videoEnabled);
   };
 
@@ -223,8 +230,8 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
           /**
            * If there is a position on load then try and seek to it
            */
-          if (currentPosition) {
-            player.current.seek(currentPosition);
+          if (props.data.position) {
+            player.current.seek(props.data.position);
           }
 
 
@@ -287,35 +294,8 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         }}
         onProgress={((args) => {
           if (live === false) {
-            const { currentTime } = args;
-            setCurrentPosition(currentTime);
-            currentPositionRef.current = currentTime;
+            updateLocalPosition(args.currentTime);
             setPlayableDuration(args.playableDuration);
-
-            const currentCachedPosition = props.data.position;
-            const newPosition = Math.round(currentTime);
-            if (currentCachedPosition !== newPosition) {
-              /**
-               * Update cache
-               */
-              const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-                fragmentName: 'STREAM_PROFILE_FRAGMENT',
-                // eslint-disable-next-line no-underscore-dangle
-                id: `${props.data.__typename}:${props.data.id}`,
-                fragment: STREAM_PROFILE_FRAGMENT,
-              });
-
-              client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-                fragmentName: 'STREAM_PROFILE_FRAGMENT',
-                // eslint-disable-next-line no-underscore-dangle
-                id: `${props.data.__typename}:${props.data.id}`,
-                fragment: STREAM_PROFILE_FRAGMENT,
-                data: {
-                  ...data,
-                  position: newPosition,
-                },
-              });
-            }
 
 
             /**
@@ -324,7 +304,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
              */
             if (Platform.OS === 'android') {
               MusicControl.updatePlayback({
-                elapsedTime: currentTime,
+                elapsedTime: args.currentTime,
               });
             }
           }
@@ -341,9 +321,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
            */
           setRate(0);
           player.current.seek(0);
-          setCurrentPosition(0);
-          currentPositionRef.current = 0;
-          props.updatePosition(0);
+          updateLocalPosition(0);
 
           if (Platform.OS === 'android') {
             MusicControl.updatePlayback({
@@ -366,7 +344,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
         duration={duration}
-        position={currentPosition}
+        position={props.data.position}
         onSeek={(position) => player.current?.seek(position)}
         playableDuration={playableDuration}
         isLoading={loading}

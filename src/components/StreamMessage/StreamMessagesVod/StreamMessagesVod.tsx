@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
 import React, { FC, useState, useEffect, useRef } from 'react';
-import { View, Text } from 'react-native';
-import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
+import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { GET_STREAM_MESSAGES_VOD_QUERY, useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
-import { getStreamMessagesVodVariables, getStreamMessagesVod, getStreamMessagesVod_getStreamMessagesVod_messages } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';
+import { useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
+import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
 import styles from './StreamMessagesVod.styles';
-import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 
@@ -22,32 +20,83 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
     },
   });
 
+
   /**
    * On init, get 20 messages from the current position
    */
-  const variables = useRef<getStreamMessagesVodVariables>({
+  const [variables, setVariables] = useState<getStreamMessagesVodVariables>({
     id: props.id,
     from: getStreamProfile.position
-      ? new Date(new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000).toISOString()
+      ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
       : getStreamProfile.timeFrom,
     last: 20,
-    after: null,
-  }).current;
+    before: null,
+  });
+
+
+  const cancelFetchMore = useRef(false);
+  const fetchingMore = useRef(false);
+  const noMoreToFetch = useRef(false);
+  const currentPosition = useRef(getStreamProfile.position);
+
+
+  /**
+   * If the position changes by more than 1 second
+   * The user has seeked the stream
+   * Set the variables and reset refs
+   */
+  useEffect(() => {
+    if (Math.abs(currentPosition.current - getStreamProfile.position) > 1) {
+      /**
+       * Set the variables to stop any mutations to the cache while the updates variables are requested
+       * These will be reset at in the useEffect below
+       */
+      cancelFetchMore.current = true;
+      fetchingMore.current = true;
+
+      setVariables({
+        id: props.id,
+        from: getStreamProfile.position
+          ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
+          : getStreamProfile.timeFrom,
+        last: 20,
+        before: null,
+      });
+    }
+    currentPosition.current = getStreamProfile.position;
+  }, [getStreamProfile.position]);
+
+
+  /**
+   * When variables change
+   * Reset all values
+   */
+  useEffect(() => {
+    cancelFetchMore.current = false;
+    fetchingMore.current = false;
+    noMoreToFetch.current = false;
+  }, [variables]);
 
 
   const queryResult = useGetStreamMessagesVodQuery({
     variables,
   });
 
-  const fetchingMore = useRef(false);
-  const noMoreToFetch = useRef(false);
 
-  if (queryResult.loading || queryResult.error || !queryResult.data?.getStreamMessagesVod) {
+  if (queryResult.loading || queryResult.error) {
     return <LoadRetry {...queryResult} />;
   }
 
 
-  console.log('getStreamProfile.position', getStreamProfile.position);
+  if (!queryResult.data?.getStreamMessagesVod) {
+    return <LoadRetry loading />;
+  }
+
+
+  /**
+   * Get the current position date
+   * Reduce the query results messages to get the ones that need to be displayed
+   */
   const currentPositionTime = new Date(new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000);
   const messagesToDisplay = queryResult.data.getStreamMessagesVod.messages.reduce((a, c) => {
     if (new Date(c.createdAt) <= currentPositionTime) {
@@ -55,8 +104,6 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
     }
     return a;
   }, []);
-  console.log('messagesToDisplay', messagesToDisplay.length);
-  console.log('queryResult.data.getStreamMessagesVod.messages.length', queryResult.data.getStreamMessagesVod.messages.length);
 
 
   /**
@@ -71,36 +118,37 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
     (async () => {
       // Set fetchingMore
       fetchingMore.current = true;
-      console.log('fetching more');
 
       try {
         await queryResult.fetchMore({
           variables: {
             ...variables,
-            after: queryResult.data.getStreamMessagesVod.messages[0].id,
+            before: queryResult.data.getStreamMessagesVod.messages[0].id,
           },
           updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            console.log('fetchMoreResult', fetchMoreResult);
+            try {
+              if (!fetchMoreResult || cancelFetchMore.current) return prev;
 
-            const newMessages = [...fetchMoreResult.getStreamMessagesVod.messages, ...prev.getStreamMessagesVod.messages];
-            if (newMessages.length >= fetchMoreResult.getStreamMessagesVod.count) {
-              noMoreToFetch.current = true;
+              const newMessages = [...fetchMoreResult.getStreamMessagesVod.messages, ...prev.getStreamMessagesVod.messages];
+              if (newMessages.length >= fetchMoreResult.getStreamMessagesVod.count) {
+                noMoreToFetch.current = true;
+              }
+
+              return {
+                getStreamMessagesVod: {
+                  ...prev.getStreamMessagesVod,
+                  ...fetchMoreResult.getStreamMessagesVod,
+                  messages: newMessages,
+                },
+              };
+            } catch (e) {
+              return prev;
             }
-
-            return {
-              getStreamMessagesVod: {
-                ...prev.getStreamMessagesVod,
-                ...fetchMoreResult.getStreamMessagesVod,
-                messages: newMessages,
-              },
-            };
           },
         });
 
         fetchingMore.current = false;
       } catch (e) {
-        console.log('e', e);
         fetchingMore.current = false;
       }
     })();
@@ -114,7 +162,9 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
         inverted
         data={messagesToDisplay}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <Text>{item.createdAt}</Text>}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        contentContainerStyle={styles.contentContainer}
+        renderItem={({ item }) => <StreamMessageListItem data={item} />}
         keyExtractor={(item) => item.id}
       />
     </View>

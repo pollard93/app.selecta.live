@@ -189,7 +189,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               }
             }}
           >
-            <Icon name={props.isPlaying ? ICON.PAUSE : ICON.PLAY} size="large" style={{ tintColor: 'white' }} />
+            <Icon name={props.isPlaying ? ICON.PAUSE : ICON.PLAY} size="large" style={Styles.icon} />
           </TouchableOpacity>
         </View>
 
@@ -197,6 +197,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
         {/* Toggle fullscreen / toggle enable video button */}
         {!props.isAudioOnly && (
           <View
+            // eslint-disable-next-line react-native/no-inline-styles
             style={[StyleSheet.absoluteFillObject, Styles.videoEnabled, { marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
             pointerEvents="box-none"
           >

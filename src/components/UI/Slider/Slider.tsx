@@ -46,7 +46,7 @@ const Slider: FC<SliderProps> = (props) => {
         if (value >= props.minimumValue && value <= props.maximumValue) {
           clearTimeout(valueChangeTimeout.current);
           valueChangeTimeout.current = setTimeout(() => {
-            props.onValueChange(value);
+            props.onValueChange(Math.floor(value));
           }, 10);
         }
       }
@@ -136,8 +136,9 @@ const Slider: FC<SliderProps> = (props) => {
 
           case State.END:
             if (props.onSlidingComplete) {
+              clearTimeout(valueChangeTimeout.current);
               // eslint-disable-next-line no-underscore-dangle
-              const value = mapRange((touchX as any)._value, 0, trackWidth, props.minimumValue, props.maximumValue);
+              const value = mapRange((clampThumb as any)._parent._value, 0, trackWidth, props.minimumValue, props.maximumValue);
               if (value != null) {
                 props.onSlidingComplete(value);
               }

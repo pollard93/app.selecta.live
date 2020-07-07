@@ -13,6 +13,7 @@ import Drawer from '../../UI/Drawer/Drawer';
 import StreamMessagesVod from '../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
+import StreamMessages from '../../StreamMessage/StreamMessages/StreamMessages';
 
 
 interface StreamProfileViewProps {
@@ -46,7 +47,16 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
    * Should only load video if user is a consumer and it hasn't been cancelled
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const shouldLoadVideo = () => props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled !== null;
+  const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null;
+
+
+  /**
+   * StreamMessagesVod must be rendered if stream has finished
+   * StreamMessages must be rendered if stream is live
+   */
+  const now = new Date();
+  const hasFinished = new Date(props.queryResult.data.getStreamProfile.timeTo) < now;
+  const isLive = !hasFinished && new Date(props.queryResult.data.getStreamProfile.timeFrom) <= now && new Date(props.queryResult.data.getStreamProfile.timeTo) >= now;
 
 
   return (
@@ -78,7 +88,8 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
             minHeight={drawerLayout.minHeight}
             maxHeight={drawerLayout.maxHeight}
           >
-            <StreamMessagesVod id={props.queryResult.data.getStreamProfile.id} />
+            {hasFinished && <StreamMessagesVod id={props.queryResult.data.getStreamProfile.id} />}
+            {isLive && <StreamMessages id={props.queryResult.data.getStreamProfile.id} />}
           </Drawer>
         </FadeInView>
       )}
