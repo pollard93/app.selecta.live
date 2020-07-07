@@ -3,11 +3,13 @@ import Video from 'selecta.components.react-native-video';
 import { Platform, AppState } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
-import { QueryHookOptions } from 'react-apollo';
+import { QueryHookOptions, useApolloClient } from 'react-apollo';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import StreamControls from './components/StreamControls/StreamControls';
 import Styles from './StreamVideo.styles';
+import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 
 
 interface StreamVideoViewProps {
@@ -25,6 +27,8 @@ interface StreamVideoViewProps {
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
+  const client = useApolloClient();
+
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -287,6 +291,31 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             setCurrentPosition(currentTime);
             currentPositionRef.current = currentTime;
             setPlayableDuration(args.playableDuration);
+
+            const currentCachedPosition = props.data.position;
+            const newPosition = Math.round(currentTime);
+            if (currentCachedPosition !== newPosition) {
+              /**
+               * Update cache
+               */
+              const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+                fragmentName: 'STREAM_PROFILE_FRAGMENT',
+                // eslint-disable-next-line no-underscore-dangle
+                id: `${props.data.__typename}:${props.data.id}`,
+                fragment: STREAM_PROFILE_FRAGMENT,
+              });
+
+              client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+                fragmentName: 'STREAM_PROFILE_FRAGMENT',
+                // eslint-disable-next-line no-underscore-dangle
+                id: `${props.data.__typename}:${props.data.id}`,
+                fragment: STREAM_PROFILE_FRAGMENT,
+                data: {
+                  ...data,
+                  position: newPosition,
+                },
+              });
+            }
 
 
             /**

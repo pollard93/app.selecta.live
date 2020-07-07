@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri Jul 03 2020 15:00:57 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 07 2020 15:01:23 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -31,6 +31,7 @@ type Channel {
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  relatedChannels(where: ChannelRelatedChannelsWhereInput, orderBy: ChannelRelatedChannelsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChannelRelatedChannels!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -79,6 +80,50 @@ type ChannelProfile {
 type ChannelProfilesPayLoad {
   channels: [ChannelProfile!]!
   count: Int!
+}
+
+type ChannelRelatedChannels {
+  id: ID!
+  channel: Channel!
+  related: Channel!
+  score: Float!
+}
+
+enum ChannelRelatedChannelsOrderByInput {
+  id_ASC
+  id_DESC
+  score_ASC
+  score_DESC
+}
+
+input ChannelRelatedChannelsWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  channel: ChannelWhereInput
+  related: ChannelWhereInput
+  score: Float
+  score_not: Float
+  score_in: [Float!]
+  score_not_in: [Float!]
+  score_lt: Float
+  score_lte: Float
+  score_gt: Float
+  score_gte: Float
+  AND: [ChannelRelatedChannelsWhereInput!]
+  OR: [ChannelRelatedChannelsWhereInput!]
+  NOT: [ChannelRelatedChannelsWhereInput!]
 }
 
 type ChannelSelf {
@@ -210,6 +255,9 @@ input ChannelWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  relatedChannels_every: ChannelRelatedChannelsWhereInput
+  relatedChannels_some: ChannelRelatedChannelsWhereInput
+  relatedChannels_none: ChannelRelatedChannelsWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -572,8 +620,6 @@ type Query {
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
-  getRecommendedChannelProfiles(first: Int, page: Int): RecommendedChannelsPayload
-  getRecommendedStreamProfiles(first: Int, page: Int): RecommendedStreamsPayload!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -581,7 +627,6 @@ type Query {
   isUsernameUnique(username: String!): Boolean
   validateResetToken: Boolean
   verifyUser: Boolean
-  test: Boolean
   channelNameExists(name: String!): Boolean!
   getChannelSelf: ChannelSelf!
   getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
@@ -591,6 +636,7 @@ type Query {
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
   getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
+  getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
 }
 
 type RecommendedChannelsPayload {
@@ -722,6 +768,7 @@ type Stream {
   audioOnly: Boolean
   positionRecords(where: StreamPositionRecordWhereInput, orderBy: StreamPositionRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamPositionRecord!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  relatedStreams(where: StreamRelatedStreamsWhereInput, orderBy: StreamRelatedStreamsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamRelatedStreams!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -938,6 +985,50 @@ type StreamProfile {
 type StreamProfilesPayLoad {
   streams: [StreamProfile!]!
   count: Int!
+}
+
+type StreamRelatedStreams {
+  id: ID!
+  stream: Stream!
+  related: Stream!
+  score: Float!
+}
+
+enum StreamRelatedStreamsOrderByInput {
+  id_ASC
+  id_DESC
+  score_ASC
+  score_DESC
+}
+
+input StreamRelatedStreamsWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  stream: StreamWhereInput
+  related: StreamWhereInput
+  score: Float
+  score_not: Float
+  score_in: [Float!]
+  score_not_in: [Float!]
+  score_lt: Float
+  score_lte: Float
+  score_gt: Float
+  score_gte: Float
+  AND: [StreamRelatedStreamsWhereInput!]
+  OR: [StreamRelatedStreamsWhereInput!]
+  NOT: [StreamRelatedStreamsWhereInput!]
 }
 
 type StreamSelf {
@@ -1189,6 +1280,9 @@ input StreamWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  relatedStreams_every: StreamRelatedStreamsWhereInput
+  relatedStreams_some: StreamRelatedStreamsWhereInput
+  relatedStreams_none: StreamRelatedStreamsWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1316,6 +1410,7 @@ type User {
   requestedChannels(where: RequestedChannelWhereInput, orderBy: RequestedChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RequestedChannel!]
   streamsConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   streamsLiveConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
+  tags(where: UserTagsWhereInput, orderBy: UserTagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTags!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1359,6 +1454,67 @@ type UserSelf {
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
   requiresUpdate: AppUpdatePayload
+}
+
+type UserTags {
+  id: ID!
+  uuid: String!
+  user: User!
+  tag: Tag!
+  order: Int!
+}
+
+enum UserTagsOrderByInput {
+  id_ASC
+  id_DESC
+  uuid_ASC
+  uuid_DESC
+  order_ASC
+  order_DESC
+}
+
+input UserTagsWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  uuid: String
+  uuid_not: String
+  uuid_in: [String!]
+  uuid_not_in: [String!]
+  uuid_lt: String
+  uuid_lte: String
+  uuid_gt: String
+  uuid_gte: String
+  uuid_contains: String
+  uuid_not_contains: String
+  uuid_starts_with: String
+  uuid_not_starts_with: String
+  uuid_ends_with: String
+  uuid_not_ends_with: String
+  user: UserWhereInput
+  tag: TagWhereInput
+  order: Int
+  order_not: Int
+  order_in: [Int!]
+  order_not_in: [Int!]
+  order_lt: Int
+  order_lte: Int
+  order_gt: Int
+  order_gte: Int
+  AND: [UserTagsWhereInput!]
+  OR: [UserTagsWhereInput!]
+  NOT: [UserTagsWhereInput!]
 }
 
 input UserWhereInput {
@@ -1475,6 +1631,9 @@ input UserWhereInput {
   streamsLiveConsuming_every: StreamWhereInput
   streamsLiveConsuming_some: StreamWhereInput
   streamsLiveConsuming_none: StreamWhereInput
+  tags_every: UserTagsWhereInput
+  tags_some: UserTagsWhereInput
+  tags_none: UserTagsWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

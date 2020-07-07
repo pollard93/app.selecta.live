@@ -10,7 +10,7 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import FadeInView from '../../UI/FadeInView/FadeInView';
 import Drawer from '../../UI/Drawer/Drawer';
-import StreamMessages from '../../StreamMessage/StreamMessages/StreamMessages';
+import StreamMessagesVod from '../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
 
@@ -78,7 +78,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
             minHeight={drawerLayout.minHeight}
             maxHeight={drawerLayout.maxHeight}
           >
-            <StreamMessages id={props.queryResult.data.getStreamProfile.id} />
+            <StreamMessagesVod id={props.queryResult.data.getStreamProfile.id} />
           </Drawer>
         </FadeInView>
       )}
