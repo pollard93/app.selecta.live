@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Jul 07 2020 15:01:23 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 07 2020 19:48:21 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -470,6 +470,7 @@ type Mutation {
   deleteNotification(id: String!): Boolean
   login(email: String!, password: String!): AuthPayload
   loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
+  putStreamComment(id: String!, comment: String!): StreamCommentClient
   putStreamMessage(id: String!, message: String!): StreamMessageClient
   readNotification(id: String!, unRead: Boolean): Notification!
   register(email: String!, password: String!): AuthPayload
@@ -635,6 +636,7 @@ type Query {
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
   getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
+  getStreamComments(id: String!, first: Int, after: String): StreamCommentClientPayload
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
 }
@@ -763,6 +765,7 @@ type Stream {
   cancelled: DateTime
   creditRevenue: Int
   messages(where: StreamMessageWhereInput, orderBy: StreamMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamMessage!]
+  comments(where: StreamCommentWhereInput, orderBy: StreamCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamComment!]
   userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
   approved: DateTime
   audioOnly: Boolean
@@ -771,6 +774,79 @@ type Stream {
   relatedStreams(where: StreamRelatedStreamsWhereInput, orderBy: StreamRelatedStreamsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamRelatedStreams!]
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type StreamComment {
+  id: ID!
+  stream: Stream!
+  user: User
+  comment: String!
+  createdAt: DateTime!
+}
+
+type StreamCommentClient {
+  id: ID!
+  user: UserProfile
+  comment: String
+  createdAt: DateTime
+}
+
+type StreamCommentClientPayload {
+  comments: [StreamCommentClient!]!
+  count: Int!
+}
+
+enum StreamCommentOrderByInput {
+  id_ASC
+  id_DESC
+  comment_ASC
+  comment_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+input StreamCommentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  stream: StreamWhereInput
+  user: UserWhereInput
+  comment: String
+  comment_not: String
+  comment_in: [String!]
+  comment_not_in: [String!]
+  comment_lt: String
+  comment_lte: String
+  comment_gt: String
+  comment_gte: String
+  comment_contains: String
+  comment_not_contains: String
+  comment_starts_with: String
+  comment_not_starts_with: String
+  comment_ends_with: String
+  comment_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [StreamCommentWhereInput!]
+  OR: [StreamCommentWhereInput!]
+  NOT: [StreamCommentWhereInput!]
 }
 
 type StreamMessage {
@@ -1261,6 +1337,9 @@ input StreamWhereInput {
   messages_every: StreamMessageWhereInput
   messages_some: StreamMessageWhereInput
   messages_none: StreamMessageWhereInput
+  comments_every: StreamCommentWhereInput
+  comments_some: StreamCommentWhereInput
+  comments_none: StreamCommentWhereInput
   userRecords_every: StreamUserRecordWhereInput
   userRecords_some: StreamUserRecordWhereInput
   userRecords_none: StreamUserRecordWhereInput

@@ -39,9 +39,13 @@ function loadStories() {
 	require('../src/components/Stream/StreamUrl/StreamUrl.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories');
+	require('../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories');
+	require('../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories');
+	require('../src/components/StreamComment/StreamComments/StreamComments.stories');
 	require('../src/components/StreamMessage/CreateStreamMessage/CreateStreamMessage.stories');
 	require('../src/components/StreamMessage/StreamMessageListItem/StreamMessageListItem.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
+	require('../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories');
 	require('../src/components/UI/Button/Button.stories');
 	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
@@ -99,9 +103,13 @@ const stories = [
 	'../src/components/Stream/StreamUrl/StreamUrl.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories',
+	'../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories',
+	'../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories',
+	'../src/components/StreamComment/StreamComments/StreamComments.stories',
 	'../src/components/StreamMessage/CreateStreamMessage/CreateStreamMessage.stories',
 	'../src/components/StreamMessage/StreamMessageListItem/StreamMessageListItem.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
+	'../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories',
 	'../src/components/UI/Button/Button.stories',
 	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',

@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 import { useMutation, MutationHookOptions } from 'react-apollo';
-import { putStreamMessage, putStreamMessageVariables } from './__generated__/putStreamMessage';
-import { STREAM_MESSAGE_FRAGMENT } from '../../fragments/StreamMessage';
+import { putStreamComment, putStreamCommentVariables } from './__generated__/putStreamComment';
+import { STREAM_COMMENT_FRAGMENT } from '../../fragments/StreamComment';
 
-export const PUT_STREAM_MESSAGE_MUTATION = gql`
-  mutation putStreamMessage($id: String!, $message: String!){
-    putStreamMessage(id: $id, message: $message){
-      ...STREAM_MESSAGE_FRAGMENT
+export const PUT_STREAM_COMMENT_MUTATION = gql`
+  mutation putStreamComment($id: String!, $comment: String!){
+    putStreamComment(id: $id, comment: $comment){
+      ...STREAM_COMMENT_FRAGMENT
     }
   },
-  ${STREAM_MESSAGE_FRAGMENT}
+  ${STREAM_COMMENT_FRAGMENT}
 `;
 
-export const usePutStreamMessageMutation = (options?: MutationHookOptions<putStreamMessage, putStreamMessageVariables>) => useMutation(PUT_STREAM_MESSAGE_MUTATION, options);
+export const usePutStreamCommentMutation = (options?: MutationHookOptions<putStreamComment, putStreamCommentVariables>) => useMutation(PUT_STREAM_COMMENT_MUTATION, options);

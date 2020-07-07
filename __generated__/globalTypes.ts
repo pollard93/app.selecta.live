@@ -488,6 +488,50 @@ export interface RequestedChannelWhereInput {
   NOT?: RequestedChannelWhereInput[] | null;
 }
 
+export interface StreamCommentWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  stream?: StreamWhereInput | null;
+  user?: UserWhereInput | null;
+  comment?: string | null;
+  comment_not?: string | null;
+  comment_in?: string[] | null;
+  comment_not_in?: string[] | null;
+  comment_lt?: string | null;
+  comment_lte?: string | null;
+  comment_gt?: string | null;
+  comment_gte?: string | null;
+  comment_contains?: string | null;
+  comment_not_contains?: string | null;
+  comment_starts_with?: string | null;
+  comment_not_starts_with?: string | null;
+  comment_ends_with?: string | null;
+  comment_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  AND?: StreamCommentWhereInput[] | null;
+  OR?: StreamCommentWhereInput[] | null;
+  NOT?: StreamCommentWhereInput[] | null;
+}
+
 export interface StreamMessageWhereInput {
   id?: string | null;
   id_not?: string | null;
@@ -797,6 +841,9 @@ export interface StreamWhereInput {
   messages_every?: StreamMessageWhereInput | null;
   messages_some?: StreamMessageWhereInput | null;
   messages_none?: StreamMessageWhereInput | null;
+  comments_every?: StreamCommentWhereInput | null;
+  comments_some?: StreamCommentWhereInput | null;
+  comments_none?: StreamCommentWhereInput | null;
   userRecords_every?: StreamUserRecordWhereInput | null;
   userRecords_some?: StreamUserRecordWhereInput | null;
   userRecords_none?: StreamUserRecordWhereInput | null;
