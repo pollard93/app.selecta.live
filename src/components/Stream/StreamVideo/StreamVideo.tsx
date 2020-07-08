@@ -8,6 +8,7 @@ import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../.
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
 import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
 import { ScreenProps } from '../../../screens/utils/interfaces';
+import { useStreamStart } from '../../../utils/streamFunctions';
 
 export interface StreamVideoProps extends ScreenProps {
   data: getStreamProfile_getStreamProfile;
@@ -112,33 +113,9 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
 
 
   /**
-   * If stream has not yet started
-   * Get the time is does start and set a timeout to refresh the view when it does
+   * When the stream starts, if it hasn't already, get a new url
    */
-  useEffect(() => {
-    const now = new Date();
-    const startTime = new Date(props.data.timeFrom);
-    if (new Date(props.data.timeFrom) < now) return undefined;
-
-    /**
-     * Get how long until start time
-     */
-    const timeToStart = startTime.getTime() - now.getTime();
-
-    /**
-     * setTimeout to refetch stream url
-     */
-    const id = setTimeout(() => {
-      query();
-    }, timeToStart);
-
-    /**
-     * Clear timeout on cleanup
-     */
-    return () => {
-      clearTimeout(id);
-    };
-  }, []);
+  useStreamStart(props.data.timeFrom, () => query());
 
 
   /**

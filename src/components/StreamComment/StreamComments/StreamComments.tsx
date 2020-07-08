@@ -32,6 +32,7 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
         renderItem={({ item }) => (
           <StreamCommentListItem data={item} />
         )}
+        debug
         FlatListProps={{
           inverted: true,
           ItemSeparatorComponent: () => <View style={styles.separator} />,

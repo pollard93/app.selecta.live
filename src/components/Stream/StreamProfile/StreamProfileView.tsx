@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useRef, useState, useMemo } from 'react';
 import { QueryResult } from 'react-apollo';
 import { Dimensions, SafeAreaView, View } from 'react-native';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
@@ -10,10 +10,9 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import FadeInView from '../../UI/FadeInView/FadeInView';
 import Drawer from '../../UI/Drawer/Drawer';
-import StreamMessagesVod from '../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
-import StreamMessages from '../../StreamMessage/StreamMessages/StreamMessages';
+import StreamCommunication from './components/StreamCommunication/StreamCommunication';
 
 
 interface StreamProfileViewProps {
@@ -27,7 +26,7 @@ interface StreamProfileViewProps {
 const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const { headerHeight, headerZindex } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
-  const windowHeight = useRef(Dimensions.get('window').height).current;
+  const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
 
   if (props.queryResult.loading) {
@@ -50,15 +49,6 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null;
 
 
-  /**
-   * StreamMessagesVod must be rendered if stream has finished
-   * StreamMessages must be rendered if stream is live
-   */
-  const now = new Date();
-  const hasFinished = new Date(props.queryResult.data.getStreamProfile.timeTo) < now;
-  const isLive = !hasFinished && new Date(props.queryResult.data.getStreamProfile.timeFrom) <= now && new Date(props.queryResult.data.getStreamProfile.timeTo) >= now;
-
-
   return (
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
@@ -70,7 +60,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = windowHeight - safeAreaInsets.top - safeAreaInsets.bottom;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,
@@ -88,8 +78,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
             minHeight={drawerLayout.minHeight}
             maxHeight={drawerLayout.maxHeight}
           >
-            {hasFinished && <StreamMessagesVod id={props.queryResult.data.getStreamProfile.id} />}
-            {isLive && <StreamMessages id={props.queryResult.data.getStreamProfile.id} />}
+            <StreamCommunication data={props.queryResult.data.getStreamProfile} />
           </Drawer>
         </FadeInView>
       )}
