@@ -1,11 +1,14 @@
-import React, { FC, useMemo, useState, useRef } from 'react';
+import React, { FC, useMemo, useState, useRef, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, Switch } from 'react-native-gesture-handler';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { useStreamStart } from '../../../../../utils/streamFunctions';
 import StreamMessagesVod from '../../../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamMessages from '../../../../StreamMessage/StreamMessages/StreamMessages';
 import StreamComments from '../../../../StreamComment/StreamComments/StreamComments';
+import Small from '../../../../UI/Typography/components/Small';
+import color from '../../../../../styles/definitions/color';
+import Styles from './StreamCommunication.styles';
 
 interface StreamCommunicationProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -14,6 +17,17 @@ interface StreamCommunicationProps {
 const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
   const window = useRef(Dimensions.get('window')).current;
   const [update, forceUpdate] = useState({});
+
+
+  /**
+   * When toggle changes, set the scrollview
+   */
+  const [viewingLiveMessages, setLiveMessages] = useState(true);
+  const scrollViewRef = useRef(null);
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    scrollViewRef.current?.scrollTo({ x: viewingLiveMessages ? 0 : window.width, y: 0, animated: true });
+  }, [viewingLiveMessages]);
 
 
   /**
@@ -55,18 +69,42 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
 
 
   return (
-    <ScrollView
-      horizontal
-      pagingEnabled
-    >
-      <View style={{ width: window.width }}>
-        {hasFinished && <StreamMessagesVod id={props.data.id} />}
-        {isLive && <StreamMessages id={props.data.id} />}
+    <View style={Styles.wrap}>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        ref={scrollViewRef}
+        onMomentumScrollEnd={(e) => {
+          if (e.nativeEvent.contentOffset.x === 0) {
+            if (!viewingLiveMessages) {
+              setLiveMessages(true);
+            }
+          } else if (viewingLiveMessages) {
+            setLiveMessages(false);
+          }
+        }}
+      >
+        <View style={{ width: window.width }}>
+          {hasFinished && <StreamMessagesVod id={props.data.id} />}
+          {isLive && <StreamMessages id={props.data.id} />}
+        </View>
+        <View style={{ width: window.width }}>
+          <StreamComments id={props.data.id} />
+        </View>
+      </ScrollView>
+
+      <View style={Styles.toggleWrap}>
+        <Small bold style={Styles.toggleText}>{viewingLiveMessages ? 'Live messages' : 'Comments'}</Small>
+        <Switch
+          value={viewingLiveMessages}
+          onValueChange={setLiveMessages}
+          trackColor={{
+            true: color.accent.primary,
+            false: color.mono.light,
+          }}
+        />
       </View>
-      <View style={{ width: window.width }}>
-        <StreamComments id={props.data.id} />
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
