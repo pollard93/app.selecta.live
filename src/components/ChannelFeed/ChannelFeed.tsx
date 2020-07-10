@@ -34,6 +34,7 @@ const ChannelFeed: FC<ChannelFeedProps> = (props) => {
             <FadeInView>
               <Feed
                 data={queryResult.data.getChannelFeed}
+                refetch={queryResult.refetch}
                 flatListProps={props.flatListProps}
               />
             </FadeInView>

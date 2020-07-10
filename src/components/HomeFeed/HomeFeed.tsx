@@ -35,6 +35,7 @@ const HomeFeed: FC<HomeFeedProps> = () => {
             : (
                 <Feed
                   data={queryResult.data.getFeed}
+                  refetch={queryResult.refetch}
                   flatListProps={{
                     contentContainerStyle: { paddingTop: headerHeight },
                   }}

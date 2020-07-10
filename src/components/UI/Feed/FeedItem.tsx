@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState, useMemo } from 'react';
 import { View, Dimensions, Animated, ListRenderItemInfo, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
@@ -46,18 +46,24 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
    * Centers the pagingEnabled scroll view after half a page
    */
   const scrollX = useRef(new Animated.Value(0));
-  const horizontalPaddingLeft = useRef(props.item.type === FEED_TYPE.HORIZONTAL && scrollX.current.interpolate({
-    inputRange: [0, itemWidth.current / 2],
-    outputRange: [0, (windowWidth.current - itemWidth.current - Styles.horizontalSeparator.width) / 2],
-    extrapolate: 'clamp',
-  }));
+  const [maxCount, setMaxCount] = useState<number>(null);
+  const horizontalPaddingLeft = useMemo(() => {
+    // Only needed if the maxCount is bigger than 1 (there is multiple pages)
+    if (props.item.type !== FEED_TYPE.HORIZONTAL || maxCount <= 1) return null;
+
+    return scrollX.current.interpolate({
+      inputRange: [0, itemWidth.current / 2],
+      outputRange: [0, (windowWidth.current - itemWidth.current - Styles.horizontalSeparator.width) / 2],
+      extrapolate: 'clamp',
+    });
+  }, [maxCount]);
 
 
   return (
     <View style={dynamicStyles[`background${props.item.background}`]}>
       <H3 style={Styles.heading}>{props.item.heading}</H3>
 
-      <Animated.View style={props.item.type === FEED_TYPE.HORIZONTAL && { paddingLeft: horizontalPaddingLeft.current }}>
+      <Animated.View style={props.item.type === FEED_TYPE.HORIZONTAL && { paddingLeft: horizontalPaddingLeft }}>
         <ApolloFlatList
           query={gql(props.item.query)}
           variables={props.item.variables}
@@ -74,16 +80,27 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
             horizontal: [FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(props.item.type),
             pagingEnabled: props.item.type === FEED_TYPE.HORIZONTAL,
             ItemSeparatorComponent: () => props.item.type === FEED_TYPE.HORIZONTAL_SMALL && <View style={Styles.horizontalSeparator} />,
-            onScroll: props.item.type === FEED_TYPE.HORIZONTAL ? Animated.event(
-              [
-                {
-                  nativeEvent: { contentOffset: { x: scrollX.current } },
-                },
-              ],
-            ) : undefined,
+            onScroll:
+              /**
+               * On scroll, set the scrollX variable
+               * Only set this variable if HORIZONTAL
+               */
+              props.item.type === FEED_TYPE.HORIZONTAL
+                ? Animated.event(
+                  [{ nativeEvent: { contentOffset: { x: scrollX.current } } }],
+                )
+                : undefined,
             scrollEventThrottle: props.item.type === FEED_TYPE.HORIZONTAL ? 16 : undefined,
           }}
           ListHeaderComponent={(args) => {
+            /**
+             * On initial load store the maxCount of items that will be displayed
+             */
+            if (maxCount === null && args.maxCount !== null) {
+              setMaxCount(args.maxCount);
+            }
+
+
             /**
              * Handle initial load and error
              */
