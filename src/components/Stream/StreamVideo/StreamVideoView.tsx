@@ -220,7 +220,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         nowPlayingInfo={{
           title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
           artist: props.data.channel.name,
-          artwork: props.data.image.url.small,
+          artwork: props.data.image.url.preview,
         }}
 
         /**
@@ -270,7 +270,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
             setLoading(false);
             MusicControl.setNowPlaying({
               title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
-              artwork: props.data.image.url.small,
+              artwork: props.data.image.url.preview,
               artist: props.data.channel.name,
               // album: 'Thriller',
               // genre: 'Post-disco, Rhythm and Blues, Funk, Dance-pop',
