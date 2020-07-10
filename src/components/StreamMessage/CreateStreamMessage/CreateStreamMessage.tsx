@@ -108,6 +108,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
         onSubmitEditing={() => mutation()}
         editable={!loading}
         wrapStyle={Styles.input}
+        maxLength={280}
       />
 
       <TouchableOpacity

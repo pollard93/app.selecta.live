@@ -108,6 +108,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
         onSubmitEditing={() => mutation()}
         editable={!loading}
         wrapStyle={Styles.input}
+        maxLength={280}
       />
 
       <TouchableOpacity
