@@ -53,7 +53,6 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
   }));
 
 
-  console.log('props.item.background', props.item.background);
   return (
     <View style={dynamicStyles[`background${props.item.background}`]}>
       <H3 style={Styles.heading}>{props.item.heading}</H3>

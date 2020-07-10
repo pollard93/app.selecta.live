@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Text, TextProps } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from '../Typography.style';
+import { GlobalDynamicStyles } from '../../../../styles/stylesheets/GlobalStyles';
 
 export interface BaseTextProps extends TextProps {
   children: any;
@@ -14,6 +15,7 @@ export interface BaseTextProps extends TextProps {
 
 const Base: FC<BaseTextProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   return (
     <Text
@@ -24,7 +26,7 @@ const Base: FC<BaseTextProps> = (props) => {
         props.light && dynamicStyles.light,
         props.forceLight && Styles.light,
         props.bold && Styles.bold,
-        props.skeleton && Styles.skeleton,
+        props.skeleton && globalDynamicStyles.skeleton,
       ]}
     />
   );

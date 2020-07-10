@@ -1,9 +1,10 @@
 import React, { FC, memo } from 'react';
 import { View, ViewStyle, StyleProp, TextStyle } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { useDarkMode, useDynamicValue } from 'react-native-dynamic';
 import Styles from './Chip.style';
 import Gradient from '../Gradient/Gradient';
 import Body from '../Typography/components/Body';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 export interface ChipProps {
   type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'SKELETON'; // Default PRIMARY
@@ -14,6 +15,8 @@ export interface ChipProps {
 
 const Chip: FC<ChipProps> = (props) => {
   const darkMode = useDarkMode();
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
   const type = (() => {
     if (darkMode) {
       if (props.type === 'LIGHT') return 'SECONDARY';
@@ -21,6 +24,25 @@ const Chip: FC<ChipProps> = (props) => {
     }
     return props.type || 'PRIMARY';
   })();
+
+
+  /**
+   * Skeleton
+   */
+  if (type === 'SKELETON') {
+    return (
+      <View style={[Styles.wrap, globalDynamicStyles.skeleton, props.style]}>
+        <Body
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[Styles.text, globalDynamicStyles.skeleton]}
+          bold={props.bold}
+        >
+          {props.children}
+        </Body>
+      </View>
+    );
+  }
 
 
   /**

@@ -6,6 +6,7 @@ import { ScreenProps } from '../../screens/utils/interfaces';
 import Feed from '../UI/Feed/Feed';
 import { useGetChannelFeedQuery } from '../../API/query/getChannelFeed/getChannelFeed';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import FadeInView from '../UI/FadeInView/FadeInView';
 
 export interface ChannelFeedProps extends ScreenProps {
   id: string;
@@ -17,18 +18,25 @@ const ChannelFeed: FC<ChannelFeedProps> = (props) => {
     variables: {
       id: props.id,
     },
+    fetchPolicy: 'network-only',
   });
+
+  if (queryResult.loading) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={GlobalStyles.PageFill}>
       {
-        queryResult.loading || queryResult.error
-          ? <LoadRetry cover {...queryResult} />
+        queryResult.error
+          ? <LoadRetry {...queryResult} />
           : (
-            <Feed
-              data={queryResult.data.getChannelFeed}
-              flatListProps={props.flatListProps}
-            />
+            <FadeInView>
+              <Feed
+                data={queryResult.data.getChannelFeed}
+                flatListProps={props.flatListProps}
+              />
+            </FadeInView>
           )
       }
     </SafeAreaView>

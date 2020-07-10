@@ -36,7 +36,6 @@ export default StyleSheet.create({
   // Skeleton
   skeletonImageWrap: {
     alignItems: 'center',
-    backgroundColor: color.mono.pale.light,
     justifyContent: 'center',
   },
   skeletonImage: {

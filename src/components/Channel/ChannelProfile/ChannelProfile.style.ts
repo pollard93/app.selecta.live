@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
+import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {
@@ -62,5 +63,35 @@ export default StyleSheet.create({
   },
   description: {
     paddingHorizontal: spacing.small,
+  },
+
+  // Skeleton
+  skeletonCoverImage: {
+    alignItems: 'center',
+    aspectRatio: 1.7777777778,
+    justifyContent: 'center',
+  },
+  skeletonCoverImageIcon: {
+    height: scalePx(50),
+    opacity: 0.1,
+    tintColor: color.mono.pale.dark,
+    width: scalePx(50),
+  },
+  skeletonProfileImage: {
+    alignItems: 'center',
+    borderColor: color.mono.light,
+    borderWidth: spacing.xxsmall,
+    justifyContent: 'center',
+    marginLeft: spacing.small,
+  },
+  skeletonProfileImageIcon: {
+    height: scalePx(25),
+    opacity: 0.3,
+    tintColor: color.mono.pale.dark,
+    width: scalePx(25),
+  },
+  channelName: {
+    padding: spacing.small,
+    width: '60%',
   },
 });
