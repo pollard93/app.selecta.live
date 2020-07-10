@@ -10,6 +10,7 @@ export interface STREAM_MESSAGE_FRAGMENT_user_profilePicture_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

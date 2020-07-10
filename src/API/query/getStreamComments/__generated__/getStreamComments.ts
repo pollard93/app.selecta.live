@@ -10,6 +10,7 @@ export interface getStreamComments_getStreamComments_comments_user_profilePictur
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

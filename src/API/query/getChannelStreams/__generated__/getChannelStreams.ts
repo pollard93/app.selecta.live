@@ -17,6 +17,7 @@ export interface getChannelStreams_getChannelStreams_streams_image_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

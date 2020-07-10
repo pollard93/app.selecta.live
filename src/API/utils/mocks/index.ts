@@ -13,6 +13,7 @@ import { getFeed } from './resolvers/query/getFeed/getFeed';
 import { getNotifications } from './resolvers/query/getNotifications/getNotifications';
 import { getRequestedChannels } from './resolvers/query/getRequestedChannels/getRequestedChannels';
 import { getSelf } from './resolvers/query/getSelf/getSelf';
+import { getStreamComments } from './resolvers/query/getStreamComments/getStreamComments';
 import { getStreamMessages } from './resolvers/query/getStreamMessages/getStreamMessages';
 import { getStreamProfile } from './resolvers/query/getStreamProfile/getStreamProfile';
 import { getStreamProfiles } from './resolvers/query/getStreamProfiles/getStreamProfiles';
@@ -20,6 +21,7 @@ import { getStreamSelf } from './resolvers/query/getStreamSelf/getStreamSelf';
 import { getStreamSelfs } from './resolvers/query/getStreamSelfs/getStreamSelfs';
 import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
 import { payForStream } from './resolvers/mutation/payForStream/payForStream';
+import { putStreamComment } from './resolvers/mutation/putStreamComment/putStreamComment';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { updateSelf } from './resolvers/mutation/updateSelf/updateSelf';
 import { withdrawFunds } from './resolvers/mutation/withdrawFunds/withdrawFunds';
@@ -29,6 +31,7 @@ export default {
     cancelStream,
     followChannel,
     payForStream,
+    putStreamComment,
     putStreamMessage,
     updateSelf,
     withdrawFunds,
@@ -43,6 +46,7 @@ export default {
     getNotifications,
     getRequestedChannels,
     getSelf,
+    getStreamComments,
     getStreamMessages,
     getStreamProfile,
     getStreamProfiles,
@@ -54,6 +58,7 @@ export default {
   Url: () => ({
     full: 'https://source.unsplash.com/1000x1000/?music',
     large: 'https://source.unsplash.com/500x500/?music',
+    preview: 'https://source.unsplash.com/500x500/?music',
     small: 'https://source.unsplash.com/200x200/?music',
     splash: 'https://source.unsplash.com/5x5/?music',
   }),

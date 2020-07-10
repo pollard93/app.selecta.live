@@ -12,6 +12,7 @@ export interface getChannelSelfs_getChannelSelfs_channels_coverImage_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }
@@ -27,6 +28,7 @@ export interface getChannelSelfs_getChannelSelfs_channels_profileImage_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

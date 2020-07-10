@@ -10,6 +10,7 @@ export interface getStreamMessagesVod_getStreamMessagesVod_messages_user_profile
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

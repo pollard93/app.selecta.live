@@ -113,6 +113,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
       <TouchableOpacity
         onPress={() => onSubmit()}
         disabled={disabled}
+        testID="submit"
       >
         <Icon
           name={ICON.SEND}

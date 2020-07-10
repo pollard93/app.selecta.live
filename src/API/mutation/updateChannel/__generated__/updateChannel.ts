@@ -10,6 +10,7 @@ export interface updateChannel_updateChannel_coverImage_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }
@@ -25,6 +26,7 @@ export interface updateChannel_updateChannel_profileImage_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

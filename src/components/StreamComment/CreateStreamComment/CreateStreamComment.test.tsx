@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
 import { wait } from '@apollo/react-testing';
 import { expect } from 'chai';
-import { TextInput, Button } from 'react-native';
 import Sinon from 'sinon';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
@@ -11,6 +10,7 @@ import CreateStreamComment from './CreateStreamComment';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import { getStreamComments, getStreamCommentsVariables } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import * as AClientModule from '../../../ApolloClient';
+import TextInput from '../../UI/Form/components/TextInput';
 
 
 describe('<CreateStreamComment />', () => {
@@ -62,23 +62,23 @@ describe('<CreateStreamComment />', () => {
     // TextInput initial value should be empty
     expect(wrapper.find(TextInput).first().props().value).to.equal('');
 
-    // Button should be disabled
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    // TouchableOpacity should be disabled
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
 
     // Update value
     wrapper.find(TextInput).first().props().onChangeText('comment');
     wrapper.update();
 
-    // Button should now not be disabled
-    expect(wrapper.find(Button).first().props().disabled).to.be.false;
+    // TouchableOpacity should now not be disabled
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Press button
-    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({} as any);
     await wait(0);
     wrapper.update();
 
-    // Button should now not be disabled as request is loading
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    // TouchableOpacity should now not be disabled as request is loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
 
     // Wait for request
     await wait(0);
@@ -89,7 +89,7 @@ describe('<CreateStreamComment />', () => {
 
     // Textinput value should have been reset and button should still be disabled
     expect(wrapper.find(TextInput).first().props().value).to.equal('');
-    expect(wrapper.find(Button).first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
 
     /**
      * Test cach has been updated with new node
@@ -131,7 +131,7 @@ describe('<CreateStreamComment />', () => {
 
     // Update value and submit
     wrapper.find(TextInput).first().props().onChangeText('comment');
-    wrapper.find(Button).first().props().onPress({} as any);
+    wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({} as any);
 
     // Wait for request and update
     await wait(0);
