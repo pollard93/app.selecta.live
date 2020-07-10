@@ -7,6 +7,7 @@ import Styles from './StreamMessageListItem.styles';
 import Body from '../../UI/Typography/components/Body';
 import Gradient from '../../UI/Gradient/Gradient';
 import { STREAM_PROFILE_FRAGMENT_channel } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
@@ -28,21 +29,30 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
 
   return (
     <View style={Styles.wrap}>
-      <AsyncImage
-        splashUrl={imageUrl.splash}
-        fullUrl={imageUrl.small}
-        // eslint-disable-next-line global-require
-        placeholderImageProps={{
-          source: require('../../../../icons/icon.jpg'),
-          style: {
-            width: '100%',
-            height: '100%',
-          },
-        }}
-        containerProps={{
-          style: Styles.profilePicture,
-        }}
-      />
+      <View style={Styles.profilePictureWrap}>
+        <AsyncImage
+          splashUrl={imageUrl.splash}
+          fullUrl={imageUrl.small}
+          // eslint-disable-next-line global-require
+          placeholderImageProps={{
+            source: require('../../../../icons/icon.jpg'),
+            style: {
+              width: '100%',
+              height: '100%',
+            },
+          }}
+          containerProps={{
+            style: Styles.profilePicture,
+          }}
+        />
+
+        {!props.data.user && (
+          <View style={Styles.channelTick}>
+            <Gradient style={StyleSheet.absoluteFillObject} />
+            <Icon name={ICON.TICK} size={'xxsmall'} forceLight />
+          </View>
+        )}
+      </View>
 
       <View style={Styles.messageOuter}>
         <View style={Styles.messageWrap}>
