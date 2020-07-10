@@ -83,6 +83,7 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
             setLiveMessages(false);
           }
         }}
+        showsHorizontalScrollIndicator={false}
       >
         <View style={{ width: window.width }}>
           {hasFinished && <StreamMessagesVod id={props.data.id} />}

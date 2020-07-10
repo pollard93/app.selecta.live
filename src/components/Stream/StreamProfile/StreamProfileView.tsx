@@ -1,6 +1,6 @@
-import React, { FC, useRef, useState, useMemo } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
-import { Dimensions, SafeAreaView, View } from 'react-native';
+import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -73,14 +73,19 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
       </SafeAreaView>
 
       {drawerLayout && (
-        <FadeInView style={[Styles.flex, { zIndex: headerZindex + 1 }]}>
-          <Drawer
-            minHeight={drawerLayout.minHeight}
-            maxHeight={drawerLayout.maxHeight}
-          >
-            <StreamCommunication data={props.queryResult.data.getStreamProfile} />
-          </Drawer>
-        </FadeInView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[Styles.flex, { zIndex: headerZindex + 1 }]}
+        >
+          <FadeInView style={Styles.flex}>
+            <Drawer
+              minHeight={drawerLayout.minHeight}
+              maxHeight={drawerLayout.maxHeight}
+            >
+              <StreamCommunication data={props.queryResult.data.getStreamProfile} />
+            </Drawer>
+          </FadeInView>
+        </KeyboardAvoidingView>
       )}
 
       {shouldLoadVideo && (

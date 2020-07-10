@@ -19,6 +19,7 @@ export enum ICON {
   VIDEO_ENABLED = 'VIDEO_ENABLED',
   VIDEO_DISABLED = 'VIDEO_DISABLED',
   DRAWER_ARROW = 'DRAWER_ARROW',
+  SEND = 'SEND',
 }
 
 interface IconProps {
@@ -73,6 +74,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.DRAWER_ARROW:
         return require('../../../assets/images/icons/drawerArrow.png');
+
+      case ICON.SEND:
+        return require('../../../assets/images/icons/send.png');
 
       default:
         return null;

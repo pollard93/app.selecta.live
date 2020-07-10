@@ -6,11 +6,10 @@ import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/
 import { getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import StreamCommentListItem from '../StreamCommentListItem/StreamCommentListItem';
 import styles from './StreamComments.styles';
-import { streamComments, streamCommentsVariables } from '../../../API/subscription/streamComments/__generated__/streamComments';
 import CreateStreamComment from '../CreateStreamComment/CreateStreamComment';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 
-class StreamCommentsFlatList extends ApolloFlatList<getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments, streamCommentsVariables, streamComments> {}
+class StreamCommentsFlatList extends ApolloFlatList<getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments> {}
 
 interface StreamCommentsProps {
   id: string;

@@ -115,7 +115,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
         disabled={disabled}
       >
         <Icon
-          name={ICON.PLAY}
+          name={ICON.SEND}
           size="small"
           style={[Styles.send, disabled && Styles.sendDisabled]}
         />
