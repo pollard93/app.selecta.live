@@ -3,10 +3,26 @@ import { storiesOf } from '@storybook/react-native';
 import StreamComments from './StreamComments';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
+import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 
 storiesOf('Stream/StreamComments', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .add('StreamComments', () => (
-    <StreamComments id="test" />
-  ));
+  .add('StreamComments', () => {
+    const TestComonent = () => {
+      const streamProfile = useGetStreamProfileQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      if (streamProfile.loading) return null;
+
+      return (
+        <StreamComments data={streamProfile.data.getStreamProfile} />
+      );
+    };
+
+    return (
+      <TestComonent />
+    );
+  });

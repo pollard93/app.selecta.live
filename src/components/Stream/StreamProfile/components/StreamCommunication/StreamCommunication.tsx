@@ -86,11 +86,11 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
         showsHorizontalScrollIndicator={false}
       >
         <View style={{ width: window.width }}>
-          {hasFinished && <StreamMessagesVod id={props.data.id} />}
-          {isLive && <StreamMessages id={props.data.id} />}
+          {hasFinished && <StreamMessagesVod data={props.data} />}
+          {isLive && <StreamMessages data={props.data} />}
         </View>
         <View style={{ width: window.width }}>
-          <StreamComments id={props.data.id} />
+          <StreamComments data={props.data} />
         </View>
       </ScrollView>
 

@@ -10,16 +10,17 @@ import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMe
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
 interface StreamMessagesProps {
-  id: string;
+  data: STREAM_PROFILE_FRAGMENT;
 }
 
 const StreamMessages: FC<StreamMessagesProps> = (props) => {
   const variables = {
-    id: props.id,
+    id: props.data.id,
     first: 10,
     after: null,
   };
@@ -31,7 +32,10 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
         variables={variables}
         accessor='getStreamMessages.messages'
         renderItem={({ item }) => (
-          <StreamMessageListItem data={item} />
+          <StreamMessageListItem
+            data={item}
+            channelData={props.data.channel}
+          />
         )}
         FlatListProps={{
           inverted: true,
@@ -51,7 +55,7 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
         subscriptionOptions={{
           document: STREAM_MESSAGES_SUBSCRIPTION,
           variables: {
-            id: props.id,
+            id: props.data.id,
           },
           updateQuery: (prev, { subscriptionData }) => {
             // Only want to insert created nodes

@@ -8,16 +8,17 @@ import StreamCommentListItem from '../StreamCommentListItem/StreamCommentListIte
 import styles from './StreamComments.styles';
 import CreateStreamComment from '../CreateStreamComment/CreateStreamComment';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 class StreamCommentsFlatList extends ApolloFlatList<getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments> {}
 
 interface StreamCommentsProps {
-  id: string;
+  data: STREAM_PROFILE_FRAGMENT;
 }
 
 const StreamComments: FC<StreamCommentsProps> = (props) => {
   const variables = {
-    id: props.id,
+    id: props.data.id,
     first: 10,
     after: null,
   };
@@ -29,7 +30,10 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
         variables={variables}
         accessor='getStreamComments.comments'
         renderItem={({ item }) => (
-          <StreamCommentListItem data={item} />
+          <StreamCommentListItem
+            data={item}
+            channelData={props.data.channel}
+          />
         )}
         debug
         FlatListProps={{

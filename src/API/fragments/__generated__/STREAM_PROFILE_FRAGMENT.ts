@@ -6,9 +6,27 @@
 // GraphQL fragment: STREAM_PROFILE_FRAGMENT
 // ====================================================
 
+export interface STREAM_PROFILE_FRAGMENT_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface STREAM_PROFILE_FRAGMENT_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: STREAM_PROFILE_FRAGMENT_channel_profileImage_url | null;
+}
+
 export interface STREAM_PROFILE_FRAGMENT_channel {
   __typename: "ChannelProfile";
+  id: string;
   name: string | null;
+  profileImage: STREAM_PROFILE_FRAGMENT_channel_profileImage | null;
 }
 
 export interface STREAM_PROFILE_FRAGMENT_image_url {

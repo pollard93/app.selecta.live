@@ -1,18 +1,28 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import StreamMessagesVod from './StreamMessagesVod';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
+import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
+import StreamMessagesVod from './StreamMessagesVod';
 
-storiesOf('Stream/StreamMessagesVod', module)
+storiesOf('Stream/StreamMessagesVodVod', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .add('StreamMessagesVod', () => (
-    <StreamMessagesVod
-      variables={{
-        id: 'test',
-        after: new Date().toISOString(),
-        threshold: 1000,
-      }}
-    />
-  ));
+  .add('StreamMessagesVod', () => {
+    const TestComonent = () => {
+      const streamProfile = useGetStreamProfileQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      if (streamProfile.loading) return null;
+
+      return (
+        <StreamMessagesVod data={streamProfile.data.getStreamProfile} />
+      );
+    };
+
+    return (
+      <TestComonent />
+    );
+  });

@@ -8,15 +8,16 @@ import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListIte
 import styles from './StreamMessagesVod.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 
 interface StreamMessagesVodProps {
-  id: string;
+  data: STREAM_PROFILE_FRAGMENT;
 }
 
 const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
   const { data: { getStreamProfile } } = useGetStreamProfileQuery({
     variables: {
-      id: props.id,
+      id: props.data.id,
     },
   });
 
@@ -25,7 +26,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    * On init, get 20 messages from the current position
    */
   const [variables, setVariables] = useState<getStreamMessagesVodVariables>({
-    id: props.id,
+    id: props.data.id,
     from: getStreamProfile.position
       ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
       : getStreamProfile.timeFrom,
@@ -55,7 +56,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
       fetchingMore.current = true;
 
       setVariables({
-        id: props.id,
+        id: props.data.id,
         from: getStreamProfile.position
           ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
           : getStreamProfile.timeFrom,
@@ -164,7 +165,12 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         contentContainerStyle={styles.contentContainer}
-        renderItem={({ item }) => <StreamMessageListItem data={item} />}
+        renderItem={({ item }) => (
+          <StreamMessageListItem
+            data={item}
+            channelData={props.data.channel}
+          />
+        )}
         keyExtractor={(item) => item.id}
       />
     </View>
