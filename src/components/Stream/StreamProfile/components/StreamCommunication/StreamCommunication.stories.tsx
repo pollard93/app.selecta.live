@@ -4,10 +4,12 @@ import StreamCommunication from './StreamCommunication';
 import SafeAreaViewDecorator from '../../../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamProfileQuery } from '../../../../../API/query/getStreamProfile/getStreamProfile';
 import GetSelfDecorator from '../../../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
+import DarkModeDecorator from '../../../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('Stream/StreamProfile/StreamCommunication', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('StreamCommunication - isConsumer - Stream has not started (starts in 5 seconds)', () => {
     const TestComponent = () => {
       const queryResult = useGetStreamProfileQuery({

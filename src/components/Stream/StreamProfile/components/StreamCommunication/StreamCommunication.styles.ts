@@ -13,7 +13,7 @@ export default StyleSheet.create({
     right: spacing.small,
     top: spacing.small,
   },
-  toggleText: {
-    paddingRight: spacing.small,
+  toggle: {
+    marginHorizontal: spacing.small,
   },
 });

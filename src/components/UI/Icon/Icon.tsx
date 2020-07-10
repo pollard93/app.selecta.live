@@ -22,6 +22,8 @@ export enum ICON {
   DRAWER_ARROW = 'DRAWER_ARROW',
   SEND = 'SEND',
   TICK = 'TICK',
+  CHAT = 'CHAT',
+  NOTES = 'NOTES',
 }
 
 interface IconProps {
@@ -85,6 +87,12 @@ const Icon = (props: IconProps) => {
 
       case ICON.TICK:
         return require('../../../assets/images/icons/tick.png');
+
+      case ICON.CHAT:
+        return require('../../../assets/images/icons/chat.png');
+
+      case ICON.NOTES:
+        return require('../../../assets/images/icons/notes.png');
 
       default:
         return null;

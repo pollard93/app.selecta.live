@@ -6,9 +6,9 @@ import { useStreamStart } from '../../../../../utils/streamFunctions';
 import StreamMessagesVod from '../../../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamMessages from '../../../../StreamMessage/StreamMessages/StreamMessages';
 import StreamComments from '../../../../StreamComment/StreamComments/StreamComments';
-import Small from '../../../../UI/Typography/components/Small';
 import color from '../../../../../styles/definitions/color';
 import Styles from './StreamCommunication.styles';
+import Icon, { ICON } from '../../../../UI/Icon/Icon';
 
 interface StreamCommunicationProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -95,7 +95,7 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
       </ScrollView>
 
       <View style={Styles.toggleWrap}>
-        <Small bold style={Styles.toggleText}>{viewingLiveMessages ? 'Live messages' : 'Comments'}</Small>
+        <Icon name={ICON.CHAT} size="small" animated style={viewingLiveMessages && { tintColor: color.accent.primary }} />
         <Switch
           value={viewingLiveMessages}
           onValueChange={setLiveMessages}
@@ -103,7 +103,9 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
             true: color.accent.primary,
             false: color.mono.light,
           }}
+          style={Styles.toggle}
         />
+        <Icon name={ICON.NOTES} size="small" animated style={!viewingLiveMessages && { tintColor: color.accent.primary }} />
       </View>
     </View>
   );
