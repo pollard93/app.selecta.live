@@ -2,13 +2,14 @@ import React, { useState, memo, FC } from 'react';
 import { View } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useDynamicValue } from 'react-native-dynamic';
 import { usePutStreamCommentMutation } from '../../../API/mutation/putStreamComment/putStreamComment';
 import { getStreamCommentsVariables, getStreamComments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import Toast from '../../UI/Toast/Toast';
-import { getGQLErrorComment } from '../../../utils/functions';
+import { getGQLErrorMessage } from '../../../utils/functions';
 import { getChannelToken } from '../../../ApolloClient';
-import Styles from './CreateStreamComment.styles';
+import Styles, { DynamicStyles } from './CreateStreamComment.styles';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import TextInput from '../../UI/Form/components/TextInput';
@@ -18,6 +19,7 @@ interface CreateStreamCommentProps {
 }
 
 const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
   const toast = useToast();
   const [comment, setComment] = useState('');
 
@@ -67,7 +69,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorComment(e)} />
+          <Toast content={getGQLErrorMessage(e)} />
         ),
         dismissible: false,
       });
@@ -95,7 +97,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
 
 
   return (
-    <View style={Styles.wrap}>
+    <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="comment"
         light
@@ -107,7 +109,8 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
         blurOnSubmit
         onSubmitEditing={() => mutation()}
         editable={!loading}
-        wrapStyle={Styles.input}
+        wrapStyle={Styles.inputWrap}
+        style={dynamicStyles.input}
         maxLength={280}
       />
 

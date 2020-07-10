@@ -123,7 +123,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
   if (props.isError) {
     return (
       <View style={[StyleSheet.absoluteFillObject, Styles.cover]}>
-        <H4 light>There has been an error</H4>
+        <H4 style={Styles.error}>Something went wrong...</H4>
       </View>
     );
   }
@@ -255,8 +255,8 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                     props.isFullScreen && Styles.timesFullScreen,
                   ]}
                 >
-                  <Small bold light>{formatTime(controlPosition)}</Small>
-                  <Small bold light>{duration}</Small>
+                  <Small bold forceLight>{formatTime(controlPosition)}</Small>
+                  <Small bold forceLight>{duration}</Small>
                 </View>
 
                 <View>

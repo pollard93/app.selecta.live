@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
 
@@ -10,14 +11,6 @@ export default StyleSheet.create({
   },
   horizontalSeparator: {
     width: spacing.small,
-  },
-
-  // background
-  backgroundDARK: {
-    backgroundColor: color.mono.pale.light,
-  },
-  backgroundLIGHT: {
-    backgroundColor: color.mono.light,
   },
 
   // flatList
@@ -57,5 +50,15 @@ export default StyleSheet.create({
 
   loadingHorizontal: {
     flexDirection: 'row',
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  // background
+  backgroundDARK: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
+  },
+  backgroundLIGHT: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.pale.dark),
   },
 });

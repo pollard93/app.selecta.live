@@ -7,9 +7,11 @@ import { useGetStreamProfilesQuery } from '../../../../API/query/getStreamProfil
 import StreamCard from './StreamCard';
 import SafeAreaViewDecorator from '../../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import StreamCardSkeleton from './StreamCardSkeleton';
+import DarkModeDecorator from '../../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('Cards/StreamCard', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
+  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('StreamCard - today', () => {
     const TestComponent = () => {
       const r = useGetStreamProfilesQuery();

@@ -31,6 +31,10 @@ export default StyleSheet.create({
     paddingVertical: spacing.xxsmall,
   },
   message: {
+    color: color.mono.dark,
     flexWrap: 'wrap',
+  },
+  messageSelf: {
+    color: color.mono.light,
   },
 });

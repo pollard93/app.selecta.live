@@ -2,10 +2,11 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { useDynamicValue } from 'react-native-dynamic';
 import { useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
 import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
-import styles from './StreamMessagesVod.styles';
+import styles, { DynamicStyles } from './StreamMessagesVod.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
@@ -15,6 +16,8 @@ interface StreamMessagesVodProps {
 }
 
 const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   const { data: { getStreamProfile } } = useGetStreamProfileQuery({
     variables: {
       id: props.data.id,
@@ -157,7 +160,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
 
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, dynamicStyles.wrap]}>
       <FlatList
         bounces={false}
         inverted

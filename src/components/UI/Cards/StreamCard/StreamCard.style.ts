@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../../styles/definitions/spacing';
 import color from '../../../../styles/definitions/color';
 import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {
-    backgroundColor: color.mono.light,
     paddingBottom: spacing.small,
   },
   image: {
@@ -47,5 +47,11 @@ export default StyleSheet.create({
   },
   skeletonTags: {
     alignSelf: 'flex-start',
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
   },
 });

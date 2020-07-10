@@ -2,6 +2,7 @@ import React, { useRef, useState, useMemo, FC } from 'react';
 import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { Navigation } from 'react-native-navigation';
+import { useDarkMode } from 'react-native-dynamic';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import H2 from '../../UI/Typography/components/H2';
 import { useGetChannelProfileQuery } from '../../../API/query/getChannelProfile/getChannelProfile';
@@ -41,6 +42,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
   const profileImageHeight = useRef(scalePx(120));
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
+  const darkMode = useDarkMode();
 
 
   /**
@@ -71,9 +73,10 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
 
   /**
    * Title color interpolation
+   * If dark mode interpolation is not needed
    */
   const titleColor = useMemo(() => {
-    if (headerLayout.height === 0) return null;
+    if (headerLayout.height === 0 || darkMode) return null;
 
     return scrollY.current.interpolate({
       inputRange: [0, coverImageHeadingDefaultHeight.current, coverImageHeadingDefaultHeight.current + headerLayout.height],
@@ -81,14 +84,15 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
       extrapolate: 'clamp',
       // useNativeDriver: true,
     });
-  }, [headerLayout.height]);
+  }, [headerLayout.height, darkMode]);
 
 
   /**
    * FollowChannel text and icon color interpolation
+   * If dark mode interpolation is not needed
    */
   const followChannelColor = useMemo(() => {
-    if (headerLayout.height === 0) return null;
+    if (headerLayout.height === 0 || darkMode) return null;
 
     return scrollY.current.interpolate({
       inputRange: [0, coverImageHeadingDefaultHeight.current, coverImageHeadingDefaultHeight.current + headerLayout.height],
@@ -96,7 +100,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
       extrapolate: 'clamp',
       // useNativeDriver: true,
     });
-  }, [headerLayout.height]);
+  }, [headerLayout.height, darkMode]);
 
 
   /**
@@ -243,16 +247,16 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
                           size="small"
                           style={[
                             Styles.headerTopContentIcon,
-                            { tintColor: titleColor },
+                            { tintColor: darkMode ? color.mono.light : titleColor },
                           ]}
                           animated
                         />
 
                         <FollowChannel
                           data={queryResult.data.getChannelProfile}
-                          wrapStyle={{ backgroundColor: titleColor }}
-                          textStyle={{ color: followChannelColor }}
-                          iconStyle={{ tintColor: followChannelColor }}
+                          wrapStyle={{ backgroundColor: darkMode ? color.mono.light : titleColor }}
+                          textStyle={{ color: darkMode ? color.mono.dark : followChannelColor }}
+                          iconStyle={{ tintColor: darkMode ? color.mono.dark : followChannelColor }}
                         />
                       </View>
                     </Animated.View>
@@ -272,9 +276,9 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
                       <Animated.Text
                         numberOfLines={2}
                         ellipsizeMode="tail"
-                        style={{ color: titleColor }}
+                        style={{ color: darkMode ? color.mono.light : titleColor }}
                       >
-                        <H2>{queryResult.data.getChannelProfile.name}</H2>
+                        <H2 disableBaseColor>{queryResult.data.getChannelProfile.name}</H2>
                       </Animated.Text>
                     </Animated.View>
                   </View>

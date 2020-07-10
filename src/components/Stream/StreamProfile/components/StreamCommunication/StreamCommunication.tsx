@@ -64,7 +64,7 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
    * Always render <StreamComments />
    */
   if (!shouldLoadStreamMessages) {
-    return <StreamComments id={props.data.id} />;
+    return <StreamComments data={props.data} />;
   }
 
 

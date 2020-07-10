@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 
 export default StyleSheet.create({
-  base: {
-    tintColor: color.mono.dark,
-  },
   xxsmall: {
     height: scalePx(8),
     width: scalePx(8),
@@ -35,5 +33,14 @@ export default StyleSheet.create({
   },
   ARROW_BACKWARD: {
     tintColor: undefined,
+  },
+  forceLight: {
+    tintColor: color.mono.light,
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  base: {
+    tintColor: new DynamicValue(color.mono.dark, color.mono.light),
   },
 });

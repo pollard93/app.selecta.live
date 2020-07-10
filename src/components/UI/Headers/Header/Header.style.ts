@@ -1,3 +1,4 @@
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import { StyleSheet } from 'react-native';
 import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
@@ -11,7 +12,6 @@ export default StyleSheet.create({
     top: 0,
   },
   wrap: {
-    backgroundColor: color.mono.light,
     ...shadow.regular,
   },
   inner: {
@@ -57,7 +57,9 @@ export default StyleSheet.create({
     height: '100%',
   },
   profilePictureInner: {
+    borderColor: color.mono.light,
     borderRadius: 200,
+    borderWidth: 2,
     height: '100%',
     overflow: 'hidden',
     width: '100%',
@@ -65,5 +67,11 @@ export default StyleSheet.create({
   profilePictureIcon: {
     height: '100%',
     width: '100%',
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
   },
 });

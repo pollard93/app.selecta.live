@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
 import Chip from '../../Chip/Chip';
-import Styles from './StreamCard.style';
+import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
 
 interface StreamCardProps {
@@ -14,8 +15,10 @@ interface StreamCardProps {
 
 const StreamCard: FC<StreamCardProps> = (props) => {
   const now = new Date();
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   return (
-    <View style={Styles.wrap}>
+    <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <AsyncImage
         splashUrl={props.data.image?.url.splash}
         fullUrl={props.data.image?.url.large}

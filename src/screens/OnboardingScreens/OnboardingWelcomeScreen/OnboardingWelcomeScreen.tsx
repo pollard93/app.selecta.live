@@ -22,9 +22,6 @@ OnboardingWelcomeScreen.prototype.ScreenName = 'OnboardingWelcomeScreen';
   // topBar: {
   //   visible: false,
   // },
-  statusBar: {
-    style: 'light',
-  },
 };
 
 /**

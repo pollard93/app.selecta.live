@@ -119,7 +119,7 @@ const LoginView = (props: LoginViewProps) => {
             disabled={props.loading}
             testID="reset"
           >
-            <Body light>Forgotten Password?</Body>
+            <Body forceLight>Forgotten Password?</Body>
           </TouchableOpacity>
 
           <Separator margin="large" />
@@ -144,7 +144,7 @@ const LoginView = (props: LoginViewProps) => {
             disabled={props.loading}
             testID="register"
           >
-            <Body bold light>Don't have an account?</Body>
+            <Body bold forceLight>Don't have an account?</Body>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

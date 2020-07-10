@@ -1,7 +1,8 @@
 import React, { FC, useRef, useEffect } from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler';
-import Styles from './Drawer.styles';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './Drawer.styles';
 import scalePx from '../../../utils/scalePx';
 import Icon, { ICON } from '../Icon/Icon';
 
@@ -15,6 +16,7 @@ const Drawer: FC<DrawerProps> = (props) => {
   const touchY = useRef(new Animated.Value(-100)).current;
   const touchYValue = useRef(0);
   const barHeight = useRef(scalePx(20)).current;
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -118,6 +120,7 @@ const Drawer: FC<DrawerProps> = (props) => {
             <Animated.View
               style={[
                 Styles.bar,
+                dynamicStyles.bar,
                 {
                   height: barHeight,
                   transform: [{
@@ -130,11 +133,14 @@ const Drawer: FC<DrawerProps> = (props) => {
                 name={ICON.DRAWER_ARROW}
                 size="xsmall"
                 animated
-                style={{
-                  transform: [{
-                    rotate: arrow,
-                  }],
-                }}
+                style={[
+                  dynamicStyles.icon,
+                  {
+                    transform: [{
+                      rotate: arrow,
+                    }],
+                  },
+                ]}
               />
             </Animated.View>
           </Animated.View>

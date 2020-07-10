@@ -22,10 +22,10 @@ ChannelProfileScreen.prototype.ScreenName = 'ChannelProfileScreen';
   topBar: {
     visible: false,
   },
-  statusBar: {
-    style: 'dark',
-    backgroundColor: 'white',
-  },
+  // statusBar: {
+  //   style: 'dark',
+  //   backgroundColor: 'white',
+  // },
 };
 
 /**

@@ -46,7 +46,6 @@ const ChannelSelfs = () => (
     ListFooterComponent={(moreToLoad) => (
       <Text>{moreToLoad ? 'LOADING' : 'NO MORE TO LOAD'}</Text>
     )}
-    debug
   />
 );
 

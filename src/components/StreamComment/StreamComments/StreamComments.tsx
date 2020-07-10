@@ -2,10 +2,11 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
+import { useDynamicValue } from 'react-native-dynamic';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import { getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import StreamCommentListItem from '../StreamCommentListItem/StreamCommentListItem';
-import styles from './StreamComments.styles';
+import styles, { DynamicStyles } from './StreamComments.styles';
 import CreateStreamComment from '../CreateStreamComment/CreateStreamComment';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
@@ -17,6 +18,8 @@ interface StreamCommentsProps {
 }
 
 const StreamComments: FC<StreamCommentsProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   const variables = {
     id: props.data.id,
     first: 10,
@@ -24,7 +27,7 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
   };
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, dynamicStyles.wrap]}>
       <StreamCommentsFlatList
         query={GET_STREAM_COMMENTS_QUERY}
         variables={variables}
@@ -35,7 +38,6 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
             channelData={props.data.channel}
           />
         )}
-        debug
         FlatListProps={{
           inverted: true,
           ItemSeparatorComponent: () => <View style={styles.separator} />,

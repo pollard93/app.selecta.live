@@ -3,7 +3,8 @@
 import React, { FC } from 'react';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import Styles from './Header.style';
+import { useDynamicValue, DynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
@@ -33,12 +34,17 @@ const Header: FC<HeaderProps> = (props) => {
   const { headerHeight, headerZindex } = useHeaderStyles();
   const self = useGetSelf();
   const credit = Math.min(999, self.credit);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const lightLogo = require('../../../../assets/images/logo-dark.png');
+  const darkLogo = require('../../../../assets/images/logo-white.png');
+  const logoUri = new DynamicValue(lightLogo, darkLogo);
 
   return (
     <View style={[Styles.outer, { zIndex: headerZindex }]}>
       <View
         style={[
           Styles.wrap,
+          dynamicStyles.wrap,
           {
             paddingTop: safeAreaInsets.top,
             borderBottomLeftRadius: headerHeight / 2,
@@ -65,7 +71,7 @@ const Header: FC<HeaderProps> = (props) => {
 
             <View style={Styles.logoWrap}>
               <Image
-                source={require('../../../../assets/images/logo-dark.png')}
+                source={useDynamicValue(logoUri)}
                 style={Styles.logo}
                 resizeMode="contain"
               />

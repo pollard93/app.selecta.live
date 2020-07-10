@@ -2,10 +2,11 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
+import { useDynamicValue } from 'react-native-dynamic';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
-import styles from './StreamMessages.styles';
+import styles, { DynamicStyles } from './StreamMessages.styles';
 import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMessages/streamMessages';
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
@@ -19,6 +20,8 @@ interface StreamMessagesProps {
 }
 
 const StreamMessages: FC<StreamMessagesProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   const variables = {
     id: props.data.id,
     first: 10,
@@ -26,7 +29,7 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
   };
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, dynamicStyles.wrap]}>
       <StreamMessagesFlatList
         query={GET_STREAM_MESSAGES_QUERY}
         variables={variables}
@@ -51,7 +54,6 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
 
           return null;
         }}
-        debug
         subscriptionOptions={{
           document: STREAM_MESSAGES_SUBSCRIPTION,
           variables: {

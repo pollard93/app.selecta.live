@@ -62,6 +62,7 @@
     "react-native": "0.62.2",
     "react-native-config": "^0.11.7",
     "react-native-device-info": "^5.5.3",
+    "react-native-dynamic": "^1.0.0-rc.4",
     "react-native-fbsdk": "^1.1.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-iap": "^4.4.8",

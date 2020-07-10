@@ -2,6 +2,7 @@ import React, { FC, useRef } from 'react';
 import { View, Dimensions, Animated, ListRenderItemInfo, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
+import { useDynamicValue } from 'react-native-dynamic';
 import { FEED_PAYLOAD_FRAGMENT_items } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
 import { FEED_TYPE } from '../../../../__generated__/globalTypes';
 import H3 from '../Typography/components/H3';
@@ -13,7 +14,7 @@ import FadeInView from '../FadeInView/FadeInView';
 import StreamCard from '../Cards/StreamCard/StreamCard';
 import ChannelCard from '../Cards/ChannelCard/ChannelCard';
 import Icon, { ICON } from '../Icon/Icon';
-import Styles from './Feed.styles';
+import Styles, { DynamicStyles } from './Feed.styles';
 import { pushScreenV2 } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
@@ -22,6 +23,7 @@ import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generate
 import { CHANNEL_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT_SHORT';
 
 const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
   const windowWidth = useRef(Dimensions.get('window').width);
 
   /**
@@ -51,8 +53,9 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
   }));
 
 
+  console.log('props.item.background', props.item.background);
   return (
-    <View style={Styles[`background${props.item.background}`]}>
+    <View style={dynamicStyles[`background${props.item.background}`]}>
       <H3 style={Styles.heading}>{props.item.heading}</H3>
 
       <Animated.View style={props.item.type === FEED_TYPE.HORIZONTAL && { paddingLeft: horizontalPaddingLeft.current }}>
@@ -60,7 +63,6 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
           query={gql(props.item.query)}
           variables={props.item.variables}
           accessor={props.item.accessor}
-          debug
           FlatListProps={{
             style: [
               Styles[`flatList${props.item.type}`],
@@ -124,7 +126,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                   return (
                     <View style={Styles.loadingHorizontal}>
                       {Array(props.item.variables.first).fill(0).map((_, i) => (
-                        <>
+                        <View key={i}>
                           <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
                             {(() => {
                               switch (props.item.accessor.split('.').pop()) {
@@ -141,7 +143,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
 
                           </View>
                           <View style={Styles.horizontalSeparator} />
-                        </>
+                        </View>
                       ))}
 
                     </View>

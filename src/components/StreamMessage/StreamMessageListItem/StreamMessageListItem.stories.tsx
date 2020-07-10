@@ -2,16 +2,16 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import StreamMessageListItem from './StreamMessageListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
-import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 import { useGetStreamMessagesQuery } from '../../../API/query/getStreamMessages/getStreamMessages';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 import color from '../../../styles/definitions/color';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
+import DarkModeDecorator from '../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: color.mono.pale.light }}>{getStory()}</SafeAreaViewDecorator>)
-  .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('StreamMessageListItem - other user', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({

@@ -8,6 +8,7 @@ import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
+import color from '../../styles/definitions/color';
 
 
 /**
@@ -72,6 +73,8 @@ export const goHome = () => Navigation.setRoot({
               bottomTab: {
                 // TODO - update icon
                 icon: require('../../assets/images/icons/search.png'),
+                textColor: color.accent.primary,
+                iconColor: color.accent.primary,
               },
             },
           },

@@ -31,6 +31,10 @@ export default StyleSheet.create({
     paddingVertical: spacing.xxsmall,
   },
   comment: {
+    color: color.mono.dark,
     flexWrap: 'wrap',
+  },
+  commentSelf: {
+    color: color.mono.light,
   },
 });

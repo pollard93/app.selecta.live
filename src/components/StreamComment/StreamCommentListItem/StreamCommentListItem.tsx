@@ -47,7 +47,7 @@ const StreamCommentListItem: FC<StreamCommentListItemProps> = (props) => {
       <View style={Styles.commentOuter}>
         <View style={Styles.commentWrap}>
           {isSelf && <Gradient style={StyleSheet.absoluteFillObject} />}
-          <Body light={isSelf} style={Styles.comment}>{props.data.comment}</Body>
+          <Body style={[Styles.comment, isSelf && Styles.commentSelf]}>{props.data.comment}</Body>
         </View>
       </View>
     </View>

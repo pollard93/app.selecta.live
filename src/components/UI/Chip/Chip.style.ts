@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
-import font from '../../../styles/definitions/font';
 
 export default StyleSheet.create({
   /**
@@ -40,9 +39,5 @@ export default StyleSheet.create({
   },
   textSKELETON: {
     color: color.mono.pale.light,
-  },
-  bold: {
-    fontFamily: font.family.heading('bold').fontFamily,
-    fontWeight: font.family.heading('bold').fontWeight,
   },
 });

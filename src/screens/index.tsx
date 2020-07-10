@@ -18,7 +18,6 @@ import ChannelScreen from './ChannelScreen/ChannelScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
 import PurchasesScreen from './PurchasesScreen/PurchasesScreen';
 import StreamVideoScreen from './StreamVideoScreen/StreamVideoScreen';
-import color from '../styles/definitions/color';
 import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
@@ -34,7 +33,7 @@ const wrapContext = (Component) => {
     const wrapped = (props) => (
       <ApolloProvider client={ApolloClient}>
         <ToastProvider screenName={Component.prototype.ScreenName}>
-          <View style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || color.mono.light }}>
+          <View style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || 'transparent' }}>
             <Component {...props} />
           </View>
         </ToastProvider>
@@ -54,8 +53,8 @@ const wrapContext = (Component) => {
   const wrapped = (props) => (
     <ApolloProvider client={ApolloClient}>
       <ToastProvider screenName={Component.prototype.ScreenName}>
-        <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || color.mono.light }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || color.mono.light }}>
+        <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: Component.prototype.backgroundColor || 'transparent' }}>
           <View style={GlobalStyles.PageFill}>
             <Component {...props} />
           </View>
