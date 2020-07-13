@@ -14,6 +14,7 @@ function loadStories() {
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
 	require('../src/components/ChannelFeed/ChannelFeed.stories');
+	require('../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories');
 	require('../src/components/HomeFeed/HomeFeed.stories');
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
@@ -49,6 +50,7 @@ function loadStories() {
 	require('../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories');
 	require('../src/components/UI/Button/Button.stories');
 	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
+	require('../src/components/UI/Cards/CreditTransactionCard/CreditTransactionCard.stories');
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Cards/WalletCard/WalletCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
@@ -80,6 +82,7 @@ const stories = [
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
 	'../src/components/ChannelFeed/ChannelFeed.stories',
+	'../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories',
 	'../src/components/HomeFeed/HomeFeed.stories',
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
@@ -115,6 +118,7 @@ const stories = [
 	'../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories',
 	'../src/components/UI/Button/Button.stories',
 	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',
+	'../src/components/UI/Cards/CreditTransactionCard/CreditTransactionCard.stories',
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Cards/WalletCard/WalletCard.stories',
 	'../src/components/UI/Chip/Chip.stories',

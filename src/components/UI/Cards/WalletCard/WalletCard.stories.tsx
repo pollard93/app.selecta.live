@@ -10,4 +10,4 @@ import SafeAreaViewDecorator from '../../../../../storybook/Decorators/SafeAreaV
 storiesOf('Cards/WalletCard', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
-  .add('WalletCard - today', () => <WalletCard />);
+  .add('WalletCard', () => <WalletCard />);

@@ -31,6 +31,21 @@ export enum ChannelOrderByInput {
   verified_DESC = "verified_DESC",
 }
 
+export enum CreditTransactionOrderByInput {
+  approved_ASC = "approved_ASC",
+  approved_DESC = "approved_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  credit_ASC = "credit_ASC",
+  credit_DESC = "credit_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  reversed_ASC = "reversed_ASC",
+  reversed_DESC = "reversed_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+}
+
 export enum FEED_BK_TYPE {
   DARK = "DARK",
   LIGHT = "LIGHT",

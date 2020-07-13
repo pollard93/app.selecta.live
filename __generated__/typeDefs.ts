@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Mon Jul 13 2020 14:42:11 GMT+0100 (British Summer Time)
+# timestamp: Mon Jul 13 2020 15:52:30 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -304,6 +304,21 @@ enum CreditTransactionOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+type CreditTransactionProfile {
+  id: ID
+  credit: Float
+  stream: StreamProfile
+  channel: ChannelProfile
+  approved: DateTime
+  reversed: DateTime
+  createdAt: DateTime
+}
+
+type CreditTransactionProfilesPayload {
+  transactions: [CreditTransactionProfile!]!
+  count: Int!
 }
 
 input CreditTransactionWhereInput {
@@ -618,6 +633,7 @@ type Query {
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getCreditTransactionProfiles(first: Int, after: String, orderBy: CreditTransactionOrderByInput): CreditTransactionProfilesPayload!
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
@@ -1056,6 +1072,7 @@ type StreamProfile {
   audioOnly: Boolean
   position: Float
   tags: [TagProfile]
+  cost: Float
 }
 
 type StreamProfilesPayLoad {

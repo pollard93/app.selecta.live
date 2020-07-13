@@ -9,6 +9,7 @@ import { getChannelProfiles } from './resolvers/query/getChannelProfiles/getChan
 import { getChannelSelf } from './resolvers/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfs } from './resolvers/query/getChannelSelfs/getChannelSelfs';
 import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
+import { getCreditTransactionProfiles } from './resolvers/query/getCreditTransactionProfiles/getCreditTransactionProfiles';
 import { getFeed } from './resolvers/query/getFeed/getFeed';
 import { getNotifications } from './resolvers/query/getNotifications/getNotifications';
 import { getRequestedChannels } from './resolvers/query/getRequestedChannels/getRequestedChannels';
@@ -42,6 +43,7 @@ export default {
     getChannelSelf,
     getChannelSelfs,
     getChannelStreams,
+    getCreditTransactionProfiles,
     getFeed,
     getNotifications,
     getRequestedChannels,
