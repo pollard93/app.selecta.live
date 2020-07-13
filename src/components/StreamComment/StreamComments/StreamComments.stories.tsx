@@ -4,12 +4,10 @@ import StreamComments from './StreamComments';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
-import DarkModeDecorator from '../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('Stream/StreamComments', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('StreamComments', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({

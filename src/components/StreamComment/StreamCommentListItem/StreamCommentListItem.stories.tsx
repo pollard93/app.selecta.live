@@ -6,12 +6,10 @@ import { useGetStreamCommentsQuery } from '../../../API/query/getStreamComments/
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 import color from '../../../styles/definitions/color';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
-import DarkModeDecorator from '../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('Stream/StreamComments/StreamCommentListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: color.mono.pale.light }}>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('StreamCommentListItem - other user', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({

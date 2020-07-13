@@ -14,6 +14,7 @@ interface StreamCardProps {
 }
 
 const StreamCard: FC<StreamCardProps> = (props) => {
+  console.log('props', props);
   const now = new Date();
   const dynamicStyles = useDynamicValue(DynamicStyles);
 

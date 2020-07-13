@@ -8,13 +8,11 @@ import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
 import { useGetSelfQuery, GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import GetSelfDecorator from '../../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
-import DarkModeDecorator from '../../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 import color from '../../../../styles/definitions/color';
 
 storiesOf('UI/Headers/Header', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { backgroundColor: color.mono.pale.dark }]}>{getStory()}</View>)
-  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('Header', () => (
     <Header />
   ))

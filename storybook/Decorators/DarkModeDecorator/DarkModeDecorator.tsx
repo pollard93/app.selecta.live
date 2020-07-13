@@ -6,11 +6,9 @@ import color from '../../../src/styles/definitions/color';
 import spacing from '../../../src/styles/definitions/spacing';
 import shadow from '../../../src/styles/definitions/shadow';
 
-interface DarkModeDecoratorProps {
-  switchPosition: 'topRight' | 'bottomRight';
-}
+interface DarkModeDecoratorProps {}
 
-const DarkModeDecorator: FC<DarkModeDecoratorProps> = (props) => {
+const DarkModeDecorator: FC = (props) => {
   const [darkMode, setDarkMode] = useState(false);
 
   return (
@@ -19,19 +17,16 @@ const DarkModeDecorator: FC<DarkModeDecoratorProps> = (props) => {
 
       <SafeAreaView style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
         <View
-          style={[
-            {
-              position: 'absolute',
-              right: spacing.large,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: color.mono.pale.light,
-              padding: spacing.small,
-              ...shadow.regular,
-            },
-            props.switchPosition === 'topRight' && { top: spacing.large * 2 },
-            props.switchPosition === 'bottomRight' && { bottom: spacing.large * 2 },
-          ]}
+          style={{
+            position: 'absolute',
+            right: spacing.large,
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: color.mono.pale.light,
+            padding: spacing.small,
+            bottom: spacing.large * 2,
+            ...shadow.regular,
+          }}
         >
           <Text style={{ marginRight: spacing.small }}>{darkMode ? 'Dark Mode' : 'Light Mode'}</Text>
           <Switch

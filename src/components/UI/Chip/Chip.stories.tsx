@@ -5,11 +5,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import Chip from './Chip';
-import DarkModeDecorator from '../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 
 storiesOf('UI/Chip', module)
   .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</CenterView>)
-  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('Chip - PRIMARY', () => (
     <Chip
       type="PRIMARY"

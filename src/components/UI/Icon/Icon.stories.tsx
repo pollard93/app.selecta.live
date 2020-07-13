@@ -5,14 +5,12 @@ import { View, ScrollView } from 'react-native';
 import { useDarkMode } from 'react-native-dynamic';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import Icon, { ICON } from './Icon';
-import DarkModeDecorator from '../../../../storybook/Decorators/DarkModeDecorator/DarkModeDecorator';
 import H4 from '../Typography/components/H4';
 import color from '../../../styles/definitions/color';
 
 storiesOf('UI/Icon', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <ScrollView>{getStory()}</ScrollView>)
-  .addDecorator((getStory) => <DarkModeDecorator switchPosition="bottomRight">{getStory()}</DarkModeDecorator>)
   .add('Icon', () => {
     const TestComponent = () => {
       const isDarkMode = useDarkMode();
