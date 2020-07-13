@@ -9,6 +9,7 @@ import LoadingIcon from '../LoadingIcon/LoadingIcon';
 
 export interface ButtonProps extends BaseProps {
   type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'FB' | 'GOOGLE'; // Default PRIMARY
+  size?: 'small' | 'regular'; // Default regular
   icon?: ICON;
   loading?: boolean;
   style?: TouchableOpacityProps['style'],
@@ -16,6 +17,8 @@ export interface ButtonProps extends BaseProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const type = props.type || 'PRIMARY';
+  const size = props.size || 'regular';
+  console.log('size', Styles[`touch${size}`]);
 
 
   const Inner = () => (
@@ -23,6 +26,7 @@ const Button: FC<ButtonProps> = (props) => {
       style={[
         Styles.wrap,
         Styles[type],
+        Styles[size],
       ]}
     >
       <Body bold style={[Styles.text, Styles[`text${type}`]]}>{props.title}</Body>
@@ -63,6 +67,7 @@ const Button: FC<ButtonProps> = (props) => {
       <TouchableOpacity
         onPress={props.onPress}
         style={[
+          Styles[`touch${size}`],
           props.disabled && !props.loading && Styles.disabled,
           props.style,
         ]}
@@ -80,6 +85,7 @@ const Button: FC<ButtonProps> = (props) => {
     <TouchableOpacity
       onPress={props.onPress}
       style={[
+        Styles[`touch${size}`],
         props.disabled && !props.loading && Styles.disabled,
         props.style,
       ]}

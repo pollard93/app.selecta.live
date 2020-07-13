@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri Jul 10 2020 10:10:57 GMT+0100 (British Summer Time)
+# timestamp: Mon Jul 13 2020 14:42:11 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -1534,6 +1534,7 @@ type UserSelf {
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
   requiresUpdate: AppUpdatePayload
+  createdAt: DateTime
 }
 
 type UserTags {

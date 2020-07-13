@@ -15,6 +15,7 @@ export const USER_SELF_FRAGMENT = gql`
       appStoreUrl
       playStoreUrl
     }
+    createdAt
   },
   ${FILE_FRAGMENT}
 `;

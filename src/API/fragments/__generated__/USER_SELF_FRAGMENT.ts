@@ -37,4 +37,5 @@ export interface USER_SELF_FRAGMENT {
   profilePicture: USER_SELF_FRAGMENT_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: USER_SELF_FRAGMENT_requiresUpdate | null;
+  createdAt: any | null;
 }

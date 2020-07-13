@@ -37,6 +37,7 @@ export interface getSelf_getSelf {
   profilePicture: getSelf_getSelf_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: getSelf_getSelf_requiresUpdate | null;
+  createdAt: any | null;
 }
 
 export interface getSelf {

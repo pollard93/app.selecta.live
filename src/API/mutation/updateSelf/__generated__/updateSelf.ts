@@ -37,6 +37,7 @@ export interface updateSelf_updateSelf {
   profilePicture: updateSelf_updateSelf_profilePicture | null;
   unreadNotificationCount: number | null;
   requiresUpdate: updateSelf_updateSelf_requiresUpdate | null;
+  createdAt: any | null;
 }
 
 export interface updateSelf {
