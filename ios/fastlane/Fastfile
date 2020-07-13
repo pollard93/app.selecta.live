@@ -26,6 +26,7 @@ platform :ios do
       itc_team_id: '2203907',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug",
       app_name: "#{ENV['APP_NAME']} debug",
+      language: 'en-GB',
 
       enable_services: {
         push_notification: "on",
@@ -34,25 +35,27 @@ platform :ios do
     )
 
     # Beta
-    # produce(
-    #   username: 'dev@madebyprism.com',
-    #   team_id: 'CQFWKU4GYE',
-    #   itc_team_id: '2203907',
-    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
-    #   app_name: "#{ENV['APP_NAME']} beta",
+    produce(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      itc_team_id: '2203907',
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
+      app_name: "#{ENV['APP_NAME']} beta",
+      language: 'en-GB',
 
-    #   enable_services: {
-    #     push_notification: "on",
-    #   }
-    # )
-    # produce(
-    #   username: 'dev@madebyprism.com',
-    #   team_id: 'CQFWKU4GYE',
-    #   itc_team_id: '2203907',
-    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
-    #   app_name: "#{ENV['APP_NAME']} beta onesignal",
-    #   skip_itc: true,
-    # )
+      enable_services: {
+        push_notification: "on",
+        in_app_purchase: "on",
+      }
+    )
+    produce(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      itc_team_id: '2203907',
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
+      app_name: "#{ENV['APP_NAME']} beta onesignal",
+      skip_itc: true,
+    )
 
     # Release
     # produce(
@@ -98,44 +101,44 @@ platform :ios do
         )
       end
     )
-    # # Beta development
-    # get_push_certificate(
-    #   username: 'dev@madebyprism.com',
-    #   team_id: 'CQFWKU4GYE',
-    #   # force: true, # create a new profile, even if the old one is still valid
-    #   development: true,
-    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
-    #   save_private_key: true,
-    #   output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
-    #   new_profile: proc do |profile_path| # this block gets called when a new profile was generated
-    #     # Update onesignal account with new pem
-    #     onesignal(
-    #       app_id: "63926411-8276-4c20-9fe2-bb31f15d5214",
-    #       app_name: "mbp-rn Beta",
-    #       auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
-    #       apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/development_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
-    #       apns_env: "sandbox"
-    #     )
-    #   end
-    # )
-    # # Beta production
-    # get_push_certificate(
-    #   username: 'dev@madebyprism.com',
-    #   team_id: 'CQFWKU4GYE',
-    #   # force: true, # create a new profile, even if the old one is still valid
-    #   app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
-    #   save_private_key: true,
-    #   output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
-    #   new_profile: proc do |profile_path| # this block gets called when a new profile was generated
-    #     # Update onesignal account with new pem
-    #     onesignal(
-    #       app_id: "63926411-8276-4c20-9fe2-bb31f15d5214",
-    #       app_name: "mbp-rn Beta",
-    #       auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
-    #       apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/production_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
-    #     )
-    #   end
-    # )
+    # Beta development
+    get_push_certificate(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      # force: true, # create a new profile, even if the old one is still valid
+      development: true,
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
+      save_private_key: true,
+      output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+      new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+        # Update onesignal account with new pem
+        onesignal(
+          app_id: "332248ca-6707-4e3d-9aa4-73ee192aa8fa",
+          app_name: "Selecta Live Beta",
+          auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
+          apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/development_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
+          apns_env: "sandbox"
+        )
+      end
+    )
+    # Beta production
+    get_push_certificate(
+      username: 'dev@madebyprism.com',
+      team_id: 'CQFWKU4GYE',
+      # force: true, # create a new profile, even if the old one is still valid
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
+      save_private_key: true,
+      output_path: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}",
+      new_profile: proc do |profile_path| # this block gets called when a new profile was generated
+        # Update onesignal account with new pem
+        onesignal(
+          app_id: "332248ca-6707-4e3d-9aa4-73ee192aa8fa",
+          app_name: "Selecta Live Beta",
+          auth_token: "#{ENV['ONESIGNAL_BETA_AUTH_TOKEN']}",
+          apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/production_#{ENV['BASE_BUNDLE_ID']}.beta.p12",
+        )
+      end
+    )
     # Release
     # get_push_certificate(
     #   username: 'dev@madebyprism.com',
@@ -149,7 +152,7 @@ platform :ios do
     #     # Update onesignal account with new pem
     #     onesignal(
     #       app_id: "2a561871-28fd-4b8a-a365-8cf9888e7b8b",
-    #       app_name: "mbp-rn",
+    #       app_name: "Selecta Live",
     #       auth_token: "#{ENV['ONESIGNAL_RELEASE_AUTH_TOKEN']}",
     #       apns_p12: "#{ENV['HOME']}/certs/#{ENV['BASE_BUNDLE_ID']}/production_#{ENV['BASE_BUNDLE_ID']}.p12",
     #     )

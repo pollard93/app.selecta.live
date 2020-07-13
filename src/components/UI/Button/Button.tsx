@@ -5,7 +5,6 @@ import Body from '../Typography/components/Body';
 import Icon, { ICON } from '../Icon/Icon';
 import Gradient from '../Gradient/Gradient';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
-import spacing from '../../../styles/definitions/spacing';
 
 
 export interface ButtonProps extends BaseProps {

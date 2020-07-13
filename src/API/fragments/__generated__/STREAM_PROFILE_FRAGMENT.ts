@@ -26,13 +26,22 @@ export interface STREAM_PROFILE_FRAGMENT_image {
   url: STREAM_PROFILE_FRAGMENT_image_url | null;
 }
 
+export interface STREAM_PROFILE_FRAGMENT_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface STREAM_PROFILE_FRAGMENT {
   __typename: "StreamProfile";
   id: string;
-  channel: STREAM_PROFILE_FRAGMENT_channel | null;
   name: string | null;
+  channel: STREAM_PROFILE_FRAGMENT_channel | null;
   image: STREAM_PROFILE_FRAGMENT_image | null;
+  timeFrom: any | null;
+  timeTo: any | null;
+  tags: (STREAM_PROFILE_FRAGMENT_tags | null)[] | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }

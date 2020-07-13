@@ -12,6 +12,13 @@ export enum ICON {
   WALLET = 'WALLET',
   SHARE = 'SHARE',
   PLUS = 'PLUS',
+  PLAY = 'PLAY',
+  PAUSE = 'PAUSE',
+  FULLSCREEN = 'FULLSCREEN',
+  CLOSE_FULLSCREEN = 'CLOSE_FULLSCREEN',
+  VIDEO_ENABLED = 'VIDEO_ENABLED',
+  VIDEO_DISABLED = 'VIDEO_DISABLED',
+  DRAWER_ARROW = 'DRAWER_ARROW',
 }
 
 interface IconProps {
@@ -45,6 +52,27 @@ const Icon = (props: IconProps) => {
 
       case ICON.PLUS:
         return require('../../../assets/images/icons/plus.png');
+
+      case ICON.PLAY:
+        return require('../../../assets/images/icons/play.png');
+
+      case ICON.PAUSE:
+        return require('../../../assets/images/icons/pause.png');
+
+      case ICON.FULLSCREEN:
+        return require('../../../assets/images/icons/fullScreen.png');
+
+      case ICON.CLOSE_FULLSCREEN:
+        return require('../../../assets/images/icons/closeFullScreen.png');
+
+      case ICON.VIDEO_ENABLED:
+        return require('../../../assets/images/icons/videoEnabled.png');
+
+      case ICON.VIDEO_DISABLED:
+        return require('../../../assets/images/icons/videoDisabled.png');
+
+      case ICON.DRAWER_ARROW:
+        return require('../../../assets/images/icons/drawerArrow.png');
 
       default:
         return null;

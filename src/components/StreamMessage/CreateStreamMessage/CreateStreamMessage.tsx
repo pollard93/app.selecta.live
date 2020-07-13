@@ -1,18 +1,23 @@
-import React, { useState, memo } from 'react';
-import { View, Button, TextInput } from 'react-native';
+import React, { useState, memo, FC } from 'react';
+import { View } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { usePutStreamMessageMutation } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 import { getStreamMessagesVariables, getStreamMessages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { getChannelToken } from '../../../ApolloClient';
+import Styles from './CreateStreamMessage.styles';
+import color from '../../../styles/definitions/color';
+import Icon, { ICON } from '../../UI/Icon/Icon';
+import TextInput from '../../UI/Form/components/TextInput';
 
 interface CreateStreamMessageProps {
   variables: getStreamMessagesVariables; // Variables for query to append to cache
 }
 
-const CreateStreamMessage = (props: CreateStreamMessageProps) => {
+const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
   const toast = useToast();
   const [message, setMessage] = useState('');
 
@@ -86,23 +91,35 @@ const CreateStreamMessage = (props: CreateStreamMessageProps) => {
   };
 
 
+  const disabled = loading || message.length === 0;
+
+
   return (
-    <View>
+    <View style={Styles.wrap}>
       <TextInput
+        name="message"
+        light
         value={message}
         onChangeText={setMessage}
-        placeholder='Enter message'
+        placeholder='Type your message here...'
+        placeholderTextColor={color.accent.primary}
         returnKeyType="send"
         blurOnSubmit
         onSubmitEditing={() => mutation()}
         editable={!loading}
+        wrapStyle={Styles.input}
       />
 
-      <Button
-        title="Submit"
-        onPress={onSubmit}
-        disabled={loading || message.length === 0}
-      />
+      <TouchableOpacity
+        onPress={() => onSubmit()}
+        disabled={disabled}
+      >
+        <Icon
+          name={ICON.PLAY}
+          size="small"
+          style={[Styles.send, disabled && Styles.sendDisabled]}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -28,15 +28,24 @@ export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_i
   url: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_image_url | null;
 }
 
+export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams {
   __typename: "StreamProfile";
   id: string;
-  channel: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel | null;
   name: string | null;
+  channel: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel | null;
   image: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_image | null;
+  timeFrom: any | null;
+  timeTo: any | null;
+  tags: (getConsumingStreamProfiles_getConsumingStreamProfiles_streams_tags | null)[] | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelled: any | null;
 }
 
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles {

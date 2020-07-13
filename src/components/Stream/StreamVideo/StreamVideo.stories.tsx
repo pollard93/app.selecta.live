@@ -1,21 +1,19 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import Config from 'react-native-config';
 import StreamVideo from './StreamVideo';
-import StreamVideoView from './StreamVideoView';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 
-storiesOf('StreamVideo', module)
+storiesOf('Stream/StreamVideo', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('StreamVideo', () => {
+  .add('StreamVideo - VOD', () => {
     const TestComponent = () => {
       const queryResult = useGetStreamProfileQuery({
         variables: {
-          id: 'test-id',
+          id: 'VOD',
         },
       });
-      if (queryResult.loading || queryResult.error) return null;
+      if (queryResult.loading) return null;
 
       return (
         <StreamVideo data={queryResult.data.getStreamProfile} />
@@ -24,20 +22,17 @@ storiesOf('StreamVideo', module)
 
     return <TestComponent />;
   })
-  .add('StreamVideoView', () => {
+  .add('StreamVideo - LIVE', () => {
     const TestComponent = () => {
       const queryResult = useGetStreamProfileQuery({
         variables: {
-          id: 'test-id',
+          id: 'LIVE',
         },
       });
-      if (queryResult.loading || queryResult.error) return null;
+      if (queryResult.loading) return null;
 
       return (
-        <StreamVideoView
-          url={Config.REACT_APP_APP_TEST_STREAM_URL}
-          data={queryResult.data.getStreamProfile}
-        />
+        <StreamVideo data={queryResult.data.getStreamProfile} />
       );
     };
 

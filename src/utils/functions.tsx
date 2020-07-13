@@ -55,6 +55,13 @@ export const formatForTimezone = (date: string, format?: string): string => {
 };
 
 
+export const formatTime = (timeInSeconds: number) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = timeInSeconds - minutes * 60;
+  return `${`${minutes}`.padStart(2, '0')}:${seconds.toFixed(0).padStart(2, '0')}`;
+};
+
+
 /**
  * Debounces a function and
  * @param fn - function to debounce
@@ -82,3 +89,19 @@ export const useDebounce = (fn: Function, delay: number, watch = []) => useCallb
   }, delay),
   watch,
 );
+
+
+/**
+ * Maps given value against 2 inputs and 2 outputs
+ */
+export const mapRange = (num, inMin, inMax, outMin, outMax): number => {
+  try {
+    // eslint-disable-next-line no-mixed-operators
+    const value = (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(value) || value === Infinity) return null;
+    return value;
+  } catch {
+    return null;
+  }
+};

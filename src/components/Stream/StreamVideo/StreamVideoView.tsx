@@ -1,20 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, FC } from 'react';
 import Video from 'selecta.components.react-native-video';
-import { SafeAreaView, Platform, Text, View, Button } from 'react-native';
+import { Platform, AppState } from 'react-native';
 import MusicControl from 'react-native-music-control';
 import { Command } from 'react-native-music-control/lib/types';
-import { useApolloClient } from 'react-apollo';
-import styles from './StreamVideo.styles';
+import { QueryHookOptions } from 'react-apollo';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import { getStreamUrl_getStreamUrl } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
-import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
-import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
+import StreamControls from './components/StreamControls/StreamControls';
+import Styles from './StreamVideo.styles';
+
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile;
-  query: any;
+  query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
+  updatePosition: (position: number) => void;
+  toggleFullScreen: () => void;
+  isFullScreen: boolean;
 }
 
 
@@ -22,18 +24,71 @@ interface StreamVideoViewProps {
  * MusicControl is only used for android
  * nowPlayingInfo is handled natively in selecta.components.react-native-video
 */
-const StreamVideoView = (props: StreamVideoViewProps) => {
-  const client = useApolloClient();
+const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [playableDuration, setPlayableDuration] = useState(0);
+  const [buffering, setBuffering] = useState(true);
+  const [error, setError] = useState(false);
   const player = useRef(null);
 
   // Live is determined from the url given, initial state null
   const [live, setLive] = useState<boolean>(null);
 
-  // Determin url based on disableVideo
-  const [disableVideo, setDisableVideo] = useState<boolean>(false);
-  const url = disableVideo ? props.url.audio : props.url.video;
+
+  /**
+   * Determin url based on videoEnabled
+   * If audioOnly, this will be default false, otherwise true
+   */
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(!props.data.audioOnly);
+  const url = !videoEnabled ? props.url.audio : props.url.video;
+
+
+  /**
+   * If the stream is not audioOnly
+   * And the app state is going from active to not active
+   * Set videoEnabled to false
+   */
+  const [appState, setAppState] = useState(AppState.currentState);
+  useEffect(() => {
+    if (props.data.audioOnly) return undefined;
+
+    const handleAppStateChange = (nextAppState) => {
+      setAppState(nextAppState);
+      if (videoEnabled && nextAppState === 'background') {
+        setVideoEnabled(false);
+      }
+    };
+
+    AppState.addEventListener('change', handleAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, [appState]);
+
+
+  /**
+   * Current position is held in state
+   * A ref is required for props.updatePosition below
+   */
+  const [currentPosition, setCurrentPosition] = useState(props.data.position);
+  const currentPositionRef = useRef(currentPosition);
+
+
+  /**
+   * On unmount
+   * If the video is not live
+   * updatePosition
+   */
+  useEffect(() => {
+    if (live) return undefined;
+    return () => {
+      if (currentPositionRef.current != null) {
+        props.updatePosition(currentPositionRef.current);
+      }
+    };
+  }, [live]);
 
 
   /**
@@ -98,60 +153,50 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       MusicControl.on(Command.skipForward, () => {
-        player.current.seek(props.data.position + 15);
+        player.current.seek(currentPosition + 15);
       });
 
       MusicControl.on(Command.skipBackward, () => {
-        player.current.seek(props.data.position - 15);
+        player.current.seek(currentPosition - 15);
       });
 
       MusicControl.on(Command.seek, (pos) => {
         player.current.seek(pos);
       });
     }
-  }, [props.data.position]);
+  }, [currentPosition]);
 
 
   /**
-   * Set stream.position in local state
+   * Toggle video enabled, set the current position before updating state
+   * When the new url is loaded, it will seek to that position
    */
-  const setProgress = (progress: number) => {
-    try {
-      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-      });
-
-      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-        data: {
-          ...data,
-          position: progress,
-        },
-      });
-    // eslint-disable-next-line no-empty
-    } catch {}
+  const toggleVideoEnabled = () => {
+    props.updatePosition(currentPosition);
+    setVideoEnabled(!videoEnabled);
   };
 
 
   return (
-    <SafeAreaView style={[GlobalStyles.PageFill, { paddingVertical: 50 }]}>
+    <>
       <Video
         source={{ uri: url }}
         automaticallyWaitsToMinimizeStalling
         ref={player}
-        onBuffer={(...args) => {
-          console.log('StreamVideoView -> onBuffer', args);
+        onBuffer={({ isBuffering }) => {
+          if (!isBuffering && buffering) {
+            setBuffering(false);
+            return;
+          }
+          if (isBuffering && !buffering) {
+            setBuffering(true);
+          }
         }}
         onError={(...args) => {
-          console.log('StreamVideoView -> onError', args);
+          console.log('StreamVideoView -> args', args);
+          setError(true);
         }}
-        style={styles.wrap}
+        style={Styles.video}
         ignoreSilentSwitch={'ignore'}
         playWhenInactive={true}
         playInBackground={true}
@@ -174,15 +219,16 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
           /**
            * If there is a position on load then try and seek to it
            */
-          if (props.data.position) {
-            player.current.seek(props.data.position);
+          if (currentPosition) {
+            player.current.seek(currentPosition);
           }
 
 
           /**
            * Set rate to 1 now video is ready to play
+           * Uncomment to autoPlay
            */
-          setRate(1);
+          // setRate(1);
 
 
           /**
@@ -192,7 +238,16 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             setLive(true);
           } else {
             setLive(false);
-            setDuration(data.duration);
+            setDuration(Math.floor(data.duration));
+          }
+
+
+          /**
+           * If video is not enabled set loading false here
+           * Otherwise this should be handled in onReadyForDisplay
+           */
+          if (!videoEnabled) {
+            setLoading(false);
           }
 
 
@@ -201,6 +256,7 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
            * Set now playing info
            */
           if (Platform.OS === 'android') {
+            setLoading(false);
             MusicControl.setNowPlaying({
               title: `${props.data.name}${live ? ' (LIVE)' : ''}`,
               artwork: props.data.image.url.small,
@@ -222,21 +278,28 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
             });
           }
         }}
-        onProgress={!live ? ((args) => {
-          const { currentTime } = args;
-          setProgress(currentTime);
+        onReadyForDisplay={() => {
+          setLoading(false);
+        }}
+        onProgress={((args) => {
+          if (live === false) {
+            const { currentTime } = args;
+            setCurrentPosition(currentTime);
+            currentPositionRef.current = currentTime;
+            setPlayableDuration(args.playableDuration);
 
 
-          /**
-           * On Video Progress (ANDROID)
-           * Update now playing info
-           */
-          if (Platform.OS === 'android') {
-            MusicControl.updatePlayback({
-              elapsedTime: currentTime,
-            });
+            /**
+             * On Video Progress (ANDROID)
+             * Update now playing info
+             */
+            if (Platform.OS === 'android') {
+              MusicControl.updatePlayback({
+                elapsedTime: currentTime,
+              });
+            }
           }
-        }) : undefined}
+        })}
         onPlaybackRateChangeFromNowPlaying={Platform.OS === 'ios' ? (({ playbackRate }) => {
           /**
            * Set playback rate on ios to allow the control from lock screen
@@ -249,7 +312,9 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
            */
           setRate(0);
           player.current.seek(0);
-          setProgress(0);
+          setCurrentPosition(0);
+          currentPositionRef.current = 0;
+          props.updatePosition(0);
 
           if (Platform.OS === 'android') {
             MusicControl.updatePlayback({
@@ -257,52 +322,35 @@ const StreamVideoView = (props: StreamVideoViewProps) => {
               elapsedTime: 0,
             });
           }
+
+          /**
+           * If live, get a new url to reset the view as VOD
+           */
+          if (live) {
+            props.query();
+          }
         }}
       />
 
-      <Button
-        title={disableVideo ? 'Enable video' : 'Disable video'}
-        onPress={() => {
-          setDisableVideo(!disableVideo);
-        }}
-      />
 
-      {
-        live === null
-          ? <Text>LOADING</Text>
-          : (
-            <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-              {
-                live === false && (
-                  <>
-                    <Text>Progress: {(props.data.position || 0).toFixed(2)}</Text>
-                    <Text>Duration: {duration.toFixed(2)}</Text>
-                  </>
-                )
-              }
-              {
-                rate === 0
-                  ? (
-                    <Button
-                      title='Play'
-                      onPress={() => {
-                        setRate(1);
-                      }}
-                    />
-                  )
-                  : (
-                    <Button
-                      title={live ? 'Stop' : 'Pause'}
-                      onPress={() => {
-                        setRate(0);
-                      }}
-                    />
-                  )
-              }
-            </View>
-          )
-      }
-    </SafeAreaView>
+      <StreamControls
+        isPlaying={rate === 1}
+        onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
+        duration={duration}
+        position={currentPosition}
+        onSeek={(position) => player.current?.seek(position)}
+        playableDuration={playableDuration}
+        isLoading={loading}
+        isBuffering={buffering}
+        isError={error}
+        isLive={live}
+        isAudioOnly={props.data.audioOnly}
+        toggleFullScreen={() => props.toggleFullScreen()}
+        isFullScreen={props.isFullScreen}
+        toggleVideoEnabled={toggleVideoEnabled}
+        isVideoEnabled={videoEnabled}
+      />
+    </>
   );
 };
 

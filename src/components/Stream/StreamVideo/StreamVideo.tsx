@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamVideoView from './StreamVideoView';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
+import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
+import { ScreenProps } from '../../../screens/utils/interfaces';
 
-interface StreamVideoProps {
+export interface StreamVideoProps extends ScreenProps {
   data: getStreamProfile_getStreamProfile;
 }
 
-const StreamVideo = (props: StreamVideoProps) => {
+const StreamVideo: FC<StreamVideoProps> = (props) => {
   const client = useApolloClient();
 
   /**
@@ -43,7 +42,6 @@ const StreamVideo = (props: StreamVideoProps) => {
      * Send the last position to server
      */
     return async () => {
-      console.log(1);
       try {
         const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
           fragmentName: 'STREAM_PROFILE_FRAGMENT',
@@ -51,7 +49,6 @@ const StreamVideo = (props: StreamVideoProps) => {
           id: `${props.data.__typename}:${props.data.id}`,
           fragment: STREAM_PROFILE_FRAGMENT,
         });
-        console.log('StreamVideo -> data', data);
 
         if (data.position) {
           await client.mutate({
@@ -63,9 +60,7 @@ const StreamVideo = (props: StreamVideoProps) => {
           });
         }
       // eslint-disable-next-line no-empty
-      } catch (e) {
-        console.log('StreamVideo -> e', e);
-      }
+      } catch (e) {}
     };
   }, []);
 
@@ -77,6 +72,8 @@ const StreamVideo = (props: StreamVideoProps) => {
    * This is an edge case, users are given ample time with one url and this should rarely be used in production
    */
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development') return undefined;
+
     /**
      * Use the audio url as is always returned
      */
@@ -115,24 +112,102 @@ const StreamVideo = (props: StreamVideoProps) => {
 
 
   /**
+   * If stream has not yet started
+   * Get the time is does start and set a timeout to refresh the view when it does
+   */
+  useEffect(() => {
+    const now = new Date();
+    const startTime = new Date(props.data.timeFrom);
+    if (new Date(props.data.timeFrom) < now) return undefined;
+
+    /**
+     * Get how long until start time
+     */
+    const timeToStart = startTime.getTime() - now.getTime();
+
+    /**
+     * setTimeout to refetch stream url
+     */
+    const id = setTimeout(() => {
+      query();
+    }, timeToStart);
+
+    /**
+     * Clear timeout on cleanup
+     */
+    return () => {
+      clearTimeout(id);
+    };
+  }, []);
+
+
+  /**
    * Loading | Error
-   * TODO - handle error messages
    */
   if (!queryResult.called || queryResult.loading || queryResult.error) {
-    return (
-      <LoadRetry {...queryResult} />
-    );
+    return null;
   }
 
 
+  /**
+   * Updates stream.position with the last known position
+   * Updates cache and server
+   */
+  const updatePosition = async (position: number) => {
+    try {
+      /**
+       * Update cache
+       */
+      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+      });
+
+      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+        fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        // eslint-disable-next-line no-underscore-dangle
+        id: `${props.data.__typename}:${props.data.id}`,
+        fragment: STREAM_PROFILE_FRAGMENT,
+        data: {
+          ...data,
+          position,
+        },
+      });
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+
+
+    /**
+     * Update server
+     */
+    try {
+      await client.mutate({
+        mutation: UPDATE_STREAM_POSITION_MUTATION,
+        variables: {
+          id: props.data.id,
+          position,
+        },
+      });
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+  };
+
+
   return (
-    <View style={GlobalStyles.PageFill}>
-      <StreamVideoView
-        url={queryResult.data.getStreamUrl}
-        data={props.data}
-        query={query}
-      />
-    </View>
+    <FullScreenWrap {...props}>
+      {({ toggleFullScreen, isFullScreen }) => (
+        <StreamVideoView
+          url={queryResult.data.getStreamUrl}
+          data={props.data}
+          query={query}
+          updatePosition={updatePosition}
+          toggleFullScreen={toggleFullScreen}
+          isFullScreen={isFullScreen}
+        />
+      )}
+    </FullScreenWrap>
   );
 };
 

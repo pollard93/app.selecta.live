@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, FC } from 'react';
-import { View, Animated, Dimensions, LayoutRectangle, SafeAreaView } from 'react-native';
+import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -12,10 +12,10 @@ import color from '../../../styles/definitions/color';
 import FollowChannel from '../FollowChannel/FollowChannel';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import ChannelFeed from '../../ChannelFeed/ChannelFeed';
-import Header from '../../UI/Headers/Header/Header';
+import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
-import { headerHeight } from '../../UI/Headers/Header/Header.style';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 export interface ChannelProfileProps extends ScreenProps {
   id: string;
@@ -39,6 +39,8 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
   const [titleLayout, setTitleLayout] = useState<Partial<LayoutRectangle>>({ height: 0 });
   const scrollY = useRef(new Animated.Value(0));
   const profileImageHeight = useRef(scalePx(120));
+  const { headerHeight } = useHeaderStyles();
+  const safeAreaInsets = useSafeArea();
 
 
   /**
@@ -48,8 +50,8 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
     if (titleLayout.height === 0) return null;
 
     return scrollY.current.interpolate({
-      inputRange: [-1000, 0, coverImageHeadingDefaultHeight.current - titleLayout.height],
-      outputRange: [1000 + coverImageHeadingDefaultHeight.current, coverImageHeadingDefaultHeight.current, titleLayout.height],
+      inputRange: [-1000, 0, coverImageHeadingDefaultHeight.current - titleLayout.height + headerHeight / 2],
+      outputRange: [1000 + coverImageHeadingDefaultHeight.current, coverImageHeadingDefaultHeight.current, headerHeight / 2],
       extrapolate: 'clamp',
       // useNativeDriver: true,
     });
@@ -120,7 +122,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
     if (headerTopLayout.height === 0 || titleLayout.height === 0 || headerLayout.height === 0) return null;
 
     return scrollY.current.interpolate({
-      inputRange: [0, coverImageHeadingDefaultHeight.current + headerLayout.height],
+      inputRange: [0, headerTopLayout.height],
       outputRange: [headerTopLayout.height, titleLayout.height],
       extrapolate: 'clamp',
       // useNativeDriver: true,
@@ -132,7 +134,7 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
    * Title padding top interpolation
    */
   const profileImageOpacity = useRef(scrollY.current.interpolate({
-    inputRange: [0, coverImageHeadingDefaultHeight.current + titleLayout.height],
+    inputRange: [0, coverImageHeadingDefaultHeight.current],
     outputRange: [1, 0],
     extrapolate: 'clamp',
     // useNativeDriver: true,
@@ -142,169 +144,170 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(props.componentId)} />
-      <SafeAreaView />
+        <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
 
-      {
-        queryResult.loading || queryResult.error
-          ? <LoadRetry {...queryResult} />
-          : (
-            <View style={[
-              Styles.wrap,
-              // Only show after all layouts have been set
-              // eslint-disable-next-line react-native/no-inline-styles
-              { opacity: (headerTopLayout.height === 0 || titleLayout.height === 0 || headerLayout.height === 0) ? 0 : 1 },
-            ]}>
-              <Animated.View
-                style={[
-                  Styles.coverImageWrap,
-                  {
-                    height: coverImageHeadingHeight,
-                    minHeight: titleLayout.height + headerHeight,
-                  },
-                ]}
-              >
-                <AsyncImage
-                  splashUrl={queryResult.data.getChannelProfile.coverImage.url.splash}
-                  fullUrl={queryResult.data.getChannelProfile.coverImage.url.full}
-                  containerProps={{
-                    style: Styles.coverImage,
-                  }}
-                  imageProps={{
-                    resizeMode: 'cover',
-                  }}
-                />
+        {
+          queryResult.loading || queryResult.error
+            ? <LoadRetry {...queryResult} />
+            : (
+              <View style={[
+                Styles.wrap,
+                // Only show after all layouts have been set
+                // eslint-disable-next-line react-native/no-inline-styles
+                { opacity: (headerTopLayout.height === 0 || titleLayout.height === 0 || headerLayout.height === 0) ? 0 : 1 },
+              ]}>
                 <Animated.View
                   style={[
-                    Styles.coverImageCover,
-                    { opacity: coverImageCoverOpacity.current },
+                    Styles.coverImageWrap,
+                    {
+                      height: coverImageHeadingHeight,
+                      minHeight: titleLayout.height + headerHeight / 2,
+                    },
                   ]}
-                />
-              </Animated.View>
-
-              <Animated.View
-                style={[
-                  Styles.headerWrap,
-                  { paddingTop: coverImageHeadingHeight },
-                ]}
-              >
-                <View
-                  onLayout={(event) => {
-                    if (headerLayout.height === 0) {
-                      setHeaderLayout(event.nativeEvent.layout);
-                    }
-                  }}
                 >
+                  <AsyncImage
+                    splashUrl={queryResult.data.getChannelProfile.coverImage.url.splash}
+                    fullUrl={queryResult.data.getChannelProfile.coverImage.url.full}
+                    containerProps={{
+                      style: Styles.coverImage,
+                    }}
+                    imageProps={{
+                      resizeMode: 'cover',
+                    }}
+                  />
                   <Animated.View
+                    style={[
+                      Styles.coverImageCover,
+                      { opacity: coverImageCoverOpacity.current },
+                    ]}
+                  />
+                </Animated.View>
+
+                <Animated.View
+                  style={[
+                    Styles.headerWrap,
+                    { paddingTop: coverImageHeadingHeight },
+                  ]}
+                >
+                  <View
                     onLayout={(event) => {
-                      if (headerTopLayout.height === 0) {
-                        setHeaderTopLayout(event.nativeEvent.layout);
+                      if (headerLayout.height === 0) {
+                        setHeaderLayout(event.nativeEvent.layout);
                       }
                     }}
-                    style={[
-                      Styles.headerTop,
-                      { height: headerTopHeight || undefined },
-                    ]}
                   >
                     <Animated.View
-                      style={{
-                        opacity: profileImageOpacity.current,
-                        height: profileImageHeight.current / 2,
-                        width: profileImageHeight.current,
+                      onLayout={(event) => {
+                        if (headerTopLayout.height === 0) {
+                          setHeaderTopLayout(event.nativeEvent.layout);
+                        }
                       }}
+                      style={[
+                        Styles.headerTop,
+                        { height: headerTopHeight || undefined },
+                      ]}
                     >
-                      <View
-                        style={[
-                          Styles.profileImageWrap,
-                          {
-                            width: profileImageHeight.current,
-                            height: profileImageHeight.current,
-                          },
-                        ]}
+                      <Animated.View
+                        style={{
+                          opacity: profileImageOpacity.current,
+                          height: profileImageHeight.current / 2,
+                          width: profileImageHeight.current,
+                        }}
                       >
-                        <View style={Styles.profileImageInner}>
-                          <AsyncImage
-                            splashUrl={queryResult.data.getChannelProfile.profileImage.url.splash}
-                            fullUrl={queryResult.data.getChannelProfile.profileImage.url.full}
-                            containerProps={{
-                              style: Styles.profileImage,
-                            }}
-                          />
+                        <View
+                          style={[
+                            Styles.profileImageWrap,
+                            {
+                              width: profileImageHeight.current,
+                              height: profileImageHeight.current,
+                            },
+                          ]}
+                        >
+                          <View style={Styles.profileImageInner}>
+                            <AsyncImage
+                              splashUrl={queryResult.data.getChannelProfile.profileImage.url.splash}
+                              fullUrl={queryResult.data.getChannelProfile.profileImage.url.full}
+                              containerProps={{
+                                style: Styles.profileImage,
+                              }}
+                            />
+                          </View>
                         </View>
+                      </Animated.View>
+
+                      <View
+                        style={Styles.headerTopContent}
+                      >
+                        <Icon
+                          name={ICON.SHARE}
+                          size="small"
+                          style={[
+                            Styles.headerTopContentIcon,
+                            { tintColor: titleColor },
+                          ]}
+                          animated
+                        />
+
+                        <FollowChannel
+                          data={queryResult.data.getChannelProfile}
+                          wrapStyle={{ backgroundColor: titleColor }}
+                          textStyle={{ color: followChannelColor }}
+                          iconStyle={{ tintColor: followChannelColor }}
+                        />
                       </View>
                     </Animated.View>
 
-                    <View
-                      style={Styles.headerTopContent}
+
+                    <Animated.View
+                      onLayout={(event) => {
+                        if (titleLayout.height === 0) {
+                          setTitleLayout(event.nativeEvent.layout);
+                        }
+                      }}
+                      style={[
+                        Styles.title,
+                        { marginTop: titlePaddingTop || undefined },
+                      ]}
                     >
-                      <Icon
-                        name={ICON.SHARE}
-                        size="small"
-                        style={[
-                          Styles.headerTopContentIcon,
-                          { tintColor: titleColor },
-                        ]}
-                        animated
-                      />
+                      <Animated.Text
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                        style={{ color: titleColor }}
+                      >
+                        <H2>{queryResult.data.getChannelProfile.name}</H2>
+                      </Animated.Text>
+                    </Animated.View>
+                  </View>
+                </Animated.View>
 
-                      <FollowChannel
-                        data={queryResult.data.getChannelProfile}
-                        wrapStyle={{ backgroundColor: titleColor }}
-                        textStyle={{ color: followChannelColor }}
-                        iconStyle={{ tintColor: followChannelColor }}
-                      />
-                    </View>
-                  </Animated.View>
-
-
-                  <Animated.View
-                    onLayout={(event) => {
-                      if (titleLayout.height === 0) {
-                        setTitleLayout(event.nativeEvent.layout);
-                      }
+                {headerLayout.height !== 0 && (
+                  <ChannelFeed
+                    id={props.id}
+                    flatListProps={{
+                      bounces: true,
+                      contentContainerStyle: {
+                        paddingTop: coverImageHeadingDefaultHeight.current + headerLayout.height,
+                      },
+                      ListHeaderComponent: () => (
+                        <View style={Styles.description}>
+                          <Body>{queryResult.data.getChannelProfile.description}</Body>
+                        </View>
+                      ),
+                      onScroll: Animated.event(
+                        [
+                          {
+                            nativeEvent: { contentOffset: { y: scrollY.current } },
+                          },
+                        ],
+                      ),
+                      scrollEventThrottle: 16,
                     }}
-                    style={[
-                      Styles.title,
-                      { marginTop: titlePaddingTop || undefined },
-                    ]}
-                  >
-                    <Animated.Text
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
-                      style={{ color: titleColor }}
-                    >
-                      <H2>{queryResult.data.getChannelProfile.name}</H2>
-                    </Animated.Text>
-                  </Animated.View>
-                </View>
-              </Animated.View>
-
-              {headerLayout.height !== 0 && (
-                <ChannelFeed
-                  id={props.id}
-                  flatListProps={{
-                    bounces: true,
-                    contentContainerStyle: {
-                      paddingTop: coverImageHeadingDefaultHeight.current + headerLayout.height,
-                    },
-                    ListHeaderComponent: () => (
-                      <View style={Styles.description}>
-                        <Body>{queryResult.data.getChannelProfile.description}</Body>
-                      </View>
-                    ),
-                    onScroll: Animated.event(
-                      [
-                        {
-                          nativeEvent: { contentOffset: { y: scrollY.current } },
-                        },
-                      ],
-                    ),
-                    scrollEventThrottle: 16,
-                  }}
-                />
-              )}
-            </View>
-          )
-      }
+                  />
+                )}
+              </View>
+            )
+        }
+      </View>
     </View>
   );
 };

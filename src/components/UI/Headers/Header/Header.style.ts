@@ -1,10 +1,7 @@
 import { StyleSheet } from 'react-native';
-import scalePx from '../../../../utils/scalePx';
 import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
-
-export const headerHeight = scalePx(55);
 
 export default StyleSheet.create({
   outer: {
@@ -12,21 +9,21 @@ export default StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-    zIndex: 100,
   },
   wrap: {
     backgroundColor: color.mono.light,
-    borderBottomLeftRadius: headerHeight / 2,
-    borderBottomRightRadius: headerHeight / 2,
     ...shadow.regular,
   },
   inner: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: headerHeight,
     justifyContent: 'space-between',
+    paddingBottom: spacing.xsmall,
     paddingHorizontal: spacing.base,
-    paddingVertical: spacing.small,
+  },
+  noSafeArea: {
+    paddingBottom: spacing.small,
+    paddingTop: spacing.small,
   },
   left: {
     alignItems: 'center',
@@ -57,10 +54,10 @@ export default StyleSheet.create({
   },
   profilePicture: {
     aspectRatio: 1,
-    width: (headerHeight - spacing.large),
+    height: '100%',
   },
   profilePictureInner: {
-    borderRadius: (headerHeight - spacing.large) / 2,
+    borderRadius: 200,
     height: '100%',
     overflow: 'hidden',
     width: '100%',

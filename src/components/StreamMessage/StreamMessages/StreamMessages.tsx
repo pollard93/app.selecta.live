@@ -1,15 +1,15 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
 import styles from './StreamMessages.styles';
 import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMessages/streamMessages';
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
@@ -20,7 +20,7 @@ interface StreamMessagesProps {
 const StreamMessages = (props: StreamMessagesProps) => {
   const variables = {
     id: props.id,
-    first: 5,
+    first: 10,
     after: null,
   };
 
@@ -31,20 +31,23 @@ const StreamMessages = (props: StreamMessagesProps) => {
         variables={variables}
         accessor='getStreamMessages.messages'
         renderItem={({ item }) => (
-          <View style={styles.item}>
-            <StreamMessageListItem data={item} />
-          </View>
-        )}
-        LoadingErrorComponent={(queryResult) => <LoadRetry {...queryResult} />}
-        ListHeaderComponent={() => (
-          <Text>HEADER</Text>
-        )}
-        ListFooterComponent={(moreToLoad) => (
-          <Text>{moreToLoad ? 'LOADING' : 'NO MORE TO LOAD'}</Text>
+          <StreamMessageListItem data={item} />
         )}
         FlatListProps={{
           inverted: true,
+          ItemSeparatorComponent: () => <View style={styles.separator} />,
+          contentContainerStyle: styles.contentContainer,
         }}
+        ListFooterComponent={({ queryResult }) => {
+          if (queryResult.loading || queryResult.error) {
+            return (
+              <LoadRetry {...queryResult} />
+            );
+          }
+
+          return null;
+        }}
+        debug
         subscriptionOptions={{
           document: STREAM_MESSAGES_SUBSCRIPTION,
           variables: {
@@ -72,6 +75,9 @@ const StreamMessages = (props: StreamMessagesProps) => {
             } catch (e) {
               return prev;
             }
+          },
+          onError: (...args) => {
+            console.log('SUB ERROR', args);
           },
         }}
       />

@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react';
-import { View, Dimensions, Animated, ListRenderItemInfo } from 'react-native';
+import { View, Dimensions, Animated, ListRenderItemInfo, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
 import { FEED_PAYLOAD_FRAGMENT_items } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
@@ -14,6 +14,12 @@ import StreamCard from '../Cards/StreamCard/StreamCard';
 import ChannelCard from '../Cards/ChannelCard/ChannelCard';
 import Icon, { ICON } from '../Icon/Icon';
 import Styles from './Feed.styles';
+import { pushScreenV2 } from '../../../screens/utils';
+import { STACK } from '../../../screens/utils/interfaces';
+import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
+import ChannelProfileScreen from '../../../screens/ChannelProfileScreen/ChannelProfileScreen';
+import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
+import { CHANNEL_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT_SHORT';
 
 const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) => {
   const windowWidth = useRef(Dimensions.get('window').width);
@@ -85,13 +91,13 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                 if (args.queryResult.loading || args.queryResult.error) {
                   return (
                     <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
-                      {Array(props.item.variables.first).fill(0).map(() => {
+                      {Array(props.item.variables.first).fill(0).map((_, i) => {
                         switch (props.item.accessor.split('.').pop()) {
                           case 'streams':
-                            return <StreamCardSkeleton />;
+                            return <StreamCardSkeleton key={i} />;
 
                           case 'channels':
-                            return <ChannelCardSkeleton />;
+                            return <ChannelCardSkeleton key={i} />;
 
                           default:
                             return null;
@@ -117,16 +123,16 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                 if (args.queryResult.loading) {
                   return (
                     <View style={Styles.loadingHorizontal}>
-                      {Array(props.item.variables.first).fill(0).map(() => (
+                      {Array(props.item.variables.first).fill(0).map((_, i) => (
                         <>
                           <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
                             {(() => {
                               switch (props.item.accessor.split('.').pop()) {
                                 case 'streams':
-                                  return <StreamCardSkeleton />;
+                                  return <StreamCardSkeleton key={i} />;
 
                                 case 'channels':
-                                  return <ChannelCardSkeleton />;
+                                  return <ChannelCardSkeleton key={i} />;
 
                                 default:
                                   return null;
@@ -152,10 +158,30 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
               {(() => {
                 switch (props.item.accessor.split('.').pop()) {
                   case 'streams':
-                    return <StreamCard data={args.item as any} />;
+                    const streamData = args.item as STREAM_PROFILE_FRAGMENT_SHORT;
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          pushScreenV2(STACK.TAB_HOME, StreamProfileScreen, { id: streamData.id });
+                        }}
+                        delayPressIn={50}
+                      >
+                        <StreamCard data={streamData} />
+                      </TouchableOpacity>
+                    );
 
                   case 'channels':
-                    return <ChannelCard data={args.item as any} />;
+                    const channelData = args.item as CHANNEL_PROFILE_FRAGMENT_SHORT;
+                    return (
+                      <TouchableOpacity
+                        onPress={() => {
+                          pushScreenV2(STACK.TAB_HOME, ChannelProfileScreen, { id: channelData.id });
+                        }}
+                        delayPressIn={50}
+                      >
+                        <ChannelCard data={channelData} />
+                      </TouchableOpacity>
+                    );
 
                   default:
                     return null;

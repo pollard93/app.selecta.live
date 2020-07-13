@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react-native';
+import { Button, View } from 'react-native';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import LoadingIcon from './LoadingIcon';
 
@@ -14,4 +16,20 @@ storiesOf('UI/LoadingIcon', module)
   ))
   .add('LoadingIcon - small', () => (
     <LoadingIcon size="small" />
-  ));
+  ))
+  .add('LoadingIcon - static', () => {
+    const TestComponent = () => {
+      const [animating, setAnimating] = useState(false);
+      return (
+        <View>
+          <LoadingIcon animating={animating} />
+          <Button
+            title={animating ? 'stop animating' : 'start animating'}
+            onPress={() => setAnimating(!animating)}
+          />
+        </View>
+      );
+    };
+
+    return <TestComponent />;
+  });
