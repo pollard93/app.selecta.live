@@ -7,6 +7,7 @@ export const FILE_FRAGMENT = gql`
     url {
       splash
       small
+      preview
       large
       full
     }

@@ -6,15 +6,34 @@
 // GraphQL query operation: getStreamProfile
 // ====================================================
 
+export interface getStreamProfile_getStreamProfile_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface getStreamProfile_getStreamProfile_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: getStreamProfile_getStreamProfile_channel_profileImage_url | null;
+}
+
 export interface getStreamProfile_getStreamProfile_channel {
   __typename: "ChannelProfile";
+  id: string;
   name: string | null;
+  profileImage: getStreamProfile_getStreamProfile_channel_profileImage | null;
 }
 
 export interface getStreamProfile_getStreamProfile_image_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

@@ -19,12 +19,9 @@ OnboardingGetStartedScreen.prototype.ScreenName = 'OnboardingGetStartedScreen';
  * Set Screen options or remove to use default
  */
 (OnboardingGetStartedScreen.prototype.options as Options) = {
-  topBar: {
-    visible: false,
-  },
-  statusBar: {
-    style: 'light',
-  },
+  // topBar: {
+  //   visible: false,
+  // },
 };
 
 /**

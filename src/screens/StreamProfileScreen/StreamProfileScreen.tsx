@@ -22,10 +22,10 @@ StreamProfileScreen.prototype.ScreenName = 'StreamProfileScreen';
   topBar: {
     visible: false,
   },
-  statusBar: {
-    style: 'dark',
-    backgroundColor: 'white',
-  },
+  // statusBar: {
+  //   style: 'dark',
+  //   backgroundColor: 'white',
+  // },
   bottomTabs: { visible: false, animate: true },
 };
 

@@ -8,7 +8,7 @@ import LoginView from './LoginView';
 import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 
 storiesOf('Onboarding/Login', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
+  .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 1)' }}>{getStory()}</SafeAreaViewDecorator>)
   .add('Login', () => (
     <Login />
   ))

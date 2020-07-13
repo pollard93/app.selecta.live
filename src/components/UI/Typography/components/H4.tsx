@@ -1,17 +1,11 @@
-import React from 'react';
-import { Text, TextProps } from 'react-native';
+import React, { FC } from 'react';
 import Styles from '../Typography.style';
+import Base, { BaseTextProps } from './Base';
 
-interface TextPropsExt extends TextProps {
-  children: any;
-  light?: boolean;
-  skeleton?: boolean;
-}
-
-const H4 = (props: TextPropsExt) => (
-  <Text
+const H4: FC<BaseTextProps> = (props) => (
+  <Base
     {...props}
-    style={[Styles.H4, props.light && Styles.light, props.skeleton && Styles.skeleton, props.style]}
+    style={[Styles.H4, props.style]}
   />
 );
 

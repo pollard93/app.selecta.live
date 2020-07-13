@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from 'react';
-import { AppRegistry } from 'react-native';
 import { getStorybookUI, configure, addDecorator } from '@storybook/react-native';
 import { ApolloProvider } from 'react-apollo';
 import Sinon from 'sinon';
@@ -11,6 +10,7 @@ import * as ScreenUtils from '../src/screens/utils';
 import { setSafeArea } from '../src/modules/SafeAreaInsets/SafeAreaInsets';
 
 import './rn-addons';
+import DarkModeDecorator from './Decorators/DarkModeDecorator/DarkModeDecorator';
 
 
 /**
@@ -73,6 +73,16 @@ addDecorator((getStory) => (
 
 
 /**
+ * Add dark mode decorator
+ */
+addDecorator((getStory) => (
+  <DarkModeDecorator>
+    {getStory()}
+  </DarkModeDecorator>
+));
+
+
+/**
  * import stories
  */
 configure(() => {
@@ -84,9 +94,5 @@ configure(() => {
 const StorybookUIRoot = getStorybookUI({
   onDeviceUI: false,
 });
-
-// If you are using React Native vanilla and after installation you don't see your app name here, write it manually.
-// If you use Expo you can safely remove this line.
-AppRegistry.registerComponent('%APP_NAME%', () => StorybookUIRoot);
 
 export default StorybookUIRoot;

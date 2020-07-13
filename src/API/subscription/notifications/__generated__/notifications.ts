@@ -12,6 +12,7 @@ export interface notifications_notifications_node_sender_profilePicture_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

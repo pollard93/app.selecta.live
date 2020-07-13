@@ -1,16 +1,15 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   wrap: {
     alignItems: 'center',
-    backgroundColor: color.mono.light,
-    borderTopColor: color.mono.pale.dark,
     borderTopWidth: 1,
     flexDirection: 'row',
   },
-  input: {
+  inputWrap: {
     flex: 1,
   },
   send: {
@@ -19,5 +18,15 @@ export default StyleSheet.create({
   },
   sendDisabled: {
     opacity: 0.5,
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
+    borderColor: new DynamicValue(color.mono.pale.regular, color.mono.lightCover),
+  },
+  input: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
   },
 });

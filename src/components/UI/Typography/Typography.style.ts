@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import font from '../../../styles/definitions/font';
 import color from '../../../styles/definitions/color';
 
@@ -33,15 +34,20 @@ export default StyleSheet.create({
     fontSize: font.size.small,
     fontWeight: font.family.body('light').fontWeight,
   },
-  light: {
-    color: color.mono.light,
-  },
-  skeleton: {
-    backgroundColor: color.mono.pale.light,
-    color: color.mono.pale.light,
-  },
   bold: {
     fontFamily: font.family.heading('bold').fontFamily,
     fontWeight: font.family.heading('bold').fontWeight,
+  },
+  light: {
+    color: color.mono.light,
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  base: {
+    color: new DynamicValue(color.mono.dark, color.mono.light),
+  },
+  light: {
+    color: new DynamicValue(color.mono.light, color.mono.dark),
   },
 });

@@ -6,15 +6,34 @@
 // GraphQL mutation operation: payForStream
 // ====================================================
 
+export interface payForStream_payForStream_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface payForStream_payForStream_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: payForStream_payForStream_channel_profileImage_url | null;
+}
+
 export interface payForStream_payForStream_channel {
   __typename: "ChannelProfile";
+  id: string;
   name: string | null;
+  profileImage: payForStream_payForStream_channel_profileImage | null;
 }
 
 export interface payForStream_payForStream_image_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

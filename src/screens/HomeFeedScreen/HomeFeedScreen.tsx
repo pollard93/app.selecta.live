@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import HomeFeed, { HomeFeedProps } from '../../components/HomeFeed/HomeFeed';
-import color from '../../styles/definitions/color';
 
 export interface HomeFeedScreenProps extends HomeFeedProps {}
 
@@ -23,17 +22,13 @@ HomeFeedScreen.prototype.ScreenName = 'HomeFeedScreen';
   topBar: {
     visible: false,
   },
-  statusBar: {
-    style: 'dark',
-    backgroundColor: 'white',
-  },
 };
 
 /**
  * Set screen color options (default white)
  */
 HomeFeedScreen.prototype.fullScreen = true;
-HomeFeedScreen.prototype.statusBarColor = color.mono.dark;
+// HomeFeedScreen.prototype.statusBarColor = color.mono.dark;
 // HomeFeedScreen.prototype.backgroundColor = color.mono.dark;
 
 /**

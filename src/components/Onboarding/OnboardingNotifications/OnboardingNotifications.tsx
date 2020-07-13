@@ -107,6 +107,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
                 type="SECONDARY"
                 title="No thanks"
                 onPress={onNext}
+                style={Styles.bottomButton}
               />
             </FadeInView>
           )

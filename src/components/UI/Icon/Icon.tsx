@@ -1,8 +1,9 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, ImageStyle, ImageProps, StyleProp, Animated } from 'react-native';
-import Styles from './Icon.style';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './Icon.style';
 
 export enum ICON {
   SEARCH = 'SEARCH',
@@ -19,17 +20,24 @@ export enum ICON {
   VIDEO_ENABLED = 'VIDEO_ENABLED',
   VIDEO_DISABLED = 'VIDEO_DISABLED',
   DRAWER_ARROW = 'DRAWER_ARROW',
+  SEND = 'SEND',
+  TICK = 'TICK',
+  CHAT = 'CHAT',
+  NOTES = 'NOTES',
 }
 
 interface IconProps {
   name: ICON;
   size: 'xxsmall' | 'xsmall' | 'small' | 'regular' | 'large' | 'xlarge';
+  forceLight?: boolean;
   style?: Animated.WithAnimatedValue<StyleProp<ImageStyle>>;
   resizeMode?: ImageProps['resizeMode'];
   animated?: boolean;
 }
 
 const Icon = (props: IconProps) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   const source = (() => {
     switch (props.name) {
       case ICON.SEARCH:
@@ -74,6 +82,18 @@ const Icon = (props: IconProps) => {
       case ICON.DRAWER_ARROW:
         return require('../../../assets/images/icons/drawerArrow.png');
 
+      case ICON.SEND:
+        return require('../../../assets/images/icons/send.png');
+
+      case ICON.TICK:
+        return require('../../../assets/images/icons/tick.png');
+
+      case ICON.CHAT:
+        return require('../../../assets/images/icons/chat.png');
+
+      case ICON.NOTES:
+        return require('../../../assets/images/icons/notes.png');
+
       default:
         return null;
     }
@@ -84,7 +104,7 @@ const Icon = (props: IconProps) => {
       <Animated.Image
         source={source}
         resizeMode={props.resizeMode || 'contain'}
-        style={[Styles.base, Styles[props.name], Styles[props.size], props.style]}
+        style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
       />
     );
   }
@@ -93,9 +113,9 @@ const Icon = (props: IconProps) => {
     <Image
       source={source}
       resizeMode={props.resizeMode || 'contain'}
-      style={[Styles.base, Styles[props.name], Styles[props.size], props.style]}
+      style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
     />
   );
 };
 
-export default Icon;
+export default memo(Icon);

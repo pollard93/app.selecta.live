@@ -33,7 +33,7 @@ const FollowChannel: FC<FollowChannelProps> = (props) => {
         ]}
       >
         <Animated.Text style={props.textStyle}>
-          <Body bold>{props.data.following ? 'Unfollow' : 'Follow'}</Body>
+          <Body bold disableBaseColor>{props.data.following ? 'Unfollow' : 'Follow'}</Body>
         </Animated.Text>
 
         <Icon
@@ -42,6 +42,7 @@ const FollowChannel: FC<FollowChannelProps> = (props) => {
             Styles.icon,
             props.iconStyle,
           ]}
+          size="regular"
           animated
         />
       </Animated.View>

@@ -123,7 +123,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
   if (props.isError) {
     return (
       <View style={[StyleSheet.absoluteFillObject, Styles.cover]}>
-        <H4 light>There has been an error</H4>
+        <H4 style={Styles.error}>Something went wrong...</H4>
       </View>
     );
   }
@@ -189,7 +189,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               }
             }}
           >
-            <Icon name={props.isPlaying ? ICON.PAUSE : ICON.PLAY} size="large" style={{ tintColor: 'white' }} />
+            <Icon name={props.isPlaying ? ICON.PAUSE : ICON.PLAY} size="large" style={Styles.icon} />
           </TouchableOpacity>
         </View>
 
@@ -197,6 +197,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
         {/* Toggle fullscreen / toggle enable video button */}
         {!props.isAudioOnly && (
           <View
+            // eslint-disable-next-line react-native/no-inline-styles
             style={[StyleSheet.absoluteFillObject, Styles.videoEnabled, { marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
             pointerEvents="box-none"
           >
@@ -254,8 +255,8 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                     props.isFullScreen && Styles.timesFullScreen,
                   ]}
                 >
-                  <Small bold light>{formatTime(controlPosition)}</Small>
-                  <Small bold light>{duration}</Small>
+                  <Small bold forceLight>{formatTime(controlPosition)}</Small>
+                  <Small bold forceLight>{duration}</Small>
                 </View>
 
                 <View>

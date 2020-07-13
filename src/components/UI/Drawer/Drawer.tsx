@@ -1,7 +1,8 @@
 import React, { FC, useRef, useEffect } from 'react';
 import { Animated, Dimensions, View } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import Styles from './Drawer.styles';
+import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './Drawer.styles';
 import scalePx from '../../../utils/scalePx';
 import Icon, { ICON } from '../Icon/Icon';
 
@@ -15,6 +16,7 @@ const Drawer: FC<DrawerProps> = (props) => {
   const touchY = useRef(new Animated.Value(-100)).current;
   const touchYValue = useRef(0);
   const barHeight = useRef(scalePx(20)).current;
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -72,6 +74,18 @@ const Drawer: FC<DrawerProps> = (props) => {
   };
 
 
+  /**
+   * When tap ends, toggle from min-max and vice versa
+   */
+  const onTapEnd = () => {
+    Animated.timing(touchY, {
+      toValue: -(touchYValue.current === props.minHeight ? props.maxHeight : props.minHeight),
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
+
   return (
     <View style={Styles.wrap}>
       <Animated.View
@@ -92,30 +106,45 @@ const Drawer: FC<DrawerProps> = (props) => {
           }
         }}
       >
-        <Animated.View>
-          <Animated.View
-            style={[
-              Styles.bar,
-              {
-                height: barHeight,
-                transform: [{
-                  translateY: clampY,
-                }],
-              },
-            ]}
-          >
-            <Icon
-              name={ICON.DRAWER_ARROW}
-              size="xsmall"
-              animated
-              style={{
-                transform: [{
-                  rotate: arrow,
-                }],
-              }}
-            />
+        <TapGestureHandler
+          onHandlerStateChange={(event) => {
+            const { nativeEvent } = event;
+            switch (nativeEvent.state) {
+              case State.END:
+                onTapEnd();
+                break;
+            }
+          }}
+        >
+          <Animated.View>
+            <Animated.View
+              style={[
+                Styles.bar,
+                dynamicStyles.bar,
+                {
+                  height: barHeight,
+                  transform: [{
+                    translateY: clampY,
+                  }],
+                },
+              ]}
+            >
+              <Icon
+                name={ICON.DRAWER_ARROW}
+                size="xsmall"
+                animated
+                style={[
+                  dynamicStyles.icon,
+                  {
+                    transform: [{
+                      rotate: arrow,
+                    }],
+                  },
+                ]}
+              />
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
+        </TapGestureHandler>
       </PanGestureHandler>
     </View>
   );

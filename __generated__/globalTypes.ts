@@ -88,6 +88,36 @@ export enum StreamOrderByInput {
   updatedAt_DESC = "updatedAt_DESC",
 }
 
+export interface ChannelRelatedChannelsWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  channel?: ChannelWhereInput | null;
+  related?: ChannelWhereInput | null;
+  score?: number | null;
+  score_not?: number | null;
+  score_in?: number[] | null;
+  score_not_in?: number[] | null;
+  score_lt?: number | null;
+  score_lte?: number | null;
+  score_gt?: number | null;
+  score_gte?: number | null;
+  AND?: ChannelRelatedChannelsWhereInput[] | null;
+  OR?: ChannelRelatedChannelsWhereInput[] | null;
+  NOT?: ChannelRelatedChannelsWhereInput[] | null;
+}
+
 export interface ChannelWhereInput {
   id?: string | null;
   id_not?: string | null;
@@ -193,6 +223,9 @@ export interface ChannelWhereInput {
   tags_every?: TagWhereInput | null;
   tags_some?: TagWhereInput | null;
   tags_none?: TagWhereInput | null;
+  relatedChannels_every?: ChannelRelatedChannelsWhereInput | null;
+  relatedChannels_some?: ChannelRelatedChannelsWhereInput | null;
+  relatedChannels_none?: ChannelRelatedChannelsWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
@@ -455,6 +488,50 @@ export interface RequestedChannelWhereInput {
   NOT?: RequestedChannelWhereInput[] | null;
 }
 
+export interface StreamCommentWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  stream?: StreamWhereInput | null;
+  user?: UserWhereInput | null;
+  comment?: string | null;
+  comment_not?: string | null;
+  comment_in?: string[] | null;
+  comment_not_in?: string[] | null;
+  comment_lt?: string | null;
+  comment_lte?: string | null;
+  comment_gt?: string | null;
+  comment_gte?: string | null;
+  comment_contains?: string | null;
+  comment_not_contains?: string | null;
+  comment_starts_with?: string | null;
+  comment_not_starts_with?: string | null;
+  comment_ends_with?: string | null;
+  comment_not_ends_with?: string | null;
+  createdAt?: any | null;
+  createdAt_not?: any | null;
+  createdAt_in?: any[] | null;
+  createdAt_not_in?: any[] | null;
+  createdAt_lt?: any | null;
+  createdAt_lte?: any | null;
+  createdAt_gt?: any | null;
+  createdAt_gte?: any | null;
+  AND?: StreamCommentWhereInput[] | null;
+  OR?: StreamCommentWhereInput[] | null;
+  NOT?: StreamCommentWhereInput[] | null;
+}
+
 export interface StreamMessageWhereInput {
   id?: string | null;
   id_not?: string | null;
@@ -555,6 +632,36 @@ export interface StreamPositionRecordWhereInput {
   AND?: StreamPositionRecordWhereInput[] | null;
   OR?: StreamPositionRecordWhereInput[] | null;
   NOT?: StreamPositionRecordWhereInput[] | null;
+}
+
+export interface StreamRelatedStreamsWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  stream?: StreamWhereInput | null;
+  related?: StreamWhereInput | null;
+  score?: number | null;
+  score_not?: number | null;
+  score_in?: number[] | null;
+  score_not_in?: number[] | null;
+  score_lt?: number | null;
+  score_lte?: number | null;
+  score_gt?: number | null;
+  score_gte?: number | null;
+  AND?: StreamRelatedStreamsWhereInput[] | null;
+  OR?: StreamRelatedStreamsWhereInput[] | null;
+  NOT?: StreamRelatedStreamsWhereInput[] | null;
 }
 
 export interface StreamUserRecordWhereInput {
@@ -734,6 +841,9 @@ export interface StreamWhereInput {
   messages_every?: StreamMessageWhereInput | null;
   messages_some?: StreamMessageWhereInput | null;
   messages_none?: StreamMessageWhereInput | null;
+  comments_every?: StreamCommentWhereInput | null;
+  comments_some?: StreamCommentWhereInput | null;
+  comments_none?: StreamCommentWhereInput | null;
   userRecords_every?: StreamUserRecordWhereInput | null;
   userRecords_some?: StreamUserRecordWhereInput | null;
   userRecords_none?: StreamUserRecordWhereInput | null;
@@ -753,6 +863,9 @@ export interface StreamWhereInput {
   tags_every?: TagWhereInput | null;
   tags_some?: TagWhereInput | null;
   tags_none?: TagWhereInput | null;
+  relatedStreams_every?: StreamRelatedStreamsWhereInput | null;
+  relatedStreams_some?: StreamRelatedStreamsWhereInput | null;
+  relatedStreams_none?: StreamRelatedStreamsWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
@@ -820,6 +933,50 @@ export interface TagWhereInput {
   AND?: TagWhereInput[] | null;
   OR?: TagWhereInput[] | null;
   NOT?: TagWhereInput[] | null;
+}
+
+export interface UserTagsWhereInput {
+  id?: string | null;
+  id_not?: string | null;
+  id_in?: string[] | null;
+  id_not_in?: string[] | null;
+  id_lt?: string | null;
+  id_lte?: string | null;
+  id_gt?: string | null;
+  id_gte?: string | null;
+  id_contains?: string | null;
+  id_not_contains?: string | null;
+  id_starts_with?: string | null;
+  id_not_starts_with?: string | null;
+  id_ends_with?: string | null;
+  id_not_ends_with?: string | null;
+  uuid?: string | null;
+  uuid_not?: string | null;
+  uuid_in?: string[] | null;
+  uuid_not_in?: string[] | null;
+  uuid_lt?: string | null;
+  uuid_lte?: string | null;
+  uuid_gt?: string | null;
+  uuid_gte?: string | null;
+  uuid_contains?: string | null;
+  uuid_not_contains?: string | null;
+  uuid_starts_with?: string | null;
+  uuid_not_starts_with?: string | null;
+  uuid_ends_with?: string | null;
+  uuid_not_ends_with?: string | null;
+  user?: UserWhereInput | null;
+  tag?: TagWhereInput | null;
+  order?: number | null;
+  order_not?: number | null;
+  order_in?: number[] | null;
+  order_not_in?: number[] | null;
+  order_lt?: number | null;
+  order_lte?: number | null;
+  order_gt?: number | null;
+  order_gte?: number | null;
+  AND?: UserTagsWhereInput[] | null;
+  OR?: UserTagsWhereInput[] | null;
+  NOT?: UserTagsWhereInput[] | null;
 }
 
 export interface UserWhereInput {
@@ -936,6 +1093,9 @@ export interface UserWhereInput {
   streamsLiveConsuming_every?: StreamWhereInput | null;
   streamsLiveConsuming_some?: StreamWhereInput | null;
   streamsLiveConsuming_none?: StreamWhereInput | null;
+  tags_every?: UserTagsWhereInput | null;
+  tags_some?: UserTagsWhereInput | null;
+  tags_none?: UserTagsWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

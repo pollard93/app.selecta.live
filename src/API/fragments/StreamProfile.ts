@@ -7,7 +7,11 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
     id
     name
     channel {
+      id
       name
+      profileImage {
+        ...FILE_FRAGMENT
+      }
     }
     image {
       ...FILE_FRAGMENT

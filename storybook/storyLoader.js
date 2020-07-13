@@ -34,14 +34,19 @@ function loadStories() {
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
+	require('../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories');
 	require('../src/components/Stream/StreamSelf/StreamSelf.stories');
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
 	require('../src/components/Stream/StreamUrl/StreamUrl.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories');
+	require('../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories');
+	require('../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories');
+	require('../src/components/StreamComment/StreamComments/StreamComments.stories');
 	require('../src/components/StreamMessage/CreateStreamMessage/CreateStreamMessage.stories');
 	require('../src/components/StreamMessage/StreamMessageListItem/StreamMessageListItem.stories');
 	require('../src/components/StreamMessage/StreamMessages/StreamMessages.stories');
+	require('../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories');
 	require('../src/components/UI/Button/Button.stories');
 	require('../src/components/UI/Cards/ChannelCard/ChannelCard.stories');
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
@@ -94,14 +99,19 @@ const stories = [
 	'../src/components/Stream/PayForStream/ReportStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
+	'../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories',
 	'../src/components/Stream/StreamSelf/StreamSelf.stories',
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',
 	'../src/components/Stream/StreamUrl/StreamUrl.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories',
+	'../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories',
+	'../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories',
+	'../src/components/StreamComment/StreamComments/StreamComments.stories',
 	'../src/components/StreamMessage/CreateStreamMessage/CreateStreamMessage.stories',
 	'../src/components/StreamMessage/StreamMessageListItem/StreamMessageListItem.stories',
 	'../src/components/StreamMessage/StreamMessages/StreamMessages.stories',
+	'../src/components/StreamMessage/StreamMessagesVod/StreamMessagesVod.stories',
 	'../src/components/UI/Button/Button.stories',
 	'../src/components/UI/Cards/ChannelCard/ChannelCard.stories',
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',

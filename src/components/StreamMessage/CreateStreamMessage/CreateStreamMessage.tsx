@@ -2,13 +2,14 @@ import React, { useState, memo, FC } from 'react';
 import { View } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useDynamicValue } from 'react-native-dynamic';
 import { usePutStreamMessageMutation } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 import { getStreamMessagesVariables, getStreamMessages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { getChannelToken } from '../../../ApolloClient';
-import Styles from './CreateStreamMessage.styles';
+import Styles, { DynamicStyles } from './CreateStreamMessage.styles';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import TextInput from '../../UI/Form/components/TextInput';
@@ -18,6 +19,7 @@ interface CreateStreamMessageProps {
 }
 
 const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
   const toast = useToast();
   const [message, setMessage] = useState('');
 
@@ -95,7 +97,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
 
 
   return (
-    <View style={Styles.wrap}>
+    <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="message"
         light
@@ -107,15 +109,18 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
         blurOnSubmit
         onSubmitEditing={() => mutation()}
         editable={!loading}
-        wrapStyle={Styles.input}
+        wrapStyle={Styles.inputWrap}
+        style={dynamicStyles.input}
+        maxLength={280}
       />
 
       <TouchableOpacity
         onPress={() => onSubmit()}
         disabled={disabled}
+        testID="submit"
       >
         <Icon
-          name={ICON.PLAY}
+          name={ICON.SEND}
           size="small"
           style={[Styles.send, disabled && Styles.sendDisabled]}
         />

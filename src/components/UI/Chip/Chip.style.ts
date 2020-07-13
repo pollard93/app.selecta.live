@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
-import font from '../../../styles/definitions/font';
 
 export default StyleSheet.create({
   /**
@@ -16,9 +15,6 @@ export default StyleSheet.create({
   },
   wrapLIGHT: {
     backgroundColor: color.mono.light,
-  },
-  wrapSKELETON: {
-    backgroundColor: color.mono.pale.light,
   },
 
 
@@ -37,12 +33,5 @@ export default StyleSheet.create({
   },
   textLIGHT: {
     color: color.mono.dark,
-  },
-  textSKELETON: {
-    color: color.mono.pale.light,
-  },
-  bold: {
-    fontFamily: font.family.heading('bold').fontFamily,
-    fontWeight: font.family.heading('bold').fontWeight,
   },
 });

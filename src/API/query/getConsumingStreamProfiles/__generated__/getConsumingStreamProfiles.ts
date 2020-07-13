@@ -8,15 +8,34 @@ import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generat
 // GraphQL query operation: getConsumingStreamProfiles
 // ====================================================
 
+export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel_profileImage_url | null;
+}
+
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel {
   __typename: "ChannelProfile";
+  id: string;
   name: string | null;
+  profileImage: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_channel_profileImage | null;
 }
 
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams_image_url {
   __typename: "Url";
   splash: string | null;
   small: string | null;
+  preview: string | null;
   large: string | null;
   full: string | null;
 }

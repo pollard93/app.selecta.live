@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../../styles/definitions/spacing';
 import color from '../../../../styles/definitions/color';
 import scalePx from '../../../../utils/scalePx';
@@ -9,11 +10,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: spacing.base,
   },
-  wrap: {
-    backgroundColor: color.mono.pale.light,
-  },
   heading: {
-    backgroundColor: color.mono.light,
     borderBottomLeftRadius: scalePx(25),
     borderBottomRightRadius: scalePx(25),
     paddingHorizontal: spacing.large,
@@ -30,5 +27,14 @@ export default StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.pale.dark),
+  },
+  heading: {
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
   },
 });

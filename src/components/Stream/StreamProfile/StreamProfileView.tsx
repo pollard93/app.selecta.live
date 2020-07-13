@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
-import { Dimensions, SafeAreaView, View } from 'react-native';
+import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -10,9 +10,9 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import FadeInView from '../../UI/FadeInView/FadeInView';
 import Drawer from '../../UI/Drawer/Drawer';
-import StreamMessages from '../../StreamMessage/StreamMessages/StreamMessages';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
+import StreamCommunication from './components/StreamCommunication/StreamCommunication';
 
 
 interface StreamProfileViewProps {
@@ -26,7 +26,7 @@ interface StreamProfileViewProps {
 const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const { headerHeight, headerZindex } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
-  const windowHeight = useRef(Dimensions.get('window').height).current;
+  const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
 
   if (props.queryResult.loading) {
@@ -46,7 +46,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
    * Should only load video if user is a consumer and it hasn't been cancelled
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const shouldLoadVideo = () => props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled !== null;
+  const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null;
 
 
   return (
@@ -60,7 +60,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = windowHeight - safeAreaInsets.top - safeAreaInsets.bottom;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,
@@ -73,14 +73,19 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
       </SafeAreaView>
 
       {drawerLayout && (
-        <FadeInView style={[Styles.flex, { zIndex: headerZindex + 1 }]}>
-          <Drawer
-            minHeight={drawerLayout.minHeight}
-            maxHeight={drawerLayout.maxHeight}
-          >
-            <StreamMessages id={props.queryResult.data.getStreamProfile.id} />
-          </Drawer>
-        </FadeInView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[Styles.flex, { zIndex: headerZindex + 1 }]}
+        >
+          <FadeInView style={Styles.flex}>
+            <Drawer
+              minHeight={drawerLayout.minHeight}
+              maxHeight={drawerLayout.maxHeight}
+            >
+              <StreamCommunication data={props.queryResult.data.getStreamProfile} />
+            </Drawer>
+          </FadeInView>
+        </KeyboardAvoidingView>
       )}
 
       {shouldLoadVideo && (

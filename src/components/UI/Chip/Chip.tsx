@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { View, ViewStyle, StyleProp, TextStyle } from 'react-native';
+import { useDarkMode, useDynamicValue } from 'react-native-dynamic';
 import Styles from './Chip.style';
 import Gradient from '../Gradient/Gradient';
 import Body from '../Typography/components/Body';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 export interface ChipProps {
   type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'SKELETON'; // Default PRIMARY
@@ -12,7 +14,35 @@ export interface ChipProps {
 }
 
 const Chip: FC<ChipProps> = (props) => {
-  const type = props.type || 'PRIMARY';
+  const darkMode = useDarkMode();
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
+  const type = (() => {
+    if (darkMode) {
+      if (props.type === 'LIGHT') return 'SECONDARY';
+      if (props.type === 'SECONDARY') return 'LIGHT';
+    }
+    return props.type || 'PRIMARY';
+  })();
+
+
+  /**
+   * Skeleton
+   */
+  if (type === 'SKELETON') {
+    return (
+      <View style={[Styles.wrap, globalDynamicStyles.skeleton, props.style]}>
+        <Body
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[Styles.text, globalDynamicStyles.skeleton]}
+          bold={props.bold}
+        >
+          {props.children}
+        </Body>
+      </View>
+    );
+  }
 
 
   /**
@@ -25,7 +55,8 @@ const Chip: FC<ChipProps> = (props) => {
           <Body
             numberOfLines={1}
             ellipsizeMode="tail"
-            style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold]}
+            style={[Styles.text, Styles[`text${type}`]]}
+            bold={props.bold}
           >
             {props.children}
           </Body>
@@ -40,7 +71,8 @@ const Chip: FC<ChipProps> = (props) => {
       <Body
         numberOfLines={1}
         ellipsizeMode='tail'
-        style={[Styles.text, Styles[`text${type}`], props.bold && Styles.bold, props.textStyle]}
+        style={[Styles.text, Styles[`text${type}`], props.textStyle]}
+        bold={props.bold}
       >
         {props.children}
       </Body>
@@ -48,4 +80,4 @@ const Chip: FC<ChipProps> = (props) => {
   );
 };
 
-export default Chip;
+export default memo(Chip);
