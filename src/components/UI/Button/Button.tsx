@@ -18,7 +18,6 @@ export interface ButtonProps extends BaseProps {
 const Button: FC<ButtonProps> = (props) => {
   const type = props.type || 'PRIMARY';
   const size = props.size || 'regular';
-  console.log('size', Styles[`touch${size}`]);
 
 
   const Inner = () => (

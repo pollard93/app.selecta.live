@@ -201,7 +201,7 @@ export const openModalScreen = (passProps: ModalScreenProps, id = ModalScreenNam
         backgroundColor: 'transparent',
         componentBackgroundColor: 'transparent',
       },
-      modalTransitionStyle: OptionsModalTransitionStyle.crossDissolve,
+      modalTransitionStyle: OptionsModalTransitionStyle.coverVertical,
       modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
       animations: {
         showModal: {

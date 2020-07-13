@@ -68,6 +68,7 @@ function loadStories() {
 	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
+	require('../src/components/Wallet/Wallet.stories');
 	require('../src/modules/AssetPicker/AssetPicker.stories');
 }
 
@@ -136,6 +137,7 @@ const stories = [
 	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
 	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
+	'../src/components/Wallet/Wallet.stories',
 	'../src/modules/AssetPicker/AssetPicker.stories'
 ];
 

@@ -14,7 +14,7 @@ const DarkModeDecorator: FC = (props) => {
 
   return (
     <ColorSchemeProvider mode={darkMode ? 'dark' : 'light'}>
-      <View style={[GlobalStyles.PageFill, { backgroundColor: darkMode ? color.mono.light : color.mono.dark }]}>
+      <View style={[GlobalStyles.PageFill, { backgroundColor: !darkMode ? color.mono.pale.light : color.mono.pale.dark }]}>
         {props.children}
       </View>
 

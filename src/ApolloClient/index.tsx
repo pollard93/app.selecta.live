@@ -108,6 +108,7 @@ const generalTokenEndpoints = [
   'getChannelSelfs',
   'getChannelStreams',
   'getConsumingStreamProfiles',
+  'getCreditTransactionProfiles',
   'getFeed',
   'getFollowingChannelProfiles',
   'getProductConfig',

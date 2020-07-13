@@ -21,9 +21,10 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
   },
   right: {
-    backgroundColor: 'red',
+    alignItems: 'center',
     flexShrink: 0,
     justifyContent: 'center',
+    minWidth: '25%',
     padding: spacing.base,
   },
 });

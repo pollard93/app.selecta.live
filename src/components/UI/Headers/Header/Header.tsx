@@ -4,12 +4,15 @@ import React, { FC } from 'react';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue, DynamicValue } from 'react-native-dynamic';
+import { Navigation } from 'react-native-navigation';
 import Styles, { DynamicStyles } from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import scalePx from '../../../../utils/scalePx';
+import { openModalScreen } from '../../../../screens/utils';
+import Wallet from '../../../Wallet/Wallet';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -38,6 +41,23 @@ const Header: FC<HeaderProps> = (props) => {
   const lightLogo = require('../../../../assets/images/logo-dark.png');
   const darkLogo = require('../../../../assets/images/logo-white.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
+
+
+  /**
+   * Open wallet
+   */
+  const onPressWallet = () => {
+    openModalScreen({
+      component: (
+        <Wallet
+          onDismiss={() => {
+            Navigation.dismissModal('WalletModal');
+          }}
+        />
+      ),
+    }, 'WalletModal');
+  };
+
 
   return (
     <View style={[Styles.outer, { zIndex: headerZindex }]}>
@@ -79,10 +99,13 @@ const Header: FC<HeaderProps> = (props) => {
           </View>
 
           <View style={Styles.right}>
-            <View style={Styles.wallet}>
+            <TouchableOpacity
+              style={Styles.wallet}
+              onPress={() => onPressWallet()}
+            >
               <Icon style={Styles.walletIcon} name={ICON.WALLET} size="small" />
               <Body>{self.credit > 999 ? `${credit}+` : credit}</Body>
-            </View>
+            </TouchableOpacity>
 
             <View style={Styles.profilePicture}>
               {

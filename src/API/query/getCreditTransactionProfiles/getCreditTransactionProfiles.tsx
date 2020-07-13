@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import gql from 'graphql-tag';
 import { QueryHookOptions, useQuery } from 'react-apollo';
 import { CREDIT_TRANSACTION_PROFILE_FRAGMENT } from '../../fragments/CreditTransactionProfile';
