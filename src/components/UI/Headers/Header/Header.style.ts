@@ -30,7 +30,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   back: {
-    marginRight: spacing.small,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    paddingRight: spacing.small,
   },
   right: {
     alignItems: 'center',

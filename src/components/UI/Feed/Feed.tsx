@@ -12,7 +12,6 @@ interface FeedProps {
 }
 
 const Feed: FC<FeedProps> = (props) => {
-  console.log('props', props.data);
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
 

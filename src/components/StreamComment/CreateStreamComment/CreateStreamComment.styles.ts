@@ -28,5 +28,6 @@ export const DynamicStyles = new DynamicStyleSheet({
   },
   input: {
     backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
+    color: new DynamicValue(color.mono.dark, color.mono.light),
   },
 });
