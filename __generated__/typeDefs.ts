@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Mon Jul 13 2020 15:52:30 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 14 2020 15:01:44 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -1063,6 +1063,7 @@ type StreamProfile {
   id: ID!
   channel: ChannelProfile
   name: String
+  info: String
   image: File
   timeFrom: DateTime
   timeTo: DateTime
@@ -1508,6 +1509,7 @@ type User {
   streamsConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   streamsLiveConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   tags(where: UserTagsWhereInput, orderBy: UserTagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTags!]
+  transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1732,6 +1734,9 @@ input UserWhereInput {
   tags_every: UserTagsWhereInput
   tags_some: UserTagsWhereInput
   tags_none: UserTagsWhereInput
+  transactions_every: CreditTransactionWhereInput
+  transactions_some: CreditTransactionWhereInput
+  transactions_none: CreditTransactionWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

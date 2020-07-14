@@ -5,4 +5,7 @@ export default StyleSheet.create({
   separator: {
     height: spacing.small,
   },
+  header: {
+    padding: spacing.small,
+  },
 });

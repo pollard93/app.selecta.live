@@ -13,6 +13,7 @@ import Drawer from '../../UI/Drawer/Drawer';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
 import StreamCommunication from './components/StreamCommunication/StreamCommunication';
+import StreamPurchase from './components/StreamPurchase/StreamPurchase';
 
 
 interface StreamProfileViewProps {
@@ -70,9 +71,13 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         >
           <StreamCard data={props.queryResult.data.getStreamProfile} />
         </View>
+
+        {!props.queryResult.data.getStreamProfile.isConsumer && (
+          <StreamPurchase data={props.queryResult.data.getStreamProfile} />
+        )}
       </SafeAreaView>
 
-      {drawerLayout && (
+      {props.queryResult.data.getStreamProfile.isConsumer && drawerLayout && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[Styles.flex, { zIndex: headerZindex + 1 }]}

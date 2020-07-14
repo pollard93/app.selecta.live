@@ -55,6 +55,7 @@ const Purchases: FC<PurchasesProps> = (props) => {
        * Get products from services
        */
       const products = await RNIap.getProducts(data.getProductConfig.map((pc) => pc.productId));
+      console.log('getAvailableProducts -> products', products);
       if (!products || !products.length) {
         throw new Error();
       }
@@ -109,7 +110,7 @@ const Purchases: FC<PurchasesProps> = (props) => {
 
       <H2>Top Up</H2>
       <H3>Your Balance: {self.credit}</H3>
-      <Body bold>Select the amount of credit's you'd like to buy</Body>
+      <Body bold>Select the amount of credit's you'd like to purchase</Body>
 
       {
         loading || error

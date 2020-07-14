@@ -13,4 +13,7 @@ storiesOf('Stream/StreamProfile', module)
   ))
   .add('StreamProfile - AUDIO_ONLY', () => (
     <StreamProfile id="AUDIO_ONLY" />
+  ))
+  .add('StreamProfile - IS_NOT_CONSUMER', () => (
+    <StreamProfile id="IS_NOT_CONSUMER" />
   ));

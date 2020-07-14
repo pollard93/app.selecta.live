@@ -33,11 +33,10 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
   /**
    * Should load stream messsages if:
    * The stream has started or is vod
-   * The user is a consumer
    * The stream is not cancelled
    */
   const now = useMemo(() => new Date(), [update]);
-  const shouldLoadStreamMessages = useMemo(() => new Date(props.data.timeFrom) <= now && props.data.isConsumer && props.data.cancelled === null, [update]);
+  const shouldLoadStreamMessages = useMemo(() => new Date(props.data.timeFrom) <= now && props.data.cancelled === null, [update]);
 
 
   /**

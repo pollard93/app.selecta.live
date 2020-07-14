@@ -38,7 +38,7 @@ try {
  * Mock apollo client
  */
 
-const client = mockClient();
+export const client = mockClient();
 
 addDecorator((getStory) => (
   <ApolloProvider client={client}>

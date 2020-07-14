@@ -1111,6 +1111,9 @@ export interface UserWhereInput {
   tags_every?: UserTagsWhereInput | null;
   tags_some?: UserTagsWhereInput | null;
   tags_none?: UserTagsWhereInput | null;
+  transactions_every?: CreditTransactionWhereInput | null;
+  transactions_some?: CreditTransactionWhereInput | null;
+  transactions_none?: CreditTransactionWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

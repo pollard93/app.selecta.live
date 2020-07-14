@@ -19,6 +19,7 @@ const CreditTransactions: FC = () => (
     }}
     FlatListProps={{
       ItemSeparatorComponent: () => <View style={Styles.separator} />,
+      showsVerticalScrollIndicator: false,
     }}
     accessor='getCreditTransactionProfiles.transactions'
     renderItem={({ item }) => (
@@ -27,13 +28,17 @@ const CreditTransactions: FC = () => (
     ListHeaderComponent={({ queryResult }) => {
       if (queryResult.loading || queryResult.error) {
         return (
-          <LoadRetry {...queryResult} />
+          <View style={Styles.header}>
+            <LoadRetry {...queryResult} />
+          </View>
         );
       }
 
       if (queryResult.data.getCreditTransactionProfiles.count === 0) {
         return (
-          <Body>Your purchases will appear here</Body>
+          <View style={Styles.header}>
+            <Body>Your purchases will appear here</Body>
+          </View>
         );
       }
 

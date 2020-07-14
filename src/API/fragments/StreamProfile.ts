@@ -29,6 +29,8 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
 export const STREAM_PROFILE_FRAGMENT = gql`
   fragment STREAM_PROFILE_FRAGMENT on StreamProfile {
     ...STREAM_PROFILE_FRAGMENT_SHORT
+    info
+    cost
     isConsumer
     audioOnly
     position
