@@ -8,6 +8,7 @@ import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import H3 from '../../Typography/components/H3';
 import Button from '../../Button/Button';
 import Small from '../../Typography/components/Small';
+import { openTopUpModal } from '../../../../screens/utils';
 
 interface WalletCardProps {}
 
@@ -38,7 +39,7 @@ const WalletCard: FC<WalletCardProps> = () => {
         <View>
           <Button
             title="Top Up"
-            onPress={console.log}
+            onPress={openTopUpModal}
             size="small"
           />
         </View>

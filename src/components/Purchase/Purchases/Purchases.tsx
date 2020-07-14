@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, FC } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
+import { FlatList } from 'react-native-gesture-handler';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
+import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
 import { getProductConfig } from '../../../API/query/getProductConfig/__generated__/getProductConfig';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import H2 from '../../UI/Typography/components/H2';
+import H3 from '../../UI/Typography/components/H3';
+import Body from '../../UI/Typography/components/Body';
+import Styles from './Purchases.style';
+import Gradient from '../../UI/Gradient/Gradient';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 interface Product extends RNIap.Product {
   credit: number;
 }
 
-const Purchases = () => {
+export interface PurchasesProps {
+  onDismiss: () => void;
+}
+
+const Purchases: FC<PurchasesProps> = (props) => {
   const client = useApolloClient();
-  const { data: { getSelf } } = useGetSelfQuery();
+  const self = useGetSelf();
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -72,20 +84,6 @@ const Purchases = () => {
 
 
   /**
-   * Loading or error
-   * If error, allow refetch of products
-   */
-  if (loading || error) {
-    return (
-      <LoadRetry
-        loading={loading}
-        refetch={getAvailableProducts as any}
-      />
-    );
-  }
-
-
-  /**
    * Requests a purchase from native
    */
   const purchaseProduct = async (productId: string) => {
@@ -101,21 +99,50 @@ const Purchases = () => {
 
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
-      <Text>Current credit: {getSelf.credit}</Text>
-      {availableProducts.map((a) => (
-        <TouchableOpacity
-          key={a.productId}
-          onPress={() => {
-            purchaseProduct(a.productId);
-          }}
-          style={{ padding: 10 }}
-        >
-          <Text>Title: {a.title}</Text>
-          <Text>Price: {a.price}</Text>
-          <Text>Credit: {a.credit}</Text>
-        </TouchableOpacity>
-      ))}
+    <View style={[GlobalStyles.PageFill, Styles.wrap]}>
+      <TouchableOpacity
+        onPress={props.onDismiss}
+        style={Styles.dismiss}
+      >
+        <Icon name={ICON.CROSS} size="small" />
+      </TouchableOpacity>
+
+      <H2>Top Up</H2>
+      <H3>Your Balance: {self.credit}</H3>
+      <Body bold>Select the amount of credit's you'd like to buy</Body>
+
+      {
+        loading || error
+          ? (
+            <LoadRetry
+              loading={loading}
+              refetch={getAvailableProducts as any}
+            />
+          )
+          : (
+            <View style={[GlobalStyles.PageFill, Styles.list]}>
+              <FlatList
+                bounces={false}
+                data={availableProducts}
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={Styles.separator} />}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      purchaseProduct(item.productId);
+                    }}
+                  >
+                    <Gradient style={Styles.item}>
+                      <H2 forceLight>{item.credit} Credits</H2>
+                      <H2 forceLight>{item.localizedPrice}</H2>
+                    </Gradient>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.productId}
+              />
+            </View>
+          )
+      }
     </View>
   );
 };

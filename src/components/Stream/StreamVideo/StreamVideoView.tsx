@@ -23,11 +23,10 @@ interface StreamVideoViewProps {
 
 /**
  * MusicControl is only used for android
- * nowPlayingInfo is handled natively in selecta.components.react-native-video
+ * nowPlayingInfo for iOS is handled natively in selecta.components.react-native-video
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const client = useApolloClient();
-
   const [rate, setRate] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -50,7 +49,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
 
   /**
    * If the stream is not audioOnly
-   * And the app state is going from active to not active
+   * And the app state is going from active background
    * Set videoEnabled to false
    */
   const [appState, setAppState] = useState(AppState.currentState);

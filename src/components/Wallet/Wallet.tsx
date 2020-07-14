@@ -21,7 +21,9 @@ const Wallet: FC<WalletProps> = (props) => (
     >
       <Icon name={ICON.CROSS} size="small" />
     </TouchableOpacity>
+
     <WalletCard />
+
     <View style={GlobalStyles.PageFill}>
       <H2 style={Styles.heading}>Purchase History</H2>
       <CreditTransactions />

@@ -1,5 +1,5 @@
 import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle, Options } from 'react-native-navigation';
-import { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
 import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
@@ -9,6 +9,7 @@ import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
+import Purchases from '../../components/Purchase/Purchases/Purchases';
 
 
 /**
@@ -211,6 +212,19 @@ export const openModalScreen = (passProps: ModalScreenProps, id = ModalScreenNam
     },
   },
 });
+
+
+export const openTopUpModal = () => {
+  openModalScreen({
+    component: (
+      <Purchases
+        onDismiss={() => {
+          Navigation.dismissModal('TopUpModal');
+        }}
+      />
+    ),
+  }, 'TopUpModal');
+};
 
 
 /**

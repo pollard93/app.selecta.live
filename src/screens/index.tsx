@@ -25,7 +25,6 @@ import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStarted
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
-import WalletScreen from './WalletScreen/WalletScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -98,5 +97,4 @@ export const registerScreens = () => {
   Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
   Navigation.registerComponent(ChannelProfileScreen.prototype.ScreenName, () => wrapContext(ChannelProfileScreen));
   Navigation.registerComponent(StreamProfileScreen.prototype.ScreenName, () => wrapContext(StreamProfileScreen));
-  Navigation.registerComponent(WalletScreen.prototype.ScreenName, () => wrapContext(WalletScreen));
 };

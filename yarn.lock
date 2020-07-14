@@ -7314,10 +7314,10 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-dooboolab-welcome@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.1.1.tgz#ca2184f6e1f568865d707a6ce3bda7e003550f54"
-  integrity sha512-tQ/9NBCGnalHwKOBjDqTD4t4wQpDfSSbxQGctzkzaLHR3AhN0wCBkIs05JciVtvl/jfLZ+DgAndktAMk3Bu7Vw==
+dooboolab-welcome@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.2.0.tgz#295818ce85a8e97dc90c0ec0510b4008e2d722dc"
+  integrity sha512-XgEbjJHAsKLge/e8jtuHsv84Ovg1Gx0GvnOTOmOlVGV1643nduTAkT3fyo/mxKbzvyXBr47RHaJAY4R2toI0UA==
 
 dot-case@^2.1.0:
   version "2.1.1"
@@ -15423,12 +15423,12 @@ react-native-gesture-handler@^1.6.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-iap@^4.4.8:
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.4.8.tgz#34404d844b1c3e203ec25763576ea4f36de665b9"
-  integrity sha512-W4d3XuBFY4hgR/dAEjKR2OqsyhaJo2AdFv+KdYEYR5HntEZBfBHVeZL4sKsaVgEvN4QwPfbOKCZk/eHr5RgppA==
+react-native-iap@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-4.5.0.tgz#3837f287460dc5dab3b4f4adc57af2f363df77dc"
+  integrity sha512-745s02fU3sppsf/HMLpaesFmGodRCFdfTuIWbXlLpNxgXLa1POKfNMVuPHkm0lIzARNdHXiEfMHlHa2KaWV8xA==
   dependencies:
-    dooboolab-welcome "^1.1.1"
+    dooboolab-welcome "^1.2.0"
 
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
