@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
-import { MockedProvider, wait } from '@apollo/react-testing';
+import { wait } from '@apollo/react-testing';
 import { expect } from 'chai';
 import Sinon from 'sinon';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../../../API/utils/mockClient';
 import StreamPurchase from './StreamPurchase';
-import { PAY_FOR_STREAM_MUTATION } from '../../../../../API/mutation/payForStream/payForStream';
 import { useGetStreamProfileQuery } from '../../../../../API/query/getStreamProfile/getStreamProfile';
 import { GET_SELF_QUERY } from '../../../../../API/query/getSelf/getSelf';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';

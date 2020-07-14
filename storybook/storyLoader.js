@@ -21,7 +21,7 @@ function loadStories() {
 	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
 	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
 	require('../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories');
-	require('../src/components/Purchase/Purchases/Purchases.stories');
+	require('../src/components/Purchase/Products/Products.stories');
 	require('../src/components/Register/Register.stories');
 	require('../src/components/RequestPasswordReset/RequestPasswordReset.stories');
 	require('../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories');
@@ -31,7 +31,6 @@ function loadStories() {
 	require('../src/components/Stream/ChannelStreams/ChannelStreams.stories');
 	require('../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories');
 	require('../src/components/Stream/PaidForStreams/PaidForStreams.stories');
-	require('../src/components/Stream/PayForStream/PayForStream.stories');
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
@@ -91,7 +90,7 @@ const stories = [
 	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
 	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
 	'../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories',
-	'../src/components/Purchase/Purchases/Purchases.stories',
+	'../src/components/Purchase/Products/Products.stories',
 	'../src/components/Register/Register.stories',
 	'../src/components/RequestPasswordReset/RequestPasswordReset.stories',
 	'../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories',
@@ -101,7 +100,6 @@ const stories = [
 	'../src/components/Stream/ChannelStreams/ChannelStreams.stories',
 	'../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories',
 	'../src/components/Stream/PaidForStreams/PaidForStreams.stories',
-	'../src/components/Stream/PayForStream/PayForStream.stories',
 	'../src/components/Stream/PayForStream/ReportStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
