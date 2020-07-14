@@ -12,7 +12,7 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import H2 from '../../UI/Typography/components/H2';
 import H3 from '../../UI/Typography/components/H3';
 import Body from '../../UI/Typography/components/Body';
-import Styles from './Purchases.style';
+import Styles from './Products.style';
 import Gradient from '../../UI/Gradient/Gradient';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Toast from '../../UI/Toast/Toast';
@@ -21,11 +21,11 @@ interface Product extends RNIap.Product {
   credit: number;
 }
 
-export interface PurchasesProps {
+export interface ProductsProps {
   onDismiss: () => void;
 }
 
-const Purchases: FC<PurchasesProps> = (props) => {
+const Products: FC<ProductsProps> = (props) => {
   const client = useApolloClient();
   const self = useGetSelf();
   const toast = useToast();
@@ -153,4 +153,4 @@ const Purchases: FC<PurchasesProps> = (props) => {
   );
 };
 
-export default Purchases;
+export default Products;

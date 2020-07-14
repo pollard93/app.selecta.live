@@ -9,7 +9,7 @@ import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
-import Purchases from '../../components/Purchase/Purchases/Purchases';
+import Products from '../../components/Purchase/Products/Products';
 
 
 /**
@@ -217,7 +217,7 @@ export const openModalScreen = (passProps: ModalScreenProps, id = ModalScreenNam
 export const openTopUpModal = () => {
   openModalScreen({
     component: (
-      <Purchases
+      <Products
         onDismiss={() => {
           Navigation.dismissModal('TopUpModal');
         }}
