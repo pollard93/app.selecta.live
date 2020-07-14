@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
 import { FlatList } from 'react-native-gesture-handler';
+import { useToast } from 'mbp-components-rn-toast';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
@@ -14,6 +15,7 @@ import Body from '../../UI/Typography/components/Body';
 import Styles from './Purchases.style';
 import Gradient from '../../UI/Gradient/Gradient';
 import Icon, { ICON } from '../../UI/Icon/Icon';
+import Toast from '../../UI/Toast/Toast';
 
 interface Product extends RNIap.Product {
   credit: number;
@@ -26,6 +28,7 @@ export interface PurchasesProps {
 const Purchases: FC<PurchasesProps> = (props) => {
   const client = useApolloClient();
   const self = useGetSelf();
+  const toast = useToast();
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -55,7 +58,6 @@ const Purchases: FC<PurchasesProps> = (props) => {
        * Get products from services
        */
       const products = await RNIap.getProducts(data.getProductConfig.map((pc) => pc.productId));
-      console.log('getAvailableProducts -> products', products);
       if (!products || !products.length) {
         throw new Error();
       }
@@ -91,10 +93,13 @@ const Purchases: FC<PurchasesProps> = (props) => {
     try {
       await RNIap.requestPurchase(productId, false);
     } catch (err) {
-      /**
-       * TODO - investigate error codes and update handling
-       */
-      console.warn(err.code, err.message);
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content={err.message} />
+        ),
+        dismissible: false,
+      });
     }
   };
 

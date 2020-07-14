@@ -135,6 +135,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
           })()}
           onPress={onPurchase}
           loading={loading}
+          testID="submit"
         />
       </View>
     </ScrollView>
