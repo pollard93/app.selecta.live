@@ -26,7 +26,10 @@ StreamProfileScreen.prototype.ScreenName = 'StreamProfileScreen';
   //   style: 'dark',
   //   backgroundColor: 'white',
   // },
-  bottomTabs: { visible: false, animate: true },
+  bottomTabs: {
+    visible: false,
+    animate: true,
+  },
 };
 
 /**

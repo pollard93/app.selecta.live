@@ -6,6 +6,6 @@ export default StyleSheet.create({
     height: spacing.small,
   },
   header: {
-    padding: spacing.small,
+    paddingVertical: spacing.small,
   },
 });

@@ -37,7 +37,7 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
         renderItem={({ item }) => (
           <StreamMessageListItem
             data={item}
-            channelData={props.data.channel}
+            streamData={props.data}
           />
         )}
         FlatListProps={{

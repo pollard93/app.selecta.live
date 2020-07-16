@@ -27,7 +27,7 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
       return (
         <StreamMessageListItem
           data={streamMessages.data.getStreamMessages.messages[0]}
-          channelData={streamProfile.data.getStreamProfile.channel}
+          streamData={streamProfile.data.getStreamProfile}
         />
       );
     };
@@ -59,7 +59,7 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
               profilePicture: null,
             },
           }}
-          channelData={streamProfile.data.getStreamProfile.channel}
+          streamData={streamProfile.data.getStreamProfile}
         />
       );
     };
@@ -91,7 +91,7 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
               id: 'SELF',
             },
           }}
-          channelData={streamProfile.data.getStreamProfile.channel}
+          streamData={streamProfile.data.getStreamProfile}
         />
       );
     };
@@ -120,7 +120,7 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
             ...streamMessages.data.getStreamMessages.messages[0],
             user: null,
           }}
-          channelData={streamProfile.data.getStreamProfile.channel}
+          streamData={streamProfile.data.getStreamProfile}
         />
       );
     };

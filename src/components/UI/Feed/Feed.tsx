@@ -32,7 +32,6 @@ const Feed: FC<FeedProps> = (props) => {
 
   return (
     <FlatList
-      bounces={false}
       {...props.flatListProps}
       data={props.data.items}
       showsVerticalScrollIndicator={false}

@@ -16,6 +16,7 @@ import Styles from './Products.style';
 import Gradient from '../../UI/Gradient/Gradient';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Toast from '../../UI/Toast/Toast';
+import FadeInView from '../../UI/FadeInView/FadeInView';
 
 interface Product extends RNIap.Product {
   credit: number;
@@ -93,13 +94,15 @@ const Products: FC<ProductsProps> = (props) => {
     try {
       await RNIap.requestPurchase(productId, false);
     } catch (err) {
-      toast.push({
-        duration: 1000,
-        component: (
-          <Toast content={err.message} />
-        ),
-        dismissible: false,
-      });
+      if (err.code !== RNIap.IAPErrorCode.E_USER_CANCELLED) {
+        toast.push({
+          duration: 1000,
+          component: (
+            <Toast content={err.message} />
+          ),
+          dismissible: false,
+        });
+      }
     }
   };
 
@@ -121,12 +124,12 @@ const Products: FC<ProductsProps> = (props) => {
         loading || error
           ? (
             <LoadRetry
-              loading={loading}
+              loading={!error && loading}
               refetch={getAvailableProducts as any}
             />
           )
           : (
-            <View style={[GlobalStyles.PageFill, Styles.list]}>
+            <FadeInView style={[GlobalStyles.PageFill, Styles.list]}>
               <FlatList
                 bounces={false}
                 data={availableProducts}
@@ -146,7 +149,7 @@ const Products: FC<ProductsProps> = (props) => {
                 )}
                 keyExtractor={(item) => item.productId}
               />
-            </View>
+            </FadeInView>
           )
       }
     </View>
