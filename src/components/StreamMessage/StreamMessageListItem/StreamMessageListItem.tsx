@@ -64,9 +64,9 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
           {isSelf && <Gradient style={StyleSheet.absoluteFillObject} />}
           <Body style={[Styles.message, isSelf && Styles.messageSelf]}>{props.data.message}</Body>
         </View>
-      </View>
 
-      <Small>{relativeTime}</Small>
+        <Small style={Styles.time}>{relativeTime}</Small>
+      </View>
     </View>
   );
 };

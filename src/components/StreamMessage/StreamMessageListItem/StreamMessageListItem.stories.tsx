@@ -128,4 +128,33 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
     return (
       <TestComonent />
     );
+  })
+  .add('StreamMessageListItem - large text', () => {
+    const TestComonent = () => {
+      const streamProfile = useGetStreamProfileQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      const streamMessages = useGetStreamMessagesQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      if (streamProfile.loading || streamMessages.loading) return null;
+
+      return (
+        <StreamMessageListItem
+          data={{
+            ...streamMessages.data.getStreamMessages.messages[0],
+            message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam posuere, urna et auctor scelerisque, dui justo faucibus neque, nec tempor neque lectus ut velit. Suspendisse semper faucibus ex, nec finibus ex egestas ut. Vivamus sed sapien a dolor molestie congue. Duis eget nisi eu eros sagittis interdum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut lectus eros. Cras volutpat lacus eget nisi tincidunt, eu fringilla urna iaculis. Phasellus facilisis pretium leo at bibendum. Vivamus venenatis tellus ut pulvinar malesuada. Fusce ultricies leo sem, ut pulvinar arcu placerat et. Etiam eget tristique libero.',
+          }}
+          streamData={streamProfile.data.getStreamProfile}
+        />
+      );
+    };
+
+    return (
+      <TestComonent />
+    );
   });
