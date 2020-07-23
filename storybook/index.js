@@ -8,9 +8,9 @@ import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
 import * as ScreenUtils from '../src/screens/utils';
 import { setSafeArea } from '../src/modules/SafeAreaInsets/SafeAreaInsets';
+import DarkModeDecorator from './Decorators/DarkModeDecorator/DarkModeDecorator';
 
 import './rn-addons';
-import DarkModeDecorator from './Decorators/DarkModeDecorator/DarkModeDecorator';
 
 
 /**

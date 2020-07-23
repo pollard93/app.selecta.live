@@ -12,7 +12,7 @@ interface LoadRetryProps extends Partial<QueryResult> {
 
 const LoadRetry: FC<LoadRetryProps> = (props) => {
   const [refetching, setRefetching] = useState(false);
-  const { loading, called, refetch } = props;
+  const { loading, called, refetch, error } = props;
 
   if (loading || !called) {
     return (
@@ -24,7 +24,11 @@ const LoadRetry: FC<LoadRetryProps> = (props) => {
 
   return (
     <View style={[styles.wrap, props.cover && styles.cover]}>
-      <H4>Something Went Wrong</H4>
+      {
+        error.networkError
+          ? <H4>There is no internet connection</H4>
+          : <H4>Something Went Wrong</H4>
+      }
       <Button
         style={styles.button}
         title="Retry"

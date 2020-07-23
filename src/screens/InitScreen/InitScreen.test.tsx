@@ -168,7 +168,7 @@ describe('<InitScreen >', () => {
     await wait(0);
 
     expect(getTokenSpy.callCount).to.equal(1);
-    expect(goToLoginSpy.callCount).to.equal(1);
+    expect(goHomeSpy.callCount).to.equal(1);
   });
 
   it('should goHome with stored general token and expired channel token', async () => {
