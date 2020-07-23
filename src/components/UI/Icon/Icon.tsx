@@ -27,7 +27,7 @@ export enum ICON {
   CROSS = 'CROSS',
 }
 
-interface IconProps {
+export interface IconProps {
   name: ICON;
   size: 'xxsmall' | 'xsmall' | 'small' | 'regular' | 'large' | 'xlarge';
   forceLight?: boolean;

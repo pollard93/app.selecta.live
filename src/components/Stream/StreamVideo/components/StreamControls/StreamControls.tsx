@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, useMemo, useRef } from 'react';
 import { View, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import Config from 'react-native-config';
 import { formatTime } from '../../../../../utils/functions';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import color from '../../../../../styles/definitions/color';
@@ -10,6 +11,7 @@ import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import Styles from './StreamControls.style';
+import ShareButton from '../../../../UI/ShareButton/ShareButton';
 
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
@@ -27,6 +29,7 @@ interface StreamControlsProps {
   isFullScreen: boolean;
   toggleVideoEnabled: () => void;
   isVideoEnabled: boolean;
+  streamId: string;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -217,6 +220,21 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             >
               <Icon name={!props.isVideoEnabled ? ICON.VIDEO_ENABLED : ICON.VIDEO_DISABLED} size="small" style={Styles.icon} />
             </TouchableOpacity>
+
+            {props.isFullScreen && (
+              <View style={{ padding: spacing.small }}>
+                <ShareButton
+                  title="Share Stream"
+                  url={`${Config.REACT_APP_API_URL_BASE}/share/stream/${props.streamId}`}
+                  iconProps={{
+                    size: 'small',
+                    style: {
+                      tintColor: '#ffffff',
+                    },
+                  }}
+                />
+              </View>
+            )}
 
             <TouchableOpacity
               onPress={() => {

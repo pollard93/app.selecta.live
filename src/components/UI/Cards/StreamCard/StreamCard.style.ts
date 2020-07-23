@@ -8,6 +8,10 @@ export default StyleSheet.create({
   wrap: {
     paddingBottom: spacing.small,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   image: {
     aspectRatio: 1.7777777778,
   },

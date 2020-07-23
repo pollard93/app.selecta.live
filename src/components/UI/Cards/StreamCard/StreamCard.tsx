@@ -2,12 +2,14 @@ import React, { FC } from 'react';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
+import Config from 'react-native-config';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
 import Chip from '../../Chip/Chip';
 import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
+import ShareButton from '../../ShareButton/ShareButton';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT;
@@ -26,8 +28,15 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           style: Styles.image,
         }}
       />
-      <View style={Styles.item}>
+      <View style={[Styles.item, Styles.header]}>
         <H4>{props.data.name}</H4>
+        <ShareButton
+          title="Share Stream"
+          url={`${Config.REACT_APP_API_URL_BASE}/share/stream/${props.data.id}`}
+          iconProps={{
+            size: 'small',
+          }}
+        />
       </View>
 
       {props.data.tags.length > 0 && (

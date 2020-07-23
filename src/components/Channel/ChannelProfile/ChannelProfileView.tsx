@@ -3,19 +3,20 @@ import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDarkMode } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';
+import Config from 'react-native-config';
 import H2 from '../../UI/Typography/components/H2';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Styles from './ChannelProfile.style';
 import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 import FollowChannel from '../FollowChannel/FollowChannel';
-import Icon, { ICON } from '../../UI/Icon/Icon';
 import ChannelFeed from '../../ChannelFeed/ChannelFeed';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import { getChannelProfile } from '../../../API/query/getChannelProfile/__generated__/getChannelProfile';
 import ChannelProfileSkeleton from './ChannelProfileSkeleton';
+import ShareButton from '../../UI/ShareButton/ShareButton';
 
 export interface ChannelProfileViewProps extends ScreenProps {
   id: string;
@@ -228,14 +229,16 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             <View
               style={Styles.headerTopContent}
             >
-              <Icon
-                name={ICON.SHARE}
-                size="small"
-                style={[
-                  Styles.headerTopContentIcon,
-                  { tintColor: darkMode ? color.mono.light : titleColor },
-                ]}
-                animated
+              <ShareButton
+                title="Share Channel"
+                url={`${Config.REACT_APP_API_URL_BASE}/share/channel/${props.queryResult.data.getChannelProfile.id}`}
+                iconProps={{
+                  size: 'small',
+                  style: [
+                    Styles.headerTopContentIcon,
+                    { tintColor: darkMode ? color.mono.light : titleColor },
+                  ],
+                }}
               />
 
               <FollowChannel
