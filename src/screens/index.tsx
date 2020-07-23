@@ -23,6 +23,7 @@ import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStarted
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
+import NetworkNotifier from '../modules/NetworkNotifier/NetworkNotifier';
 
 const wrapContext = (Component) => {
   /**
@@ -35,9 +36,11 @@ const wrapContext = (Component) => {
       return (
         <ApolloProvider client={ApolloClient}>
           <ToastProvider screenName={Component.prototype.ScreenName}>
-            <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-              <Component {...props} />
-            </View>
+            <NetworkNotifier>
+              <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+                <Component {...props} />
+              </View>
+            </NetworkNotifier>
           </ToastProvider>
         </ApolloProvider>
       );
@@ -59,12 +62,14 @@ const wrapContext = (Component) => {
     return (
       <ApolloProvider client={ApolloClient}>
         <ToastProvider screenName={Component.prototype.ScreenName}>
-          <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
-          <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-            <View style={GlobalStyles.PageFill}>
-              <Component {...props} />
-            </View>
-          </SafeAreaView>
+          <NetworkNotifier>
+            <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
+            <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+              <View style={GlobalStyles.PageFill}>
+                <Component {...props} />
+              </View>
+            </SafeAreaView>
+          </NetworkNotifier>
         </ToastProvider>
       </ApolloProvider>
     );

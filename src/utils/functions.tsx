@@ -5,10 +5,13 @@ import { useCallback } from 'react';
 
 
 /**
- * Gets Graphql error m
- * @param Err
+ * Gets Graphql error message from ApolloError
+ * If network error returns appropriate message
+ * If there is a message from api then return it
+ * Otherwise use fallback
  */
 export const getGQLErrorMessage = (Err: ApolloError, fallback = 'Something went wrong') => {
+  if (Err.networkError) return 'There is no internet connection';
   if (!Err.message.includes('GraphQL error:')) return fallback;
   return Err.message.replace('GraphQL error: ', '');
 };

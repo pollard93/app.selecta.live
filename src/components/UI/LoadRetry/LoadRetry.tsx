@@ -5,6 +5,7 @@ import styles from './LoadRetry.style';
 import H4 from '../Typography/components/H4';
 import Button from '../Button/Button';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import { getGQLErrorMessage } from '../../../utils/functions';
 
 interface LoadRetryProps extends Partial<QueryResult> {
   cover?: boolean; // Absolutely fills parent
@@ -24,11 +25,7 @@ const LoadRetry: FC<LoadRetryProps> = (props) => {
 
   return (
     <View style={[styles.wrap, props.cover && styles.cover]}>
-      {
-        error.networkError
-          ? <H4>There is no internet connection</H4>
-          : <H4>Something Went Wrong</H4>
-      }
+      <H4>{getGQLErrorMessage(error)}</H4>
       <Button
         style={styles.button}
         title="Retry"
