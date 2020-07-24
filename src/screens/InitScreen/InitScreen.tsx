@@ -11,6 +11,7 @@ import PushNotifications from '../../modules/PushNotifications';
 import InAppPurchases from '../../modules/InAppPurchases';
 import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
 import { setSafeArea } from '../../modules/SafeAreaInsets/SafeAreaInsets';
+import { store } from '../../utils/storage';
 
 const InitScreen = () => {
   const client = useApolloClient();
@@ -35,9 +36,14 @@ const InitScreen = () => {
    * Get self query
    */
   const [getSelfQuery] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
+    onCompleted: async ({ getSelf }) => {
+      /**
+       * Store result in async storage
+       */
+      await store('getSelf', getSelf);
+
       // Bind notifications
-      PushNotifications.init(id);
+      PushNotifications.init(getSelf.id);
 
       // Bind inAppPurchases
       InAppPurchases.init();
@@ -45,7 +51,7 @@ const InitScreen = () => {
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
-      if (requiresUpdate) {
+      if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
         return;
       }
@@ -53,7 +59,7 @@ const InitScreen = () => {
       /**
        * If no username is set, send user to welcome screen
        */
-      if (!username) {
+      if (!getSelf.username) {
         goToOnboarding();
         return;
       }
@@ -69,8 +75,18 @@ const InitScreen = () => {
       // Execute getChannelSelf which will try and use channel token in local storage from ApolloClient on request
       getChannelSelf();
     },
-    onError: () => {
-      goHome();
+    onError: async () => {
+      /**
+       * If getSelf errors
+       * And we have getSelf in storage, user can proceed to home, handling network issues
+       * If we do not have a cached getSelf, user must go to login
+       */
+      const getSelf = await store('getSelf');
+      if (getSelf) {
+        goHome();
+      } else {
+        goToLogin();
+      }
     },
     fetchPolicy: 'network-only',
   });
@@ -82,6 +98,16 @@ const InitScreen = () => {
   useEffect(() => {
     (async () => {
       await setSafeArea();
+
+      // Try set getSelf from cache
+      const getSelf = await store('getSelf');
+      if (getSelf) {
+        client.cache.writeData({
+          data: {
+            getSelf,
+          },
+        });
+      }
 
       // If there's no token go straight to login
       const token = await getToken(client);

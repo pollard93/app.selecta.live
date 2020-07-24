@@ -14,6 +14,7 @@ import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
 import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import { store } from '../../utils/storage';
 
 export interface RegisterProps extends ScreenProps {}
 
@@ -26,10 +27,15 @@ const Register: FC<RegisterProps> = (props) => {
   /**
    * Get self query, binds notifications and navigates home on completion
    */
-  const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate } }) => {
+  const [getSelfQuery] = useGetSelfLazyQuery({
+    onCompleted: async ({ getSelf }) => {
+      /**
+       * Store result in async storage
+       */
+      await store('getSelf', getSelf);
+
       // Bind notifications
-      PushNotifications.init(id);
+      PushNotifications.init(getSelf.id);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -37,7 +43,7 @@ const Register: FC<RegisterProps> = (props) => {
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
-      if (requiresUpdate) {
+      if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
         return;
       }
@@ -77,7 +83,7 @@ const Register: FC<RegisterProps> = (props) => {
       });
 
       // Execute getSelf to cache it
-      getSelf();
+      getSelfQuery();
     },
     onError: (e) => {
       setLoading(false);

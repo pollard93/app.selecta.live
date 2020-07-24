@@ -15,6 +15,7 @@ import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import { FormData } from '../Register/RegisterView';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
+import { store } from '../../utils/storage';
 
 export interface ResetPasswordProps extends ScreenProps {
   token: string;
@@ -29,10 +30,15 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
   /**
    * Get self query, binds notifications and navigates home on completion
    */
-  const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
+  const [getSelfQuery] = useGetSelfLazyQuery({
+    onCompleted: async ({ getSelf }) => {
+      /**
+       * Store result in async storage
+       */
+      await store('getSelf', getSelf);
+
       // Bind notifications
-      PushNotifications.init(id);
+      PushNotifications.init(getSelf.id);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -40,13 +46,13 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
-      if (requiresUpdate) {
+      if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
         return;
       }
 
       // Navigate now getSelf is cached
-      if (!username) {
+      if (!getSelf.username) {
         // Carry on onboarding process if user has no name
         pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
@@ -93,7 +99,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       });
 
       // Execute getSelf to cache it
-      getSelf();
+      getSelfQuery();
     },
     onError: (e) => {
       setLoading(false);

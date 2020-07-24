@@ -23,6 +23,7 @@ import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import { store } from '../../utils/storage';
 
 export interface LoginProps extends ScreenProps {
   toastMessage?: string;
@@ -99,10 +100,15 @@ const Login: FC<LoginProps> = (props) => {
   /**
    * Get self query, binds notifications and navigates home on completion
    */
-  const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, username, requiresUpdate } }) => {
+  const [getSelfQuery] = useGetSelfLazyQuery({
+    onCompleted: async ({ getSelf }) => {
+      /**
+       * Store result in async storage
+       */
+      await store('getSelf', getSelf);
+
       // Bind notifications
-      PushNotifications.init(id);
+      PushNotifications.init(getSelf.id);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -110,13 +116,13 @@ const Login: FC<LoginProps> = (props) => {
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
-      if (requiresUpdate) {
+      if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
         return;
       }
 
       // Navigate now getSelf is cached
-      if (!username) {
+      if (!getSelf.username) {
         // Carry on onboarding process if user has no username
         pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
@@ -155,7 +161,7 @@ const Login: FC<LoginProps> = (props) => {
       });
 
       // Execute getSelf to cache it
-      getSelf();
+      getSelfQuery();
     },
     onError: (e) => {
       setLoading(false);

@@ -1,0 +1,12 @@
+
+jest.mock('@react-native-community/netinfo', () => ({
+  getCurrentConnectivity: jest.fn(),
+  isConnectionMetered: jest.fn(),
+  addListener: jest.fn(),
+  removeListeners: jest.fn(),
+  isConnected: {
+    fetch: () => Promise.resolve(true),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+  },
+}));

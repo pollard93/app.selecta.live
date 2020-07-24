@@ -18,6 +18,7 @@ import InAppPurchases from '../../../../modules/InAppPurchases';
 import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import Button from '../../../UI/Button/Button';
+import { store } from '../../../../utils/storage';
 
 describe('<LoginWithFacebook />', () => {
   /**
@@ -91,6 +92,10 @@ describe('<LoginWithFacebook />', () => {
       query: GET_SELF_QUERY,
     });
     expect(typeof gs.getSelf.id).to.equal('string');
+
+    // GetSelf result should be stored in async storage
+    const gsc = await store('getSelf');
+    expect(gsc).to.not.be.empty;
 
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
