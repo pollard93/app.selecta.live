@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
-import NetInfo from '@react-native-community/netinfo';
+import React, { useEffect, useRef } from 'react';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import Toast from '../../components/UI/Toast/Toast';
 
 const NetworkNotifier = (props) => {
+  const netInfoState = useRef<NetInfoState>();
+
   /**
    * Subscribe to NetInfo
-   * If not connected
+   * If changed from connected to not connected
    * Display toast using global.toast (top most screens toast handler)
    */
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      if (!state.isConnected) {
+      if (!state.isConnected && netInfoState.current.isConnected) {
         setTimeout(() => {
           global.toast.push({
             duration: 1000,
@@ -24,6 +26,8 @@ const NetworkNotifier = (props) => {
           });
         }, 1000);
       }
+
+      netInfoState.current = state;
     });
 
     // Unsubscribe
