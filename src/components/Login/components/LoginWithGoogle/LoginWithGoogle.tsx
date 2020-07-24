@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -69,7 +69,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       // Navigate now getSelf is cached
       if (!username) {
         // Carry on onboarding process if user has no username
-        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {

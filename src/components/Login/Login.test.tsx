@@ -31,7 +31,7 @@ describe('<Login >', () => {
   let toastSpy = sandbox.stub(useToast(), 'push');
   let splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-  let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
@@ -42,7 +42,7 @@ describe('<Login >', () => {
     toastSpy = sandbox.stub(useToast(), 'push');
     splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-    pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
@@ -337,10 +337,10 @@ describe('<Login >', () => {
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have gone to OnboardingWelcomeScreen
-    expect(pushScreenV2Spy.callCount).to.equal(1);
-    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenV2Spy.args[0][2]).to.be.empty;
+    expect(pushScreenSpy.callCount).to.equal(1);
+    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
+    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);
@@ -367,11 +367,11 @@ describe('<Login >', () => {
     } as any);
 
     // Should have gone to RequestPasswordResetScreen
-    expect(pushScreenV2Spy.callCount).to.equal(1);
-    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(RequestPasswordResetScreen);
-    expect((pushScreenV2Spy.args[0][2] as any).defaultEmailValue).to.equal('email@test.com');
-    expect((pushScreenV2Spy.args[0][2] as any).onCompletion).to.be.instanceOf(Function);
+    expect(pushScreenSpy.callCount).to.equal(1);
+    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[0][1]).to.equal(RequestPasswordResetScreen);
+    expect((pushScreenSpy.args[0][2] as any).defaultEmailValue).to.equal('email@test.com');
+    expect((pushScreenSpy.args[0][2] as any).onCompletion).to.be.instanceOf(Function);
 
     // Call onRegister
     await wrapper.findWhere((n) => n.prop('testID') === 'register').first().props().onPress({
@@ -380,8 +380,8 @@ describe('<Login >', () => {
     } as any);
 
     // Should have gone to RegisterScreen
-    expect(pushScreenV2Spy.callCount).to.equal(2);
-    expect(pushScreenV2Spy.args[1][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[1][1]).to.equal(RegisterScreen);
+    expect(pushScreenSpy.callCount).to.equal(2);
+    expect(pushScreenSpy.args[1][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[1][1]).to.equal(RegisterScreen);
   });
 });

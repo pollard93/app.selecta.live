@@ -3,7 +3,7 @@ import { useApolloClient } from 'react-apollo';
 import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import ResetPasswordView from './ResetPasswordView';
-import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
@@ -48,7 +48,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       // Navigate now getSelf is cached
       if (!username) {
         // Carry on onboarding process if user has no name
-        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {

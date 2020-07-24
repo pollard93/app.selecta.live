@@ -1,4 +1,4 @@
-import { Navigation, Layout, OptionsModalPresentationStyle, OptionsModalTransitionStyle, Options } from 'react-native-navigation';
+import { Navigation, OptionsModalPresentationStyle, OptionsModalTransitionStyle, Options } from 'react-native-navigation';
 import React, { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
 import { LoginProps } from '../../components/Login/Login';
@@ -125,20 +125,13 @@ export const goToChannelStack = () => Navigation.setRoot({
 
 
 /**
- * Utilty to push screen, this should be used to ensure a stack is used
- * Pass the 'Props' generic to ensure any changes in props are caught
- */
-export const pushScreen = <Props extends {}>(stack: STACK, layout: Layout<Props>) => Navigation.push<Props>(stack, layout);
-
-
-/**
  * Utility to push screen
  * @param stack - STACK to push to
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
 type ExtractProps<P> = P extends FC<infer L> ? L : null;
-export const pushScreenV2 = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push<ExtractProps<T>>(stack, {
+export const pushScreen = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push<ExtractProps<T>>(stack, {
   component: {
     name: screen.prototype.ScreenName,
     passProps: props,

@@ -10,7 +10,7 @@ import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
 import Toast from '../UI/Toast/Toast';
-import { pushScreenV2 } from '../../screens/utils';
+import { pushScreen } from '../../screens/utils';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 
@@ -36,11 +36,11 @@ const HomeFeed: FC<HomeFeedProps> = () => {
 
       switch (type) {
         case 'stream':
-          pushScreenV2(STACK.TAB_HOME, StreamProfileScreen, { id: identifier });
+          pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id: identifier });
           break;
 
         case 'channel':
-          pushScreenV2(STACK.TAB_HOME, ChannelProfileScreen, { id: identifier });
+          pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id: identifier });
           break;
 
         default:

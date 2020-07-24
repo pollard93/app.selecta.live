@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ChannelLogin, { ChannelLoginProps } from '../../components/Channel/ChannelLogin/ChannelLogin';
 import { ScreenProps } from '../utils/interfaces';
 
@@ -6,7 +6,7 @@ interface ChannelLoginScreenPropsExt extends ScreenProps {}
 interface ChannelLoginScreenPropsExt extends ChannelLoginProps {}
 export interface ChannelLoginScreenProps extends ChannelLoginScreenPropsExt {}
 
-const ChannelLoginScreen = (props: ChannelLoginScreenProps) => <ChannelLogin id={props.id} />;
+const ChannelLoginScreen: FC<ChannelLoginScreenProps> = (props) => <ChannelLogin id={props.id} />;
 
 export default ChannelLoginScreen;
 

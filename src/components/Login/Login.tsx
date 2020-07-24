@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 import Config from 'react-native-config';
 import { useToast } from 'mbp-components-rn-toast';
 import LoginView from './LoginView';
-import { goHome, pushScreen, goToRequireUpdateScreen, pushScreenV2 } from '../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
 import { loginVariables } from '../../API/mutation/login/__generated__/login';
 import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
@@ -17,7 +17,7 @@ import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeA
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
 import { STACK, ScreenProps } from '../../screens/utils/interfaces';
-import { ResetPasswordScreenProps, ResetPasswordScreenName } from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
+import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
@@ -63,14 +63,7 @@ const Login: FC<LoginProps> = (props) => {
           /**
            * Push resetPasswordScreen
            */
-          pushScreen<ResetPasswordScreenProps>(STACK.ONBOARDING, {
-            component: {
-              name: ResetPasswordScreenName,
-              passProps: {
-                token,
-              },
-            },
-          });
+          pushScreen(STACK.ONBOARDING, ResetPasswordScreen, { token });
         }
       // eslint-disable-next-line no-empty
       } catch (e) {}
@@ -118,7 +111,7 @@ const Login: FC<LoginProps> = (props) => {
       // Navigate now getSelf is cached
       if (!username) {
         // Carry on onboarding process if user has no username
-        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -210,7 +203,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RequestPasswordResetScreen
    */
   const onReset = (defaultEmailValue: string) => {
-    pushScreenV2(STACK.ONBOARDING, RequestPasswordResetScreen, {
+    pushScreen(STACK.ONBOARDING, RequestPasswordResetScreen, {
       defaultEmailValue,
       onCompletion: () => {
         toast.push({
@@ -229,7 +222,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RegisterScreen
    */
   const onRegister = () => {
-    pushScreenV2(STACK.ONBOARDING, RegisterScreen, {});
+    pushScreen(STACK.ONBOARDING, RegisterScreen, {});
   };
 
 

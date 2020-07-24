@@ -32,7 +32,7 @@ describe('<LoginWithFacebook />', () => {
   let toastSpy = sandbox.stub(useToast(), 'push');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
-  let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
 
   afterEach(() => {
     sandbox.restore();
@@ -45,7 +45,7 @@ describe('<LoginWithFacebook />', () => {
     toastSpy = sandbox.stub(useToast(), 'push');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
-    pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   });
 
   it('should succeed', async () => {
@@ -248,10 +248,10 @@ describe('<LoginWithFacebook />', () => {
     wrapper.update();
 
     // Should have gone to OnboardingWelcomeScreen
-    expect(pushScreenV2Spy.callCount).to.equal(1);
-    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenV2Spy.args[0][2]).to.be.empty;
+    expect(pushScreenSpy.callCount).to.equal(1);
+    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
+    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);
