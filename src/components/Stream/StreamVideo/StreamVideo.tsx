@@ -1,5 +1,6 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, useRef } from 'react';
 import { useApolloClient } from 'react-apollo';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import StreamVideoView from './StreamVideoView';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
@@ -116,6 +117,30 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
    * When the stream starts, if it hasn't already, get a new url
    */
   useStreamStart(props.data.timeFrom, () => query());
+
+
+  /**
+   * Listen for network changes to the ip or cellular
+   * If they change, request a new url
+   */
+  const netInfoState = useRef<NetInfoState>();
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      if (netInfoState.current && state.isConnected) {
+        if (
+          netInfoState.current.type !== state.type
+          || netInfoState.current.details.ipAddress !== state.details.ipAddress
+        ) {
+          query();
+        }
+      }
+
+      netInfoState.current = state;
+    });
+
+    // Unsubscribe
+    return () => unsubscribe();
+  }, []);
 
 
   /**
