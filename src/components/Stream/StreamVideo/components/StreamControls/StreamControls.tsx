@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect, useMemo, useRef } from 'react';
 import { View, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import Config from 'react-native-config';
 import { formatTime } from '../../../../../utils/functions';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import color from '../../../../../styles/definitions/color';
@@ -225,7 +224,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               <View style={{ padding: spacing.small }}>
                 <ShareButton
                   title="Share Stream"
-                  url={`${Config.REACT_APP_API_URL_BASE}/share/stream/${props.streamId}`}
+                  uri={`share/stream/${props.streamId}`}
                   iconProps={{
                     size: 'small',
                     style: {

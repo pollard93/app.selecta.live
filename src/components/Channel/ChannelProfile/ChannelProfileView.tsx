@@ -3,7 +3,6 @@ import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDarkMode } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';
-import Config from 'react-native-config';
 import H2 from '../../UI/Typography/components/H2';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Styles from './ChannelProfile.style';
@@ -231,7 +230,7 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             >
               <ShareButton
                 title="Share Channel"
-                url={`${Config.REACT_APP_API_URL_BASE}/share/channel/${props.queryResult.data.getChannelProfile.id}`}
+                uri={`share/channel/${props.queryResult.data.getChannelProfile.id}`}
                 iconProps={{
                   size: 'small',
                   style: [

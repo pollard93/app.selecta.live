@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, Share, ShareOptions } from 'react-native';
+import Config from 'react-native-config';
 import Icon, { ICON, IconProps } from '../Icon/Icon';
 
 interface ShareButtonIconProps {
@@ -10,13 +11,14 @@ interface ShareButtonIconProps {
 
 interface ShareButtonProps {
   title: string;
-  url: string;
+  uri: string;
   dialogProps?: ShareOptions
   iconProps?: ShareButtonIconProps;
 }
 
-const ShareButton: FC<ShareButtonProps> = ({ title, url, dialogProps = {}, iconProps = {} }) => {
+const ShareButton: FC<ShareButtonProps> = ({ title, uri, dialogProps = {}, iconProps = {} }) => {
   const onShare = () => {
+    const url = `${Config.REACT_APP_API_URL_BASE}/${uri}`;
     Share.share({ title, url }, dialogProps);
   };
 

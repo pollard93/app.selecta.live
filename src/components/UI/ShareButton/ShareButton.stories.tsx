@@ -10,13 +10,13 @@ storiesOf('UI/ShareButton', module)
   .add('ShareButton - default', () => (
     <ShareButton
       title="Share Button"
-      url="https://google.com"
+      uri="test/uri"
     />
   ))
   .add('ShareButton - custom dialog props', () => (
     <ShareButton
       title="Share Button"
-      url="https://google.com"
+      uri="test/uri"
       dialogProps={{
         dialogTitle: 'This is a custom title', // Android only
         subject: 'This is a subject', // Subject if shared via email
@@ -26,7 +26,7 @@ storiesOf('UI/ShareButton', module)
   .add('ShareButton - custom icon props', () => (
     <ShareButton
       title="Share Button"
-      url="https://google.com"
+      uri="test/uri"
       iconProps={{
         size: 'xlarge',
       }}

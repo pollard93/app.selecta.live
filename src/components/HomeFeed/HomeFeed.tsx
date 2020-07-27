@@ -31,7 +31,7 @@ const HomeFeed: FC<HomeFeedProps> = () => {
 
     /** Register deep linking event listeners */
     const eventListener = ({ url }: { url: string }) => {
-      const [_, path] = url.split('://');
+      const [, path] = url.split('://');
       const [type, identifier] = path.split('/');
 
       switch (type) {

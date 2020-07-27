@@ -32,7 +32,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         <H4>{props.data.name}</H4>
         <ShareButton
           title="Share Stream"
-          url={`${Config.REACT_APP_API_URL_BASE}/share/stream/${props.data.id}`}
+          uri={`share/stream/${props.data.id}`}
           iconProps={{
             size: 'small',
           }}
