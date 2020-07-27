@@ -233,6 +233,7 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
                 uri={`share/channel/${props.queryResult.data.getChannelProfile.id}`}
                 iconProps={{
                   size: 'small',
+                  animated: true,
                   style: [
                     Styles.headerTopContentIcon,
                     { tintColor: darkMode ? color.mono.light : titleColor },

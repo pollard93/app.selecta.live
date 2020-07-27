@@ -4,9 +4,10 @@ import Config from 'react-native-config';
 import Icon, { ICON, IconProps } from '../Icon/Icon';
 
 interface ShareButtonIconProps {
-  size?: IconProps['size'],
-  style?: IconProps['style'],
-  forceLight?: IconProps['forceLight']
+  size?: IconProps['size'];
+  style?: IconProps['style'];
+  forceLight?: IconProps['forceLight'];
+  animated?: boolean;
 }
 
 interface ShareButtonProps {
@@ -24,7 +25,7 @@ const ShareButton: FC<ShareButtonProps> = ({ title, uri, dialogProps = {}, iconP
 
   return (
     <TouchableOpacity onPress={onShare}>
-      <Icon name={ICON.SHARE} size="regular" animated {...iconProps} />
+      <Icon name={ICON.SHARE} size="regular" {...iconProps} />
     </TouchableOpacity>
   );
 };
