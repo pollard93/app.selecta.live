@@ -10,7 +10,7 @@ import Button from '../../UI/Button/Button';
 import Styles from './OnboardingWelcome.style';
 import H4 from '../../UI/Typography/components/H4';
 import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
-import { pushScreenV2 } from '../../../screens/utils';
+import { pushScreen } from '../../../screens/utils';
 import OnboardingNotificationsScreen from '../../../screens/OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import { getGQLErrorMessage, useDebounce } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
@@ -89,7 +89,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
    */
   const [mutation, { loading: mutationLoading }] = useUpdateSelfMutation({
     onCompleted: () => {
-      pushScreenV2(STACK.ONBOARDING, OnboardingNotificationsScreen, {});
+      pushScreen(STACK.ONBOARDING, OnboardingNotificationsScreen, {});
     },
     onError: (e) => {
       toast.push({

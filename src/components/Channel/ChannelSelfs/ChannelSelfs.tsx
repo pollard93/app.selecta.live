@@ -7,7 +7,7 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import ChannelSelfListItem from '../ChannelSelfListItem/ChannelSelfListItem';
 import styles from './ChannelSelfs.styles';
 import { pushScreen } from '../../../screens/utils';
-import { ChannelLoginScreenProps, ChannelLoginScreenName } from '../../../screens/ChannelLoginScreen/ChannelLoginScreen';
+import ChannelLoginScreen from '../../../screens/ChannelLoginScreen/ChannelLoginScreen';
 import { STACK } from '../../../screens/utils/interfaces';
 
 class ChannelSelfsFlatList extends ApolloFlatList<getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels> {}
@@ -26,14 +26,7 @@ const ChannelSelfs = () => (
           /**
            * Go to channel login screen
            */
-          pushScreen<ChannelLoginScreenProps>(STACK.HOME, {
-            component: {
-              name: ChannelLoginScreenName,
-              passProps: {
-                id: item.id,
-              },
-            },
-          });
+          pushScreen(STACK.HOME, ChannelLoginScreen, { id: item.id });
         }}
       >
         <ChannelSelfListItem data={item} />

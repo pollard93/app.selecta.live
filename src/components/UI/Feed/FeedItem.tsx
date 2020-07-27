@@ -15,7 +15,7 @@ import StreamCard from '../Cards/StreamCard/StreamCard';
 import ChannelCard from '../Cards/ChannelCard/ChannelCard';
 import Icon, { ICON } from '../Icon/Icon';
 import Styles, { DynamicStyles } from './Feed.styles';
-import { pushScreenV2 } from '../../../screens/utils';
+import { pushScreen } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../../screens/ChannelProfileScreen/ChannelProfileScreen';
@@ -181,7 +181,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                     return (
                       <TouchableOpacity
                         onPress={() => {
-                          pushScreenV2(STACK.TAB_HOME, StreamProfileScreen, { id: streamData.id });
+                          pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id: streamData.id });
                         }}
                         delayPressIn={50}
                       >
@@ -194,7 +194,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                     return (
                       <TouchableOpacity
                         onPress={() => {
-                          pushScreenV2(STACK.TAB_HOME, ChannelProfileScreen, { id: channelData.id });
+                          pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id: channelData.id });
                         }}
                         delayPressIn={50}
                       >

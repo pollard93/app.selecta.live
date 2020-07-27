@@ -29,7 +29,6 @@ try {
   Sinon.stub(ScreenUtils, 'goHome').returns({ finally() {} });
   Sinon.stub(ScreenUtils, 'goToRequireUpdateScreen').returns({ finally() {} });
   Sinon.stub(ScreenUtils, 'pushScreen').returns({ finally() {} });
-  Sinon.stub(ScreenUtils, 'pushScreenV2').returns({ finally() {} });
 // eslint-disable-next-line no-empty
 } catch (e) {}
 

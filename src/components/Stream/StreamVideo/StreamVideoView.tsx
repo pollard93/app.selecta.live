@@ -355,6 +355,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isFullScreen={props.isFullScreen}
         toggleVideoEnabled={toggleVideoEnabled}
         isVideoEnabled={videoEnabled}
+        streamId={props.data.id}
       />
     </>
   );

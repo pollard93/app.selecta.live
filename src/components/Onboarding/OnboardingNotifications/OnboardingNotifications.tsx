@@ -8,7 +8,7 @@ import H4 from '../../UI/Typography/components/H4';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Styles from './OnboardingNotifications.style';
 import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
-import { pushScreenV2 } from '../../../screens/utils';
+import { pushScreen } from '../../../screens/utils';
 import OnboardingGetStartedScreen from '../../../screens/OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import { openSettings } from '../../../utils/functions';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -23,7 +23,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
    * On next screen
    */
   const onNext = () => {
-    pushScreenV2(STACK.ONBOARDING, OnboardingGetStartedScreen, {});
+    pushScreen(STACK.ONBOARDING, OnboardingGetStartedScreen, {});
   };
 
 

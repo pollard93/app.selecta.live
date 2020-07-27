@@ -10,6 +10,7 @@ import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import Styles from './StreamControls.style';
+import ShareButton from '../../../../UI/ShareButton/ShareButton';
 
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
@@ -27,6 +28,7 @@ interface StreamControlsProps {
   isFullScreen: boolean;
   toggleVideoEnabled: () => void;
   isVideoEnabled: boolean;
+  streamId: string;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -217,6 +219,21 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
             >
               <Icon name={!props.isVideoEnabled ? ICON.VIDEO_ENABLED : ICON.VIDEO_DISABLED} size="small" style={Styles.icon} />
             </TouchableOpacity>
+
+            {props.isFullScreen && (
+              <View style={{ padding: spacing.small }}>
+                <ShareButton
+                  title="Share Stream"
+                  uri={`share/stream/${props.streamId}`}
+                  iconProps={{
+                    size: 'small',
+                    style: {
+                      tintColor: '#ffffff',
+                    },
+                  }}
+                />
+              </View>
+            )}
 
             <TouchableOpacity
               onPress={() => {

@@ -4,7 +4,7 @@ import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
-import { pushScreenV2, goToRequireUpdateScreen } from '../../screens/utils';
+import { pushScreen, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
@@ -50,7 +50,7 @@ const Register: FC<RegisterProps> = (props) => {
 
       // Navigate now getSelf is cached
       // Carry on onboarding process
-      pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+      pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
         setLoading(false);
       });
     },
