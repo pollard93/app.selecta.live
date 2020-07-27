@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Tue Jul 14 2020 15:01:44 GMT+0100 (British Summer Time)
+# timestamp: Mon Jul 27 2020 15:43:02 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -473,10 +473,11 @@ type Mutation {
   updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
-  loginChannel(id: String!, code: String!): ChannelAuthPayload
+  loginChannelWithCode(id: String!, code: String!): ChannelAuthPayload
+  loginChannelWithToken(id: String!): ChannelAuthPayload
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
-  requestChannelLogin(id: String!): Boolean
+  requestChannelLoginCode(id: String!): Boolean
   updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload, tags: [String!]): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
@@ -635,6 +636,8 @@ type Query {
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
+  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
+  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -655,16 +658,24 @@ type Query {
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
 }
 
-type RecommendedChannelsPayload {
-  channels: [ChannelProfile!]!
-  count: Int!
-  nextPage: Int!
+type RelatedChannel {
+  id: String!
+  related: ChannelProfile
 }
 
-type RecommendedStreamsPayload {
-  streams: [StreamProfile!]!
+type RelatedChannelsPayload {
   count: Int!
-  nextPage: Int!
+  channels: [RelatedChannel!]!
+}
+
+type RelatedStream {
+  id: String!
+  related: StreamProfile
+}
+
+type RelatedStreamsPayload {
+  count: Int!
+  streams: [RelatedStream!]!
 }
 
 type RequestedChannel {
@@ -1550,6 +1561,7 @@ type UserSelf {
   credit: Float
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
+  isProducer: Boolean
   requiresUpdate: AppUpdatePayload
   createdAt: DateTime
 }

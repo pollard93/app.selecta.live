@@ -121,6 +121,7 @@ const generalTokenEndpoints = [
   'getStreamUrl',
   'isUsernameUnique',
   'loginChannel',
+  'loginChannelWithToken',
   'payForStream',
   'putStreamComment',
   'putStreamMessage',
@@ -250,11 +251,15 @@ const AClient = new ApolloClient({
           return;
         }
 
-        // Check for Expired Channel Token message, goHome and show toast
+        // Check for Expired Channel Token message, goHome to producer tab and show toast
         const expiredChannel = graphQLErrors.find((e) => e.message === 'Expired Channel Token');
         if (expiredChannel) {
           goHome({
-            toastMessage: 'Your channel session has expired! Please login again',
+            isProducer: true,
+            currentTabIndex: 1,
+            passProps: {
+              toastMessage: 'Your channel session has expired! Please login again',
+            },
           });
         }
       }

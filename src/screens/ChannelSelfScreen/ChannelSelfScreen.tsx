@@ -8,9 +8,11 @@ import { removeChannelAccessToken } from '../../ApolloClient/resolvers/mutation/
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
 import { useGetChannelSelfQuery } from '../../API/query/getChannelSelf/getChannelSelf';
 import ChannelSelf from '../../components/Channel/ChannelSelf/ChannelSelf';
+import { useGetSelf } from '../../API/query/getSelf/getSelf';
 
-const ChannelScreen = () => {
+const ChannelSelfScreen = () => {
   const client = useApolloClient();
+  const self = useGetSelf();
   const { data: { getChannelSelf } } = useGetChannelSelfQuery(); // GetChannelSelfQuery request is always requested and cached, so no need to wait for loading
 
   useEffect(() => {
@@ -31,7 +33,7 @@ const ChannelScreen = () => {
             mutation: REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION,
           });
 
-          goHome();
+          goHome({ isProducer: self.isProducer });
         }}
       >
         <Text>Logout of channel</Text>
@@ -42,14 +44,14 @@ const ChannelScreen = () => {
   );
 };
 
-export default ChannelScreen;
+export default ChannelSelfScreen;
 
 /**
  * Assign screen name as prototype so it's accessible by importing default
  */
-ChannelScreen.prototype.ScreenName = 'ChannelScreen';
+ChannelSelfScreen.prototype.ScreenName = 'ChannelSelfScreen';
 
 /**
  * Export as const so can be imported without the default
  */
-export const ChannelScreenName = ChannelScreen.prototype.ScreenName;
+export const ChannelSelfScreenName = ChannelSelfScreen.prototype.ScreenName;
