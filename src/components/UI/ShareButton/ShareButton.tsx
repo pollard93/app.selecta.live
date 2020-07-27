@@ -3,18 +3,11 @@ import { TouchableOpacity, Share, ShareOptions } from 'react-native';
 import Config from 'react-native-config';
 import Icon, { ICON, IconProps } from '../Icon/Icon';
 
-interface ShareButtonIconProps {
-  size?: IconProps['size'];
-  style?: IconProps['style'];
-  forceLight?: IconProps['forceLight'];
-  animated?: boolean;
-}
-
 interface ShareButtonProps {
   title: string;
   uri: string;
   dialogProps?: ShareOptions
-  iconProps?: ShareButtonIconProps;
+  iconProps?: Partial<IconProps>;
 }
 
 const ShareButton: FC<ShareButtonProps> = ({ title, uri, dialogProps = {}, iconProps = {} }) => {
