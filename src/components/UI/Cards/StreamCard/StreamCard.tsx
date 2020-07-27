@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
-import Config from 'react-native-config';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
