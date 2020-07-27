@@ -24,9 +24,10 @@ export enum ICON {
   TICK = 'TICK',
   CHAT = 'CHAT',
   NOTES = 'NOTES',
+  CROSS = 'CROSS',
 }
 
-interface IconProps {
+export interface IconProps {
   name: ICON;
   size: 'xxsmall' | 'xsmall' | 'small' | 'regular' | 'large' | 'xlarge';
   forceLight?: boolean;
@@ -93,6 +94,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.NOTES:
         return require('../../../assets/images/icons/notes.png');
+
+      case ICON.CROSS:
+        return require('../../../assets/images/icons/cross.png');
 
       default:
         return null;

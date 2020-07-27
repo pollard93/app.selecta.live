@@ -6,12 +6,14 @@ import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import Styles from './StreamMessageListItem.styles';
 import Body from '../../UI/Typography/components/Body';
 import Gradient from '../../UI/Gradient/Gradient';
-import { STREAM_PROFILE_FRAGMENT_channel } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import Icon, { ICON } from '../../UI/Icon/Icon';
+import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { formatTime } from '../../../utils/functions';
+import Small from '../../UI/Typography/components/Small';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
-  channelData: STREAM_PROFILE_FRAGMENT_channel;
+  streamData: STREAM_PROFILE_FRAGMENT;
 }
 
 const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
@@ -23,9 +25,12 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
    * The message was created by the channel
    */
   const imageUrl = {
-    splash: props.data.user ? props.data.user.profilePicture?.url.splash : props.channelData.profileImage.url.splash,
-    small: props.data.user ? props.data.user.profilePicture?.url.small : props.channelData.profileImage.url.small,
+    splash: props.data.user ? props.data.user.profilePicture?.url.splash : props.streamData.channel.profileImage.url.splash,
+    small: props.data.user ? props.data.user.profilePicture?.url.small : props.streamData.channel.profileImage.url.small,
   };
+
+  // Get relative time the message was created, relative to stream.timeFrom
+  const relativeTime = formatTime((new Date(props.data.createdAt).getTime() - new Date(props.streamData.timeFrom).getTime()) / 1000);
 
   return (
     <View style={Styles.wrap}>
@@ -59,6 +64,8 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
           {isSelf && <Gradient style={StyleSheet.absoluteFillObject} />}
           <Body style={[Styles.message, isSelf && Styles.messageSelf]}>{props.data.message}</Body>
         </View>
+
+        <Small style={Styles.time}>{relativeTime}</Small>
       </View>
     </View>
   );

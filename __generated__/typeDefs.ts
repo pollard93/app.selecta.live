@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri Jul 10 2020 10:10:57 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 14 2020 15:01:44 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -304,6 +304,21 @@ enum CreditTransactionOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+}
+
+type CreditTransactionProfile {
+  id: ID
+  credit: Float
+  stream: StreamProfile
+  channel: ChannelProfile
+  approved: DateTime
+  reversed: DateTime
+  createdAt: DateTime
+}
+
+type CreditTransactionProfilesPayload {
+  transactions: [CreditTransactionProfile!]!
+  count: Int!
 }
 
 input CreditTransactionWhereInput {
@@ -618,6 +633,7 @@ type Query {
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getCreditTransactionProfiles(first: Int, after: String, orderBy: CreditTransactionOrderByInput): CreditTransactionProfilesPayload!
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
@@ -1047,6 +1063,7 @@ type StreamProfile {
   id: ID!
   channel: ChannelProfile
   name: String
+  info: String
   image: File
   timeFrom: DateTime
   timeTo: DateTime
@@ -1056,6 +1073,7 @@ type StreamProfile {
   audioOnly: Boolean
   position: Float
   tags: [TagProfile]
+  cost: Float
 }
 
 type StreamProfilesPayLoad {
@@ -1491,6 +1509,7 @@ type User {
   streamsConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   streamsLiveConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
   tags(where: UserTagsWhereInput, orderBy: UserTagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTags!]
+  transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1534,6 +1553,7 @@ type UserSelf {
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
   requiresUpdate: AppUpdatePayload
+  createdAt: DateTime
 }
 
 type UserTags {
@@ -1714,6 +1734,9 @@ input UserWhereInput {
   tags_every: UserTagsWhereInput
   tags_some: UserTagsWhereInput
   tags_none: UserTagsWhereInput
+  transactions_every: CreditTransactionWhereInput
+  transactions_some: CreditTransactionWhereInput
+  transactions_none: CreditTransactionWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

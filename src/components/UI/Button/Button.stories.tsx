@@ -16,6 +16,13 @@ storiesOf('UI/Button', module)
       onPress={console.log}
     />
   ))
+  .add('Button - primary - small', () => (
+    <Button
+      title="Primary"
+      onPress={console.log}
+      size="small"
+    />
+  ))
   .add('Button - primary - loading', () => (
     <Button
       title="Primary"

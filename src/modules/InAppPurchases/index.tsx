@@ -21,6 +21,7 @@ class InAppPurchases {
    * Set subscribers
    */
   public static init() {
+    RNIap.initConnection();
     global.purchaseUpdateSubscription = RNIap.purchaseUpdatedListener(InAppPurchases.purchaseUpdated) as EmitterSubscription;
     global.purchaseErrorSubscription = RNIap.purchaseErrorListener(InAppPurchases.purchaseError) as EmitterSubscription;
   }

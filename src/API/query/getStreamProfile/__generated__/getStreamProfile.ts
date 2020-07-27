@@ -59,6 +59,8 @@ export interface getStreamProfile_getStreamProfile {
   timeFrom: any | null;
   timeTo: any | null;
   tags: (getStreamProfile_getStreamProfile_tags | null)[] | null;
+  info: string | null;
+  cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;

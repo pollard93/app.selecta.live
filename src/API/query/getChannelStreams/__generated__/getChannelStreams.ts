@@ -61,6 +61,8 @@ export interface getChannelStreams_getChannelStreams_streams {
   timeFrom: any | null;
   timeTo: any | null;
   tags: (getChannelStreams_getChannelStreams_streams_tags | null)[] | null;
+  info: string | null;
+  cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;

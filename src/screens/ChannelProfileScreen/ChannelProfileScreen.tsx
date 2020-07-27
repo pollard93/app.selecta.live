@@ -26,6 +26,10 @@ ChannelProfileScreen.prototype.ScreenName = 'ChannelProfileScreen';
   //   style: 'dark',
   //   backgroundColor: 'white',
   // },
+  bottomTabs: {
+    visible: false,
+    animate: true,
+  },
 };
 
 /**

@@ -50,4 +50,7 @@ export default StyleSheet.create({
   messageSelf: {
     color: color.mono.light,
   },
+  time: {
+    marginTop: spacing.xxsmall,
+  },
 });

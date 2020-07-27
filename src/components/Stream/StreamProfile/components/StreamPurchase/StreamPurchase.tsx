@@ -1,0 +1,145 @@
+import React, { FC, useState } from 'react';
+import { View } from 'react-native';
+import { useToast } from 'mbp-components-rn-toast';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDynamicValue } from 'react-native-dynamic';
+import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import H4 from '../../../../UI/Typography/components/H4';
+import Body from '../../../../UI/Typography/components/Body';
+import { formatForTimezone, getGQLErrorMessage } from '../../../../../utils/functions';
+import Button from '../../../../UI/Button/Button';
+import { useGetSelf, GET_SELF_QUERY } from '../../../../../API/query/getSelf/getSelf';
+import { openTopUpModal } from '../../../../../screens/utils';
+import { usePayForStreamMutation } from '../../../../../API/mutation/payForStream/payForStream';
+import Toast from '../../../../UI/Toast/Toast';
+import Styles, { DynamicStyles } from './StreamPurchase.styles';
+import H1 from '../../../../UI/Typography/components/H1';
+import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
+import { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
+
+interface StreamPurchaseProps {
+  data: STREAM_PROFILE_FRAGMENT;
+}
+
+const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
+  const self = useGetSelf();
+  const toast = useToast();
+  const [confirming, setConfirming] = useState(false);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
+
+  /**
+   * Pay for stream mutation
+   */
+  const [mutation, { loading, client }] = usePayForStreamMutation({
+    variables: {
+      id: props.data.id,
+    },
+    onCompleted: () => {
+      /**
+       * On completion remove the cost of the stream from the users credit in cache
+       */
+      try {
+        client.writeQuery<getSelf>({
+          query: GET_SELF_QUERY,
+          data: {
+            getSelf: {
+              ...self,
+              credit: self.credit - props.data.cost,
+            },
+          },
+        });
+      // eslint-disable-next-line no-empty
+      } catch {}
+
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content="Purchase successful, enjoy!" />
+        ),
+        dismissible: false,
+      });
+    },
+    onError: (e) => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content={getGQLErrorMessage(e)} />
+        ),
+        dismissible: false,
+      });
+    },
+  });
+
+
+  /**
+   * On Purchase
+   * If user does not have enough credit, open top up modal
+   * Otherwise, set state to confirming
+   * If already confirming, then execute mutation
+   */
+  const onPurchase = () => {
+    if (self.credit < props.data.cost) {
+      openTopUpModal();
+      return;
+    }
+
+    if (!confirming) {
+      setConfirming(true);
+      return;
+    }
+
+    /**
+     * PURCHASE STREAM
+     */
+    mutation();
+  };
+
+
+  return (
+    <ScrollView
+      style={Styles.wrap}
+      bounces={false}
+    >
+      <View style={Styles.info}>
+        <H4>{props.data.info}</H4>
+      </View>
+
+      <View style={Styles.buy}>
+        <H4>Buy this stream</H4>
+        <View style={[Styles.ticket, dynamicStyles.ticket]}>
+          <View style={[Styles.corner, globalDynamicStyles.background]} />
+          <View style={[Styles.corner, globalDynamicStyles.background, Styles.bottom]} />
+          <View style={[Styles.corner, globalDynamicStyles.background, Styles.right]} />
+          <View style={[Styles.corner, globalDynamicStyles.background, Styles.bottomRight]} />
+
+          <View style={Styles.ticketInfo}>
+            <Body bold>Admission #1</Body>
+            <Body bold>{formatForTimezone(props.data.timeFrom, 'calendar')}</Body>
+            <Body bold>Entry from {formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Body>
+            <Body bold>{(new Date(props.data.timeTo).getTime() - new Date(props.data.timeFrom).getTime()) / 3.6e+6} Hours</Body>
+          </View>
+
+          <View style={[Styles.cost, dynamicStyles.cost]}>
+            <H1>© {props.data.cost}</H1>
+          </View>
+        </View>
+      </View>
+
+      <View style={Styles.lower}>
+        <Button
+          title={(() => {
+            if (loading) return 'Purchasing Stream';
+            return confirming ? 'Press to confirm your purchase!' : `Buy this stream for © ${props.data.cost}`;
+          })()}
+          onPress={onPurchase}
+          loading={loading}
+          testID="submit"
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+export default StreamPurchase;

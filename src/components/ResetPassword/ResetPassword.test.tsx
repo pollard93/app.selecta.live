@@ -17,6 +17,7 @@ import * as ScreenUtilsModule from '../../screens/utils';
 import { STACK } from '../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
+import { store } from '../../utils/storage';
 
 describe('<ResetPassword />', () => {
   /**
@@ -27,7 +28,7 @@ describe('<ResetPassword />', () => {
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(useToast(), 'push');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-  let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
@@ -37,7 +38,7 @@ describe('<ResetPassword />', () => {
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(useToast(), 'push');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-    pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
@@ -87,6 +88,10 @@ describe('<ResetPassword />', () => {
       query: GET_SELF_QUERY,
     });
     expect(typeof gs.getSelf.id).to.equal('string');
+
+    // GetSelf result should be stored in async storage
+    const gsc = await store('getSelf');
+    expect(gsc).to.not.be.empty;
 
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
@@ -268,10 +273,10 @@ describe('<ResetPassword />', () => {
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have gone to OnboardingWelcomeScreen
-    expect(pushScreenV2Spy.callCount).to.equal(1);
-    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenV2Spy.args[0][2]).to.be.empty;
+    expect(pushScreenSpy.callCount).to.equal(1);
+    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
+    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

@@ -52,4 +52,17 @@ export default StyleSheet.create({
   loading: {
     marginLeft: spacing.small,
   },
+
+
+  /**
+   * Size
+   */
+  small: {
+    paddingHorizontal: spacing.small,
+    paddingVertical: spacing.xxsmall,
+  },
+  touchsmall: {
+    borderRadius: 100,
+    overflow: 'hidden',
+  },
 });

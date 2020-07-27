@@ -80,4 +80,4 @@ const Chip: FC<ChipProps> = (props) => {
   );
 };
 
-export default memo(Chip);
+export default memo(Chip) as typeof Chip;

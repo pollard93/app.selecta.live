@@ -5,6 +5,7 @@ import { Switch, View, SafeAreaView, StyleSheet, Text } from 'react-native';
 import color from '../../../src/styles/definitions/color';
 import spacing from '../../../src/styles/definitions/spacing';
 import shadow from '../../../src/styles/definitions/shadow';
+import GlobalStyles from '../../../src/styles/stylesheets/GlobalStyles';
 
 interface DarkModeDecoratorProps {}
 
@@ -13,9 +14,11 @@ const DarkModeDecorator: FC = (props) => {
 
   return (
     <ColorSchemeProvider mode={darkMode ? 'dark' : 'light'}>
-      {props.children}
+      <View style={[GlobalStyles.PageFill, { backgroundColor: !darkMode ? color.mono.pale.light : color.mono.pale.dark }]}>
+        {props.children}
+      </View>
 
-      <SafeAreaView style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+      <SafeAreaView style={{ ...StyleSheet.absoluteFillObject }} pointerEvents="box-none">
         <View
           style={{
             position: 'absolute',
@@ -25,6 +28,7 @@ const DarkModeDecorator: FC = (props) => {
             backgroundColor: color.mono.pale.light,
             padding: spacing.small,
             bottom: spacing.large * 2,
+            zIndex: 999,
             ...shadow.regular,
           }}
         >

@@ -17,6 +17,7 @@ import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { STACK } from '../../screens/utils/interfaces';
+import { store } from '../../utils/storage';
 
 describe('<Register />', () => {
   /**
@@ -26,7 +27,7 @@ describe('<Register />', () => {
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(useToast(), 'push');
-  let pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
@@ -35,7 +36,7 @@ describe('<Register />', () => {
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(useToast(), 'push');
-    pushScreenV2Spy = sandbox.stub(ScreenUtilsModule, 'pushScreenV2');
+    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
@@ -88,15 +89,19 @@ describe('<Register />', () => {
     });
     expect(typeof gs.getSelf.id).to.equal('string');
 
+    // GetSelf result should be stored in async storage
+    const gsc = await store('getSelf');
+    expect(gsc).to.not.be.empty;
+
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
     // Pushnotifications should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
-    expect(pushScreenV2Spy.args[0][0]).to.equal(STACK.ONBOARDING);
-    expect(pushScreenV2Spy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenV2Spy.args[0][2]).to.be.empty;
+    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
+    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
+    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Update - button should not return to state as no errors
     wrapper.update();
@@ -229,6 +234,6 @@ describe('<Register />', () => {
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
 
     // Should not have called OnboardingWelcomeScreen
-    expect(pushScreenV2Spy.callCount).to.equal(0);
+    expect(pushScreenSpy.callCount).to.equal(0);
   });
 });

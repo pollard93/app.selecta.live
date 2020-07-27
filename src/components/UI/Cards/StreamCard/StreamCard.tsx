@@ -8,6 +8,7 @@ import H4 from '../../Typography/components/H4';
 import Chip from '../../Chip/Chip';
 import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
+import ShareButton from '../../ShareButton/ShareButton';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT;
@@ -26,8 +27,15 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           style: Styles.image,
         }}
       />
-      <View style={Styles.item}>
+      <View style={[Styles.item, Styles.header]}>
         <H4>{props.data.name}</H4>
+        <ShareButton
+          title="Share Stream"
+          uri={`share/stream/${props.data.id}`}
+          iconProps={{
+            size: 'small',
+          }}
+        />
       </View>
 
       {props.data.tags.length > 0 && (

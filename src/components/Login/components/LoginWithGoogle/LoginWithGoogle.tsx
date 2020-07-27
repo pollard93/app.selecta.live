@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { useToast } from 'mbp-components-rn-toast';
-import { goHome, goToRequireUpdateScreen, pushScreenV2 } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -15,6 +15,7 @@ import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
 import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
+import { store } from '../../../../utils/storage';
 
 interface LoginWithGoogleProps {
   disabled?: boolean;
@@ -50,10 +51,15 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
   /**
    * Get self must be executed to cache the result
    */
-  const [getSelf] = useGetSelfLazyQuery({
-    onCompleted: async ({ getSelf: { id, requiresUpdate, username } }) => {
+  const [getSelfQuery] = useGetSelfLazyQuery({
+    onCompleted: async ({ getSelf }) => {
+      /**
+       * Store result in async storage
+       */
+      await store('getSelf', getSelf);
+
       // Bind notifications
-      PushNotifications.init(id);
+      PushNotifications.init(getSelf.id);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -61,15 +67,15 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       /**
        * If requires update is true, can be null or false, then go to RequireUpdateScreen
        */
-      if (requiresUpdate) {
+      if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
         return;
       }
 
       // Navigate now getSelf is cached
-      if (!username) {
+      if (!getSelf.username) {
         // Carry on onboarding process if user has no username
-        pushScreenV2(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -109,7 +115,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       });
 
       // Execute getSelf to cache it
-      getSelf();
+      getSelfQuery();
     },
     onError: (e) => {
       setLoading(false);

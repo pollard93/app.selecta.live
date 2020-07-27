@@ -16,6 +16,9 @@ import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/que
 import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
 import InAppPurchases from '../../modules/InAppPurchases';
 import * as SafeAreaInsetsModule from '../../modules/SafeAreaInsets/SafeAreaInsets';
+import { store } from '../../utils/storage';
+import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
+import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 
 describe('<InitScreen >', () => {
   /**
@@ -46,6 +49,9 @@ describe('<InitScreen >', () => {
     goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
     goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
     setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
+
+    // Clear getSelf store
+    await store('getSelf', null);
   });
 
 
@@ -114,9 +120,18 @@ describe('<InitScreen >', () => {
     expect(getTokenSpy.callCount).to.equal(1);
     expect(pushNotificationInitSpy.callCount).to.equal(1);
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
-    expect(getTokenSpy.callCount).to.equal(1);
     expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
+
+    // Get self should now be cached
+    const gs = client.readQuery<getSelf>({
+      query: GET_SELF_QUERY,
+    });
+    expect(typeof gs.getSelf.id).to.equal('string');
+
+    // GetSelf result should be stored in async storage
+    const gss = await store('getSelf');
+    expect(gss).to.not.be.empty;
   });
 
   it('should goToChannelStack with stored general and channel token', async () => {
@@ -141,7 +156,7 @@ describe('<InitScreen >', () => {
     expect(goToChannelStackSpy.callCount).to.equal(1);
   });
 
-  it('should goToLogin with stored expired general token', async () => {
+  it('should goToLogin on getSelf error and no getSelf is stored', async () => {
     /**
      * Create mock client and force getSelf to error
      */
@@ -169,6 +184,45 @@ describe('<InitScreen >', () => {
 
     expect(getTokenSpy.callCount).to.equal(1);
     expect(goToLoginSpy.callCount).to.equal(1);
+  });
+
+  it('should goHome on getSelf error getSelf is stored', async () => {
+    /**
+     * Create mock client and force getSelf to error
+     */
+    const client = mockClient({
+      Query: () => ({
+        getSelf: () => {
+          throw new Error('');
+        },
+      }),
+    });
+
+    // Store general and channel token
+    writeGeneralTokenToCache(client);
+
+    // Store getSelf
+    await store('getSelf', { id: 'test', __typename: 'User' });
+
+    const wrapper = mount(
+      <ApolloProvider client={client}>
+        <InitScreen />
+      </ApolloProvider>,
+    );
+    wrapper.update();
+    await wait(0);
+    await wait(0);
+    await wait(0);
+    await wait(0);
+
+    expect(getTokenSpy.callCount).to.equal(1);
+    expect(goHomeSpy.callCount).to.equal(1);
+
+    // Get self should now be cached from stored value, even though getSelf errors
+    const gs = client.readQuery<getSelf>({
+      query: GET_SELF_QUERY,
+    });
+    expect(gs.getSelf.id).to.equal('test');
   });
 
   it('should goHome with stored general token and expired channel token', async () => {

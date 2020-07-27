@@ -61,6 +61,8 @@ export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams {
   timeFrom: any | null;
   timeTo: any | null;
   tags: (getConsumingStreamProfiles_getConsumingStreamProfiles_streams_tags | null)[] | null;
+  info: string | null;
+  cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;

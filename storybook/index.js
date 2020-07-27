@@ -8,9 +8,9 @@ import { loadStories } from './storyLoader';
 import mockClient from '../src/API/utils/mockClient';
 import * as ScreenUtils from '../src/screens/utils';
 import { setSafeArea } from '../src/modules/SafeAreaInsets/SafeAreaInsets';
+import DarkModeDecorator from './Decorators/DarkModeDecorator/DarkModeDecorator';
 
 import './rn-addons';
-import DarkModeDecorator from './Decorators/DarkModeDecorator/DarkModeDecorator';
 
 
 /**
@@ -29,7 +29,6 @@ try {
   Sinon.stub(ScreenUtils, 'goHome').returns({ finally() {} });
   Sinon.stub(ScreenUtils, 'goToRequireUpdateScreen').returns({ finally() {} });
   Sinon.stub(ScreenUtils, 'pushScreen').returns({ finally() {} });
-  Sinon.stub(ScreenUtils, 'pushScreenV2').returns({ finally() {} });
 // eslint-disable-next-line no-empty
 } catch (e) {}
 
@@ -38,7 +37,7 @@ try {
  * Mock apollo client
  */
 
-const client = mockClient();
+export const client = mockClient();
 
 addDecorator((getStory) => (
   <ApolloProvider client={client}>

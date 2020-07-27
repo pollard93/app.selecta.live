@@ -171,7 +171,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
         renderItem={({ item }) => (
           <StreamMessageListItem
             data={item}
-            channelData={props.data.channel}
+            streamData={props.data}
           />
         )}
         keyExtractor={(item) => item.id}

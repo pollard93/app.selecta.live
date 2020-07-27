@@ -22,6 +22,7 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
     variables: {
       id: props.id,
     },
+    fetchPolicy: 'network-only',
   });
 
   return (

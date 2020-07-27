@@ -9,13 +9,13 @@ import Styles from './ChannelProfile.style';
 import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 import FollowChannel from '../FollowChannel/FollowChannel';
-import Icon, { ICON } from '../../UI/Icon/Icon';
 import ChannelFeed from '../../ChannelFeed/ChannelFeed';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import { getChannelProfile } from '../../../API/query/getChannelProfile/__generated__/getChannelProfile';
 import ChannelProfileSkeleton from './ChannelProfileSkeleton';
+import ShareButton from '../../UI/ShareButton/ShareButton';
 
 export interface ChannelProfileViewProps extends ScreenProps {
   id: string;
@@ -228,14 +228,17 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             <View
               style={Styles.headerTopContent}
             >
-              <Icon
-                name={ICON.SHARE}
-                size="small"
-                style={[
-                  Styles.headerTopContentIcon,
-                  { tintColor: darkMode ? color.mono.light : titleColor },
-                ]}
-                animated
+              <ShareButton
+                title="Share Channel"
+                uri={`share/channel/${props.queryResult.data.getChannelProfile.id}`}
+                iconProps={{
+                  size: 'small',
+                  animated: true,
+                  style: [
+                    Styles.headerTopContentIcon,
+                    { tintColor: darkMode ? color.mono.light : titleColor },
+                  ],
+                }}
               />
 
               <FollowChannel
