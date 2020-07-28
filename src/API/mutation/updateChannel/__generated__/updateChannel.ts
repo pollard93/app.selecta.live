@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ChannelUpdateInput } from "./../../../../../__generated__/globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: updateChannel
 // ====================================================
@@ -63,8 +65,5 @@ export interface updateChannel {
 }
 
 export interface updateChannelVariables {
-  name?: string | null;
-  description?: string | null;
-  profileImage?: any | null;
-  coverImage?: any | null;
+  data?: ChannelUpdateInput | null;
 }

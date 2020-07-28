@@ -59,6 +59,40 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             ListHeaderComponent: () => (
               <View style={Styles.description}>
                 <Body>{props.queryResult.data.getChannelProfile.description}</Body>
+                <View style={Styles.socialLinks}>
+                  {props.queryResult.data.getChannelProfile.websiteUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.websiteUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.WEBSITE} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.twitterUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.twitterUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.TWITTER} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.facebookUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.facebookUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.FACEBOOK} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.instagramUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.instagramUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.INSTAGRAM} size="small" />
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
             ),
             onScroll: Animated.event(

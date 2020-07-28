@@ -42,6 +42,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  skeletonEmpty: {
+    opacity: 0.5,
+  },
   skeletonImage: {
     height: scalePx(50),
     opacity: 0.1,
