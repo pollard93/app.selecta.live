@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import { AsyncImageProps, AsyncImage } from 'mbp-components-rn-asyncimage';
 import { View, TouchableOpacity } from 'react-native';
+import ImageResizer from 'react-native-image-resizer';
+import { useToast } from 'mbp-components-rn-toast';
 import { openAssetPickerModalScreen, closeAssetPickerModal } from '../../../modules/AssetPicker/AssetPicker';
 import Icon, { ICON } from '../Icon/Icon';
 import Styles from './EditableAsyncImage.style';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import Toast from '../Toast/Toast';
+import { getGQLErrorMessage } from '../../../utils/functions';
 
 export interface EditableAsyncImageProps {
   asyncImageProps: AsyncImageProps;
@@ -15,6 +19,7 @@ export interface EditableAsyncImageProps {
 }
 
 export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
+  const toast = useToast();
   const [selectedAsset, setSelectedAsset] = useState<PhotoIdentifier['node']>();
   const [fullUrl, setFullUrl] = useState(props.asyncImageProps.fullUrl);
   const [loading, setLoading] = useState(false);
@@ -68,7 +73,54 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
   };
 
 
-  const Inner = () => {
+  /**
+   * On confirm
+   * Set loading state
+   * Reduce image to max width and height and convert to jpeg
+   */
+  const onConfirm = async () => {
+    setLoading(true);
+
+    /**
+     * Safely get image and toast if errors
+     */
+    const image = await (async () => {
+      try {
+        return await ImageResizer.createResizedImage(selectedAsset.image.uri, 800, 800, 'JPEG', 100);
+      } catch {
+        toast.push({
+          duration: 1000,
+          component: (
+            <Toast type="ERROR" content='Something went wrong' />
+          ),
+          dismissible: false,
+        });
+
+        return null;
+      }
+    })();
+
+    /**
+     * If image is returned
+     * execute props.onConfirm
+     */
+    if (image) {
+      props.onConfirm({
+        ...selectedAsset,
+        image: {
+          ...selectedAsset.image,
+          ...image,
+        },
+      }).finally(() => {
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
+  };
+
+
+  const Controls = () => {
     if (loading) {
       return (
         <View style={[Styles.controls, Styles.loading, Styles[props.iconPosition || 'center']]}>
@@ -93,12 +145,7 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => {
-              setLoading(true);
-              props.onConfirm(selectedAsset).finally(() => {
-                setLoading(false);
-              });
-            }}
+            onPress={onConfirm}
           >
             <View style={Styles.icon}>
               <Icon
@@ -134,7 +181,7 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
         fullUrl={(selectedAsset && selectedAsset.image.uri) || fullUrl}
       />
 
-      <Inner />
+      <Controls />
     </View>
   );
 };
