@@ -36,6 +36,7 @@ export interface updateSelf_updateSelf {
   credit: number | null;
   profilePicture: updateSelf_updateSelf_profilePicture | null;
   unreadNotificationCount: number | null;
+  isProducer: boolean | null;
   requiresUpdate: updateSelf_updateSelf_requiresUpdate | null;
   createdAt: any | null;
 }

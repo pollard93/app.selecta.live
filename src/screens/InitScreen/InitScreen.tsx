@@ -2,34 +2,19 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
-import { goToLogin, goHome, goToRequireUpdateScreen, goToChannelStack, goToOnboarding } from '../utils';
-import { getToken, getChannelToken } from '../../ApolloClient';
+import { goToLogin, goHome, goToRequireUpdateScreen, goToOnboarding } from '../utils';
+import { getToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
-import { useGetChannelSelfLazyQuery } from '../../API/query/getChannelSelf/getChannelSelf';
 import PushNotifications from '../../modules/PushNotifications';
 import InAppPurchases from '../../modules/InAppPurchases';
 import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
 import { setSafeArea } from '../../modules/SafeAreaInsets/SafeAreaInsets';
 import { store } from '../../utils/storage';
+import { getSelf_getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 
 const InitScreen = () => {
   const client = useApolloClient();
-
-
-  /**
-   * Get channel self query
-   */
-  const [getChannelSelf] = useGetChannelSelfLazyQuery({
-    onCompleted: async () => {
-      // User is logged in as a channel, go to channel stack
-      goToChannelStack();
-    },
-    onError: () => {
-      goHome();
-    },
-    fetchPolicy: 'network-only',
-  });
 
 
   /**
@@ -64,16 +49,8 @@ const InitScreen = () => {
         return;
       }
 
-      // If there's no token go to ChannelSelfs
-      const channelToken = await getChannelToken(client);
-      if (!channelToken) {
-        // Navigate to home now getSelf is cached
-        goHome();
-        return;
-      }
-
-      // Execute getChannelSelf which will try and use channel token in local storage from ApolloClient on request
-      getChannelSelf();
+      // Navigate to home now getSelf is cached
+      goHome({ isProducer: getSelf.isProducer });
     },
     onError: async () => {
       /**
@@ -81,9 +58,9 @@ const InitScreen = () => {
        * And we have getSelf in storage, user can proceed to home, handling network issues
        * If we do not have a cached getSelf, user must go to login
        */
-      const getSelf = await store('getSelf');
+      const getSelf: getSelf_getSelf = await store('getSelf');
       if (getSelf) {
-        goHome();
+        goHome({ isProducer: getSelf.isProducer });
       } else {
         goToLogin();
       }

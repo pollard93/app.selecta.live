@@ -3,19 +3,18 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: loginChannel
+// GraphQL mutation operation: loginChannelWithToken
 // ====================================================
 
-export interface loginChannel_loginChannel {
+export interface loginChannelWithToken_loginChannelWithToken {
   __typename: "ChannelAuthPayload";
   token: string;
 }
 
-export interface loginChannel {
-  loginChannel: loginChannel_loginChannel | null;
+export interface loginChannelWithToken {
+  loginChannelWithToken: loginChannelWithToken_loginChannelWithToken | null;
 }
 
-export interface loginChannelVariables {
+export interface loginChannelWithTokenVariables {
   id: string;
-  code: string;
 }

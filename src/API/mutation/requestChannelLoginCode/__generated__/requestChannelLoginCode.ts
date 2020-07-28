@@ -3,13 +3,13 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: requestChannelLogin
+// GraphQL mutation operation: requestChannelLoginCode
 // ====================================================
 
-export interface requestChannelLogin {
-  requestChannelLogin: boolean | null;
+export interface requestChannelLoginCode {
+  requestChannelLoginCode: boolean | null;
 }
 
-export interface requestChannelLoginVariables {
+export interface requestChannelLoginCodeVariables {
   id: string;
 }

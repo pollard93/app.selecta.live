@@ -163,6 +163,7 @@ type ChannelSelf {
   creditWithdrawalMinimum: Int
   freeStreamAllowance: Int
   tags: [TagProfile]
+  createdAt: DateTime
 }
 
 type ChannelSelfsPayLoad {
@@ -563,10 +564,13 @@ type Mutation {
   updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!): StreamSelf
-  loginChannel(id: String!, code: String!): ChannelAuthPayload
+  deleteStream(id: String!): Boolean
+  loginChannelWithCode(id: String!, code: String!): ChannelAuthPayload
+  loginChannelWithToken(id: String!): ChannelAuthPayload
+  publishStream(id: String!): StreamSelf
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
-  requestChannelLogin(id: String!): Boolean
+  requestChannelLoginCode(id: String!): Boolean
   updateChannel(data: ChannelUpdateInput): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
@@ -716,8 +720,8 @@ type ProductConfig {
 
 type Query {
   canViewStream(id: String!): Boolean!
-  getChannelFeed(id: String!): FeedPayload
   getChannelProfile(id: String!): ChannelProfile!
+  getChannelProfileFeed(id: String!): FeedPayload
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -736,6 +740,7 @@ type Query {
   verifyUser: Boolean
   channelNameExists(name: String!): Boolean!
   getChannelSelf: ChannelSelf!
+  getChannelSelfFeed: FeedPayload
   getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
   getRequestedChannels(first: Int, after: String): RequestedChannelsPayLoad
   getStreamSelf(id: String!): StreamSelf!
@@ -886,6 +891,7 @@ type Stream {
   positionRecords(where: StreamPositionRecordWhereInput, orderBy: StreamPositionRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamPositionRecord!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   relatedStreams(where: StreamRelatedStreamsWhereInput, orderBy: StreamRelatedStreamsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamRelatedStreams!]
+  published: DateTime
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1090,6 +1096,8 @@ enum StreamOrderByInput {
   approved_DESC
   audioOnly_ASC
   audioOnly_DESC
+  published_ASC
+  published_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1232,6 +1240,7 @@ type StreamSelf {
   timeTo: DateTime
   cost: Float
   cancelled: DateTime
+  published: DateTime
   password: String
   creditRevenuePending: Int
   creditRevenue: Int
@@ -1478,6 +1487,14 @@ input StreamWhereInput {
   relatedStreams_every: StreamRelatedStreamsWhereInput
   relatedStreams_some: StreamRelatedStreamsWhereInput
   relatedStreams_none: StreamRelatedStreamsWhereInput
+  published: DateTime
+  published_not: DateTime
+  published_in: [DateTime!]
+  published_not_in: [DateTime!]
+  published_lt: DateTime
+  published_lte: DateTime
+  published_gt: DateTime
+  published_gte: DateTime
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1650,6 +1667,7 @@ type UserSelf {
   credit: Float
   channelsFollowingEdge: Int
   channelsAdminEdge: Int
+  isProducer: Boolean
   requiresUpdate: AppUpdatePayload
   createdAt: DateTime
 }

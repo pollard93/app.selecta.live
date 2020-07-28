@@ -4,10 +4,11 @@
 
 import { cancelStream } from './resolvers/mutation/cancelStream/cancelStream';
 import { followChannel } from './resolvers/mutation/followChannel/followChannel';
-import { getChannelFeed } from './resolvers/query/getChannelFeed/getChannelFeed';
 import { getChannelProfile } from './resolvers/query/getChannelProfile/getChannelProfile';
+import { getChannelProfileFeed } from './resolvers/query/getChannelProfileFeed/getChannelProfileFeed';
 import { getChannelProfiles } from './resolvers/query/getChannelProfiles/getChannelProfiles';
 import { getChannelSelf } from './resolvers/query/getChannelSelf/getChannelSelf';
+import { getChannelSelfFeed } from './resolvers/query/getChannelSelfFeed/getChannelSelfFeed';
 import { getChannelSelfs } from './resolvers/query/getChannelSelfs/getChannelSelfs';
 import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
 import { getCreditTransactionProfiles } from './resolvers/query/getCreditTransactionProfiles/getCreditTransactionProfiles';
@@ -40,10 +41,11 @@ export default {
     withdrawFunds,
   }),
   Query: () => ({
-    getChannelFeed,
     getChannelProfile,
+    getChannelProfileFeed,
     getChannelProfiles,
     getChannelSelf,
+    getChannelSelfFeed,
     getChannelSelfs,
     getChannelStreams,
     getCreditTransactionProfiles,
