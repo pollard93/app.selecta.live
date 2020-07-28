@@ -187,6 +187,11 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
             containerProps: {
               style: Styles.coverImage,
             },
+            imageProps: {
+              source: {
+                cache: 'reload',
+              },
+            },
           }}
           iconPosition="bottomRight"
           onConfirm={(file) => mutation({
@@ -225,6 +230,11 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                   fullUrl: props.data.profileImage?.url.full,
                   containerProps: {
                     style: Styles.profileImage,
+                  },
+                  imageProps: {
+                    source: {
+                      cache: 'reload',
+                    },
                   },
                 }}
                 onConfirm={(file) => mutation({
