@@ -43,6 +43,10 @@ export interface getChannelProfile_getChannelProfile {
   id: string;
   name: string | null;
   description: string | null;
+  websiteUrl: string | null;
+  twitterUrl: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
   coverImage: getChannelProfile_getChannelProfile_coverImage | null;
   profileImage: getChannelProfile_getChannelProfile_profileImage | null;
   following: boolean | null;

@@ -94,4 +94,11 @@ export default StyleSheet.create({
     padding: spacing.small,
     width: '60%',
   },
+  socialLinks: {
+    flexDirection: 'row',
+    marginTop: spacing.small,
+  },
+  socialIcon: {
+    marginRight: spacing.small,
+  },
 });

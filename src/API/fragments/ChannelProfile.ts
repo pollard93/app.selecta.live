@@ -17,6 +17,10 @@ export const CHANNEL_PROFILE_FRAGMENT = gql`
     id
     name
     description
+    websiteUrl
+    twitterUrl
+    facebookUrl
+    instagramUrl
     coverImage {
       ...FILE_FRAGMENT
     }

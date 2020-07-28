@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Jul 14 2020 15:01:44 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 28 2020 09:37:48 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -17,6 +17,10 @@ type Channel {
   id: ID!
   name: String!
   description: String!
+  websiteUrl: String
+  twitterUrl: String
+  facebookUrl: String
+  instagramUrl: String
   coverImage: File
   profileImage: File
   verified: Boolean!
@@ -48,6 +52,14 @@ enum ChannelOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  websiteUrl_ASC
+  websiteUrl_DESC
+  twitterUrl_ASC
+  twitterUrl_DESC
+  facebookUrl_ASC
+  facebookUrl_DESC
+  instagramUrl_ASC
+  instagramUrl_DESC
   verified_ASC
   verified_DESC
   credit_ASC
@@ -70,6 +82,10 @@ type ChannelProfile {
   id: ID!
   name: String
   description: String
+  websiteUrl: String
+  twitterUrl: String
+  facebookUrl: String
+  instagramUrl: String
   coverImage: File
   profileImage: File
   following: Boolean
@@ -130,6 +146,10 @@ type ChannelSelf {
   id: ID!
   name: String
   description: String
+  websiteUrl: String
+  twitterUrl: String
+  facebookUrl: String
+  instagramUrl: String
   coverImage: File
   profileImage: File
   verified: Boolean
@@ -148,6 +168,18 @@ type ChannelSelf {
 type ChannelSelfsPayLoad {
   channels: [ChannelSelf!]!
   count: Int!
+}
+
+input ChannelUpdateInput {
+  name: String
+  description: String
+  profileImage: Upload
+  coverImage: Upload
+  tags: [String!]
+  websiteUrl: String
+  twitterUrl: String
+  facebookUrl: String
+  instagramUrl: String
 }
 
 input ChannelWhereInput {
@@ -193,6 +225,62 @@ input ChannelWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  websiteUrl: String
+  websiteUrl_not: String
+  websiteUrl_in: [String!]
+  websiteUrl_not_in: [String!]
+  websiteUrl_lt: String
+  websiteUrl_lte: String
+  websiteUrl_gt: String
+  websiteUrl_gte: String
+  websiteUrl_contains: String
+  websiteUrl_not_contains: String
+  websiteUrl_starts_with: String
+  websiteUrl_not_starts_with: String
+  websiteUrl_ends_with: String
+  websiteUrl_not_ends_with: String
+  twitterUrl: String
+  twitterUrl_not: String
+  twitterUrl_in: [String!]
+  twitterUrl_not_in: [String!]
+  twitterUrl_lt: String
+  twitterUrl_lte: String
+  twitterUrl_gt: String
+  twitterUrl_gte: String
+  twitterUrl_contains: String
+  twitterUrl_not_contains: String
+  twitterUrl_starts_with: String
+  twitterUrl_not_starts_with: String
+  twitterUrl_ends_with: String
+  twitterUrl_not_ends_with: String
+  facebookUrl: String
+  facebookUrl_not: String
+  facebookUrl_in: [String!]
+  facebookUrl_not_in: [String!]
+  facebookUrl_lt: String
+  facebookUrl_lte: String
+  facebookUrl_gt: String
+  facebookUrl_gte: String
+  facebookUrl_contains: String
+  facebookUrl_not_contains: String
+  facebookUrl_starts_with: String
+  facebookUrl_not_starts_with: String
+  facebookUrl_ends_with: String
+  facebookUrl_not_ends_with: String
+  instagramUrl: String
+  instagramUrl_not: String
+  instagramUrl_in: [String!]
+  instagramUrl_not_in: [String!]
+  instagramUrl_lt: String
+  instagramUrl_lte: String
+  instagramUrl_gt: String
+  instagramUrl_gte: String
+  instagramUrl_contains: String
+  instagramUrl_not_contains: String
+  instagramUrl_starts_with: String
+  instagramUrl_not_starts_with: String
+  instagramUrl_ends_with: String
+  instagramUrl_not_ends_with: String
   coverImage: FileWhereInput
   profileImage: FileWhereInput
   verified: Boolean
@@ -479,7 +567,7 @@ type Mutation {
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
   requestChannelLogin(id: String!): Boolean
-  updateChannel(name: String, description: String, profileImage: Upload, coverImage: Upload, tags: [String!]): ChannelSelf
+  updateChannel(data: ChannelUpdateInput): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
   deleteNotification(id: String!): Boolean
@@ -637,6 +725,8 @@ type Query {
   getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
+  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
+  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -657,16 +747,24 @@ type Query {
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
 }
 
-type RecommendedChannelsPayload {
-  channels: [ChannelProfile!]!
-  count: Int!
-  nextPage: Int!
+type RelatedChannel {
+  id: String!
+  related: ChannelProfile
 }
 
-type RecommendedStreamsPayload {
-  streams: [StreamProfile!]!
+type RelatedChannelsPayload {
   count: Int!
-  nextPage: Int!
+  channels: [RelatedChannel!]!
+}
+
+type RelatedStream {
+  id: String!
+  related: StreamProfile
+}
+
+type RelatedStreamsPayload {
+  count: Int!
+  streams: [RelatedStream!]!
 }
 
 type RequestedChannel {
