@@ -164,8 +164,8 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
         ]}
       >
         <AsyncImage
-          splashUrl={props.data.coverImage.url.splash}
-          fullUrl={props.data.coverImage.url.full}
+          splashUrl={props.data.coverImage?.url.splash}
+          fullUrl={props.data.coverImage?.url.full}
           containerProps={{
             style: Styles.coverImage,
           }}
@@ -223,8 +223,8 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
               >
                 <View style={Styles.profileImageInner}>
                   <AsyncImage
-                    splashUrl={props.data.profileImage.url.splash}
-                    fullUrl={props.data.profileImage.url.full}
+                    splashUrl={props.data.profileImage?.url.splash}
+                    fullUrl={props.data.profileImage?.url.full}
                     containerProps={{
                       style: Styles.profileImage,
                     }}

@@ -10,16 +10,30 @@ storiesOf('UpdateChannel', module)
   .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .add('UpdateChannel', () => {
     const TestComponent = () => {
-      const queryResult = useGetChannelSelfQuery({
-        variables: {
-          id: 'test',
-        },
-      });
+      const queryResult = useGetChannelSelfQuery();
       if (queryResult.loading) return null;
 
       return (
         <UpdateChannel
           data={queryResult.data.getChannelSelf}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('UpdateChannel - empty data', () => {
+    const TestComponent = () => {
+      const queryResult = useGetChannelSelfQuery();
+      if (queryResult.loading) return null;
+
+      return (
+        <UpdateChannel
+          data={{
+            ...queryResult.data.getChannelSelf,
+            coverImage: null,
+            profileImage: null,
+          }}
         />
       );
     };
