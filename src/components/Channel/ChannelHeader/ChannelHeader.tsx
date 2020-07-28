@@ -13,6 +13,8 @@ import { ScreenProps } from '../../../screens/utils/interfaces';
 import ChannelHeaderSkeleton from './ChannelHeaderSkeleton';
 import { CHANNEL_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
+import FadeInView from '../../UI/FadeInView/FadeInView';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 export interface ChannelHeaderProps extends ScreenProps {
   queryResult: QueryResult<any>;
@@ -262,11 +264,15 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
         </View>
       </Animated.View>
 
-      {headerLayout.height !== 0 && props.children({
-        coverImageHeadingDefaultHeight,
-        headerLayout,
-        scrollY,
-      })}
+      {headerLayout.height !== 0 && (
+        <FadeInView style={GlobalStyles.PageFill}>
+          {props.children({
+            coverImageHeadingDefaultHeight,
+            headerLayout,
+            scrollY,
+          })}
+        </FadeInView>
+      )}
     </View>
   );
 };

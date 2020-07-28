@@ -26,13 +26,11 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
    * Gets channel tokens
    */
   const [loginChannelMutation] = useLoginChannelWithTokenMutation({
-    onCompleted: ({ loginChannelWithToken }) => {
+    onCompleted: () => {
       /**
        * Psuh ChannelSelfScreen
        */
-      pushScreen(STACK.TAB_PRODUCER, ChannelSelfScreen, {
-        id: loginChannelWithToken.channel.id,
-      });
+      pushScreen(STACK.TAB_PRODUCER, ChannelSelfScreen, {});
     },
     onError: (e) => {
       toast.push({
