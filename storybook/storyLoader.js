@@ -5,6 +5,7 @@
 
 function loadStories() {
 	require('../src/components/Channel/ChannelFunds/ChannelFunds.stories');
+	require('../src/components/Channel/ChannelHeader/ChannelHeader.stories');
 	require('../src/components/Channel/ChannelLogin/ChannelLogin.stories');
 	require('../src/components/Channel/ChannelProfile/ChannelProfile.stories');
 	require('../src/components/Channel/ChannelSelf/ChannelSelf.stories');
@@ -75,6 +76,7 @@ function loadStories() {
 
 const stories = [
 	'../src/components/Channel/ChannelFunds/ChannelFunds.stories',
+	'../src/components/Channel/ChannelHeader/ChannelHeader.stories',
 	'../src/components/Channel/ChannelLogin/ChannelLogin.stories',
 	'../src/components/Channel/ChannelProfile/ChannelProfile.stories',
 	'../src/components/Channel/ChannelSelf/ChannelSelf.stories',

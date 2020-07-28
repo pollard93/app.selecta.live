@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import ChannelSelf from './ChannelSelf';
-import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 
-storiesOf('ChannelSelf', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
+storiesOf('Channel/ChannelSelf', module)
   .add('ChannelSelf', () => (
     <ChannelSelf />
   ));

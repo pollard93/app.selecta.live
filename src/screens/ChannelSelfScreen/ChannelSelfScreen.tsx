@@ -1,48 +1,12 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
-import { useApolloClient } from 'react-apollo';
-import { goHome } from '../utils';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
-import { removeChannelAccessToken } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
-import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
-import { useGetChannelSelfQuery } from '../../API/query/getChannelSelf/getChannelSelf';
-import ChannelSelf from '../../components/Channel/ChannelSelf/ChannelSelf';
-import { useGetSelf } from '../../API/query/getSelf/getSelf';
+import React, { FC } from 'react';
+import { Options } from 'react-native-navigation';
+import ChannelSelf, { ChannelSelfProps } from '../../components/Channel/ChannelSelf/ChannelSelf';
 
-const ChannelSelfScreen = () => {
-  const client = useApolloClient();
-  const self = useGetSelf();
-  const { data: { getChannelSelf } } = useGetChannelSelfQuery(); // GetChannelSelfQuery request is always requested and cached, so no need to wait for loading
+interface ChannelSelfScreenProps extends ChannelSelfProps {}
 
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
-  return (
-    <View style={[
-      GlobalStyles.PageFill,
-      // eslint-disable-next-line react-native/no-inline-styles
-      { alignItems: 'center', justifyContent: 'center' },
-    ]}>
-      <Text>You are logged in to channel {getChannelSelf.name}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          // Logout
-          client.mutate<removeChannelAccessToken>({
-            mutation: REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION,
-          });
-
-          goHome({ isProducer: self.isProducer });
-        }}
-      >
-        <Text>Logout of channel</Text>
-      </TouchableOpacity>
-
-      <ChannelSelf />
-    </View>
-  );
-};
+const ChannelSelfScreen: FC<ChannelSelfScreenProps> = (props) => (
+  <ChannelSelf {...props} />
+);
 
 export default ChannelSelfScreen;
 
@@ -50,6 +14,30 @@ export default ChannelSelfScreen;
  * Assign screen name as prototype so it's accessible by importing default
  */
 ChannelSelfScreen.prototype.ScreenName = 'ChannelSelfScreen';
+
+/**
+ * Set Screen options or remove to use default
+ */
+(ChannelSelfScreen.prototype.options as Options) = {
+  topBar: {
+    visible: false,
+  },
+  // statusBar: {
+  //   style: 'dark',
+  //   backgroundColor: 'white',
+  // },
+  bottomTabs: {
+    visible: false,
+    animate: true,
+  },
+};
+
+/**
+ * Set screen color options (default white)
+ */
+ChannelSelfScreen.prototype.fullScreen = true;
+// ChannelSelfScreen.prototype.statusBarColor = color.mono.dark;
+// ChannelSelfScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default

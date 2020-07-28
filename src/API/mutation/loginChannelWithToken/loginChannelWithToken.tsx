@@ -6,6 +6,9 @@ export const LOGIN_CHANNEL_WITH_TOKEN_MUTATION = gql`
   mutation loginChannelWithToken($id: String!){
     loginChannelWithToken(id: $id){
       token
+      channel {
+        id
+      }
     }
   }
 `;

@@ -213,6 +213,7 @@
           "loginChannelWithCode_loginChannelWithCode",
           "loginChannelWithCode",
           "loginChannelWithCodeVariables",
+          "loginChannelWithToken_loginChannelWithToken_channel",
           "loginChannelWithToken_loginChannelWithToken",
           "loginChannelWithToken",
           "loginChannelWithTokenVariables",
