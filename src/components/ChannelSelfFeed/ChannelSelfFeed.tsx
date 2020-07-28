@@ -4,22 +4,19 @@ import { FlatListProps, SafeAreaView } from 'react-native';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import { ScreenProps } from '../../screens/utils/interfaces';
 import Feed from '../UI/Feed/Feed';
-import { useGetChannelFeedQuery } from '../../API/query/getChannelFeed/getChannelFeed';
+import { useGetChannelSelfFeedQuery } from '../../API/query/getChannelSelfFeed/getChannelSelfFeed';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import FadeInView from '../UI/FadeInView/FadeInView';
 
-export interface ChannelFeedProps extends ScreenProps {
-  id: string;
+export interface ChannelSelfFeedProps extends ScreenProps {
   flatListProps: Partial<FlatListProps<any>>;
 }
 
-const ChannelFeed: FC<ChannelFeedProps> = (props) => {
-  const queryResult = useGetChannelFeedQuery({
-    variables: {
-      id: props.id,
-    },
+const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
+  const queryResult = useGetChannelSelfFeedQuery({
     fetchPolicy: 'network-only',
   });
+  console.log('queryResult', queryResult);
 
   if (queryResult.loading) {
     return null;
@@ -33,7 +30,7 @@ const ChannelFeed: FC<ChannelFeedProps> = (props) => {
           : (
             <FadeInView>
               <Feed
-                data={queryResult.data.getChannelFeed}
+                data={queryResult.data.getChannelSelfFeed}
                 refetch={queryResult.refetch}
                 flatListProps={props.flatListProps}
               />
@@ -44,4 +41,4 @@ const ChannelFeed: FC<ChannelFeedProps> = (props) => {
   );
 };
 
-export default ChannelFeed;
+export default ChannelSelfFeed;

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-import { Animated } from 'react-native';
+import { Animated, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
@@ -10,6 +10,7 @@ import ChannelHeader from '../ChannelHeader/ChannelHeader';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Styles from './ChannelSelf.style';
+import ChannelSelfFeed from '../../ChannelSelfFeed/ChannelSelfFeed';
 
 export interface ChannelSelfViewProps extends ScreenProps {
   queryResult: QueryResult<getChannelSelf>;
@@ -46,22 +47,49 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
           <TouchableOpacity
             onPress={() => {
               /**
-               * TODO - Push EditChannelScreen
+               * TODO - Push ManageStreamsScreen
                */
             }}
-            style={Styles.editButton}
           >
-            <Icon
-              name={ICON.COG}
-              size="small"
-              animated
-            />
+            <Animated.View
+              style={[
+                Styles.editButton,
+                { backgroundColor: darkMode ? color.mono.light : titleColor },
+              ]}
+            >
+              <Icon
+                name={ICON.COG}
+                size="small"
+                style={{ tintColor: darkMode ? color.mono.dark : followChannelColor }}
+                animated
+              />
+            </Animated.View>
           </TouchableOpacity>
         </>
       )}
     >
-      {() => (
-        <Body>Channel Self</Body>
+      {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (
+        <ChannelSelfFeed
+          flatListProps={{
+            bounces: true,
+            contentContainerStyle: {
+              paddingTop: coverImageHeadingDefaultHeight.current + headerLayout.height,
+            },
+            ListHeaderComponent: () => (
+              <View style={Styles.description}>
+                <Body>{props.queryResult.data?.getChannelSelf.description}</Body>
+              </View>
+            ),
+            onScroll: Animated.event(
+              [
+                {
+                  nativeEvent: { contentOffset: { y: scrollY.current } },
+                },
+              ],
+            ),
+            scrollEventThrottle: 16,
+          }}
+        />
       )}
     </ChannelHeader>
   );

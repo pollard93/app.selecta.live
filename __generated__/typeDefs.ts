@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Jul 28 2020 09:43:06 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 28 2020 10:51:03 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -629,8 +629,8 @@ type ProductConfig {
 
 type Query {
   canViewStream(id: String!): Boolean!
-  getChannelFeed(id: String!): FeedPayload
   getChannelProfile(id: String!): ChannelProfile!
+  getChannelProfileFeed(id: String!): FeedPayload
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -649,6 +649,7 @@ type Query {
   verifyUser: Boolean
   channelNameExists(name: String!): Boolean!
   getChannelSelf: ChannelSelf!
+  getChannelSelfFeed: FeedPayload
   getChannelSelfs(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelSelfsPayLoad!
   getRequestedChannels(first: Int, after: String): RequestedChannelsPayLoad
   getStreamSelf(id: String!): StreamSelf!

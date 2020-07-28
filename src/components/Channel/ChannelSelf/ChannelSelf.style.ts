@@ -20,4 +20,7 @@ export default StyleSheet.create({
     marginLeft: spacing.xsmall,
     width: scalePx(24),
   },
+  description: {
+    paddingHorizontal: spacing.small,
+  },
 });

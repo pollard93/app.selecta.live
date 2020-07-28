@@ -3,7 +3,7 @@ import { View, Animated } from 'react-native';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
 import Styles from './ChannelProfile.style';
-import ChannelFeed from '../../ChannelFeed/ChannelFeed';
+import ChannelProfileFeed from '../../ChannelProfileFeed/ChannelProfileFeed';
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import { getChannelProfile } from '../../../API/query/getChannelProfile/__generated__/getChannelProfile';
@@ -49,7 +49,7 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
       )}
     >
       {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (
-        <ChannelFeed
+        <ChannelProfileFeed
           id={props.id}
           flatListProps={{
             bounces: true,

@@ -102,8 +102,8 @@ const link = split(
  */
 const generalTokenEndpoints = [
   'followChannel',
-  'getChannelFeed',
   'getChannelProfile',
+  'getChannelProfileFeed',
   'getChannelProfiles',
   'getChannelSelfs',
   'getChannelStreams',
