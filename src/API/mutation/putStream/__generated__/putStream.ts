@@ -22,12 +22,18 @@ export interface putStream_putStream_image {
   url: putStream_putStream_image_url | null;
 }
 
+export interface putStream_putStream_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface putStream_putStream {
   __typename: "StreamSelf";
   id: string;
   name: string | null;
   info: string | null;
   image: putStream_putStream_image | null;
+  tags: (putStream_putStream_tags | null)[] | null;
   timeFrom: any | null;
   timeTo: any | null;
   cost: number | null;

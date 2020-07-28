@@ -22,12 +22,18 @@ export interface updateStream_updateStream_image {
   url: updateStream_updateStream_image_url | null;
 }
 
+export interface updateStream_updateStream_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface updateStream_updateStream {
   __typename: "StreamSelf";
   id: string;
   name: string | null;
   info: string | null;
   image: updateStream_updateStream_image | null;
+  tags: (updateStream_updateStream_tags | null)[] | null;
   timeFrom: any | null;
   timeTo: any | null;
   cost: number | null;

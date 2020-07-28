@@ -19,16 +19,24 @@ export enum ChannelOrderByInput {
   credit_DESC = "credit_DESC",
   description_ASC = "description_ASC",
   description_DESC = "description_DESC",
+  facebookUrl_ASC = "facebookUrl_ASC",
+  facebookUrl_DESC = "facebookUrl_DESC",
   freeStreamAllowance_ASC = "freeStreamAllowance_ASC",
   freeStreamAllowance_DESC = "freeStreamAllowance_DESC",
   id_ASC = "id_ASC",
   id_DESC = "id_DESC",
+  instagramUrl_ASC = "instagramUrl_ASC",
+  instagramUrl_DESC = "instagramUrl_DESC",
   name_ASC = "name_ASC",
   name_DESC = "name_DESC",
+  twitterUrl_ASC = "twitterUrl_ASC",
+  twitterUrl_DESC = "twitterUrl_DESC",
   updatedAt_ASC = "updatedAt_ASC",
   updatedAt_DESC = "updatedAt_DESC",
   verified_ASC = "verified_ASC",
   verified_DESC = "verified_DESC",
+  websiteUrl_ASC = "websiteUrl_ASC",
+  websiteUrl_DESC = "websiteUrl_DESC",
 }
 
 export enum CreditTransactionOrderByInput {
@@ -133,6 +141,18 @@ export interface ChannelRelatedChannelsWhereInput {
   NOT?: ChannelRelatedChannelsWhereInput[] | null;
 }
 
+export interface ChannelUpdateInput {
+  name?: string | null;
+  description?: string | null;
+  profileImage?: any | null;
+  coverImage?: any | null;
+  tags?: string[] | null;
+  websiteUrl?: string | null;
+  twitterUrl?: string | null;
+  facebookUrl?: string | null;
+  instagramUrl?: string | null;
+}
+
 export interface ChannelWhereInput {
   id?: string | null;
   id_not?: string | null;
@@ -176,6 +196,62 @@ export interface ChannelWhereInput {
   description_not_starts_with?: string | null;
   description_ends_with?: string | null;
   description_not_ends_with?: string | null;
+  websiteUrl?: string | null;
+  websiteUrl_not?: string | null;
+  websiteUrl_in?: string[] | null;
+  websiteUrl_not_in?: string[] | null;
+  websiteUrl_lt?: string | null;
+  websiteUrl_lte?: string | null;
+  websiteUrl_gt?: string | null;
+  websiteUrl_gte?: string | null;
+  websiteUrl_contains?: string | null;
+  websiteUrl_not_contains?: string | null;
+  websiteUrl_starts_with?: string | null;
+  websiteUrl_not_starts_with?: string | null;
+  websiteUrl_ends_with?: string | null;
+  websiteUrl_not_ends_with?: string | null;
+  twitterUrl?: string | null;
+  twitterUrl_not?: string | null;
+  twitterUrl_in?: string[] | null;
+  twitterUrl_not_in?: string[] | null;
+  twitterUrl_lt?: string | null;
+  twitterUrl_lte?: string | null;
+  twitterUrl_gt?: string | null;
+  twitterUrl_gte?: string | null;
+  twitterUrl_contains?: string | null;
+  twitterUrl_not_contains?: string | null;
+  twitterUrl_starts_with?: string | null;
+  twitterUrl_not_starts_with?: string | null;
+  twitterUrl_ends_with?: string | null;
+  twitterUrl_not_ends_with?: string | null;
+  facebookUrl?: string | null;
+  facebookUrl_not?: string | null;
+  facebookUrl_in?: string[] | null;
+  facebookUrl_not_in?: string[] | null;
+  facebookUrl_lt?: string | null;
+  facebookUrl_lte?: string | null;
+  facebookUrl_gt?: string | null;
+  facebookUrl_gte?: string | null;
+  facebookUrl_contains?: string | null;
+  facebookUrl_not_contains?: string | null;
+  facebookUrl_starts_with?: string | null;
+  facebookUrl_not_starts_with?: string | null;
+  facebookUrl_ends_with?: string | null;
+  facebookUrl_not_ends_with?: string | null;
+  instagramUrl?: string | null;
+  instagramUrl_not?: string | null;
+  instagramUrl_in?: string[] | null;
+  instagramUrl_not_in?: string[] | null;
+  instagramUrl_lt?: string | null;
+  instagramUrl_lte?: string | null;
+  instagramUrl_gt?: string | null;
+  instagramUrl_gte?: string | null;
+  instagramUrl_contains?: string | null;
+  instagramUrl_not_contains?: string | null;
+  instagramUrl_starts_with?: string | null;
+  instagramUrl_not_starts_with?: string | null;
+  instagramUrl_ends_with?: string | null;
+  instagramUrl_not_ends_with?: string | null;
   coverImage?: FileWhereInput | null;
   profileImage?: FileWhereInput | null;
   verified?: boolean | null;
