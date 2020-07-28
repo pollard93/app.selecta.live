@@ -21,6 +21,7 @@ import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProf
 import ChannelProfileScreen from '../../../screens/ChannelProfileScreen/ChannelProfileScreen';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import { CHANNEL_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT_SHORT';
+import Body from '../Typography/components/Body';
 
 const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
@@ -103,7 +104,73 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
 
 
             /**
-             * Handle initial load and error
+             * Handle empty results
+             */
+            if (args.queryResult.data && args.maxCount === 0) {
+              switch (props.item.type) {
+                case FEED_TYPE.VERTICAL:
+                  return (
+                    <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                      {(() => {
+                        switch (props.item.accessor.split('.').pop()) {
+                          case 'streams':
+                            return (
+                              <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                            );
+
+                          case 'channels':
+                            return (
+                              <>
+                                <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                                <StreamCardSkeleton />
+                              </>
+                            );
+
+                          default:
+                            return null;
+                        }
+                      })()}
+                    </View>
+                  );
+
+                case FEED_TYPE.HORIZONTAL:
+                case FEED_TYPE.HORIZONTAL_SMALL:
+                  return (
+                    <View style={Styles.loadingHorizontal}>
+                      {(() => {
+                        switch (props.item.accessor.split('.').pop()) {
+                          case 'streams':
+                            return (
+                              <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                                <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                              </View>
+                            );
+
+                          case 'channels':
+                            return (
+                              <View style={Styles.loadingHorizontal}>
+                                <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                                  <ChannelCardSkeleton />
+                                </View>
+                                <Body style={Styles.emptyMessage}>{`${props.item.heading} will appear here`}</Body>
+                              </View>
+                            );
+
+                          default:
+                            return null;
+                        }
+                      })()}
+                    </View>
+                  );
+
+                default:
+                  return null;
+              }
+            }
+
+
+            /**
+             * Handle load and error
              */
             switch (props.item.type) {
               case FEED_TYPE.VERTICAL:
@@ -157,7 +224,6 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                                   return null;
                               }
                             })()}
-
                           </View>
                           <View style={Styles.horizontalSeparator} />
                         </View>

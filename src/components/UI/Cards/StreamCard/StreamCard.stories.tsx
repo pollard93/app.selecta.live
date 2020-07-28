@@ -101,4 +101,5 @@ storiesOf('Cards/StreamCard', module)
 
     return <TestComponent />;
   })
-  .add('StreamCardSkeleton', () => <StreamCardSkeleton />);
+  .add('StreamCardSkeleton', () => <StreamCardSkeleton />)
+  .add('StreamCardSkeleton - empty', () => <StreamCardSkeleton emptyMessage="Is Empty Result" />);
