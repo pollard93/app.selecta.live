@@ -8,4 +8,12 @@ export default StyleSheet.create({
   headerTopContentIcon: {
     marginRight: spacing.xsmall,
   },
+  socialLinks: {
+    flexDirection: 'row',
+    marginTop: spacing.small,
+    paddingHorizontal: spacing.small,
+  },
+  socialIcon: {
+    marginRight: spacing.small,
+  },
 });
