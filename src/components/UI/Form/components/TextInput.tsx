@@ -1,12 +1,12 @@
 import React, { FC, Ref, useMemo } from 'react';
-import { TextInput as TextInputRN, TextInputProps, View, StyleProp, ViewStyle } from 'react-native';
+import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
 import Styles from '../Form.style';
 import color from '../../../../styles/definitions/color';
 import Small from '../../Typography/components/Small';
 import { parseCamelCase } from '../../../../utils/functions';
 
-interface TextInputPropsExt extends TextInputProps {
+export interface TextInputProps extends TextInputPropsRN {
   name: string;
   light?: boolean; // Light background
   setRef?: Ref<any>;
@@ -14,13 +14,14 @@ interface TextInputPropsExt extends TextInputProps {
   wrapStyle?: StyleProp<ViewStyle>;
 }
 
-const TextInput: FC<TextInputPropsExt> = (props) => {
+const TextInput: FC<TextInputProps> = (props) => {
   /**
    * Get error message from props.errors
    * Checks react-hook-forms error object for an error using props.name
    * Specific error messages can be configured in the register() validation options
    */
   const errorMessage = useMemo(() => {
+    console.log('errorMessage -> props.errors', props.errors);
     if (!props.errors || !props.errors[props.name]) return null;
 
     // If message is defined then return it

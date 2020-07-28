@@ -105,15 +105,19 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
      * execute props.onConfirm
      */
     if (image) {
-      props.onConfirm({
-        ...selectedAsset,
-        image: {
-          ...selectedAsset.image,
-          ...image,
-        },
-      }).finally(() => {
+      try {
+        await props.onConfirm({
+          ...selectedAsset,
+          image: {
+            ...selectedAsset.image,
+            ...image,
+          },
+        });
+        setSelectedAsset(null);
         setLoading(false);
-      });
+      } catch {
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }

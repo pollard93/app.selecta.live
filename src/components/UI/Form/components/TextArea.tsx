@@ -1,13 +1,11 @@
-import React from 'react';
-import { TextInput, TextInputProps } from 'react-native';
+import React, { FC } from 'react';
 import Styles from '../Form.style';
-import color from '../../../../styles/definitions/color';
+import TextInput, { TextInputProps } from './TextInput';
 
-const TextArea = (props: TextInputProps) => (
+const TextArea: FC<TextInputProps> = (props) => (
   <TextInput
-    placeholderTextColor={color.mono.pale.dark}
     {...props}
-    style={[Styles.TextInput, Styles.TextArea, props.style]}
+    style={[Styles.TextArea, props.style]}
     multiline
   />
 );

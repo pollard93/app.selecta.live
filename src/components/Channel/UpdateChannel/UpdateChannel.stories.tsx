@@ -33,6 +33,12 @@ storiesOf('UpdateChannel', module)
             ...queryResult.data.getChannelSelf,
             coverImage: null,
             profileImage: null,
+            name: null,
+            description: null,
+            websiteUrl: null,
+            twitterUrl: null,
+            facebookUrl: null,
+            instagramUrl: null,
           }}
         />
       );

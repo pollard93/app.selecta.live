@@ -55,6 +55,10 @@ export interface getChannelSelf_getChannelSelf {
   creditWithdrawalValue: number | null;
   creditWithdrawalMinimum: number | null;
   freeStreamAllowance: number | null;
+  websiteUrl: string | null;
+  twitterUrl: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
   createdAt: any | null;
 }
 
