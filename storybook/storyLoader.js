@@ -39,6 +39,7 @@ function loadStories() {
 	require('../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories');
 	require('../src/components/Stream/StreamProfile/components/StreamPurchase/StreamPurchase.stories');
 	require('../src/components/Stream/StreamSelf/StreamSelf.stories');
+	require('../src/components/Stream/StreamSelfListItem/StreamSelfListItem.stories');
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
 	require('../src/components/Stream/StreamUrl/StreamUrl.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
@@ -111,6 +112,7 @@ const stories = [
 	'../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories',
 	'../src/components/Stream/StreamProfile/components/StreamPurchase/StreamPurchase.stories',
 	'../src/components/Stream/StreamSelf/StreamSelf.stories',
+	'../src/components/Stream/StreamSelfListItem/StreamSelfListItem.stories',
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',
 	'../src/components/Stream/StreamUrl/StreamUrl.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',

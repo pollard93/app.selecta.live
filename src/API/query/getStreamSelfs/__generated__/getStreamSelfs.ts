@@ -24,12 +24,18 @@ export interface getStreamSelfs_getStreamSelfs_streams_image {
   url: getStreamSelfs_getStreamSelfs_streams_image_url | null;
 }
 
+export interface getStreamSelfs_getStreamSelfs_streams_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface getStreamSelfs_getStreamSelfs_streams {
   __typename: "StreamSelf";
   id: string;
   name: string | null;
   info: string | null;
   image: getStreamSelfs_getStreamSelfs_streams_image | null;
+  tags: (getStreamSelfs_getStreamSelfs_streams_tags | null)[] | null;
   timeFrom: any | null;
   timeTo: any | null;
   cost: number | null;

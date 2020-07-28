@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ScreenProps } from '../utils/interfaces';
 import { useGetStreamProfileQuery } from '../../API/query/getStreamProfile/getStreamProfile';
 import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
@@ -9,7 +9,7 @@ interface StreamVideoScreenPropsE extends ScreenProps {
 }
 export interface StreamVideoScreenProps extends StreamVideoScreenPropsE {}
 
-const StreamVideoScreen = (props: StreamVideoScreenProps) => {
+const StreamVideoScreen: FC<StreamVideoScreenProps> = (props) => {
   const queryResult = useGetStreamProfileQuery({
     variables: {
       id: props.id,

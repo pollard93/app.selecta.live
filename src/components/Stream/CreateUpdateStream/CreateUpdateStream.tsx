@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, TextInput, Button, Switch, View, Text } from 'react-native';
+import { ScrollView, Switch, View, Text } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
@@ -12,6 +12,12 @@ import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREA
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
+import Styles from './CreateUpdateStream.style';
+import H2 from '../../UI/Typography/components/H2';
+import TextInput from '../../UI/Form/components/TextInput';
+import TextArea from '../../UI/Form/components/TextArea';
+import Button from '../../UI/Button/Button';
+import Body from '../../UI/Typography/components/Body';
 
 type FormData = {
   name: string;
@@ -241,74 +247,6 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
 
   return (
     <ScrollView style={GlobalStyles.PageFill}>
-      <TextInput
-        onChangeText={(text) => setValue('name', text, true)}
-        placeholder="Name"
-        returnKeyType="next"
-        defaultValue={defaultValues.name}
-      />
-
-      <TextInput
-        onChangeText={(text) => setValue('info', text, true)}
-        placeholder="Info"
-        returnKeyType="next"
-        defaultValue={defaultValues.info}
-      />
-
-      <DateTimePickerInput
-        defaultValue={defaultValues.timeFrom}
-        onChange={(value) => {
-          // Set timeFrom
-          setValue('timeFrom', value, true);
-
-          //
-          // also set timeTo
-          /**
-           * If this value is greater than timeTo
-           * Set timeTo an hour ahead of timeFrom
-           */
-          if (new Date(value) > new Date(timeTo)) {
-            setValue('timeTo', new Date(new Date(value).getTime() + 3600000).toISOString(), true);
-          }
-        }}
-        minimumDate={new Date()}
-      />
-
-      <DateTimePickerInput
-        defaultValue={defaultValues.timeTo}
-        value={timeTo}
-        onChange={(value) => setValue('timeTo', value, true)}
-        minimumDate={new Date(timeFrom)}
-      />
-
-      {props.channel.freeStreamAllowance > 0 && (
-        <View>
-          <Text>Free Stream?</Text>
-          <Switch
-            onValueChange={(value) => {
-              setValue('isFree', value);
-              setValue('cost', value ? '0' : defaultValues.cost, true);
-            }}
-            value={isFree}
-          />
-        </View>
-      )}
-
-      {/* eslint-disable-next-line react-native/no-inline-styles */}
-      <View style={{ display: isFree ? 'none' : 'flex' }}>
-        <TextInput
-          onChangeText={(value) => {
-            setValue('cost', value, true);
-          }}
-          placeholder="Cost"
-          returnKeyType="next"
-          keyboardType='numeric'
-          defaultValue={defaultValues.cost}
-          value={cost}
-        />
-        {errors.cost && <Text>Cost must be above or equal to {props.channel.creditMinimumStreamCost}</Text>}
-      </View>
-
       <EditableAsyncImage
         asyncImageProps={{
           /**
@@ -318,7 +256,7 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
           fullUrl: props.data?.image?.url?.full ?? 'https://images.unsplash.com/photo-1584847229598-8a12ce9a2d5a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80',
           containerProps: {
             style: {
-              width: 250,
+              flex: 1,
               height: 250,
             },
           },
@@ -341,17 +279,98 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
         )}
       </EditableAsyncImage>
 
-      <Text>Audio Only</Text>
-      <Switch
-        onValueChange={(value) => setValue('audioOnly', value, true)}
-        value={watch('audioOnly')}
-      />
+      <View style={Styles.form}>
+        <View style={Styles.section}>
+          <H2>Description</H2>
 
-      <Button
-        title="Submit"
-        onPress={handleSubmit(onSubmit)}
-        disabled={putLoading || updateLoading || !isValid || !dirty}
-      />
+          <TextInput
+            name="name"
+            onChangeText={(text) => setValue('name', text, true)}
+            placeholder="Name"
+            returnKeyType="next"
+            defaultValue={defaultValues.name}
+            style={[Styles.input, Styles.inputWrap]}
+          />
+
+          <TextArea
+            onChangeText={(text) => setValue('info', text, true)}
+            placeholder="Info"
+            returnKeyType="next"
+            defaultValue={defaultValues.info}
+            style={[Styles.infoArea, Styles.inputWrap]}
+          />
+        </View>
+
+        <View style={Styles.section}>
+          <H2>Schedule</H2>
+
+          <DateTimePickerInput
+            defaultValue={defaultValues.timeFrom}
+            onChange={(value) => {
+              setValue('timeFrom', value, true);
+
+              /**
+               * If this value is greater than timeTo
+               * Set timeTo an hour ahead of timeFrom
+               */
+              if (new Date(value) > new Date(timeTo)) {
+                setValue('timeTo', new Date(new Date(value).getTime() + 3600000).toISOString(), true);
+              }
+            }}
+            minimumDate={new Date()}
+          />
+        </View>
+
+        <View style={Styles.section}>
+          <H2>Price</H2>
+
+          {props.channel.freeStreamAllowance > 0 && (
+            <View style={[Styles.toggleInput, Styles.inputWrap]}>
+              <Body style={Styles.toggleInputLabel}>Free Stream?</Body>
+              <Switch
+                onValueChange={(value) => {
+                  setValue('isFree', value);
+                  setValue('cost', value ? '0' : defaultValues.cost, true);
+                }}
+                value={isFree}
+              />
+            </View>
+          )}
+
+          {/* eslint-disable-next-line react-native/no-inline-styles */}
+          <View style={{ display: isFree ? 'none' : 'flex' }}>
+            <TextInput
+              name="cost"
+              onChangeText={(value) => setValue('cost', value, true)}
+              placeholder="Cost"
+              returnKeyType="next"
+              keyboardType='numeric'
+              defaultValue={defaultValues.cost}
+              style={[Styles.input, Styles.inputWrap]}
+              errors={errors}
+            />
+            {/* {errors.cost && <Text>Cost must be above or equal to {props.channel.creditMinimumStreamCost}</Text>} */}
+          </View>
+        </View>
+
+        <View style={[Styles.section, Styles.settings]}>
+          <H2>Settings</H2>
+          <View style={[Styles.toggleInput, Styles.inputWrap]}>
+            <Body style={Styles.toggleInputLabel}>Audio Only</Body>
+            <Switch
+              onValueChange={(value) => setValue('audioOnly', value, true)}
+              value={watch('audioOnly')}
+            />
+          </View>
+        </View>
+
+        <Button
+          title="Submit"
+          type="SECONDARY"
+          onPress={handleSubmit(onSubmit)}
+          disabled={putLoading || updateLoading || !isValid || !dirty}
+        />
+      </View>
     </ScrollView>
   );
 };
