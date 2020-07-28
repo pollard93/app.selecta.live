@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, FC } from 'react';
-import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
+import { View, Animated, Dimensions, LayoutRectangle, TouchableOpacity, Linking } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDarkMode } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';
@@ -16,6 +16,7 @@ import { ScreenProps } from '../../../screens/utils/interfaces';
 import { getChannelProfile } from '../../../API/query/getChannelProfile/__generated__/getChannelProfile';
 import ChannelProfileSkeleton from './ChannelProfileSkeleton';
 import ShareButton from '../../UI/ShareButton/ShareButton';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 export interface ChannelProfileViewProps extends ScreenProps {
   id: string;
@@ -284,6 +285,40 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             ListHeaderComponent: () => (
               <View style={Styles.description}>
                 <Body>{props.queryResult.data.getChannelProfile.description}</Body>
+                <View style={Styles.socialLinks}>
+                  {props.queryResult.data.getChannelProfile.websiteUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.websiteUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.WEBSITE} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.twitterUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.twitterUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.TWITTER} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.facebookUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.facebookUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.FACEBOOK} size="small" />
+                    </TouchableOpacity>
+                  )}
+                  {props.queryResult.data.getChannelProfile.instagramUrl && (
+                    <TouchableOpacity
+                      onPress={() => Linking.openURL(props.queryResult.data.getChannelProfile.instagramUrl)}
+                      style={Styles.socialIcon}
+                    >
+                      <Icon name={ICON.INSTAGRAM} size="small" />
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
             ),
             onScroll: Animated.event(
