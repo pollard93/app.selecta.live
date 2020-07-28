@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
@@ -12,7 +12,6 @@ import H4 from '../../UI/Typography/components/H4';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import { pushScreen } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
-import StreamVideoScreen from '../../../screens/StreamVideoScreen/StreamVideoScreen';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 
 interface StreamListItemProps {

@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import color from '../../../../../styles/definitions/color';
 
 export default StyleSheet.create({
   wrap: {
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: color.mono.light,
     bottom: 0,
     justifyContent: 'center',
     left: 0,
