@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Jul 28 2020 10:51:03 GMT+0100 (British Summer Time)
+# timestamp: Tue Jul 28 2020 11:23:44 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -143,6 +143,7 @@ type ChannelSelf {
   creditWithdrawalMinimum: Int
   freeStreamAllowance: Int
   tags: [TagProfile]
+  createdAt: DateTime
 }
 
 type ChannelSelfsPayLoad {

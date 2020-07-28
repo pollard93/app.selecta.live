@@ -55,4 +55,5 @@ export interface CHANNEL_SELF_FRAGMENT {
   creditWithdrawalValue: number | null;
   creditWithdrawalMinimum: number | null;
   freeStreamAllowance: number | null;
+  createdAt: any | null;
 }

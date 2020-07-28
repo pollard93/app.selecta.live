@@ -55,6 +55,7 @@ export interface getChannelSelf_getChannelSelf {
   creditWithdrawalValue: number | null;
   creditWithdrawalMinimum: number | null;
   freeStreamAllowance: number | null;
+  createdAt: any | null;
 }
 
 export interface getChannelSelf {

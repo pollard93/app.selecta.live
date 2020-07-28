@@ -11,6 +11,7 @@ import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Styles from './ChannelSelf.style';
 import ChannelSelfFeed from '../../ChannelSelfFeed/ChannelSelfFeed';
+import { formatForTimezone } from '../../../utils/functions';
 
 export interface ChannelSelfViewProps extends ScreenProps {
   queryResult: QueryResult<getChannelSelf>;
@@ -76,9 +77,19 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               paddingTop: coverImageHeadingDefaultHeight.current + headerLayout.height,
             },
             ListHeaderComponent: () => (
-              <View style={Styles.description}>
-                <Body>{props.queryResult.data?.getChannelSelf.description}</Body>
-              </View>
+              <>
+                <View style={Styles.description}>
+                  <Body>{props.queryResult.data?.getChannelSelf.description}</Body>
+                </View>
+
+                <View style={Styles.description}>
+                  <Body bold>Followers: {props.queryResult.data?.getChannelSelf.followersEdge}</Body>
+                </View>
+
+                <View style={Styles.description}>
+                  <Body bold style={Styles.joined}>Joined: {formatForTimezone(props.queryResult.data?.getChannelSelf.createdAt, 'calendar')}</Body>
+                </View>
+              </>
             ),
             onScroll: Animated.event(
               [

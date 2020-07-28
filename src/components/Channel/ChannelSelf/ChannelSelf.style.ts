@@ -21,6 +21,10 @@ export default StyleSheet.create({
     width: scalePx(24),
   },
   description: {
+    marginBottom: spacing.small,
     paddingHorizontal: spacing.small,
+  },
+  joined: {
+    color: color.mono.pale.dark,
   },
 });

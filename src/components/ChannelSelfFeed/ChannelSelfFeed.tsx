@@ -16,7 +16,6 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
   const queryResult = useGetChannelSelfFeedQuery({
     fetchPolicy: 'network-only',
   });
-  console.log('queryResult', queryResult);
 
   if (queryResult.loading) {
     return null;
