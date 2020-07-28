@@ -49,7 +49,11 @@ export default StyleSheet.create({
   },
 
   loadingHorizontal: {
+    alignItems: 'center',
     flexDirection: 'row',
+  },
+  emptyMessage: {
+    marginLeft: spacing.large,
   },
 });
 

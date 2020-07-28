@@ -43,6 +43,10 @@ export interface CHANNEL_PROFILE_FRAGMENT {
   id: string;
   name: string | null;
   description: string | null;
+  websiteUrl: string | null;
+  twitterUrl: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
   coverImage: CHANNEL_PROFILE_FRAGMENT_coverImage | null;
   profileImage: CHANNEL_PROFILE_FRAGMENT_profileImage | null;
   following: boolean | null;

@@ -7,17 +7,31 @@ import Chip from '../../Chip/Chip';
 import Styles from './StreamCard.style';
 import { GlobalDynamicStyles } from '../../../../styles/stylesheets/GlobalStyles';
 
-const StreamCardSkeleton: FC = () => {
+interface StreamCardSkeletonProps {
+  emptyMessage?: string; // Message to be used as an empty result placeholder
+}
+
+const StreamCardSkeleton: FC<StreamCardSkeletonProps> = (props) => {
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   return (
     <View style={Styles.wrap}>
       <View style={[Styles.image, Styles.skeletonImageWrap, globalDynamicStyles.skeleton]}>
-        <Image
-          source={require('../../../../assets/images/logo-icon.png')}
-          style={Styles.skeletonImage}
-          resizeMode="contain"
-        />
+        {
+          props.emptyMessage
+            ? (
+              <View style={Styles.skeletonEmpty}>
+                <H4>{props.emptyMessage}</H4>
+              </View>
+            )
+            : (
+              <Image
+                source={require('../../../../assets/images/logo-icon.png')}
+                style={Styles.skeletonImage}
+                resizeMode="contain"
+              />
+            )
+        }
       </View>
       <View style={Styles.item}>
         <H4 skeleton>NAME</H4>

@@ -25,6 +25,10 @@ export enum ICON {
   CHAT = 'CHAT',
   NOTES = 'NOTES',
   CROSS = 'CROSS',
+  WEBSITE = 'WEBSITE',
+  TWITTER = 'TWITTER',
+  FACEBOOK = 'FACEBOOK',
+  INSTAGRAM = 'INSTAGRAM',
 }
 
 export interface IconProps {
@@ -97,6 +101,18 @@ const Icon = (props: IconProps) => {
 
       case ICON.CROSS:
         return require('../../../assets/images/icons/cross.png');
+
+      case ICON.WEBSITE:
+        return require('../../../assets/images/icons/website.png');
+
+      case ICON.TWITTER:
+        return require('../../../assets/images/icons/twitter.png');
+
+      case ICON.FACEBOOK:
+        return require('../../../assets/images/icons/facebook.png');
+
+      case ICON.INSTAGRAM:
+        return require('../../../assets/images/icons/instagram.png');
 
       default:
         return null;
