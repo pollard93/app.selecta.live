@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, FC, ReactNode, useEffect } from 'react';
-import { View, Animated, Dimensions, LayoutRectangle, StyleSheet } from 'react-native';
+import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDarkMode, useDynamicValue } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';

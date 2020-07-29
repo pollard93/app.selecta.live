@@ -3,7 +3,6 @@ import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
 import { CHANNEL_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT_SHORT';
 import Styles from './ChannelCard.style';
-import color from '../../../../styles/definitions/color';
 import { GlobalDynamicStyles } from '../../../../styles/stylesheets/GlobalStyles';
 
 interface ChannelCardProps {

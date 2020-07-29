@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC, useEffect } from 'react';
-import { ScrollView, View, KeyboardAvoidingView, Platform, LayoutRectangle } from 'react-native';
+import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';

@@ -21,7 +21,6 @@ const TextInput: FC<TextInputProps> = (props) => {
    * Specific error messages can be configured in the register() validation options
    */
   const errorMessage = useMemo(() => {
-    console.log('errorMessage -> props.errors', props.errors);
     if (!props.errors || !props.errors[props.name]) return null;
 
     // If message is defined then return it

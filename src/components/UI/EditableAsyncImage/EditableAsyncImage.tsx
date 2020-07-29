@@ -9,7 +9,6 @@ import Icon, { ICON } from '../Icon/Icon';
 import Styles from './EditableAsyncImage.style';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 import Toast from '../Toast/Toast';
-import { getGQLErrorMessage } from '../../../utils/functions';
 
 export interface EditableAsyncImageProps {
   asyncImageProps: AsyncImageProps;
