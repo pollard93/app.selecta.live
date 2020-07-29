@@ -15,6 +15,8 @@ import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHAN
 import TextInput from '../../UI/Form/components/TextInput';
 import TextArea from '../../UI/Form/components/TextArea';
 import Button from '../../UI/Button/Button';
+import color from '../../../styles/definitions/color';
+import ChannelHeaderStyles from '../ChannelHeader/ChannelHeader.style';
 
 
 type FormData = {
@@ -192,6 +194,11 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 cache: 'reload',
               },
             },
+            placeholderImageProps: {
+              source: require('../../../assets/images/logo-icon.png'),
+              resizeMode: 'contain',
+              style: ChannelHeaderStyles.skeletonCoverImageIcon,
+            },
           }}
           iconPosition="bottomRight"
           onConfirm={(file) => mutation({
@@ -235,6 +242,11 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                     source: {
                       cache: 'reload',
                     },
+                  },
+                  placeholderImageProps: {
+                    source: require('../../../assets/images/logo-icon.png'),
+                    resizeMode: 'contain',
+                    style: ChannelHeaderStyles.skeletonProfileImageIcon,
                   },
                 }}
                 onConfirm={(file) => mutation({

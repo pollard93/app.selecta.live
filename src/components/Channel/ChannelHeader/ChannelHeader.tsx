@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo, FC, ReactNode, useEffect } from 'react';
-import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
+import { View, Animated, Dimensions, LayoutRectangle, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { useDarkMode } from 'react-native-dynamic';
+import { useDarkMode, useDynamicValue } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';
 import { NetworkStatus } from 'apollo-client';
 import H2 from '../../UI/Typography/components/H2';
@@ -15,7 +15,7 @@ import ChannelHeaderSkeleton from './ChannelHeaderSkeleton';
 import { CHANNEL_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import FadeInView from '../../UI/FadeInView/FadeInView';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 export interface ChannelHeaderProps extends ScreenProps {
   queryResult: QueryResult<any>;
@@ -41,6 +41,7 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
   const profileImageHeight = useRef(scalePx(120));
   const { headerHeight } = useHeaderStyles();
   const darkMode = useDarkMode();
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
 
   /**
@@ -55,7 +56,7 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
       setTitleLayout({ height: 0 });
       props.queryResult.refetch();
     }
-  }, [props.data.name]);
+  }, [props.data?.name]);
 
 
   /**
@@ -182,8 +183,13 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
         <AsyncImage
           splashUrl={props.data.coverImage?.url.splash}
           fullUrl={props.data.coverImage?.url.full}
+          placeholderImageProps={{
+            source: require('../../../assets/images/logo-icon.png'),
+            resizeMode: 'contain',
+            style: Styles.skeletonCoverImageIcon,
+          }}
           containerProps={{
-            style: Styles.coverImage,
+            style: [Styles.coverImage, globalDynamicStyles.skeleton],
           }}
           imageProps={{
             resizeMode: 'cover',
@@ -241,8 +247,13 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
                   <AsyncImage
                     splashUrl={props.data.profileImage?.url.splash}
                     fullUrl={props.data.profileImage?.url.full}
+                    placeholderImageProps={{
+                      source: require('../../../assets/images/logo-icon.png'),
+                      resizeMode: 'contain',
+                      style: Styles.skeletonProfileImageIcon,
+                    }}
                     containerProps={{
-                      style: Styles.profileImage,
+                      style: [Styles.profileImage, globalDynamicStyles.skeleton],
                     }}
                   />
                 </View>
