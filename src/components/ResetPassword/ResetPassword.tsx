@@ -59,7 +59,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
         });
       } else {
         // Go home if name is set
-        goHome();
+        goHome({ isProducer: getSelf.isProducer });
       }
     },
     onError: (e) => {

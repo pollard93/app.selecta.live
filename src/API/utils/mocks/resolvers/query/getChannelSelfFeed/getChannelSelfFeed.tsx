@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable prefer-spread */
-export const getChannelFeed = (_, args) => {
+export const getChannelSelfFeed = (_, args) => {
   const items = [];
 
 
@@ -42,7 +42,7 @@ export const getChannelFeed = (_, args) => {
       `,
       accessor: 'getChannelStreams.streams',
       variables: {
-        id: args.id,
+        id: 'TEST',
         first: 2,
         orderBy: 'timeFrom_DESC',
       },
@@ -87,7 +87,7 @@ export const getChannelFeed = (_, args) => {
     `,
     accessor: 'getChannelStreams.streams',
     variables: {
-      id: args.id,
+      id: 'TEST',
       first: 5,
       orderBy: 'timeFrom_DESC',
     },
@@ -131,7 +131,7 @@ export const getChannelFeed = (_, args) => {
     `,
     accessor: 'getChannelStreams.streams',
     variables: {
-      id: args.id,
+      id: 'TEST',
       first: 5,
       orderBy: 'timeFrom_DESC',
     },

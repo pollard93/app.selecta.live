@@ -11,6 +11,7 @@ export const USER_SELF_FRAGMENT = gql`
       ...FILE_FRAGMENT
     }
     unreadNotificationCount
+    isProducer
     requiresUpdate {
       appStoreUrl
       playStoreUrl

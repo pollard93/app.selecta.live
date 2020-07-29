@@ -57,6 +57,7 @@ export interface updateChannel_updateChannel {
   creditWithdrawalValue: number | null;
   creditWithdrawalMinimum: number | null;
   freeStreamAllowance: number | null;
+  createdAt: any | null;
 }
 
 export interface updateChannel {

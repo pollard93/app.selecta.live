@@ -110,15 +110,15 @@ describe('<ChannelLogin >', () => {
     expect(goToChannelStackSpy.callCount).to.equal(1);
   });
 
-  it('should toast if loginChannel errors', async () => {
+  it('should toast if loginChannelWithCode errors', async () => {
     jest.useFakeTimers();
 
     /**
-     * Create mock client and force loginChannel to error
+     * Create mock client and force loginChannelWithCode to error
      */
     const client = mockClient({
       Mutation: () => ({
-        loginChannel: () => {
+        loginChannelWithCode: () => {
           throw new Error('');
         },
       }),

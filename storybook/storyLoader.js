@@ -5,6 +5,7 @@
 
 function loadStories() {
 	require('../src/components/Channel/ChannelFunds/ChannelFunds.stories');
+	require('../src/components/Channel/ChannelHeader/ChannelHeader.stories');
 	require('../src/components/Channel/ChannelLogin/ChannelLogin.stories');
 	require('../src/components/Channel/ChannelProfile/ChannelProfile.stories');
 	require('../src/components/Channel/ChannelSelf/ChannelSelf.stories');
@@ -13,7 +14,8 @@ function loadStories() {
 	require('../src/components/Channel/RegisterChannel/RegisterChannel.stories');
 	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
-	require('../src/components/ChannelFeed/ChannelFeed.stories');
+	require('../src/components/ChannelProfileFeed/ChannelProfileFeed.stories');
+	require('../src/components/ChannelSelfFeed/ChannelSelfFeed.stories');
 	require('../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories');
 	require('../src/components/HomeFeed/HomeFeed.stories');
 	require('../src/components/Login/Login.stories');
@@ -76,6 +78,7 @@ function loadStories() {
 
 const stories = [
 	'../src/components/Channel/ChannelFunds/ChannelFunds.stories',
+	'../src/components/Channel/ChannelHeader/ChannelHeader.stories',
 	'../src/components/Channel/ChannelLogin/ChannelLogin.stories',
 	'../src/components/Channel/ChannelProfile/ChannelProfile.stories',
 	'../src/components/Channel/ChannelSelf/ChannelSelf.stories',
@@ -84,7 +87,8 @@ const stories = [
 	'../src/components/Channel/RegisterChannel/RegisterChannel.stories',
 	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
-	'../src/components/ChannelFeed/ChannelFeed.stories',
+	'../src/components/ChannelProfileFeed/ChannelProfileFeed.stories',
+	'../src/components/ChannelSelfFeed/ChannelSelfFeed.stories',
 	'../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories',
 	'../src/components/HomeFeed/HomeFeed.stories',
 	'../src/components/Login/Login.stories',
