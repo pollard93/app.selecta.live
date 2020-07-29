@@ -36,6 +36,7 @@ export interface USER_SELF_FRAGMENT {
   credit: number | null;
   profilePicture: USER_SELF_FRAGMENT_profilePicture | null;
   unreadNotificationCount: number | null;
+  isProducer: boolean | null;
   requiresUpdate: USER_SELF_FRAGMENT_requiresUpdate | null;
   createdAt: any | null;
 }

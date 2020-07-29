@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, TextInput } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-import { useRequestChannelLoginMutation } from '../../../API/mutation/requestChannelLogin/requestChannelLogin';
-import { useLoginChannelMutation } from '../../../API/mutation/loginChannel/loginChannel';
+import { useRequestChannelLoginCodeMutation } from '../../../API/mutation/requestChannelLoginCode/requestChannelLoginCode';
+import { useLoginChannelWithCodeMutation } from '../../../API/mutation/loginChannelWithCode/loginChannelWithCode';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { useGetChannelSelfLazyQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
@@ -14,6 +14,9 @@ export interface ChannelLoginProps {
   id: string;
 }
 
+/**
+ * !UNUSED IN V1!
+ */
 const ChannelLogin = (props: ChannelLoginProps) => {
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(true);
@@ -47,12 +50,12 @@ const ChannelLogin = (props: ChannelLoginProps) => {
   /**
    * Request channel login mutation
    */
-  const [loginChannelMutation, { client }] = useLoginChannelMutation({
+  const [loginChannelMutation, { client }] = useLoginChannelWithCodeMutation({
     variables: {
       id: props.id,
       code,
     },
-    onCompleted: async ({ loginChannel: { token } }) => {
+    onCompleted: async ({ loginChannelWithCode: { token } }) => {
       // Store token
       await client.mutate<putChannelAccessToken, putChannelAccessTokenVariables>({
         mutation: PUT_CHANNEL_ACCESS_TOKEN_MUTATION,
@@ -81,7 +84,7 @@ const ChannelLogin = (props: ChannelLoginProps) => {
   /**
    * Request channel login mutation
    */
-  const [requestChannelLoginMutation] = useRequestChannelLoginMutation({
+  const [requestChannelLoginMutation] = useRequestChannelLoginCodeMutation({
     variables: {
       id: props.id,
     },

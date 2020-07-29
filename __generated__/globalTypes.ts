@@ -103,6 +103,8 @@ export enum StreamOrderByInput {
   name_DESC = "name_DESC",
   password_ASC = "password_ASC",
   password_DESC = "password_DESC",
+  published_ASC = "published_ASC",
+  published_DESC = "published_DESC",
   timeFrom_ASC = "timeFrom_ASC",
   timeFrom_DESC = "timeFrom_DESC",
   timeTo_ASC = "timeTo_ASC",
@@ -957,6 +959,14 @@ export interface StreamWhereInput {
   relatedStreams_every?: StreamRelatedStreamsWhereInput | null;
   relatedStreams_some?: StreamRelatedStreamsWhereInput | null;
   relatedStreams_none?: StreamRelatedStreamsWhereInput | null;
+  published?: any | null;
+  published_not?: any | null;
+  published_in?: any[] | null;
+  published_not_in?: any[] | null;
+  published_lt?: any | null;
+  published_lte?: any | null;
+  published_gt?: any | null;
+  published_gte?: any | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

@@ -5,11 +5,12 @@ import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
 import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
-import { ChannelScreenName } from '../ChannelScreen/ChannelScreen';
+import { ChannelSelfScreenName } from '../ChannelSelfScreen/ChannelSelfScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
 import Products from '../../components/Purchase/Products/Products';
+import { ChannelSelfsScreenName } from '../ChannelSelfsScreen/ChannelSelfsScreen';
 
 
 /**
@@ -51,39 +52,77 @@ export const goToOnboarding = () => Navigation.setRoot({
   },
 });
 
+interface GoHomeProps {
+  isProducer: boolean; // Displays Producer tab
+  currentTabIndex?: number; // Default 0
+  passProps?: any; // Pass props
+}
 
 /**
  * Resets navigation stack to home screen using STACK.HOME
  */
-export const goHome = () => Navigation.setRoot({
-  root: {
-    bottomTabs: {
-      id: STACK.HOME,
-      children: [
-        {
-          stack: {
-            id: STACK.TAB_HOME,
-            children: [
-              {
-                component: {
-                  name: HomeFeedScreenName,
+export const goHome = (props: GoHomeProps) => {
+  const currentTabIndex = props.currentTabIndex || 0;
+
+  return Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        id: STACK.HOME,
+        children: [
+          {
+            stack: {
+              id: STACK.TAB_HOME,
+              children: [
+                {
+                  component: {
+                    name: HomeFeedScreenName,
+                    passProps: currentTabIndex === 0 && props.passProps,
+                  },
                 },
-              },
-            ],
-            options: {
-              bottomTab: {
-                // TODO - update icon
-                icon: require('../../assets/images/icons/search.png'),
-                textColor: color.accent.primary,
-                iconColor: color.accent.primary,
+              ],
+              options: {
+                bottomTab: {
+                  // TODO - update icon
+                  icon: require('../../assets/images/icons/search.png'),
+                  text: 'Home',
+                  textColor: color.accent.primary,
+                  iconColor: color.accent.primary,
+                },
               },
             },
           },
-        },
-      ],
+          props.isProducer && {
+            stack: {
+              id: STACK.TAB_PRODUCER,
+              children: [
+                {
+                  component: {
+                    name: ChannelSelfsScreenName,
+                    passProps: currentTabIndex === 1 && props.passProps,
+                  },
+                },
+              ],
+              options: {
+                bottomTab: {
+                  // TODO - update icon
+                  icon: require('../../assets/images/icons/search.png'),
+                  text: 'Channels',
+                  textColor: color.accent.primary,
+                  iconColor: color.accent.primary,
+                },
+              },
+            },
+          },
+        ].filter((f) => f),
+        // options: {
+        //   bottomTabs: {
+        //     currentTabIndex,
+        //   },
+        // },
+      },
     },
-  },
-});
+  });
+};
 
 
 /**
@@ -106,6 +145,7 @@ export const goToRequireUpdateScreen = () => Navigation.setRoot({
 
 
 /**
+ * !UNUSED IN V1! (left in to allow tests to pass in ChannelLogin.test.tsx)
  * Resets navigation stack to channel screen using STACK.CHANNEL
  */
 export const goToChannelStack = () => Navigation.setRoot({
@@ -115,7 +155,7 @@ export const goToChannelStack = () => Navigation.setRoot({
       children: [
         {
           component: {
-            name: ChannelScreenName,
+            name: ChannelSelfScreenName,
           },
         },
       ],

@@ -60,7 +60,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
           setLoading(false);
         });
       } else {
-        goHome();
+        goHome({ isProducer: getSelf.isProducer });
       }
     },
     onError: (e) => {

@@ -28,10 +28,8 @@ describe('<InitScreen >', () => {
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-  let getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
   let goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
   let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-  let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
   let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
   let goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
   let setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
@@ -42,10 +40,8 @@ describe('<InitScreen >', () => {
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     getTokenSpy = sandbox.spy(AClientModule, 'getToken');
-    getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
     goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
     goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
-    goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
     goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
     goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
     setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
@@ -120,7 +116,6 @@ describe('<InitScreen >', () => {
     expect(getTokenSpy.callCount).to.equal(1);
     expect(pushNotificationInitSpy.callCount).to.equal(1);
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
-    expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
 
     // Get self should now be cached
@@ -132,28 +127,6 @@ describe('<InitScreen >', () => {
     // GetSelf result should be stored in async storage
     const gss = await store('getSelf');
     expect(gss).to.not.be.empty;
-  });
-
-  it('should goToChannelStack with stored general and channel token', async () => {
-    const client = mockClient();
-
-    // Store general and channel token
-    writeGeneralTokenToCache(client);
-    writeChannelTokenToCache(client);
-
-    const wrapper = mount(
-      <ApolloProvider client={client}>
-        <InitScreen />
-      </ApolloProvider>,
-    );
-    wrapper.update();
-    await wait(0);
-    await wait(0);
-
-    expect(getTokenSpy.callCount).to.equal(1);
-    expect(pushNotificationInitSpy.callCount).to.equal(1);
-    expect(getChannelTokenSpy.callCount).to.equal(1);
-    expect(goToChannelStackSpy.callCount).to.equal(1);
   });
 
   it('should goToLogin on getSelf error and no getSelf is stored', async () => {
@@ -254,7 +227,6 @@ describe('<InitScreen >', () => {
     await wait(0);
 
     expect(getTokenSpy.callCount).to.equal(1);
-    expect(getChannelTokenSpy.callCount).to.equal(1);
     expect(goHomeSpy.callCount).to.equal(1);
   });
 

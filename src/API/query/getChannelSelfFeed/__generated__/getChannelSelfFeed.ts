@@ -5,10 +5,10 @@
 import { FEED_TYPE, FEED_BK_TYPE } from "./../../../../../__generated__/globalTypes";
 
 // ====================================================
-// GraphQL query operation: getChannelFeed
+// GraphQL query operation: getChannelSelfFeed
 // ====================================================
 
-export interface getChannelFeed_getChannelFeed_items {
+export interface getChannelSelfFeed_getChannelSelfFeed_items {
   __typename: "FeedItem";
   heading: string;
   type: FEED_TYPE;
@@ -18,15 +18,11 @@ export interface getChannelFeed_getChannelFeed_items {
   variables: any | null;
 }
 
-export interface getChannelFeed_getChannelFeed {
+export interface getChannelSelfFeed_getChannelSelfFeed {
   __typename: "FeedPayload";
-  items: getChannelFeed_getChannelFeed_items[];
+  items: getChannelSelfFeed_getChannelSelfFeed_items[];
 }
 
-export interface getChannelFeed {
-  getChannelFeed: getChannelFeed_getChannelFeed | null;
-}
-
-export interface getChannelFeedVariables {
-  id: string;
+export interface getChannelSelfFeed {
+  getChannelSelfFeed: getChannelSelfFeed_getChannelSelfFeed | null;
 }

@@ -3,11 +3,11 @@ import { View, Image } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import H2 from '../../UI/Typography/components/H2';
-import Styles from './ChannelProfile.style';
+import Styles from './ChannelHeader.style';
 import scalePx from '../../../utils/scalePx';
 import spacing from '../../../styles/definitions/spacing';
 
-const ChannelProfileSkeleton: FC = () => {
+const ChannelHeaderSkeleton: FC = () => {
   const profileImageHeight = useRef(scalePx(120));
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
@@ -57,4 +57,4 @@ const ChannelProfileSkeleton: FC = () => {
   );
 };
 
-export default ChannelProfileSkeleton;
+export default ChannelHeaderSkeleton;

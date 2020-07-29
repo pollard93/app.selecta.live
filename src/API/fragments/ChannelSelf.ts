@@ -22,6 +22,7 @@ export const CHANNEL_SELF_FRAGMENT = gql`
     creditWithdrawalValue
     creditWithdrawalMinimum
     freeStreamAllowance
+    createdAt
   },
   ${FILE_FRAGMENT}
 `;
