@@ -85,7 +85,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           </View>
           <View style={Styles.meta}>
             <Body>Streams: 0</Body>
-            <Body>Purchases: 0</Body>
+            <Body>Purchases: {data.consumersEdge}</Body>
           </View>
         </View>
 
