@@ -14,6 +14,7 @@ import ChannelSelfFeed from '../../ChannelSelfFeed/ChannelSelfFeed';
 import { formatForTimezone } from '../../../utils/functions';
 import { pushScreen } from '../../../screens/utils';
 import UpdateChannelScreen from '../../../screens/UpdateChannelScreen/UpdateChannelScreen';
+import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
 
 export interface ChannelSelfViewProps extends ScreenProps {
   queryResult: QueryResult<getChannelSelf>;
@@ -30,9 +31,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
         <>
           <TouchableOpacity
             onPress={() => {
-              /**
-               * TODO - Push ManageStreamsScreen
-               */
+              pushScreen(STACK.TAB_PRODUCER, StreamSelfsScreen, {});
             }}
           >
             <Animated.View

@@ -5,13 +5,15 @@ import { useToast } from 'mbp-components-rn-toast';
 import { GET_CHANNEL_SELFS_QUERY } from '../../../API/query/getChannelSelfs/getChannelSelfs';
 import { getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 import ChannelSelfListItem from '../ChannelSelfListItem/ChannelSelfListItem';
-import styles from './ChannelSelfs.styles';
+import Styles from './ChannelSelfs.styles';
 import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { useLoginChannelWithTokenMutation } from '../../../API/mutation/loginChannelWithToken/loginChannelWithToken';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
 import ChannelSelfScreen from '../../../screens/ChannelSelfScreen/ChannelSelfScreen';
 import { pushScreen } from '../../../screens/utils';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 class ChannelSelfsFlatList extends ApolloFlatList<getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels> {}
 
@@ -45,7 +47,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
 
 
   return (
-    <View>
+    <View style={GlobalStyles.PageFill}>
       <ChannelSelfsFlatList
         query={GET_CHANNEL_SELFS_QUERY}
         variables={{
@@ -54,7 +56,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
         accessor='getChannelSelfs.channels'
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.item}
+            style={Styles.item}
             onPress={() => {
               loginChannelMutation({
                 variables: {
@@ -66,13 +68,17 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
             <ChannelSelfListItem data={item} />
           </TouchableOpacity>
         )}
-        // LoadingErrorComponent={(queryResult) => <LoadRetry {...queryResult} />}
-        // ListHeaderComponent={() => (
-        //   <Text>HEADER</Text>
-        // )}
-        // ListFooterComponent={(moreToLoad) => (
-        //   <Text>{moreToLoad ? 'LOADING' : 'NO MORE TO LOAD'}</Text>
-        // )}
+        ListHeaderComponent={({ queryResult }) => {
+          if (queryResult.loading || queryResult.error) {
+            return (
+              <View style={Styles.header}>
+                <LoadRetry {...queryResult} />
+              </View>
+            );
+          }
+
+          return null;
+        }}
       />
     </View>
   );

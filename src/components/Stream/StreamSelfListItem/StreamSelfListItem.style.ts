@@ -4,13 +4,15 @@ import spacing from '../../../styles/definitions/spacing';
 import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
+  wrap: {
+    backgroundColor: color.mono.light,
+  },
   banner: {
     alignItems: 'center',
     backgroundColor: color.mono.dark,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: spacing.small,
-    paddingVertical: spacing.base,
+    padding: spacing.small,
   },
   bannerHeader: {
     color: color.mono.light,
@@ -20,13 +22,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  image: {
-    flex: 1,
-    height: scalePx(120),
-  },
   title: {
     flex: 1,
-    marginRight: spacing.base,
+    maxWidth: '60%',
+    paddingRight: spacing.base,
+  },
+  image: {
+    aspectRatio: 1.777777777777778,
+    flex: 1,
   },
   body: {
     padding: spacing.small,
@@ -36,13 +39,16 @@ export default StyleSheet.create({
   },
   details: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginVertical: spacing.small,
   },
   detail: {
     flex: 1,
+    maxWidth: '60%',
+    paddingRight: spacing.base,
   },
   meta: {
-    marginLeft: spacing.small,
+    flex: 1,
   },
   authKeys: {
     borderColor: color.mono.pale.dark,
@@ -53,11 +59,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  authKeyBody: {
+    flex: 1,
+  },
   metrics: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: spacing.small,
+    marginTop: spacing.small,
   },
   metric: {
     alignItems: 'center',
