@@ -32,6 +32,7 @@
     "@apollo/react-common": "^3.1.4",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/cameraroll": "^1.5.2",
+    "@react-native-community/clipboard": "^1.2.3",
     "@react-native-community/datetimepicker": "^2.3.1",
     "@react-native-community/google-signin": "^4.0.0",
     "@react-native-community/netinfo": "^5.9.5",

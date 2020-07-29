@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react-native';
 import StreamSelfs from './StreamSelfs';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 
-storiesOf('StreamSelfs', module)
+storiesOf('Stream/StreamSelfs', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .add('StreamSelfs', () => (
     <StreamSelfs />
