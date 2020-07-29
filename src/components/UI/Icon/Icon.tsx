@@ -30,6 +30,7 @@ export enum ICON {
   TWITTER = 'TWITTER',
   FACEBOOK = 'FACEBOOK',
   INSTAGRAM = 'INSTAGRAM',
+  COPY = 'COPY',
 }
 
 export interface IconProps {
@@ -117,6 +118,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.INSTAGRAM:
         return require('../../../assets/images/icons/instagram.png');
+
+      case ICON.COPY:
+        return require('../../../assets/images/icons/copy.png');
 
       default:
         return null;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import StreamSelfs from './StreamSelfs';
-import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('StreamSelfs', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
+storiesOf('Stream/StreamSelfs', module)
+  .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('StreamSelfs', () => (
     <StreamSelfs />
   ));

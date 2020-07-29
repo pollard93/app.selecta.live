@@ -4,7 +4,7 @@ import { useDarkMode } from 'react-native-dynamic';
 import { Animated, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Body from '../../UI/Typography/components/Body';
-import { ScreenProps } from '../../../screens/utils/interfaces';
+import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import ChannelHeader from '../ChannelHeader/ChannelHeader';
 import color from '../../../styles/definitions/color';
@@ -12,6 +12,8 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 import Styles from './ChannelSelf.style';
 import ChannelSelfFeed from '../../ChannelSelfFeed/ChannelSelfFeed';
 import { formatForTimezone } from '../../../utils/functions';
+import { pushScreen } from '../../../screens/utils';
+import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
 
 export interface ChannelSelfViewProps extends ScreenProps {
   queryResult: QueryResult<getChannelSelf>;
@@ -28,9 +30,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
         <>
           <TouchableOpacity
             onPress={() => {
-              /**
-               * TODO - Push ManageStreamsScreen
-               */
+              pushScreen(STACK.TAB_PRODUCER, StreamSelfsScreen, {});
             }}
           >
             <Animated.View

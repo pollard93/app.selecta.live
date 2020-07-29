@@ -22,12 +22,18 @@ export interface STREAM_SELF_FRAGMENT_image {
   url: STREAM_SELF_FRAGMENT_image_url | null;
 }
 
+export interface STREAM_SELF_FRAGMENT_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface STREAM_SELF_FRAGMENT {
   __typename: "StreamSelf";
   id: string;
   name: string | null;
   info: string | null;
   image: STREAM_SELF_FRAGMENT_image | null;
+  tags: (STREAM_SELF_FRAGMENT_tags | null)[] | null;
   timeFrom: any | null;
   timeTo: any | null;
   cost: number | null;
