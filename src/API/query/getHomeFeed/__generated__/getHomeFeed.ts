@@ -5,10 +5,10 @@
 import { FEED_TYPE, FEED_BK_TYPE } from "./../../../../../__generated__/globalTypes";
 
 // ====================================================
-// GraphQL query operation: getFeed
+// GraphQL query operation: getHomeFeed
 // ====================================================
 
-export interface getFeed_getFeed_items {
+export interface getHomeFeed_getHomeFeed_items {
   __typename: "FeedItem";
   heading: string;
   type: FEED_TYPE;
@@ -18,11 +18,11 @@ export interface getFeed_getFeed_items {
   variables: any | null;
 }
 
-export interface getFeed_getFeed {
+export interface getHomeFeed_getHomeFeed {
   __typename: "FeedPayload";
-  items: getFeed_getFeed_items[];
+  items: getHomeFeed_getHomeFeed_items[];
 }
 
-export interface getFeed {
-  getFeed: getFeed_getFeed | null;
+export interface getHomeFeed {
+  getHomeFeed: getHomeFeed_getHomeFeed | null;
 }

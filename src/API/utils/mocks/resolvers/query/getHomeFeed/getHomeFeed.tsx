@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable prefer-spread */
-export const getFeed = () => ({
+export const getHomeFeed = () => ({
   items: [
     {
       heading: 'Your Streams',

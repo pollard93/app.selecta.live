@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { View, SafeAreaView, Linking } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useToast } from 'mbp-components-rn-toast';
-import { useGetFeedQuery } from '../../API/query/getFeed/getFeed';
+import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Header, { useHeaderStyles } from '../UI/Headers/Header/Header';
 import { ScreenProps, STACK } from '../../screens/utils/interfaces';
@@ -19,7 +19,7 @@ export interface HomeFeedProps extends ScreenProps {}
 
 const HomeFeed: FC<HomeFeedProps> = () => {
   const toast = useToast();
-  const queryResult = useGetFeedQuery();
+  const queryResult = useGetHomeFeedQuery();
   const { headerHeight } = useHeaderStyles();
 
 
@@ -71,7 +71,7 @@ const HomeFeed: FC<HomeFeedProps> = () => {
             ? <LoadRetry cover {...queryResult} />
             : (
                 <Feed
-                  data={queryResult.data.getFeed}
+                  data={queryResult.data.getHomeFeed}
                   refetch={queryResult.refetch}
                   flatListProps={{
                     contentContainerStyle: { paddingTop: headerHeight },

@@ -10,9 +10,9 @@ import { getChannelProfiles } from './resolvers/query/getChannelProfiles/getChan
 import { getChannelSelf } from './resolvers/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfFeed } from './resolvers/query/getChannelSelfFeed/getChannelSelfFeed';
 import { getChannelSelfs } from './resolvers/query/getChannelSelfs/getChannelSelfs';
-import { getChannelStreams } from './resolvers/query/getChannelStreams/getChannelStreams';
+import { getChannelStreamProfiles } from './resolvers/query/getChannelStreamProfiles/getChannelStreamProfiles';
 import { getCreditTransactionProfiles } from './resolvers/query/getCreditTransactionProfiles/getCreditTransactionProfiles';
-import { getFeed } from './resolvers/query/getFeed/getFeed';
+import { getHomeFeed } from './resolvers/query/getHomeFeed/getHomeFeed';
 import { getNotifications } from './resolvers/query/getNotifications/getNotifications';
 import { getProductConfig } from './resolvers/query/getProductConfig/getProductConfig';
 import { getRequestedChannels } from './resolvers/query/getRequestedChannels/getRequestedChannels';
@@ -47,9 +47,9 @@ export default {
     getChannelSelf,
     getChannelSelfFeed,
     getChannelSelfs,
-    getChannelStreams,
+    getChannelStreamProfiles,
     getCreditTransactionProfiles,
-    getFeed,
+    getHomeFeed,
     getNotifications,
     getProductConfig,
     getRequestedChannels,

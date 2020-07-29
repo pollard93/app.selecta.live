@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Wed Jul 29 2020 12:42:04 GMT+0100 (British Summer Time)
+# timestamp: Wed Jul 29 2020 17:57:01 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -723,11 +723,11 @@ type Query {
   getChannelProfile(id: String!): ChannelProfile!
   getChannelProfileFeed(id: String!): FeedPayload
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
-  getChannelStreams(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
+  getChannelStreamProfiles(id: String!, where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getConsumingStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
   getCreditTransactionProfiles(first: Int, after: String, orderBy: CreditTransactionOrderByInput): CreditTransactionProfilesPayload!
-  getFeed: FeedPayload
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
+  getHomeFeed: FeedPayload
   getProductConfig: [ProductConfig!]!
   getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
   getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
@@ -1233,6 +1233,7 @@ input StreamRelatedStreamsWhereInput {
 
 type StreamSelf {
   id: ID!
+  channel: ChannelProfile
   name: String
   info: String
   image: File
