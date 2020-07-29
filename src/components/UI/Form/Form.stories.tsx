@@ -9,6 +9,8 @@ import TextArea from './components/TextArea';
 import SearchInput from './components/SearchInput';
 import DateTimePickerInput from '../DateTimePicker/components/DateTimePickerInput/DateTimePickerInput';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import DateInput from './components/DateInput';
+import TimeInput from './components/TimeInput';
 
 
 storiesOf('UI/Form', module)
@@ -58,8 +60,16 @@ storiesOf('UI/Form', module)
       loading={true}
     />
   ))
-  .add('DateTimePickerInput', () => (
-    <DateTimePickerInput
+  .add('DateInput', () => (
+    <DateInput
+      value={new Date().toISOString()}
+      defaultValue={new Date().toISOString()}
+      onChange={console.log}
+      minimumDate={new Date(Date.now())}
+    />
+  ))
+  .add('TimeInput', () => (
+    <TimeInput
       value={new Date().toISOString()}
       defaultValue={new Date().toISOString()}
       onChange={console.log}

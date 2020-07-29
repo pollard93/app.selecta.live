@@ -38,6 +38,11 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: spacing.small,
   },
+  DateInput: {
+    borderColor: color.mono.pale.regular,
+    borderWidth: 1,
+    marginTop: spacing.small,
+  },
 
   // Error
   error: {

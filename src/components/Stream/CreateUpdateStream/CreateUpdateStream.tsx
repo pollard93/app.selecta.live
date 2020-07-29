@@ -18,6 +18,8 @@ import TextInput from '../../UI/Form/components/TextInput';
 import TextArea from '../../UI/Form/components/TextArea';
 import Button from '../../UI/Button/Button';
 import Body from '../../UI/Typography/components/Body';
+import TimeInput from '../../UI/Form/components/TimeInput';
+import DateInput from '../../UI/Form/components/DateInput';
 
 type FormData = {
   name: string;
@@ -179,6 +181,7 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
   const timeTo = watch('timeTo');
   const isFree = watch('isFree');
   const cost = watch('cost');
+  const duration = watch('duration');
 
 
   /**
@@ -195,26 +198,9 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
       { required: true, validate: (v) => v && v.length },
     );
 
-    register({ name: 'timeFrom' }, {
-      required: true,
-      /**
-       * timeFrom must be smaller than timeTo
-      */
-      validate: () => new Date(timeFrom) < new Date(timeTo),
-    });
-
-    register({ name: 'timeTo' }, {
-      required: true,
-      /**
-       * timeTo must be greater than timeFrom
-      */
-      validate: () => new Date(timeTo) > new Date(timeFrom),
-    });
-
-    register({ name: 'isFree' }, {
-      required: false,
-    });
-
+    register({ name: 'timeFrom' }, { required: true });
+    register({ name: 'duration' }, { required: true });
+    register({ name: 'isFree' }, { required: false });
     register({ name: 'cost' }, {
       required: true,
       validate: (v) => {
@@ -234,15 +220,23 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
       },
     });
 
-    register(
-      { name: 'image' },
-      { required: false },
-    );
+    register({ name: 'image' }, { required: false });
 
-    register({ name: 'audioOnly' }, {
-      required: false,
-    });
+    register({ name: 'audioOnly' }, { required: false });
   }, []);
+
+
+  /**
+   * Watch for duration change
+   */
+  useEffect(() => {
+    if (duration) {
+      /** Add duration to the timeFrom to calculate timeTo */
+      const value = 0;
+
+      setValue('timeFrom', value, true);
+    }
+  }, [duration]);
 
 
   return (
@@ -304,8 +298,25 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
         <View style={Styles.section}>
           <H2>Schedule</H2>
 
-          <DateTimePickerInput
+          <DateInput
             defaultValue={defaultValues.timeFrom}
+            onChange={(value) => {
+              setValue('timeFrom', value, true);
+
+              /**
+               * If this value is greater than timeTo
+               * Set timeTo an hour ahead of timeFrom
+               */
+              if (new Date(value) > new Date(timeTo)) {
+                setValue('timeTo', new Date(new Date(value).getTime() + 3600000).toISOString(), true);
+              }
+            }}
+            minimumDate={new Date()}
+          />
+
+          <TimeInput
+            value={timeFrom}
+            defaultValue={timeFrom ?? defaultValues.timeFrom}
             onChange={(value) => {
               setValue('timeFrom', value, true);
 
@@ -349,7 +360,6 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
               style={[Styles.input, Styles.inputWrap]}
               errors={errors}
             />
-            {/* {errors.cost && <Text>Cost must be above or equal to {props.channel.creditMinimumStreamCost}</Text>} */}
           </View>
         </View>
 
