@@ -66,7 +66,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: spacing.small,
+    marginTop: spacing.small,
   },
   metric: {
     alignItems: 'center',
