@@ -1,5 +1,5 @@
 import React, { useState, useRef, FC, useEffect } from 'react';
-import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, View, KeyboardAvoidingView, Platform, LayoutRectangle } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
@@ -15,8 +15,8 @@ import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHAN
 import TextInput from '../../UI/Form/components/TextInput';
 import TextArea from '../../UI/Form/components/TextArea';
 import Button from '../../UI/Button/Button';
-import color from '../../../styles/definitions/color';
 import ChannelHeaderStyles from '../ChannelHeader/ChannelHeader.style';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 
 type FormData = {
@@ -47,6 +47,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
   const [defaultValues] = useState(getValues());
   const toast = useToast();
   const profileImageHeight = useRef(scalePx(120));
+  const safeAreaInsets = useSafeArea();
 
 
   // Refs
@@ -174,227 +175,235 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
 
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={GlobalStyles.PageFill}
-    >
-      <ScrollView
+    <View style={GlobalStyles.PageFill}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={GlobalStyles.PageFill}
-        bounces={false}
       >
-        <EditableAsyncImage
-          asyncImageProps={{
-            splashUrl: props.data.coverImage?.url.splash,
-            fullUrl: props.data.coverImage?.url.full,
-            containerProps: {
-              style: Styles.coverImage,
-            },
-            imageProps: {
-              source: {
-                cache: 'reload',
-              },
-            },
-            placeholderImageProps: {
-              source: require('../../../assets/images/logo-icon.png'),
-              resizeMode: 'contain',
-              style: ChannelHeaderStyles.skeletonCoverImageIcon,
-            },
-          }}
-          iconPosition="bottomRight"
-          onConfirm={(file) => mutation({
-            variables: {
-              data: {
-                coverImage: new ReactNativeFile({
-                  uri: file.image.uri,
-                  name: file.image.filename,
-                  type: file.type,
-                }),
-              },
-            },
-          })}
-        />
-
-        <View
-          style={{
-            height: profileImageHeight.current / 2,
-            width: profileImageHeight.current,
-            paddingHorizontal: spacing.small,
-          }}
+        <ScrollView
+          style={GlobalStyles.PageFill}
+          bounces={false}
         >
-          <View
-            style={[
-              Styles.profileImageWrap,
-              {
-                width: profileImageHeight.current,
-                height: profileImageHeight.current,
+          <EditableAsyncImage
+            asyncImageProps={{
+              splashUrl: props.data.coverImage?.url.splash,
+              fullUrl: props.data.coverImage?.url.full,
+              containerProps: {
+                style: Styles.coverImage,
               },
-            ]}
+              imageProps: {
+                source: {
+                  cache: 'reload',
+                },
+              },
+              placeholderImageProps: {
+                source: require('../../../assets/images/logo-icon.png'),
+                resizeMode: 'contain',
+                style: ChannelHeaderStyles.skeletonCoverImageIcon,
+              },
+            }}
+            iconPosition="bottomRight"
+            onConfirm={(file) => mutation({
+              variables: {
+                data: {
+                  coverImage: new ReactNativeFile({
+                    uri: file.image.uri,
+                    name: file.image.filename,
+                    type: file.type,
+                  }),
+                },
+              },
+            })}
+          />
+
+          <View
+            style={{
+              height: profileImageHeight.current / 2,
+              width: profileImageHeight.current,
+              paddingHorizontal: spacing.small,
+            }}
           >
-            <View style={Styles.profileImageInner}>
-              <EditableAsyncImage
-                asyncImageProps={{
-                  splashUrl: props.data.profileImage?.url.splash,
-                  fullUrl: props.data.profileImage?.url.full,
-                  containerProps: {
-                    style: Styles.profileImage,
-                  },
-                  imageProps: {
-                    source: {
-                      cache: 'reload',
+            <View
+              style={[
+                Styles.profileImageWrap,
+                {
+                  width: profileImageHeight.current,
+                  height: profileImageHeight.current,
+                },
+              ]}
+            >
+              <View style={Styles.profileImageInner}>
+                <EditableAsyncImage
+                  asyncImageProps={{
+                    splashUrl: props.data.profileImage?.url.splash,
+                    fullUrl: props.data.profileImage?.url.full,
+                    containerProps: {
+                      style: Styles.profileImage,
                     },
-                  },
-                  placeholderImageProps: {
-                    source: require('../../../assets/images/logo-icon.png'),
-                    resizeMode: 'contain',
-                    style: ChannelHeaderStyles.skeletonProfileImageIcon,
-                  },
-                }}
-                onConfirm={(file) => mutation({
-                  variables: {
-                    data: {
-                      profileImage: new ReactNativeFile({
-                        uri: file.image.uri,
-                        name: file.image.filename,
-                        type: file.type,
-                      }),
+                    imageProps: {
+                      source: {
+                        cache: 'reload',
+                      },
                     },
-                  },
-                })}
-              />
+                    placeholderImageProps: {
+                      source: require('../../../assets/images/logo-icon.png'),
+                      resizeMode: 'contain',
+                      style: ChannelHeaderStyles.skeletonProfileImageIcon,
+                    },
+                  }}
+                  onConfirm={(file) => mutation({
+                    variables: {
+                      data: {
+                        profileImage: new ReactNativeFile({
+                          uri: file.image.uri,
+                          name: file.image.filename,
+                          type: file.type,
+                        }),
+                      },
+                    },
+                  })}
+                />
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={Styles.form}>
-          <TextInput
-            name="name"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('name', text, !!errors.name);
-            }}
-            placeholder="Enter your channel name"
-            defaultValue={defaultValues.name}
-            returnKeyType="next"
-            errors={errors}
-            onBlur={() => triggerValidation('name', true)}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              descriptionRef.current?.focus();
-            }}
-            style={[Styles.input, Styles.inputWrap]}
-          />
+          <View style={Styles.form}>
+            <TextInput
+              name="name"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('name', text, !!errors.name);
+              }}
+              placeholder="Enter your channel name"
+              defaultValue={defaultValues.name}
+              returnKeyType="next"
+              errors={errors}
+              onBlur={() => triggerValidation('name', true)}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                descriptionRef.current?.focus();
+              }}
+              style={[Styles.input, Styles.inputWrap]}
+            />
 
-          <TextArea
-            name="description"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('description', text, !!errors.description);
-            }}
-            setRef={(e) => {
-              descriptionRef.current = e;
-            }}
-            placeholder="Enter your channel description"
-            defaultValue={defaultValues.description}
-            errors={errors}
-            onBlur={() => triggerValidation('description', true)}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              websiteUrlRef.current?.focus();
-            }}
-            style={[Styles.infoArea, Styles.inputWrap]}
-          />
+            <TextArea
+              name="description"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('description', text, !!errors.description);
+              }}
+              setRef={(e) => {
+                descriptionRef.current = e;
+              }}
+              placeholder="Enter your channel description"
+              defaultValue={defaultValues.description}
+              errors={errors}
+              onBlur={() => triggerValidation('description', true)}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                websiteUrlRef.current?.focus();
+              }}
+              style={[Styles.infoArea, Styles.inputWrap]}
+            />
 
-          <TextInput
-            name="websiteUrl"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('websiteUrl', text, !!errors.websiteUrl);
-            }}
-            setRef={(e) => {
-              websiteUrlRef.current = e;
-            }}
-            placeholder="Enter your channel's website"
-            defaultValue={defaultValues.websiteUrl}
-            returnKeyType="next"
-            errors={errors}
-            onBlur={() => triggerValidation('websiteUrl', true)}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              twitterUrlRef.current?.focus();
-            }}
-            style={[Styles.input, Styles.inputWrap]}
-          />
+            <TextInput
+              name="websiteUrl"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('websiteUrl', text, !!errors.websiteUrl);
+              }}
+              setRef={(e) => {
+                websiteUrlRef.current = e;
+              }}
+              placeholder="Enter your channel's website"
+              defaultValue={defaultValues.websiteUrl}
+              returnKeyType="next"
+              errors={errors}
+              onBlur={() => triggerValidation('websiteUrl', true)}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                twitterUrlRef.current?.focus();
+              }}
+              style={[Styles.input, Styles.inputWrap]}
+            />
 
-          <TextInput
-            name="twitterUrl"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('twitterUrl', text, !!errors.twitterUrl);
-            }}
-            setRef={(e) => {
-              twitterUrlRef.current = e;
-            }}
-            placeholder="Enter your channel's twitter url"
-            defaultValue={defaultValues.twitterUrl}
-            returnKeyType="next"
-            errors={errors}
-            onBlur={() => triggerValidation('twitterUrl', true)}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              facebookUrlRef.current?.focus();
-            }}
-            style={[Styles.input, Styles.inputWrap]}
-          />
+            <TextInput
+              name="twitterUrl"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('twitterUrl', text, !!errors.twitterUrl);
+              }}
+              setRef={(e) => {
+                twitterUrlRef.current = e;
+              }}
+              placeholder="Enter your channel's twitter url"
+              defaultValue={defaultValues.twitterUrl}
+              returnKeyType="next"
+              errors={errors}
+              onBlur={() => triggerValidation('twitterUrl', true)}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                facebookUrlRef.current?.focus();
+              }}
+              style={[Styles.input, Styles.inputWrap]}
+            />
 
-          <TextInput
-            name="facebookUrl"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('facebookUrl', text, !!errors.facebookUrl);
-            }}
-            setRef={(e) => {
-              facebookUrlRef.current = e;
-            }}
-            placeholder="Enter your channel's facebook url"
-            defaultValue={defaultValues.facebookUrl}
-            returnKeyType="next"
-            errors={errors}
-            onBlur={() => triggerValidation('facebookUrl', true)}
-            onSubmitEditing={() => {
-              // eslint-disable-next-line no-unused-expressions
-              instagramUrlRef.current?.focus();
-            }}
-            style={[Styles.input, Styles.inputWrap]}
-          />
+            <TextInput
+              name="facebookUrl"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('facebookUrl', text, !!errors.facebookUrl);
+              }}
+              setRef={(e) => {
+                facebookUrlRef.current = e;
+              }}
+              placeholder="Enter your channel's facebook url"
+              defaultValue={defaultValues.facebookUrl}
+              returnKeyType="next"
+              errors={errors}
+              onBlur={() => triggerValidation('facebookUrl', true)}
+              onSubmitEditing={() => {
+                // eslint-disable-next-line no-unused-expressions
+                instagramUrlRef.current?.focus();
+              }}
+              style={[Styles.input, Styles.inputWrap]}
+            />
 
-          <TextInput
-            name="instagramUrl"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('instagramUrl', text, !!errors.instagramUrl);
-            }}
-            setRef={(e) => {
-              instagramUrlRef.current = e;
-            }}
-            placeholder="Enter your channel's instagram url"
-            defaultValue={defaultValues.instagramUrl}
-            returnKeyType="done"
-            errors={errors}
-            onBlur={() => triggerValidation('instagramUrl', true)}
-            onSubmitEditing={handleSubmit(onSubmit)}
-            style={[Styles.input, Styles.inputWrap]}
-          />
+            <TextInput
+              name="instagramUrl"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('instagramUrl', text, !!errors.instagramUrl);
+              }}
+              setRef={(e) => {
+                instagramUrlRef.current = e;
+              }}
+              placeholder="Enter your channel's instagram url"
+              defaultValue={defaultValues.instagramUrl}
+              returnKeyType="done"
+              errors={errors}
+              onBlur={() => triggerValidation('instagramUrl', true)}
+              onSubmitEditing={handleSubmit(onSubmit)}
+              style={[Styles.input, Styles.inputWrap]}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
-          <Button
-            title="Update channel"
-            onPress={handleSubmit(onSubmit)}
-            disabled={!isValid || !dirty}
-            loading={loading}
-            style={Styles.inputWrap}
-          />
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <View
+        style={{
+          paddingBottom: safeAreaInsets.bottom,
+        }}
+      >
+        <Button
+          title="Update channel"
+          onPress={handleSubmit(onSubmit)}
+          disabled={!isValid || !dirty}
+          loading={loading}
+          style={Styles.button}
+        />
+      </View>
+    </View>
   );
 };
 

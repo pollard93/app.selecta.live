@@ -37,4 +37,7 @@ export default StyleSheet.create({
   infoArea: {
     height: scalePx(120),
   },
+  button: {
+    padding: spacing.small,
+  },
 });
