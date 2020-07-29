@@ -42,7 +42,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               ]}
             >
               <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
-                <Body bold disableBaseColor>Manage Streams</Body>
+                <Body bold disableBaseColor>Streams</Body>
               </Animated.Text>
             </Animated.View>
           </TouchableOpacity>
@@ -95,11 +95,8 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               </>
             ),
             onScroll: Animated.event(
-              [
-                {
-                  nativeEvent: { contentOffset: { y: scrollY.current } },
-                },
-              ],
+              [{ nativeEvent: { contentOffset: { y: scrollY.current } } }],
+              { useNativeDriver: false },
             ),
             scrollEventThrottle: 16,
           }}

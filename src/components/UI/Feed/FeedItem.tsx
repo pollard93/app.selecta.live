@@ -69,7 +69,6 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
           query={gql(props.item.query)}
           variables={props.item.variables}
           accessor={props.item.accessor}
-          debug
           FlatListProps={{
             style: [
               Styles[`flatList${props.item.type}`],
@@ -90,6 +89,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
               props.item.type === FEED_TYPE.HORIZONTAL
                 ? Animated.event(
                   [{ nativeEvent: { contentOffset: { x: scrollX.current } } }],
+                  { useNativeDriver: false },
                 )
                 : undefined,
             scrollEventThrottle: props.item.type === FEED_TYPE.HORIZONTAL ? 16 : undefined,

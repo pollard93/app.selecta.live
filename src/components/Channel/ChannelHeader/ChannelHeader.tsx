@@ -1,8 +1,9 @@
-import React, { useRef, useState, useMemo, FC, ReactNode } from 'react';
+import React, { useRef, useState, useMemo, FC, ReactNode, useEffect } from 'react';
 import { View, Animated, Dimensions, LayoutRectangle } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDarkMode } from 'react-native-dynamic';
 import { QueryResult } from 'react-apollo';
+import { NetworkStatus } from 'apollo-client';
 import H2 from '../../UI/Typography/components/H2';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Styles from './ChannelHeader.style';
@@ -40,6 +41,21 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
   const profileImageHeight = useRef(scalePx(120));
   const { headerHeight } = useHeaderStyles();
   const darkMode = useDarkMode();
+
+
+  /**
+   * If name changes (when edited by owner in UpdateChannel)
+   * Reset all layouts and refetch to cause a full re render
+   */
+  useEffect(() => {
+    // Not on first render
+    if (headerLayout.height !== 0) {
+      setHeaderLayout({ height: 0 });
+      setHeaderTopLayout({ height: 0 });
+      setTitleLayout({ height: 0 });
+      props.queryResult.refetch();
+    }
+  }, [props.data.name]);
 
 
   /**
@@ -137,7 +153,7 @@ const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
   }));
 
 
-  if (props.queryResult.loading) {
+  if (props.queryResult.loading || props.queryResult.networkStatus === NetworkStatus.refetch) {
     return <ChannelHeaderSkeleton />;
   }
 

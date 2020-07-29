@@ -20,7 +20,10 @@ const ChannelSelf: FC<ChannelSelfProps> = (props) => {
   /**
    * Get channel profile query
    */
-  const queryResult = useGetChannelSelfQuery();
+  const queryResult = useGetChannelSelfQuery({
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'network-only',
+  });
 
 
   /**
