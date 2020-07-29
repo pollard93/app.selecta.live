@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
-import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
   coverImage: {
@@ -29,13 +28,6 @@ export default StyleSheet.create({
   },
   inputWrap: {
     marginTop: spacing.small,
-  },
-  input: {
-    borderColor: color.mono.pale.regular,
-    borderWidth: 1,
-  },
-  infoArea: {
-    height: scalePx(120),
   },
   button: {
     padding: spacing.small,

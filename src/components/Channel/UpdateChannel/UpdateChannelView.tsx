@@ -283,7 +283,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 // eslint-disable-next-line no-unused-expressions
                 descriptionRef.current?.focus();
               }}
-              style={[Styles.input, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
 
             <TextArea
@@ -303,7 +303,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 // eslint-disable-next-line no-unused-expressions
                 websiteUrlRef.current?.focus();
               }}
-              style={[Styles.infoArea, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
 
             <TextInput
@@ -324,7 +324,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 // eslint-disable-next-line no-unused-expressions
                 twitterUrlRef.current?.focus();
               }}
-              style={[Styles.input, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
 
             <TextInput
@@ -345,7 +345,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 // eslint-disable-next-line no-unused-expressions
                 facebookUrlRef.current?.focus();
               }}
-              style={[Styles.input, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
 
             <TextInput
@@ -366,7 +366,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                 // eslint-disable-next-line no-unused-expressions
                 instagramUrlRef.current?.focus();
               }}
-              style={[Styles.input, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
 
             <TextInput
@@ -384,7 +384,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
               errors={errors}
               onBlur={() => triggerValidation('instagramUrl', true)}
               onSubmitEditing={handleSubmit(onSubmit)}
-              style={[Styles.input, Styles.inputWrap]}
+              wrapStyle={Styles.inputWrap}
             />
           </View>
         </ScrollView>

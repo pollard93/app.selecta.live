@@ -43,7 +43,7 @@ const TextInput: FC<TextInputProps> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, props.wrapStyle, props.light && Styles.light]}>
+    <View style={[Styles.wrap, props.wrapStyle, props.light && Styles.light, errorMessage && Styles.wrapError]}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
