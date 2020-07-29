@@ -5,13 +5,15 @@ import { Navigation } from 'react-native-navigation';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
-import styles from './StreamSelfs.styles';
+import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import Body from '../../UI/Typography/components/Body';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -32,21 +34,40 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           }}
           accessor='getStreamSelfs.streams'
           renderItem={({ item }) => (
-            <View style={styles.item}>
+            <View style={Styles.item}>
               <StreamSelfListItem data={item} />
             </View>
           )}
           ListHeaderComponent={() => (
-            <View style={styles.header}>
+            <View style={Styles.header}>
               <H2>Stream Management</H2>
               <Button
                 type="PRIMARY"
                 title="Create New Stream"
                 onPress={console.log}
-                style={styles.createButton}
+                style={Styles.createButton}
               />
             </View>
           )}
+          ListFooterComponent={({ queryResult, maxCount }) => {
+            if (queryResult.loading || queryResult.error) {
+              return (
+                <View style={Styles.header}>
+                  <LoadRetry {...queryResult} />
+                </View>
+              );
+            }
+
+            if (maxCount === 0) {
+              return (
+                <View style={Styles.header}>
+                  <Body>Your streams will appear here</Body>
+                </View>
+              );
+            }
+
+            return null;
+          }}
         />
       </View>
     </View>
