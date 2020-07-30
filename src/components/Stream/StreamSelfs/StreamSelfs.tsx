@@ -8,12 +8,14 @@ import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
-import { ScreenProps } from '../../../screens/utils/interfaces';
+import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { pushScreen } from '../../../screens/utils';
+import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -22,6 +24,15 @@ export interface StreamSelfsProps extends ScreenProps {}
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
+
+
+  /**
+   * Push CreateUpdateStreamScreen
+   */
+  const onCreate = () => {
+    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {});
+  };
+
 
   return (
     <View style={GlobalStyles.PageFill}>
@@ -44,7 +55,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
               <Button
                 type="PRIMARY"
                 title="Create New Stream"
-                onPress={console.log}
+                onPress={onCreate}
                 style={Styles.createButton}
               />
             </View>

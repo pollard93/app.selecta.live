@@ -1,14 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import CreateUpdateStream from './CreateUpdateStream';
-import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import GetChannelSelfDecorator from '../../../../storybook/Decorators/GetChannelSelfDecorator/GetChannelSelfDecorator';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 
-storiesOf('CreateUpdateStream', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
+storiesOf('Stream/CreateUpdateStream', module)
   .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <GetChannelSelfDecorator>{getStory()}</GetChannelSelfDecorator>)
   .add('CreateUpdateStream - Create', () => {

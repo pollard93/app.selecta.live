@@ -15,6 +15,7 @@ import { pushScreen } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import Toast from '../../UI/Toast/Toast';
+import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 
 interface StreamListItemProps {
   data: STREAM_SELF_FRAGMENT;
@@ -40,6 +41,16 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
   };
 
 
+  /**
+   * Push CreateUpdateStreamScreen
+   */
+  const onEdit = () => {
+    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+      id: data.id,
+    });
+  };
+
+
   return (
     <View style={Styles.wrap}>
       <View style={Styles.banner}>
@@ -53,7 +64,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           <Button
             title="Edit"
             type="LIGHT"
-            onPress={console.log}
+            onPress={onEdit}
             size="small"
           />
         )}

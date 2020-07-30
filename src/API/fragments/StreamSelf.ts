@@ -25,6 +25,7 @@ export const STREAM_SELF_FRAGMENT = gql`
     streamKey
     streamUrl
     audioOnly
+    published
   },
   ${FILE_FRAGMENT}
   ${TAG_PROFILE_FRAGMENT}

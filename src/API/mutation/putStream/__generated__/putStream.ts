@@ -46,6 +46,7 @@ export interface putStream_putStream {
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
 }
 
 export interface putStream {

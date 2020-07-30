@@ -46,6 +46,7 @@ export interface getStreamSelf_getStreamSelf {
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
 }
 
 export interface getStreamSelf {

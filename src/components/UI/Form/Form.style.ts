@@ -7,7 +7,7 @@ import scalePx from '../../../utils/scalePx';
 export default StyleSheet.create({
   wrap: {
     alignSelf: 'stretch',
-    backgroundColor: color.mono.pale.light,
+    backgroundColor: color.mono.light,
     borderColor: color.mono.pale.regular,
     borderWidth: 1,
     paddingVertical: spacing.xxsmall,
@@ -15,9 +15,6 @@ export default StyleSheet.create({
   wrapError: {
     paddingBottom: 0,
     paddingTop: spacing.xxsmall * 2,
-  },
-  light: {
-    backgroundColor: color.mono.light,
   },
 
   // Inputs
@@ -45,11 +42,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: spacing.small,
   },
-  DateInput: {
-    borderColor: color.mono.pale.regular,
-    borderWidth: 1,
-    marginTop: spacing.small,
-  },
 
   // Error
   error: {
@@ -58,9 +50,6 @@ export default StyleSheet.create({
     left: spacing.small,
     position: 'absolute',
     top: spacing.xxsmall,
-  },
-  errorLight: {
-    backgroundColor: color.mono.light,
   },
   errorText: {
     color: color.state.error,

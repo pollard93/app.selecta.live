@@ -10,7 +10,7 @@ import SearchInput from './components/SearchInput';
 import DateTimePickerInput from '../DateTimePicker/components/DateTimePickerInput/DateTimePickerInput';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import DateInput from './components/DateInput';
-import TimeInput from './components/TimeInput';
+import DurationInput from './components/DurationInput';
 
 
 storiesOf('UI/Form', module)
@@ -91,8 +91,8 @@ storiesOf('UI/Form', module)
       minimumDate={new Date(Date.now())}
     />
   ))
-  .add('TimeInput', () => (
-    <TimeInput
+  .add('DurationInput', () => (
+    <DurationInput
       value={new Date().toISOString()}
       defaultValue={new Date().toISOString()}
       onChange={console.log}

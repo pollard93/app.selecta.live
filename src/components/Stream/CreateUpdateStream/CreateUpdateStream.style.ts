@@ -4,11 +4,13 @@ import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 
 export default StyleSheet.create({
+  image: {
+    aspectRatio: 1.7777777778,
+    backgroundColor: color.mono.pale.regular,
+    width: '100%',
+  },
   form: {
     paddingHorizontal: spacing.small,
-  },
-  infoArea: {
-    height: scalePx(120),
   },
   section: {
     marginVertical: spacing.small,
@@ -16,14 +18,13 @@ export default StyleSheet.create({
   inputWrap: {
     marginTop: spacing.small,
   },
-  input: {
-    borderColor: color.mono.pale.regular,
-    borderWidth: 1,
-  },
   toggleInput: {
     flexDirection: 'row',
   },
   toggleInputLabel: {
     marginRight: spacing.xxsmall,
+  },
+  button: {
+    padding: spacing.small,
   },
 });

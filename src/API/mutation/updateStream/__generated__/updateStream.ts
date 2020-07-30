@@ -46,6 +46,7 @@ export interface updateStream_updateStream {
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
 }
 
 export interface updateStream {

@@ -158,21 +158,17 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     }, {});
 
 
+    /**
+     * Catch processImage errors
+     */
     try {
-      /**
-       * Process images
-       */
-      if (data.coverImage) {
-        data.coverImage = await processImage(data.coverImage);
-      }
-
-      if (data.profileImage) {
-        data.profileImage = await processImage(data.profileImage);
-      }
-
       mutation({
         variables: {
-          data,
+          data: {
+            ...data,
+            coverImage: data.coverImage ? await processImage(data.coverImage) : undefined,
+            profileImage: data.profileImage ? await processImage(data.profileImage) : undefined,
+          },
         },
       });
     } catch {
@@ -304,11 +300,6 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                     fullUrl: props.data.profileImage?.url.full,
                     containerProps: {
                       style: Styles.profileImage,
-                    },
-                    placeholderImageProps: {
-                      source: require('../../../assets/images/logo-icon.png'),
-                      resizeMode: 'contain',
-                      style: ChannelHeaderStyles.skeletonProfileImageIcon,
                     },
                   }}
                   onChange={(file) => setValue('profileImage', file, true)}
