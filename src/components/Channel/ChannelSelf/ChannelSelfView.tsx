@@ -13,6 +13,7 @@ import Styles from './ChannelSelf.style';
 import ChannelSelfFeed from '../../ChannelSelfFeed/ChannelSelfFeed';
 import { formatForTimezone } from '../../../utils/functions';
 import { pushScreen } from '../../../screens/utils';
+import UpdateChannelScreen from '../../../screens/UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
 
 export interface ChannelSelfViewProps extends ScreenProps {
@@ -40,7 +41,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               ]}
             >
               <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
-                <Body bold disableBaseColor>Manage Streams</Body>
+                <Body bold disableBaseColor>Streams</Body>
               </Animated.Text>
             </Animated.View>
           </TouchableOpacity>
@@ -48,8 +49,9 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
           <TouchableOpacity
             onPress={() => {
               /**
-               * TODO - Push ManageStreamsScreen
+               * Push UpdateChannelScreen
                */
+              pushScreen(STACK.TAB_PRODUCER, UpdateChannelScreen, {});
             }}
           >
             <Animated.View
@@ -92,11 +94,8 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               </>
             ),
             onScroll: Animated.event(
-              [
-                {
-                  nativeEvent: { contentOffset: { y: scrollY.current } },
-                },
-              ],
+              [{ nativeEvent: { contentOffset: { y: scrollY.current } } }],
+              { useNativeDriver: false },
             ),
             scrollEventThrottle: 16,
           }}

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { openModalScreen } from '../../../../../screens/utils';
 import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
 import DateTimePicker from '../DateTimePicker/DateTimePicker';
+import TextInput from '../../../Form/components/TextInput';
+import Styles from './DateTimePickerInput.style';
 
 interface DateTimePickerInputProps {
   defaultValue: string; // ISOString
@@ -17,6 +19,8 @@ const DateTimePickerInput = (props: DateTimePickerInputProps) => {
   const [androidMode, setAndroidMode] = useState<'date' | 'time'>(null);
   const [date, setDate] = useState(props.defaultValue ? new Date(props.defaultValue) : new Date());
 
+  const dateInput = useRef(null);
+  const timeInput = useRef(null);
 
   /**
    * If props.value is set, watch for changes
@@ -52,14 +56,14 @@ const DateTimePickerInput = (props: DateTimePickerInputProps) => {
   /**
    * iOS needs modal support, openModalScreen with DateTimePicker as child component
    */
-  const openIOS = () => {
+  const openIOS = (mode: 'date' | 'time') => {
     openModalScreen({
       component: (
         <DateTimePicker
           pickerProps={{
             timeZoneOffsetInMinutes: 0,
             value: date,
-            mode: 'datetime',
+            mode,
             is24Hour: true,
             display: 'default',
             onChange,
@@ -68,6 +72,10 @@ const DateTimePickerInput = (props: DateTimePickerInputProps) => {
           }}
           dismissModal={() => {
             Navigation.dismissModal(ModalScreenName);
+
+            /** Blur the inputs so they can trigger the modal again */
+            dateInput.current.blur();
+            timeInput.current.blur();
           }}
         />
       ),
@@ -76,38 +84,38 @@ const DateTimePickerInput = (props: DateTimePickerInputProps) => {
 
 
   return (
-    <View ref={props.setRef}>
-      <TouchableOpacity
-        onPress={() => {
+    <View>
+      <TextInput
+        setRef={dateInput}
+        name="date"
+        onFocus={() => {
           if (Platform.OS === 'ios') {
-            openIOS();
+            openIOS('date');
             return;
           }
 
-          /**
-           * Android has native modal, open by rendering DateTimePicker below
-           */
+          /** Android has native modal, open by rendering DateTimePicker below */
           setAndroidMode('date');
         }}
-      >
-        <Text>DATE: {date.toISOString()}</Text>
-      </TouchableOpacity>
+        value={date.toISOString()}
+        style={Styles.input}
+      />
 
-      <TouchableOpacity
-        onPress={() => {
+      <TextInput
+        setRef={timeInput}
+        name="time"
+        onFocus={() => {
           if (Platform.OS === 'ios') {
-            openIOS();
+            openIOS('time');
             return;
           }
 
-          /**
-           * Android has native modal, open by rendering DateTimePicker below
-           */
+          /** Android has native modal, open by rendering DateTimePicker below */
           setAndroidMode('time');
         }}
-      >
-        <Text>TIME: {date.toISOString()}</Text>
-      </TouchableOpacity>
+        value={date.toISOString()}
+        style={Styles.input}
+      />
 
       {androidMode && (
         <DateTimePicker

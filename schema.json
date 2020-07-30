@@ -162,7 +162,7 @@
             "deprecationReason": null
           },
           {
-            "name": "getChannelStreams",
+            "name": "getChannelStreamProfiles",
             "description": null,
             "args": [
               {
@@ -337,18 +337,6 @@
             "deprecationReason": null
           },
           {
-            "name": "getFeed",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "FeedPayload",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "getFollowingChannelProfiles",
             "description": null,
             "args": [
@@ -401,6 +389,18 @@
                 "name": "ChannelProfilesPayLoad",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "getHomeFeed",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "FeedPayload",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -15970,6 +15970,18 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "channel",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ChannelProfile",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

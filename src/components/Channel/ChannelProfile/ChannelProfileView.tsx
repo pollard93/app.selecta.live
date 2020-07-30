@@ -109,11 +109,8 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
               </>
             ),
             onScroll: Animated.event(
-              [
-                {
-                  nativeEvent: { contentOffset: { y: scrollY.current } },
-                },
-              ],
+              [{ nativeEvent: { contentOffset: { y: scrollY.current } } }],
+              { useNativeDriver: false },
             ),
             scrollEventThrottle: 16,
           }}

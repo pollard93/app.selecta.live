@@ -55,5 +55,9 @@ export interface CHANNEL_SELF_FRAGMENT {
   creditWithdrawalValue: number | null;
   creditWithdrawalMinimum: number | null;
   freeStreamAllowance: number | null;
+  websiteUrl: string | null;
+  twitterUrl: string | null;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
   createdAt: any | null;
 }

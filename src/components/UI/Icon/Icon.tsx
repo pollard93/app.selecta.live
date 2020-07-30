@@ -30,6 +30,7 @@ export enum ICON {
   TWITTER = 'TWITTER',
   FACEBOOK = 'FACEBOOK',
   INSTAGRAM = 'INSTAGRAM',
+  CAMERA = 'CAMERA',
   COPY = 'COPY',
 }
 
@@ -118,6 +119,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.INSTAGRAM:
         return require('../../../assets/images/icons/instagram.png');
+
+      case ICON.CAMERA:
+        return require('../../../assets/images/icons/camera.png');
 
       case ICON.COPY:
         return require('../../../assets/images/icons/copy.png');

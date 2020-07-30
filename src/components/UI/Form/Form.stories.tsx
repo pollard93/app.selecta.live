@@ -7,8 +7,12 @@ import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import TextInput from './components/TextInput';
 import TextArea from './components/TextArea';
 import SearchInput from './components/SearchInput';
+import DateTimePickerInput from '../DateTimePicker/components/DateTimePickerInput/DateTimePickerInput';
+import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+
 
 storiesOf('UI/Form', module)
+  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</CenterView>)
   .add('TextInput', () => (
     <TextInput
@@ -40,7 +44,30 @@ storiesOf('UI/Form', module)
   ))
   .add('TextArea', () => (
     <TextArea
+      name="name"
       placeholder="TextArea"
+    />
+  ))
+  .add('TextArea - with error (required)', () => (
+    <TextArea
+      name="name"
+      placeholder="TextArea"
+      errors={{
+        name: {
+          type: 'required',
+        },
+      }}
+    />
+  ))
+  .add('TextArea - with error (pattern)', () => (
+    <TextArea
+      name="name"
+      placeholder="TextArea"
+      errors={{
+        name: {
+          type: 'pattern',
+        },
+      }}
     />
   ))
   .add('SearchInput', () => (
@@ -52,5 +79,13 @@ storiesOf('UI/Form', module)
     <SearchInput
       placeholder="SearchInput"
       loading={true}
+    />
+  ))
+  .add('DateTimePickerInput', () => (
+    <DateTimePickerInput
+      value={new Date().toISOString()}
+      defaultValue={new Date().toISOString()}
+      onChange={console.log}
+      minimumDate={new Date(Date.now())}
     />
   ));

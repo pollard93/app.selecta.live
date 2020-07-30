@@ -22,6 +22,10 @@ export const CHANNEL_SELF_FRAGMENT = gql`
     creditWithdrawalValue
     creditWithdrawalMinimum
     freeStreamAllowance
+    websiteUrl
+    twitterUrl
+    facebookUrl
+    instagramUrl
     createdAt
   },
   ${FILE_FRAGMENT}
