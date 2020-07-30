@@ -3,9 +3,8 @@ import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useCancelStreamMutation } from '../../../API/mutation/cancelStream/cancelStream';
-import { getGQLErrorMessage, formatForTimezone } from '../../../utils/functions';
+import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
-import H4 from '../../UI/Typography/components/H4';
 import Button from '../../UI/Button/Button';
 
 interface CancelStreamProps {
@@ -23,6 +22,15 @@ const CancelStream = (props: CancelStreamProps) => {
     variables: {
       id: props.data.id,
     },
+    onCompleted: () => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content="Stream cancelled" />
+        ),
+        dismissible: false,
+      });
+    },
     onError: (e) => {
       toast.push({
         duration: 1000,
@@ -33,16 +41,6 @@ const CancelStream = (props: CancelStreamProps) => {
       });
     },
   });
-
-
-  /**
-   * If cancelled render here
-   */
-  if (props.data.cancelled) {
-    return (
-      <H4 testID="Cancelled">Stream cancelled {formatForTimezone(props.data.cancelled, 'calendar')}</H4>
-    );
-  }
 
 
   /**

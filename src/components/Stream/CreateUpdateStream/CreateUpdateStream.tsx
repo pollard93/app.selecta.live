@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { View } from 'react-native';
+import React, { FC, useRef } from 'react';
+import { View, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { ScreenProps } from '../../../screens/utils/interfaces';
@@ -8,14 +8,25 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 
 export interface CreateUpdateStreamProps extends ScreenProps {
   id?: string;
+  getStreamSelfsVariables?: getStreamSelfsVariables;
 }
 
-const CreateUpdateStreamInner: FC<CreateUpdateStreamProps> = (props) => {
+export interface CreateUpdateStreamInnerProps extends CreateUpdateStreamProps {
+  canPopRef: React.MutableRefObject<boolean>;
+}
+
+const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
   if (!props.id) {
-    return <CreateUpdateStreamView />;
+    return (
+      <CreateUpdateStreamView
+        getStreamSelfsVariables={props.getStreamSelfsVariables}
+        canPopRef={props.canPopRef}
+      />
+    );
   }
 
   const queryResult = useGetStreamSelfQuery({
@@ -31,6 +42,8 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamProps> = (props) => {
   return (
     <CreateUpdateStreamView
       data={queryResult.data.getStreamSelf}
+      getStreamSelfsVariables={props.getStreamSelfsVariables}
+      canPopRef={props.canPopRef}
     />
   );
 };
@@ -38,12 +51,36 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamProps> = (props) => {
 const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
+  const canPopRef = useRef();
+
+
+  /**
+   * Handle on pop
+   */
+  const onPop = () => {
+    // If ref is false, show alert before popping
+    if (canPopRef.current === false) {
+      Alert.alert(
+        'Are you sure?',
+        'You have unsaved changes.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Yes', onPress: () => Navigation.pop(props.componentId) },
+        ],
+      );
+      return;
+    }
+
+    // Otherwise pop
+    Navigation.pop(props.componentId);
+  };
+
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(props.componentId)} />
+      <Header onPop={onPop} />
       <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
-        <CreateUpdateStreamInner {...props} />
+        <CreateUpdateStreamInner {...props} canPopRef={canPopRef} />
       </View>
     </View>
   );

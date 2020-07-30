@@ -16,6 +16,7 @@ import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -27,10 +28,22 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
 
 
   /**
+   * Variables
+   */
+  const variables: getStreamSelfsVariables = {
+    first: 5,
+    orderBy: StreamOrderByInput.createdAt_DESC,
+    after: null,
+  };
+
+
+  /**
    * Push CreateUpdateStreamScreen
    */
   const onCreate = () => {
-    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {});
+    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+      getStreamSelfsVariables: variables,
+    });
   };
 
 
@@ -40,9 +53,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
       <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight }]}>
         <StreamSelfsFlatList
           query={GET_STREAM_SELFS_QUERY}
-          variables={{
-            first: 5,
-          }}
+          variables={variables}
           accessor='getStreamSelfs.streams'
           renderItem={({ item }) => (
             <View style={Styles.item}>

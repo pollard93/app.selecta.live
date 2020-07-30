@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, FC } from 'react';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import { View, TouchableOpacity } from 'react-native';
 import { AsyncImage, AsyncImageProps } from 'mbp-components-rn-asyncimage';
@@ -6,6 +6,7 @@ import { openAssetPickerModalScreen, closeAssetPickerModal } from '../../../modu
 import Icon, { ICON } from '../Icon/Icon';
 import Styles from './EditableAsyncImage.style';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import FadeInView from '../FadeInView/FadeInView';
 
 export interface EditableAsyncImageProps {
   asyncImageProps: AsyncImageProps;
@@ -15,7 +16,70 @@ export interface EditableAsyncImageProps {
   loading?: boolean;
 }
 
-export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
+export interface EditableAsyncImageControlsProps extends EditableAsyncImageProps {
+  selectedAsset: PhotoIdentifier['node'];
+  onCancel: () => void;
+  openPicker: () => void;
+}
+
+
+/**
+ * Controls
+ */
+const Controls: FC<EditableAsyncImageControlsProps> = (props) => {
+  if (props.loading) {
+    return (
+      <FadeInView style={[Styles.controls, Styles[props.iconPosition || 'center'], Styles.loadingWrap]}>
+        <LoadingIcon size="regular" />
+      </FadeInView>
+    );
+  }
+
+  return props.selectedAsset
+    ? (
+      <View style={[Styles.controls, Styles[props.iconPosition || 'center']]}>
+        <TouchableOpacity
+          onPress={props.onCancel}
+        >
+          <View style={Styles.icon}>
+            <Icon
+              name={ICON.CROSS}
+              size="regular"
+              forceLight
+            />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={props.openPicker}
+        >
+          <View style={Styles.icon}>
+            <Icon
+              name={ICON.CAMERA}
+              size="regular"
+              forceLight
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+    : (
+      <TouchableOpacity
+        style={[Styles.controls, Styles[props.iconPosition || 'center']]}
+        onPress={props.openPicker}
+      >
+        <View style={Styles.icon}>
+          <Icon
+            name={ICON.CAMERA}
+            size="regular"
+            forceLight
+          />
+        </View>
+      </TouchableOpacity>
+    );
+};
+
+export const EditableAsyncImage: FC<EditableAsyncImageProps> = (props) => {
   const [selectedAsset, setSelectedAsset] = useState<PhotoIdentifier['node']>();
 
 
@@ -68,63 +132,6 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
   };
 
 
-  /**
-   * Controls
-   */
-  const Controls = () => {
-    if (props.loading) {
-      return (
-        <View style={[Styles.controls, Styles[props.iconPosition || 'center']]}>
-          <LoadingIcon size="small" />
-        </View>
-      );
-    }
-
-    return selectedAsset
-      ? (
-        <View style={[Styles.controls, Styles[props.iconPosition || 'center']]}>
-          <TouchableOpacity
-            onPress={onCancel}
-          >
-            <View style={Styles.icon}>
-              <Icon
-                name={ICON.CROSS}
-                size="regular"
-                forceLight
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={openPicker}
-          >
-            <View style={Styles.icon}>
-              <Icon
-                name={ICON.CAMERA}
-                size="regular"
-                forceLight
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-      )
-      : (
-        <TouchableOpacity
-          style={[Styles.controls, Styles[props.iconPosition || 'center']]}
-          onPress={openPicker}
-        >
-          <View style={Styles.icon}>
-            <Icon
-              name={ICON.CAMERA}
-              size="regular"
-              forceLight
-            />
-          </View>
-        </TouchableOpacity>
-      );
-  };
-
-
   return (
     <View style={props.asyncImageProps?.containerProps?.style}>
       <AsyncImage
@@ -133,7 +140,12 @@ export const EditableAsyncImage = (props: EditableAsyncImageProps) => {
         fullUrl={selectedAsset?.image?.uri || props.asyncImageProps?.fullUrl}
       />
 
-      <Controls />
+      <Controls
+        {...props}
+        selectedAsset={selectedAsset}
+        onCancel={onCancel}
+        openPicker={openPicker}
+      />
     </View>
   );
 };

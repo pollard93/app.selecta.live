@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
-import { ScrollView, Switch, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, Switch, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
@@ -9,10 +9,8 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
-import DateTimePickerInput from '../../UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
-import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 import Styles from './CreateUpdateStream.style';
 import H2 from '../../UI/Typography/components/H2';
@@ -25,6 +23,8 @@ import DateInput from '../../UI/Form/components/DateInput';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import StreamStates from './components/StreamStates/StreamStates';
+import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
+import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -40,41 +40,60 @@ type FormData = {
 
 interface CreateUpdateStreamViewProps {
   data?: STREAM_SELF_FRAGMENT;
+  getStreamSelfsVariables?: getStreamSelfsVariables;
+  canPopRef: React.MutableRefObject<boolean>;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const { data: { getChannelSelf } } = useGetChannelSelfQuery();
+  const [data, setData] = useState(props.data);
 
 
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation } = useForm<FormData>({
+  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
     mode: 'onChange',
-    defaultValues: props.data
+    defaultValues: data
       ? {
-        name: props.data.name,
-        info: props.data.info,
-        timeFrom: props.data.timeFrom,
-        timeTo: props.data.timeTo,
-        isFree: props.data.cost === 0,
-        cost: `${props.data.cost}`,
+        name: data.name,
+        info: data.info,
+        timeFrom: data.timeFrom,
+        timeTo: data.timeTo,
+        isFree: data.cost === 0,
+        cost: `${data.cost}`,
         image: undefined,
-        audioOnly: props.data.audioOnly,
+        audioOnly: data.audioOnly,
       }
-      : {
-        name: '',
-        info: '',
-        timeFrom: new Date(Date.now() + 3600000).toISOString(), // 1 hour
-        timeTo: new Date(Date.now() + 7200000).toISOString(), // 2 hours (1 hour duration)
-        duration: 3.6e+6, // 1 hour
-        isFree: false,
-        cost: `${getChannelSelf.creditMinimumStreamCost}`,
-        image: undefined,
-        audioOnly: false,
-      },
+      : (() => {
+        // Get now rounded to next hour
+        const timeFrom = new Date();
+        timeFrom.setHours(timeFrom.getHours() + Math.round(timeFrom.getMinutes() / 60) + 1);
+        timeFrom.setMinutes(0, 0, 0);
+
+        return {
+          name: '',
+          info: '',
+          timeFrom: timeFrom.toISOString(),
+          timeTo: new Date(timeFrom.getTime() + 3.6e+6).toISOString(), // 1 hour duration
+          duration: 3.6e+6, // 1 hour
+          isFree: false,
+          cost: `${getChannelSelf.creditMinimumStreamCost}`,
+          image: undefined,
+          audioOnly: false,
+        };
+      })(),
   });
   const [defaultValues] = useState(getValues());
+
+
+  /**
+   * When field becomes dirty, set canPopRef to false to alert user there are changes
+   */
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    props.canPopRef.current = !dirty;
+  }, [dirty]);
 
 
   /**
@@ -84,6 +103,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
+  const imageRef = useRef(null);
 
 
   /**
@@ -97,9 +117,55 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   /**
    * Put stream mutation
    */
-  const [putStreamMutation] = usePutStreamMutation({
-    onCompleted: () => {
+  const [putStreamMutation, { client }] = usePutStreamMutation({
+    onCompleted: ({ putStream }) => {
       setLoading(false);
+
+      // Set data in state so the form becomes update form
+      setData(putStream);
+
+      // Reset form
+      reset({
+        name: putStream.name,
+        info: putStream.info,
+        image: undefined,
+        timeFrom: putStream.timeFrom,
+        timeTo: putStream.timeTo,
+        duration: new Date(putStream.timeTo).getTime() - new Date(putStream.timeFrom).getTime(),
+        isFree: putStream.cost === 0,
+        cost: `${putStream.cost}`,
+        audioOnly: putStream.audioOnly,
+      });
+
+      // Reset image
+      // eslint-disable-next-line no-unused-expressions
+      imageRef.current?.();
+
+
+      /**
+       * Prepend stream in GET_STREAM_SELFS_QUERY
+       */
+      try {
+        const queryData = client.readQuery<getStreamSelfs, getStreamSelfsVariables>({
+          query: GET_STREAM_SELFS_QUERY,
+          variables: props.getStreamSelfsVariables,
+        });
+
+        client.writeQuery<getStreamSelfs, getStreamSelfsVariables>({
+          query: GET_STREAM_SELFS_QUERY,
+          variables: props.getStreamSelfsVariables,
+          data: {
+            ...queryData,
+            getStreamSelfs: {
+              ...queryData.getStreamSelfs,
+              streams: [putStream, ...queryData.getStreamSelfs.streams],
+              count: queryData.getStreamSelfs.count + 1,
+            },
+          },
+        });
+      // eslint-disable-next-line no-empty
+      } catch {}
+
 
       /**
        * Success toast
@@ -130,8 +196,27 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Update stream mutation
    */
   const [updateStreamMutation] = useUpdateStreamMutation({
-    onCompleted: () => {
+    onCompleted: ({ updateStream }) => {
       setLoading(false);
+
+      // Update data as it's in state
+      setData(updateStream);
+
+      // Reset form
+      reset({
+        name: updateStream.name,
+        info: updateStream.info,
+        image: undefined,
+        timeFrom: updateStream.timeFrom,
+        timeTo: updateStream.timeTo,
+        isFree: updateStream.cost === 0,
+        cost: `${updateStream.cost}`,
+        audioOnly: updateStream.audioOnly,
+      });
+
+      // Reset image
+      // eslint-disable-next-line no-unused-expressions
+      imageRef.current?.();
 
       /**
        * Success toast
@@ -177,7 +262,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const onSubmit = async (variables: FormData) => {
     setLoading(true);
 
-    if (props.data) {
+    if (data) {
       /**
        * Map over the form variables and only return
        * varibales the appear in the dirty fields list
@@ -204,7 +289,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             ...changed,
             cost: changed.cost ? parseInt(variables.cost, 10) : undefined,
             image: changed.image ? await processImage(changed.image) : undefined,
-            id: props.data.id,
+            id: data.id,
           },
         });
       } catch {
@@ -261,14 +346,15 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
   /**
    * Register form
+   * Inputs are required if create form (no data)
    */
   useEffect(() => {
-    register({ name: 'image' }, { required: true });
+    register({ name: 'image' }, { required: !data });
 
     register(
       { name: 'name' },
       {
-        required: true,
+        required: !data,
         validate: (v) => {
           if (!v) return false;
 
@@ -284,7 +370,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     register(
       { name: 'info' },
       {
-        required: true,
+        required: !data,
         validate: (v) => {
           if (!v) return 'Please enter some information';
 
@@ -297,12 +383,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       },
     );
 
-    register({ name: 'timeFrom' }, { required: true });
-    register({ name: 'timeTo' }, { required: true });
-    register({ name: 'duration' }, { required: true });
+    register({ name: 'timeFrom' }, { required: !data });
+    register({ name: 'timeTo' }, { required: !data });
+    register({ name: 'duration' }, { required: !data });
     register({ name: 'isFree' }, { required: false });
     register({ name: 'cost' }, {
-      required: true,
+      required: !data,
       validate: (v) => {
         /**
          * If isFree is false, cost must be greater than creditMinimumStreamCost
@@ -321,7 +407,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     });
 
     register({ name: 'audioOnly' }, { required: false });
-  }, []);
+  }, [register]);
 
 
   return (
@@ -332,14 +418,16 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       >
         <ScrollView style={GlobalStyles.PageFill}>
           <EditableAsyncImage
+            resetRef={imageRef}
             asyncImageProps={{
-              splashUrl: props.data?.image?.url?.splash,
-              fullUrl: props.data?.image?.url?.full,
+              splashUrl: data?.image?.url?.splash,
+              fullUrl: data?.image?.url?.full,
               containerProps: {
                 style: Styles.image,
               },
             }}
             onChange={(file) => setValue('image', file, true)}
+            loading={loading}
           />
 
           <View style={Styles.form}>
@@ -465,9 +553,9 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 />
               </View>
 
-              {props.data && (
+              {data && (
                 <View style={Styles.inputWrap}>
-                  <StreamStates data={props.data} />
+                  <StreamStates data={data} />
                 </View>
               )}
             </View>
@@ -481,7 +569,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         }}
       >
         <Button
-          title={loading ? `${props.data ? 'Updating' : 'Creating'}` : `${props.data ? 'Update' : 'Create'} Stream`}
+          title={loading ? `${data ? 'Updating' : 'Creating'}` : `${data ? 'Update' : 'Create'} Stream`}
           onPress={handleSubmit(onSubmit)}
           disabled={!isValid || !dirty}
           loading={loading}

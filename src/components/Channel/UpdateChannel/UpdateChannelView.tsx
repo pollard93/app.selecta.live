@@ -34,6 +34,7 @@ type FormData = {
 
 interface UpdateChannelViewProps {
   data: CHANNEL_SELF_FRAGMENT;
+  canPopRef: React.MutableRefObject<boolean>;
 }
 
 const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
@@ -54,6 +55,15 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     },
   });
   const [defaultValues] = useState(getValues());
+
+
+  /**
+   * When field becomes dirty, set canPopRef to false to alert user there are changes
+   */
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    props.canPopRef.current = !dirty;
+  }, [dirty]);
 
 
   /**

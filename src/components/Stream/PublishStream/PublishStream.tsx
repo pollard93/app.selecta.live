@@ -22,6 +22,15 @@ const PublishStream = (props: PublishStreamProps) => {
     variables: {
       id: props.data.id,
     },
+    onCompleted: () => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content="Stream published" />
+        ),
+        dismissible: false,
+      });
+    },
     onError: (e) => {
       toast.push({
         duration: 1000,

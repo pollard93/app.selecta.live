@@ -5,6 +5,8 @@ import PublishStream from '../../../PublishStream/PublishStream';
 import DeleteStream from '../../../DeleteStream/DeleteStream';
 import CancelStream from '../../../CancelStream/CancelStream';
 import Styles from './StreamStates.style';
+import { formatForTimezone } from '../../../../../utils/functions';
+import H4 from '../../../../UI/Typography/components/H4';
 
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
@@ -24,9 +26,14 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
     );
   }
 
-  return (
-    <CancelStream {...props} />
-  );
+  return !props.data.cancelled
+    ? (
+      <>
+        <H4>Stream Published {formatForTimezone(props.data.published, 'calendar')}</H4>
+        <CancelStream {...props} />
+      </>
+    )
+    : <H4>Stream Cancelled {formatForTimezone(props.data.cancelled, 'calendar')}</H4>;
 };
 
 export default StreamStates;

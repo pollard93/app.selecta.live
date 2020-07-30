@@ -8,6 +8,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     zIndex: 100,
   },
+  loadingWrap: {
+    backgroundColor: color.mono.darkCover,
+  },
   center: {
     alignItems: 'center',
     justifyContent: 'center',

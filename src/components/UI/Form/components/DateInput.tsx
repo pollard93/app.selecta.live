@@ -1,12 +1,10 @@
-import React, { FC, useState, useRef, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { View, Platform, StyleProp, ViewStyle } from 'react-native';
-import moment from 'moment-timezone';
 import { Navigation } from 'react-native-navigation';
 import TextInput from './TextInput';
 import { openModalScreen } from '../../../../screens/utils';
 import DateTimePicker from '../../DateTimePicker/components/DateTimePicker/DateTimePicker';
 import { ModalScreenName } from '../../../../screens/ModalScreen/ModalScreen';
-import Styles from '../Form.style';
 import { formatForTimezone } from '../../../../utils/functions';
 
 export interface DateInputProps {

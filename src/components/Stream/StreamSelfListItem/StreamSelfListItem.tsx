@@ -55,8 +55,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
     <View style={Styles.wrap}>
       <View style={Styles.banner}>
         <Body bold style={Styles.bannerHeader}>
-          Live On: {formatForTimezone(data.timeFrom, 'DD/MM/Y H:m')}
-          &nbsp; {formatForTimezone(data.timeFrom, 'z')}
+          Live On: {formatForTimezone(data.timeFrom, 'DD/MM/Y HH:mm z')}
           {new Date(data.timeFrom) > new Date() && ' (Upcoming)'}
         </Body>
 
@@ -114,7 +113,13 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <View style={Styles.authKeys}>
               <View style={Styles.authKey}>
                 <Body bold>Stream Url: </Body>
-                <Body style={Styles.authKeyBody}>{data.streamUrl}</Body>
+                <Body
+                  style={Styles.authKeyBody}
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                >
+                  {data.streamUrl}{data.streamUrl}
+                </Body>
 
                 <TouchableOpacity onPress={() => onCopy(data.streamUrl)}>
                   <Icon name={ICON.COPY} size="small" />

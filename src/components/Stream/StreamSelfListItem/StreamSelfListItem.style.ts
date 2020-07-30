@@ -16,6 +16,7 @@ export default StyleSheet.create({
   },
   bannerHeader: {
     color: color.mono.light,
+    flex: 1,
   },
   header: {
     alignItems: 'center',
@@ -61,6 +62,7 @@ export default StyleSheet.create({
   },
   authKeyBody: {
     flex: 1,
+    paddingRight: spacing.small,
   },
   metrics: {
     alignItems: 'center',
