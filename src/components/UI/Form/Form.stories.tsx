@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable no-console */
 import React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react-native';
+import { storiesOf } from '@storybook/react-native';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import TextInput from './components/TextInput';
 import TextArea from './components/TextArea';
@@ -46,7 +46,30 @@ storiesOf('UI/Form', module)
   ))
   .add('TextArea', () => (
     <TextArea
+      name="name"
       placeholder="TextArea"
+    />
+  ))
+  .add('TextArea - with error (required)', () => (
+    <TextArea
+      name="name"
+      placeholder="TextArea"
+      errors={{
+        name: {
+          type: 'required',
+        },
+      }}
+    />
+  ))
+  .add('TextArea - with error (pattern)', () => (
+    <TextArea
+      name="name"
+      placeholder="TextArea"
+      errors={{
+        name: {
+          type: 'pattern',
+        },
+      }}
     />
   ))
   .add('SearchInput', () => (

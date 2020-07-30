@@ -4,7 +4,7 @@ import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
   item: {
-    marginVertical: spacing.base,
+    marginBottom: spacing.small,
     width: '100%',
   },
   createButton: {
