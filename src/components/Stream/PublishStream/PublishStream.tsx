@@ -2,24 +2,23 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
-import { useCancelStreamMutation } from '../../../API/mutation/cancelStream/cancelStream';
-import { getGQLErrorMessage, formatForTimezone } from '../../../utils/functions';
+import { usePublishStreamMutation } from '../../../API/mutation/publishStream/publishStream';
+import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
-import H4 from '../../UI/Typography/components/H4';
 import Button from '../../UI/Button/Button';
 
-interface CancelStreamProps {
+interface PublishStreamProps {
   data: STREAM_SELF_FRAGMENT;
 }
 
-const CancelStream = (props: CancelStreamProps) => {
+const PublishStream = (props: PublishStreamProps) => {
   const toast = useToast();
 
 
   /**
-   * Cancel stream mutation
+   * Publish stream mutation
    */
-  const [mutation, { loading }] = useCancelStreamMutation({
+  const [mutation, { loading }] = usePublishStreamMutation({
     variables: {
       id: props.data.id,
     },
@@ -36,21 +35,11 @@ const CancelStream = (props: CancelStreamProps) => {
 
 
   /**
-   * If cancelled render here
+   * On publish show alert to confirm action
    */
-  if (props.data.cancelled) {
-    return (
-      <H4 testID="Cancelled">Stream cancelled {formatForTimezone(props.data.cancelled, 'calendar')}</H4>
-    );
-  }
-
-
-  /**
-   * On cancel show alert to confirm action
-   */
-  const onCancel = () => {
+  const onPublish = () => {
     Alert.alert(
-      'Are you sure you want to cancel stream?',
+      'Are you sure you want to publish this stream?',
       'This action is irreversible.',
       [
         { text: 'Cancel', style: 'cancel' },
@@ -62,12 +51,11 @@ const CancelStream = (props: CancelStreamProps) => {
 
   return (
     <Button
-      title="Cancel stream"
-      type="SECONDARY"
-      onPress={onCancel}
+      title="Publish"
+      onPress={onPublish}
       disabled={loading}
     />
   );
 };
 
-export default CancelStream;
+export default PublishStream;

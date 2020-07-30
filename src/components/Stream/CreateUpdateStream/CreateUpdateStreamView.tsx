@@ -24,6 +24,7 @@ import DurationInput from '../../UI/Form/components/DurationInput';
 import DateInput from '../../UI/Form/components/DateInput';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
+import StreamStates from './components/StreamStates/StreamStates';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -454,7 +455,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               </View>
             </View>
 
-            <View style={[Styles.section, Styles.settings]}>
+            <View style={Styles.section}>
               <H2>Settings</H2>
               <View style={[Styles.toggleInput, Styles.inputWrap]}>
                 <Body style={Styles.toggleInputLabel}>Audio Only</Body>
@@ -463,6 +464,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   value={watch('audioOnly')}
                 />
               </View>
+
+              {props.data && (
+                <View style={Styles.inputWrap}>
+                  <StreamStates data={props.data} />
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
