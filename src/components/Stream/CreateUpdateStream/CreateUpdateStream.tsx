@@ -256,22 +256,7 @@ const CreateUpdateStream = (props: CreateUpdateStreamProps) => {
           },
         }}
         onChange={(file) => setValue('image', file, true)}
-      >
-        {({ selectedAsset, openPicker, onCancel }) => (
-          <>
-            <Button
-              title="Change"
-              onPress={openPicker}
-            />
-
-            <Button
-              title="Cancel"
-              disabled={!selectedAsset}
-              onPress={onCancel}
-            />
-          </>
-        )}
-      </EditableAsyncImage>
+      />
 
       <View style={Styles.form}>
         <View style={Styles.section}>

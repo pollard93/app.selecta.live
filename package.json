@@ -54,7 +54,7 @@
     "jwt-decode": "^2.2.0",
     "mbp-components-rn-apolloflatlist": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#0.2.1",
     "mbp-components-rn-assetpicker": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.2.0",
-    "mbp-components-rn-asyncimage": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.3.4",
+    "mbp-components-rn-asyncimage": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.4.0",
     "mbp-components-rn-toast": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.2.2",
     "metro": "^0.59.0",
     "moment-timezone": "^0.5.31",
