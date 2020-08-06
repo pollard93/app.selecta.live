@@ -72,6 +72,12 @@ const HomeFeed: FC<HomeFeedProps> = () => {
             : (
                 <Feed
                   data={queryResult.data.getHomeFeed}
+                  onPressStream={(id) => {
+                    pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id });
+                  }}
+                  onPressChannel={(id) => {
+                    pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id });
+                  }}
                   refetch={queryResult.refetch}
                   flatListProps={{
                     contentContainerStyle: { paddingTop: headerHeight },

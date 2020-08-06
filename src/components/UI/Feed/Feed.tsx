@@ -4,9 +4,12 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { FEED_PAYLOAD_FRAGMENT } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
 import { DynamicStyles } from './Feed.styles';
 import FeedItem from './FeedItem';
+import { STACK } from '../../../screens/utils/interfaces';
 
 interface FeedProps {
   data: FEED_PAYLOAD_FRAGMENT;
+  onPressStream: (id: string) => void;
+  onPressChannel: (id: string) => void;
   refetch?: () => Promise<any>;
   flatListProps?: Partial<FlatListProps<any>>;
 }
@@ -36,7 +39,13 @@ const Feed: FC<FeedProps> = (props) => {
       data={props.data.items}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={[dynamicStyles[`background${props.data.items[0].background}`], props.flatListProps?.contentContainerStyle]}
-      renderItem={(a) => <FeedItem {...a} />}
+      renderItem={(a) => (
+        <FeedItem
+          renderInfo={a}
+          onPressStream={props.onPressStream}
+          onPressChannel={props.onPressChannel}
+        />
+      )}
       keyExtractor={(item, index) => `${item.heading}${index}`}
       refreshControl={
         props.refetch
