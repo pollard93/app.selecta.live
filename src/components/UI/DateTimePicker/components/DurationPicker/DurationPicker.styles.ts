@@ -23,4 +23,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing.small
   },
+  picker: {
+    flex: 1,
+    height: 200,
+  },
 });

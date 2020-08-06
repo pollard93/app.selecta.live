@@ -103,7 +103,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
-  const imageRef = useRef(null);
+  const imageResetRef = useRef(null);
 
 
   /**
@@ -139,7 +139,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
       // Reset image
       // eslint-disable-next-line no-unused-expressions
-      imageRef.current?.();
+      imageResetRef.current?.();
 
 
       /**
@@ -216,7 +216,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
       // Reset image
       // eslint-disable-next-line no-unused-expressions
-      imageRef.current?.();
+      imageResetRef.current?.();
 
       /**
        * Success toast
@@ -418,7 +418,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       >
         <ScrollView style={GlobalStyles.PageFill}>
           <EditableAsyncImage
-            resetRef={imageRef}
+            resetRef={imageResetRef}
             asyncImageProps={{
               splashUrl: data?.image?.url?.splash,
               fullUrl: data?.image?.url?.full,

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { View, Platform, StyleProp, ViewStyle } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import TextInput from './TextInput';
@@ -23,36 +23,6 @@ const DateInput: FC<DateInputProps> = (props) => {
 
 
   /**
-   * If props.value is set, watch for changes
-   * If it changes, and the value differs from the internal state
-   * Then set the state to match
-   */
-  useEffect(() => {
-    if (props.value && props.value !== date.toISOString()) {
-      setDate(new Date(props.value));
-    }
-  }, [props.value]);
-
-
-  /**
-   * On change set date state and execute props.onChange
-   */
-  const onChange = (_, selectedDate) => {
-    if (selectedDate) {
-      setDate(selectedDate);
-      props.onChange(new Date(selectedDate).toISOString());
-    }
-
-    /**
-     * On change is executed when the user has finished their selection and the modal is closed
-     * Set android mode to null to remove component from render
-     */
-    if (Platform.OS === 'android') {
-      setAndroidActive(false);
-    }
-  };
-
-  /**
    * iOS needs modal support, openModalScreen with DateTimePicker as child component
    */
   const openIOS = () => {
@@ -63,15 +33,20 @@ const DateInput: FC<DateInputProps> = (props) => {
             value: date,
             mode: props.mode,
             display: 'default',
-            onChange,
+            onChange: null, // Overridden in component
             minimumDate: props.minimumDate,
             maximumDate: props.maximumDate,
           }}
-          dismissModal={() => {
+          onDone={(value) => {
             Navigation.dismissModal(ModalScreenName);
 
             /** Blur the input so it can be triggered again */
             props.inputRef.current.blur();
+
+            if(value){
+              setDate(value);
+              props.onChange(new Date(value).toISOString());
+            }
           }}
         />
       ),
