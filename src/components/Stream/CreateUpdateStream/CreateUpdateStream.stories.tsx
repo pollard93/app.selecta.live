@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react-native';
 import CreateUpdateStream from './CreateUpdateStream';
@@ -6,10 +7,14 @@ import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStrea
 import GetChannelSelfDecorator from '../../../../storybook/Decorators/GetChannelSelfDecorator/GetChannelSelfDecorator';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
+import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
 storiesOf('Stream/CreateUpdateStream', module)
   .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <GetChannelSelfDecorator>{getStory()}</GetChannelSelfDecorator>)
+  .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .add('CreateUpdateStream', () => <CreateUpdateStream />)
+  .add('CreateUpdateStream with id', () => <CreateUpdateStream id="test" />)
   .add('CreateUpdateStreamView - Create', () => {
     const TestComponent = () => {
       const { data: { getChannelSelf } } = useGetChannelSelfQuery();
@@ -20,6 +25,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           channelData={getChannelSelf}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
+          onPop={console.log}
         />
       );
     };
@@ -39,6 +45,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
+          onPop={console.log}
         />
       );
     };
@@ -68,6 +75,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
+          onPop={console.log}
         />
       );
     };
@@ -100,6 +108,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
+          onPop={console.log}
         />
       );
     };
@@ -133,6 +142,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
+          onPop={console.log}
         />
       );
     };

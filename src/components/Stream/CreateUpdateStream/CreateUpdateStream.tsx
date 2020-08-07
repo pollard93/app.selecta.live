@@ -29,6 +29,7 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
         channelData={getChannelSelf}
         getStreamSelfsVariables={props.getStreamSelfsVariables}
         canPopRef={props.canPopRef}
+        onPop={() => Navigation.pop(props.componentId)}
       />
     );
   }
@@ -49,6 +50,7 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
       data={queryResult.data.getStreamSelf}
       getStreamSelfsVariables={props.getStreamSelfsVariables}
       canPopRef={props.canPopRef}
+      onPop={() => Navigation.pop(props.componentId)}
     />
   );
 };
@@ -60,7 +62,7 @@ const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
 
 
   /**
-   * Handle on pop
+   * Handle on pop with alert for changes
    */
   const onPop = () => {
     // If ref is false, show alert before popping

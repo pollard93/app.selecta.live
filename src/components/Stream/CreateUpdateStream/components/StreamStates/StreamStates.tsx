@@ -7,9 +7,12 @@ import CancelStream from '../../../CancelStream/CancelStream';
 import Styles from './StreamStates.style';
 import { formatForTimezone } from '../../../../../utils/functions';
 import H4 from '../../../../UI/Typography/components/H4';
+import { getStreamSelfsVariables } from '../../../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
+  getStreamSelfsVariables: getStreamSelfsVariables;
+  onPop: () => void;
 }
 
 const StreamStates: FC<StreamStatesProps> = (props) => {

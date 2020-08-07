@@ -45,6 +45,7 @@ interface CreateUpdateStreamViewProps {
   data?: STREAM_SELF_FRAGMENT;
   getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
+  onPop: () => void;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
@@ -603,7 +604,11 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
             {data && (
               <View style={Styles.inputWrap}>
-                <StreamStates data={data} />
+                <StreamStates
+                  data={data}
+                  getStreamSelfsVariables={props.getStreamSelfsVariables}
+                  onPop={props.onPop}
+                />
               </View>
             )}
           </View>
