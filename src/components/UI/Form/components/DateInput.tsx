@@ -1,11 +1,12 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
-import { View, Platform, StyleProp, ViewStyle } from 'react-native';
+import { View, Platform, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import TextInput from './TextInput';
 import { openModalScreen } from '../../../../screens/utils';
 import DateTimePicker from '../../DateTimePicker/components/DateTimePicker/DateTimePicker';
 import { ModalScreenName } from '../../../../screens/ModalScreen/ModalScreen';
 import { formatForTimezone } from '../../../../utils/functions';
+import Styles from '../Form.style';
 
 export interface DateInputProps {
   value: string; // ISOString - allows component value to be updated externally
@@ -15,10 +16,11 @@ export interface DateInputProps {
   minimumDate?: Date;
   maximumDate?: Date;
   wrapStyle?: StyleProp<ViewStyle>;
+  editable?: boolean;
 }
 
 const DateInput: FC<DateInputProps> = (props) => {
-  const [androidActive, setAndroidActive] = useState(false);
+  // const [androidActive, setAndroidActive] = useState(false);
   const [date, setDate] = useState(props.value ? new Date(props.value) : new Date());
 
 
@@ -43,7 +45,7 @@ const DateInput: FC<DateInputProps> = (props) => {
             /** Blur the input so it can be triggered again */
             props.inputRef.current.blur();
 
-            if(value){
+            if (value) {
               setDate(value);
               props.onChange(new Date(value).toISOString());
             }
@@ -61,16 +63,16 @@ const DateInput: FC<DateInputProps> = (props) => {
         onFocus={() => {
           if (Platform.OS === 'ios') {
             openIOS();
-            return;
           }
 
           /** Android has native modal, open by rendering DateTimePicker below */
-          setAndroidActive(true);
+          // setAndroidActive(true);
         }}
         value={formatForTimezone(date.toISOString(), props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm z')}
+        editable={props.editable}
       />
 
-      {androidActive && (
+      {/* {androidActive && (
         <DateTimePicker
           pickerProps={{
             value: date,
@@ -81,7 +83,7 @@ const DateInput: FC<DateInputProps> = (props) => {
             maximumDate: props.maximumDate,
           }}
         />
-      )}
+      )} */}
     </View>
   );
 };

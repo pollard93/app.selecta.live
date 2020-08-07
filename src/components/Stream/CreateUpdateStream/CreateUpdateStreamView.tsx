@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, FC } from 'react';
+import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
 import { ScrollView, Switch, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
@@ -114,6 +115,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const toast = useToast();
   const safeAreaInsets = useSafeArea();
   const [loading, setLoading] = useState(false);
+
+
+  /**
+   * Form is not editable if stream is cancelled
+   */
+  const editable = useMemo(() => !props.data?.cancelled, [props.data?.cancelled]);
 
 
   /**
@@ -423,39 +430,54 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         style={GlobalStyles.PageFill}
       >
         <ScrollView style={GlobalStyles.PageFill}>
-          <EditableAsyncImage
-            resetRef={imageResetRef}
-            asyncImageProps={{
-              splashUrl: data?.image?.url?.splash,
-              fullUrl: data?.image?.url?.full,
-              containerProps: {
-                style: Styles.image,
-              },
-            }}
-            onChange={(file) => setValue('image', file, true)}
-            loading={loading}
-          />
+          {
+            editable
+              ? (
+                <EditableAsyncImage
+                  resetRef={imageResetRef}
+                  asyncImageProps={{
+                    splashUrl: data?.image?.url?.splash,
+                    fullUrl: data?.image?.url?.full,
+                    containerProps: {
+                      style: Styles.image,
+                    },
+                  }}
+                  onChange={(file) => setValue('image', file, true)}
+                  loading={loading}
+                />
+              )
+              : (
+                <AsyncImage
+                  splashUrl={data?.image?.url?.splash}
+                  fullUrl={data?.image?.url?.full}
+                  containerProps={{
+                    style: Styles.image,
+                  }}
+                />
+              )
+          }
 
           <View style={Styles.form}>
             <View style={Styles.section}>
               <H2>Description</H2>
 
               <TextInput
-                  name="name"
-                  onChangeText={(text) => {
-                    // Validate on change if there's an error, otherwise validate onBlur
-                    setValue('name', text, !!errors.name);
-                  }}
-                  placeholder="Enter your stream's name"
-                  defaultValue={defaultValues.name}
-                  returnKeyType="next"
-                  errors={errors}
-                  onBlur={() => triggerValidation('name', true)}
-                  onSubmitEditing={() => {
-                    // eslint-disable-next-line no-unused-expressions
-                    infoRef.current?.focus();
-                  }}
-                  wrapStyle={Styles.inputWrap}
+                name="name"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('name', text, !!errors.name);
+                }}
+                placeholder="Enter your stream's name"
+                defaultValue={defaultValues.name}
+                returnKeyType="next"
+                errors={errors}
+                onBlur={() => triggerValidation('name', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  infoRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+                editable={editable}
               />
 
               <TextArea
@@ -476,6 +498,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   startDateRef.current?.focus();
                 }}
                 wrapStyle={Styles.inputWrap}
+                editable={editable}
               />
             </View>
 
@@ -492,6 +515,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 }}
                 minimumDate={new Date()}
                 wrapStyle={Styles.inputWrap}
+                editable={editable}
               />
 
               <DateInput
@@ -504,6 +528,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 }}
                 minimumDate={new Date()}
                 wrapStyle={Styles.inputWrap}
+                editable={editable}
               />
 
               <DurationInput
@@ -515,6 +540,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   setValue('timeTo', new Date(new Date(timeFrom).getTime() + value).toISOString(), true);
                 }}
                 wrapStyle={Styles.inputWrap}
+                editable={editable}
               />
             </View>
 
@@ -523,7 +549,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View style={{ display: isFree ? 'none' : 'flex' }}>
-                <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>
+                {editable && <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>}
                 <TextInput
                   name="cost"
                   onChangeText={(value) => setValue('cost', value, true)}
@@ -533,10 +559,11 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   defaultValue={defaultValues.cost}
                   wrapStyle={Styles.inputWrap}
                   errors={errors}
+                  editable={editable}
                 />
               </View>
 
-              {props.channelData.freeStreamAllowance > 0 && (
+              {editable && props.channelData.freeStreamAllowance > 0 && (
                 <View style={Styles.inputWrap}>
                   <View style={Styles.toggleInput}>
                     <Body bold style={Styles.toggleInputLabel}>Free Stream?</Body>
@@ -562,7 +589,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
           <View style={[Styles.section, Styles.settings]}>
             <H2>Settings</H2>
-            <View style={[Styles.toggleInput, Styles.inputWrap]}>
+            <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
               <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
               <Switch
                 onValueChange={(value) => setValue('audioOnly', value, true)}
@@ -583,19 +610,21 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <View
-        style={{
-          paddingBottom: safeAreaInsets.bottom,
-        }}
-      >
-        <Button
-          title={loading ? `${data ? 'Updating' : 'Creating'}` : `${data ? 'Update' : 'Create'} Stream`}
-          onPress={handleSubmit(onSubmit)}
-          disabled={!isValid || !dirty}
-          loading={loading}
-          style={Styles.button}
-        />
-      </View>
+      {editable && (
+        <View
+          style={{
+            paddingBottom: safeAreaInsets.bottom,
+          }}
+        >
+          <Button
+            title={loading ? `${data ? 'Updating' : 'Creating'}` : `${data ? 'Update' : 'Create'} Stream`}
+            onPress={handleSubmit(onSubmit)}
+            disabled={!isValid || !dirty}
+            loading={loading}
+            style={Styles.button}
+          />
+        </View>
+      )}
     </View>
   );
 };

@@ -31,4 +31,7 @@ export default StyleSheet.create({
   button: {
     padding: spacing.small,
   },
+  disabled: {
+    opacity: 0.5,
+  },
 });

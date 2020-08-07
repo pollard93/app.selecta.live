@@ -8,7 +8,6 @@ import { parseCamelCase } from '../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
-  light?: boolean; // Light background
   setRef?: Ref<any>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
@@ -43,7 +42,7 @@ const TextInput: FC<TextInputProps> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, props.wrapStyle, props.light && Styles.light, errorMessage && Styles.wrapError]}>
+    <View style={[Styles.wrap, props.wrapStyle, errorMessage && Styles.wrapError, props.editable === false && Styles.disabled]}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
@@ -51,7 +50,7 @@ const TextInput: FC<TextInputProps> = (props) => {
         style={[Styles.TextInput, props.style]}
       />
       {errorMessage && (
-        <View style={[Styles.error, props.light && Styles.errorLight]} pointerEvents="none">
+        <View style={Styles.error} pointerEvents="none">
           {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.errorText}>{errorMessage}</Small>}
         </View>
       )}

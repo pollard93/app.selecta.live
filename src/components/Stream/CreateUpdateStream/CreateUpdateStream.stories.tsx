@@ -105,4 +105,37 @@ storiesOf('Stream/CreateUpdateStream', module)
     };
 
     return <TestComponent />;
+  })
+  .add('CreateUpdateStreamView - update - cancelled', () => {
+    const TestComponent = () => {
+      const { data: { getChannelSelf } } = useGetChannelSelfQuery();
+      const ref = useRef();
+
+      // Get stream data
+      const queryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <CreateUpdateStreamView
+          channelData={{
+            ...getChannelSelf,
+            freeStreamAllowance: 0,
+          }}
+          data={{
+            ...queryResult.data.getStreamSelf,
+            cost: getChannelSelf.creditMinimumStreamCost,
+            published: new Date().toISOString(),
+            cancelled: new Date().toISOString(),
+          }}
+          getStreamSelfsVariables={{}}
+          canPopRef={ref}
+        />
+      );
+    };
+
+    return <TestComponent />;
   });

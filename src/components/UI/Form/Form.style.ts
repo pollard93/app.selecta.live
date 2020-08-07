@@ -54,4 +54,9 @@ export default StyleSheet.create({
   errorText: {
     color: color.state.error,
   },
+
+  // Disabled
+  disabled: {
+    opacity: 0.5,
+  },
 });

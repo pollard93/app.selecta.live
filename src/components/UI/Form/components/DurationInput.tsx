@@ -14,6 +14,7 @@ export interface DurationInputProps {
   value?: string; // ISOString - allows component value to be updated externally
   onChange: (ms: number) => void;
   wrapStyle?: StyleProp<ViewStyle>;
+  editable?: boolean;
 }
 
 const DurationInput: FC<DurationInputProps> = (props) => {
@@ -42,7 +43,7 @@ const DurationInput: FC<DurationInputProps> = (props) => {
             /** Blur the input so it can be triggered again */
             props.inputRef.current.blur();
 
-            if(value){
+            if (value) {
               setHoursValue(value.hours);
               setMinutesValue(value.minutes);
               props.onChange(getMs(value));
@@ -62,6 +63,7 @@ const DurationInput: FC<DurationInputProps> = (props) => {
           open();
         }}
         value={`${hoursValue} Hour${hoursValue === 1 ? '' : 's'}${minutesValue ? ` - ${minutesValue} Minutes` : ''}`}
+        editable={props.editable}
       />
     </View>
   );
