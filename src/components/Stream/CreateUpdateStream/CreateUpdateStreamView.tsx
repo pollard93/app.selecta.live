@@ -21,10 +21,11 @@ import Body from '../../UI/Typography/components/Body';
 import DurationInput from '../../UI/Form/components/DurationInput';
 import DateInput from '../../UI/Form/components/DateInput';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
-import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import StreamStates from './components/StreamStates/StreamStates';
 import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
+import { getChannelSelf_getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
+import color from '../../../styles/definitions/color';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -39,13 +40,13 @@ type FormData = {
 };
 
 interface CreateUpdateStreamViewProps {
+  channelData: getChannelSelf_getChannelSelf;
   data?: STREAM_SELF_FRAGMENT;
   getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
-  const { data: { getChannelSelf } } = useGetChannelSelfQuery();
   const [data, setData] = useState(props.data);
 
 
@@ -60,6 +61,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         info: data.info,
         timeFrom: data.timeFrom,
         timeTo: data.timeTo,
+        duration: new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime(),
         isFree: data.cost === 0,
         cost: `${data.cost}`,
         image: undefined,
@@ -78,7 +80,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           timeTo: new Date(timeFrom.getTime() + 3.6e+6).toISOString(), // 1 hour duration
           duration: 3.6e+6, // 1 hour
           isFree: false,
-          cost: `${getChannelSelf.creditMinimumStreamCost}`,
+          cost: `${props.channelData.creditMinimumStreamCost}`,
           image: undefined,
           audioOnly: false,
         };
@@ -340,7 +342,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const timeFrom = watch('timeFrom');
   const timeTo = watch('timeTo');
   const isFree = watch('isFree');
-  const cost = watch('cost');
   const duration = watch('duration');
 
 
@@ -395,8 +396,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
          */
         if (!watch('isFree')) {
           const n = parseInt(v, 10);
+
+          if (n < props.channelData.creditMinimumStreamCost) {
+            return 'Value does not meet minimum cost';
+          }
+
           // eslint-disable-next-line no-restricted-globals
-          return !isNaN(n) && n >= getChannelSelf.creditMinimumStreamCost;
+          return !isNaN(n) && n >= props.channelData.creditMinimumStreamCost;
         }
 
         /**
@@ -513,23 +519,11 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             </View>
 
             <View style={Styles.section}>
-              <H2>Price</H2>
-
-              {getChannelSelf.freeStreamAllowance > 0 && (
-                <View style={[Styles.toggleInput, Styles.inputWrap]}>
-                  <Body style={Styles.toggleInputLabel}>Free Stream?</Body>
-                  <Switch
-                    onValueChange={(value) => {
-                      setValue('isFree', value);
-                      setValue('cost', value ? '0' : defaultValues.cost, true);
-                    }}
-                    value={isFree}
-                  />
-                </View>
-              )}
+              <H2>Price &copy;</H2>
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
-              <View style={[{ display: isFree ? 'none' : 'flex' }, Styles.inputWrap]}>
+              <View style={{ display: isFree ? 'none' : 'flex' }}>
+                <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>
                 <TextInput
                   name="cost"
                   onChangeText={(value) => setValue('cost', value, true)}
@@ -541,15 +535,41 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   errors={errors}
                 />
               </View>
+
+              {props.channelData.freeStreamAllowance > 0 && (
+                <View style={Styles.inputWrap}>
+                  <View style={Styles.toggleInput}>
+                    <Body bold style={Styles.toggleInputLabel}>Free Stream?</Body>
+                    <Switch
+                      onValueChange={(value) => {
+                        setValue('isFree', value);
+                        setValue('cost', value ? '0' : defaultValues.cost, true);
+                      }}
+                      value={isFree}
+                      trackColor={{
+                        true: color.accent.primary,
+                        false: color.mono.light,
+                      }}
+                    />
+                  </View>
+                  <View style={Styles.inputWrap}>
+                    <Body>Free allowance: {props.channelData.freeStreamAllowance}</Body>
+                  </View>
+                </View>
+              )}
             </View>
 
             <View style={Styles.section}>
               <H2>Settings</H2>
               <View style={[Styles.toggleInput, Styles.inputWrap]}>
-                <Body style={Styles.toggleInputLabel}>Audio Only</Body>
+                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
                 <Switch
                   onValueChange={(value) => setValue('audioOnly', value, true)}
                   value={watch('audioOnly')}
+                  trackColor={{
+                    true: color.accent.primary,
+                    false: color.mono.light,
+                  }}
                 />
               </View>
 

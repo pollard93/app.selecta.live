@@ -19,6 +19,7 @@ export default StyleSheet.create({
   },
   toggleInput: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   toggleInputLabel: {
     marginRight: spacing.xxsmall,

@@ -9,6 +9,7 @@ import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
+import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 
 export interface CreateUpdateStreamProps extends ScreenProps {
   id?: string;
@@ -20,9 +21,12 @@ export interface CreateUpdateStreamInnerProps extends CreateUpdateStreamProps {
 }
 
 const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
+  const { data: { getChannelSelf } } = useGetChannelSelfQuery();
+
   if (!props.id) {
     return (
       <CreateUpdateStreamView
+        channelData={getChannelSelf}
         getStreamSelfsVariables={props.getStreamSelfsVariables}
         canPopRef={props.canPopRef}
       />
@@ -41,6 +45,7 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
 
   return (
     <CreateUpdateStreamView
+      channelData={getChannelSelf}
       data={queryResult.data.getStreamSelf}
       getStreamSelfsVariables={props.getStreamSelfsVariables}
       canPopRef={props.canPopRef}
