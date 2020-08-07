@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import spacing from '../../../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   wrap: {
@@ -6,5 +7,8 @@ export default StyleSheet.create({
   },
   inner: {
     flex: 1,
+  },
+  published: {
+    marginBottom: spacing.small,
   },
 });

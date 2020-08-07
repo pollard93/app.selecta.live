@@ -64,6 +64,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           data={{
             ...queryResult.data.getStreamSelf,
             cost: getChannelSelf.creditMinimumStreamCost,
+            published: null,
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
@@ -95,6 +96,7 @@ storiesOf('Stream/CreateUpdateStream', module)
           data={{
             ...queryResult.data.getStreamSelf,
             cost: getChannelSelf.creditMinimumStreamCost,
+            published: null,
           }}
           getStreamSelfsVariables={{}}
           canPopRef={ref}

@@ -558,27 +558,27 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 </View>
               )}
             </View>
+          </View>
 
-            <View style={Styles.section}>
-              <H2>Settings</H2>
-              <View style={[Styles.toggleInput, Styles.inputWrap]}>
-                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
-                <Switch
-                  onValueChange={(value) => setValue('audioOnly', value, true)}
-                  value={watch('audioOnly')}
-                  trackColor={{
-                    true: color.accent.primary,
-                    false: color.mono.light,
-                  }}
-                />
-              </View>
-
-              {data && (
-                <View style={Styles.inputWrap}>
-                  <StreamStates data={data} />
-                </View>
-              )}
+          <View style={[Styles.section, Styles.settings]}>
+            <H2>Settings</H2>
+            <View style={[Styles.toggleInput, Styles.inputWrap]}>
+              <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
+              <Switch
+                onValueChange={(value) => setValue('audioOnly', value, true)}
+                value={watch('audioOnly')}
+                trackColor={{
+                  true: color.accent.primary,
+                  false: color.mono.light,
+                }}
+              />
             </View>
+
+            {data && (
+              <View style={Styles.inputWrap}>
+                <StreamStates data={data} />
+              </View>
+            )}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

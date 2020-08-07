@@ -29,11 +29,11 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
   return !props.data.cancelled
     ? (
       <>
-        <H4>Stream Published {formatForTimezone(props.data.published, 'calendar')}</H4>
+        <H4 style={Styles.published}>Stream Published: {formatForTimezone(props.data.published, 'calendar')}</H4>
         <CancelStream {...props} />
       </>
     )
-    : <H4>Stream Cancelled {formatForTimezone(props.data.cancelled, 'calendar')}</H4>;
+    : <H4>Stream Cancelled: {formatForTimezone(props.data.cancelled, 'calendar')}</H4>;
 };
 
 export default StreamStates;

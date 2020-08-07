@@ -12,14 +12,18 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.small,
   },
   section: {
-    marginVertical: spacing.small,
+    marginTop: spacing.base,
+  },
+  settings: {
+    backgroundColor: color.mono.pale.regular,
+    padding: spacing.small,
   },
   inputWrap: {
     marginTop: spacing.small,
   },
   toggleInput: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   toggleInputLabel: {
     marginRight: spacing.xxsmall,
