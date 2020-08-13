@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
-import font from '../../../styles/definitions/font';
-import spacing from '../../../styles/definitions/spacing';
-import color from '../../../styles/definitions/color';
-import scalePx from '../../../utils/scalePx';
+import font from '../../../../../styles/definitions/font';
+import spacing from '../../../../../styles/definitions/spacing';
+import color from '../../../../../styles/definitions/color';
 
 export default StyleSheet.create({
   wrap: {
@@ -17,8 +16,7 @@ export default StyleSheet.create({
     paddingTop: spacing.xxsmall * 2,
   },
 
-  // Inputs
-  TextInput: {
+  input: {
     color: color.mono.dark,
     flexGrow: 1,
     fontFamily: font.family.body('light').fontFamily,
@@ -27,23 +25,7 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.small,
     paddingVertical: spacing.xsmall,
   },
-  TextArea: {
-    flex: 0,
-    flexGrow: 0,
-    // Required for multiline
-    paddingTop: spacing.small,
-    minHeight: scalePx(120),
-  },
-  SearchInput: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    backgroundColor: color.mono.pale.light,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight: spacing.small,
-  },
 
-  // Error
   error: {
     color: color.state.error,
     justifyContent: 'center',
@@ -55,7 +37,6 @@ export default StyleSheet.create({
     color: color.state.error,
   },
 
-  // Disabled
   disabled: {
     opacity: 0.5,
   },

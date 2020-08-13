@@ -6,7 +6,7 @@ import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
 import Styles from './Login.style';
-import TextInput from '../UI/Form/components/TextInput';
+import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Button from '../UI/Button/Button';
 import Separator from '../UI/Separator/Separator';
 import Body from '../UI/Typography/components/Body';

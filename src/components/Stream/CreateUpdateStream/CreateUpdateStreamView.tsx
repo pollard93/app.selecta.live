@@ -15,12 +15,12 @@ import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/upda
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 import Styles from './CreateUpdateStream.style';
 import H2 from '../../UI/Typography/components/H2';
-import TextInput from '../../UI/Form/components/TextInput';
-import TextArea from '../../UI/Form/components/TextArea';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import TextArea from '../../UI/Form/components/TextArea/TextArea';
 import Button from '../../UI/Button/Button';
 import Body from '../../UI/Typography/components/Body';
-import DurationInput from '../../UI/Form/components/DurationInput';
-import DateInput from '../../UI/Form/components/DateInput';
+import DurationInput from '../../UI/Form/components/DurationInput/DurationInput';
+import DateInput from '../../UI/Form/components/DateInput/DateInput';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import StreamStates from './components/StreamStates/StreamStates';
 import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
@@ -533,8 +533,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               />
 
               <DurationInput
-                hoursValue={(new Date(timeTo).getTime() - new Date(timeFrom).getTime()) / 3.6e+6}
-                minutesValue={(new Date(timeTo).getTime() - new Date(timeFrom).getTime()) / 60000}
+                value={duration}
                 inputRef={durationRef}
                 onChange={(value) => {
                   setValue('duration', value, true);

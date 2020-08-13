@@ -59,7 +59,11 @@ function loadStories() {
 	require('../src/components/UI/Cards/WalletCard/WalletCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
 	require('../src/components/UI/Drawer/Drawer.stories');
-	require('../src/components/UI/Form/Form.stories');
+	require('../src/components/UI/Form/components/DateInput/DateInput.stories');
+	require('../src/components/UI/Form/components/DurationInput/DurationInput.stories');
+	require('../src/components/UI/Form/components/SearchInput/SearchInput.stories');
+	require('../src/components/UI/Form/components/TextArea/TextArea.stories');
+	require('../src/components/UI/Form/components/TextInput/TextInput.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
@@ -132,7 +136,11 @@ const stories = [
 	'../src/components/UI/Cards/WalletCard/WalletCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
 	'../src/components/UI/Drawer/Drawer.stories',
-	'../src/components/UI/Form/Form.stories',
+	'../src/components/UI/Form/components/DateInput/DateInput.stories',
+	'../src/components/UI/Form/components/DurationInput/DurationInput.stories',
+	'../src/components/UI/Form/components/SearchInput/SearchInput.stories',
+	'../src/components/UI/Form/components/TextArea/TextArea.stories',
+	'../src/components/UI/Form/components/TextInput/TextInput.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',

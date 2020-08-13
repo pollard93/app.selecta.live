@@ -10,7 +10,7 @@ import CreateStreamMessage from './CreateStreamMessage';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessages, getStreamMessagesVariables } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import * as AClientModule from '../../../ApolloClient';
-import TextInput from '../../UI/Form/components/TextInput';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
 
 
 describe('<CreateStreamMessage />', () => {

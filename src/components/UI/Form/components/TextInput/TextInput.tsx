@@ -1,10 +1,10 @@
 import React, { FC, Ref, useMemo } from 'react';
 import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
-import Styles from '../Form.style';
-import color from '../../../../styles/definitions/color';
-import Small from '../../Typography/components/Small';
-import { parseCamelCase } from '../../../../utils/functions';
+import Styles from './TextInput.style';
+import color from '../../../../../styles/definitions/color';
+import Small from '../../../Typography/components/Small';
+import { parseCamelCase } from '../../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
@@ -47,7 +47,7 @@ const TextInput: FC<TextInputProps> = (props) => {
         placeholderTextColor={color.mono.pale.dark}
         {...props}
         ref={props.setRef}
-        style={[Styles.TextInput, props.style]}
+        style={[Styles.input, props.style]}
       />
       {errorMessage && (
         <View style={Styles.error} pointerEvents="none">

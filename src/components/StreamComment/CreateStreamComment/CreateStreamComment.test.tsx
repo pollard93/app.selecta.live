@@ -10,7 +10,7 @@ import CreateStreamComment from './CreateStreamComment';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import { getStreamComments, getStreamCommentsVariables } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import * as AClientModule from '../../../ApolloClient';
-import TextInput from '../../UI/Form/components/TextInput';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
 
 
 describe('<CreateStreamComment />', () => {

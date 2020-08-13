@@ -1,25 +1,22 @@
 import React, { FC, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Picker } from '@react-native-community/picker';
-import TextInput from './TextInput';
-import { openModalScreen } from '../../../../screens/utils';
-import { ModalScreenName } from '../../../../screens/ModalScreen/ModalScreen';
-import DurationPicker from '../../DateTimePicker/components/DurationPicker/DurationPicker';
+import TextInput from '../TextInput/TextInput';
+import { openModalScreen } from '../../../../../screens/utils';
+import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
+import DurationPicker from '../../../DateTimePicker/components/DurationPicker/DurationPicker';
 
 export interface DurationInputProps {
-  hoursValue: number;
-  minutesValue: number;
+  value?: number; // ms (defaults to 0)
   inputRef: React.MutableRefObject<any>;
-  value?: string; // ISOString - allows component value to be updated externally
   onChange: (ms: number) => void;
   wrapStyle?: StyleProp<ViewStyle>;
   editable?: boolean;
 }
 
 const DurationInput: FC<DurationInputProps> = (props) => {
-  const [hoursValue, setHoursValue] = useState(props.hoursValue);
-  const [minutesValue, setMinutesValue] = useState(props.minutesValue - props.hoursValue * 60);
+  const [hoursValue, setHoursValue] = useState(props.value ? Math.floor(props.value / 3.6e+6) : 0);
+  const [minutesValue, setMinutesValue] = useState(props.value ? (props.value / 60000) - (hoursValue * 60) : 0);
 
 
   /**

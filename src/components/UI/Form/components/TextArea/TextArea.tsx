@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import Styles from '../Form.style';
-import TextInput, { TextInputProps } from './TextInput';
+import Styles from './TextArea.style';
+import TextInput, { TextInputProps } from '../TextInput/TextInput';
 
 const TextArea: FC<TextInputProps> = (props) => (
   <TextInput
     {...props}
-    style={[Styles.TextArea, props.style]}
+    style={[Styles.input, props.style]}
     multiline
   />
 );

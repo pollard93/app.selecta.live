@@ -7,8 +7,8 @@ import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
 
 interface DurationPickerProps {
-  defaultHours: number;
-  defaultMinutes: number;
+  defaultHours: number; // 0 - 12
+  defaultMinutes: number; // 0|15|30|45
   onDone?: (value?: { hours: number, minutes: number }) => void; // Pass value to confirm, null to cancel
 }
 
@@ -18,15 +18,9 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
   const [minutesValueInternal, setMinutesValueInternal] = useState(props.defaultMinutes);
 
 
-  /**
-   * Get milliseconds from hours and minutes
-   */
-  const getMs = ({ hours, minutes }) => (hours * 3.6e+6) + (minutes * 60000);
-
-
   return (
     <View style={styles.wrap}>
-      <View style={[styles.inner, {paddingBottom: safeAreaInsets.bottom + spacing.small}]}>
+      <View style={[styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
         <View style={styles.buttons}>
           <Button
             title="Cancel"
@@ -63,7 +57,7 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
               setHoursValueInternal(v as number);
             }}
           >
-            {Array(7).fill(0).map((_, i) => (
+            {Array(13).fill(0).map((_, i) => (
               <Picker.Item key={i} label={`${i} Hours`} value={i} />
             ))}
           </Picker>

@@ -1,12 +1,11 @@
-import React, { FC, useState, useEffect, useRef } from 'react';
-import { View, Platform, StyleProp, ViewStyle, StyleSheet } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Platform, StyleProp, ViewStyle } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import TextInput from './TextInput';
-import { openModalScreen } from '../../../../screens/utils';
-import DateTimePicker from '../../DateTimePicker/components/DateTimePicker/DateTimePicker';
-import { ModalScreenName } from '../../../../screens/ModalScreen/ModalScreen';
-import { formatForTimezone } from '../../../../utils/functions';
-import Styles from '../Form.style';
+import TextInput from '../TextInput/TextInput';
+import { openModalScreen } from '../../../../../screens/utils';
+import DateTimePicker from '../../../DateTimePicker/components/DateTimePicker/DateTimePicker';
+import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
+import { formatForTimezone } from '../../../../../utils/functions';
 
 export interface DateInputProps {
   value: string; // ISOString - allows component value to be updated externally
