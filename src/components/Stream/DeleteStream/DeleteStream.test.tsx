@@ -18,12 +18,14 @@ describe('<DeleteStream />', () => {
   const sandbox = sinon.createSandbox();
   let alertSpy = sandbox.spy(Alert, 'alert');
   let toastSpy = sandbox.spy(useToast(), 'push');
+  let onPopSpy = sandbox.spy();
 
   afterEach(() => {
     sandbox.restore();
 
     alertSpy = sandbox.spy(Alert, 'alert');
     toastSpy = sandbox.spy(useToast(), 'push');
+    onPopSpy = sandbox.spy();
   });
 
   test('should succeed', async () => {
@@ -44,7 +46,7 @@ describe('<DeleteStream />', () => {
         <DeleteStream
           data={queryResult.data.getStreamSelf}
           getStreamSelfsVariables={{}}
-          onPop={console.log}
+          onPop={onPopSpy}
         />
       );
     };
@@ -77,6 +79,12 @@ describe('<DeleteStream />', () => {
 
     // Button should be disabled
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
+
+    // Wait for onCompleted to run
+    await wait(0);
+
+    // OnPop should have been called
+    expect(onPopSpy.callCount).to.equal(1);
   });
 
   it('should fail', async () => {
@@ -96,6 +104,7 @@ describe('<DeleteStream />', () => {
         <DeleteStream
           data={{ id: 'test', published: null } as any}
           getStreamSelfsVariables={{}}
+          // eslint-disable-next-line no-console
           onPop={console.log}
         />
       </ApolloProvider>,
