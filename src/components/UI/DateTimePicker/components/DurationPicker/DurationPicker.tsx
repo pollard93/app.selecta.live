@@ -44,7 +44,7 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
           />
         </View>
 
-        <View style={{ flexDirection: 'row' }}>
+        <View style={styles.pickerWrap}>
           <Picker
             selectedValue={hoursValueInternal}
             style={styles.picker}

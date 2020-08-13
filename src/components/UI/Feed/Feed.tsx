@@ -4,7 +4,6 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { FEED_PAYLOAD_FRAGMENT } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
 import { DynamicStyles } from './Feed.styles';
 import FeedItem from './FeedItem';
-import { STACK } from '../../../screens/utils/interfaces';
 
 interface FeedProps {
   data: FEED_PAYLOAD_FRAGMENT;

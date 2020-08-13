@@ -28,7 +28,7 @@ const DateTimePicker = (props: DateTimePickerProps) => {
 
   return (
     <View style={styles.wrap}>
-      <View style={[styles.inner, {paddingBottom: safeAreaInsets.bottom + spacing.small}]}>
+      <View style={[styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
         <View style={styles.buttons}>
           <Button
             title="Cancel"
@@ -53,7 +53,7 @@ const DateTimePicker = (props: DateTimePickerProps) => {
           {...props.pickerProps}
           value={date}
           onChange={onChange}
-          style={{paddingVertical: spacing.small}}
+          style={{ paddingVertical: spacing.small }}
         />
       </View>
     </View>

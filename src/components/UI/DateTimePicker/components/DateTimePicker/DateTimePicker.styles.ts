@@ -16,11 +16,11 @@ export default StyleSheet.create({
   inner: {
     backgroundColor: color.mono.light,
     padding: spacing.small,
-    ...shadow.regular
+    ...shadow.regular,
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.small
+    marginBottom: spacing.small,
   },
 });

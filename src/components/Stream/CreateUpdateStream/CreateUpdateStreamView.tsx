@@ -348,7 +348,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Watch times so they can be validated against eachother
    */
   const timeFrom = watch('timeFrom');
-  const timeTo = watch('timeTo');
   const isFree = watch('isFree');
   const duration = watch('duration');
 
