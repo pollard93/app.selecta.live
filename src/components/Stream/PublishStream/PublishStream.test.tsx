@@ -7,11 +7,11 @@ import sinon from 'sinon';
 import wait from 'waait';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
-import CancelStream from './CancelStream';
+import PublishStream from './PublishStream';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import Button from '../../UI/Button/Button';
 
-describe('<CancelStream />', () => {
+describe('<PublishStream />', () => {
   /**
    * Define sandbox and spies
    */
@@ -41,7 +41,7 @@ describe('<CancelStream />', () => {
       if (queryResult.loading) return null;
 
       return (
-        <CancelStream data={queryResult.data.getStreamSelf} />
+        <PublishStream data={queryResult.data.getStreamSelf} />
       );
     };
 
@@ -81,7 +81,7 @@ describe('<CancelStream />', () => {
      */
     const client = mockClient({
       Mutation: () => ({
-        cancelStream: () => {
+        publishStream: () => {
           throw new Error();
         },
       }),
@@ -89,7 +89,7 @@ describe('<CancelStream />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <CancelStream data={{ id: 'test', cancelled: null } as any} />
+        <PublishStream data={{ id: 'test', cancelled: null } as any} />
       </ApolloProvider>,
     );
 

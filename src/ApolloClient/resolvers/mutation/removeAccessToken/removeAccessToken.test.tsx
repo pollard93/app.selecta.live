@@ -26,6 +26,13 @@ describe('removeAccessToken tests', () => {
       },
     });
 
+    /**
+     * Store getSelf
+     */
+    await store('getSelf', {
+      id: '',
+    });
+
     // Create spies
     const pushNotificationDisconnectSpy = Sinon.stub(PushNotifications, 'disconnect');
     const inAppPurchasesDisconnectSpy = Sinon.stub(InAppPurchases, 'disconnect');
@@ -52,6 +59,9 @@ describe('removeAccessToken tests', () => {
 
     // Test the token has been stored in async storage
     expect(await store(LOCAL_AUTH_KEY)).to.equal(null);
+
+    // Test getSelf has been removed from storage
+    expect(await store('getSelf')).to.equal(null);
 
     // Test spy called
     expect(pushNotificationDisconnectSpy.callCount).to.equal(1);

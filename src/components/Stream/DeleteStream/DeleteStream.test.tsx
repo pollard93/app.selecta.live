@@ -2,13 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
 import { expect } from 'chai';
-import { Button, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import sinon from 'sinon';
 import wait from 'waait';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import DeleteStream from './DeleteStream';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
+import Button from '../../UI/Button/Button';
 
 describe('<DeleteStream />', () => {
   /**
@@ -40,7 +41,11 @@ describe('<DeleteStream />', () => {
       if (queryResult.loading) return null;
 
       return (
-        <DeleteStream data={queryResult.data.getStreamSelf} />
+        <DeleteStream
+          data={queryResult.data.getStreamSelf}
+          getStreamSelfsVariables={{}}
+          onPop={console.log}
+        />
       );
     };
 
@@ -72,10 +77,6 @@ describe('<DeleteStream />', () => {
 
     // Button should be disabled
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
-
-    // Wait for results
-    await wait(0);
-    wrapper.update();
   });
 
   it('should fail', async () => {
@@ -84,7 +85,7 @@ describe('<DeleteStream />', () => {
      */
     const client = mockClient({
       Mutation: () => ({
-        cancelStream: () => {
+        deleteStream: () => {
           throw new Error();
         },
       }),
@@ -92,7 +93,11 @@ describe('<DeleteStream />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <DeleteStream data={{ id: 'test', published: null } as any} />
+        <DeleteStream
+          data={{ id: 'test', published: null } as any}
+          getStreamSelfsVariables={{}}
+          onPop={console.log}
+        />
       </ApolloProvider>,
     );
 
