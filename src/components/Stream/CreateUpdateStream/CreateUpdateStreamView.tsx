@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
-import { ScrollView, Switch, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
@@ -26,7 +26,7 @@ import StreamStates from './components/StreamStates/StreamStates';
 import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getChannelSelf_getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
-import color from '../../../styles/definitions/color';
+import Switch from '../../UI/Form/components/Switch/Switch';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -364,8 +364,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       {
         required: !data,
         validate: (v) => {
-          if (!v) return false;
-
           if (v.length < 3) {
             return 'Minimum 3 characters';
           }
@@ -378,10 +376,9 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     register(
       { name: 'info' },
       {
-        required: !data,
+        // If required, provide error message
+        required: !data ? 'Please enter some information' : false,
         validate: (v) => {
-          if (!v) return 'Please enter some information';
-
           if (v.length < 3) {
             return 'Minimum 3 characters';
           }
@@ -572,10 +569,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                         setValue('cost', value ? '0' : defaultValues.cost, true);
                       }}
                       value={isFree}
-                      trackColor={{
-                        true: color.accent.primary,
-                        false: color.mono.light,
-                      }}
                     />
                   </View>
                   <View style={Styles.inputWrap}>
@@ -593,10 +586,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               <Switch
                 onValueChange={(value) => setValue('audioOnly', value, true)}
                 value={watch('audioOnly')}
-                trackColor={{
-                  true: color.accent.primary,
-                  false: color.mono.light,
-                }}
               />
             </View>
 

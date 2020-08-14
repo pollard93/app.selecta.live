@@ -25,4 +25,14 @@ storiesOf('UI/Form/DateInput', module)
       onChange={console.log}
       minimumDate={new Date(Date.now())}
     />
+  ))
+  .add('DateInput - disabled', () => (
+    <DateInput
+      value={new Date().toISOString()}
+      mode="time"
+      inputRef={{ current: null }}
+      onChange={console.log}
+      minimumDate={new Date(Date.now())}
+      editable={false}
+    />
   ));

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, Platform, StyleProp, ViewStyle } from 'react-native';
+import { View, Platform, StyleProp, ViewStyle, StyleSheet, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
@@ -19,8 +19,28 @@ export interface DateInputProps {
 }
 
 const DateInput: FC<DateInputProps> = (props) => {
-  // const [androidActive, setAndroidActive] = useState(false);
+  const [androidActive, setAndroidActive] = useState(false);
   const [date, setDate] = useState(props.value ? new Date(props.value) : new Date());
+
+
+  /**
+   * Modals will pass null if cancelled, or a date value if 'done' selected
+   */
+  const onDone = (value?: Date) => {
+    if (Platform.OS === 'ios') {
+      Navigation.dismissModal(ModalScreenName);
+    } else {
+      setAndroidActive(false);
+    }
+
+    /** Blur the input so it can be triggered again */
+    props.inputRef.current.blur();
+
+    if (value) {
+      setDate(value);
+      props.onChange(new Date(value).toISOString());
+    }
+  };
 
 
   /**
@@ -38,17 +58,7 @@ const DateInput: FC<DateInputProps> = (props) => {
             minimumDate: props.minimumDate,
             maximumDate: props.maximumDate,
           }}
-          onDone={(value) => {
-            Navigation.dismissModal(ModalScreenName);
-
-            /** Blur the input so it can be triggered again */
-            props.inputRef.current.blur();
-
-            if (value) {
-              setDate(value);
-              props.onChange(new Date(value).toISOString());
-            }
-          }}
+          onDone={onDone}
         />
       ),
     });
@@ -56,33 +66,49 @@ const DateInput: FC<DateInputProps> = (props) => {
 
   return (
     <View style={props.wrapStyle}>
-      <TextInput
-        setRef={props.inputRef}
-        name="date"
-        onFocus={() => {
+      <View pointerEvents="none">
+        <TextInput
+          setRef={props.inputRef}
+          name="date"
+          value={formatForTimezone(date.toISOString(), props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm z')}
+          editable={props.editable}
+        />
+      </View>
+
+      <TouchableOpacity
+        style={StyleSheet.absoluteFillObject}
+        onPress={() => {
+          /**
+           * Handle on open here and not onFocus of the input to prevent the keyboard appearing
+           * Don't allow the user to manually edit the input
+           */
+
+          // If disabled
+          if (props.editable === false) return;
+
           if (Platform.OS === 'ios') {
             openIOS();
+            return;
           }
 
           /** Android has native modal, open by rendering DateTimePicker below */
-          // setAndroidActive(true);
+          setAndroidActive(true);
         }}
-        value={formatForTimezone(date.toISOString(), props.mode === 'date' ? 'DD/MM/YYYY' : 'HH:mm z')}
-        editable={props.editable}
       />
 
-      {/* {androidActive && (
+      {androidActive && (
         <DateTimePicker
           pickerProps={{
             value: date,
             mode: props.mode,
             display: 'default',
-            onChange,
+            onChange: null,
             minimumDate: props.minimumDate,
             maximumDate: props.maximumDate,
           }}
+          onDone={onDone}
         />
-      )} */}
+      )}
     </View>
   );
 };

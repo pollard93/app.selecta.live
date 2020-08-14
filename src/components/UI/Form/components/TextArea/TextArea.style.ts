@@ -9,5 +9,6 @@ export default StyleSheet.create({
     // Required for multiline
     paddingTop: spacing.small,
     minHeight: scalePx(120),
+    alignItems: 'flex-start',
   },
 });

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
+import { View, StyleProp, ViewStyle, TouchableOpacity, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
@@ -53,14 +53,28 @@ const DurationInput: FC<DurationInputProps> = (props) => {
 
   return (
     <View style={props.wrapStyle}>
-      <TextInput
-        setRef={props.inputRef}
-        name="date"
-        onFocus={() => {
+      <View pointerEvents="none">
+        <TextInput
+          setRef={props.inputRef}
+          name="date"
+          value={`${hoursValue} Hour${hoursValue === 1 ? '' : 's'}${minutesValue ? ` - ${minutesValue} Minutes` : ''}`}
+          editable={props.editable}
+        />
+      </View>
+
+      <TouchableOpacity
+        style={StyleSheet.absoluteFillObject}
+        onPress={() => {
+          /**
+           * Handle on open here and not onFocus of the input to prevent the keyboard appearing
+           * Don't allow the user to manually edit the input
+           */
+
+          // If disabled
+          if (props.editable === false) return;
+
           open();
         }}
-        value={`${hoursValue} Hour${hoursValue === 1 ? '' : 's'}${minutesValue ? ` - ${minutesValue} Minutes` : ''}`}
-        editable={props.editable}
       />
     </View>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DateTimePickerCommunity, { IOSNativeProps, AndroidNativeProps } from '@react-native-community/datetimepicker';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import styles from './DateTimePicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
@@ -8,7 +8,7 @@ import spacing from '../../../../../styles/definitions/spacing';
 
 interface DateTimePickerProps {
   pickerProps: IOSNativeProps | AndroidNativeProps;
-  onDone?: (value?: Date) => void; // Pass value to confirm, null to cancel
+  onDone: (value?: Date) => void; // Pass value to confirm, null to cancel
 }
 
 const DateTimePicker = (props: DateTimePickerProps) => {
@@ -20,10 +20,34 @@ const DateTimePicker = (props: DateTimePickerProps) => {
    * On change set date state and execute props.onChange
    */
   const onChange = (_, selectedDate) => {
+    /**
+     * If android pass selectedDate, will be null if cancel was pressed
+     */
+    if (Platform.OS === 'android') {
+      props.onDone(selectedDate);
+      return;
+    }
+
+
     if (selectedDate) {
       setDate(selectedDate);
     }
   };
+
+
+  /**
+   * If android render here (renders modal)
+   */
+  if (Platform.OS === 'android') {
+    return (
+      <DateTimePickerCommunity
+        {...props.pickerProps}
+        value={date}
+        onChange={onChange}
+        style={{ paddingVertical: spacing.small }}
+      />
+    );
+  }
 
 
   return (

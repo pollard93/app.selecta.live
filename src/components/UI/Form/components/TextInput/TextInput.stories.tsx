@@ -16,6 +16,13 @@ storiesOf('UI/Form/TextInput', module)
       placeholder="TextInput"
     />
   ))
+  .add('TextInput - disabled', () => (
+    <TextInput
+      name="name"
+      placeholder="TextInput"
+      editable={false}
+    />
+  ))
   .add('TextInput - with error (required)', () => (
     <TextInput
       name="name"

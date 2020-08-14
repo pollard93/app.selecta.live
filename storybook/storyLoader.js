@@ -62,6 +62,7 @@ function loadStories() {
 	require('../src/components/UI/Form/components/DateInput/DateInput.stories');
 	require('../src/components/UI/Form/components/DurationInput/DurationInput.stories');
 	require('../src/components/UI/Form/components/SearchInput/SearchInput.stories');
+	require('../src/components/UI/Form/components/Switch/Switch.stories');
 	require('../src/components/UI/Form/components/TextArea/TextArea.stories');
 	require('../src/components/UI/Form/components/TextInput/TextInput.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
@@ -139,6 +140,7 @@ const stories = [
 	'../src/components/UI/Form/components/DateInput/DateInput.stories',
 	'../src/components/UI/Form/components/DurationInput/DurationInput.stories',
 	'../src/components/UI/Form/components/SearchInput/SearchInput.stories',
+	'../src/components/UI/Form/components/Switch/Switch.stories',
 	'../src/components/UI/Form/components/TextArea/TextArea.stories',
 	'../src/components/UI/Form/components/TextInput/TextInput.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
