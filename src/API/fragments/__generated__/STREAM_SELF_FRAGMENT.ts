@@ -47,4 +47,5 @@ export interface STREAM_SELF_FRAGMENT {
   streamUrl: string | null;
   audioOnly: boolean | null;
   published: any | null;
+  viewCount: number | null;
 }

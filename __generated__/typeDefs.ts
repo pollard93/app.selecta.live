@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sun Aug 16 2020 11:52:28 GMT+0100 (British Summer Time)
+# timestamp: Sun Aug 16 2020 14:51:58 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -892,6 +892,7 @@ type Stream {
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   relatedStreams(where: StreamRelatedStreamsWhereInput, orderBy: StreamRelatedStreamsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamRelatedStreams!]
   published: DateTime
+  viewCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1098,6 +1099,8 @@ enum StreamOrderByInput {
   audioOnly_DESC
   published_ASC
   published_DESC
+  viewCount_ASC
+  viewCount_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1251,6 +1254,7 @@ type StreamSelf {
   streamUrl: String
   audioOnly: Boolean
   tags: [TagProfile]
+  viewCount: Int
 }
 
 type StreamSelfsPayLoad {
@@ -1266,11 +1270,13 @@ type StreamUrlPayload {
 type StreamUserRecord {
   id: ID!
   token: String!
+  streamId: String!
   stream: Stream!
   user: User!
   type: String!
   createdAt: DateTime!
   sessionUpdatedAt: DateTime!
+  processed: Boolean
 }
 
 enum StreamUserRecordOrderByInput {
@@ -1278,12 +1284,16 @@ enum StreamUserRecordOrderByInput {
   id_DESC
   token_ASC
   token_DESC
+  streamId_ASC
+  streamId_DESC
   type_ASC
   type_DESC
   createdAt_ASC
   createdAt_DESC
   sessionUpdatedAt_ASC
   sessionUpdatedAt_DESC
+  processed_ASC
+  processed_DESC
 }
 
 input StreamUserRecordWhereInput {
@@ -1315,6 +1325,20 @@ input StreamUserRecordWhereInput {
   token_not_starts_with: String
   token_ends_with: String
   token_not_ends_with: String
+  streamId: String
+  streamId_not: String
+  streamId_in: [String!]
+  streamId_not_in: [String!]
+  streamId_lt: String
+  streamId_lte: String
+  streamId_gt: String
+  streamId_gte: String
+  streamId_contains: String
+  streamId_not_contains: String
+  streamId_starts_with: String
+  streamId_not_starts_with: String
+  streamId_ends_with: String
+  streamId_not_ends_with: String
   stream: StreamWhereInput
   user: UserWhereInput
   type: String
@@ -1347,6 +1371,8 @@ input StreamUserRecordWhereInput {
   sessionUpdatedAt_lte: DateTime
   sessionUpdatedAt_gt: DateTime
   sessionUpdatedAt_gte: DateTime
+  processed: Boolean
+  processed_not: Boolean
   AND: [StreamUserRecordWhereInput!]
   OR: [StreamUserRecordWhereInput!]
   NOT: [StreamUserRecordWhereInput!]
@@ -1496,6 +1522,14 @@ input StreamWhereInput {
   published_lte: DateTime
   published_gt: DateTime
   published_gte: DateTime
+  viewCount: Int
+  viewCount_not: Int
+  viewCount_in: [Int!]
+  viewCount_not_in: [Int!]
+  viewCount_lt: Int
+  viewCount_lte: Int
+  viewCount_gt: Int
+  viewCount_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

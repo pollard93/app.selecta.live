@@ -94,7 +94,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <Body>Stream Duration: {(new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime()) / 3.6e+6} Hours</Body>
           </View>
           <View style={Styles.meta}>
-            <Body>Streams: 0</Body>
+            <Body>Streams: {data.viewCount}</Body>
             <Body>Purchases: {data.consumersEdge}</Body>
           </View>
         </View>
