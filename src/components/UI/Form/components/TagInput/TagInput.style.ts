@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
-import font from '../../../../../styles/definitions/font';
 import spacing from '../../../../../styles/definitions/spacing';
 import color from '../../../../../styles/definitions/color';
-import scalePx from '../../../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {

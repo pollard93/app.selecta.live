@@ -1,9 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { View, TextInput, StyleProp, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { TextInputProps } from '../TextInput/TextInput';
 import TextInputStyles from '../TextInput/TextInput.style';
-import { TAG_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/TAG_PROFILE_FRAGMENT';
 import Styles from './TagInput.style';
 import Icon, { ICON } from '../../../Icon/Icon';
 

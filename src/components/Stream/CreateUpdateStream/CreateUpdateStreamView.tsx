@@ -28,6 +28,8 @@ import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStr
 import { getChannelSelf_getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import Switch from '../../UI/Form/components/Switch/Switch';
 import TagInput from '../../UI/Form/components/TagInput/TagInput';
+import { GET_STREAM_SELF_QUERY } from '../../../API/query/getStreamSelf/getStreamSelf';
+import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -45,32 +47,30 @@ type FormData = {
 interface CreateUpdateStreamViewProps {
   channelData: getChannelSelf_getChannelSelf;
   data?: STREAM_SELF_FRAGMENT;
+  onCreated: (id: string) => void;
   getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
   onPop: () => void;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
-  const [data, setData] = useState(props.data);
-
-
   /**
    * Form
    */
   const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
     mode: 'onChange',
-    defaultValues: data
+    defaultValues: props.data
       ? {
-        name: data.name,
-        info: data.info,
-        tags: data.tags.map((t) => t.title),
-        timeFrom: data.timeFrom,
-        timeTo: data.timeTo,
-        duration: new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime(),
-        isFree: data.cost === 0,
-        cost: `${data.cost}`,
+        name: props.data.name,
+        info: props.data.info,
+        tags: props.data.tags.map((t) => t.title),
+        timeFrom: props.data.timeFrom,
+        timeTo: props.data.timeTo,
+        duration: new Date(props.data.timeTo).getTime() - new Date(props.data.timeFrom).getTime(),
+        isFree: props.data.cost === 0,
+        cost: `${props.data.cost}`,
         image: undefined,
-        audioOnly: data.audioOnly,
+        audioOnly: props.data.audioOnly,
       }
       : (() => {
         // Get now rounded to next hour
@@ -105,6 +105,17 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
 
   /**
+   * When stream is cancelled, allow pop without alert
+   */
+  useEffect(() => {
+    if (props.data?.cancelled) {
+      // eslint-disable-next-line no-param-reassign
+      props.canPopRef.current = true;
+    }
+  }, [props.data?.cancelled]);
+
+
+  /**
    * Refs
    */
   const infoRef = useRef(null);
@@ -132,11 +143,25 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Put stream mutation
    */
   const [putStreamMutation, { client }] = usePutStreamMutation({
-    onCompleted: ({ putStream }) => {
+    onCompleted: async ({ putStream }) => {
       setLoading(false);
 
-      // Set data in state so the form becomes update form
-      setData(putStream);
+      /**
+       * When stream has been created
+       * Execute getStreamSelf query to cache it
+       * Execute props.onCreated to set the id in parent
+       * Then this component will receive props.data and begin to listen for changes in cache
+       */
+      try {
+        await client.query<getStreamSelf, getStreamSelfVariables>({
+          query: GET_STREAM_SELF_QUERY,
+          variables: {
+            id: putStream.id,
+          },
+        });
+      // eslint-disable-next-line no-empty
+      } catch {}
+      props.onCreated(putStream.id);
 
       // Reset form
       reset({
@@ -214,9 +239,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     onCompleted: ({ updateStream }) => {
       setLoading(false);
 
-      // Update data as it's in state
-      setData(updateStream);
-
       // Reset form
       reset({
         name: updateStream.name,
@@ -278,7 +300,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const onSubmit = async (variables: FormData) => {
     setLoading(true);
 
-    if (data) {
+    if (props.data) {
       /**
        * Map over the form variables and only return
        * varibales the appear in the dirty fields list
@@ -294,7 +316,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
         return p;
       }, {});
-      console.log('onSubmit -> changed', changed);
 
 
       /**
@@ -306,7 +327,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             ...changed,
             cost: changed.cost ? parseInt(variables.cost, 10) : undefined,
             image: changed.image ? await processImage(changed.image) : undefined,
-            id: data.id,
+            id: props.data.id,
           },
         });
       } catch {
@@ -365,12 +386,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Inputs are required if create form (no data)
    */
   useEffect(() => {
-    register({ name: 'image' }, { required: !data });
+    register({ name: 'image' }, { required: !props.data });
 
     register(
       { name: 'name' },
       {
-        required: !data,
+        required: !props.data,
         validate: (v) => {
           if (v.length < 3) {
             return 'Minimum 3 characters';
@@ -385,7 +406,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       { name: 'info' },
       {
         // If required, provide error message
-        required: !data ? 'Please enter some information' : false,
+        required: !props.data ? 'Please enter some information' : false,
         validate: (v) => {
           if (v.length < 3) {
             return 'Minimum 3 characters';
@@ -397,12 +418,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     );
 
     register({ name: 'tags' }, { required: false });
-    register({ name: 'timeFrom' }, { required: !data });
-    register({ name: 'timeTo' }, { required: !data });
-    register({ name: 'duration' }, { required: !data });
+    register({ name: 'timeFrom' }, { required: !props.data });
+    register({ name: 'timeTo' }, { required: !props.data });
+    register({ name: 'duration' }, { required: !props.data });
     register({ name: 'isFree' }, { required: false });
     register({ name: 'cost' }, {
-      required: !data,
+      required: !props.data,
       validate: (v) => {
         /**
          * If isFree is false, cost must be greater than creditMinimumStreamCost
@@ -442,8 +463,8 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 <EditableAsyncImage
                   resetRef={imageResetRef}
                   asyncImageProps={{
-                    splashUrl: data?.image?.url?.splash,
-                    fullUrl: data?.image?.url?.full,
+                    splashUrl: props.data?.image?.url?.splash,
+                    fullUrl: props.data?.image?.url?.full,
                     containerProps: {
                       style: Styles.image,
                     },
@@ -454,8 +475,8 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               )
               : (
                 <AsyncImage
-                  splashUrl={data?.image?.url?.splash}
-                  fullUrl={data?.image?.url?.full}
+                  splashUrl={props.data?.image?.url?.splash}
+                  fullUrl={props.data?.image?.url?.full}
                   containerProps={{
                     style: Styles.image,
                   }}
@@ -507,15 +528,17 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 editable={editable}
               />
 
-              <TagInput
-                defaultValue={defaultValues.tags}
-                onChange={(value) => {
-                  console.log('value', value);
-                  setValue('tags', value, true);
-                }}
-                wrapStyle={Styles.inputWrap}
-                editable={editable}
-              />
+              {/* If form is not editable, only show if there is tags */}
+              {(editable || props.data?.tags.length > 0) && (
+                <TagInput
+                  defaultValue={defaultValues.tags}
+                  onChange={(value) => {
+                    setValue('tags', value, true);
+                  }}
+                  wrapStyle={Styles.inputWrap}
+                  editable={editable}
+                />
+              )}
             </View>
 
             <View style={Styles.section}>
@@ -608,10 +631,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               />
             </View>
 
-            {data && (
+            {props.data && (
               <View style={Styles.inputWrap}>
                 <StreamStates
-                  data={data}
+                  data={props.data}
                   getStreamSelfsVariables={props.getStreamSelfsVariables}
                   onPop={props.onPop}
                 />
@@ -628,7 +651,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           }}
         >
           <Button
-            title={loading ? `${data ? 'Updating' : 'Creating'}` : `${data ? 'Update' : 'Create'} Stream`}
+            title={loading ? `${props.data ? 'Updating' : 'Creating'}` : `${props.data ? 'Update' : 'Create'} Stream`}
             onPress={handleSubmit(onSubmit)}
             disabled={!isValid || !dirty}
             loading={loading}

@@ -10,7 +10,7 @@ import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
 import Toast from '../UI/Toast/Toast';
-import { pushScreen, goToLogin } from '../../screens/utils';
+import { pushScreen } from '../../screens/utils';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 

@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { View, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -22,33 +22,33 @@ export interface CreateUpdateStreamInnerProps extends CreateUpdateStreamProps {
 
 const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
   const { data: { getChannelSelf } } = useGetChannelSelfQuery();
+  const [id, setId] = useState(props.id);
 
-  if (!props.id) {
-    return (
-      <CreateUpdateStreamView
-        channelData={getChannelSelf}
-        getStreamSelfsVariables={props.getStreamSelfsVariables}
-        canPopRef={props.canPopRef}
-        onPop={() => Navigation.pop(props.componentId)}
-      />
-    );
-  }
 
+  /**
+   * Get stream with id
+   */
   const queryResult = useGetStreamSelfQuery({
     variables: {
-      id: props.id,
+      id,
     },
   });
-  console.log('queryResult', queryResult);
 
-  if (queryResult.loading || queryResult.error) {
+
+  /**
+   * If id doesn't exist allow the query to fail
+   * This allows the component to switch from create to update
+   */
+  if (props.id && (queryResult.loading || queryResult.error)) {
     return <LoadRetry {...queryResult} />;
   }
+
 
   return (
     <CreateUpdateStreamView
       channelData={getChannelSelf}
-      data={queryResult.data.getStreamSelf}
+      data={queryResult?.data?.getStreamSelf}
+      onCreated={setId}
       getStreamSelfsVariables={props.getStreamSelfsVariables}
       canPopRef={props.canPopRef}
       onPop={() => Navigation.pop(props.componentId)}
