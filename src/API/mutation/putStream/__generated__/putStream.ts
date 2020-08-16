@@ -61,4 +61,5 @@ export interface putStreamVariables {
   cost: number;
   image?: any | null;
   audioOnly?: boolean | null;
+  tags?: string[] | null;
 }

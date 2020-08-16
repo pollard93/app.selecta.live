@@ -39,6 +39,7 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
       id: props.id,
     },
   });
+  console.log('queryResult', queryResult);
 
   if (queryResult.loading || queryResult.error) {
     return <LoadRetry {...queryResult} />;

@@ -27,11 +27,13 @@ import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getS
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getChannelSelf_getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import Switch from '../../UI/Form/components/Switch/Switch';
+import TagInput from '../../UI/Form/components/TagInput/TagInput';
 
 type FormData = {
   image: PhotoIdentifier['node'];
   name: string;
   info: string;
+  tags: string[];
   timeFrom: string;
   timeTo: string;
   duration: number;
@@ -61,6 +63,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       ? {
         name: data.name,
         info: data.info,
+        tags: data.tags.map((t) => t.title),
         timeFrom: data.timeFrom,
         timeTo: data.timeTo,
         duration: new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime(),
@@ -78,6 +81,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         return {
           name: '',
           info: '',
+          tags: undefined,
           timeFrom: timeFrom.toISOString(),
           timeTo: new Date(timeFrom.getTime() + 3.6e+6).toISOString(), // 1 hour duration
           duration: 3.6e+6, // 1 hour
@@ -138,6 +142,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       reset({
         name: putStream.name,
         info: putStream.info,
+        tags: putStream.tags.map((t) => t.title),
         image: undefined,
         timeFrom: putStream.timeFrom,
         timeTo: putStream.timeTo,
@@ -216,6 +221,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       reset({
         name: updateStream.name,
         info: updateStream.info,
+        tags: updateStream.tags.map((t) => t.title),
         image: undefined,
         timeFrom: updateStream.timeFrom,
         timeTo: updateStream.timeTo,
@@ -288,6 +294,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
         return p;
       }, {});
+      console.log('onSubmit -> changed', changed);
 
 
       /**
@@ -322,6 +329,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           variables: {
             name: variables.name,
             info: variables.info,
+            tags: variables.tags,
             timeFrom: variables.timeFrom,
             timeTo: variables.timeTo,
             cost: parseInt(variables.cost, 10),
@@ -388,6 +396,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       },
     );
 
+    register({ name: 'tags' }, { required: false });
     register({ name: 'timeFrom' }, { required: !data });
     register({ name: 'timeTo' }, { required: !data });
     register({ name: 'duration' }, { required: !data });
@@ -402,7 +411,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           const n = parseInt(v, 10);
 
           if (n < props.channelData.creditMinimumStreamCost) {
-            return 'Value does not meet minimum cost';
+            return 'Value does not meet minimum price';
           }
 
           // eslint-disable-next-line no-restricted-globals
@@ -493,6 +502,16 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 onSubmitEditing={() => {
                   // eslint-disable-next-line no-unused-expressions
                   startDateRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+                editable={editable}
+              />
+
+              <TagInput
+                defaultValue={defaultValues.tags}
+                onChange={(value) => {
+                  console.log('value', value);
+                  setValue('tags', value, true);
                 }}
                 wrapStyle={Styles.inputWrap}
                 editable={editable}
