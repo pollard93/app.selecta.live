@@ -7,7 +7,7 @@ import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen'
 import DurationPicker from '../../../DateTimePicker/components/DurationPicker/DurationPicker';
 
 export interface DurationInputProps {
-  value?: number; // ms (defaults to 0)
+  defaultValue?: number; // ms (defaults to 0)
   inputRef: React.MutableRefObject<any>;
   onChange: (ms: number) => void;
   wrapStyle?: StyleProp<ViewStyle>;
@@ -15,8 +15,8 @@ export interface DurationInputProps {
 }
 
 const DurationInput: FC<DurationInputProps> = (props) => {
-  const [hoursValue, setHoursValue] = useState(props.value ? Math.floor(props.value / 3.6e+6) : 0);
-  const [minutesValue, setMinutesValue] = useState(props.value ? (props.value / 60000) - (hoursValue * 60) : 0);
+  const [hoursValue, setHoursValue] = useState(props.defaultValue ? Math.floor(props.defaultValue / 3.6e+6) : 0);
+  const [minutesValue, setMinutesValue] = useState(props.defaultValue ? (props.defaultValue / 60000) - (hoursValue * 60) : 0);
 
 
   /**

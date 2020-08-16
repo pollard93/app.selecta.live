@@ -545,7 +545,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               <H2>Schedule</H2>
 
               <DateInput
-                value={timeFrom}
+                defaultValue={timeFrom}
                 inputRef={startDateRef}
                 mode="date"
                 onChange={(value) => {
@@ -558,7 +558,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               />
 
               <DateInput
-                value={timeFrom}
+                defaultValue={timeFrom}
                 inputRef={startTimeRef}
                 mode="time"
                 onChange={(value) => {
@@ -571,7 +571,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               />
 
               <DurationInput
-                value={duration}
+                defaultValue={duration}
                 inputRef={durationRef}
                 onChange={(value) => {
                   setValue('duration', value, true);

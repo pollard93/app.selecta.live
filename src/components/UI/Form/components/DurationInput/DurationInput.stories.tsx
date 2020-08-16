@@ -14,16 +14,16 @@ storiesOf('UI/Form/DurationInput', module)
       inputRef={{ current: null }}
     />
   ))
-  .add('DurationInput - with value', () => (
+  .add('DurationInput - with defaultValue', () => (
     <DurationInput
-      value={4500000} // 1 hour 15 minutes in ms
+      defaultValue={4500000} // 1 hour 15 minutes in ms
       inputRef={{ current: null }}
       onChange={console.log}
     />
   ))
   .add('DurationInput - disabled', () => (
     <DurationInput
-      value={4500000} // 1 hour 15 minutes in ms
+      defaultValue={4500000} // 1 hour 15 minutes in ms
       inputRef={{ current: null }}
       onChange={console.log}
       editable={false}

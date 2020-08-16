@@ -8,7 +8,7 @@ import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen'
 import { formatForTimezone } from '../../../../../utils/functions';
 
 export interface DateInputProps {
-  value: string; // ISOString - allows component value to be updated externally
+  defaultValue?: string; // ISOString
   inputRef: React.MutableRefObject<any>;
   onChange: (value: string) => void;
   mode: 'date' | 'time',
@@ -20,7 +20,7 @@ export interface DateInputProps {
 
 const DateInput: FC<DateInputProps> = (props) => {
   const [androidActive, setAndroidActive] = useState(false);
-  const [date, setDate] = useState(props.value ? new Date(props.value) : new Date());
+  const [date, setDate] = useState(props.defaultValue ? new Date(props.defaultValue) : new Date());
 
 
   /**

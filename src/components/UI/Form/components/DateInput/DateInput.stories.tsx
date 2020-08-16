@@ -10,7 +10,7 @@ storiesOf('UI/Form/DateInput', module)
   .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</CenterView>)
   .add('DateInput - date', () => (
     <DateInput
-      value={new Date().toISOString()}
+      defaultValue={new Date().toISOString()}
       mode="date"
       inputRef={{ current: null }}
       onChange={console.log}
@@ -19,7 +19,7 @@ storiesOf('UI/Form/DateInput', module)
   ))
   .add('DateInput - time', () => (
     <DateInput
-      value={new Date().toISOString()}
+      defaultValue={new Date().toISOString()}
       mode="time"
       inputRef={{ current: null }}
       onChange={console.log}
@@ -28,7 +28,7 @@ storiesOf('UI/Form/DateInput', module)
   ))
   .add('DateInput - disabled', () => (
     <DateInput
-      value={new Date().toISOString()}
+      defaultValue={new Date().toISOString()}
       mode="time"
       inputRef={{ current: null }}
       onChange={console.log}
