@@ -12,7 +12,6 @@ import FadeInView from '../../UI/FadeInView/FadeInView';
 import Drawer from '../../UI/Drawer/Drawer';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamSelf.styles';
-import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import StreamCommunication from '../StreamProfile/components/StreamCommunication/StreamCommunication';
 
 
