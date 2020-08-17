@@ -12,11 +12,12 @@ import { streamMessages, streamMessagesVariables } from '../../../API/subscripti
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
 interface StreamMessagesProps {
-  data: STREAM_PROFILE_FRAGMENT;
+  data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessages: FC<StreamMessagesProps> = (props) => {

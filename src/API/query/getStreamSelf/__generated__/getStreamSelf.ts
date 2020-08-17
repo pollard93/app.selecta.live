@@ -6,6 +6,29 @@
 // GraphQL query operation: getStreamSelf
 // ====================================================
 
+export interface getStreamSelf_getStreamSelf_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface getStreamSelf_getStreamSelf_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: getStreamSelf_getStreamSelf_channel_profileImage_url | null;
+}
+
+export interface getStreamSelf_getStreamSelf_channel {
+  __typename: "ChannelProfile";
+  id: string;
+  name: string | null;
+  profileImage: getStreamSelf_getStreamSelf_channel_profileImage | null;
+}
+
 export interface getStreamSelf_getStreamSelf_image_url {
   __typename: "Url";
   splash: string | null;
@@ -32,6 +55,7 @@ export interface getStreamSelf_getStreamSelf {
   id: string;
   name: string | null;
   info: string | null;
+  channel: getStreamSelf_getStreamSelf_channel | null;
   image: getStreamSelf_getStreamSelf_image | null;
   tags: (getStreamSelf_getStreamSelf_tags | null)[] | null;
   timeFrom: any | null;
@@ -48,6 +72,7 @@ export interface getStreamSelf_getStreamSelf {
   audioOnly: boolean | null;
   published: any | null;
   viewCount: number | null;
+  position: number | null;
 }
 
 export interface getStreamSelf {

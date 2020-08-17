@@ -13,9 +13,9 @@ import { formatForTimezone } from '../../../utils/functions';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import { pushScreen } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
-import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import Toast from '../../UI/Toast/Toast';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import StreamSelfScreen from '../../../screens/StreamSelfScreen/StreamSelfScreen';
 
 interface StreamListItemProps {
   data: STREAM_SELF_FRAGMENT;
@@ -106,7 +106,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <Button
               type="PRIMARY"
               title="View Stream"
-              onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}
+              onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}
               style={Styles.streamButton}
             />
 
@@ -143,14 +143,14 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           </>
         ) : (
           <View style={Styles.metrics}>
-            <TouchableOpacity onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.CHAT} size="small" />
                 <Body style={Styles.metricBody}>7231 Comments</Body>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.PLAY} size="small" />
                 <Body style={Styles.metricBody}>View Stream</Body>

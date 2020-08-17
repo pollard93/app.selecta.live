@@ -8,21 +8,15 @@ import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessa
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
 import styles, { DynamicStyles } from './StreamMessagesVod.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 interface StreamMessagesVodProps {
-  data: STREAM_PROFILE_FRAGMENT;
+  data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
-
-  const { data: { getStreamProfile } } = useGetStreamProfileQuery({
-    variables: {
-      id: props.data.id,
-    },
-  });
 
 
   /**
@@ -30,9 +24,9 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    */
   const [variables, setVariables] = useState<getStreamMessagesVodVariables>({
     id: props.data.id,
-    from: getStreamProfile.position
-      ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
-      : getStreamProfile.timeFrom,
+    from: props.data.position
+      ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
+      : props.data.timeFrom,
     last: 20,
     before: null,
   });
@@ -41,7 +35,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
   const cancelFetchMore = useRef(false);
   const fetchingMore = useRef(false);
   const noMoreToFetch = useRef(false);
-  const currentPosition = useRef(getStreamProfile.position);
+  const currentPosition = useRef(props.data.position);
 
 
   /**
@@ -50,7 +44,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    * Set the variables and reset refs
    */
   useEffect(() => {
-    if (Math.abs(currentPosition.current - getStreamProfile.position) > 1) {
+    if (Math.abs(currentPosition.current - props.data.position) > 1) {
       /**
        * Set the variables to stop any mutations to the cache while the updates variables are requested
        * These will be reset at in the useEffect below
@@ -60,15 +54,15 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
 
       setVariables({
         id: props.data.id,
-        from: getStreamProfile.position
-          ? new Date((new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000) - 10000).toISOString()
-          : getStreamProfile.timeFrom,
+        from: props.data.position
+          ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
+          : props.data.timeFrom,
         last: 20,
         before: null,
       });
     }
-    currentPosition.current = getStreamProfile.position;
-  }, [getStreamProfile.position]);
+    currentPosition.current = props.data.position;
+  }, [props.data.position]);
 
 
   /**
@@ -101,7 +95,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    * Get the current position date
    * Reduce the query results messages to get the ones that need to be displayed
    */
-  const currentPositionTime = new Date(new Date(getStreamProfile.timeFrom).getTime() + getStreamProfile.position * 1000);
+  const currentPositionTime = new Date(new Date(props.data.timeFrom).getTime() + props.data.position * 1000);
   const messagesToDisplay = queryResult.data.getStreamMessagesVod.messages.reduce((a, c) => {
     if (new Date(c.createdAt) <= currentPositionTime) {
       a.push(c);

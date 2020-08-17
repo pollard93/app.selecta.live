@@ -10,9 +10,10 @@ import color from '../../../../../styles/definitions/color';
 import Styles from './StreamCommunication.styles';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import Switch from '../../../../UI/Form/components/Switch/Switch';
+import { STREAM_SELF_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 interface StreamCommunicationProps {
-  data: STREAM_PROFILE_FRAGMENT;
+  data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamCommunication: FC<StreamCommunicationProps> = (props) => {

@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sun Aug 16 2020 14:51:58 GMT+0100 (British Summer Time)
+# timestamp: Mon Aug 17 2020 19:06:08 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -719,7 +719,6 @@ type ProductConfig {
 }
 
 type Query {
-  canViewStream(id: String!): Boolean!
   getChannelProfile(id: String!): ChannelProfile!
   getChannelProfileFeed(id: String!): FeedPayload
   getChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
@@ -734,7 +733,6 @@ type Query {
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
-  getStreamUrl(id: String!): StreamUrlPayload!
   isUsernameUnique(username: String!): Boolean
   validateResetToken: Boolean
   verifyUser: Boolean
@@ -746,10 +744,12 @@ type Query {
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
+  canViewStream(id: String!): Boolean!
   getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamComments(id: String!, first: Int, after: String): StreamCommentClientPayload
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
+  getStreamUrl(id: String!): StreamUrlPayload!
 }
 
 type RelatedChannel {
@@ -1255,6 +1255,7 @@ type StreamSelf {
   audioOnly: Boolean
   tags: [TagProfile]
   viewCount: Int
+  position: Float
 }
 
 type StreamSelfsPayLoad {
