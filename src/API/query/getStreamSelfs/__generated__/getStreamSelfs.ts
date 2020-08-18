@@ -69,6 +69,7 @@ export interface getStreamSelfs_getStreamSelfs_streams {
   creditRevenue: number | null;
   consumersEdge: number | null;
   liveConsumersEdge: number | null;
+  commentsEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;

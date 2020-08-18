@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Mon Aug 17 2020 19:06:08 GMT+0100 (British Summer Time)
+# timestamp: Tue Aug 18 2020 10:38:36 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -1250,6 +1250,7 @@ type StreamSelf {
   creditRevenue: Int
   consumersEdge: Int
   liveConsumersEdge: Int
+  commentsEdge: Int
   streamKey: String
   streamUrl: String
   audioOnly: Boolean

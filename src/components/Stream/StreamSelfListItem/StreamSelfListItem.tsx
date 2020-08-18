@@ -146,7 +146,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.CHAT} size="small" />
-                <Body style={Styles.metricBody}>7231 Comments</Body>
+                <Body style={Styles.metricBody}>{data.commentsEdge} Comment{data.commentsEdge === 1 ? '' : 's'}</Body>
               </View>
             </TouchableOpacity>
 

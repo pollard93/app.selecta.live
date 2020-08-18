@@ -29,6 +29,7 @@ export const STREAM_SELF_FRAGMENT = gql`
     creditRevenue
     consumersEdge
     liveConsumersEdge
+    commentsEdge
     streamKey
     streamUrl
     audioOnly

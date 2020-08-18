@@ -67,6 +67,7 @@ export interface STREAM_SELF_FRAGMENT {
   creditRevenue: number | null;
   consumersEdge: number | null;
   liveConsumersEdge: number | null;
+  commentsEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
