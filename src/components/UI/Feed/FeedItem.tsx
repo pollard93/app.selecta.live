@@ -3,6 +3,7 @@ import { View, Dimensions, Animated, ListRenderItemInfo, TouchableOpacity } from
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
 import { useDynamicValue } from 'react-native-dynamic';
+import { ApolloQueryResult } from 'apollo-client';
 import { FEED_PAYLOAD_FRAGMENT_items } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
 import { FEED_TYPE } from '../../../../__generated__/globalTypes';
 import H3 from '../Typography/components/H3';
@@ -23,6 +24,7 @@ interface FeedItemProps {
   renderInfo: ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>;
   onPressStream: (id: string) => void;
   onPressChannel: (id: string) => void;
+  refetchRefs: {[key:string]:() => Promise<ApolloQueryResult<unknown>>}
 }
 
 const FeedItem: FC<FeedItemProps> = (props) => {
@@ -103,6 +105,10 @@ const FeedItem: FC<FeedItemProps> = (props) => {
             if (maxCount === null && args.maxCount !== null) {
               setMaxCount(args.maxCount);
             }
+
+
+            // eslint-disable-next-line no-param-reassign
+            props.refetchRefs[`${props.renderInfo.item.heading}${props.renderInfo.index}`] = args.queryResult.refetch;
 
 
             /**
