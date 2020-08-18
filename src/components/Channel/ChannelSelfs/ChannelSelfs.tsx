@@ -27,7 +27,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
    * Login channel mutation
    * Gets channel tokens
    */
-  const [loginChannelMutation] = useLoginChannelWithTokenMutation({
+  const [loginChannelMutation, { loading }] = useLoginChannelWithTokenMutation({
     onCompleted: () => {
       /**
        * Psuh ChannelSelfScreen
@@ -58,6 +58,8 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
           <TouchableOpacity
             style={Styles.item}
             onPress={() => {
+              if (loading) return;
+
               loginChannelMutation({
                 variables: {
                   id: item.id,
