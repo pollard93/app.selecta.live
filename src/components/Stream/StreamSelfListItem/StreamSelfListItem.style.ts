@@ -79,4 +79,19 @@ export default StyleSheet.create({
     textDecorationColor: color.mono.pale.dark,
     textDecorationLine: 'underline',
   },
+
+  // Skeleton
+  bannerHeaderSkeleton: {
+    color: color.mono.dark,
+  },
+  skeletonImageWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skeletonImage: {
+    height: scalePx(50),
+    opacity: 0.1,
+    tintColor: color.mono.pale.dark,
+    width: scalePx(50),
+  },
 });

@@ -8,7 +8,6 @@ import { getStreamCommentsVariables, getStreamComments } from '../../../API/quer
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-import { getChannelToken } from '../../../ApolloClient';
 import Styles, { DynamicStyles } from './CreateStreamComment.styles';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';

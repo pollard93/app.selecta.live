@@ -17,6 +17,7 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
+import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -72,7 +73,11 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
             </View>
           )}
           ListFooterComponent={({ queryResult, maxCount }) => {
-            if (queryResult.loading || queryResult.error) {
+            if (queryResult.loading) {
+              return <StreamSelfListItemSkeleton />;
+            }
+
+            if (queryResult.error) {
               return (
                 <View style={Styles.header}>
                   <LoadRetry {...queryResult} />
