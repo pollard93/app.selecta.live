@@ -79,17 +79,9 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
 
   /**
    * Handle submission
-   * Tries to getChannelToken from local state
-   * If no token exists null will be returned and ApolloClient will replace with a general token
    */
   const onSubmit = async () => {
-    mutation({
-      context: {
-        headers: {
-          authorization: await getChannelToken(client),
-        },
-      },
-    });
+    mutation();
   };
 
 
@@ -100,7 +92,6 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
     <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="comment"
-        light
         value={comment}
         onChangeText={setComment}
         placeholder='Type your comment here...'

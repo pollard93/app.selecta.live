@@ -9,7 +9,6 @@ import mockClient from '../../../API/utils/mockClient';
 import CreateStreamComment from './CreateStreamComment';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import { getStreamComments, getStreamCommentsVariables } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
-import * as AClientModule from '../../../ApolloClient';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 
 
@@ -19,13 +18,11 @@ describe('<CreateStreamComment />', () => {
    */
   const sandbox = Sinon.createSandbox();
   let toastSpy = sandbox.spy(useToast(), 'push');
-  let getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
 
   afterEach(() => {
     sandbox.restore();
 
     toastSpy = sandbox.spy(useToast(), 'push');
-    getChannelTokenSpy = sandbox.spy(AClientModule, 'getChannelToken');
   });
 
 
@@ -83,9 +80,6 @@ describe('<CreateStreamComment />', () => {
     // Wait for request
     await wait(0);
     wrapper.update();
-
-    // Test getChannelToken was called
-    expect(getChannelTokenSpy.callCount).to.equal(1);
 
     // Textinput value should have been reset and button should still be disabled
     expect(wrapper.find(TextInput).first().props().value).to.equal('');

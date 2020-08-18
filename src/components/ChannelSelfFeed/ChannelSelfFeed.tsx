@@ -8,7 +8,7 @@ import { useGetChannelSelfFeedQuery } from '../../API/query/getChannelSelfFeed/g
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import { pushScreen } from '../../screens/utils';
-import CreateUpdateStreamScreen from '../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import StreamSelfScreen from '../../screens/StreamSelfScreen/StreamSelfScreen';
 
 export interface ChannelSelfFeedProps extends ScreenProps {
   flatListProps: Partial<FlatListProps<any>>;
@@ -33,7 +33,7 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
               <Feed
                 data={queryResult.data.getChannelSelfFeed}
                 onPressStream={(id) => {
-                  pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, { id });
+                  pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id });
                 }}
                 onPressChannel={() => {
                   // Should not be presented with channels on this feed
