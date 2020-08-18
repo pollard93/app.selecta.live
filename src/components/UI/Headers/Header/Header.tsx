@@ -108,24 +108,23 @@ const Header: FC<HeaderProps> = (props) => {
             </TouchableOpacity>
 
             <View style={Styles.profilePicture}>
+              <View style={Styles.profilePictureIconWrap}>
+                <Icon
+                  name={ICON.PROFILE}
+                  size="regular"
+                  style={Styles.profilePictureIcon}
+                />
+              </View>
               {
-                self.profilePicture
-                  ? (
-                    <AsyncImage
-                      splashUrl={self.profilePicture.url.splash}
-                      fullUrl={self.profilePicture.url.small}
-                      containerProps={{
-                        style: Styles.profilePictureInner,
-                      }}
-                    />
-                  )
-                  : (
-                    <Icon
-                      name={ICON.PROFILE}
-                      size="regular"
-                      style={Styles.profilePictureIcon}
-                    />
-                  )
+                self.profilePicture && (
+                  <AsyncImage
+                    splashUrl={self.profilePicture.url.splash}
+                    fullUrl={self.profilePicture.url.small}
+                    containerProps={{
+                      style: Styles.profilePictureInner,
+                    }}
+                  />
+                )
               }
             </View>
           </View>
