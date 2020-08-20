@@ -12,8 +12,6 @@ import { GET_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getAc
 import InitScreen from './InitScreen';
 import * as AClientModule from '../../ApolloClient';
 import * as ScreenUtilsModule from '../utils';
-import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
-import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
 import InAppPurchases from '../../modules/InAppPurchases';
 import * as SafeAreaInsetsModule from '../../modules/SafeAreaInsets/SafeAreaInsets';
 import { store } from '../../utils/storage';
@@ -59,19 +57,6 @@ describe('<InitScreen >', () => {
       query: GET_ACCESS_TOKEN_QUERY,
       data: {
         getAccessToken: 'token',
-      },
-    });
-  };
-
-
-  /**
-   * Utility to write getChannelAccessToken query
-   */
-  const writeChannelTokenToCache = (client: ApolloClient<any>) => {
-    client.writeQuery<getChannelAccessToken>({
-      query: GET_CHANNEL_ACCESS_TOKEN_QUERY,
-      data: {
-        getChannelAccessToken: 'token',
       },
     });
   };
@@ -141,7 +126,7 @@ describe('<InitScreen >', () => {
       }),
     });
 
-    // Store general and channel token
+    // Store general
     writeGeneralTokenToCache(client);
 
     const wrapper = mount(
@@ -171,11 +156,13 @@ describe('<InitScreen >', () => {
       }),
     });
 
-    // Store general and channel token
+    // Store general token
     writeGeneralTokenToCache(client);
 
-    // Store getSelf
-    await store('getSelf', { id: 'test', __typename: 'User' });
+    // Store getSelf, use otherClient to mock the data
+    const otherClient = mockClient();
+    const { data } = await otherClient.query<getSelf>({ query: GET_SELF_QUERY });
+    await store('getSelf', data.getSelf);
 
     const wrapper = mount(
       <ApolloProvider client={client}>
@@ -195,39 +182,7 @@ describe('<InitScreen >', () => {
     const gs = client.readQuery<getSelf>({
       query: GET_SELF_QUERY,
     });
-    expect(gs.getSelf.id).to.equal('test');
-  });
-
-  it('should goHome with stored general token and expired channel token', async () => {
-    /**
-     * Create mock client and force getChannelSelf to error
-     */
-    const client = mockClient({
-      Query: () => ({
-        getChannelSelf: () => {
-          throw new Error('');
-        },
-      }),
-    });
-
-    // Store general and channel token
-    writeGeneralTokenToCache(client);
-    writeChannelTokenToCache(client);
-
-    const wrapper = mount(
-      <ApolloProvider client={client}>
-        <InitScreen />
-      </ApolloProvider>,
-    );
-    wrapper.update();
-    await wait(0);
-    await wait(0);
-    await wait(0);
-    await wait(0);
-    await wait(0);
-
-    expect(getTokenSpy.callCount).to.equal(1);
-    expect(goHomeSpy.callCount).to.equal(1);
+    expect(gs.getSelf).to.deep.equal(data.getSelf);
   });
 
   it('should goToRequireUpdateScreen if getSelf.requiresUpdate is true', async () => {

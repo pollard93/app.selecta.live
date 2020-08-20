@@ -1,27 +1,33 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { FC } from 'react';
+import { View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { ScreenProps } from '../../../screens/utils/interfaces';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import Header from '../../UI/Headers/Header/Header';
+import StreamSelfView from './StreamSelfView';
 
-interface StreamSelfProps {
+export interface StreamSelfProps extends ScreenProps {
   id: string;
 }
 
-const StreamSelf = (props: StreamSelfProps) => {
+const StreamSelf: FC<StreamSelfProps> = (props) => {
+  const safeAreaInsets = useSafeArea();
+
+  /**
+   * Query
+   */
   const queryResult = useGetStreamSelfQuery({
     variables: {
       id: props.id,
     },
   });
 
-  if (queryResult.loading || queryResult.error) {
-    return <LoadRetry {...queryResult} />;
-  }
-
-  const { data: { getStreamSelf } } = queryResult;
   return (
-    <View>
-      <Text>{getStreamSelf.name}</Text>
+    <View style={[GlobalStyles.PageFill, { paddingBottom: safeAreaInsets.bottom }]}>
+      <Header onPop={() => Navigation.pop(props.componentId)} />
+      <StreamSelfView queryResult={queryResult} />
     </View>
   );
 };

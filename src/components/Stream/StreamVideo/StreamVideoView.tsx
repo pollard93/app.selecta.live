@@ -9,12 +9,15 @@ import { getStreamUrl_getStreamUrl, getStreamUrlVariables } from '../../../API/q
 import StreamControls from './components/StreamControls/StreamControls';
 import Styles from './StreamVideo.styles';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_SELF_FRAGMENT as STREAM_SELF_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
+import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
 
 
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
-  data: getStreamProfile_getStreamProfile;
+  data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
   query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
   toggleFullScreen: () => void;
   isFullScreen: boolean;
@@ -81,23 +84,48 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
       /**
        * Update cache
        */
-      const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-      });
+      // eslint-disable-next-line no-underscore-dangle
+      switch (props.data.__typename) {
+        case 'StreamProfile':
+          const streamProfile = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+            fragmentName: 'STREAM_PROFILE_FRAGMENT',
+            // eslint-disable-next-line no-underscore-dangle
+            id: `${props.data.__typename}:${props.data.id}`,
+            fragment: STREAM_PROFILE_FRAGMENT,
+          });
 
-      client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-        fragmentName: 'STREAM_PROFILE_FRAGMENT',
-        // eslint-disable-next-line no-underscore-dangle
-        id: `${props.data.__typename}:${props.data.id}`,
-        fragment: STREAM_PROFILE_FRAGMENT,
-        data: {
-          ...data,
-          position: newPosition,
-        },
-      });
+          client.writeFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+            fragmentName: 'STREAM_PROFILE_FRAGMENT',
+            // eslint-disable-next-line no-underscore-dangle
+            id: `${props.data.__typename}:${props.data.id}`,
+            fragment: STREAM_PROFILE_FRAGMENT,
+            data: {
+              ...streamProfile,
+              position: newPosition,
+            },
+          });
+          break;
+
+        case 'StreamSelf':
+          const streamSelf = client.readFragment<STREAM_SELF_FRAGMENT_TYPE>({
+            fragmentName: 'STREAM_SELF_FRAGMENT',
+            // eslint-disable-next-line no-underscore-dangle
+            id: `${props.data.__typename}:${props.data.id}`,
+            fragment: STREAM_SELF_FRAGMENT,
+          });
+
+          client.writeFragment<STREAM_SELF_FRAGMENT_TYPE>({
+            fragmentName: 'STREAM_SELF_FRAGMENT',
+            // eslint-disable-next-line no-underscore-dangle
+            id: `${props.data.__typename}:${props.data.id}`,
+            fragment: STREAM_SELF_FRAGMENT,
+            data: {
+              ...streamSelf,
+              position: newPosition,
+            },
+          });
+          break;
+      }
     }
   };
 

@@ -3,6 +3,7 @@ import { View, Dimensions, Animated, ListRenderItemInfo, TouchableOpacity } from
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import gql from 'graphql-tag';
 import { useDynamicValue } from 'react-native-dynamic';
+import { ApolloQueryResult } from 'apollo-client';
 import { FEED_PAYLOAD_FRAGMENT_items } from '../../../API/fragments/__generated__/FEED_PAYLOAD_FRAGMENT';
 import { FEED_TYPE } from '../../../../__generated__/globalTypes';
 import H3 from '../Typography/components/H3';
@@ -15,15 +16,18 @@ import StreamCard from '../Cards/StreamCard/StreamCard';
 import ChannelCard from '../Cards/ChannelCard/ChannelCard';
 import Icon, { ICON } from '../Icon/Icon';
 import Styles, { DynamicStyles } from './Feed.styles';
-import { pushScreen } from '../../../screens/utils';
-import { STACK } from '../../../screens/utils/interfaces';
-import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
-import ChannelProfileScreen from '../../../screens/ChannelProfileScreen/ChannelProfileScreen';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import { CHANNEL_PROFILE_FRAGMENT_SHORT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT_SHORT';
 import Body from '../Typography/components/Body';
 
-const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) => {
+interface FeedItemProps {
+  renderInfo: ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>;
+  onPressStream: (id: string) => void;
+  onPressChannel: (id: string) => void;
+  refetchRefs: {[key:string]:() => Promise<ApolloQueryResult<unknown>>}
+}
+
+const FeedItem: FC<FeedItemProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const windowWidth = useRef(Dimensions.get('window').width);
 
@@ -31,7 +35,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
    * Get item width based on item.type
    */
   const itemWidth = useRef((() => {
-    switch (props.item.type) {
+    switch (props.renderInfo.item.type) {
       case FEED_TYPE.HORIZONTAL:
         return windowWidth.current * 0.9;
       case FEED_TYPE.HORIZONTAL_SMALL:
@@ -50,7 +54,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
   const [maxCount, setMaxCount] = useState<number>(null);
   const horizontalPaddingLeft = useMemo(() => {
     // Only needed if the maxCount is bigger than 1 (there is multiple pages)
-    if (props.item.type !== FEED_TYPE.HORIZONTAL || maxCount <= 1) return null;
+    if (props.renderInfo.item.type !== FEED_TYPE.HORIZONTAL || maxCount <= 1) return null;
 
     return scrollX.current.interpolate({
       inputRange: [0, itemWidth.current / 2],
@@ -61,38 +65,38 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
 
 
   return (
-    <View style={dynamicStyles[`background${props.item.background}`]}>
-      <H3 style={Styles.heading}>{props.item.heading}</H3>
+    <View style={dynamicStyles[`background${props.renderInfo.item.background}`]}>
+      <H3 style={Styles.heading}>{props.renderInfo.item.heading}</H3>
 
-      <Animated.View style={props.item.type === FEED_TYPE.HORIZONTAL && { paddingLeft: horizontalPaddingLeft }}>
+      <Animated.View style={props.renderInfo.item.type === FEED_TYPE.HORIZONTAL && { paddingLeft: horizontalPaddingLeft }}>
         <ApolloFlatList
-          query={gql(props.item.query)}
-          variables={props.item.variables}
-          accessor={props.item.accessor}
+          query={gql(props.renderInfo.item.query)}
+          variables={props.renderInfo.item.variables}
+          accessor={props.renderInfo.item.accessor}
           FlatListProps={{
             style: [
-              Styles[`flatList${props.item.type}`],
-              props.item.type === FEED_TYPE.HORIZONTAL && { width: itemWidth.current, overflow: 'visible' },
+              Styles[`flatList${props.renderInfo.item.type}`],
+              props.renderInfo.item.type === FEED_TYPE.HORIZONTAL && { width: itemWidth.current, overflow: 'visible' },
             ],
             contentContainerStyle: [
-              Styles[`flatListContainer${props.item.type}`],
+              Styles[`flatListContainer${props.renderInfo.item.type}`],
             ],
             showsHorizontalScrollIndicator: false,
-            horizontal: [FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(props.item.type),
-            pagingEnabled: props.item.type === FEED_TYPE.HORIZONTAL,
-            ItemSeparatorComponent: () => props.item.type === FEED_TYPE.HORIZONTAL_SMALL && <View style={Styles.horizontalSeparator} />,
+            horizontal: [FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(props.renderInfo.item.type),
+            pagingEnabled: props.renderInfo.item.type === FEED_TYPE.HORIZONTAL,
+            ItemSeparatorComponent: () => props.renderInfo.item.type === FEED_TYPE.HORIZONTAL_SMALL && <View style={Styles.horizontalSeparator} />,
             onScroll:
               /**
                * On scroll, set the scrollX variable
                * Only set this variable if HORIZONTAL
                */
-              props.item.type === FEED_TYPE.HORIZONTAL
+              props.renderInfo.item.type === FEED_TYPE.HORIZONTAL
                 ? Animated.event(
                   [{ nativeEvent: { contentOffset: { x: scrollX.current } } }],
                   { useNativeDriver: false },
                 )
                 : undefined,
-            scrollEventThrottle: props.item.type === FEED_TYPE.HORIZONTAL ? 16 : undefined,
+            scrollEventThrottle: props.renderInfo.item.type === FEED_TYPE.HORIZONTAL ? 16 : undefined,
           }}
           ListHeaderComponent={(args) => {
             /**
@@ -103,25 +107,29 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
             }
 
 
+            // eslint-disable-next-line no-param-reassign
+            props.refetchRefs[`${props.renderInfo.item.heading}${props.renderInfo.index}`] = args.queryResult.refetch;
+
+
             /**
              * Handle empty results
              */
             if (args.queryResult.data && args.maxCount === 0) {
-              switch (props.item.type) {
+              switch (props.renderInfo.item.type) {
                 case FEED_TYPE.VERTICAL:
                   return (
-                    <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                    <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                       {(() => {
-                        switch (props.item.accessor.split('.').pop()) {
+                        switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return (
-                              <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                              <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
                             );
 
                           case 'channels':
                             return (
                               <>
-                                <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                                <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
                                 <StreamCardSkeleton />
                               </>
                             );
@@ -138,21 +146,21 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                   return (
                     <View style={Styles.loadingHorizontal}>
                       {(() => {
-                        switch (props.item.accessor.split('.').pop()) {
+                        switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return (
-                              <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
-                                <StreamCardSkeleton emptyMessage={`${props.item.heading} will appear here`} />
+                              <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                                <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
                               </View>
                             );
 
                           case 'channels':
                             return (
                               <View style={Styles.loadingHorizontal}>
-                                <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                                <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                                   <ChannelCardSkeleton />
                                 </View>
-                                <Body style={Styles.emptyMessage}>{`${props.item.heading} will appear here`}</Body>
+                                <Body style={Styles.emptyMessage}>{`${props.renderInfo.item.heading} will appear here`}</Body>
                               </View>
                             );
 
@@ -172,13 +180,13 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
             /**
              * Handle load and error
              */
-            switch (props.item.type) {
+            switch (props.renderInfo.item.type) {
               case FEED_TYPE.VERTICAL:
                 if (args.queryResult.loading || args.queryResult.error) {
                   return (
-                    <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
-                      {Array(props.item.variables.first).fill(0).map((_, i) => {
-                        switch (props.item.accessor.split('.').pop()) {
+                    <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                      {Array(props.renderInfo.item.variables.first).fill(0).map((_, i) => {
+                        switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return <StreamCardSkeleton key={i} />;
 
@@ -209,11 +217,11 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                 if (args.queryResult.loading) {
                   return (
                     <View style={Styles.loadingHorizontal}>
-                      {Array(props.item.variables.first).fill(0).map((_, i) => (
+                      {Array(props.renderInfo.item.variables.first).fill(0).map((_, i) => (
                         <View key={i}>
-                          <View style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+                          <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                             {(() => {
-                              switch (props.item.accessor.split('.').pop()) {
+                              switch (props.renderInfo.item.accessor.split('.').pop()) {
                                 case 'streams':
                                   return <StreamCardSkeleton key={i} />;
 
@@ -239,15 +247,15 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
             }
           }}
           renderItem={(args) => (
-            <FadeInView style={[Styles[`item${props.item.type}`], { width: itemWidth.current }]}>
+            <FadeInView style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
               {(() => {
-                switch (props.item.accessor.split('.').pop()) {
+                switch (props.renderInfo.item.accessor.split('.').pop()) {
                   case 'streams':
                     const streamData = args.item as STREAM_PROFILE_FRAGMENT_SHORT;
                     return (
                       <TouchableOpacity
                         onPress={() => {
-                          pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id: streamData.id });
+                          props.onPressStream(streamData.id);
                         }}
                         delayPressIn={50}
                       >
@@ -260,7 +268,7 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
                     return (
                       <TouchableOpacity
                         onPress={() => {
-                          pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id: channelData.id });
+                          props.onPressChannel(channelData.id);
                         }}
                         delayPressIn={50}
                       >
@@ -274,8 +282,8 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
               })()}
             </FadeInView>
           )}
-          disableRefresh={props.item.type === FEED_TYPE.VERTICAL}
-          disablePagination={props.item.type === FEED_TYPE.VERTICAL}
+          disableRefresh={props.renderInfo.item.type === FEED_TYPE.VERTICAL}
+          disablePagination={props.renderInfo.item.type === FEED_TYPE.VERTICAL}
         />
 
         {
@@ -283,10 +291,10 @@ const FeedItem: FC<ListRenderItemInfo<FEED_PAYLOAD_FRAGMENT_items>> = (props) =>
          * Arrows
          */
         }
-        {[FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(props.item.type) && (
-          <View style={Styles[`horizontalArrowWrap${props.item.type}`]} pointerEvents="none">
+        {[FEED_TYPE.HORIZONTAL, FEED_TYPE.HORIZONTAL_SMALL].includes(props.renderInfo.item.type) && (
+          <View style={Styles[`horizontalArrowWrap${props.renderInfo.item.type}`]} pointerEvents="none">
             <Icon
-              style={Styles[`horizontalArrow${props.item.type}`]}
+              style={Styles[`horizontalArrow${props.renderInfo.item.type}`]}
               name={ICON.ARROW_FORWARD}
               size="xsmall"
             />

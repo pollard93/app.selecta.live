@@ -4,7 +4,7 @@ import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Styles from './Register.style';
-import TextInput from '../UI/Form/components/TextInput';
+import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Button from '../UI/Button/Button';
 import Separator from '../UI/Separator/Separator';
 import LoginWithFacebook from '../Login/components/LoginWithFacebook/LoginWithFacebook';

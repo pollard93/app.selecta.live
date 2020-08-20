@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useToast } from 'mbp-components-rn-toast';
 import SplashScreen from 'react-native-splash-screen';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
-import TextInput from '../../UI/Form/components/TextInput';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSelf';
 import Button from '../../UI/Button/Button';
 import Styles from './OnboardingWelcome.style';

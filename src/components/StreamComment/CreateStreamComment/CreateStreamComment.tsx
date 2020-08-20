@@ -8,11 +8,10 @@ import { getStreamCommentsVariables, getStreamComments } from '../../../API/quer
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-import { getChannelToken } from '../../../ApolloClient';
 import Styles, { DynamicStyles } from './CreateStreamComment.styles';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
-import TextInput from '../../UI/Form/components/TextInput';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
 
 interface CreateStreamCommentProps {
   variables: getStreamCommentsVariables; // Variables for query to append to cache
@@ -79,17 +78,9 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
 
   /**
    * Handle submission
-   * Tries to getChannelToken from local state
-   * If no token exists null will be returned and ApolloClient will replace with a general token
    */
   const onSubmit = async () => {
-    mutation({
-      context: {
-        headers: {
-          authorization: await getChannelToken(client),
-        },
-      },
-    });
+    mutation();
   };
 
 
@@ -100,7 +91,6 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
     <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="comment"
-        light
         value={comment}
         onChangeText={setComment}
         placeholder='Type your comment here...'

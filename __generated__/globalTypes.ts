@@ -111,6 +111,8 @@ export enum StreamOrderByInput {
   timeTo_DESC = "timeTo_DESC",
   updatedAt_ASC = "updatedAt_ASC",
   updatedAt_DESC = "updatedAt_DESC",
+  viewCount_ASC = "viewCount_ASC",
+  viewCount_DESC = "viewCount_DESC",
 }
 
 export interface ChannelRelatedChannelsWhereInput {
@@ -786,6 +788,20 @@ export interface StreamUserRecordWhereInput {
   token_not_starts_with?: string | null;
   token_ends_with?: string | null;
   token_not_ends_with?: string | null;
+  streamId?: string | null;
+  streamId_not?: string | null;
+  streamId_in?: string[] | null;
+  streamId_not_in?: string[] | null;
+  streamId_lt?: string | null;
+  streamId_lte?: string | null;
+  streamId_gt?: string | null;
+  streamId_gte?: string | null;
+  streamId_contains?: string | null;
+  streamId_not_contains?: string | null;
+  streamId_starts_with?: string | null;
+  streamId_not_starts_with?: string | null;
+  streamId_ends_with?: string | null;
+  streamId_not_ends_with?: string | null;
   stream?: StreamWhereInput | null;
   user?: UserWhereInput | null;
   type?: string | null;
@@ -818,6 +834,8 @@ export interface StreamUserRecordWhereInput {
   sessionUpdatedAt_lte?: any | null;
   sessionUpdatedAt_gt?: any | null;
   sessionUpdatedAt_gte?: any | null;
+  processed?: boolean | null;
+  processed_not?: boolean | null;
   AND?: StreamUserRecordWhereInput[] | null;
   OR?: StreamUserRecordWhereInput[] | null;
   NOT?: StreamUserRecordWhereInput[] | null;
@@ -967,6 +985,14 @@ export interface StreamWhereInput {
   published_lte?: any | null;
   published_gt?: any | null;
   published_gte?: any | null;
+  viewCount?: number | null;
+  viewCount_not?: number | null;
+  viewCount_in?: number[] | null;
+  viewCount_not_in?: number[] | null;
+  viewCount_lt?: number | null;
+  viewCount_lte?: number | null;
+  viewCount_gt?: number | null;
+  viewCount_gte?: number | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

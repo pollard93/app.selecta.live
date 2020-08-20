@@ -6,6 +6,29 @@
 // GraphQL fragment: STREAM_SELF_FRAGMENT
 // ====================================================
 
+export interface STREAM_SELF_FRAGMENT_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface STREAM_SELF_FRAGMENT_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: STREAM_SELF_FRAGMENT_channel_profileImage_url | null;
+}
+
+export interface STREAM_SELF_FRAGMENT_channel {
+  __typename: "ChannelProfile";
+  id: string;
+  name: string | null;
+  profileImage: STREAM_SELF_FRAGMENT_channel_profileImage | null;
+}
+
 export interface STREAM_SELF_FRAGMENT_image_url {
   __typename: "Url";
   splash: string | null;
@@ -32,6 +55,7 @@ export interface STREAM_SELF_FRAGMENT {
   id: string;
   name: string | null;
   info: string | null;
+  channel: STREAM_SELF_FRAGMENT_channel | null;
   image: STREAM_SELF_FRAGMENT_image | null;
   tags: (STREAM_SELF_FRAGMENT_tags | null)[] | null;
   timeFrom: any | null;
@@ -43,7 +67,11 @@ export interface STREAM_SELF_FRAGMENT {
   creditRevenue: number | null;
   consumersEdge: number | null;
   liveConsumersEdge: number | null;
+  commentsEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
+  viewCount: number | null;
+  position: number | null;
 }

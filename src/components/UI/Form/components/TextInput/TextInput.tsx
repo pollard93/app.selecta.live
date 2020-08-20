@@ -1,14 +1,13 @@
 import React, { FC, Ref, useMemo } from 'react';
 import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
-import Styles from '../Form.style';
-import color from '../../../../styles/definitions/color';
-import Small from '../../Typography/components/Small';
-import { parseCamelCase } from '../../../../utils/functions';
+import Styles from './TextInput.style';
+import color from '../../../../../styles/definitions/color';
+import Small from '../../../Typography/components/Small';
+import { parseCamelCase } from '../../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
-  light?: boolean; // Light background
   setRef?: Ref<any>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
@@ -43,15 +42,15 @@ const TextInput: FC<TextInputProps> = (props) => {
 
 
   return (
-    <View style={[Styles.wrap, props.wrapStyle, props.light && Styles.light, errorMessage && Styles.wrapError]}>
+    <View style={[Styles.wrap, props.wrapStyle, errorMessage && Styles.wrapError, props.editable === false && Styles.disabled]}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
         ref={props.setRef}
-        style={[Styles.TextInput, props.style]}
+        style={[Styles.input, props.style]}
       />
       {errorMessage && (
-        <View style={[Styles.error, props.light && Styles.errorLight]} pointerEvents="none">
+        <View style={Styles.error} pointerEvents="none">
           {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.errorText}>{errorMessage}</Small>}
         </View>
       )}

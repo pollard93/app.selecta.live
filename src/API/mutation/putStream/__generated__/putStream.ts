@@ -6,6 +6,29 @@
 // GraphQL mutation operation: putStream
 // ====================================================
 
+export interface putStream_putStream_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface putStream_putStream_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: putStream_putStream_channel_profileImage_url | null;
+}
+
+export interface putStream_putStream_channel {
+  __typename: "ChannelProfile";
+  id: string;
+  name: string | null;
+  profileImage: putStream_putStream_channel_profileImage | null;
+}
+
 export interface putStream_putStream_image_url {
   __typename: "Url";
   splash: string | null;
@@ -32,6 +55,7 @@ export interface putStream_putStream {
   id: string;
   name: string | null;
   info: string | null;
+  channel: putStream_putStream_channel | null;
   image: putStream_putStream_image | null;
   tags: (putStream_putStream_tags | null)[] | null;
   timeFrom: any | null;
@@ -43,9 +67,13 @@ export interface putStream_putStream {
   creditRevenue: number | null;
   consumersEdge: number | null;
   liveConsumersEdge: number | null;
+  commentsEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
+  viewCount: number | null;
+  position: number | null;
 }
 
 export interface putStream {
@@ -60,4 +88,5 @@ export interface putStreamVariables {
   cost: number;
   image?: any | null;
   audioOnly?: boolean | null;
+  tags?: string[] | null;
 }

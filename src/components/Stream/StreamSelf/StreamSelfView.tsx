@@ -1,0 +1,105 @@
+import React, { FC, useRef, useState } from 'react';
+import { QueryResult } from 'react-apollo';
+import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
+import { useHeaderStyles } from '../../UI/Headers/Header/Header';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
+import FadeInView from '../../UI/FadeInView/FadeInView';
+import Drawer from '../../UI/Drawer/Drawer';
+import StreamVideo from '../StreamVideo/StreamVideo';
+import Styles from './StreamSelf.styles';
+import StreamCommunication from '../StreamProfile/components/StreamCommunication/StreamCommunication';
+
+
+interface StreamSelfViewProps {
+  queryResult: QueryResult<getStreamSelf, getStreamSelfVariables>;
+}
+
+
+/**
+ * Handle loading and error outside of navigation
+ */
+const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
+  const { headerHeight, headerZindex } = useHeaderStyles();
+  const safeAreaInsets = useSafeArea();
+  const window = useRef(Dimensions.get('window')).current;
+  const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
+
+
+  /**
+   * Loading || Error
+   */
+  if (props.queryResult.loading) {
+    return (
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <StreamCardSkeleton />
+      </SafeAreaView>
+    );
+  }
+
+  if (props.queryResult.error) {
+    return <LoadRetry {...props.queryResult} />;
+  }
+
+
+  /**
+   * Should only load video if user is a consumer and it hasn't been cancelled
+   * If the stream is yet to start, this will be handled in <StreamVideo />
+   */
+  const shouldLoadVideo = props.queryResult.data.getStreamSelf.cancelled === null;
+
+
+  return (
+    <>
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <View
+          style={{ paddingTop: headerHeight / 2 }}
+          onLayout={(event) => {
+            if (!drawerLayout) {
+              /**
+               * Using the layout of this view
+               * Set the drawer min and max
+               */
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
+              setDrawerLayout({
+                minHeight: safeHeight - event.nativeEvent.layout.height,
+                maxHeight: safeHeight,
+              });
+            }
+          }}
+        >
+          <StreamCard data={props.queryResult.data.getStreamSelf} />
+        </View>
+      </SafeAreaView>
+
+      {drawerLayout && (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[Styles.flex, { zIndex: headerZindex + 1 }]}
+        >
+          <FadeInView style={Styles.flex}>
+            <Drawer
+              minHeight={drawerLayout.minHeight}
+              maxHeight={drawerLayout.maxHeight}
+            >
+              <StreamCommunication data={props.queryResult.data.getStreamSelf} />
+            </Drawer>
+          </FadeInView>
+        </KeyboardAvoidingView>
+      )}
+
+      {shouldLoadVideo && (
+        <StreamVideo
+          {...props}
+          data={props.queryResult.data.getStreamSelf}
+        />
+      )}
+    </>
+  );
+};
+
+export default StreamSelfView;

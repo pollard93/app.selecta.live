@@ -3,6 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { View, SafeAreaView, Linking } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useToast } from 'mbp-components-rn-toast';
+import { Navigation } from 'react-native-navigation';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Header, { useHeaderStyles } from '../UI/Headers/Header/Header';
@@ -37,10 +38,20 @@ const HomeFeed: FC<HomeFeedProps> = () => {
       switch (type) {
         case 'stream':
           pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id: identifier });
+          Navigation.mergeOptions(STACK.HOME, {
+            bottomTabs: {
+              currentTabIndex: 0,
+            },
+          });
           break;
 
         case 'channel':
           pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id: identifier });
+          Navigation.mergeOptions(STACK.HOME, {
+            bottomTabs: {
+              currentTabIndex: 0,
+            },
+          });
           break;
 
         default:
@@ -72,6 +83,12 @@ const HomeFeed: FC<HomeFeedProps> = () => {
             : (
                 <Feed
                   data={queryResult.data.getHomeFeed}
+                  onPressStream={(id) => {
+                    pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id });
+                  }}
+                  onPressChannel={(id) => {
+                    pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id });
+                  }}
                   refetch={queryResult.refetch}
                   flatListProps={{
                     contentContainerStyle: { paddingTop: headerHeight },

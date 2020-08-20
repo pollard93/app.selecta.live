@@ -8,6 +8,29 @@ import { StreamWhereInput, StreamOrderByInput } from "./../../../../../__generat
 // GraphQL query operation: getStreamSelfs
 // ====================================================
 
+export interface getStreamSelfs_getStreamSelfs_streams_channel_profileImage_url {
+  __typename: "Url";
+  splash: string | null;
+  small: string | null;
+  preview: string | null;
+  large: string | null;
+  full: string | null;
+}
+
+export interface getStreamSelfs_getStreamSelfs_streams_channel_profileImage {
+  __typename: "File";
+  id: string | null;
+  mime: string | null;
+  url: getStreamSelfs_getStreamSelfs_streams_channel_profileImage_url | null;
+}
+
+export interface getStreamSelfs_getStreamSelfs_streams_channel {
+  __typename: "ChannelProfile";
+  id: string;
+  name: string | null;
+  profileImage: getStreamSelfs_getStreamSelfs_streams_channel_profileImage | null;
+}
+
 export interface getStreamSelfs_getStreamSelfs_streams_image_url {
   __typename: "Url";
   splash: string | null;
@@ -34,6 +57,7 @@ export interface getStreamSelfs_getStreamSelfs_streams {
   id: string;
   name: string | null;
   info: string | null;
+  channel: getStreamSelfs_getStreamSelfs_streams_channel | null;
   image: getStreamSelfs_getStreamSelfs_streams_image | null;
   tags: (getStreamSelfs_getStreamSelfs_streams_tags | null)[] | null;
   timeFrom: any | null;
@@ -45,9 +69,13 @@ export interface getStreamSelfs_getStreamSelfs_streams {
   creditRevenue: number | null;
   consumersEdge: number | null;
   liveConsumersEdge: number | null;
+  commentsEdge: number | null;
   streamKey: string | null;
   streamUrl: string | null;
   audioOnly: boolean | null;
+  published: any | null;
+  viewCount: number | null;
+  position: number | null;
 }
 
 export interface getStreamSelfs_getStreamSelfs {

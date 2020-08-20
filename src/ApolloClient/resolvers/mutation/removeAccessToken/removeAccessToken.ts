@@ -16,6 +16,9 @@ const removeAccessToken: LocalResolver<null, boolean> = async (_, args, { cache 
   // Remove token from async storage
   await store(LOCAL_AUTH_KEY, null);
 
+  // Remove getSelf from storage
+  await store('getSelf', null);
+
   // Disconnect push notifications and in app purchases
   PushNotifications.disconnect();
   InAppPurchases.disconnect();

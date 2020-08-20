@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState, useRef, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
-import { ScrollView, Switch } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { useStreamStart } from '../../../../../utils/streamFunctions';
 import StreamMessagesVod from '../../../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
@@ -9,9 +9,11 @@ import StreamComments from '../../../../StreamComment/StreamComments/StreamComme
 import color from '../../../../../styles/definitions/color';
 import Styles from './StreamCommunication.styles';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
+import Switch from '../../../../UI/Form/components/Switch/Switch';
+import { STREAM_SELF_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 interface StreamCommunicationProps {
-  data: STREAM_PROFILE_FRAGMENT;
+  data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
@@ -98,10 +100,6 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
         <Switch
           value={viewingLiveMessages}
           onValueChange={setLiveMessages}
-          trackColor={{
-            true: color.accent.primary,
-            false: color.mono.light,
-          }}
           style={Styles.toggle}
         />
         <Icon name={ICON.NOTES} size="small" animated style={!viewingLiveMessages && { tintColor: color.accent.primary }} />

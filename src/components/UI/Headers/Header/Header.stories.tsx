@@ -47,6 +47,44 @@ storiesOf('UI/Headers/Header', module)
       <TestComponent />
     );
   })
+  .add('Header - broken profile picture/no network', () => {
+    const TestComponent = () => {
+      const { loading, error, data, client } = useGetSelfQuery();
+
+      /**
+       * Clears getSelf.profilePicture
+       */
+      useEffect(() => {
+        if (!loading && !error) {
+          client.writeQuery<getSelf>({
+            query: GET_SELF_QUERY,
+            data: {
+              ...data,
+              getSelf: {
+                ...data.getSelf,
+                profilePicture: {
+                  ...data.getSelf.profilePicture,
+                  url: {
+                    ...data.getSelf.profilePicture.url,
+                    splash: 'broken',
+                    small: 'broken',
+                  },
+                },
+              },
+            },
+          });
+        }
+      }, []);
+
+      if (loading || error || data.getSelf.profilePicture.url.small !== 'broken') return null;
+
+      return <Header />;
+    };
+
+    return (
+      <TestComponent />
+    );
+  })
   .add('Header - 1000 credits', () => {
     const TestComponent = () => {
       const { loading, error, data, client } = useGetSelfQuery();

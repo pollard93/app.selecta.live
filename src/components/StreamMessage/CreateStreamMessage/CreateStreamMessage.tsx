@@ -12,7 +12,7 @@ import { getChannelToken } from '../../../ApolloClient';
 import Styles, { DynamicStyles } from './CreateStreamMessage.styles';
 import color from '../../../styles/definitions/color';
 import Icon, { ICON } from '../../UI/Icon/Icon';
-import TextInput from '../../UI/Form/components/TextInput';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
 
 interface CreateStreamMessageProps {
   variables: getStreamMessagesVariables; // Variables for query to append to cache

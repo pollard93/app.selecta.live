@@ -30,10 +30,12 @@ function loadStories() {
 	require('../src/components/ResetPassword/ResetPassword.stories');
 	require('../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories');
 	require('../src/components/Stream/CancelStream/CancelStream.stories');
-	require('../src/components/Stream/ChannelStreams/ChannelStreams.stories');
 	require('../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories');
+	require('../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories');
+	require('../src/components/Stream/DeleteStream/DeleteStream.stories');
 	require('../src/components/Stream/PaidForStreams/PaidForStreams.stories');
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
+	require('../src/components/Stream/PublishStream/PublishStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories');
@@ -56,9 +58,14 @@ function loadStories() {
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Cards/WalletCard/WalletCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
-	require('../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories');
 	require('../src/components/UI/Drawer/Drawer.stories');
-	require('../src/components/UI/Form/Form.stories');
+	require('../src/components/UI/Form/components/DateInput/DateInput.stories');
+	require('../src/components/UI/Form/components/DurationInput/DurationInput.stories');
+	require('../src/components/UI/Form/components/SearchInput/SearchInput.stories');
+	require('../src/components/UI/Form/components/Switch/Switch.stories');
+	require('../src/components/UI/Form/components/TagInput/TagInput.stories');
+	require('../src/components/UI/Form/components/TextArea/TextArea.stories');
+	require('../src/components/UI/Form/components/TextInput/TextInput.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
@@ -102,10 +109,12 @@ const stories = [
 	'../src/components/ResetPassword/ResetPassword.stories',
 	'../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories',
 	'../src/components/Stream/CancelStream/CancelStream.stories',
-	'../src/components/Stream/ChannelStreams/ChannelStreams.stories',
 	'../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories',
+	'../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories',
+	'../src/components/Stream/DeleteStream/DeleteStream.stories',
 	'../src/components/Stream/PaidForStreams/PaidForStreams.stories',
 	'../src/components/Stream/PayForStream/ReportStream.stories',
+	'../src/components/Stream/PublishStream/PublishStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories',
@@ -128,9 +137,14 @@ const stories = [
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Cards/WalletCard/WalletCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
-	'../src/components/UI/DateTimePicker/components/DateTimePickerInput/DateTimePickerInput.stories',
 	'../src/components/UI/Drawer/Drawer.stories',
-	'../src/components/UI/Form/Form.stories',
+	'../src/components/UI/Form/components/DateInput/DateInput.stories',
+	'../src/components/UI/Form/components/DurationInput/DurationInput.stories',
+	'../src/components/UI/Form/components/SearchInput/SearchInput.stories',
+	'../src/components/UI/Form/components/Switch/Switch.stories',
+	'../src/components/UI/Form/components/TagInput/TagInput.stories',
+	'../src/components/UI/Form/components/TextArea/TextArea.stories',
+	'../src/components/UI/Form/components/TextInput/TextInput.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',

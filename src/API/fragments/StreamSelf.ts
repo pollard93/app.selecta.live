@@ -7,6 +7,13 @@ export const STREAM_SELF_FRAGMENT = gql`
     id
     name
     info
+    channel {
+      id
+      name
+      profileImage {
+        ...FILE_FRAGMENT
+      }
+    }
     image {
       ...FILE_FRAGMENT
     }
@@ -22,9 +29,13 @@ export const STREAM_SELF_FRAGMENT = gql`
     creditRevenue
     consumersEdge
     liveConsumersEdge
+    commentsEdge
     streamKey
     streamUrl
     audioOnly
+    published
+    viewCount
+    position
   },
   ${FILE_FRAGMENT}
   ${TAG_PROFILE_FRAGMENT}

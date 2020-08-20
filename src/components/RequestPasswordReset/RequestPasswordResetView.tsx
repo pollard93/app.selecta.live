@@ -4,7 +4,7 @@ import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
 import Styles from './RequestPasswordReset.style';
 import H4 from '../UI/Typography/components/H4';
-import TextInput from '../UI/Form/components/TextInput';
+import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Button from '../UI/Button/Button';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 

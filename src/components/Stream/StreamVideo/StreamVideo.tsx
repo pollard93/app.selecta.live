@@ -6,13 +6,16 @@ import StreamVideoView from './StreamVideoView';
 import { getStreamProfile_getStreamProfile } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/StreamProfile';
 import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_SELF_FRAGMENT as STREAM_SELF_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
 import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import { useStreamStart } from '../../../utils/streamFunctions';
+import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
 
 export interface StreamVideoProps extends ScreenProps {
-  data: getStreamProfile_getStreamProfile;
+  data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
 }
 
 const StreamVideo: FC<StreamVideoProps> = (props) => {
@@ -45,14 +48,31 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
      */
     return async () => {
       try {
-        const data = client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
-          fragmentName: 'STREAM_PROFILE_FRAGMENT',
+        const data = (() => {
           // eslint-disable-next-line no-underscore-dangle
-          id: `${props.data.__typename}:${props.data.id}`,
-          fragment: STREAM_PROFILE_FRAGMENT,
-        });
+          switch (props.data.__typename) {
+            case 'StreamProfile':
+              return client.readFragment<STREAM_PROFILE_FRAGMENT_TYPE>({
+                fragmentName: 'STREAM_PROFILE_FRAGMENT',
+                // eslint-disable-next-line no-underscore-dangle
+                id: `${props.data.__typename}:${props.data.id}`,
+                fragment: STREAM_PROFILE_FRAGMENT,
+              });
 
-        if (data.position) {
+            case 'StreamSelf':
+              return client.readFragment<STREAM_SELF_FRAGMENT_TYPE>({
+                fragmentName: 'STREAM_SELF_FRAGMENT',
+                // eslint-disable-next-line no-underscore-dangle
+                id: `${props.data.__typename}:${props.data.id}`,
+                fragment: STREAM_SELF_FRAGMENT,
+              });
+
+            default:
+              return null;
+          }
+        })();
+
+        if (data && data.position) {
           await client.mutate({
             mutation: UPDATE_STREAM_POSITION_MUTATION,
             variables: {

@@ -8,12 +8,16 @@ import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
-import { ScreenProps } from '../../../screens/utils/interfaces';
+import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { pushScreen } from '../../../screens/utils';
+import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
+import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -23,15 +27,34 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
 
+
+  /**
+   * Variables
+   */
+  const variables: getStreamSelfsVariables = {
+    first: 5,
+    orderBy: StreamOrderByInput.createdAt_DESC,
+    after: null,
+  };
+
+
+  /**
+   * Push CreateUpdateStreamScreen
+   */
+  const onCreate = () => {
+    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+      getStreamSelfsVariables: variables,
+    });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(props.componentId)} />
       <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight }]}>
         <StreamSelfsFlatList
           query={GET_STREAM_SELFS_QUERY}
-          variables={{
-            first: 5,
-          }}
+          variables={variables}
           accessor='getStreamSelfs.streams'
           renderItem={({ item }) => (
             <View style={Styles.item}>
@@ -44,13 +67,17 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
               <Button
                 type="PRIMARY"
                 title="Create New Stream"
-                onPress={console.log}
+                onPress={onCreate}
                 style={Styles.createButton}
               />
             </View>
           )}
           ListFooterComponent={({ queryResult, maxCount }) => {
-            if (queryResult.loading || queryResult.error) {
+            if (queryResult.loading) {
+              return <StreamSelfListItemSkeleton />;
+            }
+
+            if (queryResult.error) {
               return (
                 <View style={Styles.header}>
                   <LoadRetry {...queryResult} />

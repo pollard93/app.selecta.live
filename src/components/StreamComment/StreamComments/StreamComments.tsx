@@ -10,11 +10,12 @@ import styles, { DynamicStyles } from './StreamComments.styles';
 import CreateStreamComment from '../CreateStreamComment/CreateStreamComment';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 class StreamCommentsFlatList extends ApolloFlatList<getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments> {}
 
 interface StreamCommentsProps {
-  data: STREAM_PROFILE_FRAGMENT;
+  data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamComments: FC<StreamCommentsProps> = (props) => {

@@ -98,41 +98,42 @@ const link = split(
 
 
 /**
- * Define endpoints that require general access token
+ * Define endpoints that require channel access token
  */
-const generalTokenEndpoints = [
-  'followChannel',
-  'getChannelProfile',
-  'getChannelProfileFeed',
-  'getChannelProfiles',
-  'getChannelSelfs',
-  'getChannelStreamProfiles',
-  'getConsumingStreamProfiles',
-  'getCreditTransactionProfiles',
-  'getFollowingChannelProfiles',
-  'getHomeFeed',
-  'getProductConfig',
-  'getSelf',
+const channelTokenEndpoints = [
+  'cancelStream',
+  'channelNameExists',
+  'deleteStream',
+  'getChannelSelf',
+  'getChannelSelfFeed',
+  'getRequestedChannels',
+  'getStreamSelf',
+  'getStreamSelfs',
+  'getTagProfiles',
+  'publishStream',
+  'putStream',
+  'registerChannel',
+  'requestChannelLoginCode',
+  'updateChannel',
+  'updateStream',
+  'withdrawFunds',
+];
+
+
+/**
+ * Define endpoints that should use a channel access token if available and fallback to general access token
+ */
+const sharedEndpoints = [
+  'canViewStream',
+  'deleteNotification',
+  'getNotifications',
   'getStreamComments',
   'getStreamMessages',
   'getStreamMessagesVod',
-  'getStreamProfile',
-  'getStreamProfiles',
   'getStreamUrl',
-  'isUsernameUnique',
-  'loginChannel',
-  'loginChannelWithToken',
-  'payForStream',
   'putStreamComment',
   'putStreamMessage',
-  'readConsumerNotification',
-  'registerChannel',
-  'reportStream',
-  'requestChannelLogin',
-  'requestPasswordReset',
-  'updateSelf',
-  'updateStreamPosition',
-  'validateInAppPurchase',
+  'readNotification',
 ];
 
 
@@ -145,13 +146,22 @@ const authMiddleware = setContext(async ({ operationName }, { headers }) => {
   /**
    * If access token is required
    * Get either a general or channel access token
-   * Dependant on generalTokenEndpoints
    */
-  const token = () => (
-    generalTokenEndpoints.includes(operationName)
-      ? getToken(AClient)
-      : getChannelToken(AClient)
-  );
+  const token = async () => {
+    // If channel token required then try and get it and fail if it doesn't exist
+    if (channelTokenEndpoints.includes(operationName)) {
+      return getChannelToken(AClient);
+    }
+
+    // If shared endpoint, try and get channel token and fallback to general token if doesn't exist
+    if (sharedEndpoints.includes(operationName)) {
+      const channelToken = await getChannelToken(AClient);
+      if (channelToken) return channelToken;
+    }
+
+    // Get general token
+    return getToken(AClient);
+  };
 
   /**
    * Merge package.json version as client-version into every request

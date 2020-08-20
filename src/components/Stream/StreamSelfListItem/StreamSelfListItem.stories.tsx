@@ -4,6 +4,7 @@ import StreamSelfListItem from './StreamSelfListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
+import StreamSelfListItemSkeleton from './StreamSelfListItemSkeleton';
 
 storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
@@ -21,7 +22,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
     return <TestComponent />;
   })
-  .add('StreamSelfsListItem - Long title, multiple tagd', () => {
+  .add('StreamSelfsListItem - Long title, multiple tags', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });
 
@@ -83,4 +84,5 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
     };
 
     return <TestComponent />;
-  });
+  })
+  .add('StreamSelfsListItemSkeleton', () => <StreamSelfListItemSkeleton />);

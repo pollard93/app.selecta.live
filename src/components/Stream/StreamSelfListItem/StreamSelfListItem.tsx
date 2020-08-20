@@ -13,8 +13,9 @@ import { formatForTimezone } from '../../../utils/functions';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import { pushScreen } from '../../../screens/utils';
 import { STACK } from '../../../screens/utils/interfaces';
-import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import Toast from '../../UI/Toast/Toast';
+import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import StreamSelfScreen from '../../../screens/StreamSelfScreen/StreamSelfScreen';
 
 interface StreamListItemProps {
   data: STREAM_SELF_FRAGMENT;
@@ -40,12 +41,21 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
   };
 
 
+  /**
+   * Push CreateUpdateStreamScreen
+   */
+  const onEdit = () => {
+    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+      id: data.id,
+    });
+  };
+
+
   return (
     <View style={Styles.wrap}>
       <View style={Styles.banner}>
         <Body bold style={Styles.bannerHeader}>
-          Live On: {formatForTimezone(data.timeFrom, 'DD/MM/Y H:m')}
-          &nbsp; {formatForTimezone(data.timeFrom, 'z')}
+          Live On: {formatForTimezone(data.timeFrom, 'DD/MM/Y HH:mm z')}
           {new Date(data.timeFrom) > new Date() && ' (Upcoming)'}
         </Body>
 
@@ -53,7 +63,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           <Button
             title="Edit"
             type="LIGHT"
-            onPress={console.log}
+            onPress={onEdit}
             size="small"
           />
         )}
@@ -84,7 +94,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <Body>Stream Duration: {(new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime()) / 3.6e+6} Hours</Body>
           </View>
           <View style={Styles.meta}>
-            <Body>Streams: 0</Body>
+            <Body>Streams: {data.viewCount}</Body>
             <Body>Purchases: {data.consumersEdge}</Body>
           </View>
         </View>
@@ -96,14 +106,20 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <Button
               type="PRIMARY"
               title="View Stream"
-              onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}
+              onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}
               style={Styles.streamButton}
             />
 
             <View style={Styles.authKeys}>
               <View style={Styles.authKey}>
                 <Body bold>Stream Url: </Body>
-                <Body style={Styles.authKeyBody}>{data.streamUrl}</Body>
+                <Body
+                  style={Styles.authKeyBody}
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                >
+                  {data.streamUrl}{data.streamUrl}
+                </Body>
 
                 <TouchableOpacity onPress={() => onCopy(data.streamUrl)}>
                   <Icon name={ICON.COPY} size="small" />
@@ -127,14 +143,14 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           </>
         ) : (
           <View style={Styles.metrics}>
-            <TouchableOpacity onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.CHAT} size="small" />
-                <Body style={Styles.metricBody}>7231 Comments</Body>
+                <Body style={Styles.metricBody}>{data.commentsEdge} Comment{data.commentsEdge === 1 ? '' : 's'}</Body>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => pushScreen(STACK.HOME, StreamProfileScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.PLAY} size="small" />
                 <Body style={Styles.metricBody}>View Stream</Body>

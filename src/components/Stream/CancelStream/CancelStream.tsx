@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, Button, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useCancelStreamMutation } from '../../../API/mutation/cancelStream/cancelStream';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
+import Button from '../../UI/Button/Button';
 
 interface CancelStreamProps {
   data: STREAM_SELF_FRAGMENT;
@@ -21,6 +22,15 @@ const CancelStream = (props: CancelStreamProps) => {
     variables: {
       id: props.data.id,
     },
+    onCompleted: () => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content="Stream cancelled" />
+        ),
+        dismissible: false,
+      });
+    },
     onError: (e) => {
       toast.push({
         duration: 1000,
@@ -31,16 +41,6 @@ const CancelStream = (props: CancelStreamProps) => {
       });
     },
   });
-
-
-  /**
-   * If cancelled render here
-   */
-  if (props.data.cancelled) {
-    return (
-      <Text testID="Cancelled">Stream cancelled on {props.data.cancelled}</Text>
-    );
-  }
 
 
   /**
@@ -61,6 +61,7 @@ const CancelStream = (props: CancelStreamProps) => {
   return (
     <Button
       title="Cancel stream"
+      type="SECONDARY"
       onPress={onCancel}
       disabled={loading}
     />

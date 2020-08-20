@@ -3,6 +3,8 @@ import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { useToast } from 'mbp-components-rn-toast';
+import { PhotoIdentifier } from '@react-native-community/cameraroll';
+import ImageResizer from 'react-native-image-resizer';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
@@ -12,8 +14,8 @@ import Styles from './UpdateChannel.style';
 import scalePx from '../../../utils/scalePx';
 import spacing from '../../../styles/definitions/spacing';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
-import TextInput from '../../UI/Form/components/TextInput';
-import TextArea from '../../UI/Form/components/TextArea';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import TextArea from '../../UI/Form/components/TextArea/TextArea';
 import Button from '../../UI/Button/Button';
 import ChannelHeaderStyles from '../ChannelHeader/ChannelHeader.style';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -22,6 +24,8 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 type FormData = {
   name: string;
   description: string;
+  coverImage: PhotoIdentifier['node'];
+  profileImage: PhotoIdentifier['node'];
   websiteUrl: string;
   twitterUrl: string;
   facebookUrl: string;
@@ -30,14 +34,20 @@ type FormData = {
 
 interface UpdateChannelViewProps {
   data: CHANNEL_SELF_FRAGMENT;
+  canPopRef: React.MutableRefObject<boolean>;
 }
 
 const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
+  /**
+   * Form
+   */
   const { register, setValue, handleSubmit, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset, getValues } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
       name: props.data.name,
       description: props.data.description,
+      coverImage: undefined,
+      profileImage: undefined,
       websiteUrl: props.data.websiteUrl,
       twitterUrl: props.data.twitterUrl,
       facebookUrl: props.data.facebookUrl,
@@ -45,33 +55,62 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     },
   });
   const [defaultValues] = useState(getValues());
-  const toast = useToast();
-  const profileImageHeight = useRef(scalePx(120));
-  const safeAreaInsets = useSafeArea();
 
 
-  // Refs
+  /**
+   * When field becomes dirty, set canPopRef to false to alert user there are changes
+   */
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    props.canPopRef.current = !dirty;
+  }, [dirty]);
+
+
+  /**
+   * Refs
+   */
   const descriptionRef = useRef(null);
   const websiteUrlRef = useRef(null);
   const twitterUrlRef = useRef(null);
   const facebookUrlRef = useRef(null);
   const instagramUrlRef = useRef(null);
+  const coverImageResetRef = useRef(null);
+  const profileImageResetRef = useRef(null);
+
+
+  /**
+   * Misc
+   */
+  const toast = useToast();
+  const profileImageHeight = useRef(scalePx(120));
+  const safeAreaInsets = useSafeArea();
+  const [loading, setLoading] = useState(false);
 
 
   /**
    * Update channel mutation
    */
-  const [mutation, { loading }] = useUpdateChannelMutation({
+  const [mutation] = useUpdateChannelMutation({
     onCompleted: ({ updateChannel }) => {
       // Reset form
       reset({
         name: updateChannel.name,
         description: updateChannel.description,
+        coverImage: undefined,
+        profileImage: undefined,
         websiteUrl: updateChannel.websiteUrl,
         twitterUrl: updateChannel.twitterUrl,
         facebookUrl: updateChannel.facebookUrl,
         instagramUrl: updateChannel.instagramUrl,
       });
+
+      // Reset images
+      // eslint-disable-next-line no-unused-expressions
+      coverImageResetRef.current?.();
+      // eslint-disable-next-line no-unused-expressions
+      profileImageResetRef.current?.();
+
+      setLoading(false);
 
       toast.push({
         duration: 1000,
@@ -82,6 +121,8 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       });
     },
     onError: (e) => {
+      setLoading(false);
+
       toast.push({
         duration: 1000,
         component: (
@@ -94,9 +135,24 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
 
 
   /**
+   * Resize image and return ReactNativeFile
+   */
+  const processImage = async (asset: PhotoIdentifier['node']) => {
+    const image = await ImageResizer.createResizedImage(asset.image.uri, 800, 800, 'JPEG', 100);
+    return new ReactNativeFile({
+      uri: image.uri,
+      name: image.name,
+      type: 'image/jpeg',
+    });
+  };
+
+
+  /**
    * On Submit execute putStreamMutation with form data
    */
-  const onSubmit = (formData: FormData) => {
+  const onSubmit = async (formData: FormData) => {
+    setLoading(true);
+
     /**
      * Create object of only changed variables
      */
@@ -111,11 +167,31 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       return p;
     }, {});
 
-    mutation({
-      variables: {
-        data,
-      },
-    });
+
+    /**
+     * Catch processImage errors
+     */
+    try {
+      mutation({
+        variables: {
+          data: {
+            ...data,
+            coverImage: data.coverImage ? await processImage(data.coverImage) : undefined,
+            profileImage: data.profileImage ? await processImage(data.profileImage) : undefined,
+          },
+        },
+      });
+    } catch {
+      setLoading(false);
+
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast type="ERROR" content='Something went wrong' />
+        ),
+        dismissible: false,
+      });
+    }
   };
 
 
@@ -156,6 +232,14 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     );
 
     register(
+      { name: 'coverImage' },
+      { required: false },
+    );
+    register(
+      { name: 'profileImage' },
+      { required: false },
+    );
+    register(
       { name: 'websiteUrl' },
       { required: false },
     );
@@ -191,11 +275,6 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
               containerProps: {
                 style: Styles.coverImage,
               },
-              imageProps: {
-                source: {
-                  cache: 'reload',
-                },
-              },
               placeholderImageProps: {
                 source: require('../../../assets/images/logo-icon.png'),
                 resizeMode: 'contain',
@@ -203,17 +282,9 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
               },
             }}
             iconPosition="bottomRight"
-            onConfirm={(file) => mutation({
-              variables: {
-                data: {
-                  coverImage: new ReactNativeFile({
-                    uri: file.image.uri,
-                    name: file.image.filename,
-                    type: file.type,
-                  }),
-                },
-              },
-            })}
+            onChange={(file) => setValue('coverImage', file, true)}
+            resetRef={coverImageResetRef}
+            loading={loading}
           />
 
           <View
@@ -240,28 +311,10 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                     containerProps: {
                       style: Styles.profileImage,
                     },
-                    imageProps: {
-                      source: {
-                        cache: 'reload',
-                      },
-                    },
-                    placeholderImageProps: {
-                      source: require('../../../assets/images/logo-icon.png'),
-                      resizeMode: 'contain',
-                      style: ChannelHeaderStyles.skeletonProfileImageIcon,
-                    },
                   }}
-                  onConfirm={(file) => mutation({
-                    variables: {
-                      data: {
-                        profileImage: new ReactNativeFile({
-                          uri: file.image.uri,
-                          name: file.image.filename,
-                          type: file.type,
-                        }),
-                      },
-                    },
-                  })}
+                  onChange={(file) => setValue('profileImage', file, true)}
+                  resetRef={profileImageResetRef}
+                  loading={loading}
                 />
               </View>
             </View>
@@ -396,7 +449,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         }}
       >
         <Button
-          title="Update channel"
+          title={loading ? 'Updating' : 'Update channel'}
           onPress={handleSubmit(onSubmit)}
           disabled={!isValid || !dirty}
           loading={loading}

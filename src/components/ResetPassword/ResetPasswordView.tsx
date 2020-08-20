@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../UI/Button/Button';
-import TextInput from '../UI/Form/components/TextInput';
+import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Styles from './ResetPassword.style';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import H4 from '../UI/Typography/components/H4';

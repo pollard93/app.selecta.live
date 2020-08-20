@@ -9,9 +9,10 @@ import Chip from '../../Chip/Chip';
 import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
+import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 interface StreamCardProps {
-  data: STREAM_PROFILE_FRAGMENT_SHORT;
+  data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamCard: FC<StreamCardProps> = (props) => {

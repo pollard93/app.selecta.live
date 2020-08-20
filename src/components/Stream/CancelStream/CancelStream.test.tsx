@@ -2,13 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { ApolloProvider } from 'react-apollo';
 import { expect } from 'chai';
-import { Button, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import sinon from 'sinon';
 import wait from 'waait';
 import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import CancelStream from './CancelStream';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
+import Button from '../../UI/Button/Button';
 
 describe('<CancelStream />', () => {
   /**
@@ -72,13 +73,6 @@ describe('<CancelStream />', () => {
 
     // Button should be disabled
     expect(wrapper.find(Button).first().props().disabled).to.be.true;
-
-    // Wait for results
-    await wait(0);
-    wrapper.update();
-
-    // Stream should not be cancelled and displaying cancelled view
-    expect(wrapper.findWhere((n) => n.props().testID === 'Cancelled')).to.have.length;
   });
 
   it('should fail', async () => {

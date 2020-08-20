@@ -27,6 +27,8 @@ import NetworkNotifier from '../modules/NetworkNotifier/NetworkNotifier';
 import ChannelSelfsScreen from './ChannelSelfsScreen/ChannelSelfsScreen';
 import UpdateChannelScreen from './UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from './StreamSelfsScreen/StreamSelfsScreen';
+import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import StreamSelfScreen from './StreamSelfScreen/StreamSelfScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -104,4 +106,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(ChannelSelfsScreen.prototype.ScreenName, () => wrapContext(ChannelSelfsScreen));
   Navigation.registerComponent(UpdateChannelScreen.prototype.ScreenName, () => wrapContext(UpdateChannelScreen));
   Navigation.registerComponent(StreamSelfsScreen.prototype.ScreenName, () => wrapContext(StreamSelfsScreen));
+  Navigation.registerComponent(CreateUpdateStreamScreen.prototype.ScreenName, () => wrapContext(CreateUpdateStreamScreen));
+  Navigation.registerComponent(StreamSelfScreen.prototype.ScreenName, () => wrapContext(StreamSelfScreen));
 };

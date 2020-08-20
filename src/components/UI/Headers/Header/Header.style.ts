@@ -65,7 +65,11 @@ export default StyleSheet.create({
     borderWidth: 2,
     height: '100%',
     overflow: 'hidden',
+    position: 'absolute',
     width: '100%',
+  },
+  profilePictureIconWrap: {
+    padding: 1,
   },
   profilePictureIcon: {
     height: '100%',

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { useQuery, QueryHookOptions } from 'react-apollo';
-import { getStreamSelf } from './__generated__/getStreamSelf';
+import { getStreamSelf, getStreamSelfVariables } from './__generated__/getStreamSelf';
 import { STREAM_SELF_FRAGMENT } from '../../fragments/StreamSelf';
 
 export const GET_STREAM_SELF_QUERY = gql`
@@ -12,4 +12,4 @@ export const GET_STREAM_SELF_QUERY = gql`
   ${STREAM_SELF_FRAGMENT}
 `;
 
-export const useGetStreamSelfQuery = (options?: QueryHookOptions<getStreamSelf>) => useQuery(GET_STREAM_SELF_QUERY, options);
+export const useGetStreamSelfQuery = (options?: QueryHookOptions<getStreamSelf, getStreamSelfVariables>) => useQuery(GET_STREAM_SELF_QUERY, options);

@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import ChannelSelfs, { ChannelSelfsProps } from '../../components/Channel/ChannelSelfs/ChannelSelfs';
+import { useMounted } from '../utils';
 
 export interface ChannelSelfsScreenProps extends ChannelSelfsProps {}
 
-const ChannelSelfsScreen: FC<ChannelSelfsScreenProps> = (props) => (
-  <ChannelSelfs {...props} />
-);
+const ChannelSelfsScreen: FC<ChannelSelfsScreenProps> = (props) => {
+  const mounted = useMounted(ChannelSelfsScreen.prototype.ScreenName);
+  if (!mounted) return null;
+
+  return (
+    <ChannelSelfs {...props} />
+  );
+};
 
 export default ChannelSelfsScreen;
 

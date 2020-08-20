@@ -16,6 +16,7 @@ export default StyleSheet.create({
   },
   bannerHeader: {
     color: color.mono.light,
+    flex: 1,
   },
   header: {
     alignItems: 'center',
@@ -61,6 +62,7 @@ export default StyleSheet.create({
   },
   authKeyBody: {
     flex: 1,
+    paddingRight: spacing.small,
   },
   metrics: {
     alignItems: 'center',
@@ -76,5 +78,20 @@ export default StyleSheet.create({
     marginLeft: spacing.xsmall,
     textDecorationColor: color.mono.pale.dark,
     textDecorationLine: 'underline',
+  },
+
+  // Skeleton
+  bannerHeaderSkeleton: {
+    color: color.mono.dark,
+  },
+  skeletonImageWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skeletonImage: {
+    height: scalePx(50),
+    opacity: 0.1,
+    tintColor: color.mono.pale.dark,
+    width: scalePx(50),
   },
 });
