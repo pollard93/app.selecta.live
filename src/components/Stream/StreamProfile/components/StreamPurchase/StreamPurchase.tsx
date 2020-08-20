@@ -108,20 +108,22 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
 
       <View style={Styles.buy}>
         <H4>Buy this stream</H4>
-        <View style={[Styles.ticket, dynamicStyles.ticket]}>
-          <View style={[Styles.corner, globalDynamicStyles.background]} />
-          <View style={[Styles.corner, globalDynamicStyles.background, Styles.bottom]} />
-          <View style={[Styles.corner, globalDynamicStyles.background, Styles.right]} />
-          <View style={[Styles.corner, globalDynamicStyles.background, Styles.bottomRight]} />
+        <View style={Styles.ticket}>
+          <View style={[Styles.ticketInfo, dynamicStyles.ticket]}>
+            <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight]} />
+            <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight, Styles.notchBottom]} />
 
-          <View style={Styles.ticketInfo}>
             <Body bold>Admission #1</Body>
             <Body bold>{formatForTimezone(props.data.timeFrom, 'calendar')}</Body>
             <Body bold>Entry from {formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Body>
             <Body bold>{(new Date(props.data.timeTo).getTime() - new Date(props.data.timeFrom).getTime()) / 3.6e+6} Hours</Body>
           </View>
 
-          <View style={[Styles.cost, dynamicStyles.cost]}>
+          <View style={[Styles.cost, dynamicStyles.ticket]}>
+            <View style={Styles.separator} />
+            <View style={[globalDynamicStyles.background, Styles.notch]} />
+            <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchBottom]} />
+
             <H1>© {props.data.cost}</H1>
           </View>
         </View>

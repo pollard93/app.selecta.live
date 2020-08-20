@@ -4,7 +4,7 @@ import CancelStream from './CancelStream';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 
-storiesOf('CancelStream', module)
+storiesOf('Stream/CancelStream', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
   .add('CancelStream', () => {
     const TestComponent = () => {
