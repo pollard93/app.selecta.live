@@ -17,7 +17,7 @@ export default {
   mono: {
     light: '#fff',
     lightCover: 'rgba(255, 255, 255, 0.1)',
-    dark: '#000',
+    dark: '#191918',
     darkCover: 'rgba(0, 0, 0, 0.8)',
     pale: {
       light: '#f0f0f0',
