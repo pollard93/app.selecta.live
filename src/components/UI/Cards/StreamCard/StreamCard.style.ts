@@ -8,6 +8,9 @@ export default StyleSheet.create({
   wrap: {
     paddingBottom: spacing.small,
   },
+  fillHeight: {
+    flex: 1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -19,6 +22,9 @@ export default StyleSheet.create({
     marginTop: spacing.small,
     paddingHorizontal: spacing.small,
   },
+  contentSpacer: {
+    flexGrow: 1,
+  },
   tagSeparator: {
     width: spacing.xxsmall,
   },
@@ -28,7 +34,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   channelNameChip: {
-    marginRight: spacing.small,
+    alignItems: 'flex-start',
+    flex: 1,
+    paddingRight: spacing.small,
   },
   chips: {
     flexDirection: 'row',

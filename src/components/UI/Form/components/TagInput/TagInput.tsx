@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
-import { View, TextInput, StyleProp, ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, TextInput, StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
+
 import TextInputStyles from '../TextInput/TextInput.style';
 import Styles from './TagInput.style';
 import Icon, { ICON } from '../../../Icon/Icon';

@@ -13,6 +13,7 @@ import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/ST
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
+  fillHeight?: boolean; // Sets flex: 1 on wrapper to fill the height, used for displaying in feed
 }
 
 const StreamCard: FC<StreamCardProps> = (props) => {
@@ -20,7 +21,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
   return (
-    <View style={[Styles.wrap, dynamicStyles.wrap]}>
+    <View style={[Styles.wrap, dynamicStyles.wrap, props.fillHeight && Styles.fillHeight]}>
       <AsyncImage
         splashUrl={props.data.image?.url.splash}
         fullUrl={props.data.image?.url.large}
@@ -39,14 +40,19 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         />
       </View>
 
-      {props.data.tags.length > 0 && (
-        <View style={Styles.item}>
-          <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
-        </View>
-      )}
+      {props.data.tags.length > 0
+        ? (
+          <View style={Styles.item}>
+            <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
+          </View>
+        )
+        : <View style={Styles.contentSpacer} />
+      }
 
       <View style={[Styles.item, Styles.lower]}>
-        <Chip type="SECONDARY" style={Styles.channelNameChip}>{props.data.channel.name}</Chip>
+        <View style={Styles.channelNameChip}>
+          <Chip type="SECONDARY">{props.data.channel.name}</Chip>
+        </View>
 
         <View style={Styles.chips}>
           {

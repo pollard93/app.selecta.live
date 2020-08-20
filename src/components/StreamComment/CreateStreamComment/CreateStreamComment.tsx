@@ -1,7 +1,7 @@
 import React, { useState, memo, FC } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { useDynamicValue } from 'react-native-dynamic';
 import { usePutStreamCommentMutation } from '../../../API/mutation/putStreamComment/putStreamComment';
 import { getStreamCommentsVariables, getStreamComments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';

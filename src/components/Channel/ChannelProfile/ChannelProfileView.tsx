@@ -1,8 +1,8 @@
 import React, { FC, useMemo } from 'react';
-import { View, Animated, Linking } from 'react-native';
+import { View, Animated, Linking, TouchableOpacity } from 'react-native';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import Styles from './ChannelProfile.style';
 import ChannelProfileFeed from '../../ChannelProfileFeed/ChannelProfileFeed';
 import Body from '../../UI/Typography/components/Body';

@@ -47,6 +47,9 @@ export default StyleSheet.create({
   itemHORIZONTAL: {
     paddingRight: spacing.small,
   },
+  itemFlex: {
+    flex: 1,
+  },
 
   loadingHorizontal: {
     alignItems: 'center',

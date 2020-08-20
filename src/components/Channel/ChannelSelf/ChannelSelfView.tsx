@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-import { Animated, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Animated, View, TouchableOpacity } from 'react-native';
+
 import Body from '../../UI/Typography/components/Body';
 import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';

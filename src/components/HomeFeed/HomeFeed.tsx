@@ -104,7 +104,7 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
                   }}
                   refetch={queryResult.refetch}
                   flatListProps={{
-                    contentContainerStyle: { paddingTop: headerHeight },
+                    style: { marginTop: headerHeight },
                   }}
                 />
             )

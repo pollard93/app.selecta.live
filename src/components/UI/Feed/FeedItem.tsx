@@ -258,8 +258,9 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                           props.onPressStream(streamData.id);
                         }}
                         delayPressIn={50}
+                        style={Styles.itemFlex}
                       >
-                        <StreamCard data={streamData} />
+                        <StreamCard data={streamData} fillHeight />
                       </TouchableOpacity>
                     );
 

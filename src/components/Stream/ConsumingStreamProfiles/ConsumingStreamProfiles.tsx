@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
 import { getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams } from '../../../API/query/getConsumingStreamProfiles/__generated__/getConsumingStreamProfiles';

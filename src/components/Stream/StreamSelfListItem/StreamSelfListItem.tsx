@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import Clipboard from '@react-native-community/clipboard';
 import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
