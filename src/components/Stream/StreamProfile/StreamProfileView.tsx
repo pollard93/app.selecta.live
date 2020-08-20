@@ -72,7 +72,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
           <StreamCard data={props.queryResult.data.getStreamProfile} />
         </View>
 
-        {!props.queryResult.data.getStreamProfile.isConsumer && (
+        {!props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null && (
           <StreamPurchase data={props.queryResult.data.getStreamProfile} />
         )}
       </SafeAreaView>
