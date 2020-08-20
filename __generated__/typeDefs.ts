@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Aug 18 2020 10:38:36 GMT+0100 (British Summer Time)
+# timestamp: Thu Aug 20 2020 16:12:08 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -36,6 +36,7 @@ type Channel {
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   relatedChannels(where: ChannelRelatedChannelsWhereInput, orderBy: ChannelRelatedChannelsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChannelRelatedChannels!]
+  viewCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -72,6 +73,8 @@ enum ChannelOrderByInput {
   creditWithdrawalMinimum_DESC
   freeStreamAllowance_ASC
   freeStreamAllowance_DESC
+  viewCount_ASC
+  viewCount_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -163,6 +166,7 @@ type ChannelSelf {
   creditWithdrawalMinimum: Int
   freeStreamAllowance: Int
   tags: [TagProfile]
+  viewCount: Int
   createdAt: DateTime
 }
 
@@ -347,6 +351,14 @@ input ChannelWhereInput {
   relatedChannels_every: ChannelRelatedChannelsWhereInput
   relatedChannels_some: ChannelRelatedChannelsWhereInput
   relatedChannels_none: ChannelRelatedChannelsWhereInput
+  viewCount: Int
+  viewCount_not: Int
+  viewCount_in: [Int!]
+  viewCount_not_in: [Int!]
+  viewCount_lt: Int
+  viewCount_lte: Int
+  viewCount_gt: Int
+  viewCount_gte: Int
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

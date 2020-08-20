@@ -35,6 +35,8 @@ export enum ChannelOrderByInput {
   updatedAt_DESC = "updatedAt_DESC",
   verified_ASC = "verified_ASC",
   verified_DESC = "verified_DESC",
+  viewCount_ASC = "viewCount_ASC",
+  viewCount_DESC = "viewCount_DESC",
   websiteUrl_ASC = "websiteUrl_ASC",
   websiteUrl_DESC = "websiteUrl_DESC",
 }
@@ -321,6 +323,14 @@ export interface ChannelWhereInput {
   relatedChannels_every?: ChannelRelatedChannelsWhereInput | null;
   relatedChannels_some?: ChannelRelatedChannelsWhereInput | null;
   relatedChannels_none?: ChannelRelatedChannelsWhereInput | null;
+  viewCount?: number | null;
+  viewCount_not?: number | null;
+  viewCount_in?: number[] | null;
+  viewCount_not_in?: number[] | null;
+  viewCount_lt?: number | null;
+  viewCount_lte?: number | null;
+  viewCount_gt?: number | null;
+  viewCount_gte?: number | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

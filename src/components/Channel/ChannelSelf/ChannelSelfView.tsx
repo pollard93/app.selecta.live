@@ -86,6 +86,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
 
                 <View style={Styles.description}>
                   <Body bold>Followers: {props.queryResult.data?.getChannelSelf.followersEdge}</Body>
+                  <Body bold>Overall Streams: {props.queryResult.data?.getChannelSelf.viewCount}</Body>
                 </View>
 
                 <View style={Styles.description}>

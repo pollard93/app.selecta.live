@@ -59,6 +59,7 @@ export interface getChannelSelf_getChannelSelf {
   twitterUrl: string | null;
   facebookUrl: string | null;
   instagramUrl: string | null;
+  viewCount: number | null;
   createdAt: any | null;
 }
 

@@ -26,6 +26,7 @@ export const CHANNEL_SELF_FRAGMENT = gql`
     twitterUrl
     facebookUrl
     instagramUrl
+    viewCount
     createdAt
   },
   ${FILE_FRAGMENT}

@@ -59,5 +59,6 @@ export interface CHANNEL_SELF_FRAGMENT {
   twitterUrl: string | null;
   facebookUrl: string | null;
   instagramUrl: string | null;
+  viewCount: number | null;
   createdAt: any | null;
 }
