@@ -13,4 +13,12 @@ storiesOf('Onboarding/OnboardingPageWrap', module)
     >
       <Text>Content</Text>
     </OnboardingPageWrap>
+  ))
+  .add('OnboardingPageWrap - onPop', () => (
+    <OnboardingPageWrap
+      heading="HEADING"
+      onPop={console.log}
+    >
+      <Text>Content</Text>
+    </OnboardingPageWrap>
   ));

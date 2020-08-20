@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   logoWrap: {
     alignSelf: 'center',
-    aspectRatio: 2.7058823529411766,
+    aspectRatio: 3.078767123287671,
     marginBottom: spacing.xlarge,
     maxWidth: scalePx(300),
     width: '80%',

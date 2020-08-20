@@ -19,9 +19,9 @@ OnboardingNotificationsScreen.prototype.ScreenName = 'OnboardingNotificationsScr
  * Set Screen options or remove to use default
  */
 (OnboardingNotificationsScreen.prototype.options as Options) = {
-  // topBar: {
-  //   visible: false,
-  // },
+  topBar: {
+    visible: false,
+  },
 };
 
 /**

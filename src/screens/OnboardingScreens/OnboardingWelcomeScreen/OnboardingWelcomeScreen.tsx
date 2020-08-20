@@ -19,9 +19,9 @@ OnboardingWelcomeScreen.prototype.ScreenName = 'OnboardingWelcomeScreen';
  * Set Screen options or remove to use default
  */
 (OnboardingWelcomeScreen.prototype.options as Options) = {
-  // topBar: {
-  //   visible: false,
-  // },
+  topBar: {
+    visible: false,
+  },
 };
 
 /**

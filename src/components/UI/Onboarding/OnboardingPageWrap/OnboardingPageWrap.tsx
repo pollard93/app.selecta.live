@@ -1,12 +1,14 @@
 import React, { FC } from 'react';
-import { View, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Image, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import H2 from '../../Typography/components/H2';
 import Styles, { DynamicStyles } from './OnboardingPageWrap.style';
 import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
+import Icon, { ICON } from '../../Icon/Icon';
 
 interface OnboardingPageWrapProps {
   heading: string;
+  onPop?: () => void;
 }
 
 const OnboardingPageWrap: FC<OnboardingPageWrapProps> = (props) => {
@@ -22,7 +24,18 @@ const OnboardingPageWrap: FC<OnboardingPageWrapProps> = (props) => {
             resizeMode="contain"
           />
         </View>
-        <H2>{props.heading}</H2>
+
+        <View style={Styles.headingInner}>
+          {props.onPop && (
+            <TouchableOpacity
+              onPress={props.onPop}
+              style={Styles.back}
+            >
+              <Icon name={ICON.ARROW_BACKWARD} size="xsmall" />
+            </TouchableOpacity>
+          )}
+          <H2>{props.heading}</H2>
+        </View>
       </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

@@ -85,7 +85,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           </>
         )}
         ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
-          <StreamCardSkeleton emptyMessage="No Results" />
+          <StreamCardSkeleton emptyMessage="Your streams will appear here" />
         )}
         FlatListProps={{
           contentContainerStyle: Styles.scrollViewContainer,

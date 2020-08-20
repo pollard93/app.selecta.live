@@ -16,6 +16,13 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.large,
     paddingVertical: spacing.base,
   },
+  headingInner: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  back: {
+    marginRight: spacing.small,
+  },
   logoWrap: {
     aspectRatio: 1,
     marginBottom: spacing.xsmall,
@@ -35,6 +42,6 @@ export const DynamicStyles = new DynamicStyleSheet({
     backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.pale.dark),
   },
   heading: {
-    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
+    backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
   },
 });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from 'react';
 import { requestNotifications, PermissionStatus, RESULTS, checkNotifications } from 'react-native-permissions';
 import { View, AppState } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Button from '../../UI/Button/Button';
 import FadeInView from '../../UI/FadeInView/FadeInView';
@@ -12,10 +13,11 @@ import { pushScreen } from '../../../screens/utils';
 import OnboardingGetStartedScreen from '../../../screens/OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import { openSettings } from '../../../utils/functions';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 export interface OnboardingNotificationsProps extends ScreenProps {}
 
-const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
+const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus | 'unknown'>(null);
 
 
@@ -87,8 +89,16 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
   const canRequest = [RESULTS.DENIED, 'unknown'].includes(permissionStatus);
 
 
+  const onPop = () => {
+    Navigation.pop(props.componentId);
+  };
+
+
   return (
-    <OnboardingPageWrap heading="Notifications">
+    <OnboardingPageWrap
+      heading="Notifications"
+      onPop={onPop}
+    >
       {
         permissionStatus === null
           ? <LoadRetry loading />
@@ -96,7 +106,11 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
             <FadeInView style={GlobalStyles.PageFill}>
               <View style={Styles.content}>
                 <H4>We’d like to keep you updated about the latest streams from your favourite artists and when new and upcoming events are announced.</H4>
-                <H4>Please enable notifications.</H4>
+
+                <View style={Styles.enable}>
+                  <Icon name={ICON.NOTIFICATION} size="small" />
+                  <H4 style={Styles.enableText}>Please enable notifications.</H4>
+                </View>
               </View>
 
               <Button

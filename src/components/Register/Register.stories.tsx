@@ -4,10 +4,12 @@ import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
 import RegisterView from './RegisterView';
 import Register from './Register';
-import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
+import { View } from 'react-native';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
+import color from '../../styles/definitions/color';
 
 storiesOf('Onboarding/Register', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
+  .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { backgroundColor: color.mono.dark }]}>{getStory()}</View>)
   .add('Register', () => (
     <Register />
   ))
