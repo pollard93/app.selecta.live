@@ -50,7 +50,7 @@ const InitScreen = () => {
       }
 
       // Navigate to home now getSelf is cached
-      goHome({ isProducer: getSelf.isProducer });
+      goHome();
     },
     onError: async () => {
       /**
@@ -60,7 +60,7 @@ const InitScreen = () => {
        */
       const getSelf: getSelf_getSelf = await store('getSelf');
       if (getSelf) {
-        goHome({ isProducer: getSelf.isProducer });
+        goHome();
       } else {
         goToLogin();
       }

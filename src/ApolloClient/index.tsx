@@ -265,10 +265,8 @@ const AClient = new ApolloClient({
         const expiredChannel = graphQLErrors.find((e) => e.message === 'Expired Channel Token');
         if (expiredChannel) {
           goHome({
-            isProducer: true,
-            currentTabIndex: 1,
             passProps: {
-              toastMessage: 'Your channel session has expired! Please login again',
+              toastMessage: 'Your channel session has expired!',
             },
           });
         }

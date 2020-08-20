@@ -1,18 +1,15 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
 import React, { FC } from 'react';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue, DynamicValue } from 'react-native-dynamic';
-import { Navigation } from 'react-native-navigation';
 import Styles, { DynamicStyles } from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
-import Body from '../../Typography/components/Body';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import scalePx from '../../../../utils/scalePx';
-import { openModalScreen } from '../../../../screens/utils';
-import Wallet from '../../../Wallet/Wallet';
+import { openScreenAsModal } from '../../../../screens/utils';
+import { STACK } from '../../../../screens/utils/interfaces';
+import ProfileScreen from '../../../../screens/ProfileScreen/ProfileScreen';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -36,7 +33,6 @@ const Header: FC<HeaderProps> = (props) => {
   const safeAreaInsets = useSafeArea();
   const { headerHeight, headerZindex } = useHeaderStyles();
   const self = useGetSelf();
-  const credit = Math.min(999, self.credit);
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const lightLogo = require('../../../../assets/images/logo-dark.png');
   const darkLogo = require('../../../../assets/images/logo-white.png');
@@ -44,18 +40,10 @@ const Header: FC<HeaderProps> = (props) => {
 
 
   /**
-   * Open wallet
+   * Open profile modal
    */
-  const onPressWallet = () => {
-    openModalScreen({
-      component: (
-        <Wallet
-          onDismiss={() => {
-            Navigation.dismissModal('WalletModal');
-          }}
-        />
-      ),
-    }, 'WalletModal');
+  const onPressProfile = () => {
+    openScreenAsModal(STACK.PROFILE, ProfileScreen, {});
   };
 
 
@@ -100,14 +88,9 @@ const Header: FC<HeaderProps> = (props) => {
 
           <View style={Styles.right}>
             <TouchableOpacity
-              style={Styles.wallet}
-              onPress={() => onPressWallet()}
+              onPress={onPressProfile}
+              style={Styles.profilePicture}
             >
-              <Icon style={Styles.walletIcon} name={ICON.WALLET} size="small" />
-              <Body>{self.credit > 999 ? `${credit}+` : credit}</Body>
-            </TouchableOpacity>
-
-            <View style={Styles.profilePicture}>
               <View style={Styles.profilePictureIconWrap}>
                 <Icon
                   name={ICON.PROFILE}
@@ -126,7 +109,7 @@ const Header: FC<HeaderProps> = (props) => {
                   />
                 )
               }
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

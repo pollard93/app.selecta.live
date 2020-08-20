@@ -11,6 +11,7 @@ import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
 import Products from '../../components/Purchase/Products/Products';
 import { ChannelSelfsScreenName } from '../ChannelSelfsScreen/ChannelSelfsScreen';
+import { WalletScreenName } from '../WalletScreen/WalletScreen';
 
 
 /**
@@ -53,7 +54,6 @@ export const goToOnboarding = () => Navigation.setRoot({
 });
 
 interface GoHomeProps {
-  isProducer: boolean; // Displays Producer tab
   currentTabIndex?: number; // Default 0
   passProps?: any; // Pass props
 }
@@ -61,8 +61,8 @@ interface GoHomeProps {
 /**
  * Resets navigation stack to home screen using STACK.HOME
  */
-export const goHome = (props: GoHomeProps) => {
-  const currentTabIndex = props.currentTabIndex || 0;
+export const goHome = (props?: GoHomeProps) => {
+  const currentTabIndex = props?.currentTabIndex || 0;
 
   return Navigation.setRoot({
     root: {
@@ -76,49 +76,72 @@ export const goHome = (props: GoHomeProps) => {
                 {
                   component: {
                     name: HomeFeedScreenName,
-                    passProps: currentTabIndex === 0 && props.passProps,
+                    passProps: currentTabIndex === 0 && props?.passProps,
                   },
                 },
               ],
               options: {
                 bottomTab: {
-                  // TODO - update icon
-                  icon: require('../../assets/images/icons/search.png'),
-                  text: 'Home',
-                  textColor: color.accent.primary,
-                  iconColor: color.accent.primary,
+                  icon: require('../../assets/images/icons/tabs/feed.png'),
+                  selectedIcon: require('../../assets/images/icons/tabs/feed-selected.png'),
+                  iconColor: color.mono.dark,
+                  selectedIconColor: color.accent.primary,
+                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
               },
             },
           },
-          props.isProducer && {
+          {
             stack: {
-              id: STACK.TAB_PRODUCER,
+              id: STACK.TAB_MY_STREAMS,
               children: [
                 {
                   component: {
-                    name: ChannelSelfsScreenName,
-                    passProps: currentTabIndex === 1 && props.passProps,
+                    name: HomeFeedScreenName,
+                    passProps: currentTabIndex === 1 && props?.passProps,
                   },
                 },
               ],
               options: {
                 bottomTab: {
-                  // TODO - update icon
-                  icon: require('../../assets/images/icons/search.png'),
-                  text: 'Channels',
-                  textColor: color.accent.primary,
-                  iconColor: color.accent.primary,
+                  icon: require('../../assets/images/icons/tabs/streams.png'),
+                  selectedIcon: require('../../assets/images/icons/tabs/streams-selected.png'),
+                  iconColor: color.mono.dark,
+                  selectedIconColor: color.accent.primary,
+                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
               },
             },
           },
-        ].filter((f) => f),
-        // options: {
-        //   bottomTabs: {
-        //     currentTabIndex,
-        //   },
-        // },
+          {
+            stack: {
+              id: STACK.TAB_WALLET,
+              children: [
+                {
+                  component: {
+                    name: WalletScreenName,
+                    passProps: currentTabIndex === 2 && props?.passProps,
+                  },
+                },
+              ],
+              options: {
+                bottomTab: {
+                  icon: require('../../assets/images/icons/tabs/wallet.png'),
+                  selectedIcon: require('../../assets/images/icons/tabs/wallet-selected.png'),
+                  iconColor: color.mono.dark,
+                  selectedIconColor: color.accent.primary,
+                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
+                },
+              },
+            },
+          },
+        ],
+        options: {
+          bottomTabs: {
+            currentTabIndex,
+            tabsAttachMode: 'onSwitchToTab',
+          },
+        },
       },
     },
   });

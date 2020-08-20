@@ -32,7 +32,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
       /**
        * Psuh ChannelSelfScreen
        */
-      pushScreen(STACK.TAB_PRODUCER, ChannelSelfScreen, {});
+      pushScreen(STACK.PROFILE, ChannelSelfScreen, {});
     },
     onError: (e) => {
       toast.push({

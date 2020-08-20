@@ -79,7 +79,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
           setLoading(false);
         });
       } else {
-        goHome({ isProducer: getSelf.isProducer });
+        goHome();
       }
     },
     onError: (e) => {

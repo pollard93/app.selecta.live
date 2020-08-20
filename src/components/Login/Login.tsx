@@ -122,7 +122,7 @@ const Login: FC<LoginProps> = (props) => {
         });
       } else {
         // Go home if username is set
-        goHome({ isProducer: getSelf.isProducer });
+        goHome();
       }
     },
     onError: (e) => {

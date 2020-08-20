@@ -3,7 +3,7 @@ import spacing from '../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   wrap: {
-    paddingHorizontal: spacing.small,
+    padding: spacing.small,
   },
   heading: {
     marginVertical: spacing.small,

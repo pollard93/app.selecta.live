@@ -24,11 +24,12 @@ import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
 import NetworkNotifier from '../modules/NetworkNotifier/NetworkNotifier';
-import ChannelSelfsScreen from './ChannelSelfsScreen/ChannelSelfsScreen';
 import UpdateChannelScreen from './UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from './StreamSelfsScreen/StreamSelfsScreen';
 import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import StreamSelfScreen from './StreamSelfScreen/StreamSelfScreen';
+import WalletScreen from './WalletScreen/WalletScreen';
+import ProfileScreen from './ProfileScreen/ProfileScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -103,9 +104,10 @@ export const registerScreens = () => {
   Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
   Navigation.registerComponent(ChannelProfileScreen.prototype.ScreenName, () => wrapContext(ChannelProfileScreen));
   Navigation.registerComponent(StreamProfileScreen.prototype.ScreenName, () => wrapContext(StreamProfileScreen));
-  Navigation.registerComponent(ChannelSelfsScreen.prototype.ScreenName, () => wrapContext(ChannelSelfsScreen));
   Navigation.registerComponent(UpdateChannelScreen.prototype.ScreenName, () => wrapContext(UpdateChannelScreen));
   Navigation.registerComponent(StreamSelfsScreen.prototype.ScreenName, () => wrapContext(StreamSelfsScreen));
   Navigation.registerComponent(CreateUpdateStreamScreen.prototype.ScreenName, () => wrapContext(CreateUpdateStreamScreen));
   Navigation.registerComponent(StreamSelfScreen.prototype.ScreenName, () => wrapContext(StreamSelfScreen));
+  Navigation.registerComponent(WalletScreen.prototype.ScreenName, () => wrapContext(WalletScreen));
+  Navigation.registerComponent(ProfileScreen.prototype.ScreenName, () => wrapContext(ProfileScreen));
 };

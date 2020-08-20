@@ -16,9 +16,11 @@ import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfile
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 
 
-export interface HomeFeedProps extends ScreenProps {}
+export interface HomeFeedProps extends ScreenProps {
+  toastMessage?: string;
+}
 
-const HomeFeed: FC<HomeFeedProps> = () => {
+const HomeFeed: FC<HomeFeedProps> = (props) => {
   const toast = useToast();
   const queryResult = useGetHomeFeedQuery();
   const { headerHeight } = useHeaderStyles();
@@ -29,6 +31,17 @@ const HomeFeed: FC<HomeFeedProps> = () => {
    */
   useEffect(() => {
     SplashScreen.hide();
+
+    // If toastMessage given then show toast
+    if (props.toastMessage) {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast content={props.toastMessage} />
+        ),
+        dismissible: false,
+      });
+    }
 
     /** Register deep linking event listeners */
     const eventListener = ({ url }: { url: string }) => {

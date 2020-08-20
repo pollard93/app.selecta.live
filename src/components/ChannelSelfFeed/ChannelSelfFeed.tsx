@@ -33,7 +33,7 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
               <Feed
                 data={queryResult.data.getChannelSelfFeed}
                 onPressStream={(id) => {
-                  pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id });
+                  pushScreen(STACK.PROFILE, StreamSelfScreen, { id });
                 }}
                 onPressChannel={() => {
                   // Should not be presented with channels on this feed

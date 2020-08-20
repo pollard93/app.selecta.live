@@ -45,7 +45,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
    * Push CreateUpdateStreamScreen
    */
   const onEdit = () => {
-    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+    pushScreen(STACK.PROFILE, CreateUpdateStreamScreen, {
       id: data.id,
     });
   };
@@ -106,7 +106,7 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
             <Button
               type="PRIMARY"
               title="View Stream"
-              onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}
+              onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: data.id })}
               style={Styles.streamButton}
             />
 
@@ -143,14 +143,14 @@ const StreamListItem: FC<StreamListItemProps> = ({ data }) => {
           </>
         ) : (
           <View style={Styles.metrics}>
-            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.CHAT} size="small" />
                 <Body style={Styles.metricBody}>{data.commentsEdge} Comment{data.commentsEdge === 1 ? '' : 's'}</Body>
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => pushScreen(STACK.TAB_PRODUCER, StreamSelfScreen, { id: data.id })}>
+            <TouchableOpacity onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: data.id })}>
               <View style={Styles.metric}>
                 <Icon name={ICON.PLAY} size="small" />
                 <Body style={Styles.metricBody}>View Stream</Body>

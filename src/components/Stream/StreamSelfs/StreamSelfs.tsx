@@ -42,7 +42,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
    * Push CreateUpdateStreamScreen
    */
   const onCreate = () => {
-    pushScreen(STACK.TAB_PRODUCER, CreateUpdateStreamScreen, {
+    pushScreen(STACK.PROFILE, CreateUpdateStreamScreen, {
       getStreamSelfsVariables: variables,
     });
   };

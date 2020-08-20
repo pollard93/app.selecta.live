@@ -1,28 +1,36 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { useGetSelfQuery } from '../../../API/query/getSelf/getSelf';
+import React, { FC } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import { useGetSelf } from '../../../API/query/getSelf/getSelf';
+import H2 from '../../UI/Typography/components/H2';
+import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';
+import { ScreenProps } from '../../../screens/utils/interfaces';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
-const Profile = () => {
-  const { data: { getSelf } } = useGetSelfQuery();
+export interface ProfileProps extends ScreenProps {}
+
+const Profile: FC<ProfileProps> = (props) => {
+  const self = useGetSelf();
+
+  const onDismiss = () => {
+    Navigation.dismissModal(props.componentId);
+  };
 
   return (
-    <View>
-      <Text>{getSelf.username}</Text>
-      <Text>{getSelf.email}</Text>
+    <View style={[GlobalStyles.PageFill, { backgroundColor: 'white' }]}>
+      <Text>{self.username}</Text>
+      <Text>{self.email}</Text>
 
-      <AsyncImage
-        splashUrl={getSelf?.profilePicture?.url?.splash}
-        fullUrl={getSelf?.profilePicture?.url?.full}
-        // eslint-disable-next-line global-require
-        placeholderImageSource={require('../../../../icons/icon.jpg')}
-        containerProps={{
-          style: {
-            width: 250,
-            height: 250,
-          },
-        }}
-      />
+      <TouchableOpacity onPress={onDismiss}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+
+      {self.isProducer && (
+        <View style={GlobalStyles.PageFill}>
+          <H2>Channels</H2>
+          <ChannelSelfs />
+        </View>
+      )}
     </View>
   );
 };

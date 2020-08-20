@@ -31,7 +31,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
         <>
           <TouchableOpacity
             onPress={() => {
-              pushScreen(STACK.TAB_PRODUCER, StreamSelfsScreen, {});
+              pushScreen(STACK.PROFILE, StreamSelfsScreen, {});
             }}
           >
             <Animated.View
@@ -51,7 +51,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               /**
                * Push UpdateChannelScreen
                */
-              pushScreen(STACK.TAB_PRODUCER, UpdateChannelScreen, {});
+              pushScreen(STACK.PROFILE, UpdateChannelScreen, {});
             }}
           >
             <Animated.View
