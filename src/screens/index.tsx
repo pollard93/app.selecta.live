@@ -30,6 +30,7 @@ import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStr
 import StreamSelfScreen from './StreamSelfScreen/StreamSelfScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import ProfileScreen from './ProfileScreen/ProfileScreen';
+import ConsumingStreamProfilesScreen from './ConsumingStreamProfilesScreen/ConsumingStreamProfilesScreen';
 
 const wrapContext = (Component) => {
   /**
@@ -110,4 +111,5 @@ export const registerScreens = () => {
   Navigation.registerComponent(StreamSelfScreen.prototype.ScreenName, () => wrapContext(StreamSelfScreen));
   Navigation.registerComponent(WalletScreen.prototype.ScreenName, () => wrapContext(WalletScreen));
   Navigation.registerComponent(ProfileScreen.prototype.ScreenName, () => wrapContext(ProfileScreen));
+  Navigation.registerComponent(ConsumingStreamProfilesScreen.prototype.ScreenName, () => wrapContext(ConsumingStreamProfilesScreen));
 };

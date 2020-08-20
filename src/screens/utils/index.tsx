@@ -10,8 +10,8 @@ import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelc
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
 import Products from '../../components/Purchase/Products/Products';
-import { ChannelSelfsScreenName } from '../ChannelSelfsScreen/ChannelSelfsScreen';
 import { WalletScreenName } from '../WalletScreen/WalletScreen';
+import { ConsumingStreamProfilesScreenName } from '../ConsumingStreamProfilesScreen/ConsumingStreamProfilesScreen';
 
 
 /**
@@ -97,7 +97,7 @@ export const goHome = (props?: GoHomeProps) => {
               children: [
                 {
                   component: {
-                    name: HomeFeedScreenName,
+                    name: ConsumingStreamProfilesScreenName,
                     passProps: currentTabIndex === 1 && props?.passProps,
                   },
                 },

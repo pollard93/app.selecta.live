@@ -12,18 +12,20 @@ interface SearchInputProps extends TextInputProps {
 
 const SearchInput: FC<SearchInputProps> = (props) => (
   <View style={props.wrapStyle}>
-    <TextInput
-      {...props}
-      wrapStyle={null}
-      style={[props.style, Styles.input]}
-    />
+    <View>
+      <TextInput
+        {...props}
+        wrapStyle={null}
+        style={[props.style, Styles.input]}
+      />
 
-    <View style={Styles.icon}>
-      {
-        !props.loading
-          ? <Icon name={ICON.SEARCH} size="small" />
-          : <LoadingIcon size="small" />
-      }
+      <View style={Styles.icon}>
+        {
+          !props.loading
+            ? <Icon name={ICON.SEARCH} size="small" />
+            : <LoadingIcon size="small" />
+        }
+      </View>
     </View>
   </View>
 );
