@@ -48,7 +48,7 @@ export default StyleSheet.create({
     marginRight: spacing.xxsmall,
   },
   logoWrap: {
-    aspectRatio: 4.22972972972973,
+    aspectRatio: 4.854054054054054,
     height: '100%',
   },
   logo: {
