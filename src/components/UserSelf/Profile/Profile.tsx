@@ -6,6 +6,7 @@ import H2 from '../../UI/Typography/components/H2';
 import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';
 import { ScreenProps } from '../../../screens/utils/interfaces';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { goToLogin } from '../../../screens/utils';
 
 export interface ProfileProps extends ScreenProps {}
 
@@ -16,13 +17,21 @@ const Profile: FC<ProfileProps> = (props) => {
     Navigation.dismissModal(props.componentId);
   };
 
+  const onLogout = () => {
+    goToLogin();
+  };
+
   return (
     <View style={[GlobalStyles.PageFill, { backgroundColor: 'white' }]}>
       <Text>{self.username}</Text>
       <Text>{self.email}</Text>
 
       <TouchableOpacity onPress={onDismiss}>
-        <Text>Close</Text>
+        <Text>Close Screen</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={onLogout}>
+        <Text>Logout</Text>
       </TouchableOpacity>
 
       {self.isProducer && (

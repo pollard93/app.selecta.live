@@ -27,7 +27,7 @@ ProfileScreen.prototype.ScreenName = 'ProfileScreen';
 /**
  * Set screen color options (default white)
  */
-ProfileScreen.prototype.fullScreen = true;
+// ProfileScreen.prototype.fullScreen = true;
 // ProfileScreen.prototype.statusBarColor = color.mono.dark;
 // ProfileScreen.prototype.backgroundColor = color.mono.dark;
 
