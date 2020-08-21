@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
 import React, { useState, FC } from 'react';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
-
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
 import { getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams } from '../../../API/query/getConsumingStreamProfiles/__generated__/getConsumingStreamProfiles';
@@ -34,10 +34,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
     setVariables({
       ...variables,
       where: name
-        ? {
-          // eslint-disable-next-line camelcase
-          name_contains: name,
-        }
+        ? { name_contains: name }
         : undefined,
     });
   }, 500, []);
@@ -85,7 +82,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           </>
         )}
         ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
-          <StreamCardSkeleton emptyMessage="Your streams will appear here" />
+          <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'Your streams will appear here'} />
         )}
         FlatListProps={{
           contentContainerStyle: Styles.scrollViewContainer,
