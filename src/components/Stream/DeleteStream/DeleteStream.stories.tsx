@@ -16,7 +16,10 @@ storiesOf('Stream/DeleteStream', module)
       if (queryResult.loading) return null;
 
       return (
-        <DeleteStream data={queryResult.data.getStreamSelf} />
+        <DeleteStream
+          getStreamSelfsVariables={{}}
+          data={queryResult.data.getStreamSelf}
+        />
       );
     };
 

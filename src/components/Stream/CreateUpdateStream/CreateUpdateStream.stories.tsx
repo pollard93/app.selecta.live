@@ -22,6 +22,7 @@ storiesOf('Stream/CreateUpdateStream', module)
 
       return (
         <CreateUpdateStreamView
+          onCreated={console.log}
           channelData={getChannelSelf}
           getStreamSelfsVariables={{}}
           canPopRef={ref}
@@ -39,6 +40,7 @@ storiesOf('Stream/CreateUpdateStream', module)
 
       return (
         <CreateUpdateStreamView
+          onCreated={console.log}
           channelData={{
             ...getChannelSelf,
             freeStreamAllowance: 0,
@@ -67,6 +69,7 @@ storiesOf('Stream/CreateUpdateStream', module)
 
       return (
         <CreateUpdateStreamView
+          onCreated={console.log}
           channelData={getChannelSelf}
           data={{
             ...queryResult.data.getStreamSelf,
@@ -97,6 +100,7 @@ storiesOf('Stream/CreateUpdateStream', module)
 
       return (
         <CreateUpdateStreamView
+          onCreated={console.log}
           channelData={{
             ...getChannelSelf,
             freeStreamAllowance: 0,
@@ -130,6 +134,7 @@ storiesOf('Stream/CreateUpdateStream', module)
 
       return (
         <CreateUpdateStreamView
+          onCreated={console.log}
           channelData={{
             ...getChannelSelf,
             freeStreamAllowance: 0,

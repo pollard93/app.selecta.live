@@ -10,4 +10,4 @@ import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDec
 storiesOf('Wallet', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
-  .add('Wallet', () => <Wallet onDismiss={console.log} />);
+  .add('Wallet', () => <Wallet />);

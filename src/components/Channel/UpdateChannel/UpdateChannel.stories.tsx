@@ -19,6 +19,7 @@ storiesOf('UpdateChannel', module)
 
       return (
         <UpdateChannelView
+          canPopRef={{ current: false }}
           data={queryResult.data.getChannelSelf}
         />
       );
@@ -33,6 +34,7 @@ storiesOf('UpdateChannel', module)
 
       return (
         <UpdateChannelView
+          canPopRef={{ current: false }}
           data={{
             ...queryResult.data.getChannelSelf,
             coverImage: null,

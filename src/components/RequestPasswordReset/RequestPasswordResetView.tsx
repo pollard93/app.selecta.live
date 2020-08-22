@@ -60,7 +60,6 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
           onSubmitEditing={handleSubmit(props.onSubmit)}
           defaultValue={props.defaultEmailValue}
           testID="email"
-          light
         />
       </View>
 

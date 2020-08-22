@@ -100,7 +100,6 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
     <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="message"
-        light
         value={message}
         onChangeText={setMessage}
         placeholder='Type your message here...'

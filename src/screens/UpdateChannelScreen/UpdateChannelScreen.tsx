@@ -1,18 +1,13 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import UpdateChannel from '../../components/Channel/UpdateChannel/UpdateChannel';
-import { useGetChannelSelfQuery } from '../../API/query/getChannelSelf/getChannelSelf';
 import { ScreenProps } from '../utils/interfaces';
 
 interface UpdateChannelScreenProps extends ScreenProps {}
 
-const UpdateChannelScreen: FC<UpdateChannelScreenProps> = (props) => {
-  const { data: { getChannelSelf } } = useGetChannelSelfQuery();
-
-  return (
-    <UpdateChannel data={getChannelSelf} {...props} />
-  );
-};
+const UpdateChannelScreen: FC<UpdateChannelScreenProps> = (props) => (
+  <UpdateChannel {...props} />
+);
 
 export default UpdateChannelScreen;
 

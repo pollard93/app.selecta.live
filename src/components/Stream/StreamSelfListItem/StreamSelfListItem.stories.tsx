@@ -16,6 +16,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             name: 'Stream Title to go here and here and here And maybe here',
@@ -42,6 +43,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             published: null,
@@ -59,6 +61,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             cancelled: new Date().toISOString(),
@@ -76,6 +79,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFrom: new Date().toISOString(), // Just started
@@ -94,6 +98,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFrom: new Date(Date.now() + 360000).toISOString(), // not started yet
@@ -112,6 +117,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
+          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFrom: new Date(Date.now() - 360000).toISOString(), // has started

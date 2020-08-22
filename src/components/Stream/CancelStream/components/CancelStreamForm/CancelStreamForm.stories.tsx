@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import CancelStreamForm from './CancelStreamForm';
@@ -16,7 +17,10 @@ storiesOf('Stream/CancelStream/CancelStreamForm', module)
       if (queryResult.loading) return null;
 
       return (
-        <CancelStreamForm data={queryResult.data.getStreamSelf} />
+        <CancelStreamForm
+          data={queryResult.data.getStreamSelf}
+          onDismiss={console.log}
+        />
       );
     };
 

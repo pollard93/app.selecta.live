@@ -10,10 +10,11 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { formatTime } from '../../../utils/functions';
 import Small from '../../UI/Typography/components/Small';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
-  streamData: STREAM_PROFILE_FRAGMENT;
+  streamData: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {

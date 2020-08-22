@@ -51,7 +51,6 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
           onBlur={() => triggerValidation('password')}
           onSubmitEditing={handleSubmit(props.onSubmit)}
           testID="password"
-          light
         />
       </View>
 
