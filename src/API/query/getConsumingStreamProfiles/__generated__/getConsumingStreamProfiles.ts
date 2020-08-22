@@ -67,6 +67,7 @@ export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
+  cancelledMessage: string | null;
 }
 
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles {

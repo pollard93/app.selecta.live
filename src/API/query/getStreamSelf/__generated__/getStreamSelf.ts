@@ -62,6 +62,7 @@ export interface getStreamSelf_getStreamSelf {
   timeTo: any | null;
   cost: number | null;
   cancelled: any | null;
+  cancelledMessage: string | null;
   password: string | null;
   creditRevenuePending: number | null;
   creditRevenue: number | null;

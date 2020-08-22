@@ -30,7 +30,7 @@ const RegisterView = (props: RegisterViewProps) => {
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
-  }, []);
+  }, [register]);
 
 
   return (

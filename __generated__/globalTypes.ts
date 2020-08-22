@@ -89,6 +89,8 @@ export enum StreamOrderByInput {
   approved_DESC = "approved_DESC",
   audioOnly_ASC = "audioOnly_ASC",
   audioOnly_DESC = "audioOnly_DESC",
+  cancelledMessage_ASC = "cancelledMessage_ASC",
+  cancelledMessage_DESC = "cancelledMessage_DESC",
   cancelled_ASC = "cancelled_ASC",
   cancelled_DESC = "cancelled_DESC",
   cost_ASC = "cost_ASC",
@@ -951,6 +953,20 @@ export interface StreamWhereInput {
   cancelled_lte?: any | null;
   cancelled_gt?: any | null;
   cancelled_gte?: any | null;
+  cancelledMessage?: string | null;
+  cancelledMessage_not?: string | null;
+  cancelledMessage_in?: string[] | null;
+  cancelledMessage_not_in?: string[] | null;
+  cancelledMessage_lt?: string | null;
+  cancelledMessage_lte?: string | null;
+  cancelledMessage_gt?: string | null;
+  cancelledMessage_gte?: string | null;
+  cancelledMessage_contains?: string | null;
+  cancelledMessage_not_contains?: string | null;
+  cancelledMessage_starts_with?: string | null;
+  cancelledMessage_not_starts_with?: string | null;
+  cancelledMessage_ends_with?: string | null;
+  cancelledMessage_not_ends_with?: string | null;
   creditRevenue?: number | null;
   creditRevenue_not?: number | null;
   creditRevenue_in?: number[] | null;

@@ -14,6 +14,7 @@ import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
 import StreamCommunication from './components/StreamCommunication/StreamCommunication';
 import StreamPurchase from './components/StreamPurchase/StreamPurchase';
+import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 
 
 interface StreamProfileViewProps {
@@ -77,7 +78,7 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         )}
       </SafeAreaView>
 
-      {props.queryResult.data.getStreamProfile.isConsumer && drawerLayout && (
+      {shouldLoadVideo && drawerLayout && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[Styles.flex, { zIndex: headerZindex + 1 }]}
@@ -91,6 +92,10 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
             </Drawer>
           </FadeInView>
         </KeyboardAvoidingView>
+      )}
+
+      {props.queryResult.data.getStreamProfile.cancelled !== null && (
+        <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
       )}
 
       {shouldLoadVideo && (

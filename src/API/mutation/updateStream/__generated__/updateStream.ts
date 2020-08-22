@@ -62,6 +62,7 @@ export interface updateStream_updateStream {
   timeTo: any | null;
   cost: number | null;
   cancelled: any | null;
+  cancelledMessage: string | null;
   password: string | null;
   creditRevenuePending: number | null;
   creditRevenue: number | null;

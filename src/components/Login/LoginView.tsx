@@ -34,7 +34,7 @@ const LoginView = (props: LoginViewProps) => {
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true });
-  }, []);
+  }, [register]);
 
 
   return (

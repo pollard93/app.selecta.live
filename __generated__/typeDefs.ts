@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Aug 22 2020 14:28:48 GMT+0100 (British Summer Time)
+# timestamp: Sat Aug 22 2020 17:13:46 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -575,7 +575,7 @@ type Mutation {
   updateSelf(username: String, profilePicture: Upload): UserSelf
   updateStreamPosition(id: String!, position: Float!): Boolean
   validateInAppPurchase(receipt: Json!): UserSelf!
-  cancelStream(id: String!): StreamSelf
+  cancelStream(id: String!, message: String!): StreamSelf
   deleteStream(id: String!): Boolean
   loginChannelWithCode(id: String!, code: String!): ChannelAuthPayload
   loginChannelWithToken(id: String!): ChannelAuthPayload
@@ -894,6 +894,7 @@ type Stream {
   transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
   password: String!
   cancelled: DateTime
+  cancelledMessage: String
   creditRevenue: Int
   messages(where: StreamMessageWhereInput, orderBy: StreamMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamMessage!]
   comments(where: StreamCommentWhereInput, orderBy: StreamCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamComment!]
@@ -1103,6 +1104,8 @@ enum StreamOrderByInput {
   password_DESC
   cancelled_ASC
   cancelled_DESC
+  cancelledMessage_ASC
+  cancelledMessage_DESC
   creditRevenue_ASC
   creditRevenue_DESC
   approved_ASC
@@ -1191,6 +1194,7 @@ type StreamProfile {
   isConsumer: Boolean
   liveConsumersEdge: Int
   cancelled: DateTime
+  cancelledMessage: String
   audioOnly: Boolean
   position: Float
   tags: [TagProfile]
@@ -1256,6 +1260,7 @@ type StreamSelf {
   timeTo: DateTime
   cost: Float
   cancelled: DateTime
+  cancelledMessage: String
   published: DateTime
   password: String
   creditRevenuePending: Int
@@ -1492,6 +1497,20 @@ input StreamWhereInput {
   cancelled_lte: DateTime
   cancelled_gt: DateTime
   cancelled_gte: DateTime
+  cancelledMessage: String
+  cancelledMessage_not: String
+  cancelledMessage_in: [String!]
+  cancelledMessage_not_in: [String!]
+  cancelledMessage_lt: String
+  cancelledMessage_lte: String
+  cancelledMessage_gt: String
+  cancelledMessage_gte: String
+  cancelledMessage_contains: String
+  cancelledMessage_not_contains: String
+  cancelledMessage_starts_with: String
+  cancelledMessage_not_starts_with: String
+  cancelledMessage_ends_with: String
+  cancelledMessage_not_ends_with: String
   creditRevenue: Int
   creditRevenue_not: Int
   creditRevenue_in: [Int!]

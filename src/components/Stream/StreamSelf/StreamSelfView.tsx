@@ -13,6 +13,7 @@ import Drawer from '../../UI/Drawer/Drawer';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamSelf.styles';
 import StreamCommunication from '../StreamProfile/components/StreamCommunication/StreamCommunication';
+import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 
 
 interface StreamSelfViewProps {
@@ -92,12 +93,16 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         </KeyboardAvoidingView>
       )}
 
-      {!isCancelled && (
-        <StreamVideo
-          {...props}
-          data={props.queryResult.data.getStreamSelf}
-        />
-      )}
+      {
+        !isCancelled
+          ? (
+            <StreamVideo
+              {...props}
+              data={props.queryResult.data.getStreamSelf}
+            />
+          )
+          : <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+        }
     </>
   );
 };

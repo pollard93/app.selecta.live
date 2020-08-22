@@ -25,6 +25,17 @@ export const getStreamProfile = (_, variables) => {
         cost: Math.floor(Math.random() * Math.floor(100)),
       });
 
+    case 'CANCELLED':
+      return ({
+        id: variables.id,
+        isConsumer: true,
+        audioOnly: false,
+        position: 0,
+        // eslint-disable-next-line max-len
+        cancelledMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut',
+        cost: Math.floor(Math.random() * Math.floor(100)),
+      });
+
     default:
       return ({
         id: variables.id,

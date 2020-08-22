@@ -10,6 +10,7 @@ export interface cancelStream_cancelStream {
   __typename: "StreamSelf";
   id: string;
   cancelled: any | null;
+  cancelledMessage: string | null;
 }
 
 export interface cancelStream {
@@ -18,4 +19,5 @@ export interface cancelStream {
 
 export interface cancelStreamVariables {
   id: string;
+  message: string;
 }

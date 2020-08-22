@@ -33,7 +33,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
    */
   const [variables] = useState<getStreamSelfsVariables>({
     first: 5,
-    orderBy: StreamOrderByInput.createdAt_ASC,
+    orderBy: StreamOrderByInput.createdAt_DESC,
     after: null,
   });
 

@@ -24,6 +24,7 @@ export const STREAM_SELF_FRAGMENT = gql`
     timeTo
     cost
     cancelled
+    cancelledMessage
     password
     creditRevenuePending
     creditRevenue

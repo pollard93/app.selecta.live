@@ -30,6 +30,7 @@ function loadStories() {
 	require('../src/components/ResetPassword/ResetPassword.stories');
 	require('../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories');
 	require('../src/components/Stream/CancelStream/CancelStream.stories');
+	require('../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories');
 	require('../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories');
 	require('../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories');
 	require('../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories');
@@ -109,6 +110,7 @@ const stories = [
 	'../src/components/ResetPassword/ResetPassword.stories',
 	'../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories',
 	'../src/components/Stream/CancelStream/CancelStream.stories',
+	'../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories',
 	'../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories',
 	'../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories',
 	'../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories',
