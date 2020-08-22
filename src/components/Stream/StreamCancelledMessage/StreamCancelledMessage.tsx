@@ -13,7 +13,7 @@ interface StreamCancelledMessageProps {
 
 const StreamCancelledMessage: FC<StreamCancelledMessageProps> = (props) => (
   <ScrollView
-    style={Styles.flex}
+    style={Styles.wrap}
     contentContainerStyle={Styles.cancelled}
     bounces={false}
   >

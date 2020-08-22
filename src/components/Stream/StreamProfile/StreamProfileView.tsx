@@ -76,6 +76,10 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         {!props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null && (
           <StreamPurchase data={props.queryResult.data.getStreamProfile} />
         )}
+
+        {props.queryResult.data.getStreamProfile.cancelled !== null && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
+        )}
       </SafeAreaView>
 
       {shouldLoadVideo && drawerLayout && (
@@ -92,10 +96,6 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
             </Drawer>
           </FadeInView>
         </KeyboardAvoidingView>
-      )}
-
-      {props.queryResult.data.getStreamProfile.cancelled !== null && (
-        <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
       )}
 
       {shouldLoadVideo && (

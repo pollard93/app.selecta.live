@@ -75,6 +75,10 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         >
           <StreamCard data={props.queryResult.data.getStreamSelf} />
         </View>
+
+        {isCancelled && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+        )}
       </SafeAreaView>
 
       {!isCancelled && drawerLayout && (
@@ -93,16 +97,12 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         </KeyboardAvoidingView>
       )}
 
-      {
-        !isCancelled
-          ? (
-            <StreamVideo
-              {...props}
-              data={props.queryResult.data.getStreamSelf}
-            />
-          )
-          : <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
-        }
+      {!isCancelled && (
+        <StreamVideo
+          {...props}
+          data={props.queryResult.data.getStreamSelf}
+        />
+      )}
     </>
   );
 };
