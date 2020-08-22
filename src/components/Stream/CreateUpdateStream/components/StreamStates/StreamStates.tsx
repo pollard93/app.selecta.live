@@ -12,7 +12,7 @@ import { getStreamSelfsVariables } from '../../../../../API/query/getStreamSelfs
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
   getStreamSelfsVariables: getStreamSelfsVariables;
-  onPop: () => void;
+  onPop?: () => void;
 }
 
 const StreamStates: FC<StreamStatesProps> = (props) => {

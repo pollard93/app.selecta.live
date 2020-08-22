@@ -36,7 +36,7 @@ export default StyleSheet.create({
     padding: spacing.small,
   },
   streamButton: {
-    marginVertical: spacing.small,
+    marginBottom: spacing.small,
   },
   details: {
     flexDirection: 'row',
@@ -50,6 +50,9 @@ export default StyleSheet.create({
   },
   meta: {
     flex: 1,
+  },
+  controls: {
+    marginTop: spacing.small,
   },
   authKeys: {
     borderColor: color.mono.pale.dark,
@@ -68,7 +71,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: spacing.small,
   },
   metric: {
     alignItems: 'center',

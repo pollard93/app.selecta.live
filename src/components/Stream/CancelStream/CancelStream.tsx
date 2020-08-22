@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Alert } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
@@ -11,7 +11,7 @@ interface CancelStreamProps {
   data: STREAM_SELF_FRAGMENT;
 }
 
-const CancelStream = (props: CancelStreamProps) => {
+const CancelStream: FC<CancelStreamProps> = (props) => {
   const toast = useToast();
 
 

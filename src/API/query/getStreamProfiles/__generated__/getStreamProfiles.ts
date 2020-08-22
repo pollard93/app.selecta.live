@@ -60,6 +60,7 @@ export interface getStreamProfiles_getStreamProfiles_streams {
   image: getStreamProfiles_getStreamProfiles_streams_image | null;
   timeFrom: any | null;
   timeTo: any | null;
+  cancelled: any | null;
   tags: (getStreamProfiles_getStreamProfiles_streams_tags | null)[] | null;
 }
 

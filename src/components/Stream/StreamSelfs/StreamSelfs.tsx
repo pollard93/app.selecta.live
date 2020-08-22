@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
@@ -29,13 +29,13 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
 
 
   /**
-   * Variables
+   * Initial Variables
    */
-  const variables: getStreamSelfsVariables = {
+  const [variables] = useState<getStreamSelfsVariables>({
     first: 5,
-    orderBy: StreamOrderByInput.createdAt_DESC,
+    orderBy: StreamOrderByInput.createdAt_ASC,
     after: null,
-  };
+  });
 
 
   /**
@@ -58,7 +58,10 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           accessor='getStreamSelfs.streams'
           renderItem={({ item }) => (
             <View style={Styles.item}>
-              <StreamSelfListItem data={item} />
+              <StreamSelfListItem
+                data={item}
+                getStreamSelfsVariables={variables}
+              />
             </View>
           )}
           ListHeaderComponent={() => (

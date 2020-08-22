@@ -18,6 +18,7 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
     }
     timeFrom
     timeTo
+    cancelled
     tags {
       ...TAG_PROFILE_FRAGMENT
     }

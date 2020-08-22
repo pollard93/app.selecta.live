@@ -60,13 +60,13 @@ export interface getConsumingStreamProfiles_getConsumingStreamProfiles_streams {
   image: getConsumingStreamProfiles_getConsumingStreamProfiles_streams_image | null;
   timeFrom: any | null;
   timeTo: any | null;
+  cancelled: any | null;
   tags: (getConsumingStreamProfiles_getConsumingStreamProfiles_streams_tags | null)[] | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
-  cancelled: any | null;
 }
 
 export interface getConsumingStreamProfiles_getConsumingStreamProfiles {

@@ -58,11 +58,11 @@ export interface STREAM_PROFILE_FRAGMENT {
   image: STREAM_PROFILE_FRAGMENT_image | null;
   timeFrom: any | null;
   timeTo: any | null;
+  cancelled: any | null;
   tags: (STREAM_PROFILE_FRAGMENT_tags | null)[] | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
-  cancelled: any | null;
 }

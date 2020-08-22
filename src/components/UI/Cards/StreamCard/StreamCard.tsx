@@ -16,8 +16,35 @@ interface StreamCardProps {
   fillHeight?: boolean; // Sets flex: 1 on wrapper to fill the height, used for displaying in feed
 }
 
-const StreamCard: FC<StreamCardProps> = (props) => {
+const StreamCardTime: FC<StreamCardProps> = (props) => {
   const now = new Date();
+
+  /**
+   * Return cancelled message
+   */
+  if (props.data.cancelled !== null) {
+    return <Chip bold>Cancelled</Chip>;
+  }
+
+  /**
+   * Return Live
+   */
+  if (new Date(props.data.timeFrom) <= now && new Date(props.data.timeTo) >= now) {
+    return <Chip bold>Live</Chip>;
+  }
+
+  /**
+   * Fallback to returning date and time
+   */
+  return (
+    <>
+      <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
+      <Chip bold>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
+    </>
+  );
+};
+
+const StreamCard: FC<StreamCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
   return (
@@ -55,18 +82,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         </View>
 
         <View style={Styles.chips}>
-          {
-            new Date(props.data.timeFrom) <= now && new Date(props.data.timeTo) >= now
-              ? (
-                <Chip bold>Live</Chip>
-              )
-              : (
-                <>
-                  <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
-                  <Chip bold>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
-                </>
-              )
-          }
+          <StreamCardTime {...props} />
         </View>
       </View>
     </View>

@@ -58,5 +58,6 @@ export interface STREAM_PROFILE_FRAGMENT_SHORT {
   image: STREAM_PROFILE_FRAGMENT_SHORT_image | null;
   timeFrom: any | null;
   timeTo: any | null;
+  cancelled: any | null;
   tags: (STREAM_PROFILE_FRAGMENT_SHORT_tags | null)[] | null;
 }

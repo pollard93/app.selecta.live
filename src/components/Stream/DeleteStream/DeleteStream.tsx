@@ -13,7 +13,7 @@ import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStr
 interface DeleteStreamProps {
   data: STREAM_SELF_FRAGMENT;
   getStreamSelfsVariables: getStreamSelfsVariables;
-  onPop: () => void;
+  onPop?: () => void;
 }
 
 const DeleteStream: FC<DeleteStreamProps> = (props) => {
@@ -54,9 +54,10 @@ const DeleteStream: FC<DeleteStreamProps> = (props) => {
       } catch {}
 
       /**
-       * Pop
+       * Pop if given
        */
-      props.onPop();
+      // eslint-disable-next-line no-unused-expressions
+      props.onPop?.();
     },
     onError: (e) => {
       toast.push({

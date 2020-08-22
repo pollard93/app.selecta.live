@@ -58,13 +58,13 @@ export interface getStreamProfile_getStreamProfile {
   image: getStreamProfile_getStreamProfile_image | null;
   timeFrom: any | null;
   timeTo: any | null;
+  cancelled: any | null;
   tags: (getStreamProfile_getStreamProfile_tags | null)[] | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   position: number | null;
-  cancelled: any | null;
 }
 
 export interface getStreamProfile {
