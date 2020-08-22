@@ -16,7 +16,6 @@ import { REMOVE_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutat
 import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeAccessToken/__generated__/removeAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
@@ -24,8 +23,9 @@ import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface LoginProps extends ScreenProps {
+export interface LoginProps {
   toastMessage?: string;
 }
 
@@ -33,6 +33,7 @@ const Login: FC<LoginProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -64,7 +65,7 @@ const Login: FC<LoginProps> = (props) => {
           /**
            * Push resetPasswordScreen
            */
-          pushScreen(STACK.ONBOARDING, ResetPasswordScreen, { token });
+          pushScreen(screenProps.componentId, ResetPasswordScreen, { token });
         }
       // eslint-disable-next-line no-empty
       } catch (e) {}
@@ -117,7 +118,7 @@ const Login: FC<LoginProps> = (props) => {
       // Navigate now getSelf is cached
       if (!getSelf.username) {
         // Carry on onboarding process if user has no username
-        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -209,7 +210,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RequestPasswordResetScreen
    */
   const onReset = (defaultEmailValue: string) => {
-    pushScreen(STACK.ONBOARDING, RequestPasswordResetScreen, {
+    pushScreen(screenProps.componentId, RequestPasswordResetScreen, {
       defaultEmailValue,
       onCompletion: () => {
         toast.push({
@@ -228,7 +229,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RegisterScreen
    */
   const onRegister = () => {
-    pushScreen(STACK.ONBOARDING, RegisterScreen, {});
+    pushScreen(screenProps.componentId, RegisterScreen, {});
   };
 
 

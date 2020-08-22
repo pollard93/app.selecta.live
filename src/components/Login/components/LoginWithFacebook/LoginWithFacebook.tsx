@@ -14,9 +14,9 @@ import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
-import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../../../utils/storage';
+import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 interface LoginWithFacebookProps {
   disabled?: boolean;
@@ -27,6 +27,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const context = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -56,7 +57,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
       // Navigate now getSelf is cached
       if (!getSelf.username) {
         // Carry on onboarding process if user has no username
-        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {

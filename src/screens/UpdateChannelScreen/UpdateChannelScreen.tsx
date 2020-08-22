@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import UpdateChannel from '../../components/Channel/UpdateChannel/UpdateChannel';
-import { ScreenProps } from '../utils/interfaces';
 
-interface UpdateChannelScreenProps extends ScreenProps {}
+interface UpdateChannelScreenProps {}
 
 const UpdateChannelScreen: FC<UpdateChannelScreenProps> = (props) => (
   <UpdateChannel {...props} />

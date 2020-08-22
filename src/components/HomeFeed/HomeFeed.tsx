@@ -7,16 +7,17 @@ import { Navigation } from 'react-native-navigation';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Header, { useHeaderStyles } from '../UI/Headers/Header/Header';
-import { ScreenProps, STACK } from '../../screens/utils/interfaces';
+import { STACK } from '../../screens/utils/interfaces';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
 import Toast from '../UI/Toast/Toast';
 import { pushScreen } from '../../screens/utils';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 
-export interface HomeFeedProps extends ScreenProps {
+export interface HomeFeedProps {
   toastMessage?: string;
 }
 
@@ -24,6 +25,7 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
   const toast = useToast();
   const queryResult = useGetHomeFeedQuery();
   const { headerHeight } = useHeaderStyles();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -50,8 +52,8 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
 
       switch (type) {
         case 'stream':
-          pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id: identifier });
-          Navigation.mergeOptions(STACK.HOME, {
+          pushScreen(screenProps.componentId, StreamProfileScreen, { id: identifier });
+          Navigation.mergeOptions(STACK.ROOT, {
             bottomTabs: {
               currentTabIndex: 0,
             },
@@ -59,8 +61,8 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
           break;
 
         case 'channel':
-          pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id: identifier });
-          Navigation.mergeOptions(STACK.HOME, {
+          pushScreen(screenProps.componentId, ChannelProfileScreen, { id: identifier });
+          Navigation.mergeOptions(STACK.ROOT, {
             bottomTabs: {
               currentTabIndex: 0,
             },
@@ -97,10 +99,10 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
                 <Feed
                   data={queryResult.data.getHomeFeed}
                   onPressStream={(id) => {
-                    pushScreen(STACK.TAB_HOME, StreamProfileScreen, { id });
+                    pushScreen(screenProps.componentId, StreamProfileScreen, { id });
                   }}
                   onPressChannel={(id) => {
-                    pushScreen(STACK.TAB_HOME, ChannelProfileScreen, { id });
+                    pushScreen(screenProps.componentId, ChannelProfileScreen, { id });
                   }}
                   refetch={queryResult.refetch}
                   flatListProps={{

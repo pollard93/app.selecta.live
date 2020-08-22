@@ -2,11 +2,9 @@ import React, { FC, useMemo } from 'react';
 import { View, Animated, Linking, TouchableOpacity } from 'react-native';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-
 import Styles from './ChannelProfile.style';
 import ChannelProfileFeed from '../../ChannelProfileFeed/ChannelProfileFeed';
 import Body from '../../UI/Typography/components/Body';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import { getChannelProfile } from '../../../API/query/getChannelProfile/__generated__/getChannelProfile';
 import ChannelHeader from '../ChannelHeader/ChannelHeader';
 import ShareButton from '../../UI/ShareButton/ShareButton';
@@ -14,7 +12,7 @@ import color from '../../../styles/definitions/color';
 import FollowChannel from '../FollowChannel/FollowChannel';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 
-export interface ChannelProfileViewProps extends ScreenProps {
+export interface ChannelProfileViewProps {
   id: string;
   queryResult: QueryResult<getChannelProfile>;
 }
@@ -58,7 +56,7 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
     >
       {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (
         <ChannelProfileFeed
-          id={props.id}
+          {...props}
           flatListProps={{
             bounces: true,
             contentContainerStyle: {

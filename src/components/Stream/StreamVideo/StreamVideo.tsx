@@ -9,12 +9,11 @@ import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../.
 import { STREAM_SELF_FRAGMENT as STREAM_SELF_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
 import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import { useStreamStart } from '../../../utils/streamFunctions';
 import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
 
-export interface StreamVideoProps extends ScreenProps {
+export interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
 }
 

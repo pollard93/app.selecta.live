@@ -2,18 +2,19 @@ import React, { FC } from 'react';
 import { View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Header from '../../UI/Headers/Header/Header';
 import StreamSelfView from './StreamSelfView';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface StreamSelfProps extends ScreenProps {
+export interface StreamSelfProps {
   id: string;
 }
 
 const StreamSelf: FC<StreamSelfProps> = (props) => {
   const safeAreaInsets = useSafeArea();
+  const screenProps = useScreenProps();
 
   /**
    * Query
@@ -26,8 +27,11 @@ const StreamSelf: FC<StreamSelfProps> = (props) => {
 
   return (
     <View style={[GlobalStyles.PageFill, { paddingBottom: safeAreaInsets.bottom }]}>
-      <Header onPop={() => Navigation.pop(props.componentId)} />
-      <StreamSelfView queryResult={queryResult} />
+      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <StreamSelfView
+        {...props}
+        queryResult={queryResult}
+      />
     </View>
   );
 };

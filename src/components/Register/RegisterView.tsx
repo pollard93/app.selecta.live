@@ -113,12 +113,14 @@ const RegisterView = (props: RegisterViewProps) => {
 
           <View style={Styles.input}>
             <LoginWithFacebook
+              {...props}
               disabled={props.loading}
               buttonText="Sign up with Facebook"
             />
           </View>
 
           <LoginWithGoogle
+            {...props}
             disabled={props.loading}
             buttonText="Sign up with Google"
           />

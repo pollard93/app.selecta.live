@@ -4,14 +4,20 @@ import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/Onboardin
 import Button from '../../UI/Button/Button';
 import H4 from '../../UI/Typography/components/H4';
 import Styles from './OnboardingGetStarted.style';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import { goHome } from '../../../screens/utils';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface OnboardingGetStartedProps extends ScreenProps {}
+export interface OnboardingGetStartedProps {}
 
-const OnboardingGetStarted: FC<OnboardingGetStartedProps> = (props) => {
+const OnboardingGetStarted: FC<OnboardingGetStartedProps> = () => {
+  const screenProps = useScreenProps();
+
+
+  /**
+   * Pop
+   */
   const onPop = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

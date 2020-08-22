@@ -6,7 +6,6 @@ import { GET_CHANNEL_SELFS_QUERY } from '../../../API/query/getChannelSelfs/getC
 import { getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 import ChannelSelfListItem from '../ChannelSelfListItem/ChannelSelfListItem';
 import Styles from './ChannelSelfs.styles';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { useLoginChannelWithTokenMutation } from '../../../API/mutation/loginChannelWithToken/loginChannelWithToken';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
@@ -14,13 +13,15 @@ import ChannelSelfScreen from '../../../screens/ChannelSelfScreen/ChannelSelfScr
 import { pushScreen } from '../../../screens/utils';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 class ChannelSelfsFlatList extends ApolloFlatList<getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels> {}
 
-export interface ChannelSelfsProps extends ScreenProps {}
+export interface ChannelSelfsProps {}
 
 const ChannelSelfs: FC<ChannelSelfsProps> = () => {
   const toast = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -32,7 +33,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
       /**
        * Psuh ChannelSelfScreen
        */
-      pushScreen(STACK.PROFILE, ChannelSelfScreen, {});
+      pushScreen(screenProps.componentId, ChannelSelfScreen, {});
     },
     onError: (e) => {
       toast.push({

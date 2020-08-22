@@ -11,13 +11,13 @@ import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/reso
 import { useResetPasswordMutation } from '../../API/mutation/resetPassword/resetPassword';
 import Toast from '../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
-import { STACK, ScreenProps } from '../../screens/utils/interfaces';
 import { FormData } from '../Register/RegisterView';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ResetPasswordProps extends ScreenProps {
+export interface ResetPasswordProps {
   token: string;
 }
 
@@ -25,6 +25,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const context = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -54,7 +55,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       // Navigate now getSelf is cached
       if (!getSelf.username) {
         // Carry on onboarding process if user has no name
-        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -133,7 +134,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
    * Pop this screen
    */
   const onPop = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

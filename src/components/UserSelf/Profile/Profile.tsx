@@ -4,17 +4,18 @@ import { Navigation } from 'react-native-navigation';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import H2 from '../../UI/Typography/components/H2';
 import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { goToLogin } from '../../../screens/utils';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ProfileProps extends ScreenProps {}
+export interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = (props) => {
   const self = useGetSelf();
+  const screenProps = useScreenProps();
 
   const onDismiss = () => {
-    Navigation.dismissModal(props.componentId);
+    Navigation.dismissModal(screenProps.componentId);
   };
 
   const onLogout = () => {
@@ -22,7 +23,7 @@ const Profile: FC<ProfileProps> = (props) => {
   };
 
   return (
-    <View style={[GlobalStyles.PageFill, { backgroundColor: 'white' }]}>
+    <View style={GlobalStyles.PageFill}>
       <Text>{self.username}</Text>
       <Text>{self.email}</Text>
 
@@ -37,7 +38,7 @@ const Profile: FC<ProfileProps> = (props) => {
       {self.isProducer && (
         <View style={GlobalStyles.PageFill}>
           <H2>Channels</H2>
-          <ChannelSelfs />
+          <ChannelSelfs {...props} />
         </View>
       )}
     </View>

@@ -2,19 +2,20 @@ import React, { FC, useRef } from 'react';
 import { View, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import UpdateChannelView from './UpdateChannelView';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-interface UpdateChannelProps extends ScreenProps {}
+interface UpdateChannelProps {}
 
-const UpdateChannel: FC<UpdateChannelProps> = (props) => {
+const UpdateChannel: FC<UpdateChannelProps> = () => {
   const { data: { getChannelSelf } } = useGetChannelSelfQuery();
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
   const canPopRef = useRef();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -28,14 +29,14 @@ const UpdateChannel: FC<UpdateChannelProps> = (props) => {
         'You have unsaved changes.',
         [
           { text: 'Cancel', style: 'cancel' },
-          { text: 'Yes', onPress: () => Navigation.pop(props.componentId) },
+          { text: 'Yes', onPress: () => Navigation.pop(screenProps.componentId) },
         ],
       );
       return;
     }
 
     // Otherwise pop
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

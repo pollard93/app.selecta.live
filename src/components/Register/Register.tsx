@@ -12,13 +12,14 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
-import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface RegisterProps extends ScreenProps {}
+export interface RegisterProps {}
 
-const Register: FC<RegisterProps> = (props) => {
+const Register: FC<RegisterProps> = () => {
+  const screenProps = useScreenProps();
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const context = useToast();
@@ -50,7 +51,7 @@ const Register: FC<RegisterProps> = (props) => {
 
       // Navigate now getSelf is cached
       // Carry on onboarding process
-      pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+      pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
         setLoading(false);
       });
     },
@@ -114,7 +115,7 @@ const Register: FC<RegisterProps> = (props) => {
    * Form submission
    */
   const onLogin = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

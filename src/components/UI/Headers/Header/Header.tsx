@@ -10,6 +10,7 @@ import scalePx from '../../../../utils/scalePx';
 import { openScreenAsModal } from '../../../../screens/utils';
 import { STACK } from '../../../../screens/utils/interfaces';
 import ProfileScreen from '../../../../screens/ProfileScreen/ProfileScreen';
+import NotificationsScreen from '../../../../screens/NotificationsScreen/NotificationsScreen';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -44,6 +45,14 @@ const Header: FC<HeaderProps> = (props) => {
    */
   const onPressProfile = () => {
     openScreenAsModal(STACK.PROFILE, ProfileScreen, {});
+  };
+
+
+  /**
+   * Open notifications modal
+   */
+  const onPressNotifications = () => {
+    openScreenAsModal(STACK.NOTIFICATIONS, NotificationsScreen, {});
   };
 
 
@@ -87,6 +96,29 @@ const Header: FC<HeaderProps> = (props) => {
           </View>
 
           <View style={Styles.right}>
+            <TouchableOpacity
+              onPress={onPressNotifications}
+              style={Styles.profilePicture}
+            >
+              <View style={Styles.profilePictureIconWrap}>
+                <Icon
+                  name={ICON.PROFILE}
+                  size="regular"
+                  style={Styles.profilePictureIcon}
+                />
+              </View>
+              {
+                self.profilePicture && (
+                  <AsyncImage
+                    splashUrl={self.profilePicture.url.splash}
+                    fullUrl={self.profilePicture.url.small}
+                    containerProps={{
+                      style: Styles.profilePictureInner,
+                    }}
+                  />
+                )
+              }
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={onPressProfile}
               style={Styles.profilePicture}

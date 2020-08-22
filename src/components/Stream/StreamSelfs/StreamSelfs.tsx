@@ -8,7 +8,6 @@ import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -18,14 +17,16 @@ import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
-export interface StreamSelfsProps extends ScreenProps {}
+export interface StreamSelfsProps {}
 
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -42,7 +43,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
    * Push CreateUpdateStreamScreen
    */
   const onCreate = () => {
-    pushScreen(STACK.PROFILE, CreateUpdateStreamScreen, {
+    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {
       getStreamSelfsVariables: variables,
     });
   };
@@ -50,7 +51,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(props.componentId)} />
+      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
       <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight }]}>
         <StreamSelfsFlatList
           query={GET_STREAM_SELFS_QUERY}
@@ -59,6 +60,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           renderItem={({ item }) => (
             <View style={Styles.item}>
               <StreamSelfListItem
+                {...props}
                 data={item}
                 getStreamSelfsVariables={variables}
               />

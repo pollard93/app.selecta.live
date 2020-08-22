@@ -16,7 +16,9 @@ storiesOf('Stream/StreamVideo', module)
       if (queryResult.loading) return null;
 
       return (
-        <StreamVideo data={queryResult.data.getStreamProfile} />
+        <StreamVideo
+          data={queryResult.data.getStreamProfile}
+        />
       );
     };
 
@@ -32,7 +34,9 @@ storiesOf('Stream/StreamVideo', module)
       if (queryResult.loading) return null;
 
       return (
-        <StreamVideo data={queryResult.data.getStreamProfile} />
+        <StreamVideo
+          data={queryResult.data.getStreamProfile}
+        />
       );
     };
 

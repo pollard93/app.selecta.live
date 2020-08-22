@@ -10,14 +10,13 @@ import Styles from './ChannelHeader.style';
 import scalePx from '../../../utils/scalePx';
 import color from '../../../styles/definitions/color';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import { ScreenProps } from '../../../screens/utils/interfaces';
 import ChannelHeaderSkeleton from './ChannelHeaderSkeleton';
 import { CHANNEL_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_PROFILE_FRAGMENT';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import FadeInView from '../../UI/FadeInView/FadeInView';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
-export interface ChannelHeaderProps extends ScreenProps {
+export interface ChannelHeaderProps {
   queryResult: QueryResult<any>;
   data: CHANNEL_PROFILE_FRAGMENT | CHANNEL_SELF_FRAGMENT;
   topContent: (args: {

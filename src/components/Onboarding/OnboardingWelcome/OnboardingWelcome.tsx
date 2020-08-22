@@ -9,21 +9,22 @@ import { useUpdateSelfMutation } from '../../../API/mutation/updateSelf/updateSe
 import Button from '../../UI/Button/Button';
 import Styles from './OnboardingWelcome.style';
 import H4 from '../../UI/Typography/components/H4';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { pushScreen } from '../../../screens/utils';
 import OnboardingNotificationsScreen from '../../../screens/OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import { getGQLErrorMessage, useDebounce } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
 import { useIsUsernameUniqueLazyQuery } from '../../../API/query/isUsernameUnique/isUsernameUnique';
 import SearchInput from '../../UI/Form/components/SearchInput/SearchInput';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface OnboardingWelcomeProps extends ScreenProps {}
+export interface OnboardingWelcomeProps {}
 
 type FormData = {
   username: string;
 };
 
-const OnboardingWelcome: FC<OnboardingWelcomeProps> = (props) => {
+const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
+  const screenProps = useScreenProps();
   const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation, setError, clearError } = useForm<FormData>({ mode: 'onChange' });
   const toast = useToast();
 
@@ -93,7 +94,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = (props) => {
    */
   const [mutation, { loading: mutationLoading }] = useUpdateSelfMutation({
     onCompleted: () => {
-      pushScreen(STACK.ONBOARDING, OnboardingNotificationsScreen, {});
+      pushScreen(screenProps.componentId, OnboardingNotificationsScreen, {});
     },
     onError: (e) => {
       toast.push({
@@ -131,7 +132,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = (props) => {
 
 
   const onPop = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

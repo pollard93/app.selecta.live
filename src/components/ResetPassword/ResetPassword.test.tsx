@@ -14,7 +14,6 @@ import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import ResetPasswordView from './ResetPasswordView';
 import * as ScreenUtilsModule from '../../screens/utils';
-import { STACK } from '../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
@@ -47,7 +46,9 @@ describe('<ResetPassword />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <ResetPassword token="string" />
+        <ResetPassword
+          token="string"
+        />
       </ApolloProvider>,
     );
 
@@ -121,7 +122,9 @@ describe('<ResetPassword />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <ResetPassword token="string" />
+        <ResetPassword
+          token="string"
+        />
       </ApolloProvider>,
     );
 
@@ -160,7 +163,9 @@ describe('<ResetPassword />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <ResetPassword token="string" />
+        <ResetPassword
+          token="string"
+        />
       </ApolloProvider>,
     );
 
@@ -202,7 +207,9 @@ describe('<ResetPassword />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <ResetPassword token="string" />
+        <ResetPassword
+          token="string"
+        />
       </ApolloProvider>,
     );
 
@@ -248,7 +255,9 @@ describe('<ResetPassword />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <ResetPassword token="string" />
+        <ResetPassword
+          token="string"
+        />
       </ApolloProvider>,
     );
 
@@ -274,7 +283,6 @@ describe('<ResetPassword />', () => {
 
     // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 

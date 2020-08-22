@@ -30,6 +30,14 @@ initMocks(path.join(__dirname, '__mocks__'));
 
 
 /**
+ * Include local module mocks
+ */
+jest.mock('./src/modules/ScreenPropsProvider/ScreenPropsProvider', () => ({
+  useScreenProps: () => ({}),
+}));
+
+
+/**
  * Set up DOM in node.js environment for Enzyme to mount to
  */
 const { JSDOM } = require('jsdom');

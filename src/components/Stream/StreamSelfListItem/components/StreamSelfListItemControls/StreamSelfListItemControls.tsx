@@ -7,14 +7,15 @@ import Body from '../../../../UI/Typography/components/Body';
 import Button from '../../../../UI/Button/Button';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import { pushScreen } from '../../../../../screens/utils';
-import { STACK } from '../../../../../screens/utils/interfaces';
 import Toast from '../../../../UI/Toast/Toast';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import StreamStates from '../../../CreateUpdateStream/components/StreamStates/StreamStates';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
+import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const toast = useToast();
+  const screenProps = useScreenProps();
   const now = new Date();
 
 
@@ -53,7 +54,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
         <Button
           type="PRIMARY"
           title="View Stream"
-          onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: props.data.id })}
+          onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}
           style={Styles.streamButton}
         />
 
@@ -96,14 +97,14 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   return (
     <View style={Styles.metrics}>
-      <TouchableOpacity onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: props.data.id })}>
+      <TouchableOpacity onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}>
         <View style={Styles.metric}>
           <Icon name={ICON.CHAT} size="small" />
           <Body style={Styles.metricBody}>{props.data.commentsEdge} Comment{props.data.commentsEdge === 1 ? '' : 's'}</Body>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => pushScreen(STACK.PROFILE, StreamSelfScreen, { id: props.data.id })}>
+      <TouchableOpacity onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}>
         <View style={Styles.metric}>
           <Icon name={ICON.PLAY} size="small" />
           <Body style={Styles.metricBody}>View Stream</Body>

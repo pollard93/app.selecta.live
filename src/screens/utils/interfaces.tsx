@@ -4,16 +4,17 @@
 export enum STACK {
   ONBOARDING = 'ONBOARDING',
   REQUIRE_UDPATE = 'REQUIRE_UDPATE',
-  HOME = 'HOME',
+  ROOT = 'ROOT',
   TAB_HOME = 'TAB_HOME',
   TAB_MY_STREAMS = 'TAB_MY_STREAMS',
   TAB_WALLET = 'TAB_WALLET',
   CHANNEL = 'CHANNEL',
   PROFILE = 'PROFILE',
+  NOTIFICATIONS = 'NOTIFICATIONS',
 }
 
 
 export interface ScreenProps {
-  componentId?: string;
-  rootTag?: number;
+  componentId: string;
+  rootTag: number;
 }

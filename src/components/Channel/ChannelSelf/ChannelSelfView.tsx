@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
 import { Animated, View, TouchableOpacity } from 'react-native';
-
 import Body from '../../UI/Typography/components/Body';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import ChannelHeader from '../ChannelHeader/ChannelHeader';
 import color from '../../../styles/definitions/color';
@@ -15,13 +13,15 @@ import { formatForTimezone } from '../../../utils/functions';
 import { pushScreen } from '../../../screens/utils';
 import UpdateChannelScreen from '../../../screens/UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ChannelSelfViewProps extends ScreenProps {
+export interface ChannelSelfViewProps {
   queryResult: QueryResult<getChannelSelf>;
 }
 
 const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
   const darkMode = useDarkMode();
+  const screenProps = useScreenProps();
 
   return (
     <ChannelHeader
@@ -31,7 +31,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
         <>
           <TouchableOpacity
             onPress={() => {
-              pushScreen(STACK.PROFILE, StreamSelfsScreen, {});
+              pushScreen(screenProps.componentId, StreamSelfsScreen, {});
             }}
           >
             <Animated.View
@@ -51,7 +51,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
               /**
                * Push UpdateChannelScreen
                */
-              pushScreen(STACK.PROFILE, UpdateChannelScreen, {});
+              pushScreen(screenProps.componentId, UpdateChannelScreen, {});
             }}
           >
             <Animated.View

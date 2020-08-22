@@ -343,7 +343,6 @@ describe('<Login >', () => {
 
     // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 
@@ -373,7 +372,6 @@ describe('<Login >', () => {
 
     // Should have gone to RequestPasswordResetScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(RequestPasswordResetScreen);
     expect((pushScreenSpy.args[0][2] as any).defaultEmailValue).to.equal('email@test.com');
     expect((pushScreenSpy.args[0][2] as any).onCompletion).to.be.instanceOf(Function);
@@ -386,7 +384,6 @@ describe('<Login >', () => {
 
     // Should have gone to RegisterScreen
     expect(pushScreenSpy.callCount).to.equal(2);
-    expect(pushScreenSpy.args[1][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[1][1]).to.equal(RegisterScreen);
   });
 });

@@ -15,7 +15,6 @@ import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import * as ScreenUtilsModule from '../../../../screens/utils';
 import InAppPurchases from '../../../../modules/InAppPurchases';
-import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import Button from '../../../UI/Button/Button';
 import { store } from '../../../../utils/storage';
@@ -254,7 +253,6 @@ describe('<LoginWithFacebook />', () => {
 
     // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 

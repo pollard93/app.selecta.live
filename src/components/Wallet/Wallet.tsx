@@ -7,23 +7,30 @@ import H2 from '../UI/Typography/components/H2';
 import CreditTransactions from '../CreditTransaction/CreditTransactions/CreditTransactions';
 import GlobalStyles, { GlobalDynamicStyles } from '../../styles/stylesheets/GlobalStyles';
 import Styles from './Wallet.styles';
+import Header, { useHeaderStyles } from '../UI/Headers/Header/Header';
+import spacing from '../../styles/definitions/spacing';
 
 export interface WalletProps {}
 
 const Wallet: FC<WalletProps> = () => {
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+  const { headerHeight } = useHeaderStyles();
 
   return (
-    <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill]}>
-      <View style={[GlobalStyles.PageFill, Styles.wrap]}>
-        <WalletCard />
+    <View style={GlobalStyles.PageFill}>
+      <Header />
 
-        <View style={GlobalStyles.PageFill}>
-          <H2 style={Styles.heading}>Purchase History</H2>
-          <CreditTransactions />
+      <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill]}>
+        <View style={[GlobalStyles.PageFill, Styles.wrap, { paddingTop: headerHeight + spacing.small }]}>
+          <WalletCard />
+
+          <View style={GlobalStyles.PageFill}>
+            <H2 style={Styles.heading}>Purchase History</H2>
+            <CreditTransactions />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 

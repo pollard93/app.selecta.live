@@ -16,7 +16,6 @@ import RegisterView from './RegisterView';
 import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { STACK } from '../../screens/utils/interfaces';
 import { store } from '../../utils/storage';
 
 describe('<Register />', () => {
@@ -99,7 +98,6 @@ describe('<Register />', () => {
     // Pushnotifications should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 

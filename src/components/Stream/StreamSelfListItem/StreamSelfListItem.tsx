@@ -8,11 +8,11 @@ import Button from '../../UI/Button/Button';
 import H3 from '../../UI/Typography/components/H3';
 import { formatForTimezone } from '../../../utils/functions';
 import { pushScreen } from '../../../screens/utils';
-import { STACK } from '../../../screens/utils/interfaces';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItemControls from './components/StreamSelfListItemControls/StreamSelfListItemControls';
 import { getStreamDuration } from '../../../utils/streamFunctions';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 export interface StreamSelfListItemProps {
   data: STREAM_SELF_FRAGMENT;
@@ -20,11 +20,14 @@ export interface StreamSelfListItemProps {
 }
 
 const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
+  const screenProps = useScreenProps();
+
+
   /**
    * Push CreateUpdateStreamScreen
    */
   const onEdit = () => {
-    pushScreen(STACK.PROFILE, CreateUpdateStreamScreen, {
+    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {
       id: props.data.id,
     });
   };
