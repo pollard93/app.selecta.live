@@ -194,10 +194,10 @@ export const goToChannelStack = () => Navigation.setRoot({
  * @param props - Props of screen class
  */
 type ExtractProps<P> = P extends FC<infer L> ? L : null;
-export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>, options: Options = {}) => Navigation.push<ExtractProps<T>>(stack, {
+export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>, options: Options = {}) => Navigation.push(stack, {
   component: {
     name: screen.prototype.ScreenName,
-    passProps: props as any,
+    passProps: props,
     options: {
       animations: {
         push: {
@@ -217,7 +217,7 @@ export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
-export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>) => Navigation.showModal<T>({
+export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>) => Navigation.showModal({
   stack: {
     id: stack,
     children: [
