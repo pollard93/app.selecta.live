@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface readNotification_readNotification {
-  __typename: "Notification";
+  __typename: "NotificationProfile";
   id: string;
   readDate: any | null;
 }

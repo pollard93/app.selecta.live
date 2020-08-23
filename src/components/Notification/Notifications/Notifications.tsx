@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
 import { GET_NOTIFICATIONS_QUERY } from '../../../API/query/getNotifications/getNotifications';
@@ -11,6 +11,7 @@ import { NOTIFICATIONS_SUBSCRIPTION } from '../../../API/subscription/notificati
 import { notifications } from '../../../API/subscription/notifications/__generated__/notifications';
 import Button from '../../UI/Button/Button';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { NOTIFICATION_FRAGMENT } from '../../../API/fragments/__generated__/NOTIFICATION_FRAGMENT';
 
 class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
 
@@ -28,6 +29,11 @@ const Notifications: FC<NotificationsProps> = () => {
   };
 
 
+  const onPressNotification = (data: NOTIFICATION_FRAGMENT) => {
+    console.log('NotificationsFlatList -> onPressNotification -> data', data);
+  };
+
+
   return (
     <View>
       <Button
@@ -42,9 +48,14 @@ const Notifications: FC<NotificationsProps> = () => {
         }}
         accessor='getNotifications.notifications'
         renderItem={({ item }) => (
-          <View style={styles.item}>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              onPressNotification(item);
+            }}
+          >
             <NotificationListItem data={item} />
-          </View>
+          </TouchableOpacity>
         )}
         // LoadingErrorComponent={(queryResult) => <LoadRetry {...queryResult} />}
         ListHeaderComponent={() => (

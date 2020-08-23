@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { FILE_FRAGMENT } from './File';
 
 export const NOTIFICATION_FRAGMENT = gql`
-  fragment NOTIFICATION_FRAGMENT on Notification {
+  fragment NOTIFICATION_FRAGMENT on NotificationProfile {
     id
     type
     sender {
@@ -11,7 +11,10 @@ export const NOTIFICATION_FRAGMENT = gql`
         ...FILE_FRAGMENT
       }
     }
-    channelReceiver {
+    stream {
+      id
+    }
+    channel {
       id
     }
     readDate

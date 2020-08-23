@@ -32,7 +32,10 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
 
 
   return (
-    <OnboardingPageWrap heading="Reset Password">
+    <OnboardingPageWrap
+      heading="Reset Password"
+      onPop={props.onPop}
+    >
       <View style={Styles.input}>
         <H4 style={Styles.content}>Enter your new password</H4>
 

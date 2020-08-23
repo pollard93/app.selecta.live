@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Aug 22 2020 17:13:46 GMT+0100 (British Summer Time)
+# timestamp: Sun Aug 23 2020 16:46:22 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -11,34 +11,6 @@ type AppUpdatePayload {
 type AuthPayload {
   token: String!
   user: UserSelf
-}
-
-type Channel {
-  id: ID!
-  name: String!
-  description: String!
-  websiteUrl: String
-  twitterUrl: String
-  facebookUrl: String
-  instagramUrl: String
-  coverImage: File
-  profileImage: File
-  verified: Boolean!
-  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  admins(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  streams(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
-  credit: Float!
-  creditMinimumStreamCost: Int!
-  creditWithdrawalValue: Int!
-  creditWithdrawalMinimum: Int!
-  freeStreamAllowance: Int!
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
-  transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  relatedChannels(where: ChannelRelatedChannelsWhereInput, orderBy: ChannelRelatedChannelsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChannelRelatedChannels!]
-  viewCount: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type ChannelAuthPayload {
@@ -99,20 +71,6 @@ type ChannelProfile {
 type ChannelProfilesPayLoad {
   channels: [ChannelProfile!]!
   count: Int!
-}
-
-type ChannelRelatedChannels {
-  id: ID!
-  channel: Channel!
-  related: Channel!
-  score: Float!
-}
-
-enum ChannelRelatedChannelsOrderByInput {
-  id_ASC
-  id_DESC
-  score_ASC
-  score_DESC
 }
 
 input ChannelRelatedChannelsWhereInput {
@@ -380,18 +338,6 @@ input ChannelWhereInput {
   NOT: [ChannelWhereInput!]
 }
 
-type CreditTransaction {
-  id: ID!
-  credit: Float!
-  consumer: User!
-  stream: Stream!
-  channel: Channel!
-  approved: DateTime
-  reversed: DateTime
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 enum CreditTransactionOrderByInput {
   id_ASC
   id_DESC
@@ -568,8 +514,10 @@ input FileWhereInput {
 scalar Json
 
 type Mutation {
+  deleteNotification(id: String!): Boolean
   followChannel(id: String!, unfollow: Boolean): ChannelProfile
   payForStream(id: String!): StreamProfile!
+  readNotification(id: String!, unRead: Boolean): NotificationProfile!
   reportStream(id: String!, content: String!): Boolean
   updatePassword(currentPassword: String!, newPassword: String!): Boolean
   updateSelf(username: String, profilePicture: Upload): UserSelf
@@ -586,12 +534,10 @@ type Mutation {
   updateChannel(data: ChannelUpdateInput): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
-  deleteNotification(id: String!): Boolean
   login(email: String!, password: String!): AuthPayload
   loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
   putStreamComment(id: String!, comment: String!): StreamCommentClient
   putStreamMessage(id: String!, message: String!): StreamMessageClient
-  readNotification(id: String!, unRead: Boolean): Notification!
   register(email: String!, password: String!): AuthPayload
   requestPasswordReset(email: String!): Boolean
   resetPassword(password: String!): AuthPayload
@@ -603,35 +549,11 @@ enum MutationType {
   DELETED
 }
 
-type Notification {
-  id: ID!
-  type: NOTIFICATION_TYPE
-  receiver: UserProfile
-  sender: UserProfile
-  channelReceiver: ChannelProfile
-  readDate: DateTime
-  createdAt: DateTime
-}
-
 enum NOTIFICATION_TYPE {
   PASSWORD_CHANGED
+  STREAM_CANCELLED
+  NEW_STREAM_FROM_FOLLOWING
   REQUESTED_CHANNEL_APPROVED
-  CHANNEL_NOTIFICATION_TEST
-}
-
-enum NotificationOrderByInput {
-  id_ASC
-  id_DESC
-  type_ASC
-  type_DESC
-  receiverId_ASC
-  receiverId_DESC
-  readDate_ASC
-  readDate_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type NotificationPreviousValues {
@@ -643,14 +565,25 @@ type NotificationPreviousValues {
   updatedAt: DateTime!
 }
 
-type NotificationsPayLoad {
-  notifications: [Notification!]!
+type NotificationProfile {
+  id: ID!
+  type: NOTIFICATION_TYPE
+  receiver: UserProfile
+  sender: UserProfile
+  stream: StreamProfile
+  channel: ChannelProfile
+  readDate: DateTime
+  createdAt: DateTime
+}
+
+type NotificationProfilesPayLoad {
+  notifications: [NotificationProfile!]!
   count: Int!
 }
 
-type NotificationSubscriptionPayload {
+type NotificationProfileSubscriptionPayload {
   mutation: MutationType!
-  node: Notification
+  node: NotificationProfile
   updatedFields: [String!]
   previousValues: NotificationPreviousValues
 }
@@ -690,7 +623,8 @@ input NotificationWhereInput {
   receiverId_ends_with: String
   receiverId_not_ends_with: String
   sender: UserWhereInput
-  channelReceiver: ChannelWhereInput
+  stream: StreamWhereInput
+  channel: ChannelWhereInput
   readDate: DateTime
   readDate_not: DateTime
   readDate_in: [DateTime!]
@@ -739,6 +673,7 @@ type Query {
   getCreditTransactionProfiles(first: Int, after: String, orderBy: CreditTransactionOrderByInput): CreditTransactionProfilesPayload!
   getFollowingChannelProfiles(where: ChannelWhereInput, first: Int, after: String, orderBy: ChannelOrderByInput): ChannelProfilesPayLoad!
   getHomeFeed: FeedPayload
+  getNotifications(first: Int, after: String): NotificationProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
   getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
   getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
@@ -757,7 +692,6 @@ type Query {
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
   canViewStream(id: String!): Boolean!
-  getNotifications(channelId: String, first: Int, after: String): NotificationsPayLoad!
   getStreamComments(id: String!, first: Int, after: String): StreamCommentClientPayload
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
@@ -790,19 +724,6 @@ type RequestedChannel {
   description: String
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-enum RequestedChannelOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type RequestedChannelsPayLoad {
@@ -880,44 +801,6 @@ enum SOCIAL_PROVIDER {
   GOOGLE
 }
 
-type Stream {
-  id: ID!
-  channel: Channel!
-  name: String!
-  info: String!
-  image: File
-  timeFrom: DateTime!
-  timeTo: DateTime!
-  cost: Float!
-  consumers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  liveConsumers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
-  password: String!
-  cancelled: DateTime
-  cancelledMessage: String
-  creditRevenue: Int
-  messages(where: StreamMessageWhereInput, orderBy: StreamMessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamMessage!]
-  comments(where: StreamCommentWhereInput, orderBy: StreamCommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamComment!]
-  userRecords(where: StreamUserRecordWhereInput, orderBy: StreamUserRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamUserRecord!]
-  approved: DateTime
-  audioOnly: Boolean
-  positionRecords(where: StreamPositionRecordWhereInput, orderBy: StreamPositionRecordOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamPositionRecord!]
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  relatedStreams(where: StreamRelatedStreamsWhereInput, orderBy: StreamRelatedStreamsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StreamRelatedStreams!]
-  published: DateTime
-  viewCount: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type StreamComment {
-  id: ID!
-  stream: Stream!
-  user: User
-  comment: String!
-  createdAt: DateTime!
-}
-
 type StreamCommentClient {
   id: ID!
   user: UserProfile
@@ -928,15 +811,6 @@ type StreamCommentClient {
 type StreamCommentClientPayload {
   comments: [StreamCommentClient!]!
   count: Int!
-}
-
-enum StreamCommentOrderByInput {
-  id_ASC
-  id_DESC
-  comment_ASC
-  comment_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 input StreamCommentWhereInput {
@@ -983,15 +857,6 @@ input StreamCommentWhereInput {
   NOT: [StreamCommentWhereInput!]
 }
 
-type StreamMessage {
-  id: ID!
-  stream: Stream!
-  streamId: String!
-  user: User
-  message: String!
-  createdAt: DateTime!
-}
-
 type StreamMessageClient {
   id: ID!
   user: UserProfile
@@ -1009,17 +874,6 @@ type StreamMessageClientSubscriptionPayload {
   node: StreamMessageClient
   updatedFields: [String!]
   previousValues: StreamMessagePreviousValues
-}
-
-enum StreamMessageOrderByInput {
-  id_ASC
-  id_DESC
-  streamId_ASC
-  streamId_DESC
-  message_ASC
-  message_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type StreamMessagePreviousValues {
@@ -1122,23 +976,6 @@ enum StreamOrderByInput {
   updatedAt_DESC
 }
 
-type StreamPositionRecord {
-  id: ID!
-  extendedId: String!
-  stream: Stream!
-  user: User!
-  position: Float!
-}
-
-enum StreamPositionRecordOrderByInput {
-  id_ASC
-  id_DESC
-  extendedId_ASC
-  extendedId_DESC
-  position_ASC
-  position_DESC
-}
-
 input StreamPositionRecordWhereInput {
   id: ID
   id_not: ID
@@ -1204,20 +1041,6 @@ type StreamProfile {
 type StreamProfilesPayLoad {
   streams: [StreamProfile!]!
   count: Int!
-}
-
-type StreamRelatedStreams {
-  id: ID!
-  stream: Stream!
-  related: Stream!
-  score: Float!
-}
-
-enum StreamRelatedStreamsOrderByInput {
-  id_ASC
-  id_DESC
-  score_ASC
-  score_DESC
 }
 
 input StreamRelatedStreamsWhereInput {
@@ -1286,35 +1109,6 @@ type StreamUrlPayload {
   video: String
 }
 
-type StreamUserRecord {
-  id: ID!
-  token: String!
-  streamId: String!
-  stream: Stream!
-  user: User!
-  type: String!
-  createdAt: DateTime!
-  sessionUpdatedAt: DateTime!
-  processed: Boolean
-}
-
-enum StreamUserRecordOrderByInput {
-  id_ASC
-  id_DESC
-  token_ASC
-  token_DESC
-  streamId_ASC
-  streamId_DESC
-  type_ASC
-  type_DESC
-  createdAt_ASC
-  createdAt_DESC
-  sessionUpdatedAt_ASC
-  sessionUpdatedAt_DESC
-  processed_ASC
-  processed_DESC
-}
-
 input StreamUserRecordWhereInput {
   id: ID
   id_not: ID
@@ -1359,6 +1153,20 @@ input StreamUserRecordWhereInput {
   streamId_ends_with: String
   streamId_not_ends_with: String
   stream: StreamWhereInput
+  userId: String
+  userId_not: String
+  userId_in: [String!]
+  userId_not_in: [String!]
+  userId_lt: String
+  userId_lte: String
+  userId_gt: String
+  userId_gte: String
+  userId_contains: String
+  userId_not_contains: String
+  userId_starts_with: String
+  userId_not_starts_with: String
+  userId_ends_with: String
+  userId_not_ends_with: String
   user: UserWhereInput
   type: String
   type_not: String
@@ -1585,25 +1393,8 @@ input StreamWhereInput {
 }
 
 type Subscription {
-  notifications: NotificationSubscriptionPayload
+  notifications: NotificationProfileSubscriptionPayload
   streamMessages(id: String!): StreamMessageClientSubscriptionPayload
-}
-
-type Tag {
-  id: ID!
-  title: String!
-  channels(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
-  streams(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
-  createdAt: DateTime!
-}
-
-enum TagOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type TagProfile {
@@ -1675,51 +1466,6 @@ type Url {
   full: String
 }
 
-type User {
-  id: ID!
-  username: String
-  email: String!
-  facebookId: String
-  googleId: String
-  profilePicture: File
-  password: String
-  verified: Boolean
-  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
-  credit: Float!
-  channelsFollowing(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
-  channelsAdmin(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel!]
-  requestedChannels(where: RequestedChannelWhereInput, orderBy: RequestedChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RequestedChannel!]
-  streamsConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
-  streamsLiveConsuming(where: StreamWhereInput, orderBy: StreamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Stream!]
-  tags(where: UserTagsWhereInput, orderBy: UserTagsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTags!]
-  transactions(where: CreditTransactionWhereInput, orderBy: CreditTransactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CreditTransaction!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-enum UserOrderByInput {
-  id_ASC
-  id_DESC
-  username_ASC
-  username_DESC
-  email_ASC
-  email_DESC
-  facebookId_ASC
-  facebookId_DESC
-  googleId_ASC
-  googleId_DESC
-  password_ASC
-  password_DESC
-  verified_ASC
-  verified_DESC
-  credit_ASC
-  credit_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
 type UserProfile {
   id: ID!
   username: String
@@ -1738,23 +1484,6 @@ type UserSelf {
   isProducer: Boolean
   requiresUpdate: AppUpdatePayload
   createdAt: DateTime
-}
-
-type UserTags {
-  id: ID!
-  uuid: String!
-  user: User!
-  tag: Tag!
-  order: Int!
-}
-
-enum UserTagsOrderByInput {
-  id_ASC
-  id_DESC
-  uuid_ASC
-  uuid_DESC
-  order_ASC
-  order_DESC
 }
 
 input UserTagsWhereInput {

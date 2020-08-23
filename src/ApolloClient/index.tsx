@@ -125,14 +125,12 @@ const channelTokenEndpoints = [
  */
 const sharedEndpoints = [
   'canViewStream',
-  'deleteNotification',
   'getStreamComments',
   'getStreamMessages',
   'getStreamMessagesVod',
   'getStreamUrl',
   'putStreamComment',
   'putStreamMessage',
-  'readNotification',
 ];
 
 

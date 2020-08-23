@@ -74,9 +74,10 @@ export enum MutationType {
 }
 
 export enum NOTIFICATION_TYPE {
-  CHANNEL_NOTIFICATION_TEST = "CHANNEL_NOTIFICATION_TEST",
+  NEW_STREAM_FROM_FOLLOWING = "NEW_STREAM_FROM_FOLLOWING",
   PASSWORD_CHANGED = "PASSWORD_CHANGED",
   REQUESTED_CHANNEL_APPROVED = "REQUESTED_CHANNEL_APPROVED",
+  STREAM_CANCELLED = "STREAM_CANCELLED",
 }
 
 export enum SOCIAL_PROVIDER {
@@ -500,7 +501,8 @@ export interface NotificationWhereInput {
   receiverId_ends_with?: string | null;
   receiverId_not_ends_with?: string | null;
   sender?: UserWhereInput | null;
-  channelReceiver?: ChannelWhereInput | null;
+  stream?: StreamWhereInput | null;
+  channel?: ChannelWhereInput | null;
   readDate?: any | null;
   readDate_not?: any | null;
   readDate_in?: any[] | null;
@@ -815,6 +817,20 @@ export interface StreamUserRecordWhereInput {
   streamId_ends_with?: string | null;
   streamId_not_ends_with?: string | null;
   stream?: StreamWhereInput | null;
+  userId?: string | null;
+  userId_not?: string | null;
+  userId_in?: string[] | null;
+  userId_not_in?: string[] | null;
+  userId_lt?: string | null;
+  userId_lte?: string | null;
+  userId_gt?: string | null;
+  userId_gte?: string | null;
+  userId_contains?: string | null;
+  userId_not_contains?: string | null;
+  userId_starts_with?: string | null;
+  userId_not_starts_with?: string | null;
+  userId_ends_with?: string | null;
+  userId_not_ends_with?: string | null;
   user?: UserWhereInput | null;
   type?: string | null;
   type_not?: string | null;

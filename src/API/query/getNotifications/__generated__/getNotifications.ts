@@ -30,23 +30,29 @@ export interface getNotifications_getNotifications_notifications_sender {
   profilePicture: getNotifications_getNotifications_notifications_sender_profilePicture | null;
 }
 
-export interface getNotifications_getNotifications_notifications_channelReceiver {
+export interface getNotifications_getNotifications_notifications_stream {
+  __typename: "StreamProfile";
+  id: string;
+}
+
+export interface getNotifications_getNotifications_notifications_channel {
   __typename: "ChannelProfile";
   id: string;
 }
 
 export interface getNotifications_getNotifications_notifications {
-  __typename: "Notification";
+  __typename: "NotificationProfile";
   id: string;
   type: NOTIFICATION_TYPE | null;
   sender: getNotifications_getNotifications_notifications_sender | null;
-  channelReceiver: getNotifications_getNotifications_notifications_channelReceiver | null;
+  stream: getNotifications_getNotifications_notifications_stream | null;
+  channel: getNotifications_getNotifications_notifications_channel | null;
   readDate: any | null;
   createdAt: any | null;
 }
 
 export interface getNotifications_getNotifications {
-  __typename: "NotificationsPayLoad";
+  __typename: "NotificationProfilesPayLoad";
   notifications: getNotifications_getNotifications_notifications[];
   count: number;
 }
@@ -56,7 +62,6 @@ export interface getNotifications {
 }
 
 export interface getNotificationsVariables {
-  channelId?: string | null;
   first?: number | null;
   after?: string | null;
 }

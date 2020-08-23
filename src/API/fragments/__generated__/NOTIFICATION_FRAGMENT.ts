@@ -30,17 +30,23 @@ export interface NOTIFICATION_FRAGMENT_sender {
   profilePicture: NOTIFICATION_FRAGMENT_sender_profilePicture | null;
 }
 
-export interface NOTIFICATION_FRAGMENT_channelReceiver {
+export interface NOTIFICATION_FRAGMENT_stream {
+  __typename: "StreamProfile";
+  id: string;
+}
+
+export interface NOTIFICATION_FRAGMENT_channel {
   __typename: "ChannelProfile";
   id: string;
 }
 
 export interface NOTIFICATION_FRAGMENT {
-  __typename: "Notification";
+  __typename: "NotificationProfile";
   id: string;
   type: NOTIFICATION_TYPE | null;
   sender: NOTIFICATION_FRAGMENT_sender | null;
-  channelReceiver: NOTIFICATION_FRAGMENT_channelReceiver | null;
+  stream: NOTIFICATION_FRAGMENT_stream | null;
+  channel: NOTIFICATION_FRAGMENT_channel | null;
   readDate: any | null;
   createdAt: any | null;
 }

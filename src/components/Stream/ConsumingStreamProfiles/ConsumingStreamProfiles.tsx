@@ -17,6 +17,7 @@ import { useDebounce } from '../../../utils/functions';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import spacing from '../../../styles/definitions/spacing';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
@@ -24,10 +25,16 @@ export interface ConsumingStreamProfilesProps {}
 
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   const { headerHeight } = useHeaderStyles();
+  const screenProps = useScreenProps();
+
+
+  /**
+   * Define initial variables
+   */
   const [variables, setVariables] = useState<getConsumingStreamProfilesVariables>({
     first: 5,
+    orderBy: StreamOrderByInput.timeFrom_DESC,
   });
-  const screenProps = useScreenProps();
 
 
   /**

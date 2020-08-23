@@ -30,23 +30,29 @@ export interface notifications_notifications_node_sender {
   profilePicture: notifications_notifications_node_sender_profilePicture | null;
 }
 
-export interface notifications_notifications_node_channelReceiver {
+export interface notifications_notifications_node_stream {
+  __typename: "StreamProfile";
+  id: string;
+}
+
+export interface notifications_notifications_node_channel {
   __typename: "ChannelProfile";
   id: string;
 }
 
 export interface notifications_notifications_node {
-  __typename: "Notification";
+  __typename: "NotificationProfile";
   id: string;
   type: NOTIFICATION_TYPE | null;
   sender: notifications_notifications_node_sender | null;
-  channelReceiver: notifications_notifications_node_channelReceiver | null;
+  stream: notifications_notifications_node_stream | null;
+  channel: notifications_notifications_node_channel | null;
   readDate: any | null;
   createdAt: any | null;
 }
 
 export interface notifications_notifications {
-  __typename: "NotificationSubscriptionPayload";
+  __typename: "NotificationProfileSubscriptionPayload";
   mutation: MutationType;
   updatedFields: string[] | null;
   node: notifications_notifications_node | null;
