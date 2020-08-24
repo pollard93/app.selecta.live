@@ -1,17 +1,15 @@
 /* eslint-disable max-len */
 import React, { FC } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
 import { GET_NOTIFICATIONS_QUERY } from '../../../API/query/getNotifications/getNotifications';
 import { getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications } from '../../../API/query/getNotifications/__generated__/getNotifications';
 import NotificationListItem from '../NotificationListItem/NotificationListItem';
-import styles from './Notifications.styles';
 import { NOTIFICATIONS_SUBSCRIPTION } from '../../../API/subscription/notifications/notifications';
 import { notifications } from '../../../API/subscription/notifications/__generated__/notifications';
 import Button from '../../UI/Button/Button';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import { NOTIFICATION_FRAGMENT } from '../../../API/fragments/__generated__/NOTIFICATION_FRAGMENT';
 
 class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
 
@@ -29,11 +27,6 @@ const Notifications: FC<NotificationsProps> = () => {
   };
 
 
-  const onPressNotification = (data: NOTIFICATION_FRAGMENT) => {
-    console.log('NotificationsFlatList -> onPressNotification -> data', data);
-  };
-
-
   return (
     <View>
       <Button
@@ -48,14 +41,7 @@ const Notifications: FC<NotificationsProps> = () => {
         }}
         accessor='getNotifications.notifications'
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              onPressNotification(item);
-            }}
-          >
-            <NotificationListItem data={item} />
-          </TouchableOpacity>
+          <NotificationListItem data={item} />
         )}
         // LoadingErrorComponent={(queryResult) => <LoadRetry {...queryResult} />}
         ListHeaderComponent={() => (

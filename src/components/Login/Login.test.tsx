@@ -19,7 +19,6 @@ import InAppPurchases from '../../modules/InAppPurchases';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { STACK } from '../../screens/utils/interfaces';
 import { store } from '../../utils/storage';
 
 describe('<Login >', () => {
