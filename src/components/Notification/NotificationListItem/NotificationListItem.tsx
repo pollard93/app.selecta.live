@@ -11,6 +11,8 @@ import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProf
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
 import { useReadNotificationMutation } from '../../../API/mutation/readNotification/readNotification';
+import { getSelf } from '../../../API/query/getSelf/__generated__/getSelf';
+import { GET_SELF_QUERY } from '../../../API/query/getSelf/getSelf';
 
 interface NotificationListItemProps {
   data: NOTIFICATION_FRAGMENT;
@@ -46,9 +48,31 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
   /**
    * Read notification mutation
    */
-  const [readNotificationMutation] = useReadNotificationMutation({
+  const [readNotificationMutation, { client }] = useReadNotificationMutation({
     variables: {
       id: props.data.id,
+    },
+    onCompleted: () => {
+      /**
+       * On Completed decrement the unreadNotificationCount
+       */
+      try {
+        const data = client.readQuery<getSelf>({
+          query: GET_SELF_QUERY,
+        });
+
+        client.writeQuery<getSelf>({
+          query: GET_SELF_QUERY,
+          data: {
+            ...data,
+            getSelf: {
+              ...data.getSelf,
+              unreadNotificationCount: Math.max(0, data.getSelf.unreadNotificationCount - 1),
+            },
+          },
+        });
+      // eslint-disable-next-line no-empty
+      } catch {}
     },
   });
 

@@ -36,7 +36,7 @@ const Header: FC<HeaderProps> = (props) => {
   const self = useGetSelf();
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const lightLogo = require('../../../../assets/images/logo-dark.png');
-  const darkLogo = require('../../../../assets/images/logo-white.png');
+  const darkLogo = require('../../../../assets/images/logo-light.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
 
 
@@ -98,36 +98,24 @@ const Header: FC<HeaderProps> = (props) => {
           <View style={Styles.right}>
             <TouchableOpacity
               onPress={onPressNotifications}
-              style={Styles.profilePicture}
+              style={Styles.iconWrap}
             >
-              <View style={Styles.profilePictureIconWrap}>
-                <Icon
-                  name={ICON.PROFILE}
-                  size="regular"
-                  style={Styles.profilePictureIcon}
-                />
-              </View>
-              {
-                self.profilePicture && (
-                  <AsyncImage
-                    splashUrl={self.profilePicture.url.splash}
-                    fullUrl={self.profilePicture.url.small}
-                    containerProps={{
-                      style: Styles.profilePictureInner,
-                    }}
-                  />
-                )
-              }
+              <Icon
+                name={self.unreadNotificationCount === 0 ? ICON.NOTIFICATIONS_READ : ICON.NOTIFICATIONS_UNREAD}
+                size="regular"
+                style={Styles.icon}
+              />
             </TouchableOpacity>
+
             <TouchableOpacity
               onPress={onPressProfile}
-              style={Styles.profilePicture}
+              style={Styles.iconWrap}
             >
               <View style={Styles.profilePictureIconWrap}>
                 <Icon
                   name={ICON.PROFILE}
                   size="regular"
-                  style={Styles.profilePictureIcon}
+                  style={Styles.icon}
                 />
               </View>
               {

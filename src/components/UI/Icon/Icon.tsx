@@ -33,6 +33,8 @@ export enum ICON {
   CAMERA = 'CAMERA',
   COPY = 'COPY',
   NOTIFICATION = 'NOTIFICATION',
+  NOTIFICATIONS_READ = 'NOTIFICATIONS_READ',
+  NOTIFICATIONS_UNREAD = 'NOTIFICATIONS_UNREAD',
 }
 
 export interface IconProps {
@@ -129,6 +131,12 @@ const Icon = (props: IconProps) => {
 
       case ICON.NOTIFICATION:
         return require('../../../assets/images/icons/notifications.png');
+
+      case ICON.NOTIFICATIONS_READ:
+        return require('../../../assets/images/icons/notifications-read.png');
+
+      case ICON.NOTIFICATIONS_UNREAD:
+        return require('../../../assets/images/icons/notifications-unread.png');
 
       default:
         return null;
