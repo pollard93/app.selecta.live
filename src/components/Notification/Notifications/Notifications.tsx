@@ -1,8 +1,10 @@
 /* eslint-disable max-len */
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import BadgeAndroid from 'react-native-android-badge';
 import { GET_NOTIFICATIONS_QUERY } from '../../../API/query/getNotifications/getNotifications';
 import { getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications } from '../../../API/query/getNotifications/__generated__/getNotifications';
 import NotificationListItem from '../NotificationListItem/NotificationListItem';
@@ -17,6 +19,15 @@ export interface NotificationsProps {}
 
 const Notifications: FC<NotificationsProps> = () => {
   const screenProps = useScreenProps();
+
+
+  /**
+   * Clear badges
+   */
+  useEffect(() => {
+    PushNotificationIOS.setApplicationIconBadgeNumber(0);
+    BadgeAndroid.setBadge(0);
+  }, []);
 
 
   /**

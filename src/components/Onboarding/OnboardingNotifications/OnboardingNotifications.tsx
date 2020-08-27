@@ -73,7 +73,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
    */
   const requestPermission = async () => {
     try {
-      const { status } = await requestNotifications(['alert', 'sound']);
+      const { status } = await requestNotifications(['alert', 'sound', 'badge']);
       if (status === RESULTS.GRANTED) {
         onNext();
       } else {

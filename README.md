@@ -314,7 +314,7 @@ Group font family, weight, size and other common text style properties in `/src/
 ### IOS
 
 1. Open the project in Xcode
-2. In Images.xcassets there is a SplashIcon, running `dev:appicon` will generate these images from `icon.jpg`
+2. In Images.xcassets there is a SplashIcon, running `dev:appicon` will generate these images from `./icons/icon.jpg`
 3. Open LaunchScreen.xib, select the view and choose background colour from the menu on the right
 
 For more details read this article (https://medium.com/@appstud/add-a-splash-screen-to-a-react-native-app-810492e773f9)
