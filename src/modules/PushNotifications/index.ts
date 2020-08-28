@@ -11,6 +11,7 @@ import { loginChannelWithTokenVariables, loginChannelWithToken } from '../../API
 import ChannelSelfScreen from '../../screens/ChannelSelfScreen/ChannelSelfScreen';
 import { READ_NOTIFICATION_MUTATION } from '../../API/mutation/readNotification/readNotification';
 import { readNotification, readNotificationVariables } from '../../API/mutation/readNotification/__generated__/readNotification';
+import { GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY } from '../../API/query/getSelf/getSelf';
 
 
 /**
@@ -42,6 +43,7 @@ class PushNotifications {
   public static init(id: string) {
     OneSignal.init(Config.REACT_APP_ONESIGNAL_APPID, { kOSSettingsKeyAutoPrompt: false });
     OneSignal.inFocusDisplaying(2);
+    OneSignal.addEventListener('received', PushNotifications.onReceived);
     OneSignal.addEventListener('opened', PushNotifications.onOpened);
     OneSignal.setExternalUserId(id);
 
@@ -58,8 +60,19 @@ class PushNotifications {
   }
 
   public static disconnect() {
+    OneSignal.removeEventListener('received', PushNotifications.onReceived);
     OneSignal.removeEventListener('opened', PushNotifications.onOpened);
     OneSignal.removeExternalUserId();
+  }
+
+  public static onReceived() {
+    /**
+     * On Received query getSelf to update unreadNotificationCount
+     */
+    AClient.query({
+      query: GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY,
+      fetchPolicy: 'network-only',
+    });
   }
 
   public static async onOpened(openResult) {

@@ -111,7 +111,9 @@
 		BC4246EC233F7BDA00A52916 /* selectaLive.beta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.beta.entitlements; path = selectaLive/selectaLive.beta.entitlements; sourceTree = "<group>"; };
 		BC4246ED233F7BDA00A52916 /* selectaLive.debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.debug.entitlements; path = selectaLive/selectaLive.debug.entitlements; sourceTree = "<group>"; };
 		BC42BCFE2333F85100E6BDB4 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		BC9233E724F8F145006DBF89 /* OneSignalNotificationServiceExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtensionRelease.entitlements; sourceTree = "<group>"; };
 		BC92FFC12339186400D986A6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		BCBF71AE24F8652700FAB6B1 /* OneSignalNotificationServiceExtensionBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtensionBeta.entitlements; sourceTree = "<group>"; };
 		BCEFDBBC2459F3F200B8D4F8 /* selectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "selectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
 		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = selectaLive/Dummy.swift; sourceTree = "<group>"; };
 		BCF1342B24F84B87003504E5 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
@@ -277,6 +279,8 @@
 		BC4246DF233F78F200A52916 /* OneSignalNotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
+				BC9233E724F8F145006DBF89 /* OneSignalNotificationServiceExtensionRelease.entitlements */,
+				BCBF71AE24F8652700FAB6B1 /* OneSignalNotificationServiceExtensionBeta.entitlements */,
 				BCF1342B24F84B87003504E5 /* OneSignalNotificationServiceExtension.entitlements */,
 				BC4246E0233F78F200A52916 /* NotificationService.h */,
 				BC4246E1233F78F200A52916 /* NotificationService.m */,
@@ -890,7 +894,7 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.debug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
@@ -927,7 +931,7 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
@@ -1193,7 +1197,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1248,11 +1252,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtensionRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1318,11 +1322,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtensionBeta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1411,7 +1415,7 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.beta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;

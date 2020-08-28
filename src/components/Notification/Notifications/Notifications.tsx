@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { FC, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -25,8 +25,14 @@ const Notifications: FC<NotificationsProps> = () => {
    * Clear badges
    */
   useEffect(() => {
-    PushNotificationIOS.setApplicationIconBadgeNumber(0);
-    BadgeAndroid.setBadge(0);
+    if (Platform.OS === 'ios') {
+      PushNotificationIOS.setApplicationIconBadgeNumber(0);
+      return;
+    }
+
+    if (Platform.OS === 'android') {
+      BadgeAndroid.setBadge(0);
+    }
   }, []);
 
 
