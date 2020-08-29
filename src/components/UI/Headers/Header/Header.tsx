@@ -11,6 +11,7 @@ import { openScreenAsModal } from '../../../../screens/utils';
 import { STACK } from '../../../../screens/utils/interfaces';
 import ProfileScreen from '../../../../screens/ProfileScreen/ProfileScreen';
 import NotificationsScreen from '../../../../screens/NotificationsScreen/NotificationsScreen';
+import HeaderNotifications from './components/HeaderNotifications/HeaderNotifications';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -100,11 +101,7 @@ const Header: FC<HeaderProps> = (props) => {
               onPress={onPressNotifications}
               style={Styles.iconWrap}
             >
-              <Icon
-                name={self.unreadNotificationCount === 0 ? ICON.NOTIFICATIONS_READ : ICON.NOTIFICATIONS_UNREAD}
-                size="regular"
-                style={Styles.icon}
-              />
+              <HeaderNotifications />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -124,7 +121,7 @@ const Header: FC<HeaderProps> = (props) => {
                     splashUrl={self.profilePicture.url.splash}
                     fullUrl={self.profilePicture.url.small}
                     containerProps={{
-                      style: Styles.profilePictureInner,
+                      style: [Styles.profilePictureInner, dynamicStyles.profilePictureInner],
                     }}
                   />
                 )

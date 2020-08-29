@@ -53,6 +53,7 @@ const Notifications: FC<NotificationsProps> = () => {
 
       <NotificationsFlatList
         query={GET_NOTIFICATIONS_QUERY}
+        fetchPolicy={'network-only'}
         variables={{
           first: 5,
         }}

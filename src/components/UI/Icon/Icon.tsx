@@ -33,7 +33,8 @@ export enum ICON {
   CAMERA = 'CAMERA',
   COPY = 'COPY',
   NOTIFICATION = 'NOTIFICATION',
-  NOTIFICATIONS_READ = 'NOTIFICATIONS_READ',
+  NOTIFICATIONS_READ_DARK = 'NOTIFICATIONS_READ_DARK',
+  NOTIFICATIONS_READ_LIGHT = 'NOTIFICATIONS_READ_LIGHT',
   NOTIFICATIONS_UNREAD = 'NOTIFICATIONS_UNREAD',
 }
 
@@ -132,8 +133,11 @@ const Icon = (props: IconProps) => {
       case ICON.NOTIFICATION:
         return require('../../../assets/images/icons/notifications.png');
 
-      case ICON.NOTIFICATIONS_READ:
-        return require('../../../assets/images/icons/notifications-read.png');
+      case ICON.NOTIFICATIONS_READ_DARK:
+        return require('../../../assets/images/icons/notifications-read-dark.png');
+
+      case ICON.NOTIFICATIONS_READ_LIGHT:
+        return require('../../../assets/images/icons/notifications-read-light.png');
 
       case ICON.NOTIFICATIONS_UNREAD:
         return require('../../../assets/images/icons/notifications-unread.png');
@@ -147,7 +151,7 @@ const Icon = (props: IconProps) => {
     return (
       <Animated.Image
         source={source}
-        resizeMode={props.resizeMode || 'contain'}
+        resizeMode={props.resizeMode || 'center'}
         style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
       />
     );
@@ -156,7 +160,7 @@ const Icon = (props: IconProps) => {
   return (
     <Image
       source={source}
-      resizeMode={props.resizeMode || 'contain'}
+      resizeMode={props.resizeMode || 'cover'}
       style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
     />
   );

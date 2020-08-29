@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
+import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
   outer: {
@@ -65,7 +66,6 @@ export default StyleSheet.create({
     width: '100%',
   },
   profilePictureInner: {
-    borderColor: color.mono.light,
     borderRadius: 200,
     borderWidth: 2,
     height: '100%',
@@ -76,10 +76,18 @@ export default StyleSheet.create({
   profilePictureIconWrap: {
     padding: 1,
   },
+  pulsingIcon: {
+    position: 'absolute',
+    right: 0,
+    top: -(scalePx(3)),
+  },
 });
 
 export const DynamicStyles = new DynamicStyleSheet({
   wrap: {
     backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
+  },
+  profilePictureInner: {
+    borderColor: new DynamicValue(color.mono.pale.regular, color.mono.pale.light),
   },
 });

@@ -132,7 +132,7 @@ const RegisterView = (props: RegisterViewProps) => {
             onPress={props.onLogin}
             disabled={props.loading}
           >
-            <Body bold light>Already have an account?</Body>
+            <Body bold forceLight>Already have an account?</Body>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
