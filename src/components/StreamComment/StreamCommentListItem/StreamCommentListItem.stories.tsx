@@ -10,6 +10,36 @@ import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/ge
 storiesOf('Stream/StreamComments/StreamCommentListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: color.mono.pale.light }}>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .add('StreamCommentListItem - long message', () => {
+    const TestComonent = () => {
+      const streamProfile = useGetStreamProfileQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      const streamComments = useGetStreamCommentsQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      if (streamProfile.loading || streamComments.loading) return null;
+
+      return (
+        <StreamCommentListItem
+          data={{
+            ...streamComments.data.getStreamComments.comments[0],
+            // eslint-disable-next-line max-len
+            comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut',
+          }}
+          channelData={streamProfile.data.getStreamProfile.channel}
+        />
+      );
+    };
+
+    return (
+      <TestComonent />
+    );
+  })
   .add('StreamCommentListItem - other user', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({

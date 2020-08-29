@@ -35,7 +35,10 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
         accessor='getStreamComments.comments'
         renderItem={({ item }) => (
           <StreamCommentListItem
-            data={item}
+            data={{
+              ...item,
+              comment: 'hdeuw dweu hewuifh ewuifh ewufewh feuiwfh ewiuf hewf ewiufh ewi',
+            }}
             channelData={props.data.channel}
           />
         )}
@@ -44,16 +47,20 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
           ItemSeparatorComponent: () => <View style={styles.separator} />,
           contentContainerStyle: styles.contentContainer,
         }}
-        ListFooterComponent={({ queryResult }) => {
-          if (queryResult.loading || queryResult.error) {
-            return (
-              <LoadRetry {...queryResult} />
-            );
-          }
+      >
+      {({ queryResult }) => {
+        /**
+         * Handle loading and error
+         */
+        if (queryResult.loading || queryResult.error) {
+          return (
+            <LoadRetry cover {...queryResult} />
+          );
+        }
 
-          return null;
-        }}
-      />
+        return null;
+      }}
+      </StreamCommentsFlatList>
 
       <CreateStreamComment variables={variables} />
     </View>

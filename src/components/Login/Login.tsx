@@ -73,17 +73,6 @@ const Login: FC<LoginProps> = (props) => {
 
 
     /**
-     * Handle Android
-     */
-    if (Platform.OS === 'android') {
-      Linking.getInitialURL().then((url) => {
-        onOpen({ url });
-      });
-      return undefined;
-    }
-
-
-    /**
      * Handle iOS
      */
     Linking.addEventListener('url', onOpen);

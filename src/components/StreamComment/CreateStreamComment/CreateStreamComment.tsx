@@ -1,24 +1,17 @@
 import React, { useState, memo, FC } from 'react';
-import { View, TouchableOpacity } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-
-import { useDynamicValue } from 'react-native-dynamic';
 import { usePutStreamCommentMutation } from '../../../API/mutation/putStreamComment/putStreamComment';
 import { getStreamCommentsVariables, getStreamComments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
-import Styles, { DynamicStyles } from './CreateStreamComment.styles';
-import color from '../../../styles/definitions/color';
-import Icon, { ICON } from '../../UI/Icon/Icon';
-import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import MessageInput from '../../UI/Form/components/MessageInput/MessageInput';
 
 interface CreateStreamCommentProps {
   variables: getStreamCommentsVariables; // Variables for query to append to cache
 }
 
 const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
   const toast = useToast();
   const [comment, setComment] = useState('');
 
@@ -84,38 +77,14 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
   };
 
 
-  const disabled = loading || comment.length === 0;
-
-
   return (
-    <View style={[Styles.wrap, dynamicStyles.wrap]}>
-      <TextInput
-        name="comment"
-        value={comment}
-        onChangeText={setComment}
-        placeholder='Type your comment here...'
-        placeholderTextColor={color.accent.primary}
-        returnKeyType="send"
-        blurOnSubmit
-        onSubmitEditing={() => mutation()}
-        editable={!loading}
-        wrapStyle={Styles.inputWrap}
-        style={dynamicStyles.input}
-        maxLength={280}
-      />
-
-      <TouchableOpacity
-        onPress={() => onSubmit()}
-        disabled={disabled}
-        testID="submit"
-      >
-        <Icon
-          name={ICON.SEND}
-          size="small"
-          style={[Styles.send, disabled && Styles.sendDisabled]}
-        />
-      </TouchableOpacity>
-    </View>
+    <MessageInput
+      message={comment}
+      setMessage={setComment}
+      placeholder="Type your comment here..."
+      onSubmit={onSubmit}
+      disabled={loading || comment.length === 0}
+    />
   );
 };
 

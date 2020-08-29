@@ -46,15 +46,6 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
           ItemSeparatorComponent: () => <View style={styles.separator} />,
           contentContainerStyle: styles.contentContainer,
         }}
-        ListFooterComponent={({ queryResult }) => {
-          if (queryResult.loading || queryResult.error) {
-            return (
-              <LoadRetry {...queryResult} />
-            );
-          }
-
-          return null;
-        }}
         subscriptionOptions={{
           document: STREAM_MESSAGES_SUBSCRIPTION,
           variables: {
@@ -87,7 +78,20 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
             // Die silently
           },
         }}
-      />
+      >
+        {({ queryResult }) => {
+          /**
+           * Handle loading and error
+           */
+          if (queryResult.loading || queryResult.error) {
+            return (
+              <LoadRetry cover {...queryResult} />
+            );
+          }
+
+          return null;
+        }}
+      </StreamMessagesFlatList>
 
       <CreateStreamMessage variables={variables} />
     </View>

@@ -1,25 +1,18 @@
 import React, { useState, memo, FC } from 'react';
-import { View, TouchableOpacity } from 'react-native';
 import { useToast } from 'mbp-components-rn-toast';
-
-import { useDynamicValue } from 'react-native-dynamic';
 import { usePutStreamMessageMutation } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 import { getStreamMessagesVariables, getStreamMessages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { getChannelToken } from '../../../ApolloClient';
-import Styles, { DynamicStyles } from './CreateStreamMessage.styles';
-import color from '../../../styles/definitions/color';
-import Icon, { ICON } from '../../UI/Icon/Icon';
-import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import MessageInput from '../../UI/Form/components/MessageInput/MessageInput';
 
 interface CreateStreamMessageProps {
   variables: getStreamMessagesVariables; // Variables for query to append to cache
 }
 
 const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
   const toast = useToast();
   const [message, setMessage] = useState('');
 
@@ -93,38 +86,14 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
   };
 
 
-  const disabled = loading || message.length === 0;
-
-
   return (
-    <View style={[Styles.wrap, dynamicStyles.wrap]}>
-      <TextInput
-        name="message"
-        value={message}
-        onChangeText={setMessage}
-        placeholder='Type your message here...'
-        placeholderTextColor={color.accent.primary}
-        returnKeyType="send"
-        blurOnSubmit
-        onSubmitEditing={() => mutation()}
-        editable={!loading}
-        wrapStyle={Styles.inputWrap}
-        style={dynamicStyles.input}
-        maxLength={280}
-      />
-
-      <TouchableOpacity
-        onPress={() => onSubmit()}
-        disabled={disabled}
-        testID="submit"
-      >
-        <Icon
-          name={ICON.SEND}
-          size="small"
-          style={[Styles.send, disabled && Styles.sendDisabled]}
-        />
-      </TouchableOpacity>
-    </View>
+    <MessageInput
+      message={message}
+      setMessage={setMessage}
+      placeholder="Type your message here..."
+      onSubmit={onSubmit}
+      disabled={loading || message.length === 0}
+    />
   );
 };
 

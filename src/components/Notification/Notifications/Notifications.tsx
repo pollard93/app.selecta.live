@@ -87,6 +87,9 @@ const Notifications: FC<NotificationsProps> = () => {
               return prev;
             }
           },
+          onError: () => {
+            // Die silently
+          },
         }}
       />
     </View>
