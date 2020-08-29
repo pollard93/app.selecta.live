@@ -22,6 +22,7 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
     tags {
       ...TAG_PROFILE_FRAGMENT
     }
+    position
   },
   ${FILE_FRAGMENT}
   ${TAG_PROFILE_FRAGMENT}
@@ -34,7 +35,6 @@ export const STREAM_PROFILE_FRAGMENT = gql`
     cost
     isConsumer
     audioOnly
-    position
     cancelledMessage
   },
   ${STREAM_PROFILE_FRAGMENT_SHORT}

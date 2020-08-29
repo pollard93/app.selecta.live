@@ -187,5 +187,29 @@ storiesOf('Cards/StreamCard', module)
 
     return <TestComponent />;
   })
+  .add('StreamCard - with position', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard
+          data={{
+            ...r.data.getStreamProfile,
+            timeFrom: new Date(Date.now()).toISOString(),
+            timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
+            position: 8.64e+7 / 2,
+          }}
+          showPosition
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
   .add('StreamCardSkeleton', () => <StreamCardSkeleton />)
   .add('StreamCardSkeleton - empty', () => <StreamCardSkeleton emptyMessage="Is Empty Result" />);

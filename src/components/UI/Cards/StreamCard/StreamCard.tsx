@@ -10,10 +10,12 @@ import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
 import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { getStreamDurationMs } from '../../../../utils/streamFunctions';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
   fillHeight?: boolean; // Sets flex: 1 on wrapper to fill the height, used for displaying in feed
+  showPosition?: boolean;
 }
 
 const StreamCardTime: FC<StreamCardProps> = (props) => {
@@ -56,29 +58,36 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           style: Styles.image,
         }}
       />
-      <View style={[Styles.item, Styles.header]}>
-        <H4
-          numberOfLines={2}
-          ellipsizeMode="tail"
-          style={Styles.name}
-        >
-          {props.data.name}
-        </H4>
-        <View>
-          <ShareButton
-            title="Share Stream"
-            uri={`share/stream/${props.data.id}`}
-            iconProps={{
-              size: 'small',
-            }}
-          />
+
+      <View>
+        {props.showPosition && props.data.position > 0 && (
+          <View style={[Styles.position, { width: `${(props.data.position / getStreamDurationMs(props.data)) * 100}%` }]} />
+        )}
+
+        <View style={[Styles.item, Styles.header]}>
+          <H4
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={Styles.name}
+          >
+            {props.data.name}
+          </H4>
+          <View>
+            <ShareButton
+              title="Share Stream"
+              uri={`share/stream/${props.data.id}`}
+              iconProps={{
+                size: 'small',
+              }}
+            />
+          </View>
         </View>
       </View>
 
       {props.data.tags.length > 0
         ? (
           <View style={Styles.item}>
-            <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
+            <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')} {props.data}</Body>
           </View>
         )
         : <View style={Styles.contentSpacer} />

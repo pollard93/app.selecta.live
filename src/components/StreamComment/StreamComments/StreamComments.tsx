@@ -35,10 +35,7 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
         accessor='getStreamComments.comments'
         renderItem={({ item }) => (
           <StreamCommentListItem
-            data={{
-              ...item,
-              comment: 'hdeuw dweu hewuifh ewuifh ewufewh feuiwfh ewiuf hewf ewiufh ewi',
-            }}
+            data={item}
             channelData={props.data.channel}
           />
         )}

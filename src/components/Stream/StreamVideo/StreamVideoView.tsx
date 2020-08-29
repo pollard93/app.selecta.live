@@ -321,7 +321,10 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         }}
         onProgress={((args) => {
           if (live === false) {
-            updateLocalPosition(args.currentTime);
+            // Don't update local position until loaded
+            if (!loading) {
+              updateLocalPosition(args.currentTime);
+            }
             setPlayableDuration(args.playableDuration);
 
 

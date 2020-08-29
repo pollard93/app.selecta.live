@@ -22,6 +22,12 @@ export default StyleSheet.create({
   image: {
     aspectRatio: 1.7777777778,
   },
+  position: {
+    backgroundColor: color.accent.primary,
+    height: 2,
+    position: 'absolute',
+    top: -2,
+  },
   item: {
     marginTop: spacing.small,
     paddingHorizontal: spacing.small,

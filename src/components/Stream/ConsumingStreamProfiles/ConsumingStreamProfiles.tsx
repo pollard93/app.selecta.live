@@ -71,7 +71,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
         accessor='getConsumingStreamProfiles.streams'
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => onPressStream(item.id)}>
-            <StreamCard data={item} />
+            <StreamCard data={item} showPosition />
           </TouchableOpacity>
         )}
         ListHeaderComponent={({ queryResult }) => (

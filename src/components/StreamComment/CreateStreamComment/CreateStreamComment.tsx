@@ -83,6 +83,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
       setMessage={setComment}
       placeholder="Type your comment here..."
       onSubmit={onSubmit}
+      editable={!loading}
       disabled={loading || comment.length === 0}
     />
   );

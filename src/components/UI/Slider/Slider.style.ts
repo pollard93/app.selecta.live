@@ -3,7 +3,7 @@ import color from '../../../styles/definitions/color';
 
 export default StyleSheet.create({
   wrap: {
-    backgroundColor: color.mono.light,
+    backgroundColor: color.mono.dark,
     height: 2,
     justifyContent: 'center',
   },

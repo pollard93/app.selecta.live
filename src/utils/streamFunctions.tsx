@@ -39,11 +39,17 @@ export const useStreamStart = (timeFrom: string, onStarted: () => void) => {
 
 
 /**
+ * Takes stream data, and returns duration in ms
+ */
+export const getStreamDurationMs = (data: {timeFrom: string; timeTo: string}) => new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime();
+
+
+/**
  * Takes stream data, and returns hours and minutes values to be displayed
  * If pretty is given, return string of formatted time
  */
 export const getStreamDuration = (data: {timeFrom: string; timeTo: string}, pretty = false) => {
-  const durationMs = new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime();
+  const durationMs = getStreamDurationMs(data);
 
   if (pretty) {
     return formatTime(durationMs / 1000);

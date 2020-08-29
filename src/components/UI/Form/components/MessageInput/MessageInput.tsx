@@ -11,7 +11,8 @@ interface MessageInputProps {
   setMessage: (value: string) => void;
   placeholder: string;
   onSubmit: () => void;
-  disabled: boolean;
+  editable: boolean; // TextInput not editable
+  disabled: boolean; // Cannot submit
 }
 
 const MessageInput: FC<MessageInputProps> = (props) => {
@@ -28,7 +29,7 @@ const MessageInput: FC<MessageInputProps> = (props) => {
         returnKeyType="send"
         blurOnSubmit
         onSubmitEditing={() => props.onSubmit()}
-        editable={!props.disabled}
+        editable={props.editable}
         wrapStyle={Styles.inputWrap}
         maxLength={280}
       />

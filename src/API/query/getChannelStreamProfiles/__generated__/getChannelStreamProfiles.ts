@@ -62,11 +62,11 @@ export interface getChannelStreamProfiles_getChannelStreamProfiles_streams {
   timeTo: any | null;
   cancelled: any | null;
   tags: (getChannelStreamProfiles_getChannelStreamProfiles_streams_tags | null)[] | null;
+  position: number | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
-  position: number | null;
   cancelledMessage: string | null;
 }
 

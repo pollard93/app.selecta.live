@@ -12,6 +12,7 @@ storiesOf('UI/Form/MessageInput', module)
       setMessage={console.log}
       placeholder="Placeholder"
       onSubmit={console.log}
+      editable={false}
       disabled={false}
     />
   ))
@@ -21,6 +22,7 @@ storiesOf('UI/Form/MessageInput', module)
       setMessage={console.log}
       placeholder="Placeholder"
       onSubmit={console.log}
+      editable={false}
       disabled={false}
     />
   ))
@@ -30,6 +32,7 @@ storiesOf('UI/Form/MessageInput', module)
       setMessage={console.log}
       placeholder="Placeholder"
       onSubmit={console.log}
+      editable={false}
       disabled={true}
     />
   ));

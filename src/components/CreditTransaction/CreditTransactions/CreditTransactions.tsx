@@ -8,6 +8,7 @@ import CreditTransactionCard from '../../UI/Cards/CreditTransactionCard/CreditTr
 import Styles from './CreditTransactions.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Body from '../../UI/Typography/components/Body';
+import color from '../../../styles/definitions/color';
 
 class CreditTransactionsFlatList extends ApolloFlatList<getCreditTransactionProfilesVariables, getCreditTransactionProfiles, getCreditTransactionProfiles_getCreditTransactionProfiles_transactions> {}
 
@@ -36,8 +37,8 @@ const CreditTransactions: FC = () => (
 
       if (queryResult.data.getCreditTransactionProfiles.count === 0) {
         return (
-          <View style={Styles.header}>
-            <Body>Your purchases will appear here</Body>
+          <View>
+            <Body style={{ color: color.mono.pale.dark }}>Your purchases will appear here</Body>
           </View>
         );
       }

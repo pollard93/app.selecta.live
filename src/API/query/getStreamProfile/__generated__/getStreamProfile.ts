@@ -60,11 +60,11 @@ export interface getStreamProfile_getStreamProfile {
   timeTo: any | null;
   cancelled: any | null;
   tags: (getStreamProfile_getStreamProfile_tags | null)[] | null;
+  position: number | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
-  position: number | null;
   cancelledMessage: string | null;
 }
 

@@ -62,6 +62,7 @@ export interface getStreamProfiles_getStreamProfiles_streams {
   timeTo: any | null;
   cancelled: any | null;
   tags: (getStreamProfiles_getStreamProfiles_streams_tags | null)[] | null;
+  position: number | null;
 }
 
 export interface getStreamProfiles_getStreamProfiles {

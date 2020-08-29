@@ -60,10 +60,10 @@ export interface STREAM_PROFILE_FRAGMENT {
   timeTo: any | null;
   cancelled: any | null;
   tags: (STREAM_PROFILE_FRAGMENT_tags | null)[] | null;
+  position: number | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
-  position: number | null;
   cancelledMessage: string | null;
 }
