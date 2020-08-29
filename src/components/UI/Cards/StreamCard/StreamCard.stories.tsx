@@ -10,6 +10,26 @@ import StreamCardSkeleton from './StreamCardSkeleton';
 
 storiesOf('Cards/StreamCard', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
+  .add('StreamCard - long stream name', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard data={{
+          ...r.data.getStreamProfile,
+          // eslint-disable-next-line max-len
+          name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut',
+        }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
   .add('StreamCard - today', () => {
     const TestComponent = () => {
       const r = useGetStreamProfileQuery({

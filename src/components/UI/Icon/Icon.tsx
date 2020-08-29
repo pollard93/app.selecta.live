@@ -151,7 +151,7 @@ const Icon = (props: IconProps) => {
     return (
       <Animated.Image
         source={source}
-        resizeMode={props.resizeMode || 'center'}
+        resizeMode={props.resizeMode || 'contain'}
         style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
       />
     );
@@ -160,7 +160,7 @@ const Icon = (props: IconProps) => {
   return (
     <Image
       source={source}
-      resizeMode={props.resizeMode || 'cover'}
+      resizeMode={props.resizeMode || 'contain'}
       style={[dynamicStyles.base, Styles[props.name], Styles[props.size], props.style, props.forceLight && Styles.forceLight]}
     />
   );

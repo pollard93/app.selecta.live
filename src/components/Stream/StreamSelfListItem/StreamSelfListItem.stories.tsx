@@ -36,6 +36,24 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
     return <TestComponent />;
   })
+  .add('StreamSelfsListItem - No Tags', () => {
+    const TestComponent = () => {
+      const res = useGetStreamSelfQuery({ variables: { id: '1' } });
+      if (res.loading) return null;
+
+      return (
+        <StreamSelfListItem
+          getStreamSelfsVariables={{}}
+          data={{
+            ...res.data.getStreamSelf,
+            tags: [],
+          }}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
   .add('StreamSelfsListItem - Not published', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });

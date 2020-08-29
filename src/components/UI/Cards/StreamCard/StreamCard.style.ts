@@ -15,6 +15,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  name: {
+    flex: 1,
+    paddingRight: spacing.small,
+  },
   image: {
     aspectRatio: 1.7777777778,
   },

@@ -71,7 +71,9 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
 
         <View style={Styles.details}>
           <View style={Styles.detail}>
-            <Body>{props.data.tags.map(({ title }) => `#${title} `)}</Body>
+            {props.data.tags.length > 0 && (
+              <Body>{props.data.tags.map(({ title }) => `#${title} `)}</Body>
+            )}
             <Body>Ticket Price: &copy;{props.data.cost}</Body>
             <Body>Stream Duration: {getStreamDuration(props.data, true)}</Body>
           </View>

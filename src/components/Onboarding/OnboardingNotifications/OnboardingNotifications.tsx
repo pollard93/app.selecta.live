@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, useRef } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { requestNotifications, PermissionStatus, RESULTS, checkNotifications } from 'react-native-permissions';
 import { View, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -62,14 +62,9 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
   useEffect(() => {
     checkPermissions();
 
-    const test = (...args) => {
-      console.log(args);
-      checkPermissions();
-    };
-
-    AppState.addEventListener('change', test);
+    AppState.addEventListener('change', checkPermissions);
     return () => {
-      AppState.removeEventListener('change', test);
+      AppState.removeEventListener('change', checkPermissions);
     };
   }, []);
 

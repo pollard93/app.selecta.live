@@ -10,6 +10,7 @@ import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
 import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import spacing from '../../../../styles/definitions/spacing';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
@@ -57,14 +58,22 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         }}
       />
       <View style={[Styles.item, Styles.header]}>
-        <H4>{props.data.name}</H4>
-        <ShareButton
-          title="Share Stream"
-          uri={`share/stream/${props.data.id}`}
-          iconProps={{
-            size: 'small',
-          }}
-        />
+        <H4
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          style={Styles.name}
+        >
+          {props.data.name}
+        </H4>
+        <View>
+          <ShareButton
+            title="Share Stream"
+            uri={`share/stream/${props.data.id}`}
+            iconProps={{
+              size: 'small',
+            }}
+          />
+        </View>
       </View>
 
       {props.data.tags.length > 0
