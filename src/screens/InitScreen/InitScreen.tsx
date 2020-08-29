@@ -28,7 +28,8 @@ const InitScreen = () => {
       await store('getSelf', getSelf);
 
       // Bind notifications
-      PushNotifications.init(getSelf.id);
+      // Prompt now if user has a username as they will not be going to the onboarding process
+      PushNotifications.init(getSelf.id, !!getSelf.username);
 
       // Bind inAppPurchases
       InAppPurchases.init();

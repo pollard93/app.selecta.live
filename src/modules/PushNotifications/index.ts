@@ -39,9 +39,10 @@ type PushNotificationDataType<T extends NOTIFICATION_TYPE> =
 class PushNotifications {
   /**
    * Init will user id, will bind the setExternalUserId in onesignal for targetting via api
+   * Pass promptNow to prompt user for permissions
    */
-  public static init(id: string) {
-    OneSignal.init(Config.REACT_APP_ONESIGNAL_APPID, { kOSSettingsKeyAutoPrompt: false });
+  public static init(id: string, promptNow = false) {
+    OneSignal.init(Config.REACT_APP_ONESIGNAL_APPID, { kOSSettingsKeyAutoPrompt: promptNow });
     OneSignal.inFocusDisplaying(2);
     OneSignal.addEventListener('received', PushNotifications.onReceived);
     OneSignal.addEventListener('opened', PushNotifications.onOpened);
