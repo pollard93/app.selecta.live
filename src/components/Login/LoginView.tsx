@@ -56,7 +56,6 @@ const LoginView = (props: LoginViewProps) => {
           <View style={Styles.logoWrap}>
             <Image
               source={require('../../assets/images/logo-with-strap-light.png')}
-              style={Styles.logo}
               resizeMode="contain"
             />
           </View>
@@ -68,7 +67,7 @@ const LoginView = (props: LoginViewProps) => {
                 // Validate on change if there's an error, otherwise validate onBlur
                 setValue('email', text, !!errors.email);
               }}
-              placeholder="Login with email"
+              placeholder="Enter your email"
               autoCompleteType="email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -93,7 +92,7 @@ const LoginView = (props: LoginViewProps) => {
                 // Validate on change if there's an error, otherwise validate onBlur
                 setValue('password', text, !!errors.password);
               }}
-              placeholder="Login with password"
+              placeholder="Enter your password"
               secureTextEntry
               autoCompleteType="password"
               autoCapitalize="none"
