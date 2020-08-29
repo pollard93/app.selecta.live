@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC, useRef } from 'react';
 import { requestNotifications, PermissionStatus, RESULTS, checkNotifications } from 'react-native-permissions';
 import { View, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -61,24 +61,27 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
    */
   useEffect(() => {
     checkPermissions();
-    AppState.addEventListener('change', checkPermissions);
+
+    const test = (...args) => {
+      console.log(args);
+      checkPermissions();
+    };
+
+    AppState.addEventListener('change', test);
     return () => {
-      AppState.removeEventListener('change', checkPermissions);
+      AppState.removeEventListener('change', test);
     };
   }, []);
 
 
   /**
    * Request notification permissions
+   * If accepted or rejected, `AppState.addEventListener('change');` will be called
+   * Which will handle the result
    */
   const requestPermission = async () => {
     try {
-      const { status } = await requestNotifications(['alert', 'sound', 'badge']);
-      if (status === RESULTS.GRANTED) {
-        onNext();
-      } else {
-        setPermissionStatus(status);
-      }
+      await requestNotifications(['alert', 'sound', 'badge']);
     // eslint-disable-next-line no-empty
     } catch {}
   };
