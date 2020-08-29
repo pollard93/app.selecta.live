@@ -54,7 +54,7 @@
     "email-validator": "^2.0.4",
     "graphql-tag": "^2.10.1",
     "jwt-decode": "^2.2.0",
-    "mbp-components-rn-apolloflatlist": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#0.2.2",
+    "mbp-components-rn-apolloflatlist": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-apolloflatlist.git#0.2.3",
     "mbp-components-rn-assetpicker": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-assetpicker.git#0.2.0",
     "mbp-components-rn-asyncimage": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-asyncimage.git#0.4.0",
     "mbp-components-rn-toast": "ssh://git@bitbucket.org:madebyprism/mbp-components-rn-toast.git#0.2.2",

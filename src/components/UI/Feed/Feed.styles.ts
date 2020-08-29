@@ -63,9 +63,9 @@ export default StyleSheet.create({
 export const DynamicStyles = new DynamicStyleSheet({
   // background
   backgroundDARK: {
-    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.dark),
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.monoDarkMode.pale.light),
   },
   backgroundLIGHT: {
-    backgroundColor: new DynamicValue(color.mono.pale.light, color.mono.pale.dark),
+    backgroundColor: new DynamicValue(color.mono.pale.light, color.monoDarkMode.pale.regular),
   },
 });

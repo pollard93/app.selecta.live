@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, FC } from 'react';
-import { View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
@@ -18,6 +18,8 @@ import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import spacing from '../../../styles/definitions/spacing';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
+import Body from '../../UI/Typography/components/Body';
+import color from '../../../styles/definitions/color';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
@@ -63,48 +65,58 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
     <View style={GlobalStyles.PageFill}>
       <Header />
 
-      <SafeAreaView style={GlobalStyles.PageFill}>
-        <ConsumingStreamProfilesFlatList
-          query={GET_CONSUMING_STREAM_PROFILES}
-          variables={variables}
-          accessor='getConsumingStreamProfiles.streams'
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => onPressStream(item.id)}>
-              <StreamCard data={item} />
-            </TouchableOpacity>
-          )}
-          ListHeaderComponent={({ queryResult }) => (
-            <>
-              <SearchInput
-                name="Search"
-                onChangeText={debounceName}
-                placeholder='Search name'
-                returnKeyType="done"
-                wrapStyle={Styles.padding}
-                loading={queryResult.loading}
-              />
+      <ConsumingStreamProfilesFlatList
+        query={GET_CONSUMING_STREAM_PROFILES}
+        variables={variables}
+        accessor='getConsumingStreamProfiles.streams'
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => onPressStream(item.id)}>
+            <StreamCard data={item} />
+          </TouchableOpacity>
+        )}
+        ListHeaderComponent={({ queryResult }) => (
+          <>
+            <SearchInput
+              name="Search"
+              onChangeText={debounceName}
+              placeholder='Search name'
+              returnKeyType="done"
+              wrapStyle={Styles.padding}
+              loading={queryResult.loading}
+            />
 
-              {!queryResult.data && queryResult.loading && (
-                <StreamCardSkeleton />
-              )}
+            {!queryResult.data && queryResult.loading && <StreamCardSkeleton />}
+          </>
+        )}
+        FlatListProps={{
+          contentContainerStyle: [Styles.scrollViewContainer, { paddingTop: headerHeight + spacing.small }],
+          ItemSeparatorComponent: () => <View style={Styles.separator} />,
+          showsVerticalScrollIndicator: false,
+        }}
+      >
+        {({ queryResult, maxCount }) => {
+          // Handle error
+          if (queryResult.error) {
+            return (
+              <View pointerEvents="box-none" style={[Styles.flatListCover, { marginTop: headerHeight + spacing.small }]}>
+                <LoadRetry {...queryResult} />
+              </View>
+            );
+          }
 
-              {queryResult.error && (
-                <View style={Styles.padding}>
-                  <LoadRetry {...queryResult} />
-                </View>
-              )}
-            </>
-          )}
-          ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
-            <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'Your streams will appear here'} />
-          )}
-          FlatListProps={{
-            contentContainerStyle: [Styles.scrollViewContainer, { paddingTop: headerHeight + spacing.small }],
-            ItemSeparatorComponent: () => <View style={Styles.separator} />,
-            showsVerticalScrollIndicator: false,
-          }}
-        />
-      </SafeAreaView>
+          // Handle no results
+          if (queryResult.data && !queryResult.loading && maxCount === 0) {
+            return (
+              <View pointerEvents="box-none" style={[Styles.flatListCover, Styles.flatListCoverCenter, { marginTop: headerHeight + spacing.small }]}>
+                <Body style={{ color: color.mono.pale.dark }}>Purchased streams will appear here.</Body>
+                <Body style={{ color: color.mono.pale.dark }}>You have no streams yet!</Body>
+              </View>
+            );
+          }
+
+          return null;
+        }}
+      </ConsumingStreamProfilesFlatList>
     </View>
   );
 };

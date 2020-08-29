@@ -84,7 +84,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/feed.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/feed-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
@@ -106,7 +106,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/streams.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/streams-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
@@ -128,7 +128,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/wallet.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/wallet-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
