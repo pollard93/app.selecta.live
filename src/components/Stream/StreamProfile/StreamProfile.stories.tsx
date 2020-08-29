@@ -17,6 +17,9 @@ storiesOf('Stream/StreamProfile', module)
   .add('StreamProfile - IS_NOT_CONSUMER', () => (
     <StreamProfile id="IS_NOT_CONSUMER" />
   ))
+  .add('StreamProfile - IS_NOT_CONSUMER_FREE', () => (
+    <StreamProfile id="IS_NOT_CONSUMER_FREE" />
+  ))
   .add('StreamProfile - CANCELLED', () => (
     <StreamProfile id="CANCELLED" />
   ));

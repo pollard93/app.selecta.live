@@ -13,7 +13,7 @@ export const GET_SELF_QUERY = gql`
 `;
 
 export const GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY = gql`
-  query getSelf {
+  query getSelfUnreadNotificationCount {
     getSelf {
       id
       unreadNotificationCount

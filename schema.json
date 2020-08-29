@@ -17599,7 +17599,7 @@
             "deprecationReason": null
           },
           {
-            "name": "payForStream",
+            "name": "purchaseStream",
             "description": null,
             "args": [
               {

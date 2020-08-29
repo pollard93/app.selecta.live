@@ -3,19 +3,19 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: payForStream
+// GraphQL mutation operation: purchaseStream
 // ====================================================
 
-export interface payForStream_payForStream {
+export interface purchaseStream_purchaseStream {
   __typename: "StreamProfile";
   id: string;
   isConsumer: boolean | null;
 }
 
-export interface payForStream {
-  payForStream: payForStream_payForStream;
+export interface purchaseStream {
+  purchaseStream: purchaseStream_purchaseStream;
 }
 
-export interface payForStreamVariables {
+export interface purchaseStreamVariables {
   id: string;
 }

@@ -10,7 +10,7 @@ import { formatForTimezone, getGQLErrorMessage } from '../../../../../utils/func
 import Button from '../../../../UI/Button/Button';
 import { useGetSelf, GET_SELF_QUERY } from '../../../../../API/query/getSelf/getSelf';
 import { openTopUpModal } from '../../../../../screens/utils';
-import { usePayForStreamMutation } from '../../../../../API/mutation/payForStream/payForStream';
+import { usePurchaseStreamMutation } from '../../../../../API/mutation/purchaseStream/purchaseStream';
 import Toast from '../../../../UI/Toast/Toast';
 import Styles, { DynamicStyles } from './StreamPurchase.styles';
 import H1 from '../../../../UI/Typography/components/H1';
@@ -32,7 +32,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
   /**
    * Pay for stream mutation
    */
-  const [mutation, { loading, client }] = usePayForStreamMutation({
+  const [mutation, { loading, client }] = usePurchaseStreamMutation({
     variables: {
       id: props.data.id,
     },

@@ -177,11 +177,11 @@ describe('<StreamPurchase />', () => {
 
   test('should fail', async () => {
     /**
-     * Create mock client and force payForStream to error
+     * Create mock client and force purchaseStream to error
      */
     const client = mockClient({
       Mutation: () => ({
-        payForStream: () => {
+        purchaseStream: () => {
           throw new Error();
         },
       }),
