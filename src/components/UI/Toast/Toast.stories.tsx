@@ -9,11 +9,17 @@ import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/Toas
 
 storiesOf('UI/Toast', module)
   .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
-  .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { justifyContent: 'flex-end', backgroundColor: 'white' }]}>{getStory()}</View>)
+  .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { justifyContent: 'flex-start', backgroundColor: 'white' }]}>{getStory()}</View>)
   .add('Toast - info', () => (
     <Toast
       type="INFO"
       content="Toast - info"
+    />
+  ))
+  .add('Toast - long text', () => (
+    <Toast
+      type="INFO"
+      content="Toast - info info info info info info info info info info info"
     />
   ))
   .add('Toast - success', () => (

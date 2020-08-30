@@ -72,7 +72,10 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
           toast.push({
             duration: 1000,
             component: (
-              <Toast content="Unable to open link" />
+              <Toast
+                type="ERROR"
+                content="Unable to open link"
+              />
             ),
             dismissible: false,
           });

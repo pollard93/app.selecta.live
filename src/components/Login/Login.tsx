@@ -55,7 +55,10 @@ const Login: FC<LoginProps> = (props) => {
             toast.push({
               duration: 1000,
               component: (
-                <Toast content="Link has expired" />
+                <Toast
+                  type="ERROR"
+                  content="Link has expired"
+                />
               ),
               dismissible: false,
             });
@@ -122,7 +125,10 @@ const Login: FC<LoginProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -153,7 +159,10 @@ const Login: FC<LoginProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -206,7 +215,10 @@ const Login: FC<LoginProps> = (props) => {
         toast.push({
           duration: 1000,
           component: (
-            <Toast content="Please open your magic link in the email we have just sent you" />
+            <Toast
+              type="SUCCESS"
+              content="Please open your magic link in the email we have just sent you"
+            />
           ),
           dismissible: false,
         });

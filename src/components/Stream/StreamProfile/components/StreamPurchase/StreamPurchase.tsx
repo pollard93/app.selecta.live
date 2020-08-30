@@ -56,7 +56,10 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content="Purchase successful, enjoy!" />
+          <Toast
+            type="SUCCESS"
+            content="Purchase successful, enjoy!"
+          />
         ),
         dismissible: false,
       });
@@ -65,7 +68,10 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

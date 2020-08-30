@@ -37,7 +37,10 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

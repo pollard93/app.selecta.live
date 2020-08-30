@@ -48,7 +48,10 @@ const ProfileUpdate = () => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content='Updated profile' />
+          <Toast
+            type="SUCCESS"
+            content='Updated profile'
+          />
         ),
         dismissible: false,
       });
@@ -57,7 +60,10 @@ const ProfileUpdate = () => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

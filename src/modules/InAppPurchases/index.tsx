@@ -117,7 +117,10 @@ class InAppPurchases {
           global.toast.push({
             duration: 1000,
             component: (
-              <Toast content="There is a pending transaction for this item" />
+              <Toast
+                type="ERROR"
+                content="There is a pending transaction for this item"
+              />
             ),
             dismissible: false,
           });
@@ -135,7 +138,10 @@ class InAppPurchases {
           global.toast.push({
             duration: 1000,
             component: (
-              <Toast content={error.message || 'Something went wrong with your payment'} />
+              <Toast
+                type="ERROR"
+                content={error.message || 'Something went wrong with your payment'}
+              />
             ),
             dismissible: false,
           });

@@ -29,7 +29,10 @@ const CancelStream: FC<CancelStreamProps> = (props) => {
               toast.push({
                 duration: 1000,
                 component: (
-                  <Toast content="Stream cancelled" />
+                  <Toast
+                    type="SUCCESS"
+                    content="Stream cancelled"
+                  />
                 ),
                 dismissible: false,
               });

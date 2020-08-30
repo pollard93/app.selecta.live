@@ -100,7 +100,10 @@ const Products: FC<ProductsProps> = (props) => {
         toast.push({
           duration: 1000,
           component: (
-            <Toast content={err.message} />
+            <Toast
+              type="ERROR"
+              content={err.message}
+            />
           ),
           dismissible: false,
         });

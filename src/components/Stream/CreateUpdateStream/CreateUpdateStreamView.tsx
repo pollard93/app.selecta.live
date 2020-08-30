@@ -216,7 +216,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content='Created stream' />
+          <Toast
+            type="SUCCESS"
+            content='Created stream'
+          />
         ),
         dismissible: false,
       });
@@ -227,7 +230,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -265,7 +271,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content='Updated stream' />
+          <Toast
+            type="SUCCESS"
+            content='Updated stream'
+          />
         ),
         dismissible: false,
       });
@@ -276,7 +285,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       toast.push({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -339,7 +351,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         toast.push({
           duration: 1000,
           component: (
-            <Toast type="ERROR" content='Something went wrong' />
+            <Toast
+              type="ERROR"
+              content='Something went wrong'
+            />
           ),
           dismissible: false,
         });
@@ -367,7 +382,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         toast.push({
           duration: 1000,
           component: (
-            <Toast type="ERROR" content='Something went wrong' />
+            <Toast
+              type="ERROR"
+              content='Something went wrong'
+            />
           ),
           dismissible: false,
         });
