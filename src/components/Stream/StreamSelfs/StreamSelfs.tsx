@@ -8,8 +8,7 @@ import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import Header from '../../UI/Headers/Header/Header';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -26,8 +25,6 @@ export interface StreamSelfsProps {
 }
 
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
-  const { headerHeight } = useHeaderStyles();
-  const safeAreaInsets = useSafeArea();
   const screenProps = useScreenProps();
 
 
@@ -54,56 +51,55 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={() => Navigation.pop(screenProps.componentId)} />
-      <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight }]}>
-        <StreamSelfsFlatList
-          query={GET_STREAM_SELFS_QUERY}
-          variables={variables}
-          accessor='getStreamSelfs.streams'
-          renderItem={({ item }) => (
-            <View style={Styles.item}>
-              <StreamSelfListItem
-                {...props}
-                data={item}
-                getStreamSelfsVariables={variables}
-              />
-            </View>
-          )}
-          ListHeaderComponent={() => (
-            <View style={Styles.header}>
-              <H2>Stream Management</H2>
-              <Button
-                type="PRIMARY"
-                title="Create New Stream"
-                onPress={onCreate}
-                style={Styles.createButton}
-              />
-            </View>
-          )}
-          ListFooterComponent={({ queryResult, maxCount }) => {
-            if (queryResult.loading) {
-              return <StreamSelfListItemSkeleton />;
-            }
 
-            if (queryResult.error) {
-              return (
-                <View style={Styles.header}>
-                  <LoadRetry {...queryResult} />
-                </View>
-              );
-            }
+      <StreamSelfsFlatList
+        query={GET_STREAM_SELFS_QUERY}
+        variables={variables}
+        accessor='getStreamSelfs.streams'
+        renderItem={({ item }) => (
+          <View style={Styles.item}>
+            <StreamSelfListItem
+              {...props}
+              data={item}
+              getStreamSelfsVariables={variables}
+            />
+          </View>
+        )}
+        ListHeaderComponent={() => (
+          <View style={Styles.header}>
+            <H2>Stream Management</H2>
+            <Button
+              type="PRIMARY"
+              title="Create New Stream"
+              onPress={onCreate}
+              style={Styles.createButton}
+            />
+          </View>
+        )}
+        ListFooterComponent={({ queryResult, maxCount }) => {
+          if (queryResult.loading) {
+            return <StreamSelfListItemSkeleton />;
+          }
 
-            if (maxCount === 0) {
-              return (
-                <View style={Styles.header}>
-                  <Body>Your streams will appear here</Body>
-                </View>
-              );
-            }
+          if (queryResult.error) {
+            return (
+              <View style={Styles.header}>
+                <LoadRetry {...queryResult} />
+              </View>
+            );
+          }
 
-            return null;
-          }}
-        />
-      </View>
+          if (maxCount === 0) {
+            return (
+              <View style={Styles.header}>
+                <Body>Your streams will appear here</Body>
+              </View>
+            );
+          }
+
+          return null;
+        }}
+      />
     </View>
   );
 };

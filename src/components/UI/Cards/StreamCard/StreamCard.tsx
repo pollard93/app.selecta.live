@@ -87,7 +87,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
       {props.data.tags.length > 0
         ? (
           <View style={Styles.item}>
-            <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')} {props.data}</Body>
+            <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
           </View>
         )
         : <View style={Styles.contentSpacer} />

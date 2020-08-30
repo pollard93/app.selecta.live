@@ -6,12 +6,12 @@ import Styles, { DynamicStyles } from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
-import scalePx from '../../../../utils/scalePx';
 import { openScreenAsModal } from '../../../../screens/utils';
 import { STACK } from '../../../../screens/utils/interfaces';
 import ProfileScreen from '../../../../screens/ProfileScreen/ProfileScreen';
 import NotificationsScreen from '../../../../screens/NotificationsScreen/NotificationsScreen';
 import HeaderNotifications from './components/HeaderNotifications/HeaderNotifications';
+import scalePx from '../../../../utils/scalePx';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -19,16 +19,12 @@ interface HeaderProps {
 
 
 /**
- * If ther is a safe area inset at the top of the screen
- * Header height will be smaller as padding top is not required
+ * Styles which can be used in other components
  */
-export const useHeaderStyles = () => {
-  const safeAreaInsets = useSafeArea();
-  return ({
-    headerHeight: safeAreaInsets.top === 0 ? scalePx(50) : scalePx(35),
-    headerZindex: 100,
-  });
-};
+export const useHeaderStyles = () => ({
+  headerHeight: scalePx(35),
+  headerZindex: 100,
+});
 
 
 const Header: FC<HeaderProps> = (props) => {
@@ -58,76 +54,73 @@ const Header: FC<HeaderProps> = (props) => {
 
 
   return (
-    <View style={[Styles.outer, { zIndex: headerZindex }]}>
+    <View
+      style={[
+        Styles.wrap,
+        dynamicStyles.wrap,
+        {
+          paddingTop: safeAreaInsets.top,
+          zIndex: headerZindex,
+        },
+      ]}
+    >
       <View
         style={[
-          Styles.wrap,
-          dynamicStyles.wrap,
-          {
-            paddingTop: safeAreaInsets.top,
-            borderBottomLeftRadius: headerHeight / 2,
-            borderBottomRightRadius: headerHeight / 2,
-          },
+          Styles.inner,
+          safeAreaInsets.top === 0 && Styles.noSafeArea,
+          { height: headerHeight },
         ]}
       >
-        <View
-          style={[
-            Styles.inner,
-            safeAreaInsets.top === 0 && Styles.noSafeArea,
-            { height: headerHeight },
-          ]}
-        >
-          <View style={Styles.left}>
-            {props.onPop && (
-              <TouchableOpacity
-                onPress={props.onPop}
-                style={Styles.back}
-              >
-                <Icon name={ICON.ARROW_BACKWARD} size="xsmall" />
-              </TouchableOpacity>
-            )}
+        <View style={Styles.left}>
+          {props.onPop && (
+            <TouchableOpacity
+              onPress={props.onPop}
+              style={Styles.back}
+            >
+              <Icon name={ICON.ARROW_BACKWARD} size="xsmall" />
+            </TouchableOpacity>
+          )}
 
-            <View style={Styles.logoWrap}>
-              <Image
-                source={useDynamicValue(logoUri)}
-                style={Styles.logo}
-                resizeMode="contain"
+          <View style={Styles.logoWrap}>
+            <Image
+              source={useDynamicValue(logoUri)}
+              style={Styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+
+        <View style={Styles.right}>
+          <TouchableOpacity
+            onPress={onPressNotifications}
+            style={Styles.iconWrap}
+          >
+            <HeaderNotifications />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={onPressProfile}
+            style={Styles.iconWrap}
+          >
+            <View style={Styles.profilePictureIconWrap}>
+              <Icon
+                name={ICON.PROFILE}
+                size="regular"
+                style={Styles.icon}
               />
             </View>
-          </View>
-
-          <View style={Styles.right}>
-            <TouchableOpacity
-              onPress={onPressNotifications}
-              style={Styles.iconWrap}
-            >
-              <HeaderNotifications />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={onPressProfile}
-              style={Styles.iconWrap}
-            >
-              <View style={Styles.profilePictureIconWrap}>
-                <Icon
-                  name={ICON.PROFILE}
-                  size="regular"
-                  style={Styles.icon}
+            {
+              self.profilePicture && (
+                <AsyncImage
+                  splashUrl={self.profilePicture.url.splash}
+                  fullUrl={self.profilePicture.url.small}
+                  containerProps={{
+                    style: [Styles.profilePictureInner, dynamicStyles.profilePictureInner],
+                  }}
                 />
-              </View>
-              {
-                self.profilePicture && (
-                  <AsyncImage
-                    splashUrl={self.profilePicture.url.splash}
-                    fullUrl={self.profilePicture.url.small}
-                    containerProps={{
-                      style: [Styles.profilePictureInner, dynamicStyles.profilePictureInner],
-                    }}
-                  />
-                )
-              }
-            </TouchableOpacity>
-          </View>
+              )
+            }
+          </TouchableOpacity>
         </View>
       </View>
     </View>

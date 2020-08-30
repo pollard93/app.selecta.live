@@ -2,8 +2,7 @@ import React, { FC, useRef, useState } from 'react';
 import { View, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import Header from '../../UI/Headers/Header/Header';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -58,8 +57,6 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
 };
 
 const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
-  const { headerHeight } = useHeaderStyles();
-  const safeAreaInsets = useSafeArea();
   const canPopRef = useRef();
   const screenProps = useScreenProps();
 
@@ -89,9 +86,7 @@ const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={onPop} />
-      <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
-        <CreateUpdateStreamInner {...props} canPopRef={canPopRef} />
-      </View>
+      <CreateUpdateStreamInner {...props} canPopRef={canPopRef} />
     </View>
   );
 };

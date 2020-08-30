@@ -6,12 +6,6 @@ import shadow from '../../../../styles/definitions/shadow';
 import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
-  outer: {
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
   wrap: {
     ...shadow.regular,
   },
@@ -39,14 +33,6 @@ export default StyleSheet.create({
   right: {
     alignItems: 'center',
     flexDirection: 'row',
-  },
-  wallet: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginRight: spacing.small,
-  },
-  walletIcon: {
-    marginRight: spacing.xxsmall,
   },
   logoWrap: {
     aspectRatio: 4.854054054054054,
@@ -79,7 +65,7 @@ export default StyleSheet.create({
   pulsingIcon: {
     position: 'absolute',
     right: 0,
-    top: -(scalePx(3)),
+    top: -(scalePx(2)),
   },
 });
 

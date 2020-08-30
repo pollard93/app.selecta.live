@@ -8,7 +8,6 @@ import spacing from '../../../../../styles/definitions/spacing';
 import Slider from '../../../../UI/Slider/Slider';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
-import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import Styles from './StreamControls.style';
 import ShareButton from '../../../../UI/ShareButton/ShareButton';
 
@@ -32,7 +31,6 @@ interface StreamControlsProps {
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
-  const { headerHeight } = useHeaderStyles();
   const hideControlsTimeout = useRef<number>(null);
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -200,7 +198,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
         {!props.isAudioOnly && (
           <View
             // eslint-disable-next-line react-native/no-inline-styles
-            style={[StyleSheet.absoluteFillObject, Styles.videoEnabled, { marginTop: props.isFullScreen ? 0 : headerHeight / 2 }]}
+            style={[StyleSheet.absoluteFillObject, Styles.videoEnabled]}
             pointerEvents="box-none"
           >
             <TouchableOpacity

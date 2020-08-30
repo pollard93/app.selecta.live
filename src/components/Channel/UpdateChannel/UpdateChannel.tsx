@@ -3,8 +3,7 @@ import { View, Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import Header from '../../UI/Headers/Header/Header';
 import UpdateChannelView from './UpdateChannelView';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
@@ -12,8 +11,6 @@ interface UpdateChannelProps {}
 
 const UpdateChannel: FC<UpdateChannelProps> = () => {
   const { data: { getChannelSelf } } = useGetChannelSelfQuery();
-  const { headerHeight } = useHeaderStyles();
-  const safeAreaInsets = useSafeArea();
   const canPopRef = useRef();
   const screenProps = useScreenProps();
 
@@ -43,9 +40,7 @@ const UpdateChannel: FC<UpdateChannelProps> = () => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={onPop} />
-      <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
-        <UpdateChannelView data={getChannelSelf} canPopRef={canPopRef} />
-      </View>
+      <UpdateChannelView data={getChannelSelf} canPopRef={canPopRef} />
     </View>
   );
 };

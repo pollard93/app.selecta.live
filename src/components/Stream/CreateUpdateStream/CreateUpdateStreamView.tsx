@@ -6,6 +6,7 @@ import { useToast } from 'mbp-components-rn-toast';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
@@ -13,7 +14,7 @@ import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream'
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
-import Styles from './CreateUpdateStream.style';
+import Styles, { DynamicStyles } from './CreateUpdateStream.style';
 import H2 from '../../UI/Typography/components/H2';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import TextArea from '../../UI/Form/components/TextArea/TextArea';
@@ -54,6 +55,8 @@ interface CreateUpdateStreamViewProps {
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
   /**
    * Form
    */
@@ -621,7 +624,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             </View>
           </View>
 
-          <View style={[Styles.section, Styles.settings]}>
+          <View style={[Styles.section, Styles.settings, dynamicStyles.settings]}>
             <H2>Settings</H2>
             <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
               <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>

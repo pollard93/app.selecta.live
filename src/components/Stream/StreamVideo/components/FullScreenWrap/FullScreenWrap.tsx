@@ -84,7 +84,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
    * Get window height and work out the width to set the element when in full screen mode
    * Fit's 16/9 component within landscape screen
    */
-  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight).current;
+  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - (headerHeight * 2)).current;
   const fullScreenWidth = useRef(Math.min(window.width * 1.777777777777778, windowHeight)).current;
 
 
@@ -120,7 +120,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
 
   return (
     <Animated.View style={[Styles.wrap, { backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }]} pointerEvents="box-none">
-      <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
+      <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
         <Animated.View
           style={[
             Styles.video,

@@ -25,7 +25,7 @@ interface StreamSelfViewProps {
  * Handle loading and error outside of navigation
  */
 const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
-  const { headerHeight, headerZindex } = useHeaderStyles();
+  const { headerZindex } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
   const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
@@ -58,7 +58,6 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
-          style={{ paddingTop: headerHeight / 2 }}
           onLayout={(event) => {
             if (!isCancelled && !drawerLayout) {
               /**

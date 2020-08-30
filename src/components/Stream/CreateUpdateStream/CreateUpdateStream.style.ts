@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
 
@@ -15,7 +16,6 @@ export default StyleSheet.create({
     marginTop: spacing.base,
   },
   settings: {
-    backgroundColor: color.mono.pale.regular,
     padding: spacing.small,
   },
   inputWrap: {
@@ -33,5 +33,12 @@ export default StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
+  },
+});
+
+
+export const DynamicStyles = new DynamicStyleSheet({
+  settings: {
+    backgroundColor: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.dark),
   },
 });

@@ -6,5 +6,8 @@ import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/
 storiesOf('Channel/ChannelProfile', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('ChannelProfile', () => (
-    <ChannelProfile id="HAS_LIVE_STREAMS" />
+    <ChannelProfile id="TEST" />
+  ))
+  .add('ChannelProfile - Long Name', () => (
+    <ChannelProfile id="LONG_NAME" />
   ));

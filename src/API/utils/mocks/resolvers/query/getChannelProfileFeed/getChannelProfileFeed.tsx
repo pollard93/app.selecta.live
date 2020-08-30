@@ -11,8 +11,8 @@ export const getChannelProfileFeed = (_, args) => {
     type: 'HORIZONTAL',
     background: 'DARK',
     query: `
-      query getChannelStreams($id: String!, $where: StreamWhereInput, $first: Int, $after: String, $orderBy: StreamOrderByInput){
-        getChannelStreams(id: $id, where: $where, first: $first, after: $after, orderBy: $orderBy){
+      query getChannelStreamProfiles($id: String!, $where: StreamWhereInput, $first: Int, $after: String, $orderBy: StreamOrderByInput){
+        getChannelStreamProfiles(id: $id, where: $where, first: $first, after: $after, orderBy: $orderBy){
           streams {
             id
             name
@@ -38,7 +38,7 @@ export const getChannelProfileFeed = (_, args) => {
         }
       }
     `,
-    accessor: 'getChannelStreams.streams',
+    accessor: 'getChannelStreamProfiles.streams',
     variables: {
       id: args.id,
       first: 5,
@@ -55,8 +55,8 @@ export const getChannelProfileFeed = (_, args) => {
     type: 'HORIZONTAL',
     background: 'LIGHT',
     query: `
-      query getChannelStreams($id: String!, $where: StreamWhereInput, $first: Int, $after: String, $orderBy: StreamOrderByInput){
-        getChannelStreams(id: $id, where: $where, first: $first, after: $after, orderBy: $orderBy){
+      query getChannelStreamProfiles($id: String!, $where: StreamWhereInput, $first: Int, $after: String, $orderBy: StreamOrderByInput){
+        getChannelStreamProfiles(id: $id, where: $where, first: $first, after: $after, orderBy: $orderBy){
           streams {
             id
             name
@@ -82,7 +82,7 @@ export const getChannelProfileFeed = (_, args) => {
         }
       }
     `,
-    accessor: 'getChannelStreams.streams',
+    accessor: 'getChannelStreamProfiles.streams',
     variables: {
       id: args.id,
       first: 5,

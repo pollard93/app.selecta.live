@@ -55,14 +55,13 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
-          style={{ paddingTop: headerHeight / 2 }}
           onLayout={(event) => {
             if (!drawerLayout) {
               /**
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,

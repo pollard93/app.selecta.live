@@ -14,8 +14,7 @@ import { pushScreen } from '../../../screens/utils';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 import { useDebounce } from '../../../utils/functions';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import spacing from '../../../styles/definitions/spacing';
+import Header from '../../UI/Headers/Header/Header';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 import Body from '../../UI/Typography/components/Body';
@@ -26,7 +25,6 @@ class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamP
 export interface ConsumingStreamProfilesProps {}
 
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
-  const { headerHeight } = useHeaderStyles();
   const screenProps = useScreenProps();
 
 
@@ -89,7 +87,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           </>
         )}
         FlatListProps={{
-          contentContainerStyle: [Styles.scrollViewContainer, { paddingTop: headerHeight + spacing.small }],
+          contentContainerStyle: [Styles.scrollViewContainer],
           ItemSeparatorComponent: () => <View style={Styles.separator} />,
           showsVerticalScrollIndicator: false,
         }}
@@ -98,7 +96,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           // Handle error
           if (queryResult.error) {
             return (
-              <View pointerEvents="box-none" style={[Styles.flatListCover, { marginTop: headerHeight + spacing.small }]}>
+              <View pointerEvents="box-none" style={Styles.flatListCover}>
                 <LoadRetry {...queryResult} />
               </View>
             );
@@ -107,7 +105,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           // Handle no results
           if (queryResult.data && !queryResult.loading && maxCount === 0) {
             return (
-              <View pointerEvents="box-none" style={[Styles.flatListCover, Styles.flatListCoverCenter, { marginTop: headerHeight + spacing.small }]}>
+              <View pointerEvents="box-none" style={[Styles.flatListCover, Styles.flatListCoverCenter]}>
                 <Body style={{ color: color.mono.pale.dark }}>Purchased streams will appear here.</Body>
                 <Body style={{ color: color.mono.pale.dark }}>You have no streams yet!</Body>
               </View>

@@ -6,7 +6,7 @@ import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
-import Header, { useHeaderStyles } from '../UI/Headers/Header/Header';
+import Header from '../UI/Headers/Header/Header';
 import { STACK } from '../../screens/utils/interfaces';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
@@ -24,7 +24,6 @@ export interface HomeFeedProps {
 const HomeFeed: FC<HomeFeedProps> = (props) => {
   const toast = useToast();
   const queryResult = useGetHomeFeedQuery();
-  const { headerHeight } = useHeaderStyles();
   const screenProps = useScreenProps();
 
 
@@ -105,9 +104,6 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
                     pushScreen(screenProps.componentId, ChannelProfileScreen, { id });
                   }}
                   refetch={queryResult.refetch}
-                  flatListProps={{
-                    contentContainerStyle: { paddingTop: headerHeight },
-                  }}
                 />
             )
         }
