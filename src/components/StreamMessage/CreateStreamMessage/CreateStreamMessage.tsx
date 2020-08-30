@@ -95,6 +95,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
       setMessage={setMessage}
       placeholder="Type your message here..."
       onSubmit={onSubmit}
+      editable={!loading}
       disabled={loading || message.length === 0}
     />
   );

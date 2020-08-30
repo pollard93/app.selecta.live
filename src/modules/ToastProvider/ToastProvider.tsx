@@ -38,7 +38,7 @@ interface ToastProviderProps {
 }
 
 const ToastProvider = (props: ToastProviderProps) => (
-  <ToastProviderModule position='bottom'>
+  <ToastProviderModule position='top'>
     <ToastInner screenName={props.screenName} />
     {props.children}
   </ToastProviderModule>

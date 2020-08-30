@@ -6,17 +6,18 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
 import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
-import styles, { DynamicStyles } from './StreamMessagesVod.styles';
+import styles from './StreamMessagesVod.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface StreamMessagesVodProps {
   data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const dynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
 
   /**
@@ -154,7 +155,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
 
 
   return (
-    <View style={[styles.wrap, dynamicStyles.wrap]}>
+    <View style={[styles.wrap, dynamicStyles.background]}>
       <FlatList
         bounces={false}
         inverted

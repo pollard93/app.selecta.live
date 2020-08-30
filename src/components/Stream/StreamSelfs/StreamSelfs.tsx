@@ -20,9 +20,7 @@ import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenProps
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
-export interface StreamSelfsProps {
-  test: string;
-}
+export interface StreamSelfsProps {}
 
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const screenProps = useScreenProps();
