@@ -39,6 +39,7 @@ export default StyleSheet.create({
     backgroundColor: color.mono.light,
     borderBottomLeftRadius: 0,
     borderRadius: scalePx(10),
+    overflow: 'hidden',
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.xxsmall,
   },

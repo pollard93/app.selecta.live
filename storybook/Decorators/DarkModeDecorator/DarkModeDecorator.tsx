@@ -20,7 +20,7 @@ const DarkModeDecoratorInner: FC<DarkModeDecoratorProps> = (props) => {
 };
 
 const DarkModeDecorator: FC<DarkModeDecoratorProps> = (props) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   return (
     <ColorSchemeProvider mode={darkMode ? 'dark' : 'light'}>

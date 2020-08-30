@@ -16,7 +16,7 @@ storiesOf('UI/Form/MessageInput', module)
       disabled={false}
     />
   ))
-  .add('MessageInput - widht text', () => (
+  .add('MessageInput - with text', () => (
     <MessageInput
       message="With Text"
       setMessage={console.log}

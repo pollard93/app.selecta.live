@@ -11,6 +11,7 @@ import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/ST
 import { formatTime } from '../../../utils/functions';
 import Small from '../../UI/Typography/components/Small';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
@@ -18,8 +19,16 @@ interface StreamMessageListItemProps {
 }
 
 const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
+  /**
+   * Check if message has been created by this user
+   * If there user data on the message, then check if the user matches getSelf
+   * If there's no user data, try and get channelSelf from cache only and see if ids match
+   */
   const self = useGetSelf();
-  const isSelf = props.data.user?.id === self.id;
+  const channel = useGetChannelSelfQuery({ fetchPolicy: 'cache-only' });
+  const isSelf = props.data.user
+    ? props.data.user?.id === self.id
+    : channel.data?.getChannelSelf.id === props.streamData.channel.id;
 
   /**
    * If no user is assigned in the data
