@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, ButtonProps as BaseProps, TouchableOpacityProps, View } from 'react-native';
+import { useDarkMode } from 'react-native-dynamic';
 import Styles from './Button.style';
 import Body from '../Typography/components/Body';
 import Icon, { ICON } from '../Icon/Icon';
@@ -16,8 +17,20 @@ export interface ButtonProps extends BaseProps {
 }
 
 const Button: FC<ButtonProps> = (props) => {
-  const type = props.type || 'PRIMARY';
+  const darkMode = useDarkMode();
   const size = props.size || 'regular';
+
+
+  /**
+   * Get type
+   */
+  const type = (() => {
+    if (darkMode) {
+      if (props.type === 'LIGHT') return 'SECONDARY';
+      if (props.type === 'SECONDARY') return 'LIGHT';
+    }
+    return props.type || 'PRIMARY';
+  })();
 
 
   const Inner = () => (

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import DateTimePickerCommunity, { IOSNativeProps, AndroidNativeProps } from '@react-native-community/datetimepicker';
 import { View, Platform } from 'react-native';
-import styles from './DateTimePicker.styles';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './DateTimePicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
@@ -14,6 +15,7 @@ interface DateTimePickerProps {
 const DateTimePicker = (props: DateTimePickerProps) => {
   const safeAreaInsets = useSafeArea();
   const [date, setDate] = useState(props.pickerProps.value);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -51,9 +53,9 @@ const DateTimePicker = (props: DateTimePickerProps) => {
 
 
   return (
-    <View style={styles.wrap}>
-      <View style={[styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
-        <View style={styles.buttons}>
+    <View style={Styles.wrap}>
+      <View style={[Styles.inner, dynamicStyles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
+        <View style={Styles.buttons}>
           <Button
             title="Cancel"
             type="SECONDARY"
@@ -78,6 +80,7 @@ const DateTimePicker = (props: DateTimePickerProps) => {
           value={date}
           onChange={onChange}
           style={{ paddingVertical: spacing.small }}
+          textColor={dynamicStyles.text.color}
         />
       </View>
     </View>

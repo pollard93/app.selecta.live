@@ -1,7 +1,8 @@
 import React, { useState, FC } from 'react';
 import { Picker } from '@react-native-community/picker';
 import { View } from 'react-native';
-import styles from './DurationPicker.styles';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './DurationPicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
@@ -9,19 +10,20 @@ import spacing from '../../../../../styles/definitions/spacing';
 interface DurationPickerProps {
   defaultHours: number; // 0 - 12
   defaultMinutes: number; // 0|15|30|45
-  onDone?: (value?: { hours: number, minutes: number }) => void; // Pass value to confirm, null to cancel
+  onDone: (value?: { hours: number, minutes: number }) => void; // Pass value to confirm, null to cancel
 }
 
 const DurationPicker: FC<DurationPickerProps> = (props) => {
   const safeAreaInsets = useSafeArea();
   const [hoursValueInternal, setHoursValueInternal] = useState(props.defaultHours);
   const [minutesValueInternal, setMinutesValueInternal] = useState(props.defaultMinutes);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   return (
-    <View style={styles.wrap}>
-      <View style={[styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
-        <View style={styles.buttons}>
+    <View style={Styles.wrap}>
+      <View style={[Styles.inner, dynamicStyles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
+        <View style={Styles.buttons}>
           <Button
             title="Cancel"
             type="SECONDARY"
@@ -44,10 +46,10 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
           />
         </View>
 
-        <View style={styles.pickerWrap}>
+        <View style={Styles.pickerWrap}>
           <Picker
             selectedValue={hoursValueInternal}
-            style={styles.picker}
+            style={Styles.picker}
             onValueChange={(v) => {
               // Don't allow 0
               if ((v as number) === 0 && minutesValueInternal === 0) {
@@ -58,13 +60,18 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
             }}
           >
             {Array(13).fill(0).map((_, i) => (
-              <Picker.Item key={i} label={`${i} Hours`} value={i} />
+              <Picker.Item
+                key={i}
+                label={`${i} Hours`}
+                value={i}
+                color={dynamicStyles.text.color}
+              />
             ))}
           </Picker>
 
           <Picker
             selectedValue={minutesValueInternal}
-            style={styles.picker}
+            style={Styles.picker}
             onValueChange={(v) => {
               // Don't allow 0
               if ((v as number) === 0 && hoursValueInternal === 0) {
@@ -75,7 +82,12 @@ const DurationPicker: FC<DurationPickerProps> = (props) => {
             }}
           >
             {[0, 15, 30, 45].map((v) => (
-              <Picker.Item key={v} label={`${v} Minutes`} value={v} />
+              <Picker.Item
+                key={v}
+                label={`${v} Minutes`}
+                value={v}
+                color={dynamicStyles.text.color}
+              />
             ))}
           </Picker>
         </View>
