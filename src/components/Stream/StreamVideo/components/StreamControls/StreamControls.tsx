@@ -307,7 +307,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                       }
                     }}
                     tracks={[
-                      { color: color.mono.pale.dark, width: props.playableDuration / props.duration }, // Buffer
+                      { color: color.mono.dark, width: props.playableDuration / props.duration }, // Buffer
                     ]}
                     loading={props.isBuffering}
                   />

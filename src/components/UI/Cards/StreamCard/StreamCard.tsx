@@ -61,7 +61,10 @@ const StreamCard: FC<StreamCardProps> = (props) => {
 
       <View>
         {props.showPosition && props.data.position > 0 && (
-          <View style={[Styles.position, { width: `${(props.data.position / getStreamDurationMs(props.data)) * 100}%` }]} />
+          <>
+            <View style={[Styles.position, Styles.positionBackground]} />
+            <View style={[Styles.position, { width: `${(props.data.position / getStreamDurationMs(props.data)) * 100}%` }]} />
+          </>
         )}
 
         <View style={[Styles.item, Styles.header]}>

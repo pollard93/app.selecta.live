@@ -28,6 +28,10 @@ export default StyleSheet.create({
     position: 'absolute',
     top: -2,
   },
+  positionBackground: {
+    backgroundColor: color.mono.pale.light.color().alpha(0.3).toString(),
+    width: '100%',
+  },
   item: {
     marginTop: spacing.small,
     paddingHorizontal: spacing.small,
