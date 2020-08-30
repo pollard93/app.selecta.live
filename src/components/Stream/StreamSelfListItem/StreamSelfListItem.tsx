@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
-import Styles from './StreamSelfListItem.style';
+import Styles, { DynamicStyles } from './StreamSelfListItem.style';
 import Body from '../../UI/Typography/components/Body';
 import Button from '../../UI/Button/Button';
 import H3 from '../../UI/Typography/components/H3';
@@ -21,6 +22,7 @@ export interface StreamSelfListItemProps {
 
 const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
   const screenProps = useScreenProps();
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -34,9 +36,9 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
 
 
   return (
-    <View style={Styles.wrap}>
+    <View style={dynamicStyles.wrap}>
       <View style={Styles.banner}>
-        <Body bold style={Styles.bannerHeader}>
+        <Body bold forceLight style={Styles.bannerHeader}>
           Live On: {formatForTimezone(props.data.timeFrom, 'DD/MM/Y HH:mm z')}
           {new Date(props.data.timeFrom) > new Date() && ' (Upcoming)'}
         </Body>

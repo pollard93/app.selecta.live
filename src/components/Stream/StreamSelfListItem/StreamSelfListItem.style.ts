@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
 import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
-  wrap: {
-    backgroundColor: color.mono.light,
-  },
   banner: {
     alignItems: 'center',
     backgroundColor: color.mono.dark,
@@ -15,7 +13,6 @@ export default StyleSheet.create({
     padding: spacing.small,
   },
   bannerHeader: {
-    color: color.mono.light,
     flex: 1,
   },
   header: {
@@ -64,6 +61,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   authKeyBody: {
+    color: color.mono.dark,
     flex: 1,
     paddingRight: spacing.small,
   },
@@ -95,5 +93,14 @@ export default StyleSheet.create({
     opacity: 0.1,
     tintColor: color.mono.pale.dark,
     width: scalePx(50),
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.light, color.monoDarkMode.pale.dark),
+  },
+  authKeyBody: {
+    color: new DynamicValue(color.mono.dark, color.mono.light),
   },
 });

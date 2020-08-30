@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { useToast } from 'mbp-components-rn-toast';
-import Styles from '../../StreamSelfListItem.style';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from '../../StreamSelfListItem.style';
 import Body from '../../../../UI/Typography/components/Body';
 import Button from '../../../../UI/Button/Button';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
@@ -17,6 +18,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const toast = useToast();
   const screenProps = useScreenProps();
   const now = new Date();
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -62,7 +64,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
           <View style={Styles.authKey}>
             <Body bold>Stream Url: </Body>
             <Body
-              style={Styles.authKeyBody}
+              style={[Styles.authKeyBody, dynamicStyles.authKeyBody]}
               ellipsizeMode="tail"
               numberOfLines={1}
             >
@@ -80,7 +82,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
               editable={false}
               secureTextEntry={true}
               value={props.data.streamKey}
-              style={Styles.authKeyBody}
+              style={[Styles.authKeyBody, dynamicStyles.authKeyBody]}
             />
 
             <TouchableOpacity onPress={() => onCopy(props.data.streamKey)}>
