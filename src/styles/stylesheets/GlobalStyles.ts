@@ -19,7 +19,7 @@ export const GlobalDynamicStyles = new DynamicStyleSheet({
     backgroundColor: new DynamicValue(color.mono.pale.light, color.monoDarkMode.pale.light),
   },
   skeleton: {
-    backgroundColor: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.regular),
-    color: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.regular),
+    backgroundColor: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.dark),
+    color: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.dark),
   },
 });

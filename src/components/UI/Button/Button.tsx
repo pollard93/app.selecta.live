@@ -69,6 +69,7 @@ const Button: FC<ButtonProps> = (props) => {
           Styles[`touch${size}`],
           props.disabled && !props.loading && Styles.disabled,
           props.style,
+          Styles.radius,
         ]}
         disabled={props.disabled || props.loading}
       >
@@ -87,6 +88,7 @@ const Button: FC<ButtonProps> = (props) => {
         Styles[`touch${size}`],
         props.disabled && !props.loading && Styles.disabled,
         props.style,
+        Styles.radius,
       ]}
       disabled={props.disabled || props.loading}
     >

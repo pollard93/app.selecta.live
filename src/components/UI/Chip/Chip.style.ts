@@ -7,8 +7,10 @@ export default StyleSheet.create({
    * Wrap
    */
   wrap: {
+    borderRadius: 2,
     flexDirection: 'row',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   wrapSECONDARY: {
     backgroundColor: color.mono.dark,
