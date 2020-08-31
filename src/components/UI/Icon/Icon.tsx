@@ -36,6 +36,7 @@ export enum ICON {
   NOTIFICATIONS_READ_DARK = 'NOTIFICATIONS_READ_DARK',
   NOTIFICATIONS_READ_LIGHT = 'NOTIFICATIONS_READ_LIGHT',
   NOTIFICATIONS_UNREAD = 'NOTIFICATIONS_UNREAD',
+  DRAG_HANDLE = 'DRAG_HANDLE',
 }
 
 export interface IconProps {
@@ -141,6 +142,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.NOTIFICATIONS_UNREAD:
         return require('../../../assets/images/icons/notifications-unread.png');
+
+      case ICON.DRAG_HANDLE:
+        return require('../../../assets/images/icons/drag-handle.png');
 
       default:
         return null;

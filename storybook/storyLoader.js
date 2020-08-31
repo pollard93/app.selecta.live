@@ -62,6 +62,7 @@ function loadStories() {
 	require('../src/components/UI/DateTimePicker/components/DateTimePicker/DateTimePicker.stories');
 	require('../src/components/UI/DateTimePicker/components/DurationPicker/DurationPicker.stories');
 	require('../src/components/UI/Drawer/Drawer.stories');
+	require('../src/components/UI/DrawerV2/DrawerV2.stories');
 	require('../src/components/UI/Form/components/DateInput/DateInput.stories');
 	require('../src/components/UI/Form/components/DurationInput/DurationInput.stories');
 	require('../src/components/UI/Form/components/MessageInput/MessageInput.stories');
@@ -146,6 +147,7 @@ const stories = [
 	'../src/components/UI/DateTimePicker/components/DateTimePicker/DateTimePicker.stories',
 	'../src/components/UI/DateTimePicker/components/DurationPicker/DurationPicker.stories',
 	'../src/components/UI/Drawer/Drawer.stories',
+	'../src/components/UI/DrawerV2/DrawerV2.stories',
 	'../src/components/UI/Form/components/DateInput/DateInput.stories',
 	'../src/components/UI/Form/components/DurationInput/DurationInput.stories',
 	'../src/components/UI/Form/components/MessageInput/MessageInput.stories',
