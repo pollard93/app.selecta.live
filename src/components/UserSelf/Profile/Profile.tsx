@@ -1,16 +1,19 @@
 import React, { FC } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
+import { ToastProps, useToast } from 'mbp-components-rn-toast';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import H2 from '../../UI/Typography/components/H2';
 import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import { goToLogin } from '../../../screens/utils';
+import { goToLogin, openModalScreen } from '../../../screens/utils';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import UpdatePassword from '../UpdatePassword/UpdatePassword';
 
 export interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = (props) => {
+  const toast = useToast();
   const self = useGetSelf();
   const screenProps = useScreenProps();
 
@@ -29,6 +32,24 @@ const Profile: FC<ProfileProps> = (props) => {
 
       <TouchableOpacity onPress={onDismiss}>
         <Text>Close Screen</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => {
+        openModalScreen({
+          component: (
+            <UpdatePassword
+              onClosed={(toastProps?: ToastProps) => {
+                Navigation.dismissModal('UPDATE_PASSWORD');
+
+                if (toastProps) {
+                  toast.push(toastProps);
+                }
+              }}
+            />
+          ),
+        }, 'UPDATE_PASSWORD', OptionsModalTransitionStyle.crossDissolve);
+      }}>
+        <Text>Edit password</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onLogout}>

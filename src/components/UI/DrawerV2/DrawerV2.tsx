@@ -1,11 +1,12 @@
 import React, { FC, useRef, useEffect, useState, useMemo, ReactNode } from 'react';
-import { Animated, View, LayoutRectangle, TouchableOpacity, StyleSheet } from 'react-native';
+import { Animated, View, LayoutRectangle, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from './DrawerV2.styles';
 import scalePx from '../../../utils/scalePx';
 import Icon, { ICON } from '../Icon/Icon';
 import color from '../../../styles/definitions/color';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 interface DrawerV2Props {
   onClosed: (args?: any) => void; // Called when closed
@@ -15,6 +16,7 @@ interface DrawerV2Props {
 }
 
 const DrawerV2: FC<DrawerV2Props> = (props) => {
+  const safeAreaInsets = useSafeArea();
   const touchY = useRef(new Animated.Value(0)).current;
   const touchYValue = useRef(0);
   const barHeight = useRef(scalePx(20)).current;
@@ -118,14 +120,17 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
 
 
   return (
-    <View
-      style={[
-        Styles.wrap,
-        // eslint-disable-next-line react-native/no-inline-styles
-        { opacity: !clampY ? 0 : 1 },
-      ]}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={[Styles.wrap, { opacity: !clampY ? 0 : 1 }]}
+      keyboardVerticalOffset={-safeAreaInsets.bottom}
     >
-      <TouchableOpacity style={StyleSheet.absoluteFillObject}>
+      <TouchableOpacity
+        style={StyleSheet.absoluteFillObject}
+        activeOpacity={1}
+        onPress={() => onClose()}
+      >
         <Animated.View style={{ backgroundColor, ...StyleSheet.absoluteFillObject }} />
       </TouchableOpacity>
 
@@ -184,7 +189,7 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
           })}
         </View>
       </Animated.View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

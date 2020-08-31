@@ -1,0 +1,200 @@
+import React, { useRef, useEffect, FC } from 'react';
+import { View } from 'react-native';
+import { useForm } from 'react-hook-form';
+import { useToast, ToastProps } from 'mbp-components-rn-toast';
+import { useUpdatePasswordMutation } from '../../../API/mutation/updatePassword/updatePassword';
+import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import Button from '../../UI/Button/Button';
+import Styles from './UpdatePassword.style';
+import DrawerV2 from '../../UI/DrawerV2/DrawerV2';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import spacing from '../../../styles/definitions/spacing';
+import Toast from '../../UI/Toast/Toast';
+import { getGQLErrorMessage } from '../../../utils/functions';
+
+export interface UpdatePasswordProps {
+  onClosed: (toast?: ToastProps) => void; // On Success toast must be in the parent after modal dismissed
+}
+
+export type FormData = {
+  newPassword: string;
+  confirmPassword: string;
+  currentPassword: string;
+};
+
+const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
+  const safeAreaInsets = useSafeArea();
+  const toast = useToast();
+
+
+  /**
+   * Form
+   */
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+
+
+  /**
+   * Refs
+   */
+  const confirmPasswordRef = useRef(null);
+  const currentPasswordRef = useRef(null);
+  const onCloseRef = useRef<(args?: ToastProps) => void>(null);
+
+
+  /**
+   * Register form
+   */
+  useEffect(() => {
+    register({ name: 'newPassword' }, { required: true });
+
+    register(
+      { name: 'confirmPassword' },
+      { required: 'Please confirm your password',
+        validate: (v) => {
+          if (v === watch('newPassword')) return true;
+          return 'Password do not match';
+        } },
+    );
+
+    register(
+      { name: 'currentPassword' },
+      { required: 'Please enter your current password', pattern: /^.{6,}$/ },
+    );
+  }, [register]);
+
+
+  /**
+   * Mutation
+   */
+  const [mutation, { loading }] = useUpdatePasswordMutation({
+    onCompleted: () => {
+      onCloseRef.current({
+        duration: 1000,
+        component: (
+          <Toast
+            type="SUCCESS"
+            content="Password Updated"
+          />
+        ),
+        dismissible: false,
+      });
+    },
+    onError: (e) => {
+      toast.push({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
+        ),
+        dismissible: false,
+      });
+    },
+  });
+
+
+  /**
+   * On Submit
+   */
+  const onSubmit = (data: FormData) => {
+    mutation({
+      variables: {
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      },
+    });
+  };
+
+
+  return (
+    <DrawerV2 onClosed={props.onClosed}>
+      {({ onClose }) => {
+        onCloseRef.current = onClose;
+
+        return (
+          <View style={{ paddingBottom: safeAreaInsets.bottom + spacing.small }}>
+            <View style={Styles.wrap}>
+              <View style={Styles.input}>
+                <TextInput
+                  name="newPassword"
+                  onChangeText={(text) => {
+                    // Validate on change if there's an error, otherwise validate onBlur
+                    setValue('newPassword', text, !!errors.newPassword);
+                  }}
+                  placeholder="Enter new password"
+                  secureTextEntry
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                  errors={errors}
+                  onBlur={() => triggerValidation('newPassword')}
+                  onSubmitEditing={() => {
+                    // eslint-disable-next-line no-unused-expressions
+                    confirmPasswordRef.current?.focus();
+                  }}
+                />
+              </View>
+
+              <View style={Styles.input}>
+                <TextInput
+                  name="confirmPassword"
+                  setRef={(e) => {
+                    confirmPasswordRef.current = e;
+                  }}
+                  onChangeText={(text) => {
+                    // Validate on change if there's an error, otherwise validate onBlur
+                    setValue('confirmPassword', text, !!errors.confirmPassword);
+                  }}
+                  placeholder="Enter new password again"
+                  secureTextEntry
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  errors={errors}
+                  onBlur={() => triggerValidation('confirmPassword')}
+                  onSubmitEditing={() => {
+                    // eslint-disable-next-line no-unused-expressions
+                    currentPasswordRef.current?.focus();
+                  }}
+                />
+              </View>
+
+              <View style={Styles.input}>
+                <TextInput
+                  name="currentPassword"
+                  setRef={(e) => {
+                    currentPasswordRef.current = e;
+                  }}
+                  onChangeText={(text) => {
+                    // Validate on change if there's an error, otherwise validate onBlur
+                    setValue('currentPassword', text, !!errors.currentPassword);
+                  }}
+                  placeholder="Enter your current password"
+                  secureTextEntry
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  errors={errors}
+                  onBlur={() => triggerValidation('currentPassword')}
+                  onSubmitEditing={handleSubmit(onSubmit)}
+                />
+              </View>
+
+              <View style={Styles.input}>
+                <Button
+                  title={loading ? 'Updating' : 'Update Password'}
+                  onPress={handleSubmit(onSubmit)}
+                  disabled={!isValid || !dirty}
+                  loading={loading}
+                />
+              </View>
+            </View>
+          </View>
+        );
+      }}
+    </DrawerV2>
+  );
+};
+
+export default UpdatePassword;

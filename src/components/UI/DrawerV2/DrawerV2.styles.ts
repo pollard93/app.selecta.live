@@ -9,13 +9,7 @@ export default StyleSheet.create({
   },
   bar: {
     alignItems: 'center',
-    justifyContent: 'center'
-    // alignSelf: 'stretch',
-    // borderTopWidth: 1,
-    // justifyContent: 'center',
-    // left: 0,
-    // position: 'absolute',
-    // right: 0,
+    justifyContent: 'center',
   },
 });
 

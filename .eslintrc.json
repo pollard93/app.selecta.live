@@ -278,6 +278,8 @@
           "updateChannel_updateChannel",
           "updateChannel",
           "updateChannelVariables",
+          "updatePassword",
+          "updatePasswordVariables",
           "updateSelf_updateSelf_profilePicture_url",
           "updateSelf_updateSelf_profilePicture",
           "updateSelf_updateSelf_requiresUpdate",
