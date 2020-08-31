@@ -4,6 +4,7 @@ import { useToast } from 'mbp-components-rn-toast';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from './Toast.style';
 import H4 from '../Typography/components/H4';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 export interface ToastProps {
   content: string;
@@ -12,7 +13,7 @@ export interface ToastProps {
 
 const Toast: FC<ToastProps> = (props) => {
   const type = props.type || 'INFO';
-  const { safeAreaInsets } = useToast();
+  const safeAreaInsets = useSafeArea();
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
   return (

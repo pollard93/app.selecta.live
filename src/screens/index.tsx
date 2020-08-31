@@ -29,6 +29,7 @@ import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStr
 import StreamSelfScreen from './StreamSelfScreen/StreamSelfScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import ProfileScreen from './ProfileScreen/ProfileScreen';
+import ToastOverlay from './ToastOverlay/ToastOverlay';
 import ConsumingStreamProfilesScreen from './ConsumingStreamProfilesScreen/ConsumingStreamProfilesScreen';
 import { ScreenProps } from './utils/interfaces';
 import NotificationsScreen from './NotificationsScreen/NotificationsScreen';
@@ -36,6 +37,25 @@ import ScreenPropsProvider from '../modules/ScreenPropsProvider/ScreenPropsProvi
 
 
 const wrapContext = (Component) => {
+  /**
+   * Overlay component
+   */
+  if(!!Component.prototype.options?.overlay){
+    const wrapped = (props: ScreenProps) => {
+      return (
+        <ScreenPropsProvider {...props}>
+          <Component {...props} />
+        </ScreenPropsProvider>
+      );
+    };
+
+    // Allows static options to be called for react-native-navigation
+    (wrapped as any).options = Component.prototype.options;
+
+    return wrapped;
+  }
+
+
   /**
    * Wrap without SafeArea
    */
@@ -120,4 +140,5 @@ export const registerScreens = () => {
   Navigation.registerComponent(ProfileScreen.prototype.ScreenName, () => wrapContext(ProfileScreen));
   Navigation.registerComponent(ConsumingStreamProfilesScreen.prototype.ScreenName, () => wrapContext(ConsumingStreamProfilesScreen));
   Navigation.registerComponent(NotificationsScreen.prototype.ScreenName, () => wrapContext(NotificationsScreen));
+  Navigation.registerComponent(ToastOverlay.prototype.ScreenName, () => wrapContext(ToastOverlay));
 };

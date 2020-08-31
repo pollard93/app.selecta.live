@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import React, { FC, useEffect } from 'react';
-import { View, SafeAreaView, Linking } from 'react-native';
+import { View, SafeAreaView, Linking, Button } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
@@ -92,6 +92,29 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
   return (
     <View style={GlobalStyles.PageFill}>
       <Header />
+
+      <Button title="TOAST" onPress={async () => {
+        try {
+          const test = await Navigation.showOverlay({
+            component: {
+              name: 'Toast',
+              passProps: {
+                duration: 1000,
+                component: (
+                  <Toast
+                    type="ERROR"
+                    content="Unable to open link"
+                  />
+                ),
+                dismissible: false,
+              },
+            },
+          })
+          console.log("test", test)
+        } catch (e){
+          console.log("e", e)
+        }
+      }} />
 
       <SafeAreaView style={GlobalStyles.PageFill}>
         {

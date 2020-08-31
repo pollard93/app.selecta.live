@@ -9,6 +9,7 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { goToLogin, openModalScreen } from '../../../screens/utils';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
+import UpdateEmail from '../UpdateEmail/UpdateEmail';
 
 export interface ProfileProps {}
 
@@ -50,6 +51,24 @@ const Profile: FC<ProfileProps> = (props) => {
         }, 'UPDATE_PASSWORD', OptionsModalTransitionStyle.crossDissolve);
       }}>
         <Text>Edit password</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => {
+        openModalScreen({
+          component: (
+            <UpdateEmail
+              onClosed={(toastProps?: ToastProps) => {
+                Navigation.dismissModal('UPDATE_EMAIL');
+
+                if (toastProps) {
+                  toast.push(toastProps);
+                }
+              }}
+            />
+          ),
+        }, 'UPDATE_EMAIL', OptionsModalTransitionStyle.crossDissolve);
+      }}>
+        <Text>Edit email</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onLogout}>
