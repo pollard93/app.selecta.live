@@ -47,19 +47,6 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
     <View style={GlobalStyles.PageFill}>
       <Header />
 
-      <Button title="TOAST" onPress={async () => {
-        pushToast({
-          duration: 1000,
-          component: (
-            <Toast
-              type="ERROR"
-              content="Unable to open link"
-            />
-          ),
-          dismissible: false,
-        });
-      }} />
-
       <SafeAreaView style={GlobalStyles.PageFill}>
         {
           queryResult.loading || queryResult.error

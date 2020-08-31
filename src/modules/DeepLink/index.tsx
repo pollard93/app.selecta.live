@@ -1,16 +1,70 @@
 import React from 'react';
 import Config from 'react-native-config';
 import { Navigation } from 'react-native-navigation';
+import jwtDecode from 'jwt-decode';
 import client from '../../ApolloClient';
 import { VERIFY_USER_QUERY } from '../../API/query/verifyUser/verifyUser';
 import { VERIFY_EMAIL_CHANGE_QUERY } from '../../API/query/verifyEmailChange/verifyEmailChange';
 import Toast from '../../components/UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
 import { pushToast } from '../Toast';
-import { pushScreen } from '../../screens/utils';
+import { pushScreen, openScreenAsModal } from '../../screens/utils';
 import { STACK } from '../../screens/utils/interfaces';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
+import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
+import { store } from '../../utils/storage';
+import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
+import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
+
+
+/**
+ * Utility to validate the user is logged in
+ * Pushes toast and returns false if not
+ */
+const isLoggedIn = () => {
+  try {
+    client.readQuery<getSelf>({
+      query: GET_SELF_QUERY,
+    });
+    return true;
+  } catch {
+    pushToast({
+      duration: 3000,
+      component: (
+        <Toast
+          type="ERROR"
+          content="Please login"
+        />
+      ),
+      dismissible: false,
+    });
+    return false;
+  }
+};
+
+
+/**
+ * Utility to validate the expiry of a token in a deep link
+ * Pushes toast and returns false if expired
+ */
+const validateToken = (token: string) => {
+  const { exp } = jwtDecode(token);
+  if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
+    pushToast({
+      duration: 1000,
+      component: (
+        <Toast
+          type="ERROR"
+          content="Link has expired"
+        />
+      ),
+      dismissible: false,
+    });
+    return false;
+  }
+  return true;
+};
 
 
 /**
@@ -20,11 +74,24 @@ export const onOpenLink = async ({ url }: { url: string }) => {
   try {
     const uri = url.replace(Config.REACT_APP_DEEP_LINKING_BASE_URL.toLowerCase(), '');
 
+
     switch (true) {
+      /**
+       * Reset Password
+       */
+      case uri.startsWith('reset-password/'):
+        const token = uri.replace('reset-password/', '');
+        if (!validateToken(token)) break;
+        openScreenAsModal(STACK.RESET_PASSWORD, ResetPasswordScreen, { token });
+        break;
+
+
       /**
        * Verify
        */
       case uri.startsWith('verify/'):
+        if (!isLoggedIn()) break;
+
         try {
           await client.query({
             query: VERIFY_USER_QUERY,
@@ -59,10 +126,13 @@ export const onOpenLink = async ({ url }: { url: string }) => {
         }
         break;
 
+
       /**
        * Verify email
        */
       case uri.startsWith('verify-email/'):
+        if (!isLoggedIn()) break;
+
         try {
           await client.query({
             query: VERIFY_EMAIL_CHANGE_QUERY,
@@ -72,6 +142,20 @@ export const onOpenLink = async ({ url }: { url: string }) => {
               },
             },
           });
+
+
+          /**
+           * On completed, store result in async storage
+           */
+          try {
+            const data = client.readQuery<getSelf>({
+              query: GET_SELF_QUERY,
+            });
+
+            await store('getSelf', data.getSelf);
+          // eslint-disable-next-line no-empty
+          } catch {}
+
 
           pushToast({
             duration: 3000,
@@ -102,6 +186,8 @@ export const onOpenLink = async ({ url }: { url: string }) => {
        * Stream view
        */
       case uri.startsWith('stream/'):
+        if (!isLoggedIn()) break;
+
         /**
          * Clear TAB_HOME stack, modals and switch to TAB_HOME tab
          */
@@ -120,6 +206,8 @@ export const onOpenLink = async ({ url }: { url: string }) => {
        * Channel view
        */
       case uri.startsWith('channel/'):
+        if (!isLoggedIn()) break;
+
         /**
          * Clear TAB_HOME stack, modals and switch to TAB_HOME tab
          */

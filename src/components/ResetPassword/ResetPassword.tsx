@@ -16,6 +16,7 @@ import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../modules/Toast';
+import { STACK } from '../../screens/utils/interfaces';
 
 export interface ResetPasswordProps {
   token: string;
@@ -134,7 +135,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
    * Pop this screen
    */
   const onPop = () => {
-    Navigation.pop(screenProps.componentId);
+    Navigation.dismissModal(STACK.RESET_PASSWORD);
   };
 
 

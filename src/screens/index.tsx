@@ -21,7 +21,6 @@ import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStarted
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
-import NetworkNotifier from '../modules/NetworkNotifier/NetworkNotifier';
 import UpdateChannelScreen from './UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from './StreamSelfsScreen/StreamSelfsScreen';
 import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStreamScreen';
@@ -63,11 +62,9 @@ const wrapContext = (Component) => {
       return (
         <ScreenPropsProvider {...props}>
           <ApolloProvider client={ApolloClient}>
-            <NetworkNotifier>
-              <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-                <Component {...props} />
-              </View>
-            </NetworkNotifier>
+            <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+              <Component {...props} />
+            </View>
           </ApolloProvider>
         </ScreenPropsProvider>
       );

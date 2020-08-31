@@ -36,53 +36,6 @@ const Login: FC<LoginProps> = (props) => {
 
 
   /**
-   * Reset password deep linking
-   * Listens for live.selecta.app://reset-password/${token}
-   * Pushes ResetPasswordScreen with token
-   */
-  useEffect(() => {
-    const onOpen = (event: {url: string}) => {
-      try {
-        const uri = event.url.replace(Config.REACT_APP_DEEP_LINKING_BASE_URL, '');
-        if (uri.startsWith('reset-password')) {
-          /**
-           * Get token and check the expiry is not within 5 minutes
-           */
-          const token = uri.replace('reset-password/', '');
-          const { exp } = jwtDecode(token);
-          if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            pushToast({
-              duration: 1000,
-              component: (
-                <Toast
-                  type="ERROR"
-                  content="Link has expired"
-                />
-              ),
-              dismissible: false,
-            });
-            return;
-          }
-
-          /**
-           * Push resetPasswordScreen
-           */
-          pushScreen(screenProps.componentId, ResetPasswordScreen, { token });
-        }
-      // eslint-disable-next-line no-empty
-      } catch (e) {}
-    };
-
-
-    /**
-     * Handle iOS
-     */
-    Linking.addEventListener('url', onOpen);
-    return () => Linking.removeEventListener('url', onOpen);
-  }, []);
-
-
-  /**
    * Get self query, binds notifications and navigates home on completion
    */
   const [getSelfQuery] = useGetSelfLazyQuery({

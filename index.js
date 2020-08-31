@@ -3,6 +3,7 @@ import { Linking } from 'react-native';
 import { registerScreens } from './src/screens';
 import { InitScreenName } from './src/screens/InitScreen/InitScreen';
 import { onOpenLink } from './src/modules/DeepLink';
+import NetworkNotifier from './src/modules/NetworkNotifier';
 
 // eslint-disable-next-line no-console
 console.disableYellowBox = true;
@@ -17,6 +18,14 @@ Navigation.events().registerAppLaunchedListener(() => {
   Linking.removeEventListener('url', onOpenLink);
   Linking.addEventListener('url', onOpenLink);
 
+  /**
+   * Start listening to network connection
+   */
+  NetworkNotifier();
+
+  /**
+   * Set app root
+   */
   Navigation.setRoot({
     root: {
       component: {
