@@ -5,6 +5,7 @@ import { VERIFY_USER_QUERY } from '../../API/query/verifyUser/verifyUser';
 import { VERIFY_EMAIL_CHANGE_QUERY } from '../../API/query/verifyEmailChange/verifyEmailChange';
 import Toast from '../../components/UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
+import { pushToast } from '../Toast';
 
 export type DeepLinkUri = 'verify/' | 'verify-email/';
 
@@ -23,7 +24,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
           },
         });
 
-        global.toast.push({
+        pushToast({
           duration: 3000,
           component: (
             <Toast
@@ -34,7 +35,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
           dismissible: false,
         });
       } catch (e) {
-        global.toast.push({
+        pushToast({
           duration: 3000,
           component: (
             <Toast
@@ -46,7 +47,6 @@ export const onOpenLink = async ({ url }: { url: string }) => {
         });
       }
     } else if (uri.startsWith('verify-email/')) {
-      console.log("onOpenLink -> global.toast", global.toast);
       try {
         await client.query({
           query: VERIFY_EMAIL_CHANGE_QUERY,
@@ -57,7 +57,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
           },
         });
 
-        global.toast.push({
+        pushToast({
           duration: 3000,
           component: (
             <Toast
@@ -68,7 +68,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
           dismissible: false,
         });
       } catch (e) {
-        global.toast.push({
+        pushToast({
           duration: 3000,
           component: (
             <Toast
@@ -80,5 +80,16 @@ export const onOpenLink = async ({ url }: { url: string }) => {
         });
       }
     }
-  } catch {}
+  } catch {
+    pushToast({
+      duration: 3000,
+      component: (
+        <Toast
+          type="ERROR"
+          content='Cannot open link'
+        />
+      ),
+      dismissible: false,
+    });
+  }
 };

@@ -5,11 +5,11 @@ import { expect } from 'chai';
 import { Alert } from 'react-native';
 import sinon from 'sinon';
 import wait from 'waait';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import DeleteStream from './DeleteStream';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import Button from '../../UI/Button/Button';
+import * as ToastModule from '../../../modules/Toast';
 
 describe('<DeleteStream />', () => {
   /**
@@ -17,14 +17,14 @@ describe('<DeleteStream />', () => {
    */
   const sandbox = sinon.createSandbox();
   let alertSpy = sandbox.spy(Alert, 'alert');
-  let toastSpy = sandbox.spy(useToast(), 'push');
+  let toastSpy = sandbox.spy(ToastModule, 'pushToast');
   let onPopSpy = sandbox.spy();
 
   afterEach(() => {
     sandbox.restore();
 
     alertSpy = sandbox.spy(Alert, 'alert');
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
     onPopSpy = sandbox.spy();
   });
 

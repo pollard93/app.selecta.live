@@ -5,10 +5,10 @@ import { MockedProvider, wait } from '@apollo/react-testing';
 import { expect } from 'chai';
 import { TextInput, Button } from 'react-native';
 import Sinon from 'sinon';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import ReportStream from './ReportStream';
 import { REPORT_STREAM_MUTATION } from '../../../API/mutation/reportStream/reportStream';
+import * as ToastModule from '../../../modules/Toast';
 
 const client = mockClient();
 
@@ -20,7 +20,7 @@ describe('<ReportStream />', () => {
   let toastSpy;
 
   beforeEach(() => {
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
   });
 
   afterEach(() => {

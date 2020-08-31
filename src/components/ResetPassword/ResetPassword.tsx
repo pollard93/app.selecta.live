@@ -1,6 +1,5 @@
 import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import ResetPasswordView from './ResetPasswordView';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
@@ -16,6 +15,7 @@ import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingW
 import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
 export interface ResetPasswordProps {
   token: string;
@@ -24,7 +24,6 @@ export interface ResetPasswordProps {
 const ResetPassword: FC<ResetPasswordProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const context = useToast();
   const screenProps = useScreenProps();
 
 
@@ -67,7 +66,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -106,7 +105,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

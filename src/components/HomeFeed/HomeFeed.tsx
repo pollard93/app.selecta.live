@@ -2,7 +2,6 @@
 import React, { FC, useEffect } from 'react';
 import { View, SafeAreaView, Linking, Button } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
@@ -15,6 +14,7 @@ import { pushScreen } from '../../screens/utils';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
 
 export interface HomeFeedProps {
@@ -22,7 +22,6 @@ export interface HomeFeedProps {
 }
 
 const HomeFeed: FC<HomeFeedProps> = (props) => {
-  const toast = useToast();
   const queryResult = useGetHomeFeedQuery();
   const screenProps = useScreenProps();
 
@@ -35,7 +34,7 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
 
     // If toastMessage given then show toast
     if (props.toastMessage) {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content={props.toastMessage} />
@@ -69,7 +68,7 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
           break;
 
         default:
-          toast.push({
+          pushToast({
             duration: 1000,
             component: (
               <Toast
@@ -94,26 +93,16 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
       <Header />
 
       <Button title="TOAST" onPress={async () => {
-        try {
-          const test = await Navigation.showOverlay({
-            component: {
-              name: 'Toast',
-              passProps: {
-                duration: 1000,
-                component: (
-                  <Toast
-                    type="ERROR"
-                    content="Unable to open link"
-                  />
-                ),
-                dismissible: false,
-              },
-            },
-          })
-          console.log("test", test)
-        } catch (e){
-          console.log("e", e)
-        }
+        pushToast({
+          duration: 1000,
+          component: (
+            <Toast
+              type="ERROR"
+              content="Unable to open link"
+            />
+          ),
+          dismissible: false,
+        });
       }} />
 
       <SafeAreaView style={GlobalStyles.PageFill}>

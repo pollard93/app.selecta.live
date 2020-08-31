@@ -1,8 +1,8 @@
 import { Navigation } from 'react-native-navigation';
+import { Linking } from 'react-native';
 import { registerScreens } from './src/screens';
 import { InitScreenName } from './src/screens/InitScreen/InitScreen';
 import { onOpenLink } from './src/modules/DeepLink';
-import { Linking } from 'react-native';
 
 // eslint-disable-next-line no-console
 console.disableYellowBox = true;

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { useToast, ToastProps } from 'mbp-components-rn-toast';
 import { validate as validateEmail } from 'email-validator';
 import { useUpdateEmailMutation } from '../../../API/mutation/updateEmail/updateEmail';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
@@ -12,9 +11,10 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import spacing from '../../../styles/definitions/spacing';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { pushToast } from '../../../modules/Toast';
 
 export interface UpdateEmailProps {
-  onClosed: (toast?: ToastProps) => void; // On Success toast must be in the parent after modal dismissed
+  onClosed: () => void; // On Success toast must be in the parent after modal dismissed
 }
 
 export type FormData = {
@@ -24,20 +24,19 @@ export type FormData = {
 
 const UpdateEmail: FC<UpdateEmailProps> = (props) => {
   const safeAreaInsets = useSafeArea();
-  const toast = useToast();
 
 
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
    * Refs
    */
   const passwordRef = useRef(null);
-  const onCloseRef = useRef<(args?: ToastProps) => void>(null);
+  const onCloseRef = useRef<() => void>(null);
 
 
   /**
@@ -58,7 +57,9 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
    */
   const [mutation, { loading }] = useUpdateEmailMutation({
     onCompleted: () => {
-      onCloseRef.current({
+      onCloseRef.current();
+
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -70,7 +71,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

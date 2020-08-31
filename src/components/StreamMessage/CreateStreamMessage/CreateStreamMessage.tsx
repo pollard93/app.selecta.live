@@ -1,5 +1,4 @@
 import React, { useState, memo, FC } from 'react';
-import { useToast } from 'mbp-components-rn-toast';
 import { usePutStreamMessageMutation } from '../../../API/mutation/putStreamMessage/putStreamMessage';
 import { getStreamMessagesVariables, getStreamMessages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
@@ -7,13 +6,13 @@ import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { getChannelToken } from '../../../ApolloClient';
 import MessageInput from '../../UI/Form/components/MessageInput/MessageInput';
+import { pushToast } from '../../../modules/Toast';
 
 interface CreateStreamMessageProps {
   variables: getStreamMessagesVariables; // Variables for query to append to cache
 }
 
 const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
-  const toast = useToast();
   const [message, setMessage] = useState('');
 
 
@@ -59,7 +58,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
       } catch (e) {}
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

@@ -5,10 +5,10 @@ import { expect } from 'chai';
 import { Button, Alert, Text } from 'react-native';
 import sinon from 'sinon';
 import wait from 'waait';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import ChannelFunds from './ChannelFunds';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
+import * as ToastModule from '../../../modules/Toast';
 
 describe('<ChannelFunds />', () => {
   /**
@@ -16,12 +16,12 @@ describe('<ChannelFunds />', () => {
    */
   const sandbox = sinon.createSandbox();
   let alertSpy = sandbox.spy(Alert, 'alert');
-  let toastSpy = sandbox.spy(useToast(), 'push');
+  let toastSpy = sandbox.spy(ToastModule, 'pushToast');
 
   afterEach(() => {
     sandbox.restore();
     alertSpy = sandbox.spy(Alert, 'alert');
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
   });
 
   test('should succeed', async () => {

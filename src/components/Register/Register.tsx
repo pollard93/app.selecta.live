@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import { useApolloClient } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
@@ -15,6 +14,7 @@ import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
 export interface RegisterProps {}
 
@@ -22,7 +22,6 @@ const Register: FC<RegisterProps> = () => {
   const screenProps = useScreenProps();
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const context = useToast();
 
 
   /**
@@ -58,7 +57,7 @@ const Register: FC<RegisterProps> = () => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -92,7 +91,7 @@ const Register: FC<RegisterProps> = () => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

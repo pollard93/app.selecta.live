@@ -1,14 +1,15 @@
-import React, { useMemo, useEffect, useState, FC, useRef, ReactNode } from 'react';
+import React, { useEffect, useState, FC, useRef, ReactNode } from 'react';
 import { Animated, TouchableOpacity, View } from 'react-native';
+import { Navigation, Options } from 'react-native-navigation';
 import styles from './ToastOverlay.styles';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import { Navigation, Options } from 'react-native-navigation';
 
 
 export interface ToastOverlayProps {
   duration: number;
   component: ReactNode;
-  dismissible?: boolean;
+  position?: 'top' | 'bottom'; // Default top
+  dismissible?: boolean; // Default false
 }
 
 
@@ -105,13 +106,12 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
    * used for interpolating the transform.translateY
    */
   const getOutputRange = () => {
-    switch ('top') {
+    switch (props.position) {
       case 'bottom':
         return [layout.height, 0];
       case 'top':
-        return [layout.height * -1, 0];
       default:
-        return [0, 0];
+        return [layout.height * -1, 0];
     }
   };
 
@@ -123,7 +123,6 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
   const ToastWrap = () => (
     <View
       onLayout={(event) => {
-        console.log("event", event)
         if (!layout) {
           /**
            * When layout is set, we can now animate using these values
@@ -207,11 +206,11 @@ ToastOverlay.prototype.ScreenName = 'ToastOverlay';
  */
 (ToastOverlay.prototype.options as Options) = {
   layout: {
-    componentBackgroundColor: 'transparent'
+    componentBackgroundColor: 'transparent',
   },
   overlay: {
-    interceptTouchOutside: false
-  }
+    interceptTouchOutside: false,
+  },
 };
 
 /**

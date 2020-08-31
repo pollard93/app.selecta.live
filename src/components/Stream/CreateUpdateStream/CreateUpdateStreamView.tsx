@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
-import { useToast } from 'mbp-components-rn-toast';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
@@ -31,6 +30,7 @@ import Switch from '../../UI/Form/components/Switch/Switch';
 import TagInput from '../../UI/Form/components/TagInput/TagInput';
 import { GET_STREAM_SELF_QUERY } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
+import { pushToast } from '../../../modules/Toast';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -131,7 +131,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   /**
    * Misc
    */
-  const toast = useToast();
   const safeAreaInsets = useSafeArea();
   const [loading, setLoading] = useState(false);
 
@@ -213,7 +212,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -227,7 +226,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -268,7 +267,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -282,7 +281,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -348,7 +347,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       } catch {
         setLoading(false);
 
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
             <Toast
@@ -379,7 +378,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       } catch {
         setLoading(false);
 
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
             <Toast

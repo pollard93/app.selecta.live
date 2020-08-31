@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Mon Aug 31 2020 11:45:09 GMT+0100 (British Summer Time)
+# timestamp: Mon Aug 31 2020 12:58:13 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String

@@ -4,7 +4,6 @@ import SplashScreen from 'react-native-splash-screen';
 import { Linking } from 'react-native';
 import jwtDecode from 'jwt-decode';
 import Config from 'react-native-config';
-import { useToast } from 'mbp-components-rn-toast';
 import LoginView from './LoginView';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
@@ -24,6 +23,7 @@ import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
 export interface LoginProps {
   toastMessage?: string;
@@ -32,7 +32,6 @@ export interface LoginProps {
 const Login: FC<LoginProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const toast = useToast();
   const screenProps = useScreenProps();
 
 
@@ -52,7 +51,7 @@ const Login: FC<LoginProps> = (props) => {
           const token = uri.replace('reset-password/', '');
           const { exp } = jwtDecode(token);
           if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            toast.push({
+            pushToast({
               duration: 1000,
               component: (
                 <Toast
@@ -122,7 +121,7 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -156,7 +155,7 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -175,7 +174,7 @@ const Login: FC<LoginProps> = (props) => {
    */
   useEffect(() => {
     if (props.toastMessage) {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content={props.toastMessage} />
@@ -212,7 +211,7 @@ const Login: FC<LoginProps> = (props) => {
     pushScreen(screenProps.componentId, RequestPasswordResetScreen, {
       defaultEmailValue,
       onCompletion: () => {
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
             <Toast

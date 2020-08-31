@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
-import { ToastProps, useToast } from 'mbp-components-rn-toast';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import H2 from '../../UI/Typography/components/H2';
 import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';
@@ -10,11 +9,12 @@ import { goToLogin, openModalScreen } from '../../../screens/utils';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
 import UpdateEmail from '../UpdateEmail/UpdateEmail';
+import { ToastOverlayProps } from '../../../screens/ToastOverlay/ToastOverlay';
+import { pushToast } from '../../../modules/Toast';
 
 export interface ProfileProps {}
 
 const Profile: FC<ProfileProps> = (props) => {
-  const toast = useToast();
   const self = useGetSelf();
   const screenProps = useScreenProps();
 
@@ -39,11 +39,11 @@ const Profile: FC<ProfileProps> = (props) => {
         openModalScreen({
           component: (
             <UpdatePassword
-              onClosed={(toastProps?: ToastProps) => {
+              onClosed={(toastProps?: ToastOverlayProps) => {
                 Navigation.dismissModal('UPDATE_PASSWORD');
 
                 if (toastProps) {
-                  toast.push(toastProps);
+                  pushToast(toastProps);
                 }
               }}
             />
@@ -61,7 +61,7 @@ const Profile: FC<ProfileProps> = (props) => {
                 Navigation.dismissModal('UPDATE_EMAIL');
 
                 if (toastProps) {
-                  toast.push(toastProps);
+                  pushToast(toastProps);
                 }
               }}
             />

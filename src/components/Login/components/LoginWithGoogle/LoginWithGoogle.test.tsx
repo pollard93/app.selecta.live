@@ -5,7 +5,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../../API/utils/mockClient';
 import LoginWithGoogle from './LoginWithGoogle';
 import { GET_ACCESS_TOKEN_QUERY } from '../../../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
@@ -18,6 +17,7 @@ import InAppPurchases from '../../../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import Button from '../../../UI/Button/Button';
 import { store } from '../../../../utils/storage';
+import * as ToastModule from '../../../../modules/Toast';
 
 describe('<LoginWithGoogle />', () => {
   /**
@@ -32,7 +32,7 @@ describe('<LoginWithGoogle />', () => {
   let signOutSpy = sandbox.spy(GoogleSignin, 'signOut');
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -48,7 +48,7 @@ describe('<LoginWithGoogle />', () => {
     signOutSpy = sandbox.spy(GoogleSignin, 'signOut');
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');

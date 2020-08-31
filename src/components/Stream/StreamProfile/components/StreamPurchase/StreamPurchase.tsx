@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
@@ -16,6 +15,7 @@ import Styles, { DynamicStyles } from './StreamPurchase.styles';
 import H1 from '../../../../UI/Typography/components/H1';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
 import { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
+import { pushToast } from '../../../../../modules/Toast';
 
 interface StreamPurchaseProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -23,7 +23,6 @@ interface StreamPurchaseProps {
 
 const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
   const self = useGetSelf();
-  const toast = useToast();
   const [confirming, setConfirming] = useState(false);
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
   const dynamicStyles = useDynamicValue(DynamicStyles);
@@ -53,7 +52,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
       // eslint-disable-next-line no-empty
       } catch {}
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -65,7 +64,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

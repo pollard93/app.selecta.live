@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { useToast, ToastProps } from 'mbp-components-rn-toast';
 import { useUpdatePasswordMutation } from '../../../API/mutation/updatePassword/updatePassword';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import Button from '../../UI/Button/Button';
@@ -11,9 +10,10 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import spacing from '../../../styles/definitions/spacing';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { pushToast } from '../../../modules/Toast';
 
 export interface UpdatePasswordProps {
-  onClosed: (toast?: ToastProps) => void; // On Success toast must be in the parent after modal dismissed
+  onClosed: () => void; // On Success toast must be in the parent after modal dismissed
 }
 
 export type FormData = {
@@ -24,7 +24,6 @@ export type FormData = {
 
 const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
   const safeAreaInsets = useSafeArea();
-  const toast = useToast();
 
 
   /**
@@ -38,7 +37,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
    */
   const confirmPasswordRef = useRef(null);
   const currentPasswordRef = useRef(null);
-  const onCloseRef = useRef<(args?: ToastProps) => void>(null);
+  const onCloseRef = useRef<() => void>(null);
 
 
   /**
@@ -68,7 +67,9 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
    */
   const [mutation, { loading }] = useUpdatePasswordMutation({
     onCompleted: () => {
-      onCloseRef.current({
+      onCloseRef.current();
+
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -80,7 +81,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

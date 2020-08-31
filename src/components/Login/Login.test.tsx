@@ -4,7 +4,6 @@ import wait from 'waait';
 import { expect, assert } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import SplashScreen from 'react-native-splash-screen';
 import Login from './Login';
 import mockClient from '../../API/utils/mockClient';
@@ -20,6 +19,7 @@ import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen
 import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import * as ToastModule from '../../modules/Toast';
 
 describe('<Login >', () => {
   /**
@@ -28,7 +28,7 @@ describe('<Login >', () => {
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -39,7 +39,7 @@ describe('<Login >', () => {
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');

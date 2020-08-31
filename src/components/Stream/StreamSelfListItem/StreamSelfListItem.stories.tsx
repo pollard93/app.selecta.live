@@ -3,12 +3,10 @@ import { storiesOf } from '@storybook/react-native';
 import StreamSelfListItem from './StreamSelfListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 import StreamSelfListItemSkeleton from './StreamSelfListItemSkeleton';
 
 storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
-  .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .add('StreamSelfsListItem - Long title, multiple tags', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });

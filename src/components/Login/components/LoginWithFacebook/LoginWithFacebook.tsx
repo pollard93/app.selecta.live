@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Alert } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
@@ -17,6 +16,7 @@ import Button from '../../../UI/Button/Button';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../../../utils/storage';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../../../modules/Toast';
 
 interface LoginWithFacebookProps {
   disabled?: boolean;
@@ -26,7 +26,6 @@ interface LoginWithFacebookProps {
 const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  const context = useToast();
   const screenProps = useScreenProps();
 
 
@@ -68,7 +67,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -107,7 +106,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
       setLoading(false);
       LoginManager.logOut();
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -176,7 +175,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
           () => {
             setLoading(false);
 
-            context.push({
+            pushToast({
               duration: 1000,
               component: (
                 <Toast content="Something went wrong" />

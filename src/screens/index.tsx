@@ -12,7 +12,6 @@ import RegisterScreen from './RegisterScreen/RegisterScreen';
 import RequireUpdateScreen from './RequireUpdateScreen/RequireUpdateScreen';
 import ResetPasswordScreen from './ResetPasswordScreen/ResetPasswordScreen';
 import RequestResetPasswordScreen from './RequestPasswordResetScreen/RequestPasswordResetScreen';
-import ToastProvider from '../modules/ToastProvider/ToastProvider';
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelSelfScreen from './ChannelSelfScreen/ChannelSelfScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
@@ -40,14 +39,12 @@ const wrapContext = (Component) => {
   /**
    * Overlay component
    */
-  if(!!Component.prototype.options?.overlay){
-    const wrapped = (props: ScreenProps) => {
-      return (
-        <ScreenPropsProvider {...props}>
-          <Component {...props} />
-        </ScreenPropsProvider>
-      );
-    };
+  if (Component.prototype.options?.overlay) {
+    const wrapped = (props: ScreenProps) => (
+      <ScreenPropsProvider {...props}>
+        <Component {...props} />
+      </ScreenPropsProvider>
+    );
 
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
@@ -66,13 +63,11 @@ const wrapContext = (Component) => {
       return (
         <ScreenPropsProvider {...props}>
           <ApolloProvider client={ApolloClient}>
-            <ToastProvider screenName={Component.prototype.ScreenName}>
-              <NetworkNotifier>
-                <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-                  <Component {...props} />
-                </View>
-              </NetworkNotifier>
-            </ToastProvider>
+            <NetworkNotifier>
+              <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+                <Component {...props} />
+              </View>
+            </NetworkNotifier>
           </ApolloProvider>
         </ScreenPropsProvider>
       );
@@ -94,16 +89,12 @@ const wrapContext = (Component) => {
     return (
       <ScreenPropsProvider {...props}>
         <ApolloProvider client={ApolloClient}>
-          <ToastProvider screenName={Component.prototype.ScreenName}>
-            <NetworkNotifier>
-              <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
-              <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-                <View style={GlobalStyles.PageFill}>
-                  <Component {...props} />
-                </View>
-              </SafeAreaView>
-            </NetworkNotifier>
-          </ToastProvider>
+          <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
+          <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+            <View style={GlobalStyles.PageFill}>
+              <Component {...props} />
+            </View>
+          </SafeAreaView>
         </ApolloProvider>
       </ScreenPropsProvider>
     );

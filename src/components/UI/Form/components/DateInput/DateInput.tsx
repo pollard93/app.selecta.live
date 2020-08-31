@@ -4,7 +4,6 @@ import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
 import DateTimePicker from '../../../DateTimePicker/components/DateTimePicker/DateTimePicker';
-import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
 import { formatForTimezone } from '../../../../../utils/functions';
 
 export interface DateInputProps {

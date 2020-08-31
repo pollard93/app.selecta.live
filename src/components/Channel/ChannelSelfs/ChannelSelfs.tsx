@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
-import { useToast } from 'mbp-components-rn-toast';
 import { GET_CHANNEL_SELFS_QUERY } from '../../../API/query/getChannelSelfs/getChannelSelfs';
 import { getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 import ChannelSelfListItem from '../ChannelSelfListItem/ChannelSelfListItem';
@@ -14,13 +13,13 @@ import { pushScreen } from '../../../screens/utils';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../../modules/Toast';
 
 class ChannelSelfsFlatList extends ApolloFlatList<getChannelSelfsVariables, getChannelSelfs, getChannelSelfs_getChannelSelfs_channels> {}
 
 export interface ChannelSelfsProps {}
 
 const ChannelSelfs: FC<ChannelSelfsProps> = () => {
-  const toast = useToast();
   const screenProps = useScreenProps();
 
 
@@ -36,7 +35,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
       pushScreen(screenProps.componentId, ChannelSelfScreen, {});
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

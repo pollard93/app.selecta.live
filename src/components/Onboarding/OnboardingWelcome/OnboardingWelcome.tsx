@@ -1,7 +1,6 @@
 import React, { useEffect, FC } from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { useToast } from 'mbp-components-rn-toast';
 import SplashScreen from 'react-native-splash-screen';
 import { Navigation } from 'react-native-navigation';
 import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
@@ -16,6 +15,7 @@ import Toast from '../../UI/Toast/Toast';
 import { useIsUsernameUniqueLazyQuery } from '../../../API/query/isUsernameUnique/isUsernameUnique';
 import SearchInput from '../../UI/Form/components/SearchInput/SearchInput';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../../modules/Toast';
 
 export interface OnboardingWelcomeProps {}
 
@@ -26,7 +26,6 @@ type FormData = {
 const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
   const screenProps = useScreenProps();
   const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation, setError, clearError } = useForm<FormData>({ mode: 'onChange' });
-  const toast = useToast();
 
   /**
    * Remove splash
@@ -97,7 +96,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
       pushScreen(screenProps.componentId, OnboardingNotificationsScreen, {});
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

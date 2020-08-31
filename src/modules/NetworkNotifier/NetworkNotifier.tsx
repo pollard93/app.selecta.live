@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import Toast from '../../components/UI/Toast/Toast';
+import { pushToast } from '../Toast';
 
 const NetworkNotifier = (props) => {
   const netInfoState = useRef<NetInfoState>();
@@ -14,7 +15,7 @@ const NetworkNotifier = (props) => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       if (!state.isConnected && netInfoState.current.isConnected) {
         setTimeout(() => {
-          global.toast.push({
+          pushToast({
             duration: 1000,
             component: (
               <Toast

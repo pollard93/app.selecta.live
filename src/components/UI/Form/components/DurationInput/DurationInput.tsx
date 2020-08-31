@@ -3,7 +3,6 @@ import { View, StyleProp, ViewStyle, TouchableOpacity, StyleSheet } from 'react-
 import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
-import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
 import DurationPicker from '../../../DateTimePicker/components/DurationPicker/DurationPicker';
 
 export interface DurationInputProps {

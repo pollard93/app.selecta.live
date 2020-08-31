@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Alert } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useApolloClient } from 'react-apollo';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useDeleteStreamMutation } from '../../../API/mutation/deleteStream/deleteStream';
@@ -9,6 +8,7 @@ import Toast from '../../UI/Toast/Toast';
 import Button from '../../UI/Button/Button';
 import { getStreamSelfs, getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
+import { pushToast } from '../../../modules/Toast';
 
 interface DeleteStreamProps {
   data: STREAM_SELF_FRAGMENT;
@@ -17,7 +17,6 @@ interface DeleteStreamProps {
 }
 
 const DeleteStream: FC<DeleteStreamProps> = (props) => {
-  const toast = useToast();
   const client = useApolloClient();
 
 
@@ -60,7 +59,7 @@ const DeleteStream: FC<DeleteStreamProps> = (props) => {
       props.onPop?.();
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

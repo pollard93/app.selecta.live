@@ -39,7 +39,7 @@ void (async function () {
     }, []);
 
     // Replace the camelcase allow rule with the new camelCases
-    (eslintrc.rules.camelcase[1] as any).allow = camelCases;
+    (eslintrc.rules.camelcase[1] as any).allow = camelCases.filter((value, index, self) => self.indexOf(value) === index);
 
     // Write .eslintrc.json back
     fs.writeFileSync('.eslintrc.json', JSON.stringify(eslintrc, null, 2));

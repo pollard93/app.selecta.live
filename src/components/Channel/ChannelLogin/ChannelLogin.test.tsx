@@ -4,12 +4,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
 import { TextInput } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import ChannelLogin from './ChannelLogin';
 import * as ScreenUtilsModule from '../../../screens/utils';
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
 import { getChannelAccessToken } from '../../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
+import * as ToastModule from '../../../modules/Toast';
 
 const flushPromises = () => new Promise((res) => process.nextTick(res));
 
@@ -19,13 +19,13 @@ describe('<ChannelLogin >', () => {
    */
   const sandbox = sinon.createSandbox();
 
-  let toastSpy = sandbox.spy(useToast(), 'push');
+  let toastSpy = sandbox.spy(ToastModule, 'pushToast');
   let goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
 
   afterEach(() => {
     sandbox.restore();
 
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
     goToChannelStackSpy = sandbox.spy(ScreenUtilsModule, 'goToChannelStack');
   });
 

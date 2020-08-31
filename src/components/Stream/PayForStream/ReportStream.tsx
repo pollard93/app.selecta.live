@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { View, Button, TextInput } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useReportStreamMutation } from '../../../API/mutation/reportStream/reportStream';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { pushToast } from '../../../modules/Toast';
 
 interface ReportStreamProps {
   id: string;
 }
 
 const ReportStream = (props: ReportStreamProps) => {
-  const toast = useToast();
   const [content, setContent] = useState('');
 
 
@@ -26,7 +25,7 @@ const ReportStream = (props: ReportStreamProps) => {
       // Reset content state
       setContent('');
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content="Thank you" />
@@ -35,7 +34,7 @@ const ReportStream = (props: ReportStreamProps) => {
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

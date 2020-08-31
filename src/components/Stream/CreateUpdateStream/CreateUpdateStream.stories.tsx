@@ -2,7 +2,6 @@
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react-native';
 import CreateUpdateStream from './CreateUpdateStream';
-import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import GetChannelSelfDecorator from '../../../../storybook/Decorators/GetChannelSelfDecorator/GetChannelSelfDecorator';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
@@ -10,7 +9,6 @@ import CreateUpdateStreamView from './CreateUpdateStreamView';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
 storiesOf('Stream/CreateUpdateStream', module)
-  .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <GetChannelSelfDecorator>{getStory()}</GetChannelSelfDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('CreateUpdateStream', () => <CreateUpdateStream />)

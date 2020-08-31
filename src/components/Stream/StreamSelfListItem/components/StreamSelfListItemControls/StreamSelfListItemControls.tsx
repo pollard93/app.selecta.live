@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import { useToast } from 'mbp-components-rn-toast';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from '../../StreamSelfListItem.style';
 import Body from '../../../../UI/Typography/components/Body';
@@ -13,9 +12,9 @@ import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelf
 import StreamStates from '../../../CreateUpdateStream/components/StreamStates/StreamStates';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../../../../modules/Toast';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
-  const toast = useToast();
   const screenProps = useScreenProps();
   const now = new Date();
   const dynamicStyles = useDynamicValue(DynamicStyles);
@@ -37,7 +36,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const onCopy = (text: string) => {
     Clipboard.setString(text);
 
-    toast.push({
+    pushToast({
       duration: 1000,
       component: (
         <Toast content='Copied!' />

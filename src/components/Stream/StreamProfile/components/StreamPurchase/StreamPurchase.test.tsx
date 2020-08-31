@@ -4,13 +4,13 @@ import { ApolloProvider } from 'react-apollo';
 import { wait } from '@apollo/react-testing';
 import { expect } from 'chai';
 import Sinon from 'sinon';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../../../API/utils/mockClient';
 import StreamPurchase from './StreamPurchase';
 import { useGetStreamProfileQuery } from '../../../../../API/query/getStreamProfile/getStreamProfile';
 import { GET_SELF_QUERY } from '../../../../../API/query/getSelf/getSelf';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
 import * as ScreenUtilsModule from '../../../../../screens/utils';
+import * as ToastModule from '../../../../../modules/Toast';
 
 
 describe('<StreamPurchase />', () => {
@@ -18,13 +18,13 @@ describe('<StreamPurchase />', () => {
    * Define sandbox and spies
    */
   const sandbox = Sinon.createSandbox();
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let openTopUpModalSpy = sandbox.stub(ScreenUtilsModule, 'openTopUpModal');
 
   afterEach(() => {
     sandbox.restore();
 
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     openTopUpModalSpy = sandbox.stub(ScreenUtilsModule, 'openTopUpModal');
   });
 

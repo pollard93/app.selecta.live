@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { ScrollView, TextInput, Text, Button } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { useToast } from 'mbp-components-rn-toast';
 import { useRegisterChannelMutation } from '../../../API/mutation/registerChannel/registerChannel';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { registerChannelVariables } from '../../../API/mutation/registerChannel/__generated__/registerChannel';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { pushToast } from '../../../modules/Toast';
 
 type FormData = {
   name: string;
@@ -16,7 +16,6 @@ type FormData = {
 const RegisterChannel = () => {
   const { register, setValue, handleSubmit, errors, formState: { isValid, dirty } } = useForm<FormData>({ mode: 'onChange' });
   const descriptionRef = useRef(null);
-  const toast = useToast();
 
 
   /**
@@ -24,7 +23,7 @@ const RegisterChannel = () => {
    */
   const [mutation, { loading }] = useRegisterChannelMutation({
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

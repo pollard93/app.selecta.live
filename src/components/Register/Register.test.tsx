@@ -4,7 +4,6 @@ import wait from 'waait';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import Register from './Register';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
@@ -17,6 +16,7 @@ import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import * as ToastModule from '../../modules/Toast';
 
 describe('<Register />', () => {
   /**
@@ -25,7 +25,7 @@ describe('<Register />', () => {
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
@@ -34,7 +34,7 @@ describe('<Register />', () => {
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });

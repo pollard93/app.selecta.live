@@ -1,18 +1,17 @@
 import React, { useState, memo, FC } from 'react';
-import { useToast } from 'mbp-components-rn-toast';
 import { usePutStreamCommentMutation } from '../../../API/mutation/putStreamComment/putStreamComment';
 import { getStreamCommentsVariables, getStreamComments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import MessageInput from '../../UI/Form/components/MessageInput/MessageInput';
+import { pushToast } from '../../../modules/Toast';
 
 interface CreateStreamCommentProps {
   variables: getStreamCommentsVariables; // Variables for query to append to cache
 }
 
 const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
-  const toast = useToast();
   const [comment, setComment] = useState('');
 
 
@@ -58,7 +57,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
       } catch (e) {}
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

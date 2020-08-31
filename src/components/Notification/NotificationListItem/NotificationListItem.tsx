@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { NOTIFICATION_FRAGMENT } from '../../../API/fragments/__generated__/NOTIFICATION_FRAGMENT';
 import { useLoginChannelWithTokenMutation } from '../../../API/mutation/loginChannelWithToken/loginChannelWithToken';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
@@ -13,6 +12,7 @@ import Toast from '../../UI/Toast/Toast';
 import { useReadNotificationMutation } from '../../../API/mutation/readNotification/readNotification';
 import { getSelf } from '../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../API/query/getSelf/getSelf';
+import { pushToast } from '../../../modules/Toast';
 
 interface NotificationListItemProps {
   data: NOTIFICATION_FRAGMENT;
@@ -20,7 +20,6 @@ interface NotificationListItemProps {
 
 const NotificationListItem: FC<NotificationListItemProps> = (props) => {
   const screenProps = useScreenProps();
-  const toast = useToast();
 
 
   /**
@@ -34,7 +33,7 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
       pushScreen(screenProps.componentId, ChannelSelfScreen, {});
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

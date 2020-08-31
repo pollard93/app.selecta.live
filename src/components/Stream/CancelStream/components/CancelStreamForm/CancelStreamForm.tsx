@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View, StyleSheet, Dimensions } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useForm } from 'react-hook-form';
 import { STREAM_SELF_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useCancelStreamMutation } from '../../../../../API/mutation/cancelStream/cancelStream';
@@ -12,6 +11,7 @@ import TextArea from '../../../../UI/Form/components/TextArea/TextArea';
 import Styles from './CancelStreamForm.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import spacing from '../../../../../styles/definitions/spacing';
+import { pushToast } from '../../../../../modules/Toast';
 
 interface CancelStreamFormProps {
   data: STREAM_SELF_FRAGMENT;
@@ -53,7 +53,6 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
   /**
    * Misc
    */
-  const toast = useToast();
   const safeAreaInsets = useSafeArea();
   const window = useRef(Dimensions.get('window')).current;
   const windowHeight = useRef(window.height - safeAreaInsets.bottom).current;
@@ -67,7 +66,7 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
       props.onDismiss(true);
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast

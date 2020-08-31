@@ -14,7 +14,6 @@ export interface verifyEmailChange_verifyEmailChange_user {
 
 export interface verifyEmailChange_verifyEmailChange {
   __typename: "AuthPayload";
-  token: string;
   user: verifyEmailChange_verifyEmailChange_user | null;
 }
 

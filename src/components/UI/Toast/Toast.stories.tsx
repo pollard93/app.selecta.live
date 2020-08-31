@@ -5,10 +5,8 @@ import { storiesOf } from '@storybook/react-native';
 import { View } from 'react-native';
 import Toast from './Toast';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import ToastDecorator from '../../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 
 storiesOf('UI/Toast', module)
-  .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { justifyContent: 'flex-start', backgroundColor: 'white' }]}>{getStory()}</View>)
   .add('Toast - info', () => (
     <Toast

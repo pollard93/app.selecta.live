@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from './Toast.style';
 import H4 from '../Typography/components/H4';

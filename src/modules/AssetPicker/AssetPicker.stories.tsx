@@ -4,11 +4,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { Button } from 'react-native';
 import AssetPicker, { openAssetPickerModalScreen, closeAssetPickerModal } from './AssetPicker';
-import ToastDecorator from '../../../storybook/Decorators/ToastDecorator/ToastDecorator';
 import CenterView from '../../../storybook/Decorators/CenterView/CenterView';
 
 storiesOf('UI/AssetPicker', module)
-  .addDecorator((getStory) => <ToastDecorator>{getStory()}</ToastDecorator>)
   .add('AssetPicker - single', () => (
     <AssetPicker
       assetType="All"
