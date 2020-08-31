@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import React, { FC, useEffect } from 'react';
-import { View, SafeAreaView, Button } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';

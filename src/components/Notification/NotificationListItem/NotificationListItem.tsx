@@ -13,6 +13,7 @@ import { useReadNotificationMutation } from '../../../API/mutation/readNotificat
 import { getSelf } from '../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../API/query/getSelf/getSelf';
 import { pushToast } from '../../../modules/Toast';
+import { updateStoredGetSelf } from '../../../utils/userFunctions';
 
 interface NotificationListItemProps {
   data: NOTIFICATION_FRAGMENT;
@@ -75,6 +76,11 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
         });
       // eslint-disable-next-line no-empty
       } catch {}
+
+      /**
+       * Update store
+       */
+      updateStoredGetSelf();
     },
   });
 

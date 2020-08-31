@@ -13,9 +13,9 @@ import { STACK } from '../../screens/utils/interfaces';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
-import { store } from '../../utils/storage';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
+import { updateStoredGetSelf } from '../../utils/userFunctions';
 
 
 /**
@@ -143,19 +143,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
             },
           });
 
-
-          /**
-           * On completed, store result in async storage
-           */
-          try {
-            const data = client.readQuery<getSelf>({
-              query: GET_SELF_QUERY,
-            });
-
-            await store('getSelf', data.getSelf);
-          // eslint-disable-next-line no-empty
-          } catch {}
-
+          updateStoredGetSelf();
 
           pushToast({
             duration: 3000,

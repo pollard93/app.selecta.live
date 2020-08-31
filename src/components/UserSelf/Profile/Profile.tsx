@@ -9,6 +9,7 @@ import { goToLogin, openModalScreen } from '../../../screens/utils';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
 import UpdateEmail from '../UpdateEmail/UpdateEmail';
+import UpdateUsername from '../UpdateUsername/UpdateUsername';
 
 export interface ProfileProps {}
 
@@ -31,6 +32,20 @@ const Profile: FC<ProfileProps> = (props) => {
 
       <TouchableOpacity onPress={onDismiss}>
         <Text>Close Screen</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => {
+        openModalScreen({
+          component: (
+            <UpdateUsername
+              onClosed={() => {
+                Navigation.dismissModal('UPDATE_USERNAME');
+              }}
+            />
+          ),
+        }, 'UPDATE_USERNAME', OptionsModalTransitionStyle.crossDissolve);
+      }}>
+        <Text>Edit username</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {

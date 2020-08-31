@@ -14,7 +14,7 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 import { pushToast } from '../../../modules/Toast';
 
 export interface UpdateEmailProps {
-  onClosed: () => void; // On Success toast must be in the parent after modal dismissed
+  onClosed: () => void;
 }
 
 export type FormData = {

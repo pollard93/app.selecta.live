@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { QueryHookOptions, useLazyQuery } from 'react-apollo';
-import { isUsernameUnique } from './__generated__/isUsernameUnique';
+import { isUsernameUnique, isUsernameUniqueVariables } from './__generated__/isUsernameUnique';
 
 export const IS_USERNAME_UNIQUE_QUERY = gql`
   query isUsernameUnique($username: String!){
@@ -8,4 +8,4 @@ export const IS_USERNAME_UNIQUE_QUERY = gql`
   }
 `;
 
-export const useIsUsernameUniqueLazyQuery = (options?: QueryHookOptions<isUsernameUnique>) => useLazyQuery(IS_USERNAME_UNIQUE_QUERY, options);
+export const useIsUsernameUniqueLazyQuery = (options?: QueryHookOptions<isUsernameUnique, isUsernameUniqueVariables>) => useLazyQuery(IS_USERNAME_UNIQUE_QUERY, options);

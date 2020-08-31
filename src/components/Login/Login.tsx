@@ -1,9 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import SplashScreen from 'react-native-splash-screen';
-import { Linking } from 'react-native';
-import jwtDecode from 'jwt-decode';
-import Config from 'react-native-config';
 import LoginView from './LoginView';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
@@ -15,7 +12,6 @@ import { REMOVE_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutat
 import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeAccessToken/__generated__/removeAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';

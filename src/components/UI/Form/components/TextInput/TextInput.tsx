@@ -23,7 +23,10 @@ const TextInput: FC<TextInputProps> = (props) => {
     if (!props.errors || !props.errors[props.name]) return null;
 
     // If message is defined then return it
-    if (props.errors[props.name].message) return props.errors[props.name].message;
+    if (props.errors[props.name].message) {
+      if (props.errors[props.name].message === 'DO_NOT_DISPLAY') return null;
+      return props.errors[props.name].message;
+    }
 
     // Default to generic error message
     switch (props.errors[props.name].type) {
