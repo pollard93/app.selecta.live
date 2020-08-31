@@ -9,8 +9,6 @@ import { goToLogin, openModalScreen } from '../../../screens/utils';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import UpdatePassword from '../UpdatePassword/UpdatePassword';
 import UpdateEmail from '../UpdateEmail/UpdateEmail';
-import { ToastOverlayProps } from '../../../screens/ToastOverlay/ToastOverlay';
-import { pushToast } from '../../../modules/Toast';
 
 export interface ProfileProps {}
 
@@ -39,12 +37,8 @@ const Profile: FC<ProfileProps> = (props) => {
         openModalScreen({
           component: (
             <UpdatePassword
-              onClosed={(toastProps?: ToastOverlayProps) => {
+              onClosed={() => {
                 Navigation.dismissModal('UPDATE_PASSWORD');
-
-                if (toastProps) {
-                  pushToast(toastProps);
-                }
               }}
             />
           ),
@@ -57,12 +51,8 @@ const Profile: FC<ProfileProps> = (props) => {
         openModalScreen({
           component: (
             <UpdateEmail
-              onClosed={(toastProps?: ToastProps) => {
+              onClosed={() => {
                 Navigation.dismissModal('UPDATE_EMAIL');
-
-                if (toastProps) {
-                  pushToast(toastProps);
-                }
               }}
             />
           ),
