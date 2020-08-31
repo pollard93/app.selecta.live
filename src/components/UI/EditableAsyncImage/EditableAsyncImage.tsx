@@ -14,6 +14,7 @@ export interface EditableAsyncImageProps {
   iconPosition?: 'center' | 'bottomRight'; // Default center
   resetRef?: React.MutableRefObject<() => void>; // Pass a ref to be assigned to reset the component
   loading?: boolean;
+  onConfirm?: () => void; // Shows a control to allow the user to confirm their selection
 }
 
 export interface EditableAsyncImageControlsProps extends EditableAsyncImageProps {
@@ -35,8 +36,8 @@ const Controls: FC<EditableAsyncImageControlsProps> = (props) => {
     );
   }
 
-  return props.selectedAsset
-    ? (
+  if (props.selectedAsset) {
+    return (
       <View style={[Styles.controls, Styles[props.iconPosition || 'center']]}>
         <TouchableOpacity
           onPress={props.onCancel}
@@ -50,33 +51,53 @@ const Controls: FC<EditableAsyncImageControlsProps> = (props) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={props.openPicker}
-        >
-          <View style={Styles.icon}>
-            <Icon
-              name={ICON.CAMERA}
-              size="regular"
-              forceLight
-            />
-          </View>
-        </TouchableOpacity>
+        {
+          props.onConfirm
+            ? (
+              <TouchableOpacity
+                onPress={props.onConfirm}
+              >
+                <View style={Styles.icon}>
+                  <Icon
+                    name={ICON.TICK}
+                    size="regular"
+                    forceLight
+                  />
+                </View>
+              </TouchableOpacity>
+            )
+            : (
+              <TouchableOpacity
+                onPress={props.openPicker}
+              >
+                <View style={Styles.icon}>
+                  <Icon
+                    name={ICON.CAMERA}
+                    size="regular"
+                    forceLight
+                  />
+                </View>
+              </TouchableOpacity>
+            )
+        }
       </View>
-    )
-    : (
-      <TouchableOpacity
-        style={[Styles.controls, Styles[props.iconPosition || 'center']]}
-        onPress={props.openPicker}
-      >
-        <View style={Styles.icon}>
-          <Icon
-            name={ICON.CAMERA}
-            size="regular"
-            forceLight
-          />
-        </View>
-      </TouchableOpacity>
     );
+  }
+
+  return (
+    <TouchableOpacity
+      style={[Styles.controls, Styles[props.iconPosition || 'center']]}
+      onPress={props.openPicker}
+    >
+      <View style={Styles.icon}>
+        <Icon
+          name={ICON.CAMERA}
+          size="regular"
+          forceLight
+        />
+      </View>
+    </TouchableOpacity>
+  );
 };
 
 export const EditableAsyncImage: FC<EditableAsyncImageProps> = (props) => {

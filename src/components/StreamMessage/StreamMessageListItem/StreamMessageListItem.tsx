@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_MESSAGE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_MESSAGE_FRAGMENT';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import Styles from './StreamMessageListItem.styles';
@@ -12,6 +13,7 @@ import { formatTime } from '../../../utils/functions';
 import Small from '../../UI/Typography/components/Small';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
@@ -19,6 +21,8 @@ interface StreamMessageListItemProps {
 }
 
 const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
   /**
    * Check if message has been created by this user
    * If there user data on the message, then check if the user matches getSelf
@@ -57,7 +61,7 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
             },
           }}
           containerProps={{
-            style: Styles.profilePicture,
+            style: [GlobalStyles.ImageCircleBorderInner, globalDynamicStyles.ImageCircleBorderInner],
           }}
         />
 

@@ -51,14 +51,6 @@ export default StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  profilePictureInner: {
-    borderRadius: 200,
-    borderWidth: 2,
-    height: '100%',
-    overflow: 'hidden',
-    position: 'absolute',
-    width: '100%',
-  },
   profilePictureIconWrap: {
     padding: 1,
   },
@@ -72,8 +64,5 @@ export default StyleSheet.create({
 export const DynamicStyles = new DynamicStyleSheet({
   wrap: {
     backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
-  },
-  profilePictureInner: {
-    borderColor: new DynamicValue(color.mono.pale.regular, color.mono.pale.light),
   },
 });

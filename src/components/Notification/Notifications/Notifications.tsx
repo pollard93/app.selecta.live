@@ -10,8 +10,8 @@ import { getNotificationsVariables, getNotifications, getNotifications_getNotifi
 import NotificationListItem from '../NotificationListItem/NotificationListItem';
 import { NOTIFICATIONS_SUBSCRIPTION } from '../../../API/subscription/notifications/notifications';
 import { notifications } from '../../../API/subscription/notifications/__generated__/notifications';
-import Button from '../../UI/Button/Button';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import Header from '../../UI/Headers/Header/Header';
 
 class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
 
@@ -37,19 +37,16 @@ const Notifications: FC<NotificationsProps> = () => {
 
 
   /**
-   * On Dismiss
+   * On pop
    */
-  const onDismiss = () => {
-    Navigation.dismissModal(screenProps.componentId);
+  const onPop = () => {
+    Navigation.pop(screenProps.componentId);
   };
 
 
   return (
     <View>
-      <Button
-        title="Close modal"
-        onPress={onDismiss}
-      />
+      <Header onPop={onPop} />
 
       <NotificationsFlatList
         query={GET_NOTIFICATIONS_QUERY}

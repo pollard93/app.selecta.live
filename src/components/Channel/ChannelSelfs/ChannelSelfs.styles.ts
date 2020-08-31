@@ -8,4 +8,7 @@ export default StyleSheet.create({
   header: {
     paddingVertical: spacing.small,
   },
+  separator: {
+    height: spacing.small,
+  },
 });

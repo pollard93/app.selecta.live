@@ -6,12 +6,13 @@ import Styles, { DynamicStyles } from './Header.style';
 import { useGetSelf } from '../../../../API/query/getSelf/getSelf';
 import Icon, { ICON } from '../../Icon/Icon';
 import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
-import { openScreenAsModal } from '../../../../screens/utils';
-import { STACK } from '../../../../screens/utils/interfaces';
+import { pushScreen } from '../../../../screens/utils';
 import ProfileScreen from '../../../../screens/ProfileScreen/ProfileScreen';
 import NotificationsScreen from '../../../../screens/NotificationsScreen/NotificationsScreen';
 import HeaderNotifications from './components/HeaderNotifications/HeaderNotifications';
 import scalePx from '../../../../utils/scalePx';
+import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../../styles/stylesheets/GlobalStyles';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -28,10 +29,12 @@ export const useHeaderStyles = () => ({
 
 
 const Header: FC<HeaderProps> = (props) => {
+  const screenProps = useScreenProps();
   const safeAreaInsets = useSafeArea();
   const { headerHeight, headerZindex } = useHeaderStyles();
   const self = useGetSelf();
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
   const lightLogo = require('../../../../assets/images/logo-dark.png');
   const darkLogo = require('../../../../assets/images/logo-light.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
@@ -41,7 +44,7 @@ const Header: FC<HeaderProps> = (props) => {
    * Open profile modal
    */
   const onPressProfile = () => {
-    openScreenAsModal(STACK.PROFILE, ProfileScreen, {});
+    pushScreen(screenProps.componentId, ProfileScreen, {});
   };
 
 
@@ -49,7 +52,7 @@ const Header: FC<HeaderProps> = (props) => {
    * Open notifications modal
    */
   const onPressNotifications = () => {
-    openScreenAsModal(STACK.NOTIFICATIONS, NotificationsScreen, {});
+    pushScreen(screenProps.componentId, NotificationsScreen, {});
   };
 
 
@@ -115,7 +118,7 @@ const Header: FC<HeaderProps> = (props) => {
                   splashUrl={self.profilePicture.url.splash}
                   fullUrl={self.profilePicture.url.small}
                   containerProps={{
-                    style: [Styles.profilePictureInner, dynamicStyles.profilePictureInner],
+                    style: [GlobalStyles.ImageCircleBorderInner, globalDynamicStyles.ImageCircleBorderInner],
                   }}
                 />
               )

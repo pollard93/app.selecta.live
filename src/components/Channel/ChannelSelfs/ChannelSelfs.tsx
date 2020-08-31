@@ -73,6 +73,10 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => {
             <ChannelSelfListItem data={item} />
           </TouchableOpacity>
         )}
+        FlatListProps={{
+          ItemSeparatorComponent: () => <View style={Styles.separator} />,
+          bounces: false,
+        }}
         ListHeaderComponent={({ queryResult }) => {
           if (queryResult.loading || queryResult.error) {
             return (

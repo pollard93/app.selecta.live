@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_COMMENT_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_COMMENT_FRAGMENT';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import Styles from './StreamCommentListItem.styles';
@@ -10,6 +11,7 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface StreamCommentListItemProps {
   data: STREAM_COMMENT_FRAGMENT;
@@ -17,6 +19,8 @@ interface StreamCommentListItemProps {
 }
 
 const StreamCommentListItem: FC<StreamCommentListItemProps> = (props) => {
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
   /**
    * Check if message has been created by this user
    * If there user data on the message, then check if the user matches getSelf
@@ -52,7 +56,7 @@ const StreamCommentListItem: FC<StreamCommentListItemProps> = (props) => {
             },
           }}
           containerProps={{
-            style: Styles.profilePicture,
+            style: [GlobalStyles.ImageCircleBorderInner, globalDynamicStyles.ImageCircleBorderInner],
           }}
         />
 

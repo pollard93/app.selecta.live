@@ -27,7 +27,7 @@ NotificationsScreen.prototype.ScreenName = 'NotificationsScreen';
 /**
  * Set screen color options (default white)
  */
-// NotificationsScreen.prototype.fullScreen = true;
+NotificationsScreen.prototype.fullScreen = true;
 // NotificationsScreen.prototype.statusBarColor = color.mono.dark;
 // NotificationsScreen.prototype.backgroundColor = color.mono.dark;
 
