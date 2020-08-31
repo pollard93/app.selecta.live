@@ -6,6 +6,7 @@ import Styles, { DynamicStyles } from './DateTimePicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
+import DrawerV2 from '../../../DrawerV2/DrawerV2';
 
 interface DateTimePickerProps {
   pickerProps: IOSNativeProps | AndroidNativeProps;
@@ -53,37 +54,39 @@ const DateTimePicker = (props: DateTimePickerProps) => {
 
 
   return (
-    <View style={Styles.wrap}>
-      <View style={[Styles.inner, dynamicStyles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
-        <View style={Styles.buttons}>
-          <Button
-            title="Cancel"
-            type="SECONDARY"
-            size="small"
-            onPress={() => {
-              props.onDone();
-            }}
-          />
+    <DrawerV2 onClosed={props.onDone}>
+      {({ onClose }) => (
+        <View style={[Styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
+          <View style={Styles.buttons}>
+            <Button
+              title="Cancel"
+              type="SECONDARY"
+              size="small"
+              onPress={() => {
+                onClose();
+              }}
+            />
 
-          <Button
-            title="Done"
-            type="PRIMARY"
-            size="small"
-            onPress={() => {
-              props.onDone(date);
-            }}
+            <Button
+              title="Done"
+              type="PRIMARY"
+              size="small"
+              onPress={() => {
+                onClose(date);
+              }}
+            />
+          </View>
+
+          <DateTimePickerCommunity
+            {...props.pickerProps}
+            value={date}
+            onChange={onChange}
+            style={{ paddingVertical: spacing.small }}
+            textColor={dynamicStyles.text.color}
           />
         </View>
-
-        <DateTimePickerCommunity
-          {...props.pickerProps}
-          value={date}
-          onChange={onChange}
-          style={{ paddingVertical: spacing.small }}
-          textColor={dynamicStyles.text.color}
-        />
-      </View>
-    </View>
+      )}
+    </DrawerV2>
   );
 };
 

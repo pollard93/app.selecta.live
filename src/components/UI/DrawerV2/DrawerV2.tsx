@@ -8,9 +8,9 @@ import Icon, { ICON } from '../Icon/Icon';
 import color from '../../../styles/definitions/color';
 
 interface DrawerV2Props {
-  onClosed: Animated.EndCallback; // Called when closed
+  onClosed: (args?: any) => void; // Called when closed
   children: (args: {
-    onClose: () => void; // Call to close, will call props.onClosed after animation
+    onClose: (args?: any) => void; // Call to close, will call props.onClosed after animation, can pass through args
   }) => ReactNode;
 }
 
@@ -44,8 +44,8 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
     if (!childLayout) return null;
 
     return touchY.interpolate({
-      inputRange: [0, childLayout.height],
-      outputRange: [barHeight, childLayout.height + barHeight],
+      inputRange: [0, childLayout.height + barHeight],
+      outputRange: [0, childLayout.height + barHeight],
       extrapolate: 'clamp',
     });
   }, [childLayout]);
@@ -58,7 +58,7 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
     if (!childLayout) return null;
 
     return touchY.interpolate({
-      inputRange: [0, childLayout.height],
+      inputRange: [0, childLayout.height + barHeight],
       outputRange: [color.mono.darkCover, color.mono.darkCover.color().alpha(0).toString()],
       extrapolate: 'clamp',
     });
@@ -81,13 +81,16 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
 
   /**
    * Animate to the bottom
+   * Can pass args through here to be picked up onClosed
    */
-  const onClose = () => {
+  const onClose = (args?: any) => {
     Animated.timing(touchY, {
-      toValue: childLayout.height,
+      toValue: childLayout.height + barHeight,
       duration: 100,
       useNativeDriver: false,
-    }).start(props.onClosed);
+    }).start(() => {
+      props.onClosed(args);
+    });
   };
 
 

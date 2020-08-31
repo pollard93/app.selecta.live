@@ -247,8 +247,13 @@ export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: 
  * Sets background color and modal presentation style
  * @param passProps - ModalScreenProps
  * @param id - optional id to be assigned to the modal, used for dismissal
+ * @param modalTransitionStyle - optional OptionsModalTransitionStyle
  */
-export const openModalScreen = (passProps: Omit<ModalScreenProps, keyof ScreenProps>, id = ModalScreenName) => Navigation.showModal<Omit<ModalScreenProps, keyof ScreenProps>>({
+export const openModalScreen = (
+  passProps: Omit<ModalScreenProps, keyof ScreenProps>,
+  id = ModalScreenName,
+  modalTransitionStyle: OptionsModalTransitionStyle = OptionsModalTransitionStyle.coverVertical,
+) => Navigation.showModal<Omit<ModalScreenProps, keyof ScreenProps>>({
   component: {
     id,
     name: ModalScreenName,
@@ -258,7 +263,7 @@ export const openModalScreen = (passProps: Omit<ModalScreenProps, keyof ScreenPr
         backgroundColor: 'transparent',
         componentBackgroundColor: 'transparent',
       },
-      modalTransitionStyle: OptionsModalTransitionStyle.coverVertical,
+      modalTransitionStyle,
       modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
       animations: {
         showModal: {
