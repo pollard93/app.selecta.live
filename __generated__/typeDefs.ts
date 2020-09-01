@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Mon Aug 31 2020 12:58:13 GMT+0100 (British Summer Time)
+# timestamp: Tue Sep 01 2020 15:14:51 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -550,6 +550,12 @@ enum MutationType {
   DELETED
 }
 
+enum NOTIFICATION_ON_OPEN_TYPE {
+  STREAM
+  CHANNEL
+  CHANNEL_LOGIN
+}
+
 enum NOTIFICATION_TYPE {
   PASSWORD_CHANGED
   STREAM_CANCELLED
@@ -560,6 +566,8 @@ enum NOTIFICATION_TYPE {
 type NotificationPreviousValues {
   id: ID!
   type: NOTIFICATION_TYPE!
+  message: String!
+  onOpenType: NOTIFICATION_ON_OPEN_TYPE!
   receiverId: String!
   readDate: DateTime
   createdAt: DateTime!
@@ -569,6 +577,8 @@ type NotificationPreviousValues {
 type NotificationProfile {
   id: ID!
   type: NOTIFICATION_TYPE
+  message: String
+  onOpenType: NOTIFICATION_ON_OPEN_TYPE
   receiver: UserProfile
   sender: UserProfile
   stream: StreamProfile
@@ -608,6 +618,24 @@ input NotificationWhereInput {
   type_not: NOTIFICATION_TYPE
   type_in: [NOTIFICATION_TYPE!]
   type_not_in: [NOTIFICATION_TYPE!]
+  message: String
+  message_not: String
+  message_in: [String!]
+  message_not_in: [String!]
+  message_lt: String
+  message_lte: String
+  message_gt: String
+  message_gte: String
+  message_contains: String
+  message_not_contains: String
+  message_starts_with: String
+  message_not_starts_with: String
+  message_ends_with: String
+  message_not_ends_with: String
+  onOpenType: NOTIFICATION_ON_OPEN_TYPE
+  onOpenType_not: NOTIFICATION_ON_OPEN_TYPE
+  onOpenType_in: [NOTIFICATION_ON_OPEN_TYPE!]
+  onOpenType_not_in: [NOTIFICATION_ON_OPEN_TYPE!]
   receiver: UserWhereInput
   receiverId: String
   receiverId_not: String

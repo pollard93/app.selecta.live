@@ -12,36 +12,8 @@ import { pushScreen, openScreenAsModal } from '../../screens/utils';
 import { STACK } from '../../screens/utils/interfaces';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
-import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
-import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
-import { updateStoredGetSelf } from '../../utils/userFunctions';
-
-
-/**
- * Utility to validate the user is logged in
- * Pushes toast and returns false if not
- */
-const isLoggedIn = () => {
-  try {
-    client.readQuery<getSelf>({
-      query: GET_SELF_QUERY,
-    });
-    return true;
-  } catch {
-    pushToast({
-      duration: 3000,
-      component: (
-        <Toast
-          type="ERROR"
-          content="Please login"
-        />
-      ),
-      dismissible: false,
-    });
-    return false;
-  }
-};
+import { updateStoredGetSelf, isLoggedIn } from '../../utils/userFunctions';
 
 
 /**

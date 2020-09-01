@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, FC } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
@@ -14,11 +14,9 @@ import { pushScreen } from '../../../screens/utils';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 import { useDebounce } from '../../../utils/functions';
-import Header from '../../UI/Headers/Header/Header';
+import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
-import Body from '../../UI/Typography/components/Body';
-import color from '../../../styles/definitions/color';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
@@ -26,6 +24,7 @@ export interface ConsumingStreamProfilesProps {}
 
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   const screenProps = useScreenProps();
+  const { headerHeight } = useHeaderStyles();
 
 
   /**
@@ -86,28 +85,21 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
             {!queryResult.data && queryResult.loading && <StreamCardSkeleton />}
           </>
         )}
+        ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
+          <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'Your streams will appear here'} />
+        )}
         FlatListProps={{
           contentContainerStyle: [Styles.scrollViewContainer],
           ItemSeparatorComponent: () => <View style={Styles.separator} />,
           showsVerticalScrollIndicator: false,
         }}
       >
-        {({ queryResult, maxCount }) => {
+        {({ queryResult }) => {
           // Handle error
           if (queryResult.error) {
             return (
-              <View pointerEvents="box-none" style={Styles.flatListCover}>
+              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
                 <LoadRetry {...queryResult} />
-              </View>
-            );
-          }
-
-          // Handle no results
-          if (queryResult.data && !queryResult.loading && maxCount === 0) {
-            return (
-              <View pointerEvents="box-none" style={[Styles.flatListCover, Styles.flatListCoverCenter]}>
-                <Body style={{ color: color.mono.pale.dark }}>Purchased streams will appear here.</Body>
-                <Body style={{ color: color.mono.pale.dark }}>You have no streams yet!</Body>
               </View>
             );
           }

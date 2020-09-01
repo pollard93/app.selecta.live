@@ -12,11 +12,4 @@ export default StyleSheet.create({
   scrollViewContainer: {
     paddingVertical: spacing.small,
   },
-  flatListCover: {
-    justifyContent: 'center',
-    ...StyleSheet.absoluteFillObject,
-  },
-  flatListCoverCenter: {
-    alignItems: 'center',
-  },
 });

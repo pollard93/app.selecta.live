@@ -5,6 +5,8 @@ export const NOTIFICATION_FRAGMENT = gql`
   fragment NOTIFICATION_FRAGMENT on NotificationProfile {
     id
     type
+    message
+    onOpenType
     sender {
       id
       profilePicture {
@@ -13,9 +15,15 @@ export const NOTIFICATION_FRAGMENT = gql`
     }
     stream {
       id
+      image {
+        ...FILE_FRAGMENT
+      }
     }
     channel {
       id
+      profileImage {
+        ...FILE_FRAGMENT
+      }
     }
     readDate
     createdAt

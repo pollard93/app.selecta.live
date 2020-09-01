@@ -73,6 +73,12 @@ export enum MutationType {
   UPDATED = "UPDATED",
 }
 
+export enum NOTIFICATION_ON_OPEN_TYPE {
+  CHANNEL = "CHANNEL",
+  CHANNEL_LOGIN = "CHANNEL_LOGIN",
+  STREAM = "STREAM",
+}
+
 export enum NOTIFICATION_TYPE {
   NEW_STREAM_FROM_FOLLOWING = "NEW_STREAM_FROM_FOLLOWING",
   PASSWORD_CHANGED = "PASSWORD_CHANGED",
@@ -485,6 +491,24 @@ export interface NotificationWhereInput {
   type_not?: NOTIFICATION_TYPE | null;
   type_in?: NOTIFICATION_TYPE[] | null;
   type_not_in?: NOTIFICATION_TYPE[] | null;
+  message?: string | null;
+  message_not?: string | null;
+  message_in?: string[] | null;
+  message_not_in?: string[] | null;
+  message_lt?: string | null;
+  message_lte?: string | null;
+  message_gt?: string | null;
+  message_gte?: string | null;
+  message_contains?: string | null;
+  message_not_contains?: string | null;
+  message_starts_with?: string | null;
+  message_not_starts_with?: string | null;
+  message_ends_with?: string | null;
+  message_not_ends_with?: string | null;
+  onOpenType?: NOTIFICATION_ON_OPEN_TYPE | null;
+  onOpenType_not?: NOTIFICATION_ON_OPEN_TYPE | null;
+  onOpenType_in?: NOTIFICATION_ON_OPEN_TYPE[] | null;
+  onOpenType_not_in?: NOTIFICATION_ON_OPEN_TYPE[] | null;
   receiver?: UserWhereInput | null;
   receiverId?: string | null;
   receiverId_not?: string | null;

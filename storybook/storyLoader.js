@@ -19,6 +19,7 @@ function loadStories() {
 	require('../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories');
 	require('../src/components/HomeFeed/HomeFeed.stories');
 	require('../src/components/Login/Login.stories');
+	require('../src/components/Notification/NotificationListItem/NotificationListItem.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
 	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
 	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
@@ -86,6 +87,7 @@ function loadStories() {
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
 	require('../src/components/UserSelf/UpdateEmail/UpdateEmail.stories');
 	require('../src/components/UserSelf/UpdatePassword/UpdatePassword.stories');
+	require('../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories');
 	require('../src/components/UserSelf/UpdateUsername/UpdateUsername.stories');
 	require('../src/components/Wallet/Wallet.stories');
 	require('../src/modules/AssetPicker/AssetPicker.stories');
@@ -107,6 +109,7 @@ const stories = [
 	'../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories',
 	'../src/components/HomeFeed/HomeFeed.stories',
 	'../src/components/Login/Login.stories',
+	'../src/components/Notification/NotificationListItem/NotificationListItem.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
 	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
 	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
@@ -174,6 +177,7 @@ const stories = [
 	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
 	'../src/components/UserSelf/UpdateEmail/UpdateEmail.stories',
 	'../src/components/UserSelf/UpdatePassword/UpdatePassword.stories',
+	'../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories',
 	'../src/components/UserSelf/UpdateUsername/UpdateUsername.stories',
 	'../src/components/Wallet/Wallet.stories',
 	'../src/modules/AssetPicker/AssetPicker.stories'

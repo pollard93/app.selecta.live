@@ -1,11 +1,13 @@
-import React, { FC } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import React, { FC, useMemo } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { NOTIFICATION_FRAGMENT } from '../../../API/fragments/__generated__/NOTIFICATION_FRAGMENT';
 import { useLoginChannelWithTokenMutation } from '../../../API/mutation/loginChannelWithToken/loginChannelWithToken';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushScreen } from '../../../screens/utils';
 import ChannelSelfScreen from '../../../screens/ChannelSelfScreen/ChannelSelfScreen';
-import { NOTIFICATION_TYPE } from '../../../../__generated__/globalTypes';
+import { NOTIFICATION_ON_OPEN_TYPE } from '../../../../__generated__/globalTypes';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
@@ -14,6 +16,11 @@ import { getSelf } from '../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../API/query/getSelf/getSelf';
 import { pushToast } from '../../../modules/Toast';
 import { updateStoredGetSelf } from '../../../utils/userFunctions';
+import Markdown from '../../UI/Markdown/Markdown';
+import PulsingIcon from '../../UI/PulsingIcon/PulsingIcon';
+import Styles from './NotificationListItem.styles';
+import ChannelProfileScreen from '../../../screens/ChannelProfileScreen/ChannelProfileScreen';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface NotificationListItemProps {
   data: NOTIFICATION_FRAGMENT;
@@ -21,6 +28,7 @@ interface NotificationListItemProps {
 
 const NotificationListItem: FC<NotificationListItemProps> = (props) => {
   const screenProps = useScreenProps();
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
 
   /**
@@ -91,27 +99,6 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
   const onPressNotification = () => {
     if (loading) return;
 
-    switch (props.data.type) {
-      case NOTIFICATION_TYPE.STREAM_CANCELLED:
-      case NOTIFICATION_TYPE.NEW_STREAM_FROM_FOLLOWING:
-        /**
-         * Push StreamProfile Screen
-         */
-        pushScreen(screenProps.componentId, StreamProfileScreen, { id: props.data.stream.id });
-        break;
-
-      case NOTIFICATION_TYPE.REQUESTED_CHANNEL_APPROVED:
-        loginChannelMutation({
-          variables: {
-            id: props.data.channel.id,
-          },
-        });
-        break;
-
-      default:
-        break;
-    }
-
 
     /**
      * Set notification to read
@@ -119,14 +106,88 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
     if (props.data.readDate === null) {
       readNotificationMutation();
     }
+
+
+    /**
+     * Try and handle some effect on opening
+     */
+    try {
+      switch (props.data.onOpenType) {
+        case NOTIFICATION_ON_OPEN_TYPE.STREAM:
+          pushScreen(screenProps.componentId, StreamProfileScreen, { id: props.data.stream.id });
+          break;
+
+        case NOTIFICATION_ON_OPEN_TYPE.CHANNEL:
+          pushScreen(screenProps.componentId, ChannelProfileScreen, { id: props.data.stream.id });
+          break;
+
+        case NOTIFICATION_ON_OPEN_TYPE.CHANNEL_LOGIN:
+          loginChannelMutation({
+            variables: {
+              id: props.data.channel.id,
+            },
+          });
+          break;
+
+        default:
+          break;
+      }
+    // eslint-disable-next-line no-empty
+    } catch {}
   };
+
+
+  /**
+   * Get image for notification
+   */
+  const imageUrl = useMemo(() => {
+    try {
+      switch (props.data.onOpenType) {
+        case NOTIFICATION_ON_OPEN_TYPE.STREAM:
+          return props.data.stream.image.url;
+
+        case NOTIFICATION_ON_OPEN_TYPE.CHANNEL:
+        case NOTIFICATION_ON_OPEN_TYPE.CHANNEL_LOGIN:
+          return props.data.channel.profileImage.url;
+
+        default:
+          return null;
+      }
+    } catch {
+      return null;
+    }
+  }, []);
 
 
   return (
     <TouchableOpacity onPress={onPressNotification}>
-      <Text>{props.data.type}</Text>
-      <Text>{props.data.readDate ? 'read' : 'unread'}</Text>
-      <Text>{loading ? 'loading' : ''}</Text>
+      <View style={[Styles.wrap, props.data.readDate && Styles.read]}>
+        <View style={Styles.pulse}>
+          {!props.data.readDate && (
+            <PulsingIcon
+              animating={new Date(props.data.createdAt).getTime() - new Date().getTime() < 3.6e+6}
+              duration={1000}
+              delay={5000}
+            />
+          )}
+        </View>
+
+        {imageUrl && (
+          <View style={Styles.image}>
+            <AsyncImage
+              splashUrl={imageUrl.splash}
+              fullUrl={imageUrl.full}
+              containerProps={{
+                style: [GlobalStyles.ImageCircleBorderInner, globalDynamicStyles.ImageCircleBorderInner],
+              }}
+            />
+          </View>
+        )}
+
+        <View style={Styles.content}>
+          <Markdown>{props.data.message}</Markdown>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
