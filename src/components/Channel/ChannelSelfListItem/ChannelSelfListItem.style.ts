@@ -22,4 +22,10 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: spacing.base,
   },
+  loading: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    backgroundColor: color.mono.darkCover,
+    justifyContent: 'center',
+  },
 });
