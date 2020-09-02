@@ -17,6 +17,8 @@ import * as SafeAreaInsetsModule from '../../modules/SafeAreaInsets/SafeAreaInse
 import { store } from '../../utils/storage';
 import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import { getSelf } from '../../API/query/getSelf/__generated__/getSelf';
+import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from '../../ApolloClient/resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
+import { getChannelAccessToken } from '../../ApolloClient/resolvers/query/getChannelAccessToken/__generated__/getChannelAccessToken';
 
 describe('<InitScreen >', () => {
   /**
@@ -65,6 +67,16 @@ describe('<InitScreen >', () => {
   it('should goToLogin with no stored general token', async () => {
     const client = mockClient();
 
+    /**
+     * Add channel token to test it is removed in Init
+     */
+    client.writeQuery<getChannelAccessToken>({
+      query: GET_CHANNEL_ACCESS_TOKEN_QUERY,
+      data: {
+        getChannelAccessToken: 'token',
+      },
+    });
+
     const wrapper = mount(
       <ApolloProvider client={client}>
         <InitScreen />
@@ -82,6 +94,14 @@ describe('<InitScreen >', () => {
     expect(global.safeAreaInsets).to.be.undefined;
     expect(setSafeAreaSpy.callCount).to.equal(1);
     expect(global.safeAreaInsets).to.not.be.null;
+
+    /**
+     * Channel token should have been removed
+     */
+    const res = client.readQuery<getChannelAccessToken>({
+      query: GET_CHANNEL_ACCESS_TOKEN_QUERY,
+    });
+    expect(res.getChannelAccessToken).to.be.null;
   });
 
   it('should goHome with stored general token', async () => {
