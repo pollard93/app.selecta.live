@@ -89,6 +89,10 @@ const Notifications: FC<NotificationsProps> = () => {
             // Only want to insert created nodes
             if (subscriptionData.data.notifications.mutation !== 'CREATED') return prev;
 
+            // Test the notification doesn't exist
+            const exists = prev.getNotifications.notifications.find((n) => n.id === subscriptionData.data.notifications.node.id);
+            if (exists) return prev;
+
             try {
               return {
                 ...prev,
