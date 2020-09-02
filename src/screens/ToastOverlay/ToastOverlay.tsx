@@ -14,8 +14,8 @@ export interface ToastOverlayProps {
 
 
 /**
- * Toast inner
- * Handles queue and animation
+ * Toast overlay screen
+ * Create this component with `Navigation.showOverlay`
  */
 const ToastOverlay: FC<ToastOverlayProps> = (props) => {
   const screenProps = useScreenProps();
@@ -23,7 +23,7 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
   // Create an animated value only once
   const [bounceValue] = useState(new Animated.Value(0));
 
-  // Required for queuing system
+  // Required for removing toast after x amount of time
   const timeoutId = useRef(null);
 
   // Required for animation
@@ -49,9 +49,7 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
       },
     ).start(() => {
       /**
-       * When finished
-       * Destroy the item in the queue
-       * Set to ready and clear layout
+       * When finished destroy component
        */
       Navigation.dismissOverlay(screenProps.componentId);
     });
@@ -64,10 +62,7 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
    */
   useEffect(() => {
     /**
-     * Do nothing if:
-     * Not ready (currently animating another toast in the queue)
-     * Layout is not set (waiting for component to mount)
-     * Qeue length is 0
+     * Do nothing if layout is not set (waiting for component to mount)
      */
     if (layout === null) return;
 
@@ -90,12 +85,6 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
         timeoutId.current = setTimeout(() => {
           removeToast();
         }, props.duration);
-      } else {
-        /**
-         * If duration is set to 0, then do not set timeout
-         * However setTimeoutId, otherwise the `onPress` of component will not allow the removal
-         */
-        timeoutId.current = null;
       }
     });
   }, [layout]);
@@ -136,14 +125,7 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-              /**
-               * Only let the user dismiss:
-               * If the item in the queue is dismissable
-               * If the timeoutId is set (only set after fully animated in)
-               */
-              if (timeoutId != null) {
-                removeToast();
-              }
+              removeToast();
             }}
           >
             {props.component}
@@ -158,9 +140,6 @@ const ToastOverlay: FC<ToastOverlayProps> = (props) => {
 
 
   /**
-   * Safearea view is positioned absolute
-   * the position prop will force it to top or bottom
-   *
    * Animated view uses the bounceValue (0-1)
    * Animates the opacity, 0 before layout is available
    * Animates transform.translateY when layout is available
