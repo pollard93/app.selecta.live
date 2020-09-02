@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
@@ -48,6 +48,7 @@ const StreamCardTime: FC<StreamCardProps> = (props) => {
 
 const StreamCard: FC<StreamCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const width = useMemo(() => `${((props.data.position * 1000) / getStreamDurationMs(props.data)) * 100}%`, [props.data.position]);
 
   return (
     <View style={[Styles.wrap, dynamicStyles.wrap, props.fillHeight && Styles.fillHeight]}>
@@ -63,7 +64,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         {props.showPosition && props.data.position > 0 && (
           <>
             <View style={[Styles.position, Styles.positionBackground]} />
-            <View style={[Styles.position, { width: `${(props.data.position / getStreamDurationMs(props.data)) * 100}%` }]} />
+            <View style={[Styles.position, { width }]} />
           </>
         )}
 
