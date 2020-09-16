@@ -59,7 +59,9 @@ export interface putStream_putStream {
   image: putStream_putStream_image | null;
   tags: (putStream_putStream_tags | null)[] | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
   cost: number | null;
   cancelled: any | null;
   cancelledMessage: string | null;

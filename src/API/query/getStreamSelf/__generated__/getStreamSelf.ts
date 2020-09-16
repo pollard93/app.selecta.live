@@ -59,7 +59,9 @@ export interface getStreamSelf_getStreamSelf {
   image: getStreamSelf_getStreamSelf_image | null;
   tags: (getStreamSelf_getStreamSelf_tags | null)[] | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
   cost: number | null;
   cancelled: any | null;
   cancelledMessage: string | null;

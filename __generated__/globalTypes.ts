@@ -84,6 +84,7 @@ export enum NOTIFICATION_TYPE {
   PASSWORD_CHANGED = "PASSWORD_CHANGED",
   REQUESTED_CHANNEL_APPROVED = "REQUESTED_CHANNEL_APPROVED",
   STREAM_CANCELLED = "STREAM_CANCELLED",
+  STREAM_GONE_LIVE = "STREAM_GONE_LIVE",
 }
 
 export enum SOCIAL_PROVIDER {
@@ -116,8 +117,12 @@ export enum StreamOrderByInput {
   password_DESC = "password_DESC",
   published_ASC = "published_ASC",
   published_DESC = "published_DESC",
+  timeFromLive_ASC = "timeFromLive_ASC",
+  timeFromLive_DESC = "timeFromLive_DESC",
   timeFrom_ASC = "timeFrom_ASC",
   timeFrom_DESC = "timeFrom_DESC",
+  timeToLive_ASC = "timeToLive_ASC",
+  timeToLive_DESC = "timeToLive_DESC",
   timeTo_ASC = "timeTo_ASC",
   timeTo_DESC = "timeTo_DESC",
   updatedAt_ASC = "updatedAt_ASC",
@@ -946,6 +951,14 @@ export interface StreamWhereInput {
   timeFrom_lte?: any | null;
   timeFrom_gt?: any | null;
   timeFrom_gte?: any | null;
+  timeFromLive?: any | null;
+  timeFromLive_not?: any | null;
+  timeFromLive_in?: any[] | null;
+  timeFromLive_not_in?: any[] | null;
+  timeFromLive_lt?: any | null;
+  timeFromLive_lte?: any | null;
+  timeFromLive_gt?: any | null;
+  timeFromLive_gte?: any | null;
   timeTo?: any | null;
   timeTo_not?: any | null;
   timeTo_in?: any[] | null;
@@ -954,6 +967,14 @@ export interface StreamWhereInput {
   timeTo_lte?: any | null;
   timeTo_gt?: any | null;
   timeTo_gte?: any | null;
+  timeToLive?: any | null;
+  timeToLive_not?: any | null;
+  timeToLive_in?: any[] | null;
+  timeToLive_not_in?: any[] | null;
+  timeToLive_lt?: any | null;
+  timeToLive_lte?: any | null;
+  timeToLive_gt?: any | null;
+  timeToLive_gte?: any | null;
   cost?: number | null;
   cost_not?: number | null;
   cost_in?: number[] | null;
@@ -1292,6 +1313,9 @@ export interface UserWhereInput {
   transactions_every?: CreditTransactionWhereInput | null;
   transactions_some?: CreditTransactionWhereInput | null;
   transactions_none?: CreditTransactionWhereInput | null;
+  positions_every?: StreamPositionRecordWhereInput | null;
+  positions_some?: StreamPositionRecordWhereInput | null;
+  positions_none?: StreamPositionRecordWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

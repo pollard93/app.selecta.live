@@ -21,7 +21,9 @@ export const STREAM_SELF_FRAGMENT = gql`
       ...TAG_PROFILE_FRAGMENT
     }
     timeFrom
+    timeFromLive
     timeTo
+    timeToLive
     cost
     cancelled
     cancelledMessage

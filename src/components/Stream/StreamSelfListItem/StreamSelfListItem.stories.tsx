@@ -88,7 +88,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
     return <TestComponent />;
   })
-  .add('StreamSelfsListItem - Live now', () => {
+  .add('StreamSelfsListItem - Starts in 1 hour', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });
       if (res.loading) return null;
@@ -98,8 +98,9 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
           getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
-            timeFrom: new Date().toISOString(), // Just started
-            timeTo: new Date(Date.now() + 360000).toISOString(), // Not finished
+            timeFromLive: null,
+            timeToLive: null,
+            timeFrom: new Date(Date.now() + 3.6e+6).toISOString(), // Starts in 1 hour
           }}
         />
       );
@@ -107,7 +108,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
     return <TestComponent />;
   })
-  .add('StreamSelfsListItem - Not Started', () => {
+  .add('StreamSelfsListItem - Starts in 0.5 hour', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });
       if (res.loading) return null;
@@ -117,8 +118,9 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
           getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
-            timeFrom: new Date(Date.now() + 360000).toISOString(), // not started yet
-            timeTo: new Date(Date.now() + 360000).toISOString(), // Not finished
+            timeFromLive: null,
+            timeToLive: null,
+            timeFrom: new Date(Date.now() + 1.8e+6).toISOString(), // Starts in 0.5 hour
           }}
         />
       );
@@ -126,7 +128,7 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
     return <TestComponent />;
   })
-  .add('StreamSelfsListItem - Finished', () => {
+  .add('StreamSelfsListItem - Is live', () => {
     const TestComponent = () => {
       const res = useGetStreamSelfQuery({ variables: { id: '1' } });
       if (res.loading) return null;
@@ -136,8 +138,26 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
           getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
-            timeFrom: new Date(Date.now() - 360000).toISOString(), // has started
-            timeTo: new Date(Date.now() - 360000).toISOString(), // has finished
+            timeToLive: null,
+            timeFromLive: new Date().toISOString(), // Has gone live
+          }}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamSelfsListItem - Has ended', () => {
+    const TestComponent = () => {
+      const res = useGetStreamSelfQuery({ variables: { id: '1' } });
+      if (res.loading) return null;
+
+      return (
+        <StreamSelfListItem
+          getStreamSelfsVariables={{}}
+          data={{
+            ...res.data.getStreamSelf,
+            timeToLive: new Date().toISOString(), // Has ended
           }}
         />
       );

@@ -1,3 +1,4 @@
+import React from 'react';
 import AClient from '../ApolloClient';
 import { getSelf } from '../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../API/query/getSelf/getSelf';

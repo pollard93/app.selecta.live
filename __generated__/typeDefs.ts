@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Sep 01 2020 15:14:51 GMT+0100 (British Summer Time)
+# timestamp: Wed Sep 16 2020 17:04:19 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -526,6 +526,8 @@ type Mutation {
   validateInAppPurchase(receipt: Json!): UserSelf!
   cancelStream(id: String!, message: String!): StreamSelf
   deleteStream(id: String!): Boolean
+  endLive(id: String!): StreamSelf
+  goLive(id: String!): StreamSelf
   loginChannelWithCode(id: String!, code: String!): ChannelAuthPayload
   loginChannelWithToken(id: String!): ChannelAuthPayload
   publishStream(id: String!): StreamSelf
@@ -561,13 +563,14 @@ enum NOTIFICATION_TYPE {
   STREAM_CANCELLED
   NEW_STREAM_FROM_FOLLOWING
   REQUESTED_CHANNEL_APPROVED
+  STREAM_GONE_LIVE
 }
 
 type NotificationPreviousValues {
   id: ID!
   type: NOTIFICATION_TYPE!
   message: String!
-  onOpenType: NOTIFICATION_ON_OPEN_TYPE!
+  onOpenType: NOTIFICATION_ON_OPEN_TYPE
   receiverId: String!
   readDate: DateTime
   createdAt: DateTime!
@@ -980,8 +983,12 @@ enum StreamOrderByInput {
   info_DESC
   timeFrom_ASC
   timeFrom_DESC
+  timeFromLive_ASC
+  timeFromLive_DESC
   timeTo_ASC
   timeTo_DESC
+  timeToLive_ASC
+  timeToLive_DESC
   cost_ASC
   cost_DESC
   password_ASC
@@ -1110,7 +1117,9 @@ type StreamSelf {
   info: String
   image: File
   timeFrom: DateTime
+  timeFromLive: DateTime
   timeTo: DateTime
+  timeToLive: DateTime
   cost: Float
   cancelled: DateTime
   cancelledMessage: String
@@ -1288,6 +1297,14 @@ input StreamWhereInput {
   timeFrom_lte: DateTime
   timeFrom_gt: DateTime
   timeFrom_gte: DateTime
+  timeFromLive: DateTime
+  timeFromLive_not: DateTime
+  timeFromLive_in: [DateTime!]
+  timeFromLive_not_in: [DateTime!]
+  timeFromLive_lt: DateTime
+  timeFromLive_lte: DateTime
+  timeFromLive_gt: DateTime
+  timeFromLive_gte: DateTime
   timeTo: DateTime
   timeTo_not: DateTime
   timeTo_in: [DateTime!]
@@ -1296,6 +1313,14 @@ input StreamWhereInput {
   timeTo_lte: DateTime
   timeTo_gt: DateTime
   timeTo_gte: DateTime
+  timeToLive: DateTime
+  timeToLive_not: DateTime
+  timeToLive_in: [DateTime!]
+  timeToLive_not_in: [DateTime!]
+  timeToLive_lt: DateTime
+  timeToLive_lte: DateTime
+  timeToLive_gt: DateTime
+  timeToLive_gte: DateTime
   cost: Float
   cost_not: Float
   cost_in: [Float!]
@@ -1680,6 +1705,9 @@ input UserWhereInput {
   transactions_every: CreditTransactionWhereInput
   transactions_some: CreditTransactionWhereInput
   transactions_none: CreditTransactionWhereInput
+  positions_every: StreamPositionRecordWhereInput
+  positions_some: StreamPositionRecordWhereInput
+  positions_none: StreamPositionRecordWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
