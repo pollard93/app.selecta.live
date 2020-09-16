@@ -1,9 +1,9 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { View, TextInput, StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
-
 import TextInputStyles from '../TextInput/TextInput.style';
 import Styles from './TagInput.style';
 import Icon, { ICON } from '../../../Icon/Icon';
+import color from '../../../../../styles/definitions/color';
 
 export interface TagInputProps {
   onChange: (value: string[]) => void;
@@ -100,6 +100,7 @@ const TagInput: FC<TagInputProps> = (props) => {
         <View style={Styles.tag}>
           <TextInput
             placeholder="#New Tag"
+            placeholderTextColor={color.mono.pale.dark}
             value={newTagValue}
             onChangeText={(value) => {
               setNewTagValue(prependHash(value));

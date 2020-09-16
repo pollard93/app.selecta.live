@@ -31,6 +31,10 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
 
+
+  /**
+   * Loading || Error
+   */
   if (props.queryResult.loading) {
     return (
       <SafeAreaView style={GlobalStyles.PageFill}>

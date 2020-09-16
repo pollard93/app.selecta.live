@@ -23,6 +23,7 @@ const StreamSelf: FC<StreamSelfProps> = (props) => {
     variables: {
       id: props.id,
     },
+    fetchPolicy: 'network-only',
   });
 
   return (

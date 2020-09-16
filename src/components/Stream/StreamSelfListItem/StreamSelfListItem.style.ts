@@ -51,20 +51,6 @@ export default StyleSheet.create({
   controls: {
     marginTop: spacing.small,
   },
-  authKeys: {
-    borderColor: color.mono.pale.dark,
-    borderWidth: scalePx(1),
-    padding: spacing.xsmall,
-  },
-  authKey: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  authKeyBody: {
-    color: color.mono.dark,
-    flex: 1,
-    paddingRight: spacing.small,
-  },
   metrics: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -99,8 +85,5 @@ export default StyleSheet.create({
 export const DynamicStyles = new DynamicStyleSheet({
   wrap: {
     backgroundColor: new DynamicValue(color.mono.light, color.monoDarkMode.pale.dark),
-  },
-  authKeyBody: {
-    color: new DynamicValue(color.mono.dark, color.mono.light),
   },
 });

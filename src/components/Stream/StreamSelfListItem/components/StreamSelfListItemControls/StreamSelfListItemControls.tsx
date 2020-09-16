@@ -1,25 +1,28 @@
-import React, { FC } from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
-import Clipboard from '@react-native-community/clipboard';
-import { useDynamicValue } from 'react-native-dynamic';
+import React, { FC, useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment-timezone';
-import Styles, { DynamicStyles } from '../../StreamSelfListItem.style';
+import Styles from '../../StreamSelfListItem.style';
 import Body from '../../../../UI/Typography/components/Body';
 import Button from '../../../../UI/Button/Button';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import { pushScreen } from '../../../../../screens/utils';
-import Toast from '../../../../UI/Toast/Toast';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import StreamStates from '../../../CreateUpdateStream/components/StreamStates/StreamStates';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import { pushToast } from '../../../../../modules/Toast';
-import { formatForTimezone } from '../../../../../utils/functions';
+import GoLiveScreen from '../../../../../screens/GoLiveScreens/GoLiveScreen/GoLiveScreen';
+import { useStreamStart } from '../../../../../utils/streamFunctions';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const screenProps = useScreenProps();
   const now = new Date();
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+
+
+  /**
+   * When the stream is available to go live, force update to make the go live button available
+   */
+  const [, setState] = useState({});
+  useStreamStart(new Date(new Date(props.data.timeFrom).getTime() - 1.8e+6).toISOString(), () => setState({}));
 
 
   /**
@@ -30,22 +33,6 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
       <StreamStates {...props} />
     );
   }
-
-
-  /**
-   * Set text in clipboard and toast success
-   */
-  const onCopy = (text: string) => {
-    Clipboard.setString(text);
-
-    pushToast({
-      duration: 1000,
-      component: (
-        <Toast content='Copied!' />
-      ),
-      dismissible: false,
-    });
-  };
 
 
   /**
@@ -80,7 +67,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
       <Button
         type="PRIMARY"
         title="END LIVE"
-        onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}
+        onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
         style={Styles.streamButton}
       />
     );
@@ -95,7 +82,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
       <Button
         type="PRIMARY"
         title="GO LIVE"
-        onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}
+        onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
         style={Styles.streamButton}
       />
     );
@@ -109,7 +96,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
     <Button
       type="PRIMARY"
       title={`Available to go live ${moment(new Date(new Date(props.data.timeFrom).getTime() - 1.8e+6)).fromNow()}`}
-      onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}
+      onPress={() => {}}
       style={Styles.streamButton}
       disabled
     />

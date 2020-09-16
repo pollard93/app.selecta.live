@@ -32,6 +32,7 @@ import ConsumingStreamProfilesScreen from './ConsumingStreamProfilesScreen/Consu
 import { ScreenProps } from './utils/interfaces';
 import NotificationsScreen from './NotificationsScreen/NotificationsScreen';
 import ScreenPropsProvider from '../modules/ScreenPropsProvider/ScreenPropsProvider';
+import GoLiveScreen from './GoLiveScreens/GoLiveScreen/GoLiveScreen';
 
 
 const wrapContext = (Component) => {
@@ -129,4 +130,5 @@ export const registerScreens = () => {
   Navigation.registerComponent(ConsumingStreamProfilesScreen.prototype.ScreenName, () => wrapContext(ConsumingStreamProfilesScreen));
   Navigation.registerComponent(NotificationsScreen.prototype.ScreenName, () => wrapContext(NotificationsScreen));
   Navigation.registerComponent(ToastOverlay.prototype.ScreenName, () => wrapContext(ToastOverlay));
+  Navigation.registerComponent(GoLiveScreen.prototype.ScreenName, () => wrapContext(GoLiveScreen));
 };
