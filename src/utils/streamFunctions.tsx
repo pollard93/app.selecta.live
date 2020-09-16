@@ -38,24 +38,36 @@ export const useStreamStart = (timeFrom: string, onStarted: () => void) => {
 };
 
 
+type StreamTimes = {
+  timeFrom: string;
+  timeFromLive: string;
+  timeTo: string;
+  timeToLive: string;
+}
+
+
 /**
  * Takes stream data, and returns duration in ms
  */
-export const getStreamDurationMs = (data: {timeFrom: string; timeTo: string}) => new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime();
+export const getStreamDurationMs = (data: StreamTimes) => new Date(data.timeToLive || data.timeTo).getTime() - new Date(data.timeFromLive || data.timeFrom).getTime();
+
+
+/**
+ * Takes stream data, and returns hours and minutes values to be displayed
+ */
+export const getStreamDuration = (data: StreamTimes) => {
+  const durationMs = getStreamDurationMs(data);
+  const hours = Math.floor(durationMs / 3.6e+6);
+  const minutes = (durationMs / 60000) - (hours * 60);
+  return { hours, minutes };
+};
 
 
 /**
  * Takes stream data, and returns hours and minutes values to be displayed
  * If pretty is given, return string of formatted time
  */
-export const getStreamDuration = (data: {timeFrom: string; timeTo: string}, pretty = false) => {
+export const getStreamDurationPretty = (data: StreamTimes) => {
   const durationMs = getStreamDurationMs(data);
-
-  if (pretty) {
-    return formatTime(durationMs / 1000);
-  }
-
-  const hours = Math.floor(durationMs / 3.6e+6);
-  const minutes = (durationMs / 60000) - (hours * 60);
-  return { hours, minutes };
+  return formatTime(durationMs / 1000);
 };

@@ -12,7 +12,7 @@ import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItemControls from './components/StreamSelfListItemControls/StreamSelfListItemControls';
-import { getStreamDuration } from '../../../utils/streamFunctions';
+import { getStreamDurationPretty } from '../../../utils/streamFunctions';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 export interface StreamSelfListItemProps {
@@ -39,11 +39,11 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
     <View style={dynamicStyles.wrap}>
       <View style={Styles.banner}>
         <Body bold forceLight style={Styles.bannerHeader}>
-          Live On: {formatForTimezone(props.data.timeFrom, 'DD/MM/Y HH:mm z')}
-          {new Date(props.data.timeFrom) > new Date() && ' (Upcoming)'}
+          Live On: {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'DD/MM/Y HH:mm z')}
+          {!props.data.timeFromLive && ' (Upcoming)'}
         </Body>
 
-        {new Date(props.data.timeFrom) >= new Date() && (
+        {!props.data.timeFromLive && (
           <Button
             title="Edit"
             type="LIGHT"
@@ -77,7 +77,7 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
               <Body>{props.data.tags.map(({ title }) => `#${title} `)}</Body>
             )}
             <Body>Ticket Price: &copy;{props.data.cost}</Body>
-            <Body>Stream Duration: {getStreamDuration(props.data, true)}</Body>
+            <Body>Stream Duration: {getStreamDurationPretty(props.data)}</Body>
           </View>
           <View style={Styles.meta}>
             <Body>Streams: {props.data.viewCount}</Body>

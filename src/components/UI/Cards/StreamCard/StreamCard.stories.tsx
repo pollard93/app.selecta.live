@@ -202,7 +202,35 @@ storiesOf('Cards/StreamCard', module)
             ...r.data.getStreamProfile,
             timeFrom: new Date(Date.now()).toISOString(),
             timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
-            position: 8.64e+7 / 2,
+            timeFromLive: null,
+            timeToLive: null,
+            position: (8.64e+7 / 2) / 1000,
+          }}
+          showPosition
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - with position - live', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard
+          data={{
+            ...r.data.getStreamProfile,
+            timeFrom: new Date(Date.now()).toISOString(),
+            timeTo: new Date(Date.now()).toISOString(),
+            timeFromLive: new Date(Date.now()).toISOString(),
+            timeToLive: new Date(Date.now() + 8.64e+7).toISOString(),
+            position: (8.64e+7 / 2) / 1000,
           }}
           showPosition
         />

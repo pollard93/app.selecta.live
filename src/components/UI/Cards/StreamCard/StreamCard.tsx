@@ -19,8 +19,6 @@ interface StreamCardProps {
 }
 
 const StreamCardTime: FC<StreamCardProps> = (props) => {
-  const now = new Date();
-
   /**
    * Return cancelled message
    */
@@ -31,7 +29,7 @@ const StreamCardTime: FC<StreamCardProps> = (props) => {
   /**
    * Return Live
    */
-  if (new Date(props.data.timeFrom) <= now && new Date(props.data.timeTo) >= now) {
+  if (props.data.timeFromLive && !props.data.timeToLive) {
     return <Chip bold>Live</Chip>;
   }
 
@@ -40,8 +38,8 @@ const StreamCardTime: FC<StreamCardProps> = (props) => {
    */
   return (
     <>
-      <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
-      <Chip bold>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
+      <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'calendar')}</Chip>
+      <Chip bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'z')}</Chip>
     </>
   );
 };

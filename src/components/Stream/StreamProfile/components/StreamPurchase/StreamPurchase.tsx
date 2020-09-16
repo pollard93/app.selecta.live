@@ -16,6 +16,7 @@ import H1 from '../../../../UI/Typography/components/H1';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
 import { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
 import { pushToast } from '../../../../../modules/Toast';
+import { getStreamDuration } from '../../../../../utils/streamFunctions';
 
 interface StreamPurchaseProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -102,6 +103,12 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
   };
 
 
+  /**
+   * Duration
+   */
+  const duration = getStreamDuration(props.data);
+
+
   return (
     <ScrollView
       style={Styles.wrap}
@@ -119,9 +126,9 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight, Styles.notchBottom]} />
 
             <Body bold>Admission #1</Body>
-            <Body bold>{formatForTimezone(props.data.timeFrom, 'calendar')}</Body>
-            <Body bold>Entry from {formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Body>
-            <Body bold>{(new Date(props.data.timeTo).getTime() - new Date(props.data.timeFrom).getTime()) / 3.6e+6} Hours</Body>
+            <Body bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'calendar')}</Body>
+            <Body bold>Entry from {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'z')}</Body>
+            <Body bold>{`${duration.hours} Hours ${duration.minutes ? `${duration.minutes} Minutes` : ''}`}</Body>
           </View>
 
           <View style={[Styles.cost, dynamicStyles.ticket]}>

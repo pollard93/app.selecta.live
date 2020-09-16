@@ -26,8 +26,8 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
   const [variables, setVariables] = useState<getStreamMessagesVodVariables>({
     id: props.data.id,
     from: props.data.position
-      ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
-      : props.data.timeFrom,
+      ? new Date((new Date(props.data.timeFromLive).getTime() + props.data.position * 1000) - 10000).toISOString()
+      : props.data.timeFromLive,
     last: 20,
     before: null,
   });
@@ -56,8 +56,8 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
       setVariables({
         id: props.data.id,
         from: props.data.position
-          ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
-          : props.data.timeFrom,
+          ? new Date((new Date(props.data.timeFromLive).getTime() + props.data.position * 1000) - 10000).toISOString()
+          : props.data.timeFromLive,
         last: 20,
         before: null,
       });
@@ -96,7 +96,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    * Get the current position date
    * Reduce the query results messages to get the ones that need to be displayed
    */
-  const currentPositionTime = new Date(new Date(props.data.timeFrom).getTime() + props.data.position * 1000);
+  const currentPositionTime = new Date(new Date(props.data.timeFromLive).getTime() + props.data.position * 1000);
   const messagesToDisplay = queryResult.data.getStreamMessagesVod.messages.reduce((a, c) => {
     if (new Date(c.createdAt) <= currentPositionTime) {
       a.push(c);

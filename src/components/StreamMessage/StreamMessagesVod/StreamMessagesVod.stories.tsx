@@ -5,7 +5,7 @@ import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import StreamMessagesVod from './StreamMessagesVod';
 
-storiesOf('Stream/StreamMessagesVodVod', module)
+storiesOf('Stream/StreamMessagesVod', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('StreamMessagesVod', () => {

@@ -37,20 +37,19 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
    * The stream has started or is vod
    * The stream is not cancelled
    */
-  const now = useMemo(() => new Date(), [update]);
-  const shouldLoadStreamMessages = useMemo(() => new Date(props.data.timeFrom) <= now && props.data.cancelled === null, [update]);
+  const shouldLoadStreamMessages = useMemo(() => props.data.timeFromLive && props.data.cancelled === null, [update]);
 
 
   /**
    * If the stream has finished render <StreamMessagesVod />
    */
-  const hasFinished = useMemo(() => new Date(props.data.timeTo) < now, [update]);
+  const hasFinished = useMemo(() => props.data.timeToLive, [update]);
 
 
   /**
    * If the stream is live <StreamMessages />
    */
-  const isLive = useMemo(() => new Date(props.data.timeFrom) <= now && new Date(props.data.timeTo) >= now, [update]);
+  const isLive = useMemo(() => props.data.timeFromLive && !props.data.timeToLive, [update]);
 
 
   /**

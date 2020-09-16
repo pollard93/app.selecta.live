@@ -57,7 +57,9 @@ export interface STREAM_PROFILE_FRAGMENT {
   channel: STREAM_PROFILE_FRAGMENT_channel | null;
   image: STREAM_PROFILE_FRAGMENT_image | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
   cancelled: any | null;
   tags: (STREAM_PROFILE_FRAGMENT_tags | null)[] | null;
   position: number | null;

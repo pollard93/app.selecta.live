@@ -43,8 +43,8 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
     small: props.data.user ? props.data.user.profilePicture?.url.small : props.streamData.channel.profileImage.url.small,
   };
 
-  // Get relative time the message was created, relative to stream.timeFrom
-  const relativeTime = formatTime((new Date(props.data.createdAt).getTime() - new Date(props.streamData.timeFrom).getTime()) / 1000);
+  // Get relative time the message was created, relative to stream.timeFromLive
+  const relativeTime = formatTime((new Date(props.data.createdAt).getTime() - new Date(props.streamData.timeFromLive).getTime()) / 1000);
 
   return (
     <View style={Styles.wrap}>
