@@ -127,7 +127,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
   /**
    * Poll the master playlist and setConnected when live
    */
-  const timeout = useRef<number>();
+  const interval = useRef<number>();
   useEffect(() => {
     /**
      * If timeFromLive is set, then the stream is already live
@@ -138,28 +138,29 @@ const GoLive: FC<GoLiveProps> = (props) => {
     }
 
     if (state === 'WAITING' && streamUrlQueryResult.data?.getStreamUrl) {
-      timeout.current = setInterval(async () => {
+      const videoUrl = streamUrlQueryResult.data?.getStreamUrl.video || streamUrlQueryResult.data?.getStreamUrl.audio;
+      interval.current = setInterval(async () => {
         try {
           /**
            * Handle video
            */
-          const res = await fetch(streamUrlQueryResult.data?.getStreamUrl.video);
+          const res = await fetch(videoUrl);
           if (res.status !== 200) throw new Error();
 
           /**
            * Get all files in master playlist and check they have been produced
            */
           const playlists = (await res.text()).match(/^(.*?).m3u8$/gm);
-          const replace = streamUrlQueryResult.data?.getStreamUrl.video.split('/').pop();
+          const replace = videoUrl.split('/').pop();
 
           for (const playlist of playlists) {
-            const playlistUrl = streamUrlQueryResult.data?.getStreamUrl.video.replace(replace, playlist);
+            const playlistUrl = videoUrl.replace(replace, playlist);
             const playlistRes = await fetch(playlistUrl);
             if (playlistRes.status !== 200) throw new Error();
           }
 
           // If no errors have occured, clear interval and set state to connected
-          clearInterval(timeout.current);
+          clearInterval(interval.current);
           setState('CONNECTED');
         // eslint-disable-next-line no-empty
         } catch {}
@@ -167,7 +168,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
     }
 
     return () => {
-      clearInterval(timeout.current);
+      clearInterval(interval.current);
     };
   }, [streamSelfQueryResult.data?.getStreamSelf, streamUrlQueryResult.data?.getStreamUrl]);
 

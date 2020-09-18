@@ -7,6 +7,7 @@ import Header from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import StreamProfileView from './StreamProfileView';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { usePollLive } from '../../../utils/streamFunctions';
 
 export interface StreamProfileProps {
   id: string;
@@ -25,6 +26,13 @@ const StreamProfile: FC<StreamProfileProps> = (props) => {
     },
     fetchPolicy: 'network-only',
   });
+
+
+  /**
+   * Poll
+   */
+  usePollLive(props.id);
+
 
   return (
     <View style={[GlobalStyles.PageFill, { paddingBottom: safeAreaInsets.bottom }]}>

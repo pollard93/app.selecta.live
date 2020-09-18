@@ -123,7 +123,7 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
   if (props.isError) {
     return (
       <View style={[StyleSheet.absoluteFillObject, Styles.cover]}>
-        <H4 style={Styles.error}>Something went wrong...</H4>
+        <H4 forceLight>Something went wrong...</H4>
       </View>
     );
   }

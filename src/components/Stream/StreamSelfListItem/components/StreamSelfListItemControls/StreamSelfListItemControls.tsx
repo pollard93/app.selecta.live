@@ -11,11 +11,10 @@ import StreamStates from '../../../CreateUpdateStream/components/StreamStates/St
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import GoLiveScreen from '../../../../../screens/GoLiveScreens/GoLiveScreen/GoLiveScreen';
-import { useStreamStart } from '../../../../../utils/streamFunctions';
+import { useStreamStart, canGoLive } from '../../../../../utils/streamFunctions';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const screenProps = useScreenProps();
-  const now = new Date();
 
 
   /**
@@ -77,7 +76,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   /**
    * If within half an hour of timeFrom then show go live button
    */
-  if (new Date(props.data.timeFrom).getTime() - now.getTime() <= 1.8e+6) {
+  if (canGoLive(props.data)) {
     return (
       <Button
         type="PRIMARY"

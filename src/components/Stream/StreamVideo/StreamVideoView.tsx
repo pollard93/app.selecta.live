@@ -369,7 +369,6 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         }}
       />
 
-
       <StreamControls
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
