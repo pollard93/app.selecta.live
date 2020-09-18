@@ -2,7 +2,6 @@ import React, { FC, useMemo, useState, useRef, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
-import { useStreamStart } from '../../../../../utils/streamFunctions';
 import StreamMessagesVod from '../../../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamMessages from '../../../../StreamMessage/StreamMessages/StreamMessages';
 import StreamComments from '../../../../StreamComment/StreamComments/StreamComments';
@@ -18,7 +17,6 @@ interface StreamCommunicationProps {
 
 const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
   const window = useRef(Dimensions.get('window')).current;
-  const [update, forceUpdate] = useState({});
 
 
   /**
@@ -37,25 +35,19 @@ const StreamCommunication: FC<StreamCommunicationProps> = (props) => {
    * The stream has started or is vod
    * The stream is not cancelled
    */
-  const shouldLoadStreamMessages = useMemo(() => props.data.timeFromLive && props.data.cancelled === null, [update]);
+  const shouldLoadStreamMessages = useMemo(() => props.data.timeFromLive && props.data.cancelled === null, [props.data.timeFromLive, props.data.cancelled]);
 
 
   /**
    * If the stream has finished render <StreamMessagesVod />
    */
-  const hasFinished = useMemo(() => props.data.timeToLive, [update]);
+  const hasFinished = useMemo(() => props.data.timeToLive, [props.data.timeToLive]);
 
 
   /**
    * If the stream is live <StreamMessages />
    */
-  const isLive = useMemo(() => props.data.timeFromLive && !props.data.timeToLive, [update]);
-
-
-  /**
-   * When the stream starts, if it hasn't already, forceUpdate this view
-   */
-  useStreamStart(props.data.timeFrom, () => forceUpdate({}));
+  const isLive = useMemo(() => props.data.timeFromLive && !props.data.timeToLive, [props.data.timeFromLive, props.data.timeToLive]);
 
 
   /**
