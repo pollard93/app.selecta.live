@@ -53,7 +53,7 @@ const Profile: FC<ProfileProps> = (props) => {
 
 
   /**
-   * On edit username
+   * On edit email
    */
   const onEditEmail = () => {
     openModalScreen({
@@ -69,7 +69,7 @@ const Profile: FC<ProfileProps> = (props) => {
 
 
   /**
-   * On edit username
+   * On edit password
    */
   const onEditPassword = () => {
     openModalScreen({

@@ -76,6 +76,13 @@ export default StyleSheet.create({
   skeletonTags: {
     alignSelf: 'flex-start',
   },
+  icons: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  shareIcon: {
+    marginLeft: spacing.small,
+  },
 });
 
 export const DynamicStyles = new DynamicStyleSheet({

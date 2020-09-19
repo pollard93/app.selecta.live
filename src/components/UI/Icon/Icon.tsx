@@ -38,6 +38,7 @@ export enum ICON {
   NOTIFICATIONS_UNREAD = 'NOTIFICATIONS_UNREAD',
   DRAG_HANDLE = 'DRAG_HANDLE',
   CREATE = 'CREATE',
+  FLAG = 'FLAG',
 }
 
 export interface IconProps {
@@ -149,6 +150,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.CREATE:
         return require('../../../assets/images/icons/create.png');
+
+      case ICON.FLAG:
+        return require('../../../assets/images/icons/flag.png');
 
       default:
         return null;

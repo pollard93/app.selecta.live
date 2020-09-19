@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
@@ -11,6 +12,9 @@ import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
 import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { getStreamDurationMs } from '../../../../utils/streamFunctions';
+import Icon, { ICON } from '../../Icon/Icon';
+import { openModalScreen } from '../../../../screens/utils';
+import ReportStream from '../../../Stream/ReportStream/ReportStream';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
@@ -48,6 +52,24 @@ const StreamCard: FC<StreamCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const width = useMemo(() => `${((props.data.position * 1000) / getStreamDurationMs(props.data)) * 100}%`, [props.data.position]);
 
+
+  /**
+   * On report stream
+   */
+  const onReportStream = () => {
+    openModalScreen({
+      component: (
+        <ReportStream
+          id={props.data.id}
+          onClosed={() => {
+            Navigation.dismissModal('REPORT_STREAM');
+          }}
+        />
+      ),
+    }, 'REPORT_STREAM', OptionsModalTransitionStyle.crossDissolve);
+  };
+
+
   return (
     <View style={[Styles.wrap, dynamicStyles.wrap, props.fillHeight && Styles.fillHeight]}>
       <AsyncImage
@@ -74,12 +96,21 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           >
             {props.data.name}
           </H4>
-          <View>
+
+          <View style={Styles.icons}>
+            {/* eslint-disable-next-line no-underscore-dangle */}
+            {props.data.__typename === 'StreamProfile' && (
+              <TouchableOpacity onPress={onReportStream}>
+                <Icon name={ICON.FLAG} size="small" />
+              </TouchableOpacity>
+            )}
+
             <ShareButton
               title="Share Stream"
               uri={`share/stream/${props.data.id}`}
               iconProps={{
                 size: 'small',
+                style: Styles.shareIcon,
               }}
             />
           </View>
