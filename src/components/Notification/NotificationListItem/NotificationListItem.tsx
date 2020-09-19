@@ -162,16 +162,6 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
   return (
     <TouchableOpacity onPress={onPressNotification}>
       <View style={[Styles.wrap, props.data.readDate && Styles.read]}>
-        <View style={Styles.pulse}>
-          {!props.data.readDate && (
-            <PulsingIcon
-              animating={new Date(props.data.createdAt).getTime() - new Date().getTime() < 3.6e+6}
-              duration={1000}
-              delay={5000}
-            />
-          )}
-        </View>
-
         {imageUrl && (
           <View style={Styles.image}>
             <AsyncImage
@@ -187,6 +177,16 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
         <View style={Styles.content}>
           <Markdown>{props.data.message}</Markdown>
         </View>
+
+        {!props.data.readDate && (
+          <View style={Styles.pulse}>
+            <PulsingIcon
+              animating={new Date(props.data.createdAt).getTime() - new Date().getTime() < 3.6e+6}
+              duration={1000}
+              delay={5000}
+            />
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );

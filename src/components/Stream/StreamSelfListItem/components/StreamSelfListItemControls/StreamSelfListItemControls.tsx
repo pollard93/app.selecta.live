@@ -10,7 +10,7 @@ import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelf
 import StreamStates from '../../../CreateUpdateStream/components/StreamStates/StreamStates';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import GoLiveScreen from '../../../../../screens/GoLiveScreens/GoLiveScreen/GoLiveScreen';
+import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
 import { useStreamStart, canGoLive } from '../../../../../utils/streamFunctions';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
@@ -65,9 +65,8 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
     return (
       <Button
         type="PRIMARY"
-        title="END LIVE"
+        title="END STREAM"
         onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
-        style={Styles.streamButton}
       />
     );
   }
@@ -82,7 +81,6 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
         type="PRIMARY"
         title="GO LIVE"
         onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
-        style={Styles.streamButton}
       />
     );
   }
@@ -96,7 +94,6 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
       type="PRIMARY"
       title={`Available to go live ${moment(new Date(new Date(props.data.timeFrom).getTime() - 1.8e+6)).fromNow()}`}
       onPress={() => {}}
-      style={Styles.streamButton}
       disabled
     />
   );

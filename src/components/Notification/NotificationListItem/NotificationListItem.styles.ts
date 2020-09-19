@@ -13,7 +13,7 @@ export default StyleSheet.create({
     opacity: 0.5,
   },
   pulse: {
-    marginRight: spacing.small,
+    marginLeft: spacing.small,
     width: scalePx(10),
   },
   image: {

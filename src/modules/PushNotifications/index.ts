@@ -14,6 +14,8 @@ import { readNotification, readNotificationVariables } from '../../API/mutation/
 import { GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY } from '../../API/query/getSelf/getSelf';
 import { isLoggedIn } from '../../utils/userFunctions';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
+import { GET_STREAM_PROFILE_QUERY } from '../../API/query/getStreamProfile/getStreamProfile';
+import { GET_CHANNEL_PROFILE_QUERY } from '../../API/query/getChannelProfile/getChannelProfile';
 
 
 /**
@@ -57,14 +59,57 @@ class PushNotifications {
     OneSignal.removeExternalUserId();
   }
 
-  public static onReceived() {
+  public static async onReceived(args) {
     /**
      * On Received query getSelf to update unreadNotificationCount
      */
-    AClient.query({
-      query: GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY,
-      fetchPolicy: 'network-only',
-    });
+    try {
+      await AClient.query({
+        query: GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY,
+        fetchPolicy: 'network-only',
+      });
+    // eslint-disable-next-line no-empty
+    } catch {}
+
+
+    /**
+     * On receieved
+     * If logged in
+     * Then update the onOpenType fragments in cache by making a request
+     */
+    try {
+      const data: PushNotificationData = args.payload.additionalData;
+
+      switch (data.onOpenType) {
+        case NOTIFICATION_ON_OPEN_TYPE.STREAM:
+          if (!isLoggedIn()) break;
+
+          await AClient.query({
+            query: GET_STREAM_PROFILE_QUERY,
+            variables: {
+              id: data.streamId,
+            },
+            fetchPolicy: 'network-only',
+          });
+          break;
+
+        case NOTIFICATION_ON_OPEN_TYPE.CHANNEL:
+          if (!isLoggedIn()) break;
+
+          await AClient.query({
+            query: GET_CHANNEL_PROFILE_QUERY,
+            variables: {
+              id: data.channelId,
+            },
+            fetchPolicy: 'network-only',
+          });
+          break;
+
+        default:
+          break;
+      }
+    // eslint-disable-next-line no-empty
+    } catch {}
   }
 
   public static async onOpened(openResult) {

@@ -32,9 +32,6 @@ export default StyleSheet.create({
   body: {
     padding: spacing.small,
   },
-  streamButton: {
-    marginBottom: spacing.small,
-  },
   details: {
     flexDirection: 'row',
     justifyContent: 'space-between',

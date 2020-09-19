@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
-import GoLive, { GoLiveProps } from '../../../components/Stream/GoLive/GoLive/GoLive';
+import GoLive, { GoLiveProps } from '../../components/Stream/GoLive/GoLive';
 
 export interface GoLiveScreenProps extends GoLiveProps {}
 
@@ -24,13 +24,14 @@ GoLiveScreen.prototype.ScreenName = 'GoLiveScreen';
   },
   bottomTabs: {
     visible: false,
+    animate: true,
   },
 };
 
 /**
  * Set screen color options (default white)
  */
-// GoLiveScreen.prototype.fullScreen = true;
+GoLiveScreen.prototype.fullScreen = true;
 // GoLiveScreen.prototype.statusBarColor = color.mono.dark;
 // GoLiveScreen.prototype.backgroundColor = color.mono.dark;
 

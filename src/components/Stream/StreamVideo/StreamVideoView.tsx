@@ -19,8 +19,8 @@ interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
   query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
-  toggleFullScreen: () => void;
-  isFullScreen: boolean;
+  toggleFullScreen?: () => void;
+  isFullScreen?: boolean;
 }
 
 
@@ -231,8 +231,12 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
           }
         }}
         onError={(...args) => {
-          console.log('StreamVideoView -> args', args);
           setError(true);
+
+          if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.log('Video Error:', args);
+          }
         }}
         style={Styles.video}
         ignoreSilentSwitch={'ignore'}
@@ -381,7 +385,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isError={error}
         isLive={live}
         isAudioOnly={props.data.audioOnly}
-        toggleFullScreen={() => props.toggleFullScreen()}
+        toggleFullScreen={props.toggleFullScreen}
         isFullScreen={props.isFullScreen}
         toggleVideoEnabled={toggleVideoEnabled}
         isVideoEnabled={videoEnabled}

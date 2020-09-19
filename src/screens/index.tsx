@@ -32,7 +32,7 @@ import ConsumingStreamProfilesScreen from './ConsumingStreamProfilesScreen/Consu
 import { ScreenProps } from './utils/interfaces';
 import NotificationsScreen from './NotificationsScreen/NotificationsScreen';
 import ScreenPropsProvider from '../modules/ScreenPropsProvider/ScreenPropsProvider';
-import GoLiveScreen from './GoLiveScreens/GoLiveScreen/GoLiveScreen';
+import GoLiveScreen from './GoLiveScreen/GoLiveScreen';
 
 
 const wrapContext = (Component) => {

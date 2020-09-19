@@ -36,6 +36,7 @@ function loadStories() {
 	require('../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories');
 	require('../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories');
 	require('../src/components/Stream/DeleteStream/DeleteStream.stories');
+	require('../src/components/Stream/GoLive/GoLive.stories');
 	require('../src/components/Stream/PayForStream/ReportStream.stories');
 	require('../src/components/Stream/PublishStream/PublishStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
@@ -126,6 +127,7 @@ const stories = [
 	'../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories',
 	'../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories',
 	'../src/components/Stream/DeleteStream/DeleteStream.stories',
+	'../src/components/Stream/GoLive/GoLive.stories',
 	'../src/components/Stream/PayForStream/ReportStream.stories',
 	'../src/components/Stream/PublishStream/PublishStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',

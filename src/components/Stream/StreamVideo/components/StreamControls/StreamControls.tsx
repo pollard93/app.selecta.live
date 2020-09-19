@@ -23,8 +23,8 @@ interface StreamControlsProps {
   isError: boolean; // Shows error ui
   isLive: boolean; // Hides all ui except play/pause
   isAudioOnly?: boolean; // Hides full screen and enable video controls
-  toggleFullScreen: () => void;
-  isFullScreen: boolean;
+  toggleFullScreen?: () => void;
+  isFullScreen?: boolean;
   toggleVideoEnabled: () => void;
   isVideoEnabled: boolean;
   streamId: string;
@@ -233,22 +233,24 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               </View>
             )}
 
-            <TouchableOpacity
-              onPress={() => {
-                // eslint-disable-next-line no-underscore-dangle
-                if ((fadeAnim as any)._value < 1) {
-                  /**
-                   * If controls not shown assume this touch is to show controls
-                   */
-                  showControls();
-                } else {
-                  props.toggleFullScreen();
-                }
-              }}
-              style={{ padding: spacing.small }}
-            >
-              <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={Styles.icon} />
-            </TouchableOpacity>
+            {props.toggleFullScreen && (
+              <TouchableOpacity
+                onPress={() => {
+                  // eslint-disable-next-line no-underscore-dangle
+                  if ((fadeAnim as any)._value < 1) {
+                    /**
+                     * If controls not shown assume this touch is to show controls
+                     */
+                    showControls();
+                  } else {
+                    props.toggleFullScreen();
+                  }
+                }}
+                style={{ padding: spacing.small }}
+              >
+                <Icon name={!props.isFullScreen ? ICON.FULLSCREEN : ICON.CLOSE_FULLSCREEN} size="small" style={Styles.icon} />
+              </TouchableOpacity>
+            )}
           </View>
         )}
 
