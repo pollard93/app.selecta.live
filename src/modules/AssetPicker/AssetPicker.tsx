@@ -10,6 +10,7 @@ import Icon, { ICON } from '../../components/UI/Icon/Icon';
 import { openModalScreen } from '../../screens/utils';
 import usePermissions from '../../components/UI/Permission/usePermissions';
 import useSafeArea from '../SafeAreaInsets/SafeAreaInsets';
+import PermissionsError from '../../components/UI/Permission/PermissionsError';
 
 /**
  * Create an AssetPickerItem component and pass it to the Provider
@@ -72,10 +73,20 @@ const AssetPicker: FC<AssetPickerProps> = (props) => {
   const { permissionStatus } = usePermissions({
     iosPermission: PERMISSIONS.IOS.PHOTO_LIBRARY,
     androidPermission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-    errorMessage: 'This app needs permission to access your camera roll.',
-    onDismiss: () => closeAssetPickerModal(),
   });
-  if (permissionStatus !== RESULTS.GRANTED) return null;
+
+  /**
+   * Permission error
+   */
+  if (permissionStatus && permissionStatus !== RESULTS.GRANTED) {
+    return (
+      <PermissionsError
+        state={permissionStatus}
+        errorMessage="We require permission to access your camera roll."
+        onDismiss={closeAssetPickerModal}
+      />
+    );
+  }
 
 
   return (

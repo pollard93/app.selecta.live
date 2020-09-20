@@ -39,6 +39,7 @@ export enum ICON {
   DRAG_HANDLE = 'DRAG_HANDLE',
   CREATE = 'CREATE',
   FLAG = 'FLAG',
+  ERROR = 'ERROR',
 }
 
 export interface IconProps {
@@ -153,6 +154,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.FLAG:
         return require('../../../assets/images/icons/flag.png');
+
+      case ICON.ERROR:
+        return require('../../../assets/images/icons/error.png');
 
       default:
         return null;

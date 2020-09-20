@@ -5,7 +5,11 @@ import spacing from '../../../styles/definitions/spacing';
 export default StyleSheet.create({
   wrap: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: color.mono.darkCover,
+    backgroundColor: color.mono.dark,
+  },
+  container: {
+    alignSelf: 'center',
+    width: '80%',
   },
   inner: {
     alignItems: 'center',
@@ -13,9 +17,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   dismiss: {
-    left: spacing.large,
+    left: spacing.small,
     position: 'absolute',
-    top: spacing.large,
+    top: spacing.small,
   },
   dismissIcon: {
     tintColor: color.mono.light,

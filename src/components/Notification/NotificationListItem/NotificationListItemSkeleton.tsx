@@ -12,8 +12,6 @@ const NotificationListItemSkeleton: FC<NotificationListItemSkeletonProps> = () =
 
   return (
     <View style={[Styles.wrap, Styles.skeletonContentWrap]}>
-      <View style={Styles.pulse} />
-
       <View style={[Styles.image, Styles.skeletonImageWrap, globalDynamicStyles.skeleton]}>
         <Image
           source={require('../../../assets/images/logo-icon.png')}
