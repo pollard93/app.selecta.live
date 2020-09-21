@@ -17,6 +17,7 @@ import Styles, { DynamicStyles } from './Notifications.styles';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import NotificationListItemSkeleton from '../NotificationListItem/NotificationListItemSkeleton';
+import H4 from '../../UI/Typography/components/H4';
 
 class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
 
@@ -111,11 +112,21 @@ const Notifications: FC<NotificationsProps> = () => {
           },
         }}
       >
-        {({ queryResult }) => {
+        {({ queryResult, maxCount }) => {
           if (queryResult.error) {
             return (
               <View style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
                 <LoadRetry {...queryResult} />
+              </View>
+            );
+          }
+
+          if (maxCount === 0) {
+            return (
+              <View style={[StyleSheet.absoluteFillObject, Styles.empty, { paddingTop: headerHeight }]}>
+                <View style={GlobalStyles.MaxWidth}>
+                  <H4 style={Styles.emptyText}>Your notifications will appear here</H4>
+                </View>
               </View>
             );
           }

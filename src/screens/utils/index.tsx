@@ -3,7 +3,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
 import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
-import { STACK, ScreenProps } from './interfaces';
+import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelSelfScreenName } from '../ChannelSelfScreen/ChannelSelfScreen';
 import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
@@ -18,7 +18,7 @@ import { ConsumingStreamProfilesScreenName } from '../ConsumingStreamProfilesScr
  * Resets navigation stack to login screen using STACK.ONBOARDING
  * @param toastMessage - optional toast message to show on mount of login
  */
-export const goToLogin = (passProps: Omit<LoginProps, keyof ScreenProps> = {}) => Navigation.setRoot({
+export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
   root: {
     stack: {
       id: STACK.ONBOARDING,
@@ -194,7 +194,7 @@ export const goToChannelStack = () => Navigation.setRoot({
  * @param props - Props of screen class
  */
 type ExtractProps<P> = P extends FC<infer L> ? L : null;
-export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>, options: Options = {}) => Navigation.push(stack, {
+export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push(stack, {
   component: {
     name: screen.prototype.ScreenName,
     passProps: props,
@@ -217,7 +217,7 @@ export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
-export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: Omit<ExtractProps<T>, keyof ScreenProps>) => Navigation.showModal({
+export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.showModal({
   stack: {
     id: stack,
     children: [
@@ -250,10 +250,10 @@ export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: 
  * @param modalTransitionStyle - optional OptionsModalTransitionStyle
  */
 export const openModalScreen = (
-  passProps: Omit<ModalScreenProps, keyof ScreenProps>,
+  passProps: ModalScreenProps,
   id = ModalScreenName,
   modalTransitionStyle: OptionsModalTransitionStyle = OptionsModalTransitionStyle.coverVertical,
-) => Navigation.showModal<Omit<ModalScreenProps, keyof ScreenProps>>({
+) => Navigation.showModal<ModalScreenProps>({
   component: {
     id,
     name: ModalScreenName,

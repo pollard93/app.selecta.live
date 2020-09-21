@@ -13,6 +13,7 @@ export enum ICON {
   WALLET = 'WALLET',
   SHARE = 'SHARE',
   PLUS = 'PLUS',
+  MINUS = 'MINUS',
   PLAY = 'PLAY',
   PAUSE = 'PAUSE',
   FULLSCREEN = 'FULLSCREEN',
@@ -76,6 +77,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.PLUS:
         return require('../../../assets/images/icons/plus.png');
+
+      case ICON.MINUS:
+        return require('../../../assets/images/icons/minus.png');
 
       case ICON.PLAY:
         return require('../../../assets/images/icons/play.png');

@@ -7,6 +7,13 @@ export default StyleSheet.create({
     height: 1,
     opacity: 0.5,
   },
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
+  },
 });
 
 export const DynamicStyles = new DynamicStyleSheet({

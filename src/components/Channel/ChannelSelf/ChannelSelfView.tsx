@@ -90,6 +90,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
                 </View>
 
                 <View style={Styles.description}>
+                  <Body bold style={Styles.joined}>Credit: © {props.queryResult.data?.getChannelSelf.credit}</Body>
                   <Body bold style={Styles.joined}>Joined: {formatForTimezone(props.queryResult.data?.getChannelSelf.createdAt, 'calendar')}</Body>
                 </View>
               </>

@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
-import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {
@@ -13,8 +12,7 @@ export default StyleSheet.create({
   },
   icon: {
     aspectRatio: 1,
-    marginLeft: spacing.xsmall,
+    marginLeft: spacing.xxsmall,
     tintColor: color.mono.light,
-    width: scalePx(12),
   },
 });

@@ -115,7 +115,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
       bounces={false}
     >
       <View style={[Styles.info, dynamicStyles.info]}>
-        <H4>{props.data.info}</H4>
+        <Body>{props.data.info}</Body>
       </View>
 
       <View style={Styles.buy}>

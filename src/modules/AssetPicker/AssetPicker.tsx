@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import AssetPickerModule, { AssetPickerProps, AssetPickerItemProps, MultiSelectComponentProps } from 'mbp-components-rn-assetpicker';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Styles from './AssetPicker.style';
 import Button from '../../components/UI/Button/Button';
@@ -59,7 +59,7 @@ export const openAssetPickerModalScreen = (props: AssetPickerProps) => {
     component: (
       <AssetPicker {...props} />
     ),
-  }, 'ASSET_PICKER_MODAL');
+  }, 'ASSET_PICKER_MODAL', OptionsModalTransitionStyle.crossDissolve);
 };
 
 
