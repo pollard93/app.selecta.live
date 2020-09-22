@@ -8,6 +8,9 @@ export default StyleSheet.create({
   inner: {
     flex: 1,
   },
+  spacer: {
+    width: spacing.small,
+  },
   published: {
     marginBottom: spacing.small,
   },

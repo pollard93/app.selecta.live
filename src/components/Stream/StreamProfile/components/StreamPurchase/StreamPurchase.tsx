@@ -81,11 +81,20 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
 
   /**
    * On Purchase
+   * If stream is free, then execute mutation
    * If user does not have enough credit, open top up modal
    * Otherwise, set state to confirming
    * If already confirming, then execute mutation
    */
   const onPurchase = () => {
+    if (props.data.cost === 0) {
+      /**
+       * PURCHASE STREAM
+       */
+      mutation();
+      return;
+    }
+
     if (self.credit < props.data.cost) {
       openTopUpModal();
       return;
@@ -145,6 +154,11 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
         <Button
           title={(() => {
             if (loading) return 'Purchasing Stream';
+
+            if (props.data.cost === 0) {
+              return 'Watch this stream for free!';
+            }
+
             return confirming ? 'Press to confirm your purchase!' : `Buy this stream for © ${props.data.cost}`;
           })()}
           onPress={onPurchase}

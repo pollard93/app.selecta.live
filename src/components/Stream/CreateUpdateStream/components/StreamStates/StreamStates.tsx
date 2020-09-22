@@ -22,6 +22,7 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
         <View style={Styles.inner}>
           <DeleteStream {...props} />
         </View>
+        <View style={Styles.spacer} />
         <View style={Styles.inner}>
           <PublishStream {...props} />
         </View>

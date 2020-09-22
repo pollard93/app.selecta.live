@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import ConsumingStreamProfiles, { ConsumingStreamProfilesProps } from '../../components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles';
+import { useMounted } from '../utils';
 
 export interface ConsumingStreamProfilesScreenProps extends ConsumingStreamProfilesProps {}
 
-const ConsumingStreamProfilesScreen: FC<ConsumingStreamProfilesScreenProps> = (props) => (
-  <ConsumingStreamProfiles {...props} />
-);
+const ConsumingStreamProfilesScreen: FC<ConsumingStreamProfilesScreenProps> = (props) => {
+  const mounted = useMounted(ConsumingStreamProfilesScreen.prototype.ScreenName);
+  if (!mounted) return null;
+
+  return (
+    <ConsumingStreamProfiles {...props} />
+  );
+};
 
 export default ConsumingStreamProfilesScreen;
 
