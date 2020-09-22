@@ -15,6 +15,15 @@ import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
 
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      pauseCurrentVideo: () => void;
+    }
+  }
+}
+
+
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
@@ -213,6 +222,30 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const toggleVideoEnabled = () => {
     setVideoEnabled(!videoEnabled);
   };
+
+
+  /**
+   * On mount, try and execute global.pauseCurrentVideo incase there is other videos in the stack
+   * On unmount, remove global.pauseCurrentVideo
+   */
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    global.pauseCurrentVideo?.();
+
+    return () => {
+      global.pauseCurrentVideo = null;
+    };
+  }, []);
+
+
+  /**
+   * When rate changes to 1, assign a global function to pause from anywhere
+   */
+  useEffect(() => {
+    if (rate === 1) {
+      global.pauseCurrentVideo = () => setRate(0);
+    }
+  }, [rate]);
 
 
   return (
