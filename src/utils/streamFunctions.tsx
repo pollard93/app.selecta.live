@@ -50,7 +50,15 @@ type StreamTimes = {
 /**
  * Takes stream data, and returns duration in ms
  */
-export const getStreamDurationMs = (data: StreamTimes) => new Date(data.timeToLive || data.timeTo).getTime() - new Date(data.timeFromLive || data.timeFrom).getTime();
+export const getStreamDurationMs = (data: StreamTimes) => {
+  // Live duration, if both are set
+  if (data.timeFromLive && data.timeToLive) {
+    return new Date(data.timeToLive).getTime() - new Date(data.timeFromLive).getTime();
+  }
+
+  // Scheduled
+  return new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime();
+};
 
 
 /**

@@ -30,7 +30,7 @@ interface StreamVideoViewProps {
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const client = useApolloClient();
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState(1);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
   const [playableDuration, setPlayableDuration] = useState(0);

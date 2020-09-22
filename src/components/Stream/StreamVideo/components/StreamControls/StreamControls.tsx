@@ -323,8 +323,8 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
               >
                 <View style={Styles.live}>
                   <LoadingIcon size="small" />
-                  <Small bold light style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
-                  {props.isBuffering && <Small bold light style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}
+                  <Small bold forceLight style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>
+                  {props.isBuffering && <Small bold forceLight style={{ paddingLeft: spacing.xsmall }}>Buffering...</Small>}
                 </View>
               </View>
             )
