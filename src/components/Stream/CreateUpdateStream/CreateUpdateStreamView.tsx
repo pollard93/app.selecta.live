@@ -132,7 +132,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Refs
    */
   const infoRef = useRef(null);
-  const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
   const imageResetRef = useRef(null);
@@ -626,10 +625,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 defaultValue={defaultValues.info}
                 errors={errors}
                 onBlur={() => triggerValidation('info', true)}
-                onSubmitEditing={() => {
-                  // eslint-disable-next-line no-unused-expressions
-                  startDateRef.current?.focus();
-                }}
                 wrapStyle={Styles.inputWrap}
                 editable={editable}
               />
@@ -652,7 +647,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
               <DateInput
                 defaultValue={timeFrom}
-                inputRef={startDateRef}
                 mode="date"
                 onChange={(value) => {
                   setValue('timeFrom', value, true);
