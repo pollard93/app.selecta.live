@@ -11,37 +11,38 @@ const exec = util.promisify(childProcess.exec);
  * Creates app icons and splash icons from icon.jpg in root
  */
 void (async function () {
-  const maingIconPath = path.join(__dirname, '../icons/icon.jpg');
-  const mainIcon = await Jimp.read(maingIconPath);
-
-
   /**
-   * Create pixel densities for use later
+   * Create pixel densities for jpg and png icons
    */
-  // Save @3x.{png,jpg}
-  const clone = mainIcon.clone();
-  await clone.write(path.join(__dirname, '../icons/density/icon@3x.jpg'));
-  await clone.write(path.join(__dirname, '../icons/density/icon@3x.png'));
+  for (const ext of ['png', 'jpg']) {
+    const mainIconPath = path.join(__dirname, `../icons/icon.${ext}`);
+    const mainIcon = await Jimp.read(mainIconPath);
+    const clone = mainIcon.clone();
 
-  // Generate densities (.{png,jpg} not working for some reason!)
-  await exec(`yarn dev:icons dir:${path.join(__dirname, '../icons/density/*@3x.png')}`);
-  await exec(`yarn dev:icons dir:${path.join(__dirname, '../icons/density/*@3x.jpg')}`);
+    // Save @3x
+    await clone.write(path.join(__dirname, `../icons/density/icon@3x.${ext}`));
+
+    // Generate densities
+    await exec(`yarn dev:icons dir:${path.join(__dirname, `../icons/density/*@3x.${ext}`)}`);
+  }
 
 
   /**
    * Generate adaptive android icon
    * https://medium.com/google-design/designing-adaptive-icons-515af294c783
    */
+  const jpgIconPath = path.join(__dirname, '../icons/icon.jpg');
+  const jpgIcon = await Jimp.read(jpgIconPath);
   await new Promise((res) => {
-    const resizedImage = mainIcon
+    const resizedImage = jpgIcon
       .clone()
-      .resize(mainIcon.bitmap.width * 0.6, mainIcon.bitmap.height * 0.6);
+      .resize(jpgIcon.bitmap.width * 0.6, jpgIcon.bitmap.height * 0.6);
 
     // Create a new image and blit in the resized image
     // 0x0 = 0 = rgba(0, 0, 0, 0)
-    new Jimp(mainIcon.bitmap.width, mainIcon.bitmap.height, 'rgba(255, 255, 255, 1)')
-      .blit(resizedImage, mainIcon.bitmap.width * 0.2, mainIcon.bitmap.height * 0.2)
-      .write(maingIconPath.replace('icon.', 'icon-android.'), () => res()); // save
+    new Jimp(jpgIcon.bitmap.width, jpgIcon.bitmap.height, 'rgba(255, 255, 255, 1)')
+      .blit(resizedImage, jpgIcon.bitmap.width * 0.2, jpgIcon.bitmap.height * 0.2)
+      .write(jpgIconPath.replace('icon.', 'icon-android.'), () => res()); // save
   });
 
 

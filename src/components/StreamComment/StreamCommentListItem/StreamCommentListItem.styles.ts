@@ -10,14 +10,8 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.small,
   },
   profilePictureWrap: {
-    marginRight: spacing.small,
-  },
-  profilePicture: {
     aspectRatio: 1,
-    borderColor: color.mono.light,
-    borderRadius: scalePx(26) / 2,
-    borderWidth: 2,
-    overflow: 'hidden',
+    marginRight: spacing.small,
     width: scalePx(26),
   },
   channelTick: {
@@ -38,7 +32,7 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: color.mono.light,
     borderBottomLeftRadius: 0,
-    borderRadius: scalePx(20),
+    borderRadius: scalePx(10),
     overflow: 'hidden',
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.xxsmall,

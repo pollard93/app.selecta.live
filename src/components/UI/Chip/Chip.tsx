@@ -17,6 +17,10 @@ const Chip: FC<ChipProps> = (props) => {
   const darkMode = useDarkMode();
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
+
+  /**
+   * Get type
+   */
   const type = (() => {
     if (darkMode) {
       if (props.type === 'LIGHT') return 'SECONDARY';

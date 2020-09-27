@@ -378,6 +378,8 @@ PODS:
     - React
   - RNCPicker (1.6.5):
     - React
+  - RNCPushNotificationIOS (1.4.1):
+    - React
   - RNDateTimePicker (2.3.2):
     - React
   - RNDeviceInfo (5.5.3):
@@ -461,6 +463,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -577,6 +580,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/clipboard"
   RNCPicker:
     :path: "../node_modules/@react-native-community/picker"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
@@ -654,6 +659,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: e0dd7c8a36543b4ef84969acd9f8aceba3a92dc2
   RNCClipboard: 48eaf27bea3de7c9a265529725434268d47a2ee9
   RNCPicker: 55b9b4240d0a9eba8733d02616775d4040de2e7d
+  RNCPushNotificationIOS: c145c6253ea016e5efeff604f2720736b4a596f7
   RNDateTimePicker: 4bd49e09f91ca73d69119a9e1173b0d43b82f5e5
   RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38

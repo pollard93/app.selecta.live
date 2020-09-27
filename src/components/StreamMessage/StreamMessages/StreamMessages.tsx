@@ -6,13 +6,14 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
-import styles, { DynamicStyles } from './StreamMessages.styles';
+import styles from './StreamMessages.styles';
 import { STREAM_MESSAGES_SUBSCRIPTION } from '../../../API/subscription/streamMessages/streamMessages';
 import { streamMessages, streamMessagesVariables } from '../../../API/subscription/streamMessages/__generated__/streamMessages';
 import CreateStreamMessage from '../CreateStreamMessage/CreateStreamMessage';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 class StreamMessagesFlatList extends ApolloFlatList<getStreamMessagesVariables, getStreamMessages, getStreamMessages_getStreamMessages_messages, streamMessagesVariables, streamMessages> {}
 
@@ -21,7 +22,7 @@ interface StreamMessagesProps {
 }
 
 const StreamMessages: FC<StreamMessagesProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const dynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   const variables = {
     id: props.data.id,
@@ -30,7 +31,7 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
   };
 
   return (
-    <View style={[styles.wrap, dynamicStyles.wrap]}>
+    <View style={[styles.wrap, dynamicStyles.background]}>
       <StreamMessagesFlatList
         query={GET_STREAM_MESSAGES_QUERY}
         variables={variables}
@@ -45,15 +46,6 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
           inverted: true,
           ItemSeparatorComponent: () => <View style={styles.separator} />,
           contentContainerStyle: styles.contentContainer,
-        }}
-        ListFooterComponent={({ queryResult }) => {
-          if (queryResult.loading || queryResult.error) {
-            return (
-              <LoadRetry {...queryResult} />
-            );
-          }
-
-          return null;
         }}
         subscriptionOptions={{
           document: STREAM_MESSAGES_SUBSCRIPTION,
@@ -87,7 +79,20 @@ const StreamMessages: FC<StreamMessagesProps> = (props) => {
             // Die silently
           },
         }}
-      />
+      >
+        {({ queryResult }) => {
+          /**
+           * Handle loading and error
+           */
+          if (queryResult.loading || queryResult.error) {
+            return (
+              <LoadRetry cover {...queryResult} />
+            );
+          }
+
+          return null;
+        }}
+      </StreamMessagesFlatList>
 
       <CreateStreamMessage variables={variables} />
     </View>

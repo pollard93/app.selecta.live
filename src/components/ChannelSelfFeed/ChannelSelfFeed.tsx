@@ -1,20 +1,25 @@
-/* eslint-disable max-classes-per-file */
 import React, { FC } from 'react';
 import { FlatListProps, SafeAreaView } from 'react-native';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
-import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import Feed from '../UI/Feed/Feed';
 import { useGetChannelSelfFeedQuery } from '../../API/query/getChannelSelfFeed/getChannelSelfFeed';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import { pushScreen } from '../../screens/utils';
 import StreamSelfScreen from '../../screens/StreamSelfScreen/StreamSelfScreen';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ChannelSelfFeedProps extends ScreenProps {
+export interface ChannelSelfFeedProps {
   flatListProps: Partial<FlatListProps<any>>;
 }
 
 const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
+  const screenProps = useScreenProps();
+
+
+  /**
+   * Query
+   */
   const queryResult = useGetChannelSelfFeedQuery({
     fetchPolicy: 'network-only',
   });
@@ -22,6 +27,7 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
   if (queryResult.loading) {
     return null;
   }
+
 
   return (
     <SafeAreaView style={GlobalStyles.PageFill}>
@@ -33,7 +39,7 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
               <Feed
                 data={queryResult.data.getChannelSelfFeed}
                 onPressStream={(id) => {
-                  pushScreen(STACK.PROFILE, StreamSelfScreen, { id });
+                  pushScreen(screenProps.componentId, StreamSelfScreen, { id });
                 }}
                 onPressChannel={() => {
                   // Should not be presented with channels on this feed

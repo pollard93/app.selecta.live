@@ -4,7 +4,6 @@ import wait from 'waait';
 import { expect, assert } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import SplashScreen from 'react-native-splash-screen';
 import Login from './Login';
 import mockClient from '../../API/utils/mockClient';
@@ -19,8 +18,8 @@ import InAppPurchases from '../../modules/InAppPurchases';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { STACK } from '../../screens/utils/interfaces';
 import { store } from '../../utils/storage';
+import * as ToastModule from '../../modules/Toast';
 
 describe('<Login >', () => {
   /**
@@ -29,7 +28,7 @@ describe('<Login >', () => {
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -40,7 +39,7 @@ describe('<Login >', () => {
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     splashScreenSpy = sandbox.stub(SplashScreen, 'hide');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -343,7 +342,6 @@ describe('<Login >', () => {
 
     // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 
@@ -373,7 +371,6 @@ describe('<Login >', () => {
 
     // Should have gone to RequestPasswordResetScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(RequestPasswordResetScreen);
     expect((pushScreenSpy.args[0][2] as any).defaultEmailValue).to.equal('email@test.com');
     expect((pushScreenSpy.args[0][2] as any).onCompletion).to.be.instanceOf(Function);
@@ -386,7 +383,6 @@ describe('<Login >', () => {
 
     // Should have gone to RegisterScreen
     expect(pushScreenSpy.callCount).to.equal(2);
-    expect(pushScreenSpy.args[1][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[1][1]).to.equal(RegisterScreen);
   });
 });

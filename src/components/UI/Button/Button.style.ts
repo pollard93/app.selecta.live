@@ -14,6 +14,10 @@ export default StyleSheet.create({
     paddingHorizontal: spacing.xsmall,
     paddingVertical: spacing.small,
   },
+  radius: {
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
   disabled: {
     opacity: 0.5,
   },

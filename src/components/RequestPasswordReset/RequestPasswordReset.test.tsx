@@ -15,7 +15,9 @@ describe('<RequestPasswordReset />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <RequestPasswordReset onCompletion={completionSpy} />
+        <RequestPasswordReset
+          onCompletion={completionSpy}
+        />
       </ApolloProvider>,
     );
 
@@ -57,7 +59,9 @@ describe('<RequestPasswordReset />', () => {
 
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <RequestPasswordReset onCompletion={completionSpy} />
+        <RequestPasswordReset
+          onCompletion={completionSpy}
+        />
       </ApolloProvider>,
     );
 

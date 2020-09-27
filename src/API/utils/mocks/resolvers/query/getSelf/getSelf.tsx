@@ -4,4 +4,5 @@ export const getSelf = () => ({
   username: 'username',
   email: 'dev@madebyprism.com',
   credit: 0,
+  unreadNotificationCount: 0,
 });

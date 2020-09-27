@@ -17,10 +17,14 @@ export const STREAM_PROFILE_FRAGMENT_SHORT = gql`
       ...FILE_FRAGMENT
     }
     timeFrom
+    timeFromLive
     timeTo
+    timeToLive
+    cancelled
     tags {
       ...TAG_PROFILE_FRAGMENT
     }
+    position
   },
   ${FILE_FRAGMENT}
   ${TAG_PROFILE_FRAGMENT}
@@ -33,9 +37,7 @@ export const STREAM_PROFILE_FRAGMENT = gql`
     cost
     isConsumer
     audioOnly
-    position
-    cancelled
+    cancelledMessage
   },
   ${STREAM_PROFILE_FRAGMENT_SHORT}
-  ${FILE_FRAGMENT}
 `;

@@ -3,7 +3,6 @@ import { View, TouchableOpacity, SafeAreaView } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
 import { FlatList } from 'react-native-gesture-handler';
-import { useToast } from 'mbp-components-rn-toast';
 import { useDynamicValue } from 'react-native-dynamic';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
@@ -18,6 +17,7 @@ import Gradient from '../../UI/Gradient/Gradient';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Toast from '../../UI/Toast/Toast';
 import FadeInView from '../../UI/FadeInView/FadeInView';
+import { pushToast } from '../../../modules/Toast';
 
 interface Product extends RNIap.Product {
   credit: number;
@@ -30,7 +30,6 @@ export interface ProductsProps {
 const Products: FC<ProductsProps> = (props) => {
   const client = useApolloClient();
   const self = useGetSelf();
-  const toast = useToast();
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -97,10 +96,13 @@ const Products: FC<ProductsProps> = (props) => {
       await RNIap.requestPurchase(productId, false);
     } catch (err) {
       if (err.code !== RNIap.IAPErrorCode.E_USER_CANCELLED) {
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
-            <Toast content={err.message} />
+            <Toast
+              type="ERROR"
+              content={err.message}
+            />
           ),
           dismissible: false,
         });

@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
-import { View } from 'react-native';
+import React, { FC, useMemo } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { STREAM_PROFILE_FRAGMENT_SHORT } from '../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT_SHORT';
 import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
@@ -10,15 +11,64 @@ import Styles, { DynamicStyles } from './StreamCard.style';
 import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
 import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { getStreamDurationMs } from '../../../../utils/streamFunctions';
+import Icon, { ICON } from '../../Icon/Icon';
+import { openModalScreen } from '../../../../screens/utils';
+import ReportStream from '../../../Stream/ReportStream/ReportStream';
 
 interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
   fillHeight?: boolean; // Sets flex: 1 on wrapper to fill the height, used for displaying in feed
+  showPosition?: boolean;
 }
 
+const StreamCardTime: FC<StreamCardProps> = (props) => {
+  /**
+   * Return cancelled message
+   */
+  if (props.data.cancelled !== null) {
+    return <Chip bold>Cancelled</Chip>;
+  }
+
+  /**
+   * Return Live
+   */
+  if (props.data.timeFromLive && !props.data.timeToLive) {
+    return <Chip bold>Live</Chip>;
+  }
+
+  /**
+   * Fallback to returning date and time
+   */
+  return (
+    <>
+      <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'calendar')}</Chip>
+      <Chip bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'z')}</Chip>
+    </>
+  );
+};
+
 const StreamCard: FC<StreamCardProps> = (props) => {
-  const now = new Date();
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const width = useMemo(() => `${((props.data.position * 1000) / getStreamDurationMs(props.data)) * 100}%`, [props.data.position]);
+
+
+  /**
+   * On report stream
+   */
+  const onReportStream = () => {
+    openModalScreen({
+      component: (
+        <ReportStream
+          id={props.data.id}
+          onClosed={() => {
+            Navigation.dismissModal('REPORT_STREAM');
+          }}
+        />
+      ),
+    }, 'REPORT_STREAM', OptionsModalTransitionStyle.crossDissolve);
+  };
+
 
   return (
     <View style={[Styles.wrap, dynamicStyles.wrap, props.fillHeight && Styles.fillHeight]}>
@@ -29,15 +79,42 @@ const StreamCard: FC<StreamCardProps> = (props) => {
           style: Styles.image,
         }}
       />
-      <View style={[Styles.item, Styles.header]}>
-        <H4>{props.data.name}</H4>
-        <ShareButton
-          title="Share Stream"
-          uri={`share/stream/${props.data.id}`}
-          iconProps={{
-            size: 'small',
-          }}
-        />
+
+      <View>
+        {props.showPosition && props.data.position > 0 && (
+          <>
+            <View style={[Styles.position, Styles.positionBackground]} />
+            <View style={[Styles.position, { width }]} />
+          </>
+        )}
+
+        <View style={[Styles.item, Styles.header]}>
+          <H4
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={Styles.name}
+          >
+            {props.data.name}
+          </H4>
+
+          <View style={Styles.icons}>
+            {/* eslint-disable-next-line no-underscore-dangle */}
+            {props.data.__typename === 'StreamProfile' && (
+              <TouchableOpacity onPress={onReportStream}>
+                <Icon name={ICON.FLAG} size="small" />
+              </TouchableOpacity>
+            )}
+
+            <ShareButton
+              title="Share Stream"
+              uri={`share/stream/${props.data.id}`}
+              iconProps={{
+                size: 'small',
+                style: Styles.shareIcon,
+              }}
+            />
+          </View>
+        </View>
       </View>
 
       {props.data.tags.length > 0
@@ -55,18 +132,7 @@ const StreamCard: FC<StreamCardProps> = (props) => {
         </View>
 
         <View style={Styles.chips}>
-          {
-            new Date(props.data.timeFrom) <= now && new Date(props.data.timeTo) >= now
-              ? (
-                <Chip bold>Live</Chip>
-              )
-              : (
-                <>
-                  <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFrom, 'calendar')}</Chip>
-                  <Chip bold>{formatForTimezone(props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFrom, 'z')}</Chip>
-                </>
-              )
-          }
+          <StreamCardTime {...props} />
         </View>
       </View>
     </View>

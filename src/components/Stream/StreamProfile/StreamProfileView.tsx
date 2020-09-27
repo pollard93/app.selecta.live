@@ -14,6 +14,7 @@ import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamProfile.styles';
 import StreamCommunication from './components/StreamCommunication/StreamCommunication';
 import StreamPurchase from './components/StreamPurchase/StreamPurchase';
+import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 
 
 interface StreamProfileViewProps {
@@ -30,6 +31,10 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
 
+
+  /**
+   * Loading || Error
+   */
   if (props.queryResult.loading) {
     return (
       <SafeAreaView style={GlobalStyles.PageFill}>
@@ -54,14 +59,13 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
-          style={{ paddingTop: headerHeight / 2 }}
           onLayout={(event) => {
             if (!drawerLayout) {
               /**
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,
@@ -75,9 +79,13 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         {!props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null && (
           <StreamPurchase data={props.queryResult.data.getStreamProfile} />
         )}
+
+        {props.queryResult.data.getStreamProfile.cancelled !== null && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
+        )}
       </SafeAreaView>
 
-      {props.queryResult.data.getStreamProfile.isConsumer && drawerLayout && (
+      {shouldLoadVideo && drawerLayout && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[Styles.flex, { zIndex: headerZindex + 1 }]}

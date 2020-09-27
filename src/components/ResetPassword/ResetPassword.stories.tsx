@@ -8,7 +8,9 @@ import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDec
 storiesOf('ResetPassword', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .add('ResetPassword', () => (
-    <ResetPassword token="" />
+    <ResetPassword
+      token=""
+    />
   ))
   .add('ResetPasswordView Default', () => (
     <ResetPasswordView

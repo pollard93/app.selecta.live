@@ -1,9 +1,8 @@
 import React, { FC, useState } from 'react';
 import { View, StyleProp, ViewStyle, TouchableOpacity, StyleSheet } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
-import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
 import DurationPicker from '../../../DateTimePicker/components/DurationPicker/DurationPicker';
 
 export interface DurationInputProps {
@@ -35,7 +34,7 @@ const DurationInput: FC<DurationInputProps> = (props) => {
           defaultHours={hoursValue}
           defaultMinutes={minutesValue}
           onDone={(value) => {
-            Navigation.dismissModal(ModalScreenName);
+            Navigation.dismissModal('DURATION_INPUT');
 
             /** Blur the input so it can be triggered again */
             props.inputRef.current.blur();
@@ -48,7 +47,7 @@ const DurationInput: FC<DurationInputProps> = (props) => {
           }}
         />
       ),
-    });
+    }, 'DURATION_INPUT', OptionsModalTransitionStyle.crossDissolve);
   };
 
   return (

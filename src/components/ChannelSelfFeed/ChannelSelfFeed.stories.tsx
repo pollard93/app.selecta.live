@@ -3,11 +3,8 @@ import { storiesOf } from '@storybook/react-native';
 import ChannelSelfFeed from './ChannelSelfFeed';
 import GetSelfDecorator from '../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('ChannelSelfFeed', module)
+storiesOf('Channel/ChannelSelfFeed', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('ChannelSelfFeed', () => (
-    <ChannelSelfFeed id="TEST" flatListProps={{}} />
-  ))
-  .add('ChannelSelfFeed - has live streams', () => (
-    <ChannelSelfFeed id="HAS_LIVE_STREAMS" flatListProps={{}} />
+    <ChannelSelfFeed flatListProps={{}} />
   ));

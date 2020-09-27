@@ -7,7 +7,7 @@ import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import Chip from './Chip';
 
 storiesOf('UI/Chip', module)
-  .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', alignItems: 'center' }}>{getStory()}</CenterView>)
   .add('Chip - PRIMARY', () => (
     <Chip
       type="PRIMARY"

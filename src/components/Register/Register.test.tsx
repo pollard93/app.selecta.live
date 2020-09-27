@@ -4,7 +4,6 @@ import wait from 'waait';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import Register from './Register';
 import mockClient from '../../API/utils/mockClient';
 import PushNotifications from '../../modules/PushNotifications';
@@ -16,8 +15,8 @@ import RegisterView from './RegisterView';
 import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import { STACK } from '../../screens/utils/interfaces';
 import { store } from '../../utils/storage';
+import * as ToastModule from '../../modules/Toast';
 
 describe('<Register />', () => {
   /**
@@ -26,7 +25,7 @@ describe('<Register />', () => {
   const sandbox = sinon.createSandbox();
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
@@ -35,7 +34,7 @@ describe('<Register />', () => {
 
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
@@ -99,7 +98,6 @@ describe('<Register />', () => {
     // Pushnotifications should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 

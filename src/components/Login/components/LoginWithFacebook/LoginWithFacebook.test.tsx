@@ -5,7 +5,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { ApolloProvider } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../../API/utils/mockClient';
 import LoginWithFacebook from './LoginWithFacebook';
 import { GET_ACCESS_TOKEN_QUERY } from '../../../../ApolloClient/resolvers/query/getAccessToken/getAccessTokenQuery';
@@ -15,10 +14,10 @@ import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import * as ScreenUtilsModule from '../../../../screens/utils';
 import InAppPurchases from '../../../../modules/InAppPurchases';
-import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import Button from '../../../UI/Button/Button';
 import { store } from '../../../../utils/storage';
+import * as ToastModule from '../../../../modules/Toast';
 
 describe('<LoginWithFacebook />', () => {
   /**
@@ -30,7 +29,7 @@ describe('<LoginWithFacebook />', () => {
   let getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-  let toastSpy = sandbox.stub(useToast(), 'push');
+  let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -43,7 +42,7 @@ describe('<LoginWithFacebook />', () => {
     getCurrentAccessTokenSpy = sandbox.spy(AccessToken, 'getCurrentAccessToken');
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
-    toastSpy = sandbox.stub(useToast(), 'push');
+    toastSpy = sandbox.stub(ToastModule, 'pushToast');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
     pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
@@ -254,7 +253,6 @@ describe('<LoginWithFacebook />', () => {
 
     // Should have gone to OnboardingWelcomeScreen
     expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][0]).to.equal(STACK.ONBOARDING);
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
 

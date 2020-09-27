@@ -59,8 +59,12 @@ export interface getStreamProfiles_getStreamProfiles_streams {
   channel: getStreamProfiles_getStreamProfiles_streams_channel | null;
   image: getStreamProfiles_getStreamProfiles_streams_image | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
+  cancelled: any | null;
   tags: (getStreamProfiles_getStreamProfiles_streams_tags | null)[] | null;
+  position: number | null;
 }
 
 export interface getStreamProfiles_getStreamProfiles {

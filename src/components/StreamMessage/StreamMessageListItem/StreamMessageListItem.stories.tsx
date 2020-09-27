@@ -4,12 +4,42 @@ import StreamMessageListItem from './StreamMessageListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamMessagesQuery } from '../../../API/query/getStreamMessages/getStreamMessages';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
-import color from '../../../styles/definitions/color';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
+import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 
 storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
-  .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: color.mono.pale.light }}>{getStory()}</SafeAreaViewDecorator>)
+  .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .add('StreamMessageListItem - long message', () => {
+    const TestComonent = () => {
+      const streamProfile = useGetStreamProfileQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      const streamMessages = useGetStreamMessagesQuery({
+        variables: {
+          id: 'test-id',
+        },
+      });
+      if (streamProfile.loading || streamMessages.loading) return null;
+
+      return (
+        <StreamMessageListItem
+          data={{
+            ...streamMessages.data.getStreamMessages.messages[0],
+            // eslint-disable-next-line max-len
+            message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut',
+          }}
+          streamData={streamProfile.data.getStreamProfile}
+        />
+      );
+    };
+
+    return (
+      <TestComonent />
+    );
+  })
   .add('StreamMessageListItem - other user', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({
@@ -129,8 +159,9 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
       <TestComonent />
     );
   })
-  .add('StreamMessageListItem - large text', () => {
+  .add('StreamMessageListItem - channel self', () => {
     const TestComonent = () => {
+      const channelSelf = useGetChannelSelfQuery();
       const streamProfile = useGetStreamProfileQuery({
         variables: {
           id: 'test-id',
@@ -141,16 +172,21 @@ storiesOf('Stream/StreamMessages/StreamMessageListItem', module)
           id: 'test-id',
         },
       });
-      if (streamProfile.loading || streamMessages.loading) return null;
+      if (streamProfile.loading || channelSelf.loading || streamMessages.loading) return null;
 
       return (
         <StreamMessageListItem
           data={{
             ...streamMessages.data.getStreamMessages.messages[0],
-            // eslint-disable-next-line max-len
-            message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam posuere, urna et auctor scelerisque, dui justo faucibus neque, nec tempor neque lectus ut velit. Suspendisse semper faucibus ex, nec finibus ex egestas ut. Vivamus sed sapien a dolor molestie congue. Duis eget nisi eu eros sagittis interdum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut lectus eros. Cras volutpat lacus eget nisi tincidunt, eu fringilla urna iaculis. Phasellus facilisis pretium leo at bibendum. Vivamus venenatis tellus ut pulvinar malesuada. Fusce ultricies leo sem, ut pulvinar arcu placerat et. Etiam eget tristique libero.',
+            user: null,
           }}
-          streamData={streamProfile.data.getStreamProfile}
+          streamData={{
+            ...streamProfile.data.getStreamProfile,
+            channel: {
+              ...streamProfile.data.getStreamProfile.channel,
+              id: channelSelf.data.getChannelSelf.id,
+            },
+          }}
         />
       );
     };

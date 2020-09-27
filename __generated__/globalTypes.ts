@@ -73,10 +73,18 @@ export enum MutationType {
   UPDATED = "UPDATED",
 }
 
+export enum NOTIFICATION_ON_OPEN_TYPE {
+  CHANNEL = "CHANNEL",
+  CHANNEL_LOGIN = "CHANNEL_LOGIN",
+  STREAM = "STREAM",
+}
+
 export enum NOTIFICATION_TYPE {
-  CHANNEL_NOTIFICATION_TEST = "CHANNEL_NOTIFICATION_TEST",
+  NEW_STREAM_FROM_FOLLOWING = "NEW_STREAM_FROM_FOLLOWING",
   PASSWORD_CHANGED = "PASSWORD_CHANGED",
   REQUESTED_CHANNEL_APPROVED = "REQUESTED_CHANNEL_APPROVED",
+  STREAM_CANCELLED = "STREAM_CANCELLED",
+  STREAM_GONE_LIVE = "STREAM_GONE_LIVE",
 }
 
 export enum SOCIAL_PROVIDER {
@@ -89,6 +97,8 @@ export enum StreamOrderByInput {
   approved_DESC = "approved_DESC",
   audioOnly_ASC = "audioOnly_ASC",
   audioOnly_DESC = "audioOnly_DESC",
+  cancelledMessage_ASC = "cancelledMessage_ASC",
+  cancelledMessage_DESC = "cancelledMessage_DESC",
   cancelled_ASC = "cancelled_ASC",
   cancelled_DESC = "cancelled_DESC",
   cost_ASC = "cost_ASC",
@@ -107,8 +117,12 @@ export enum StreamOrderByInput {
   password_DESC = "password_DESC",
   published_ASC = "published_ASC",
   published_DESC = "published_DESC",
+  timeFromLive_ASC = "timeFromLive_ASC",
+  timeFromLive_DESC = "timeFromLive_DESC",
   timeFrom_ASC = "timeFrom_ASC",
   timeFrom_DESC = "timeFrom_DESC",
+  timeToLive_ASC = "timeToLive_ASC",
+  timeToLive_DESC = "timeToLive_DESC",
   timeTo_ASC = "timeTo_ASC",
   timeTo_DESC = "timeTo_DESC",
   updatedAt_ASC = "updatedAt_ASC",
@@ -482,6 +496,24 @@ export interface NotificationWhereInput {
   type_not?: NOTIFICATION_TYPE | null;
   type_in?: NOTIFICATION_TYPE[] | null;
   type_not_in?: NOTIFICATION_TYPE[] | null;
+  message?: string | null;
+  message_not?: string | null;
+  message_in?: string[] | null;
+  message_not_in?: string[] | null;
+  message_lt?: string | null;
+  message_lte?: string | null;
+  message_gt?: string | null;
+  message_gte?: string | null;
+  message_contains?: string | null;
+  message_not_contains?: string | null;
+  message_starts_with?: string | null;
+  message_not_starts_with?: string | null;
+  message_ends_with?: string | null;
+  message_not_ends_with?: string | null;
+  onOpenType?: NOTIFICATION_ON_OPEN_TYPE | null;
+  onOpenType_not?: NOTIFICATION_ON_OPEN_TYPE | null;
+  onOpenType_in?: NOTIFICATION_ON_OPEN_TYPE[] | null;
+  onOpenType_not_in?: NOTIFICATION_ON_OPEN_TYPE[] | null;
   receiver?: UserWhereInput | null;
   receiverId?: string | null;
   receiverId_not?: string | null;
@@ -498,7 +530,8 @@ export interface NotificationWhereInput {
   receiverId_ends_with?: string | null;
   receiverId_not_ends_with?: string | null;
   sender?: UserWhereInput | null;
-  channelReceiver?: ChannelWhereInput | null;
+  stream?: StreamWhereInput | null;
+  channel?: ChannelWhereInput | null;
   readDate?: any | null;
   readDate_not?: any | null;
   readDate_in?: any[] | null;
@@ -813,6 +846,20 @@ export interface StreamUserRecordWhereInput {
   streamId_ends_with?: string | null;
   streamId_not_ends_with?: string | null;
   stream?: StreamWhereInput | null;
+  userId?: string | null;
+  userId_not?: string | null;
+  userId_in?: string[] | null;
+  userId_not_in?: string[] | null;
+  userId_lt?: string | null;
+  userId_lte?: string | null;
+  userId_gt?: string | null;
+  userId_gte?: string | null;
+  userId_contains?: string | null;
+  userId_not_contains?: string | null;
+  userId_starts_with?: string | null;
+  userId_not_starts_with?: string | null;
+  userId_ends_with?: string | null;
+  userId_not_ends_with?: string | null;
   user?: UserWhereInput | null;
   type?: string | null;
   type_not?: string | null;
@@ -904,6 +951,14 @@ export interface StreamWhereInput {
   timeFrom_lte?: any | null;
   timeFrom_gt?: any | null;
   timeFrom_gte?: any | null;
+  timeFromLive?: any | null;
+  timeFromLive_not?: any | null;
+  timeFromLive_in?: any[] | null;
+  timeFromLive_not_in?: any[] | null;
+  timeFromLive_lt?: any | null;
+  timeFromLive_lte?: any | null;
+  timeFromLive_gt?: any | null;
+  timeFromLive_gte?: any | null;
   timeTo?: any | null;
   timeTo_not?: any | null;
   timeTo_in?: any[] | null;
@@ -912,6 +967,14 @@ export interface StreamWhereInput {
   timeTo_lte?: any | null;
   timeTo_gt?: any | null;
   timeTo_gte?: any | null;
+  timeToLive?: any | null;
+  timeToLive_not?: any | null;
+  timeToLive_in?: any[] | null;
+  timeToLive_not_in?: any[] | null;
+  timeToLive_lt?: any | null;
+  timeToLive_lte?: any | null;
+  timeToLive_gt?: any | null;
+  timeToLive_gte?: any | null;
   cost?: number | null;
   cost_not?: number | null;
   cost_in?: number[] | null;
@@ -951,6 +1014,20 @@ export interface StreamWhereInput {
   cancelled_lte?: any | null;
   cancelled_gt?: any | null;
   cancelled_gte?: any | null;
+  cancelledMessage?: string | null;
+  cancelledMessage_not?: string | null;
+  cancelledMessage_in?: string[] | null;
+  cancelledMessage_not_in?: string[] | null;
+  cancelledMessage_lt?: string | null;
+  cancelledMessage_lte?: string | null;
+  cancelledMessage_gt?: string | null;
+  cancelledMessage_gte?: string | null;
+  cancelledMessage_contains?: string | null;
+  cancelledMessage_not_contains?: string | null;
+  cancelledMessage_starts_with?: string | null;
+  cancelledMessage_not_starts_with?: string | null;
+  cancelledMessage_ends_with?: string | null;
+  cancelledMessage_not_ends_with?: string | null;
   creditRevenue?: number | null;
   creditRevenue_not?: number | null;
   creditRevenue_in?: number[] | null;
@@ -1236,6 +1313,9 @@ export interface UserWhereInput {
   transactions_every?: CreditTransactionWhereInput | null;
   transactions_some?: CreditTransactionWhereInput | null;
   transactions_none?: CreditTransactionWhereInput | null;
+  positions_every?: StreamPositionRecordWhereInput | null;
+  positions_some?: StreamPositionRecordWhereInput | null;
+  positions_none?: StreamPositionRecordWhereInput | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

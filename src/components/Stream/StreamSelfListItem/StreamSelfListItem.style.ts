@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
 import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
-  wrap: {
-    backgroundColor: color.mono.light,
-  },
   banner: {
     alignItems: 'center',
     backgroundColor: color.mono.dark,
@@ -15,7 +13,6 @@ export default StyleSheet.create({
     padding: spacing.small,
   },
   bannerHeader: {
-    color: color.mono.light,
     flex: 1,
   },
   header: {
@@ -35,9 +32,6 @@ export default StyleSheet.create({
   body: {
     padding: spacing.small,
   },
-  streamButton: {
-    marginVertical: spacing.small,
-  },
   details: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -51,24 +45,13 @@ export default StyleSheet.create({
   meta: {
     flex: 1,
   },
-  authKeys: {
-    borderColor: color.mono.pale.dark,
-    borderWidth: scalePx(1),
-    padding: spacing.xsmall,
-  },
-  authKey: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  authKeyBody: {
-    flex: 1,
-    paddingRight: spacing.small,
+  controls: {
+    marginTop: spacing.small,
   },
   metrics: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: spacing.small,
   },
   metric: {
     alignItems: 'center',
@@ -93,5 +76,11 @@ export default StyleSheet.create({
     opacity: 0.1,
     tintColor: color.mono.pale.dark,
     width: scalePx(50),
+  },
+});
+
+export const DynamicStyles = new DynamicStyleSheet({
+  wrap: {
+    backgroundColor: new DynamicValue(color.mono.light, color.monoDarkMode.pale.dark),
   },
 });

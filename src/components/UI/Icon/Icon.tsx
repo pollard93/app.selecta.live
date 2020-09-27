@@ -13,6 +13,7 @@ export enum ICON {
   WALLET = 'WALLET',
   SHARE = 'SHARE',
   PLUS = 'PLUS',
+  MINUS = 'MINUS',
   PLAY = 'PLAY',
   PAUSE = 'PAUSE',
   FULLSCREEN = 'FULLSCREEN',
@@ -33,6 +34,13 @@ export enum ICON {
   CAMERA = 'CAMERA',
   COPY = 'COPY',
   NOTIFICATION = 'NOTIFICATION',
+  NOTIFICATIONS_READ_DARK = 'NOTIFICATIONS_READ_DARK',
+  NOTIFICATIONS_READ_LIGHT = 'NOTIFICATIONS_READ_LIGHT',
+  NOTIFICATIONS_UNREAD = 'NOTIFICATIONS_UNREAD',
+  DRAG_HANDLE = 'DRAG_HANDLE',
+  CREATE = 'CREATE',
+  FLAG = 'FLAG',
+  ERROR = 'ERROR',
 }
 
 export interface IconProps {
@@ -69,6 +77,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.PLUS:
         return require('../../../assets/images/icons/plus.png');
+
+      case ICON.MINUS:
+        return require('../../../assets/images/icons/minus.png');
 
       case ICON.PLAY:
         return require('../../../assets/images/icons/play.png');
@@ -129,6 +140,27 @@ const Icon = (props: IconProps) => {
 
       case ICON.NOTIFICATION:
         return require('../../../assets/images/icons/notifications.png');
+
+      case ICON.NOTIFICATIONS_READ_DARK:
+        return require('../../../assets/images/icons/notifications-read-dark.png');
+
+      case ICON.NOTIFICATIONS_READ_LIGHT:
+        return require('../../../assets/images/icons/notifications-read-light.png');
+
+      case ICON.NOTIFICATIONS_UNREAD:
+        return require('../../../assets/images/icons/notifications-unread.png');
+
+      case ICON.DRAG_HANDLE:
+        return require('../../../assets/images/icons/drag-handle.png');
+
+      case ICON.CREATE:
+        return require('../../../assets/images/icons/create.png');
+
+      case ICON.FLAG:
+        return require('../../../assets/images/icons/flag.png');
+
+      case ICON.ERROR:
+        return require('../../../assets/images/icons/error.png');
 
       default:
         return null;

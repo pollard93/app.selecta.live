@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_MESSAGE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_MESSAGE_FRAGMENT';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import Styles from './StreamMessageListItem.styles';
@@ -10,15 +11,28 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { formatTime } from '../../../utils/functions';
 import Small from '../../UI/Typography/components/Small';
+import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
-  streamData: STREAM_PROFILE_FRAGMENT;
+  streamData: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
+  /**
+   * Check if message has been created by this user
+   * If there user data on the message, then check if the user matches getSelf
+   * If there's no user data, try and get channelSelf from cache only and see if ids match
+   */
   const self = useGetSelf();
-  const isSelf = props.data.user?.id === self.id;
+  const channel = useGetChannelSelfQuery({ fetchPolicy: 'cache-only' });
+  const isSelf = props.data.user
+    ? props.data.user?.id === self.id
+    : channel.data?.getChannelSelf.id === props.streamData.channel.id;
 
   /**
    * If no user is assigned in the data
@@ -29,8 +43,8 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
     small: props.data.user ? props.data.user.profilePicture?.url.small : props.streamData.channel.profileImage.url.small,
   };
 
-  // Get relative time the message was created, relative to stream.timeFrom
-  const relativeTime = formatTime((new Date(props.data.createdAt).getTime() - new Date(props.streamData.timeFrom).getTime()) / 1000);
+  // Get relative time the message was created, relative to stream.timeFromLive
+  const relativeTime = formatTime((new Date(props.data.createdAt).getTime() - new Date(props.streamData.timeFromLive).getTime()) / 1000);
 
   return (
     <View style={Styles.wrap}>
@@ -47,7 +61,7 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
             },
           }}
           containerProps={{
-            style: Styles.profilePicture,
+            style: [GlobalStyles.ImageCircleBorderInner, globalDynamicStyles.ImageCircleBorderInner],
           }}
         />
 

@@ -1,20 +1,20 @@
 import React, { FC } from 'react';
 import { Navigation } from 'react-native-navigation';
-import { useToast } from 'mbp-components-rn-toast';
 import { useRequestPasswordResetMutation } from '../../API/mutation/requestPasswordReset/requestPasswordReset';
 import RequestPasswordResetView from './RequestPasswordResetView';
-import { ScreenProps } from '../../screens/utils/interfaces';
 import Toast from '../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
 import { FormData } from '../Register/RegisterView';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
-export interface RequestPasswordResetProps extends ScreenProps {
+export interface RequestPasswordResetProps {
   onCompletion: () => void;
   defaultEmailValue?: string;
 }
 
 const RequestPasswordReset: FC<RequestPasswordResetProps> = (props) => {
-  const toast = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -25,10 +25,10 @@ const RequestPasswordReset: FC<RequestPasswordResetProps> = (props) => {
       /**
        * Pop this screen and execute props.onCompletion
        */
-      Navigation.pop(props.componentId).finally(props.onCompletion);
+      Navigation.pop(screenProps.componentId).finally(props.onCompletion);
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast
@@ -56,7 +56,7 @@ const RequestPasswordReset: FC<RequestPasswordResetProps> = (props) => {
    * Pop this screen
    */
   const onPop = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

@@ -19,6 +19,7 @@ function loadStories() {
 	require('../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories');
 	require('../src/components/HomeFeed/HomeFeed.stories');
 	require('../src/components/Login/Login.stories');
+	require('../src/components/Notification/NotificationListItem/NotificationListItem.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
 	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
 	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
@@ -30,12 +31,14 @@ function loadStories() {
 	require('../src/components/ResetPassword/ResetPassword.stories');
 	require('../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories');
 	require('../src/components/Stream/CancelStream/CancelStream.stories');
+	require('../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories');
 	require('../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories');
 	require('../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories');
 	require('../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories');
 	require('../src/components/Stream/DeleteStream/DeleteStream.stories');
-	require('../src/components/Stream/PayForStream/ReportStream.stories');
+	require('../src/components/Stream/GoLive/GoLive.stories');
 	require('../src/components/Stream/PublishStream/PublishStream.stories');
+	require('../src/components/Stream/ReportStream/ReportStream.stories');
 	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories');
@@ -58,9 +61,13 @@ function loadStories() {
 	require('../src/components/UI/Cards/StreamCard/StreamCard.stories');
 	require('../src/components/UI/Cards/WalletCard/WalletCard.stories');
 	require('../src/components/UI/Chip/Chip.stories');
+	require('../src/components/UI/DateTimePicker/components/DateTimePicker/DateTimePicker.stories');
+	require('../src/components/UI/DateTimePicker/components/DurationPicker/DurationPicker.stories');
 	require('../src/components/UI/Drawer/Drawer.stories');
+	require('../src/components/UI/DrawerV2/DrawerV2.stories');
 	require('../src/components/UI/Form/components/DateInput/DateInput.stories');
 	require('../src/components/UI/Form/components/DurationInput/DurationInput.stories');
+	require('../src/components/UI/Form/components/MessageInput/MessageInput.stories');
 	require('../src/components/UI/Form/components/SearchInput/SearchInput.stories');
 	require('../src/components/UI/Form/components/Switch/Switch.stories');
 	require('../src/components/UI/Form/components/TagInput/TagInput.stories');
@@ -72,12 +79,17 @@ function loadStories() {
 	require('../src/components/UI/LoadingIcon/LoadingIcon.stories');
 	require('../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories');
 	require('../src/components/UI/Permission/PermissionsError.stories');
+	require('../src/components/UI/PulsingIcon/PulsingIcon.stories');
 	require('../src/components/UI/ShareButton/ShareButton.stories');
 	require('../src/components/UI/Slider/Slider.stories');
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
 	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
+	require('../src/components/UserSelf/UpdateEmail/UpdateEmail.stories');
+	require('../src/components/UserSelf/UpdatePassword/UpdatePassword.stories');
+	require('../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories');
+	require('../src/components/UserSelf/UpdateUsername/UpdateUsername.stories');
 	require('../src/components/Wallet/Wallet.stories');
 	require('../src/modules/AssetPicker/AssetPicker.stories');
 }
@@ -98,6 +110,7 @@ const stories = [
 	'../src/components/CreditTransaction/CreditTransactions/CreditTransactions.stories',
 	'../src/components/HomeFeed/HomeFeed.stories',
 	'../src/components/Login/Login.stories',
+	'../src/components/Notification/NotificationListItem/NotificationListItem.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
 	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
 	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
@@ -109,12 +122,14 @@ const stories = [
 	'../src/components/ResetPassword/ResetPassword.stories',
 	'../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories',
 	'../src/components/Stream/CancelStream/CancelStream.stories',
+	'../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories',
 	'../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories',
 	'../src/components/Stream/CreateUpdateStream/CreateUpdateStream.stories',
 	'../src/components/Stream/CreateUpdateStream/components/StreamStates/StreamStates.stories',
 	'../src/components/Stream/DeleteStream/DeleteStream.stories',
-	'../src/components/Stream/PayForStream/ReportStream.stories',
+	'../src/components/Stream/GoLive/GoLive.stories',
 	'../src/components/Stream/PublishStream/PublishStream.stories',
+	'../src/components/Stream/ReportStream/ReportStream.stories',
 	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories',
@@ -137,9 +152,13 @@ const stories = [
 	'../src/components/UI/Cards/StreamCard/StreamCard.stories',
 	'../src/components/UI/Cards/WalletCard/WalletCard.stories',
 	'../src/components/UI/Chip/Chip.stories',
+	'../src/components/UI/DateTimePicker/components/DateTimePicker/DateTimePicker.stories',
+	'../src/components/UI/DateTimePicker/components/DurationPicker/DurationPicker.stories',
 	'../src/components/UI/Drawer/Drawer.stories',
+	'../src/components/UI/DrawerV2/DrawerV2.stories',
 	'../src/components/UI/Form/components/DateInput/DateInput.stories',
 	'../src/components/UI/Form/components/DurationInput/DurationInput.stories',
+	'../src/components/UI/Form/components/MessageInput/MessageInput.stories',
 	'../src/components/UI/Form/components/SearchInput/SearchInput.stories',
 	'../src/components/UI/Form/components/Switch/Switch.stories',
 	'../src/components/UI/Form/components/TagInput/TagInput.stories',
@@ -151,12 +170,17 @@ const stories = [
 	'../src/components/UI/LoadingIcon/LoadingIcon.stories',
 	'../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories',
 	'../src/components/UI/Permission/PermissionsError.stories',
+	'../src/components/UI/PulsingIcon/PulsingIcon.stories',
 	'../src/components/UI/ShareButton/ShareButton.stories',
 	'../src/components/UI/Slider/Slider.stories',
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
 	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
+	'../src/components/UserSelf/UpdateEmail/UpdateEmail.stories',
+	'../src/components/UserSelf/UpdatePassword/UpdatePassword.stories',
+	'../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories',
+	'../src/components/UserSelf/UpdateUsername/UpdateUsername.stories',
 	'../src/components/Wallet/Wallet.stories',
 	'../src/modules/AssetPicker/AssetPicker.stories'
 ];

@@ -8,7 +8,9 @@ export default StyleSheet.create({
     marginBottom: spacing.xxsmall,
   },
   wrap: {
+    borderRadius: 2,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   contentWrap: {
     flex: 1,

@@ -1,10 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import SplashScreen from 'react-native-splash-screen';
-import { Linking, Platform } from 'react-native';
-import jwtDecode from 'jwt-decode';
-import Config from 'react-native-config';
-import { useToast } from 'mbp-components-rn-toast';
 import LoginView from './LoginView';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
 import { useLoginMutation } from '../../API/mutation/login/login';
@@ -16,78 +12,23 @@ import { REMOVE_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutat
 import { removeAccessToken } from '../../ApolloClient/resolvers/mutation/removeAccessToken/__generated__/removeAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
-import { STACK, ScreenProps } from '../../screens/utils/interfaces';
-import ResetPasswordScreen from '../../screens/ResetPasswordScreen/ResetPasswordScreen';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
-export interface LoginProps extends ScreenProps {
+export interface LoginProps {
   toastMessage?: string;
 }
 
 const Login: FC<LoginProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const toast = useToast();
-
-
-  /**
-   * Reset password deep linking
-   * Listens for live.selecta.app://reset-password/${token}
-   * Pushes ResetPasswordScreen with token
-   */
-  useEffect(() => {
-    const onOpen = (event: {url: string}) => {
-      try {
-        const uri = event.url.replace(Config.REACT_APP_DEEP_LINKING_BASE_URL, '');
-        if (uri.startsWith('reset-password')) {
-          /**
-           * Get token and check the expiry is not within 5 minutes
-           */
-          const token = uri.replace('reset-password/', '');
-          const { exp } = jwtDecode(token);
-          if (new Date(exp * 1000) <= new Date(Date.now() - 30000)) {
-            toast.push({
-              duration: 1000,
-              component: (
-                <Toast content="Link has expired" />
-              ),
-              dismissible: false,
-            });
-            return;
-          }
-
-          /**
-           * Push resetPasswordScreen
-           */
-          pushScreen(STACK.ONBOARDING, ResetPasswordScreen, { token });
-        }
-      // eslint-disable-next-line no-empty
-      } catch (e) {}
-    };
-
-
-    /**
-     * Handle Android
-     */
-    if (Platform.OS === 'android') {
-      Linking.getInitialURL().then((url) => {
-        onOpen({ url });
-      });
-      return undefined;
-    }
-
-
-    /**
-     * Handle iOS
-     */
-    Linking.addEventListener('url', onOpen);
-    return () => Linking.removeEventListener('url', onOpen);
-  }, []);
+  const screenProps = useScreenProps();
 
 
   /**
@@ -101,7 +42,8 @@ const Login: FC<LoginProps> = (props) => {
       await store('getSelf', getSelf);
 
       // Bind notifications
-      PushNotifications.init(getSelf.id);
+      // Prompt now if user has a username as they will not be going to the onboarding process
+      PushNotifications.init(getSelf.id, !!getSelf.username);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -117,7 +59,7 @@ const Login: FC<LoginProps> = (props) => {
       // Navigate now getSelf is cached
       if (!getSelf.username) {
         // Carry on onboarding process if user has no username
-        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -128,10 +70,13 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -159,10 +104,13 @@ const Login: FC<LoginProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -175,7 +123,7 @@ const Login: FC<LoginProps> = (props) => {
    */
   useEffect(() => {
     if (props.toastMessage) {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content={props.toastMessage} />
@@ -209,13 +157,16 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RequestPasswordResetScreen
    */
   const onReset = (defaultEmailValue: string) => {
-    pushScreen(STACK.ONBOARDING, RequestPasswordResetScreen, {
+    pushScreen(screenProps.componentId, RequestPasswordResetScreen, {
       defaultEmailValue,
       onCompletion: () => {
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
-            <Toast content="Please open your magic link in the email we have just sent you" />
+            <Toast
+              type="SUCCESS"
+              content="Please open your magic link in the email we have just sent you"
+            />
           ),
           dismissible: false,
         });
@@ -228,7 +179,7 @@ const Login: FC<LoginProps> = (props) => {
    * Navigate to RegisterScreen
    */
   const onRegister = () => {
-    pushScreen(STACK.ONBOARDING, RegisterScreen, {});
+    pushScreen(screenProps.componentId, RegisterScreen, {});
   };
 
 

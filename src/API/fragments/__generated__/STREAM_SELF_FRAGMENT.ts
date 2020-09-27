@@ -59,9 +59,12 @@ export interface STREAM_SELF_FRAGMENT {
   image: STREAM_SELF_FRAGMENT_image | null;
   tags: (STREAM_SELF_FRAGMENT_tags | null)[] | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
   cost: number | null;
   cancelled: any | null;
+  cancelledMessage: string | null;
   password: string | null;
   creditRevenuePending: number | null;
   creditRevenue: number | null;

@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { formatTime } from './functions';
+import { useGetStreamProfileLiveLazyQuery } from '../API/query/getStreamProfile/getStreamProfileLive';
 
 
 /**
@@ -34,4 +36,77 @@ export const useStreamStart = (timeFrom: string, onStarted: () => void) => {
       clearTimeout(id);
     };
   }, []);
+};
+
+
+type StreamTimes = {
+  timeFrom: string;
+  timeFromLive: string;
+  timeTo: string;
+  timeToLive: string;
+}
+
+
+/**
+ * Takes stream data, and returns duration in ms
+ */
+export const getStreamDurationMs = (data: StreamTimes) => {
+  // Live duration, if both are set
+  if (data.timeFromLive && data.timeToLive) {
+    return new Date(data.timeToLive).getTime() - new Date(data.timeFromLive).getTime();
+  }
+
+  // Scheduled
+  return new Date(data.timeTo).getTime() - new Date(data.timeFrom).getTime();
+};
+
+
+/**
+ * Takes stream data, and returns hours and minutes values to be displayed
+ */
+export const getStreamDuration = (data: StreamTimes) => {
+  const durationMs = getStreamDurationMs(data);
+  const hours = Math.floor(durationMs / 3.6e+6);
+  const minutes = (durationMs / 60000) - (hours * 60);
+  return { hours, minutes };
+};
+
+
+/**
+ * Takes stream data, and returns hours and minutes values to be displayed
+ * If pretty is given, return string of formatted time
+ */
+export const getStreamDurationPretty = (data: StreamTimes) => {
+  const durationMs = getStreamDurationMs(data);
+  return formatTime(durationMs / 1000);
+};
+
+
+/**
+ * Tests if the given stream can go live (is within half an hour of timeFrom)
+ */
+export const canGoLive = (data: StreamTimes) => new Date(data.timeFrom).getTime() - Date.now() <= 1.8e+6;
+
+
+/**
+ * Poll stream profile every 10 seconds and update stream.timeFromLive and stream.timeToLive in cache
+ */
+export const usePollLive = (id: string) => {
+  const [query, queryResult] = useGetStreamProfileLiveLazyQuery({
+    variables: { id },
+    fetchPolicy: 'network-only',
+  });
+
+  const interval = useRef<number>();
+  useEffect(() => {
+    if (!queryResult.data?.getStreamProfile.timeFromLive || !queryResult.data?.getStreamProfile.timeToLive) {
+      interval.current = setInterval(() => {
+        query();
+      }, 10000);
+    }
+
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, [queryResult]);
 };

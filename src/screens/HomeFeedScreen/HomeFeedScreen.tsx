@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import HomeFeed, { HomeFeedProps } from '../../components/HomeFeed/HomeFeed';
+import { useMounted } from '../utils';
 
 export interface HomeFeedScreenProps extends HomeFeedProps {}
 
-const HomeFeedScreen: FC<HomeFeedScreenProps> = (props) => (
-  <HomeFeed {...props} />
-);
+const HomeFeedScreen: FC<HomeFeedScreenProps> = (props) => {
+  const mounted = useMounted(HomeFeedScreen.prototype.ScreenName);
+  if (!mounted) return null;
+
+  return (
+    <HomeFeed {...props} />
+  );
+};
 
 export default HomeFeedScreen;
 

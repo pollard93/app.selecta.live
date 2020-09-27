@@ -12,7 +12,7 @@ const StreamSelfListItemSkeleton: FC<StreamSelfListItemSkeletonProps> = () => {
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   return (
-    <View style={Styles.wrap}>
+    <View>
       <View style={Styles.banner}>
         <Body style={Styles.bannerHeaderSkeleton}>
           Live On:

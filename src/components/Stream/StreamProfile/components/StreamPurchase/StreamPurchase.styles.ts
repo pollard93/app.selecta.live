@@ -9,7 +9,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   info: {
-    backgroundColor: color.mono.pale.regular,
     padding: spacing.small,
   },
   buy: {
@@ -56,21 +55,21 @@ export default StyleSheet.create({
   },
   notch: {
     borderColor: color.accent.primary,
-    borderRadius: (scalePx(15)),
+    borderRadius: (scalePx(7.5)),
     borderWidth: 1,
-    height: scalePx(30),
-    left: -(scalePx(15)),
+    height: scalePx(15),
+    left: -(scalePx(7.5)),
     position: 'absolute',
-    top: -(scalePx(15)),
-    width: scalePx(30),
+    top: -(scalePx(7.5)),
+    width: scalePx(15),
   },
   notchBottom: {
-    bottom: -(scalePx(15)),
+    bottom: -(scalePx(7.5)),
     top: null,
   },
   notchRight: {
     left: null,
-    right: -(scalePx(15)),
+    right: -(scalePx(7.5)),
   },
   lower: {
     padding: spacing.small,
@@ -78,6 +77,9 @@ export default StyleSheet.create({
 });
 
 export const DynamicStyles = new DynamicStyleSheet({
+  info: {
+    backgroundColor: new DynamicValue(color.mono.pale.regular, color.monoDarkMode.pale.regular),
+  },
   ticket: {
     backgroundColor: new DynamicValue(color.mono.light, color.mono.dark),
   },

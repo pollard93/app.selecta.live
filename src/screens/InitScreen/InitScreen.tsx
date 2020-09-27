@@ -12,6 +12,8 @@ import LoadRetry from '../../components/UI/LoadRetry/LoadRetry';
 import { setSafeArea } from '../../modules/SafeAreaInsets/SafeAreaInsets';
 import { store } from '../../utils/storage';
 import { getSelf_getSelf } from '../../API/query/getSelf/__generated__/getSelf';
+import { removeChannelAccessToken } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
+import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
 
 const InitScreen = () => {
   const client = useApolloClient();
@@ -28,7 +30,8 @@ const InitScreen = () => {
       await store('getSelf', getSelf);
 
       // Bind notifications
-      PushNotifications.init(getSelf.id);
+      // Prompt now if user has a username as they will not be going to the onboarding process
+      PushNotifications.init(getSelf.id, !!getSelf.username);
 
       // Bind inAppPurchases
       InAppPurchases.init();
@@ -75,6 +78,11 @@ const InitScreen = () => {
   useEffect(() => {
     (async () => {
       await setSafeArea();
+
+      // Remove channel access token
+      await client.mutate<removeChannelAccessToken>({
+        mutation: REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION,
+      });
 
       // Try set getSelf from cache
       const getSelf = await store('getSelf');

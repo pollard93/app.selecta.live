@@ -12,44 +12,62 @@ import RegisterScreen from './RegisterScreen/RegisterScreen';
 import RequireUpdateScreen from './RequireUpdateScreen/RequireUpdateScreen';
 import ResetPasswordScreen from './ResetPasswordScreen/ResetPasswordScreen';
 import RequestResetPasswordScreen from './RequestPasswordResetScreen/RequestPasswordResetScreen';
-import ToastProvider from '../modules/ToastProvider/ToastProvider';
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelSelfScreen from './ChannelSelfScreen/ChannelSelfScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
-import StreamVideoScreen from './StreamVideoScreen/StreamVideoScreen';
 import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
-import NetworkNotifier from '../modules/NetworkNotifier/NetworkNotifier';
 import UpdateChannelScreen from './UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from './StreamSelfsScreen/StreamSelfsScreen';
 import CreateUpdateStreamScreen from './CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import StreamSelfScreen from './StreamSelfScreen/StreamSelfScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import ProfileScreen from './ProfileScreen/ProfileScreen';
+import ToastOverlay from './ToastOverlay/ToastOverlay';
 import ConsumingStreamProfilesScreen from './ConsumingStreamProfilesScreen/ConsumingStreamProfilesScreen';
+import { ScreenProps } from './utils/interfaces';
+import NotificationsScreen from './NotificationsScreen/NotificationsScreen';
+import ScreenPropsProvider from '../modules/ScreenPropsProvider/ScreenPropsProvider';
+import GoLiveScreen from './GoLiveScreen/GoLiveScreen';
+
 
 const wrapContext = (Component) => {
+  /**
+   * Overlay component
+   */
+  if (Component.prototype.options?.overlay) {
+    const wrapped = (props: ScreenProps) => (
+      <ScreenPropsProvider {...props}>
+        <Component {...props} />
+      </ScreenPropsProvider>
+    );
+
+    // Allows static options to be called for react-native-navigation
+    (wrapped as any).options = Component.prototype.options;
+
+    return wrapped;
+  }
+
+
   /**
    * Wrap without SafeArea
    */
   if (Component.prototype.fullScreen) {
-    const wrapped = (props) => {
+    const wrapped = (props: ScreenProps) => {
       const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
       return (
-        <ApolloProvider client={ApolloClient}>
-          <ToastProvider screenName={Component.prototype.ScreenName}>
-            <NetworkNotifier>
-              <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-                <Component {...props} />
-              </View>
-            </NetworkNotifier>
-          </ToastProvider>
-        </ApolloProvider>
+        <ScreenPropsProvider {...props}>
+          <ApolloProvider client={ApolloClient}>
+            <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+              <Component {...props} />
+            </View>
+          </ApolloProvider>
+        </ScreenPropsProvider>
       );
     };
 
@@ -63,22 +81,20 @@ const wrapContext = (Component) => {
   /**
    * Wrap with SafeArea
    */
-  const wrapped = (props) => {
+  const wrapped = (props: ScreenProps) => {
     const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
     return (
-      <ApolloProvider client={ApolloClient}>
-        <ToastProvider screenName={Component.prototype.ScreenName}>
-          <NetworkNotifier>
-            <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
-            <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
-              <View style={GlobalStyles.PageFill}>
-                <Component {...props} />
-              </View>
-            </SafeAreaView>
-          </NetworkNotifier>
-        </ToastProvider>
-      </ApolloProvider>
+      <ScreenPropsProvider {...props}>
+        <ApolloProvider client={ApolloClient}>
+          <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
+          <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
+            <View style={GlobalStyles.PageFill}>
+              <Component {...props} />
+            </View>
+          </SafeAreaView>
+        </ApolloProvider>
+      </ScreenPropsProvider>
     );
   };
 
@@ -87,6 +103,7 @@ const wrapContext = (Component) => {
 
   return wrapped;
 };
+
 
 export const registerScreens = () => {
   Navigation.registerComponent(InitScreen.prototype.ScreenName, () => wrapContext(InitScreen));
@@ -98,7 +115,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen));
   Navigation.registerComponent(ChannelSelfScreen.prototype.ScreenName, () => wrapContext(ChannelSelfScreen));
   Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen));
-  Navigation.registerComponent(StreamVideoScreen.prototype.ScreenName, () => wrapContext(StreamVideoScreen));
   Navigation.registerComponent(OnboardingWelcomeScreen.prototype.ScreenName, () => wrapContext(OnboardingWelcomeScreen));
   Navigation.registerComponent(OnboardingNotificationsScreen.prototype.ScreenName, () => wrapContext(OnboardingNotificationsScreen));
   Navigation.registerComponent(OnboardingGetStartedScreen.prototype.ScreenName, () => wrapContext(OnboardingGetStartedScreen));
@@ -112,4 +128,7 @@ export const registerScreens = () => {
   Navigation.registerComponent(WalletScreen.prototype.ScreenName, () => wrapContext(WalletScreen));
   Navigation.registerComponent(ProfileScreen.prototype.ScreenName, () => wrapContext(ProfileScreen));
   Navigation.registerComponent(ConsumingStreamProfilesScreen.prototype.ScreenName, () => wrapContext(ConsumingStreamProfilesScreen));
+  Navigation.registerComponent(NotificationsScreen.prototype.ScreenName, () => wrapContext(NotificationsScreen));
+  Navigation.registerComponent(ToastOverlay.prototype.ScreenName, () => wrapContext(ToastOverlay));
+  Navigation.registerComponent(GoLiveScreen.prototype.ScreenName, () => wrapContext(GoLiveScreen));
 };

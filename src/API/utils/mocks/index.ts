@@ -24,7 +24,7 @@ import { getStreamProfiles } from './resolvers/query/getStreamProfiles/getStream
 import { getStreamSelf } from './resolvers/query/getStreamSelf/getStreamSelf';
 import { getStreamSelfs } from './resolvers/query/getStreamSelfs/getStreamSelfs';
 import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
-import { payForStream } from './resolvers/mutation/payForStream/payForStream';
+import { purchaseStream } from './resolvers/mutation/purchaseStream/purchaseStream';
 import { putStreamComment } from './resolvers/mutation/putStreamComment/putStreamComment';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
 import { updateSelf } from './resolvers/mutation/updateSelf/updateSelf';
@@ -34,7 +34,7 @@ export default {
   Mutation: () => ({
     cancelStream,
     followChannel,
-    payForStream,
+    purchaseStream,
     putStreamComment,
     putStreamMessage,
     updateSelf,

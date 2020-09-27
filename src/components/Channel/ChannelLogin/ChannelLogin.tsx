@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, TextInput } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useRequestChannelLoginCodeMutation } from '../../../API/mutation/requestChannelLoginCode/requestChannelLoginCode';
 import { useLoginChannelWithCodeMutation } from '../../../API/mutation/loginChannelWithCode/loginChannelWithCode';
 import Toast from '../../UI/Toast/Toast';
@@ -9,6 +8,7 @@ import { useGetChannelSelfLazyQuery } from '../../../API/query/getChannelSelf/ge
 import { putChannelAccessToken, putChannelAccessTokenVariables } from '../../../ApolloClient/resolvers/mutation/putChannelAccessToken/__generated__/putChannelAccessToken';
 import { PUT_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../../ApolloClient/resolvers/mutation/putChannelAccessToken/putChannelAccessTokenMutation';
 import { goToChannelStack } from '../../../screens/utils';
+import { pushToast } from '../../../modules/Toast';
 
 export interface ChannelLoginProps {
   id: string;
@@ -21,7 +21,6 @@ const ChannelLogin = (props: ChannelLoginProps) => {
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(true);
   const [countDown, setCountDown] = useState(30);
-  const toast = useToast();
 
 
   /**
@@ -35,10 +34,13 @@ const ChannelLogin = (props: ChannelLoginProps) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -70,10 +72,13 @@ const ChannelLogin = (props: ChannelLoginProps) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -94,10 +99,13 @@ const ChannelLogin = (props: ChannelLoginProps) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

@@ -6,6 +6,7 @@ import { VALIDATE_IN_APP_PURCHASE_MUTATION } from '../../API/mutation/validateIn
 import { validateInAppPurchaseVariables, validateInAppPurchase } from '../../API/mutation/validateInAppPurchase/__generated__/validateInAppPurchase';
 import AClient from '../../ApolloClient';
 import Toast from '../../components/UI/Toast/Toast';
+import { pushToast } from '../Toast';
 
 declare global {
   namespace NodeJS {
@@ -113,15 +114,16 @@ class InAppPurchases {
          * Alert the user there is a pending transaction
          * Try and reprocess the transactions
          */
-        if (global.toast) {
-          global.toast.push({
-            duration: 1000,
-            component: (
-              <Toast content="There is a pending transaction for this item" />
-            ),
-            dismissible: false,
-          });
-        }
+        pushToast({
+          duration: 1000,
+          component: (
+            <Toast
+              type="ERROR"
+              content="There is a pending transaction for this item"
+            />
+          ),
+          dismissible: false,
+        });
 
         InAppPurchases.reConnect();
         break;
@@ -131,15 +133,16 @@ class InAppPurchases {
         break;
 
       default:
-        if (global.toast) {
-          global.toast.push({
-            duration: 1000,
-            component: (
-              <Toast content={error.message || 'Something went wrong with your payment'} />
-            ),
-            dismissible: false,
-          });
-        }
+        pushToast({
+          duration: 1000,
+          component: (
+            <Toast
+              type="ERROR"
+              content={error.message || 'Something went wrong with your payment'}
+            />
+          ),
+          dismissible: false,
+        });
         break;
     }
   }

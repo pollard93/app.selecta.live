@@ -46,8 +46,7 @@ storiesOf('Stream/StreamProfile/StreamCommunication', module)
           data={{
             ...queryResult.data.getStreamProfile,
             isConsumer: true,
-            timeFrom: new Date().toISOString(),
-            timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
+            timeFromLive: new Date().toISOString(),
             cancelled: null,
           }}
         />
@@ -70,8 +69,8 @@ storiesOf('Stream/StreamProfile/StreamCommunication', module)
           data={{
             ...queryResult.data.getStreamProfile,
             isConsumer: true,
-            timeFrom: new Date(Date.now() - 8.64e+7).toISOString(),
-            timeTo: new Date().toISOString(),
+            timeFromLive: new Date().toISOString(),
+            timeToLive: new Date().toISOString(),
             cancelled: null,
           }}
         />

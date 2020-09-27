@@ -1,12 +1,18 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import Wallet, { WalletProps } from '../../components/Wallet/Wallet';
+import { useMounted } from '../utils';
 
 export interface WalletScreenProps extends WalletProps {}
 
-const WalletScreen: FC<WalletScreenProps> = (props) => (
-  <Wallet {...props} />
-);
+const WalletScreen: FC<WalletScreenProps> = (props) => {
+  const mounted = useMounted(WalletScreen.prototype.ScreenName);
+  if (!mounted) return null;
+
+  return (
+    <Wallet {...props} />
+  );
+};
 
 export default WalletScreen;
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, ScrollView, TextInput } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
@@ -11,6 +10,7 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 import { updateSelfVariables } from '../../../API/mutation/updateSelf/__generated__/updateSelf';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
+import { pushToast } from '../../../modules/Toast';
 
 type FormData = {
   username: string;
@@ -26,7 +26,6 @@ const ProfileUpdate = () => {
       profilePicture: undefined,
     },
   });
-  const toast = useToast();
 
 
   /**
@@ -45,19 +44,25 @@ const ProfileUpdate = () => {
       /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content='Updated profile' />
+          <Toast
+            type="SUCCESS"
+            content='Updated profile'
+          />
         ),
         dismissible: false,
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

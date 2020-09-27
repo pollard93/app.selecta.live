@@ -4,12 +4,12 @@ import { ApolloProvider } from 'react-apollo';
 import { wait } from '@apollo/react-testing';
 import { expect } from 'chai';
 import Sinon from 'sinon';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import CreateStreamMessage from './CreateStreamMessage';
 import { GET_STREAM_MESSAGES_QUERY } from '../../../API/query/getStreamMessages/getStreamMessages';
 import { getStreamMessages, getStreamMessagesVariables } from '../../../API/query/getStreamMessages/__generated__/getStreamMessages';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
+import * as ToastModule from '../../../modules/Toast';
 
 
 describe('<CreateStreamMessage />', () => {
@@ -17,12 +17,12 @@ describe('<CreateStreamMessage />', () => {
    * Define sandbox and spies
    */
   const sandbox = Sinon.createSandbox();
-  let toastSpy = sandbox.spy(useToast(), 'push');
+  let toastSpy = sandbox.spy(ToastModule, 'pushToast');
 
   afterEach(() => {
     sandbox.restore();
 
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
   });
 
 

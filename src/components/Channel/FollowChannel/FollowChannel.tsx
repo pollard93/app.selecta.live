@@ -37,12 +37,12 @@ const FollowChannel: FC<FollowChannelProps> = (props) => {
         </Animated.Text>
 
         <Icon
-          name={ICON.PLUS}
+          name={props.data.following ? ICON.MINUS : ICON.PLUS}
           style={[
             Styles.icon,
             props.iconStyle,
           ]}
-          size="regular"
+          size="small"
           animated
         />
       </Animated.View>

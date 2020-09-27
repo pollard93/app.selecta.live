@@ -6,17 +6,18 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
 import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';
 import StreamMessageListItem from '../StreamMessageListItem/StreamMessageListItem';
-import styles, { DynamicStyles } from './StreamMessagesVod.styles';
+import styles from './StreamMessagesVod.styles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface StreamMessagesVodProps {
   data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
 const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const dynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
 
   /**
@@ -25,8 +26,8 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
   const [variables, setVariables] = useState<getStreamMessagesVodVariables>({
     id: props.data.id,
     from: props.data.position
-      ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
-      : props.data.timeFrom,
+      ? new Date((new Date(props.data.timeFromLive).getTime() + props.data.position * 1000) - 10000).toISOString()
+      : props.data.timeFromLive,
     last: 20,
     before: null,
   });
@@ -55,8 +56,8 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
       setVariables({
         id: props.data.id,
         from: props.data.position
-          ? new Date((new Date(props.data.timeFrom).getTime() + props.data.position * 1000) - 10000).toISOString()
-          : props.data.timeFrom,
+          ? new Date((new Date(props.data.timeFromLive).getTime() + props.data.position * 1000) - 10000).toISOString()
+          : props.data.timeFromLive,
         last: 20,
         before: null,
       });
@@ -95,7 +96,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
    * Get the current position date
    * Reduce the query results messages to get the ones that need to be displayed
    */
-  const currentPositionTime = new Date(new Date(props.data.timeFrom).getTime() + props.data.position * 1000);
+  const currentPositionTime = new Date(new Date(props.data.timeFromLive).getTime() + props.data.position * 1000);
   const messagesToDisplay = queryResult.data.getStreamMessagesVod.messages.reduce((a, c) => {
     if (new Date(c.createdAt) <= currentPositionTime) {
       a.push(c);
@@ -154,7 +155,7 @@ const StreamMessagesVod: FC<StreamMessagesVodProps> = (props) => {
 
 
   return (
-    <View style={[styles.wrap, dynamicStyles.wrap]}>
+    <View style={[styles.wrap, dynamicStyles.background]}>
       <FlatList
         bounces={false}
         inverted

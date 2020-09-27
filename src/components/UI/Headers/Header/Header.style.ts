@@ -3,14 +3,9 @@ import { StyleSheet } from 'react-native';
 import color from '../../../../styles/definitions/color';
 import spacing from '../../../../styles/definitions/spacing';
 import shadow from '../../../../styles/definitions/shadow';
+import scalePx from '../../../../utils/scalePx';
 
 export default StyleSheet.create({
-  outer: {
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
   wrap: {
     ...shadow.regular,
   },
@@ -39,14 +34,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  wallet: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginRight: spacing.small,
-  },
-  walletIcon: {
-    marginRight: spacing.xxsmall,
-  },
   logoWrap: {
     aspectRatio: 4.854054054054054,
     height: '100%',
@@ -55,25 +42,22 @@ export default StyleSheet.create({
     maxHeight: '100%',
     maxWidth: '100%',
   },
-  profilePicture: {
+  iconWrap: {
     aspectRatio: 1,
     height: '100%',
+    marginLeft: spacing.small,
   },
-  profilePictureInner: {
-    borderColor: color.mono.light,
-    borderRadius: 200,
-    borderWidth: 2,
+  icon: {
     height: '100%',
-    overflow: 'hidden',
-    position: 'absolute',
     width: '100%',
   },
   profilePictureIconWrap: {
     padding: 1,
   },
-  profilePictureIcon: {
-    height: '100%',
-    width: '100%',
+  pulsingIcon: {
+    position: 'absolute',
+    right: 0,
+    top: -(scalePx(2)),
   },
 });
 

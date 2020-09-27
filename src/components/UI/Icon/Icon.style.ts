@@ -34,6 +34,12 @@ export default StyleSheet.create({
   ARROW_BACKWARD: {
     tintColor: undefined,
   },
+  NOTIFICATIONS_READ_DARK: {
+    tintColor: undefined,
+  },
+  NOTIFICATIONS_READ_LIGHT: {
+    tintColor: undefined,
+  },
   forceLight: {
     tintColor: color.mono.light,
   },

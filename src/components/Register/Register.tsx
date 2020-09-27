@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import { useApolloClient } from 'react-apollo';
-import { useToast } from 'mbp-components-rn-toast';
 import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
@@ -12,16 +11,17 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
-import { ScreenProps, STACK } from '../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
+import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../modules/Toast';
 
-export interface RegisterProps extends ScreenProps {}
+export interface RegisterProps {}
 
-const Register: FC<RegisterProps> = (props) => {
+const Register: FC<RegisterProps> = () => {
+  const screenProps = useScreenProps();
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const context = useToast();
 
 
   /**
@@ -50,17 +50,20 @@ const Register: FC<RegisterProps> = (props) => {
 
       // Navigate now getSelf is cached
       // Carry on onboarding process
-      pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+      pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
         setLoading(false);
       });
     },
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -88,10 +91,13 @@ const Register: FC<RegisterProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -114,7 +120,7 @@ const Register: FC<RegisterProps> = (props) => {
    * Form submission
    */
   const onLogin = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

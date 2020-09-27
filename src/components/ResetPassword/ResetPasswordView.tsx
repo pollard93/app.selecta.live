@@ -32,7 +32,10 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
 
 
   return (
-    <OnboardingPageWrap heading="Reset Password">
+    <OnboardingPageWrap
+      heading="Reset Password"
+      onPop={props.onPop}
+    >
       <View style={Styles.input}>
         <H4 style={Styles.content}>Enter your new password</H4>
 
@@ -51,7 +54,6 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
           onBlur={() => triggerValidation('password')}
           onSubmitEditing={handleSubmit(props.onSubmit)}
           testID="password"
-          light
         />
       </View>
 

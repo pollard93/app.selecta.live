@@ -3,11 +3,11 @@ import { Dimensions, Animated, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
-import { ScreenProps } from '../../../../../screens/utils/interfaces';
 import Styles from './FullScreenWrap.style';
+import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 
-interface FullScreenWrapProps extends ScreenProps {
+interface FullScreenWrapProps {
   children: (args: {
     toggleFullScreen: () => void;
     isFullScreen: boolean;
@@ -21,6 +21,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
   const animValue = useRef(new Animated.Value(0)).current;
   const [isFullScreen, setFullScreen] = useState(false);
   const { headerHeight, headerZindex } = useHeaderStyles();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -44,7 +45,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
        * Change status bar color (android)
        * Hide bottom tabs
        */
-      Navigation.mergeOptions(props.componentId, {
+      Navigation.mergeOptions(screenProps.componentId, {
         statusBar: {
           backgroundColor: 'black',
         },
@@ -69,7 +70,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
        * Change status bar color (android)
        * Show bottom tabs
        */
-      Navigation.mergeOptions(props.componentId, {
+      Navigation.mergeOptions(screenProps.componentId, {
         statusBar: {
           backgroundColor: 'white',
         },
@@ -83,7 +84,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
    * Get window height and work out the width to set the element when in full screen mode
    * Fit's 16/9 component within landscape screen
    */
-  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight).current;
+  const windowHeight = useRef(window.height - safeAreaInsets.top - safeAreaInsets.bottom - (headerHeight * 2)).current;
   const fullScreenWidth = useRef(Math.min(window.width * 1.777777777777778, windowHeight)).current;
 
 
@@ -119,7 +120,7 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
 
   return (
     <Animated.View style={[Styles.wrap, { backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }]} pointerEvents="box-none">
-      <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight / 2, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
+      <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
         <Animated.View
           style={[
             Styles.video,

@@ -8,6 +8,7 @@ export default StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: color.mono.light,
     borderColor: color.mono.pale.regular,
+    borderRadius: 2,
     borderWidth: 1,
     paddingVertical: spacing.xxsmall,
   },

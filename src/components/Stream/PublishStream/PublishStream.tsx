@@ -1,20 +1,17 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { usePublishStreamMutation } from '../../../API/mutation/publishStream/publishStream';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import Toast from '../../UI/Toast/Toast';
 import Button from '../../UI/Button/Button';
+import { pushToast } from '../../../modules/Toast';
 
 interface PublishStreamProps {
   data: STREAM_SELF_FRAGMENT;
 }
 
 const PublishStream = (props: PublishStreamProps) => {
-  const toast = useToast();
-
-
   /**
    * Publish stream mutation
    */
@@ -23,19 +20,25 @@ const PublishStream = (props: PublishStreamProps) => {
       id: props.data.id,
     },
     onCompleted: () => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content="Stream published" />
+          <Toast
+            type="SUCCESS"
+            content="Stream published"
+          />
         ),
         dismissible: false,
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

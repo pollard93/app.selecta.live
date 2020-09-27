@@ -104,12 +104,14 @@ const channelTokenEndpoints = [
   'cancelStream',
   'channelNameExists',
   'deleteStream',
+  'endLive',
   'getChannelSelf',
   'getChannelSelfFeed',
   'getRequestedChannels',
   'getStreamSelf',
   'getStreamSelfs',
   'getTagProfiles',
+  'goLive',
   'publishStream',
   'putStream',
   'registerChannel',
@@ -125,15 +127,12 @@ const channelTokenEndpoints = [
  */
 const sharedEndpoints = [
   'canViewStream',
-  'deleteNotification',
-  'getNotifications',
   'getStreamComments',
   'getStreamMessages',
   'getStreamMessagesVod',
   'getStreamUrl',
   'putStreamComment',
   'putStreamMessage',
-  'readNotification',
 ];
 
 

@@ -30,7 +30,7 @@ const RegisterView = (props: RegisterViewProps) => {
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
-  }, []);
+  }, [register]);
 
 
   return (
@@ -52,7 +52,6 @@ const RegisterView = (props: RegisterViewProps) => {
           <View style={Styles.logoWrap}>
             <Image
               source={require('../../assets/images/logo-with-strap-light.png')}
-              style={Styles.logo}
               resizeMode="contain"
             />
           </View>
@@ -64,7 +63,7 @@ const RegisterView = (props: RegisterViewProps) => {
                 // Validate on change if there's an error, otherwise validate onBlur
                 setValue('email', text, !!errors.email);
               }}
-              placeholder="Sign up with your email"
+              placeholder="Enter your email"
               autoCompleteType="email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -89,7 +88,7 @@ const RegisterView = (props: RegisterViewProps) => {
                 // Validate on change if there's an error, otherwise validate onBlur
                 setValue('password', text, !!errors.password);
               }}
-              placeholder="Password"
+              placeholder="Enter a password"
               secureTextEntry
               autoCompleteType="password"
               autoCapitalize="none"
@@ -113,12 +112,14 @@ const RegisterView = (props: RegisterViewProps) => {
 
           <View style={Styles.input}>
             <LoginWithFacebook
+              {...props}
               disabled={props.loading}
               buttonText="Sign up with Facebook"
             />
           </View>
 
           <LoginWithGoogle
+            {...props}
             disabled={props.loading}
             buttonText="Sign up with Google"
           />
@@ -130,7 +131,7 @@ const RegisterView = (props: RegisterViewProps) => {
             onPress={props.onLogin}
             disabled={props.loading}
           >
-            <Body bold light>Already have an account?</Body>
+            <Body bold forceLight>Already have an account?</Body>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

@@ -4,7 +4,7 @@ import spacing from '../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   shroudStyles: {
-    backgroundColor: color.mono.dark.color().alpha(0.9).toString(),
+    backgroundColor: color.mono.darkCover,
   },
   imageWrap: {
     padding: 2,

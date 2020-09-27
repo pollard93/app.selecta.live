@@ -59,7 +59,7 @@ interface GoHomeProps {
 }
 
 /**
- * Resets navigation stack to home screen using STACK.HOME
+ * Resets navigation stack to home screen using STACK.ROOT
  */
 export const goHome = (props?: GoHomeProps) => {
   const currentTabIndex = props?.currentTabIndex || 0;
@@ -67,7 +67,7 @@ export const goHome = (props?: GoHomeProps) => {
   return Navigation.setRoot({
     root: {
       bottomTabs: {
-        id: STACK.HOME,
+        id: STACK.ROOT,
         children: [
           {
             stack: {
@@ -84,7 +84,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/feed.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/feed-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
@@ -106,7 +106,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/streams.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/streams-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
@@ -128,7 +128,7 @@ export const goHome = (props?: GoHomeProps) => {
                 bottomTab: {
                   icon: require('../../assets/images/icons/tabs/wallet.png'),
                   selectedIcon: require('../../assets/images/icons/tabs/wallet-selected.png'),
-                  iconColor: color.mono.dark,
+                  iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
                   iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
@@ -189,12 +189,12 @@ export const goToChannelStack = () => Navigation.setRoot({
 
 /**
  * Utility to push screen
- * @param stack - STACK to push to
+ * @param stack - STACK to push to, or ScreenProps.componentId can be used
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
 type ExtractProps<P> = P extends FC<infer L> ? L : null;
-export const pushScreen = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push<ExtractProps<T>>(stack, {
+export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props: ExtractProps<T>, options: Options = {}) => Navigation.push(stack, {
   component: {
     name: screen.prototype.ScreenName,
     passProps: props,
@@ -217,7 +217,7 @@ export const pushScreen = <T extends FC>(stack: STACK, screen: T, props: Extract
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
-export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.showModal<T>({
+export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.showModal({
   stack: {
     id: stack,
     children: [
@@ -247,8 +247,13 @@ export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: 
  * Sets background color and modal presentation style
  * @param passProps - ModalScreenProps
  * @param id - optional id to be assigned to the modal, used for dismissal
+ * @param modalTransitionStyle - optional OptionsModalTransitionStyle
  */
-export const openModalScreen = (passProps: ModalScreenProps, id = ModalScreenName) => Navigation.showModal<ModalScreenProps>({
+export const openModalScreen = (
+  passProps: ModalScreenProps,
+  id = ModalScreenName,
+  modalTransitionStyle: OptionsModalTransitionStyle = OptionsModalTransitionStyle.coverVertical,
+) => Navigation.showModal<ModalScreenProps>({
   component: {
     id,
     name: ModalScreenName,
@@ -258,7 +263,7 @@ export const openModalScreen = (passProps: ModalScreenProps, id = ModalScreenNam
         backgroundColor: 'transparent',
         componentBackgroundColor: 'transparent',
       },
-      modalTransitionStyle: OptionsModalTransitionStyle.coverVertical,
+      modalTransitionStyle,
       modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
       animations: {
         showModal: {

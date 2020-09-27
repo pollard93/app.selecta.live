@@ -3,16 +3,18 @@ import { View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelProfileQuery } from '../../../API/query/getChannelProfile/getChannelProfile';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import { ScreenProps } from '../../../screens/utils/interfaces';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import Header from '../../UI/Headers/Header/Header';
 import ChannelProfileView from './ChannelProfileView';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ChannelProfileProps extends ScreenProps {
+export interface ChannelProfileProps {
   id: string;
 }
 
 const ChannelProfile: FC<ChannelProfileProps> = (props) => {
+  const screenProps = useScreenProps();
+
+
   /**
    * Get channel profile query
    */
@@ -22,18 +24,14 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
     },
   });
 
-  const { headerHeight } = useHeaderStyles();
-  const safeAreaInsets = useSafeArea();
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(props.componentId)} />
-      <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
-        <ChannelProfileView
-          id={props.id}
-          queryResult={queryResult}
-        />
-      </View>
+      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <ChannelProfileView
+        {...props}
+        queryResult={queryResult}
+      />
     </View>
   );
 };

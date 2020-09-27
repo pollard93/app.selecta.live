@@ -2,7 +2,6 @@ import React, { useState, useRef, FC, useEffect } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
-import { useToast } from 'mbp-components-rn-toast';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -19,6 +18,7 @@ import TextArea from '../../UI/Form/components/TextArea/TextArea';
 import Button from '../../UI/Button/Button';
 import ChannelHeaderStyles from '../ChannelHeader/ChannelHeader.style';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import { pushToast } from '../../../modules/Toast';
 
 
 type FormData = {
@@ -81,7 +81,6 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
   /**
    * Misc
    */
-  const toast = useToast();
   const profileImageHeight = useRef(scalePx(120));
   const safeAreaInsets = useSafeArea();
   const [loading, setLoading] = useState(false);
@@ -112,7 +111,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
 
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content='Updated channel' />
@@ -123,10 +122,13 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -184,7 +186,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
     } catch {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast type="ERROR" content='Something went wrong' />

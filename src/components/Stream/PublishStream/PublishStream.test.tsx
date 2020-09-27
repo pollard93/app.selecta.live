@@ -5,11 +5,11 @@ import { expect } from 'chai';
 import { Alert } from 'react-native';
 import sinon from 'sinon';
 import wait from 'waait';
-import { useToast } from 'mbp-components-rn-toast';
 import mockClient from '../../../API/utils/mockClient';
 import PublishStream from './PublishStream';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import Button from '../../UI/Button/Button';
+import * as ToastModule from '../../../modules/Toast';
 
 describe('<PublishStream />', () => {
   /**
@@ -17,13 +17,13 @@ describe('<PublishStream />', () => {
    */
   const sandbox = sinon.createSandbox();
   let alertSpy = sandbox.spy(Alert, 'alert');
-  let toastSpy = sandbox.spy(useToast(), 'push');
+  let toastSpy = sandbox.spy(ToastModule, 'pushToast');
 
   afterEach(() => {
     sandbox.restore();
 
     alertSpy = sandbox.spy(Alert, 'alert');
-    toastSpy = sandbox.spy(useToast(), 'push');
+    toastSpy = sandbox.spy(ToastModule, 'pushToast');
   });
 
   test('should succeed', async () => {

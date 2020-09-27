@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, FC } from 'react';
-import { View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
@@ -9,20 +9,30 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Styles from './ConsumingStreamProfiles.styles';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import SearchInput from '../../UI/Form/components/SearchInput/SearchInput';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import { pushScreen } from '../../../screens/utils';
 import StreamProfileScreen from '../../../screens/StreamProfileScreen/StreamProfileScreen';
 import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 import { useDebounce } from '../../../utils/functions';
+import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
-export interface ConsumingStreamProfilesProps extends ScreenProps {}
+export interface ConsumingStreamProfilesProps {}
 
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
+  const screenProps = useScreenProps();
+  const { headerHeight } = useHeaderStyles();
+
+
+  /**
+   * Define initial variables
+   */
   const [variables, setVariables] = useState<getConsumingStreamProfilesVariables>({
     first: 5,
+    orderBy: StreamOrderByInput.timeFrom_DESC,
   });
 
 
@@ -44,19 +54,21 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
    * Navigate to stream in this stack on press
    */
   const onPressStream = (id: string) => {
-    pushScreen(STACK.TAB_MY_STREAMS, StreamProfileScreen, { id });
+    pushScreen(screenProps.componentId, StreamProfileScreen, { id });
   };
 
 
   return (
-    <SafeAreaView style={GlobalStyles.PageFill}>
+    <View style={GlobalStyles.PageFill}>
+      <Header />
+
       <ConsumingStreamProfilesFlatList
         query={GET_CONSUMING_STREAM_PROFILES}
         variables={variables}
         accessor='getConsumingStreamProfiles.streams'
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => onPressStream(item.id)}>
-            <StreamCard data={item} />
+            <StreamCard data={item} showPosition />
           </TouchableOpacity>
         )}
         ListHeaderComponent={({ queryResult }) => (
@@ -70,27 +82,32 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
               loading={queryResult.loading}
             />
 
-            {!queryResult.data && queryResult.loading && (
-              <StreamCardSkeleton />
-            )}
-
-            {queryResult.error && (
-              <View style={Styles.padding}>
-                <LoadRetry {...queryResult} />
-              </View>
-            )}
+            {!queryResult.data && queryResult.loading && <StreamCardSkeleton />}
           </>
         )}
         ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
           <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'Your streams will appear here'} />
         )}
         FlatListProps={{
-          contentContainerStyle: Styles.scrollViewContainer,
+          contentContainerStyle: [Styles.scrollViewContainer],
           ItemSeparatorComponent: () => <View style={Styles.separator} />,
           showsVerticalScrollIndicator: false,
         }}
-      />
-    </SafeAreaView>
+      >
+        {({ queryResult }) => {
+          // Handle error
+          if (queryResult.error) {
+            return (
+              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
+                <LoadRetry {...queryResult} />
+              </View>
+            );
+          }
+
+          return null;
+        }}
+      </ConsumingStreamProfilesFlatList>
+    </View>
   );
 };
 

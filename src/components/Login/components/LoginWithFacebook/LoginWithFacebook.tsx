@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Alert } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
@@ -14,9 +13,10 @@ import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
-import { STACK } from '../../../../screens/utils/interfaces';
 import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../../../utils/storage';
+import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { pushToast } from '../../../../modules/Toast';
 
 interface LoginWithFacebookProps {
   disabled?: boolean;
@@ -26,7 +26,7 @@ interface LoginWithFacebookProps {
 const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  const context = useToast();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -40,7 +40,8 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
       await store('getSelf', getSelf);
 
       // Bind notifications
-      PushNotifications.init(getSelf.id);
+      // Prompt now if user has a username as they will not be going to the onboarding process
+      PushNotifications.init(getSelf.id, !!getSelf.username);
 
       // Bind in app purchases
       InAppPurchases.init();
@@ -56,7 +57,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
       // Navigate now getSelf is cached
       if (!getSelf.username) {
         // Carry on onboarding process if user has no username
-        pushScreen(STACK.ONBOARDING, OnboardingWelcomeScreen, {}).finally(() => {
+        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
           setLoading(false);
         });
       } else {
@@ -66,10 +67,13 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -102,10 +106,13 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
       setLoading(false);
       LoginManager.logOut();
 
-      context.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -168,7 +175,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
           () => {
             setLoading(false);
 
-            context.push({
+            pushToast({
               duration: 1000,
               component: (
                 <Toast content="Something went wrong" />

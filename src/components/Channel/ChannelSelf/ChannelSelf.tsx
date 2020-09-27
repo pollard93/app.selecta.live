@@ -4,17 +4,17 @@ import { Navigation } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
-import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
-import { ScreenProps } from '../../../screens/utils/interfaces';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import Header from '../../UI/Headers/Header/Header';
 import ChannelSelfView from './ChannelSelfView';
 import { removeChannelAccessToken } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface ChannelSelfProps extends ScreenProps {}
+export interface ChannelSelfProps {}
 
-const ChannelSelf: FC<ChannelSelfProps> = (props) => {
+const ChannelSelf: FC<ChannelSelfProps> = () => {
   const client = useApolloClient();
+  const screenProps = useScreenProps();
 
 
   /**
@@ -37,20 +37,14 @@ const ChannelSelf: FC<ChannelSelfProps> = (props) => {
     // eslint-disable-next-line no-empty
     } catch {}
 
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
-
-
-  const { headerHeight } = useHeaderStyles();
-  const safeAreaInsets = useSafeArea();
 
 
   return (
     <View style={GlobalStyles.PageFill}>
       <Header onPop={onPop} />
-      <View style={[GlobalStyles.PageFill, { paddingTop: safeAreaInsets.top + headerHeight / 2 }]}>
-        <ChannelSelfView queryResult={queryResult} />
-      </View>
+      <ChannelSelfView queryResult={queryResult} />
     </View>
   );
 };

@@ -8,4 +8,8 @@ export default StyleSheet.create({
   content: {
     marginBottom: spacing.large,
   },
+  button: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
 });

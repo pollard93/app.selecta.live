@@ -3,22 +3,69 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import { useGetStreamProfilesQuery } from '../../../../API/query/getStreamProfiles/getStreamProfiles';
+import { useGetStreamProfileQuery } from '../../../../API/query/getStreamProfile/getStreamProfile';
 import StreamCard from './StreamCard';
 import SafeAreaViewDecorator from '../../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import StreamCardSkeleton from './StreamCardSkeleton';
 
 storiesOf('Cards/StreamCard', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</SafeAreaViewDecorator>)
-  .add('StreamCard - today', () => {
+  .add('StreamCard - long stream name', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
+          // eslint-disable-next-line max-len
+          name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae odio id nibh iaculis tempus id nec lectus. In laoreet placerat mi eu blandit. Duis non felis turpis. Aliquam diam odio, faucibus in dui ut, ultrices laoreet lectus. Ut tempus magna nibh, et tincidunt leo placerat non. Fusce commodo faucibus mi, non maximus metus consequat ut',
+        }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - today', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard data={{
+          ...r.data.getStreamProfile,
           timeFrom: new Date().toISOString(),
+        }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - today (long channel name)', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard data={{
+          ...r.data.getStreamProfile,
+          timeFrom: new Date().toISOString(),
+          channel: {
+            ...r.data.getStreamProfile.channel,
+            name: 'Very Very Very Very Long Channel Name',
+          },
         }} />
       );
     };
@@ -27,12 +74,16 @@ storiesOf('Cards/StreamCard', module)
   })
   .add('StreamCard - tomorrow', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
           timeFrom: new Date(Date.now() + 8.64e+7).toISOString(),
         }} />
       );
@@ -42,12 +93,16 @@ storiesOf('Cards/StreamCard', module)
   })
   .add('StreamCard - next week', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
           timeFrom: new Date(Date.now() + 5.184e+8).toISOString(),
         }} />
       );
@@ -57,12 +112,16 @@ storiesOf('Cards/StreamCard', module)
   })
   .add('StreamCard - last day', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
           timeFrom: new Date(Date.now() - 8.64e+7).toISOString(),
         }} />
       );
@@ -72,12 +131,16 @@ storiesOf('Cards/StreamCard', module)
   })
   .add('StreamCard - last week', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
           timeFrom: new Date(Date.now() - 5.184e+8).toISOString(),
         }} />
       );
@@ -87,15 +150,90 @@ storiesOf('Cards/StreamCard', module)
   })
   .add('StreamCard - live now', () => {
     const TestComponent = () => {
-      const r = useGetStreamProfilesQuery();
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
       if (r.loading) return null;
 
       return (
         <StreamCard data={{
-          ...r.data.getStreamProfiles.streams[0],
+          ...r.data.getStreamProfile,
           timeFrom: new Date(Date.now()).toISOString(),
           timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
         }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - cancelled', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard data={{
+          ...r.data.getStreamProfile,
+          cancelled: new Date().toISOString(),
+        }} />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - with position', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard
+          data={{
+            ...r.data.getStreamProfile,
+            timeFrom: new Date(Date.now()).toISOString(),
+            timeTo: new Date(Date.now() + 8.64e+7).toISOString(),
+            timeFromLive: null,
+            timeToLive: null,
+            position: (8.64e+7 / 2) / 1000,
+          }}
+          showPosition
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('StreamCard - with position - live', () => {
+    const TestComponent = () => {
+      const r = useGetStreamProfileQuery({
+        variables: {
+          id: 'TEST',
+        },
+      });
+      if (r.loading) return null;
+
+      return (
+        <StreamCard
+          data={{
+            ...r.data.getStreamProfile,
+            timeFrom: new Date(Date.now()).toISOString(),
+            timeTo: new Date(Date.now()).toISOString(),
+            timeFromLive: new Date(Date.now()).toISOString(),
+            timeToLive: new Date(Date.now() + 8.64e+7).toISOString(),
+            position: (8.64e+7 / 2) / 1000,
+          }}
+          showPosition
+        />
       );
     };
 

@@ -8,16 +8,17 @@ import FadeInView from '../../UI/FadeInView/FadeInView';
 import H4 from '../../UI/Typography/components/H4';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Styles from './OnboardingNotifications.style';
-import { ScreenProps, STACK } from '../../../screens/utils/interfaces';
 import { pushScreen } from '../../../screens/utils';
 import OnboardingGetStartedScreen from '../../../screens/OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import { openSettings } from '../../../utils/functions';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import Icon, { ICON } from '../../UI/Icon/Icon';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
-export interface OnboardingNotificationsProps extends ScreenProps {}
+export interface OnboardingNotificationsProps {}
 
-const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
+const OnboardingNotifications: FC<OnboardingNotificationsProps> = () => {
+  const screenProps = useScreenProps();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus | 'unknown'>(null);
 
 
@@ -25,7 +26,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
    * On next screen
    */
   const onNext = () => {
-    pushScreen(STACK.ONBOARDING, OnboardingGetStartedScreen, {});
+    pushScreen(screenProps.componentId, OnboardingGetStartedScreen, {});
   };
 
 
@@ -60,6 +61,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
    */
   useEffect(() => {
     checkPermissions();
+
     AppState.addEventListener('change', checkPermissions);
     return () => {
       AppState.removeEventListener('change', checkPermissions);
@@ -69,15 +71,12 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
 
   /**
    * Request notification permissions
+   * If accepted or rejected, `AppState.addEventListener('change');` will be called
+   * Which will handle the result
    */
   const requestPermission = async () => {
     try {
-      const { status } = await requestNotifications(['alert', 'sound']);
-      if (status === RESULTS.GRANTED) {
-        onNext();
-      } else {
-        setPermissionStatus(status);
-      }
+      await requestNotifications(['alert', 'sound', 'badge']);
     // eslint-disable-next-line no-empty
     } catch {}
   };
@@ -90,7 +89,7 @@ const OnboardingNotifications: FC<OnboardingNotificationsProps> = (props) => {
 
 
   const onPop = () => {
-    Navigation.pop(props.componentId);
+    Navigation.pop(screenProps.componentId);
   };
 
 

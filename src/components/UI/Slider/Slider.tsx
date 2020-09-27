@@ -3,7 +3,7 @@ import { Animated, View, TouchableHighlight } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Styles from './Slider.style';
 import scalePx from '../../../utils/scalePx';
-import LoadingIcon from '../LoadingIcon/LoadingIcon';
+import PulsingIcon from '../PulsingIcon/PulsingIcon';
 import { mapRange } from '../../../utils/functions';
 
 export interface SliderProps {
@@ -17,11 +17,11 @@ export interface SliderProps {
     color: string;
     width: number; // Between 0-1
   }[]; // Array tracks to display, rendered in order, last in array being top most
-  loading?: boolean; // If true sets the LoadingIcon (thumb) to animate
+  loading?: boolean; // If true sets the PulsingIcon (thumb) to animate
 }
 
 const Slider: FC<SliderProps> = (props) => {
-  const thumbWidth = useRef(scalePx(20)).current;
+  const thumbWidth = useRef(scalePx(10)).current;
   const currentState = useRef<State>(null);
   const trackWidthTimeout = useRef<number>();
   const valueChangeTimeout = useRef<number>();
@@ -198,10 +198,9 @@ const Slider: FC<SliderProps> = (props) => {
               }}
               pointerEvents="none"
             >
-              <LoadingIcon
+              <PulsingIcon
                 size={thumbWidth}
                 animating={!!props.loading}
-                hideOuterRing
               />
             </Animated.View>
           </TouchableHighlight>

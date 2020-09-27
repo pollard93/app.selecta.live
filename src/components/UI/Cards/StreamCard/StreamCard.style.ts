@@ -15,8 +15,22 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  name: {
+    flex: 1,
+    paddingRight: spacing.small,
+  },
   image: {
     aspectRatio: 1.7777777778,
+  },
+  position: {
+    backgroundColor: color.accent.primary,
+    height: 2,
+    position: 'absolute',
+    top: -2,
+  },
+  positionBackground: {
+    backgroundColor: color.mono.pale.light.color().alpha(0.3).toString(),
+    width: '100%',
   },
   item: {
     marginTop: spacing.small,
@@ -61,6 +75,13 @@ export default StyleSheet.create({
   },
   skeletonTags: {
     alignSelf: 'flex-start',
+  },
+  icons: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  shareIcon: {
+    marginLeft: spacing.small,
   },
 });
 

@@ -1,4 +1,5 @@
 import React, { useEffect, FC, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useApolloClient } from 'react-apollo';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { useGetStreamUrlLazyQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
@@ -9,17 +10,21 @@ import { STREAM_PROFILE_FRAGMENT as STREAM_PROFILE_FRAGMENT_TYPE } from '../../.
 import { STREAM_SELF_FRAGMENT as STREAM_SELF_FRAGMENT_TYPE } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { UPDATE_STREAM_POSITION_MUTATION } from '../../../API/mutation/updateStreamPosition/updateStreamPosition';
 import FullScreenWrap from './components/FullScreenWrap/FullScreenWrap';
-import { ScreenProps } from '../../../screens/utils/interfaces';
-import { useStreamStart } from '../../../utils/streamFunctions';
 import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
+import { canGoLive } from '../../../utils/streamFunctions';
+import H4 from '../../UI/Typography/components/H4';
+import Styles from './StreamVideo.styles';
+import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
 
-export interface StreamVideoProps extends ScreenProps {
+export interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
+  disableFullScreen?: boolean;
 }
 
 const StreamVideo: FC<StreamVideoProps> = (props) => {
   const client = useApolloClient();
+
 
   /**
    * Get stream url lazy query
@@ -35,10 +40,10 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
   });
 
 
+  /**
+   * getStreamUrl on mount
+   */
   useEffect(() => {
-    /**
-     * getStreamUrl on mount
-     */
     query();
 
 
@@ -134,9 +139,15 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
 
 
   /**
-   * When the stream starts, if it hasn't already, get a new url
+   * When stream becomes live (from poll)
+   * And there is an error already on getStreamUrl (prevent refetching if live)
+   * Then refetch the stream url
    */
-  useStreamStart(props.data.timeFrom, () => query());
+  useEffect(() => {
+    if (queryResult.error && props.data.timeFromLive) {
+      query();
+    }
+  }, [props.data.timeFromLive]);
 
 
   /**
@@ -164,24 +175,78 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
 
 
   /**
-   * Loading | Error
+   * Disable full screen
    */
-  if (!queryResult.called || queryResult.loading || queryResult.error) {
-    return null;
+  if (props.disableFullScreen) {
+    /**
+     * Handle about to go live
+     * Only for StreamProfile, not StreamSelf
+     */
+    // eslint-disable-next-line no-underscore-dangle
+    if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+      return (
+        <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
+          <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>
+          <LoadingIcon size="small" />
+        </View>
+      );
+    }
+
+
+    /**
+     * Loading | Error
+     */
+    if (!queryResult.called || queryResult.loading || queryResult.error) {
+      return null;
+    }
+
+
+    return (
+      <StreamVideoView
+        url={queryResult.data.getStreamUrl}
+        data={props.data}
+        query={query}
+      />
+    );
   }
 
 
   return (
     <FullScreenWrap {...props}>
-      {({ toggleFullScreen, isFullScreen }) => (
-        <StreamVideoView
-          url={queryResult.data.getStreamUrl}
-          data={props.data}
-          query={query}
-          toggleFullScreen={toggleFullScreen}
-          isFullScreen={isFullScreen}
-        />
-      )}
+      {({ toggleFullScreen, isFullScreen }) => {
+        /**
+         * Handle about to go live
+         * Only for StreamProfile, not StreamSelf
+         */
+        // eslint-disable-next-line no-underscore-dangle
+        if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+          return (
+            <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
+              <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>
+              <LoadingIcon size="small" />
+            </View>
+          );
+        }
+
+
+        /**
+         * Loading | Error
+         */
+        if (!queryResult.called || queryResult.loading || queryResult.error) {
+          return null;
+        }
+
+
+        return (
+          <StreamVideoView
+            url={queryResult.data.getStreamUrl}
+            data={props.data}
+            query={query}
+            toggleFullScreen={toggleFullScreen}
+            isFullScreen={isFullScreen}
+          />
+        );
+      }}
     </FullScreenWrap>
   );
 };

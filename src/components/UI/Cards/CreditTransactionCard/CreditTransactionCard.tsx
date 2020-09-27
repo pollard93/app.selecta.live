@@ -17,7 +17,7 @@ const CreditTransactionCard: FC<CreditTransactionCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
   return (
-    <View>
+    <>
       <Small bold style={Styles.createdAt}>{formatForTimezone(props.data.createdAt, 'calendar')}</Small>
       <View style={[Styles.wrap, dynamicStyles.wrap]}>
         <View style={Styles.contentWrap}>
@@ -31,7 +31,7 @@ const CreditTransactionCard: FC<CreditTransactionCardProps> = (props) => {
           </H4>
         </Gradient>
       </View>
-    </View>
+    </>
   );
 };
 

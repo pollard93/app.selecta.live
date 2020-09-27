@@ -2,14 +2,15 @@ import React, { FC } from 'react';
 import AssetPickerModule, { AssetPickerProps, AssetPickerItemProps, MultiSelectComponentProps } from 'mbp-components-rn-assetpicker';
 import { View } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
-import { useToast } from 'mbp-components-rn-toast';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Styles from './AssetPicker.style';
 import Button from '../../components/UI/Button/Button';
 import Icon, { ICON } from '../../components/UI/Icon/Icon';
 import { openModalScreen } from '../../screens/utils';
 import usePermissions from '../../components/UI/Permission/usePermissions';
+import useSafeArea from '../SafeAreaInsets/SafeAreaInsets';
+import PermissionsError from '../../components/UI/Permission/PermissionsError';
 
 /**
  * Create an AssetPickerItem component and pass it to the Provider
@@ -39,7 +40,7 @@ export const AssetPickerItem: FC<AssetPickerItemProps> = (props) => (
  * Create an MultiSelectComponent and pass it to the Provider
  */
 export const MultiSelectComponent: FC<MultiSelectComponentProps> = (props) => {
-  const { safeAreaInsets } = useToast();
+  const safeAreaInsets = useSafeArea();
 
   return (
     <View style={[Styles.multiSelectWrap, { paddingBottom: safeAreaInsets.bottom }]}>
@@ -58,7 +59,7 @@ export const openAssetPickerModalScreen = (props: AssetPickerProps) => {
     component: (
       <AssetPicker {...props} />
     ),
-  }, 'ASSET_PICKER_MODAL');
+  }, 'ASSET_PICKER_MODAL', OptionsModalTransitionStyle.crossDissolve);
 };
 
 
@@ -72,10 +73,20 @@ const AssetPicker: FC<AssetPickerProps> = (props) => {
   const { permissionStatus } = usePermissions({
     iosPermission: PERMISSIONS.IOS.PHOTO_LIBRARY,
     androidPermission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-    errorMessage: 'This app needs permission to access your camera roll.',
-    onDismiss: () => closeAssetPickerModal(),
   });
-  if (permissionStatus !== RESULTS.GRANTED) return null;
+
+  /**
+   * Permission error
+   */
+  if (permissionStatus && permissionStatus !== RESULTS.GRANTED) {
+    return (
+      <PermissionsError
+        state={permissionStatus}
+        errorMessage="We require permission to access your camera roll."
+        onDismiss={closeAssetPickerModal}
+      />
+    );
+  }
 
 
   return (

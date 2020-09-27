@@ -8,7 +8,7 @@ const ChannelCardSkeleton: FC = () => {
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   return (
-    <View style={[globalDynamicStyles.skeleton, Styles.skeletonWrap]}>
+    <View style={[Styles.skeletonWrap, globalDynamicStyles.skeleton]}>
       <Image
         source={require('../../../../assets/images/logo-icon.png')}
         style={Styles.skeletonImage}

@@ -26,6 +26,14 @@ export default {
     },
   },
 
+  monoDarkMode: {
+    pale: {
+      light: '#2b2b2b',
+      regular: '#303030',
+      dark: '#393939',
+    },
+  },
+
 
   // Accented color group
   accent: {

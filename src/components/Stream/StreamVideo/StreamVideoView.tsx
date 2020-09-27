@@ -15,12 +15,21 @@ import { getStreamSelf_getStreamSelf } from '../../../API/query/getStreamSelf/__
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/StreamSelf';
 
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      pauseCurrentVideo: () => void;
+    }
+  }
+}
+
+
 interface StreamVideoViewProps {
   url: getStreamUrl_getStreamUrl;
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
   query: (options?: QueryHookOptions<getStreamUrlVariables>) => void;
-  toggleFullScreen: () => void;
-  isFullScreen: boolean;
+  toggleFullScreen?: () => void;
+  isFullScreen?: boolean;
 }
 
 
@@ -30,7 +39,7 @@ interface StreamVideoViewProps {
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   const client = useApolloClient();
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState(1);
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
   const [playableDuration, setPlayableDuration] = useState(0);
@@ -215,6 +224,30 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
   };
 
 
+  /**
+   * On mount, try and execute global.pauseCurrentVideo incase there is other videos in the stack
+   * On unmount, remove global.pauseCurrentVideo
+   */
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    global.pauseCurrentVideo?.();
+
+    return () => {
+      global.pauseCurrentVideo = null;
+    };
+  }, []);
+
+
+  /**
+   * When rate changes to 1, assign a global function to pause from anywhere
+   */
+  useEffect(() => {
+    if (rate === 1) {
+      global.pauseCurrentVideo = () => setRate(0);
+    }
+  }, [rate]);
+
+
   return (
     <>
       <Video
@@ -231,8 +264,12 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
           }
         }}
         onError={(...args) => {
-          console.log('StreamVideoView -> args', args);
           setError(true);
+
+          if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.log('Video Error:', args);
+          }
         }}
         style={Styles.video}
         ignoreSilentSwitch={'ignore'}
@@ -321,7 +358,10 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         }}
         onProgress={((args) => {
           if (live === false) {
-            updateLocalPosition(args.currentTime);
+            // Don't update local position until loaded
+            if (!loading) {
+              updateLocalPosition(args.currentTime);
+            }
             setPlayableDuration(args.playableDuration);
 
 
@@ -366,7 +406,6 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         }}
       />
 
-
       <StreamControls
         isPlaying={rate === 1}
         onPlayPause={() => setRate(rate === 1 ? 0 : 1)}
@@ -379,7 +418,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         isError={error}
         isLive={live}
         isAudioOnly={props.data.audioOnly}
-        toggleFullScreen={() => props.toggleFullScreen()}
+        toggleFullScreen={props.toggleFullScreen}
         isFullScreen={props.isFullScreen}
         toggleVideoEnabled={toggleVideoEnabled}
         isVideoEnabled={videoEnabled}

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
@@ -15,6 +16,9 @@ storiesOf('UI/Headers/Header', module)
   .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { backgroundColor: color.mono.pale.dark }]}>{getStory()}</View>)
   .add('Header', () => (
     <Header />
+  ))
+  .add('Header - with pop', () => (
+    <Header onPop={console.log} />
   ))
   .add('Header - no profile picture', () => {
     const TestComponent = () => {
@@ -52,7 +56,7 @@ storiesOf('UI/Headers/Header', module)
       const { loading, error, data, client } = useGetSelfQuery();
 
       /**
-       * Clears getSelf.profilePicture
+       * Sets getSelf.profilePicture to broken image
        */
       useEffect(() => {
         if (!loading && !error) {
@@ -85,12 +89,12 @@ storiesOf('UI/Headers/Header', module)
       <TestComponent />
     );
   })
-  .add('Header - 1000 credits', () => {
+  .add('Header - with notifications', () => {
     const TestComponent = () => {
       const { loading, error, data, client } = useGetSelfQuery();
 
       /**
-       * Clears getSelf.profilePicture
+       * Sets getSelf.unreadNotificationCount to 1000
        */
       useEffect(() => {
         if (!loading && !error) {
@@ -100,14 +104,14 @@ storiesOf('UI/Headers/Header', module)
               ...data,
               getSelf: {
                 ...data.getSelf,
-                credit: 1000,
+                unreadNotificationCount: 1000,
               },
             },
           });
         }
       }, []);
 
-      if (loading || error || data.getSelf.credit < 1000) return null;
+      if (loading || error || data.getSelf.unreadNotificationCount < 1000) return null;
 
       return <Header />;
     };

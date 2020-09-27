@@ -1,9 +1,8 @@
 import React, { ReactNode, FC } from 'react';
 import { View } from 'react-native';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
-import { ScreenProps } from '../utils/interfaces';
 
-export interface ModalScreenProps extends ScreenProps {
+export interface ModalScreenProps {
   component: ReactNode;
 }
 

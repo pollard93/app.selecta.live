@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react';
 import { View, Platform, StyleProp, ViewStyle, StyleSheet, TouchableOpacity } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import TextInput from '../TextInput/TextInput';
 import { openModalScreen } from '../../../../../screens/utils';
 import DateTimePicker from '../../../DateTimePicker/components/DateTimePicker/DateTimePicker';
-import { ModalScreenName } from '../../../../../screens/ModalScreen/ModalScreen';
 import { formatForTimezone } from '../../../../../utils/functions';
 
 export interface DateInputProps {
@@ -28,7 +27,7 @@ const DateInput: FC<DateInputProps> = (props) => {
    */
   const onDone = (value?: Date) => {
     if (Platform.OS === 'ios') {
-      Navigation.dismissModal(ModalScreenName);
+      Navigation.dismissModal('DATE_INPUT');
     } else {
       setAndroidActive(false);
     }
@@ -61,7 +60,7 @@ const DateInput: FC<DateInputProps> = (props) => {
           onDone={onDone}
         />
       ),
-    });
+    }, 'DATE_INPUT', OptionsModalTransitionStyle.crossDissolve);
   };
 
   return (

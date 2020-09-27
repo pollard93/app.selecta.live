@@ -6,11 +6,12 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { GET_STREAM_COMMENTS_QUERY } from '../../../API/query/getStreamComments/getStreamComments';
 import { getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments } from '../../../API/query/getStreamComments/__generated__/getStreamComments';
 import StreamCommentListItem from '../StreamCommentListItem/StreamCommentListItem';
-import styles, { DynamicStyles } from './StreamComments.styles';
+import styles from './StreamComments.styles';
 import CreateStreamComment from '../CreateStreamComment/CreateStreamComment';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { STREAM_PROFILE_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 class StreamCommentsFlatList extends ApolloFlatList<getStreamCommentsVariables, getStreamComments, getStreamComments_getStreamComments_comments> {}
 
@@ -19,7 +20,7 @@ interface StreamCommentsProps {
 }
 
 const StreamComments: FC<StreamCommentsProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const dynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
   const variables = {
     id: props.data.id,
@@ -28,7 +29,7 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
   };
 
   return (
-    <View style={[styles.wrap, dynamicStyles.wrap]}>
+    <View style={[styles.wrap, dynamicStyles.background]}>
       <StreamCommentsFlatList
         query={GET_STREAM_COMMENTS_QUERY}
         variables={variables}
@@ -36,7 +37,7 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
         renderItem={({ item }) => (
           <StreamCommentListItem
             data={item}
-            channelData={props.data.channel}
+            streamData={props.data}
           />
         )}
         FlatListProps={{
@@ -44,16 +45,20 @@ const StreamComments: FC<StreamCommentsProps> = (props) => {
           ItemSeparatorComponent: () => <View style={styles.separator} />,
           contentContainerStyle: styles.contentContainer,
         }}
-        ListFooterComponent={({ queryResult }) => {
-          if (queryResult.loading || queryResult.error) {
-            return (
-              <LoadRetry {...queryResult} />
-            );
-          }
+      >
+      {({ queryResult }) => {
+        /**
+         * Handle loading and error
+         */
+        if (queryResult.loading || queryResult.error) {
+          return (
+            <LoadRetry cover {...queryResult} />
+          );
+        }
 
-          return null;
-        }}
-      />
+        return null;
+      }}
+      </StreamCommentsFlatList>
 
       <CreateStreamComment variables={variables} />
     </View>

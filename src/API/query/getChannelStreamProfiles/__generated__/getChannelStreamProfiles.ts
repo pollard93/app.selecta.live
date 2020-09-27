@@ -59,14 +59,17 @@ export interface getChannelStreamProfiles_getChannelStreamProfiles_streams {
   channel: getChannelStreamProfiles_getChannelStreamProfiles_streams_channel | null;
   image: getChannelStreamProfiles_getChannelStreamProfiles_streams_image | null;
   timeFrom: any | null;
+  timeFromLive: any | null;
   timeTo: any | null;
+  timeToLive: any | null;
+  cancelled: any | null;
   tags: (getChannelStreamProfiles_getChannelStreamProfiles_streams_tags | null)[] | null;
+  position: number | null;
   info: string | null;
   cost: number | null;
   isConsumer: boolean | null;
   audioOnly: boolean | null;
-  position: number | null;
-  cancelled: any | null;
+  cancelledMessage: string | null;
 }
 
 export interface getChannelStreamProfiles_getChannelStreamProfiles {

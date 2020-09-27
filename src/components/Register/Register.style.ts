@@ -9,15 +9,13 @@ export default StyleSheet.create({
     paddingVertical: spacing.xlarge,
   },
   logoWrap: {
+    alignItems: 'center',
     alignSelf: 'center',
     aspectRatio: 3.078767123287671,
+    justifyContent: 'center',
     marginBottom: spacing.xlarge,
     maxWidth: scalePx(300),
     width: '80%',
-  },
-  logo: {
-    maxHeight: '100%',
-    maxWidth: '100%',
   },
   input: {
     flexGrow: 0,

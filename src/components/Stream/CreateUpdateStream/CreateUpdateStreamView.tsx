@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
-import { useToast } from 'mbp-components-rn-toast';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
+import { useDynamicValue } from 'react-native-dynamic';
+import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
@@ -13,7 +14,7 @@ import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream'
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
-import Styles from './CreateUpdateStream.style';
+import Styles, { DynamicStyles } from './CreateUpdateStream.style';
 import H2 from '../../UI/Typography/components/H2';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import TextArea from '../../UI/Form/components/TextArea/TextArea';
@@ -25,11 +26,14 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import StreamStates from './components/StreamStates/StreamStates';
 import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
-import { getChannelSelf_getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
+import { getChannelSelf_getChannelSelf, getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import Switch from '../../UI/Form/components/Switch/Switch';
 import TagInput from '../../UI/Form/components/TagInput/TagInput';
 import { GET_STREAM_SELF_QUERY } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
+import { pushToast } from '../../../modules/Toast';
+import { GET_CHANNEL_SELF_QUERY } from '../../../API/query/getChannelSelf/getChannelSelf';
+import { getChannelSelfsVariables } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -54,6 +58,10 @@ interface CreateUpdateStreamViewProps {
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const client = useApolloClient();
+
+
   /**
    * Form
    */
@@ -68,7 +76,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         timeTo: props.data.timeTo,
         duration: new Date(props.data.timeTo).getTime() - new Date(props.data.timeFrom).getTime(),
         isFree: props.data.cost === 0,
-        cost: `${props.data.cost}`,
+        cost: `${Math.max(props.data.cost, props.channelData.creditMinimumStreamCost)}`,
         image: undefined,
         audioOnly: props.data.audioOnly,
       }
@@ -92,7 +100,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         };
       })(),
   });
-  const [defaultValues] = useState(getValues());
+
+
+  /**
+   * Get default values and update them when register changes (form switched to update form)
+   */
+  const defaultValues = useMemo(() => getValues(), [register]);
 
 
   /**
@@ -119,7 +132,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Refs
    */
   const infoRef = useRef(null);
-  const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
   const imageResetRef = useRef(null);
@@ -128,7 +140,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   /**
    * Misc
    */
-  const toast = useToast();
   const safeAreaInsets = useSafeArea();
   const [loading, setLoading] = useState(false);
 
@@ -140,9 +151,28 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
 
   /**
+   * Update channel self cache
+   */
+  const updateChannelSelf = (dataToUpdate: Partial<getChannelSelf_getChannelSelf>) => {
+    try {
+      client.writeQuery<getChannelSelf, getChannelSelfsVariables>({
+        query: GET_CHANNEL_SELF_QUERY,
+        data: {
+          getChannelSelf: {
+            ...props.channelData,
+            ...dataToUpdate,
+          },
+        },
+      });
+    // eslint-disable-next-line no-empty
+    } catch {}
+  };
+
+
+  /**
    * Put stream mutation
    */
-  const [putStreamMutation, { client }] = usePutStreamMutation({
+  const [putStreamMutation] = usePutStreamMutation({
     onCompleted: async ({ putStream }) => {
       setLoading(false);
 
@@ -161,6 +191,8 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         });
       // eslint-disable-next-line no-empty
       } catch {}
+
+      // Set id in parent so this form becomes an update form
       props.onCreated(putStream.id);
 
       // Reset form
@@ -173,7 +205,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         timeTo: putStream.timeTo,
         duration: new Date(putStream.timeTo).getTime() - new Date(putStream.timeFrom).getTime(),
         isFree: putStream.cost === 0,
-        cost: `${putStream.cost}`,
+        cost: `${Math.max(putStream.cost, props.channelData.creditMinimumStreamCost)}`,
         audioOnly: putStream.audioOnly,
       });
 
@@ -208,12 +240,25 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
 
       /**
+       * Reduce freeStreamAllowance
+       */
+      if (putStream.cost === 0) {
+        updateChannelSelf({
+          freeStreamAllowance: Math.max(props.channelData.freeStreamAllowance - 1, 0),
+        });
+      }
+
+
+      /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content='Created stream' />
+          <Toast
+            type="SUCCESS"
+            content='Created stream'
+          />
         ),
         dismissible: false,
       });
@@ -221,10 +266,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -248,7 +296,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         timeFrom: updateStream.timeFrom,
         timeTo: updateStream.timeTo,
         isFree: updateStream.cost === 0,
-        cost: `${updateStream.cost}`,
+        cost: `${Math.max(updateStream.cost, props.channelData.creditMinimumStreamCost)}`,
         audioOnly: updateStream.audioOnly,
       });
 
@@ -256,13 +304,36 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       // eslint-disable-next-line no-unused-expressions
       imageResetRef.current?.();
 
+
+      /**
+       * Reduce freeStreamAllowance
+       */
+      if (!defaultValues.isFree && updateStream.cost === 0) {
+        updateChannelSelf({
+          freeStreamAllowance: Math.max(props.channelData.freeStreamAllowance - 1, 0),
+        });
+      }
+
+      /**
+       * Increase freeStreamAllowance
+       */
+      if (defaultValues.isFree && updateStream.cost !== 0) {
+        updateChannelSelf({
+          freeStreamAllowance: Math.max(props.channelData.freeStreamAllowance + 1, 0),
+        });
+      }
+
+
       /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content='Updated stream' />
+          <Toast
+            type="SUCCESS"
+            content='Updated stream'
+          />
         ),
         dismissible: false,
       });
@@ -270,10 +341,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     onError: (e) => {
       setLoading(false);
 
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });
@@ -300,6 +374,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const onSubmit = async (variables: FormData) => {
     setLoading(true);
 
+
+    /**
+     * zeros cost if isFree
+     */
+    const getCost = () => (variables.isFree ? 0 : parseInt(variables.cost, 10));
+
+
     if (props.data) {
       /**
        * Map over the form variables and only return
@@ -325,18 +406,21 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         updateStreamMutation({
           variables: {
             ...changed,
-            cost: changed.cost ? parseInt(variables.cost, 10) : undefined,
-            image: changed.image ? await processImage(changed.image) : undefined,
+            cost: changed.cost != null || changed.isFree != null ? getCost() : undefined,
+            image: changed.image != null ? await processImage(changed.image) : undefined,
             id: props.data.id,
           },
         });
       } catch {
         setLoading(false);
 
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
-            <Toast type="ERROR" content='Something went wrong' />
+            <Toast
+              type="ERROR"
+              content='Something went wrong'
+            />
           ),
           dismissible: false,
         });
@@ -353,7 +437,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             tags: variables.tags,
             timeFrom: variables.timeFrom,
             timeTo: variables.timeTo,
-            cost: parseInt(variables.cost, 10),
+            cost: getCost(),
             audioOnly: variables.audioOnly,
             image: await processImage(variables.image),
           },
@@ -361,10 +445,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       } catch {
         setLoading(false);
 
-        toast.push({
+        pushToast({
           duration: 1000,
           component: (
-            <Toast type="ERROR" content='Something went wrong' />
+            <Toast
+              type="ERROR"
+              content='Something went wrong'
+            />
           ),
           dismissible: false,
         });
@@ -379,6 +466,34 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const timeFrom = watch('timeFrom');
   const isFree = watch('isFree');
   const duration = watch('duration');
+
+
+  /**
+   * Free stream allowance to display
+   */
+  const freeStreamAllowance = useMemo(() => {
+    if (!defaultValues.isFree && isFree) {
+      return props.channelData.freeStreamAllowance - 1;
+    }
+
+    if (defaultValues.isFree && !isFree) {
+      return props.channelData.freeStreamAllowance + 1;
+    }
+
+    return props.channelData.freeStreamAllowance;
+  }, [isFree, props.channelData.freeStreamAllowance]);
+
+
+  /**
+   * User can only edit free stream if they have allowance, or the stream is free
+   */
+  const canEditFreeStream = useMemo(() => {
+    if (props.channelData.freeStreamAllowance > 0 || defaultValues.isFree) {
+      return true;
+    }
+
+    return false;
+  }, [isFree, props.channelData.freeStreamAllowance]);
 
 
   /**
@@ -425,24 +540,14 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
     register({ name: 'cost' }, {
       required: !props.data,
       validate: (v) => {
-        /**
-         * If isFree is false, cost must be greater than creditMinimumStreamCost
-         */
-        if (!watch('isFree')) {
-          const n = parseInt(v, 10);
+        const n = parseInt(v, 10);
 
-          if (n < props.channelData.creditMinimumStreamCost) {
-            return 'Value does not meet minimum price';
-          }
-
-          // eslint-disable-next-line no-restricted-globals
-          return !isNaN(n) && n >= props.channelData.creditMinimumStreamCost;
+        if (n < props.channelData.creditMinimumStreamCost) {
+          return 'Value does not meet minimum price';
         }
 
-        /**
-         * If free is true, this value will be set to 0, and is valid
-         */
-        return true;
+        // eslint-disable-next-line no-restricted-globals
+        return !isNaN(n) && n >= props.channelData.creditMinimumStreamCost;
       },
     });
 
@@ -520,10 +625,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 defaultValue={defaultValues.info}
                 errors={errors}
                 onBlur={() => triggerValidation('info', true)}
-                onSubmitEditing={() => {
-                  // eslint-disable-next-line no-unused-expressions
-                  startDateRef.current?.focus();
-                }}
                 wrapStyle={Styles.inputWrap}
                 editable={editable}
               />
@@ -546,7 +647,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
               <DateInput
                 defaultValue={timeFrom}
-                inputRef={startDateRef}
                 mode="date"
                 onChange={(value) => {
                   setValue('timeFrom', value, true);
@@ -586,7 +686,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               <H2>Price &copy;</H2>
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
-              <View style={{ display: isFree ? 'none' : 'flex' }}>
+              <View pointerEvents={isFree ? 'none' : 'auto'} style={{ opacity: isFree ? 0.5 : 1 }}>
                 {editable && <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>}
                 <TextInput
                   name="cost"
@@ -601,46 +701,49 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 />
               </View>
 
-              {editable && props.channelData.freeStreamAllowance > 0 && (
+              {canEditFreeStream && (
                 <View style={Styles.inputWrap}>
                   <View style={Styles.toggleInput}>
                     <Body bold style={Styles.toggleInputLabel}>Free Stream?</Body>
                     <Switch
                       onValueChange={(value) => {
                         setValue('isFree', value);
-                        setValue('cost', value ? '0' : defaultValues.cost, true);
                       }}
                       value={isFree}
+                      disabled={!editable}
                     />
                   </View>
                   <View style={Styles.inputWrap}>
-                    <Body>Free allowance: {props.channelData.freeStreamAllowance}</Body>
+                    <Body>Free allowance: {freeStreamAllowance}</Body>
                   </View>
                 </View>
               )}
             </View>
           </View>
 
-          <View style={[Styles.section, Styles.settings]}>
-            <H2>Settings</H2>
-            <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
-              <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
-              <Switch
-                onValueChange={(value) => setValue('audioOnly', value, true)}
-                value={watch('audioOnly')}
-              />
-            </View>
+          {props.data && (
+            <View style={[Styles.section, Styles.settings, dynamicStyles.settings]}>
+              <H2>Settings</H2>
 
-            {props.data && (
-              <View style={Styles.inputWrap}>
-                <StreamStates
-                  data={props.data}
-                  getStreamSelfsVariables={props.getStreamSelfsVariables}
-                  onPop={props.onPop}
+              {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
+                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
+                <Switch
+                  onValueChange={(value) => setValue('audioOnly', value, true)}
+                  value={watch('audioOnly')}
                 />
-              </View>
-            )}
-          </View>
+              </View> */}
+
+              {props.data && (
+                <View style={Styles.inputWrap}>
+                  <StreamStates
+                    data={props.data}
+                    getStreamSelfsVariables={props.getStreamSelfsVariables}
+                    onPop={props.onPop}
+                  />
+                </View>
+              )}
+            </View>
+          )}
         </ScrollView>
       </KeyboardAvoidingView>
 

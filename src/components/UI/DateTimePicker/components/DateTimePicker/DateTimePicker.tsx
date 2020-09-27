@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import DateTimePickerCommunity, { IOSNativeProps, AndroidNativeProps } from '@react-native-community/datetimepicker';
 import { View, Platform } from 'react-native';
-import styles from './DateTimePicker.styles';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './DateTimePicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
+import DrawerV2 from '../../../DrawerV2/DrawerV2';
 
 interface DateTimePickerProps {
   pickerProps: IOSNativeProps | AndroidNativeProps;
@@ -14,6 +16,7 @@ interface DateTimePickerProps {
 const DateTimePicker = (props: DateTimePickerProps) => {
   const safeAreaInsets = useSafeArea();
   const [date, setDate] = useState(props.pickerProps.value);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -51,36 +54,39 @@ const DateTimePicker = (props: DateTimePickerProps) => {
 
 
   return (
-    <View style={styles.wrap}>
-      <View style={[styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
-        <View style={styles.buttons}>
-          <Button
-            title="Cancel"
-            type="SECONDARY"
-            size="small"
-            onPress={() => {
-              props.onDone();
-            }}
-          />
+    <DrawerV2 onClosed={props.onDone}>
+      {({ onClose }) => (
+        <View style={[Styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
+          <View style={Styles.buttons}>
+            <Button
+              title="Cancel"
+              type="SECONDARY"
+              size="small"
+              onPress={() => {
+                onClose();
+              }}
+            />
 
-          <Button
-            title="Done"
-            type="PRIMARY"
-            size="small"
-            onPress={() => {
-              props.onDone(date);
-            }}
+            <Button
+              title="Done"
+              type="PRIMARY"
+              size="small"
+              onPress={() => {
+                onClose(date);
+              }}
+            />
+          </View>
+
+          <DateTimePickerCommunity
+            {...props.pickerProps}
+            value={date}
+            onChange={onChange}
+            style={{ paddingVertical: spacing.small }}
+            textColor={dynamicStyles.text.color}
           />
         </View>
-
-        <DateTimePickerCommunity
-          {...props.pickerProps}
-          value={date}
-          onChange={onChange}
-          style={{ paddingVertical: spacing.small }}
-        />
-      </View>
-    </View>
+      )}
+    </DrawerV2>
   );
 };
 

@@ -40,7 +40,10 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
 
 
   return (
-    <OnboardingPageWrap heading="Reset Password">
+    <OnboardingPageWrap
+      heading="Reset Password"
+      onPop={props.onPop}
+    >
       <View style={Styles.input}>
         <H4 style={Styles.content}>Enter your email and we'll send you a magic link to reset your password.</H4>
 
@@ -60,7 +63,6 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
           onSubmitEditing={handleSubmit(props.onSubmit)}
           defaultValue={props.defaultEmailValue}
           testID="email"
-          light
         />
       </View>
 

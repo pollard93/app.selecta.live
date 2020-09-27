@@ -12,6 +12,15 @@ export const GET_SELF_QUERY = gql`
   ${USER_SELF_FRAGMENT}
 `;
 
+export const GET_SELF_UNREAD_NOTIFICATION_COUNT_QUERY = gql`
+  query getSelfUnreadNotificationCount {
+    getSelf {
+      id
+      unreadNotificationCount
+    }
+  }
+`;
+
 export const useGetSelfQuery = (options?: QueryHookOptions<getSelf>) => useQuery(GET_SELF_QUERY, options);
 export const useGetSelfLazyQuery = (options?: QueryHookOptions<getSelf>) => useLazyQuery(GET_SELF_QUERY, options);
 

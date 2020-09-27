@@ -42,7 +42,4 @@ export default StyleSheet.create({
     flexDirection: 'row',
     padding: spacing.small,
   },
-  error: {
-    color: color.mono.light,
-  },
 });

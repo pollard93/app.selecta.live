@@ -1,19 +1,16 @@
 import React from 'react';
 import { View, Text, Button, Alert } from 'react-native';
-import { useToast } from 'mbp-components-rn-toast';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import { useWithdrawFundsMutation } from '../../../API/mutation/withdrawFunds/withdrawFunds';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
+import { pushToast } from '../../../modules/Toast';
 
 interface ChannelFundsProps {
   data: CHANNEL_SELF_FRAGMENT;
 }
 
 const ChannelFunds = (props: ChannelFundsProps) => {
-  const toast = useToast();
-
-
   /**
    * Withdraw funds mutation
    */
@@ -22,7 +19,7 @@ const ChannelFunds = (props: ChannelFundsProps) => {
       /**
        * Success toast
        */
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
           <Toast content='Updated channel' />
@@ -31,10 +28,13 @@ const ChannelFunds = (props: ChannelFundsProps) => {
       });
     },
     onError: (e) => {
-      toast.push({
+      pushToast({
         duration: 1000,
         component: (
-          <Toast content={getGQLErrorMessage(e)} />
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
         ),
         dismissible: false,
       });

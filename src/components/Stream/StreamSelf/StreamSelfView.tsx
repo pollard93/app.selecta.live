@@ -13,6 +13,7 @@ import Drawer from '../../UI/Drawer/Drawer';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import Styles from './StreamSelf.styles';
 import StreamCommunication from '../StreamProfile/components/StreamCommunication/StreamCommunication';
+import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 
 
 interface StreamSelfViewProps {
@@ -47,24 +48,23 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
 
 
   /**
-   * Should only load video if user is a consumer and it hasn't been cancelled
+   * Should only load video and communication if stream hasn't been cancelled
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const shouldLoadVideo = props.queryResult.data.getStreamSelf.cancelled === null;
+  const isCancelled = props.queryResult.data.getStreamSelf.cancelled !== null;
 
 
   return (
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
-          style={{ paddingTop: headerHeight / 2 }}
           onLayout={(event) => {
-            if (!drawerLayout) {
+            if (!isCancelled && !drawerLayout) {
               /**
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,
@@ -74,9 +74,13 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         >
           <StreamCard data={props.queryResult.data.getStreamSelf} />
         </View>
+
+        {isCancelled && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+        )}
       </SafeAreaView>
 
-      {drawerLayout && (
+      {!isCancelled && drawerLayout && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={[Styles.flex, { zIndex: headerZindex + 1 }]}
@@ -92,7 +96,7 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         </KeyboardAvoidingView>
       )}
 
-      {shouldLoadVideo && (
+      {!isCancelled && (
         <StreamVideo
           {...props}
           data={props.queryResult.data.getStreamSelf}

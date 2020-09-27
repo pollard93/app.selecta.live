@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Options } from 'react-native-navigation';
 import Register, { RegisterProps } from '../../components/Register/Register';
 import color from '../../styles/definitions/color';
 
