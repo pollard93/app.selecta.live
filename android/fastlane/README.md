@@ -31,6 +31,11 @@ Submit a new Beta Build to browserstack
 fastlane android beta
 ```
 Submit a new Beta Build to the Google Play Store
+### android release
+```
+fastlane android release
+```
+Deploy a new version to the Google Play Store
 
 ----
 

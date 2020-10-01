@@ -1,10 +1,143 @@
 {
-  "web": {
-    "client_id": "235314003497-37plkfi911daivvke6ic7pv4mhphg68l.apps.googleusercontent.com",
-    "project_id": "selecta-1585157357181",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_secret": "3klm-7K-tb2D-Cr5SJyRm3CR"
-  }
+  "project_info": {
+    "project_number": "923259272645",
+    "firebase_url": "https://selecta-live-1601575055552.firebaseio.com",
+    "project_id": "selecta-live-1601575055552",
+    "storage_bucket": "selecta-live-1601575055552.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923259272645:android:6277f25e5f296f16961fac",
+        "android_client_info": {
+          "package_name": "live.selecta.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923259272645-b524vkidlg1jgkb0rumfhli8ckeu0kmo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "live.selecta.app",
+            "certificate_hash": "2368af2c7417bc0f33714eacf1da7d635c86d31d"
+          }
+        },
+        {
+          "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5XsYpnomhDAa0Su3hKjy3Uj0SN-y0K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "live.selecta.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923259272645:android:9936f01fba5f4960961fac",
+        "android_client_info": {
+          "package_name": "live.selecta.app.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923259272645-bofi6aktt14krvv7rhn8ntej31vak3q1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "live.selecta.app.beta",
+            "certificate_hash": "4db23896ecec14e6fcf2de29e012dab57b661875"
+          }
+        },
+        {
+          "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5XsYpnomhDAa0Su3hKjy3Uj0SN-y0K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "live.selecta.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923259272645:android:82b8a72e67a0311b961fac",
+        "android_client_info": {
+          "package_name": "live.selecta.app.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923259272645-thgfjig02np5cqbibeq4v0kqv5pugk5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "live.selecta.app.debug",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5XsYpnomhDAa0Su3hKjy3Uj0SN-y0K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923259272645-ulaski8457igl5gp12m8gssmqk4djhub.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "live.selecta.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
 }

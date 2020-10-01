@@ -32,10 +32,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
    * Configure on mount
    */
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '235314003497-37plkfi911daivvke6ic7pv4mhphg68l.apps.googleusercontent.com',
-      iosClientId: '235314003497-4jl8egs3ca885o2crijqngq3i86rh6cu.apps.googleusercontent.com',
-    });
+    GoogleSignin.configure();
   }, []);
 
 
