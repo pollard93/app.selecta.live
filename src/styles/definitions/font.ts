@@ -12,7 +12,7 @@ export default {
       name: 'Open Sans',
       weights: {
         light: {
-          postScriptName: 'OpenSans-CondensedLight',
+          postScriptName: 'OpenSans-CondLight',
           weight: '300',
         },
       },
@@ -21,7 +21,7 @@ export default {
       name: 'Open Sans Condensed',
       weights: {
         bold: {
-          postScriptName: 'OpenSans-CondensedBold',
+          postScriptName: 'OpenSans-CondBold',
           weight: 'bold',
         },
       },
