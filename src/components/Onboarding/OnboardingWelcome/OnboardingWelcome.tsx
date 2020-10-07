@@ -6,19 +6,15 @@ import OnboardingPageWrap from '../../UI/Onboarding/OnboardingPageWrap/Onboardin
 import Button from '../../UI/Button/Button';
 import Styles from './OnboardingWelcome.style';
 import H4 from '../../UI/Typography/components/H4';
-import { pushScreen } from '../../../screens/utils';
-import OnboardingNotificationsScreen from '../../../screens/OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import UsernameInput from '../../UI/Form/components/UsernameInput/UsernameInput';
+import { goHome } from '../../../screens/utils';
 
 export interface OnboardingWelcomeProps {}
 
-type FormData = {
-  username: string;
-};
-
 const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
   const screenProps = useScreenProps();
+
 
   /**
    * Remove splash
@@ -28,13 +24,13 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
   }, []);
 
 
-  const onPop = () => {
-    Navigation.pop(screenProps.componentId);
+  const onCompleted = () => {
+    goHome();
   };
 
 
-  const onCompleted = () => {
-    pushScreen(screenProps.componentId, OnboardingNotificationsScreen, {});
+  const onPop = () => {
+    Navigation.pop(screenProps.componentId);
   };
 
 
@@ -55,7 +51,7 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
                 title="Next"
                 onPress={args.onSubmit}
                 disabled={args.disabled}
-                loading={args.loading}
+                loading={args.queryLoading || args.queryLoading}
               />
             </View>
           )}
