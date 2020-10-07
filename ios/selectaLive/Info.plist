@@ -54,7 +54,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>43</string>
+	<string>44</string>
 	<key>FacebookAppID</key>
 	<string>233563547770081</string>
 	<key>FacebookDisplayName</key>
@@ -75,7 +75,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Selecta would like access to your camera roll</string>
 	<key>OneSignal_disable_badge_clearing</key>
