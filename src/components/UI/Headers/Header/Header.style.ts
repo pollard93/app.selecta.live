@@ -51,6 +51,12 @@ export default StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  iconSelected: {
+    tintColor: color.accent.primary,
+  },
+  profileSelected: {
+    borderColor: color.accent.primary,
+  },
   profilePictureIconWrap: {
     padding: 1,
   },

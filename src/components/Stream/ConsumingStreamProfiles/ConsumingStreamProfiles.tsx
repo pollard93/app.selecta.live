@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useState, FC } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, FC, useRef } from 'react';
+import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
@@ -25,6 +25,7 @@ export interface ConsumingStreamProfilesProps {}
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   const screenProps = useScreenProps();
   const { headerHeight } = useHeaderStyles();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -58,9 +59,17 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   };
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    ref.current.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header />
+      <Header onPressLogo={onPressLogo} />
 
       <ConsumingStreamProfilesFlatList
         query={GET_CONSUMING_STREAM_PROFILES}

@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { useState, useMemo, forwardRef, ForwardRefRenderFunction } from 'react';
 import { FlatList, FlatListProps, RefreshControl } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { ApolloQueryResult } from 'apollo-client';
@@ -14,7 +14,7 @@ interface FeedProps {
   flatListProps?: Partial<FlatListProps<any>>;
 }
 
-const Feed: FC<FeedProps> = (props) => {
+const Feed: ForwardRefRenderFunction<FlatList, FeedProps> = (props, ref) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const refetchRefs = useMemo<{[key:string]:() => Promise<ApolloQueryResult<unknown>>}>(() => ({}), []);
 
@@ -32,8 +32,8 @@ const Feed: FC<FeedProps> = (props) => {
     } catch (e) {} // eslint-disable-line no-empty
 
     // Loop all refetchRefs and execute
-    for (const ref of Object.values(refetchRefs)) {
-      ref();
+    for (const r of Object.values(refetchRefs)) {
+      r();
     }
 
     setRefreshing(false);
@@ -43,6 +43,7 @@ const Feed: FC<FeedProps> = (props) => {
   return (
     <FlatList
       {...props.flatListProps}
+      ref={ref}
       data={props.data.items}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={[dynamicStyles[`background${props.data.items[0].background}`], props.flatListProps?.contentContainerStyle]}
@@ -69,4 +70,4 @@ const Feed: FC<FeedProps> = (props) => {
   );
 };
 
-export default Feed;
+export default forwardRef(Feed);

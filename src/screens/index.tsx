@@ -38,11 +38,18 @@ const wrapContext = (Component) => {
    * Overlay component
    */
   if (Component.prototype.options?.overlay) {
-    const wrapped = (props: ScreenProps) => (
-      <ScreenPropsProvider {...props}>
-        <Component {...props} />
-      </ScreenPropsProvider>
-    );
+    const wrapped = (props: ScreenProps) => {
+      const screenProps: ScreenProps = {
+        ...props,
+        name: Component.prototype.ScreenName,
+      };
+
+      return (
+        <ScreenPropsProvider {...screenProps}>
+          <Component {...props} />
+        </ScreenPropsProvider>
+      );
+    };
 
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
@@ -57,9 +64,13 @@ const wrapContext = (Component) => {
   if (Component.prototype.fullScreen) {
     const wrapped = (props: ScreenProps) => {
       const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+      const screenProps: ScreenProps = {
+        ...props,
+        name: Component.prototype.ScreenName,
+      };
 
       return (
-        <ScreenPropsProvider {...props}>
+        <ScreenPropsProvider {...screenProps}>
           <ApolloProvider client={ApolloClient}>
             <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
               <Component {...props} />
@@ -81,9 +92,13 @@ const wrapContext = (Component) => {
    */
   const wrapped = (props: ScreenProps) => {
     const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+    const screenProps: ScreenProps = {
+      ...props,
+      name: Component.prototype.ScreenName,
+    };
 
     return (
-      <ScreenPropsProvider {...props}>
+      <ScreenPropsProvider {...screenProps}>
         <ApolloProvider client={ApolloClient}>
           <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
           <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
@@ -98,6 +113,7 @@ const wrapContext = (Component) => {
 
   // Allows static options to be called for react-native-navigation
   (wrapped as any).options = Component.prototype.options;
+
 
   return wrapped;
 };

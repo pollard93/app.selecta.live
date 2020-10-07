@@ -14,6 +14,7 @@ export enum STACK {
 
 
 export interface ScreenProps {
+  name: string;
   componentId: string;
   rootTag: number;
 }

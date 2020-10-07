@@ -1,6 +1,5 @@
-/* eslint-disable max-classes-per-file */
-import React, { FC, useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import React, { FC, useEffect, useRef } from 'react';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { requestNotifications } from 'react-native-permissions';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
@@ -19,6 +18,7 @@ export interface HomeFeedProps {}
 const HomeFeed: FC<HomeFeedProps> = () => {
   const queryResult = useGetHomeFeedQuery();
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -31,9 +31,17 @@ const HomeFeed: FC<HomeFeedProps> = () => {
   }, []);
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    ref.current.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header />
+      <Header onPressLogo={onPressLogo} />
 
       <SafeAreaView style={GlobalStyles.PageFill}>
         {
@@ -41,11 +49,14 @@ const HomeFeed: FC<HomeFeedProps> = () => {
             ? <LoadRetry cover {...queryResult} />
             : (
                 <Feed
+                  ref={ref}
                   data={queryResult.data.getHomeFeed}
                   onPressStream={(id) => {
+                    console.log('id', id);
                     pushScreen(screenProps.componentId, StreamProfileScreen, { id });
                   }}
                   onPressChannel={(id) => {
+                    console.log('id', id);
                     pushScreen(screenProps.componentId, ChannelProfileScreen, { id });
                   }}
                   refetch={queryResult.refetch}
