@@ -598,6 +598,30 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               )
           }
 
+          {props.data && (
+            <View style={[Styles.settings, dynamicStyles.settings]}>
+              <H2>Settings</H2>
+
+              {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
+                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
+                <Switch
+                  onValueChange={(value) => setValue('audioOnly', value, true)}
+                  value={watch('audioOnly')}
+                />
+              </View> */}
+
+              {props.data && (
+                <View style={Styles.inputWrap}>
+                  <StreamStates
+                    data={props.data}
+                    getStreamSelfsVariables={props.getStreamSelfsVariables}
+                    onPop={props.onPop}
+                  />
+                </View>
+              )}
+            </View>
+          )}
+
           <View style={Styles.form}>
             <View style={Styles.section}>
               <H2>Description</H2>
@@ -736,30 +760,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               )}
             </View>
           </View>
-
-          {props.data && (
-            <View style={[Styles.section, Styles.settings, dynamicStyles.settings]}>
-              <H2>Settings</H2>
-
-              {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
-                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
-                <Switch
-                  onValueChange={(value) => setValue('audioOnly', value, true)}
-                  value={watch('audioOnly')}
-                />
-              </View> */}
-
-              {props.data && (
-                <View style={Styles.inputWrap}>
-                  <StreamStates
-                    data={props.data}
-                    getStreamSelfsVariables={props.getStreamSelfsVariables}
-                    onPop={props.onPop}
-                  />
-                </View>
-              )}
-            </View>
-          )}
         </ScrollView>
       </KeyboardAvoidingView>
 

@@ -43,14 +43,12 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
           {!props.data.timeFromLive && ' (Upcoming)'}
         </Body>
 
-        {!props.data.timeFromLive && (
-          <Button
-            title="Edit"
-            type="LIGHT"
-            onPress={onEdit}
-            size="small"
-          />
-        )}
+        <Button
+          title="Edit"
+          type="LIGHT"
+          onPress={onEdit}
+          size="small"
+        />
       </View>
 
       <View style={Styles.body}>
