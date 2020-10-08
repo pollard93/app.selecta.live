@@ -265,15 +265,15 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
 
 
   return (
-    <View style={GlobalStyles.PageFill}>
+    <>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={GlobalStyles.PageFill}
       >
         <ScrollView
-          style={GlobalStyles.PageFill}
           bounces={false}
           ref={props.innerRef}
+          style={GlobalStyles.PageFill}
         >
           <EditableAsyncImage
             asyncImageProps={{
@@ -463,7 +463,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
           style={Styles.button}
         />
       </View>
-    </View>
+    </>
   );
 };
 

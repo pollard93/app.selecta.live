@@ -9,7 +9,7 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
-import { getGQLErrorMessage } from '../../../utils/functions';
+import { getGQLErrorMessage, parseCurrency } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
@@ -34,6 +34,7 @@ import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStr
 import { pushToast } from '../../../modules/Toast';
 import { GET_CHANNEL_SELF_QUERY } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfsVariables } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
+import spacing from '../../../styles/definitions/spacing';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -468,6 +469,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const timeFrom = watch('timeFrom');
   const isFree = watch('isFree');
   const duration = watch('duration');
+  const cost = watch('cost');
 
 
   /**
@@ -558,14 +560,16 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
 
   return (
-    <View style={GlobalStyles.PageFill}>
+    <>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={GlobalStyles.PageFill}
       >
         <ScrollView
-          style={GlobalStyles.PageFill}
+          bounces={false}
+          contentContainerStyle={{ paddingBottom: spacing.small }}
           ref={props.innerRef}
+          style={GlobalStyles.PageFill}
         >
           {
             editable
@@ -693,7 +697,13 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View pointerEvents={isFree ? 'none' : 'auto'} style={{ opacity: isFree ? 0.5 : 1 }}>
-                {editable && <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>}
+                {editable && (
+                  <>
+                    <Body>Value per credit: <Body bold>{parseCurrency(props.channelData.creditWithdrawalValue)}</Body></Body>
+                    <Body>Value per purchase: <Body bold>{parseCurrency(cost ? parseInt(cost, 10) * props.channelData.creditWithdrawalValue : 0)}</Body></Body>
+                    <Body>Minimum Price: <Body bold>&copy; {props.channelData.creditMinimumStreamCost}</Body></Body>
+                  </>
+                )}
                 <TextInput
                   name="cost"
                   onChangeText={(value) => setValue('cost', value, true)}
@@ -768,7 +778,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           />
         </View>
       )}
-    </View>
+    </>
   );
 };
 
