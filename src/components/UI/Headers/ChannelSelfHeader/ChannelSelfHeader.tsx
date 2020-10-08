@@ -7,7 +7,7 @@ import useSafeArea from '../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { useGetChannelSelfQuery } from '../../../../API/query/getChannelSelf/getChannelSelf';
 import { useHeaderStyles } from '../Header/Header';
-import H4 from '../../Typography/components/H4';
+import H3 from '../../Typography/components/H3';
 
 interface ChannelSelfHeaderProps {
   onPop?: () => void;
@@ -65,13 +65,13 @@ const ChannelSelfHeader: FC<ChannelSelfHeaderProps> = (props) => {
           style={Styles.headingWrap}
           disabled={!props.onPop && !props.onPressLogo}
         >
-          <H4
+          <H3
             numberOfLines={2}
             ellipsizeMode="tail"
             forceLight
           >
             {getChannelSelf.name}
-          </H4>
+          </H3>
         </TouchableOpacity>
       </View>
     </View>

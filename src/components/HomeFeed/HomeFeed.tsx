@@ -53,11 +53,9 @@ const HomeFeed: FC<HomeFeedProps> = () => {
                   ref={ref}
                   data={queryResult.data.getHomeFeed}
                   onPressStream={(id) => {
-                    console.log('id', id);
                     pushScreen(screenProps.componentId, StreamProfileScreen, { id });
                   }}
                   onPressChannel={(id) => {
-                    console.log('id', id);
                     pushScreen(screenProps.componentId, ChannelProfileScreen, { id });
                   }}
                   refetch={queryResult.refetch}

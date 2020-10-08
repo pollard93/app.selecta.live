@@ -3,7 +3,6 @@ import { View, Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
-import Header from '../../UI/Headers/Header/Header';
 import UpdateChannelView from './UpdateChannelView';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';

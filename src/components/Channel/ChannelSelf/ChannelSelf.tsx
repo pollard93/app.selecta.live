@@ -4,7 +4,6 @@ import { Navigation } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
-import Header from '../../UI/Headers/Header/Header';
 import ChannelSelfView from './ChannelSelfView';
 import { removeChannelAccessToken } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';

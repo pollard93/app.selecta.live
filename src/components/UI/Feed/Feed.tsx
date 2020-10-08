@@ -1,4 +1,4 @@
-import React, { useState, useMemo, forwardRef, ForwardRefRenderFunction, useRef } from 'react';
+import React, { useState, useMemo, forwardRef, ForwardRefRenderFunction } from 'react';
 import { FlatList, FlatListProps, RefreshControl } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { ApolloQueryResult } from 'apollo-client';
