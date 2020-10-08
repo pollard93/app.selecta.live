@@ -1,8 +1,7 @@
 import React, { FC, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
-import { FlatList } from 'react-native-gesture-handler';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';

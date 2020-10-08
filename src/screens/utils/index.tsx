@@ -283,11 +283,7 @@ export const openModalScreen = (
 export const openTopUpModal = () => {
   openModalScreen({
     component: (
-      <Products
-        onDismiss={() => {
-          Navigation.dismissModal('TopUpModal');
-        }}
-      />
+      <Products />
     ),
   }, 'TopUpModal', OptionsModalTransitionStyle.crossDissolve);
 };

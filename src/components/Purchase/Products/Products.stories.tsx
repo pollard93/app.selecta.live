@@ -9,5 +9,5 @@ storiesOf('Products', module)
   .addDecorator(getStory => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator(getStory => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
   .add('Products', () => (
-    <Products onDismiss={console.log} />
+    <Products />
   ))
