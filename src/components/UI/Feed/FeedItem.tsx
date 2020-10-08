@@ -123,13 +123,13 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                         switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return (
-                              <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
+                              <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
                             );
 
                           case 'channels':
                             return (
                               <>
-                                <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
+                                <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
                                 <StreamCardSkeleton />
                               </>
                             );
@@ -150,7 +150,7 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                           case 'streams':
                             return (
                               <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
-                                <StreamCardSkeleton emptyMessage={`${props.renderInfo.item.heading} will appear here`} />
+                                <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
                               </View>
                             );
 
@@ -160,7 +160,7 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                                 <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                                   <ChannelCardSkeleton />
                                 </View>
-                                <Body style={Styles.emptyMessage}>{`${props.renderInfo.item.heading} will appear here`}</Body>
+                                <Body style={Styles.emptyMessage}>{`No ${props.renderInfo.item.heading}`}</Body>
                               </View>
                             );
 

@@ -125,7 +125,7 @@ const Notifications: FC<NotificationsProps> = () => {
             return (
               <View style={[StyleSheet.absoluteFillObject, Styles.empty, { paddingTop: headerHeight }]}>
                 <View style={GlobalStyles.MaxWidth}>
-                  <H4 style={Styles.emptyText}>Your notifications will appear here</H4>
+                  <H4 style={Styles.emptyText}>No Notifications</H4>
                 </View>
               </View>
             );

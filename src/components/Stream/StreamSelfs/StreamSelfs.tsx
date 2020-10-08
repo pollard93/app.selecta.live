@@ -113,7 +113,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           if (maxCount === 0) {
             return (
               <View style={Styles.header}>
-                <Body>Your streams will appear here</Body>
+                <Body>No Streams</Body>
               </View>
             );
           }
