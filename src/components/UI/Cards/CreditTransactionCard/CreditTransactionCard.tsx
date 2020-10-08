@@ -8,6 +8,8 @@ import Chip from '../../Chip/Chip';
 import { formatForTimezone } from '../../../../utils/functions';
 import Gradient from '../../Gradient/Gradient';
 import Small from '../../Typography/components/Small';
+import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
+import Icon, { ICON } from '../../Icon/Icon';
 
 interface CreditTransactionCardProps {
   data: CREDIT_TRANSACTION_PROFILE_FRAGMENT;
@@ -26,9 +28,10 @@ const CreditTransactionCard: FC<CreditTransactionCardProps> = (props) => {
         </View>
 
         <Gradient style={Styles.right}>
-          <H4 forceLight>
-            © {props.data.credit}
-          </H4>
+          <View style={GlobalStyles.CostText}>
+            <Icon name={ICON.CREDIT} forceLight size="xsmall" />
+            <H4 forceLight> {props.data.credit}</H4>
+          </View>
         </Gradient>
       </View>
     </>

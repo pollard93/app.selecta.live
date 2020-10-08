@@ -14,9 +14,10 @@ import Toast from '../../../../UI/Toast/Toast';
 import Styles, { DynamicStyles } from './StreamPurchase.styles';
 import H1 from '../../../../UI/Typography/components/H1';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
-import { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
 import { pushToast } from '../../../../../modules/Toast';
 import { getStreamDurationPretty } from '../../../../../utils/streamFunctions';
+import Icon, { ICON } from '../../../../UI/Icon/Icon';
 
 interface StreamPurchaseProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -146,7 +147,10 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
             <View style={[globalDynamicStyles.background, Styles.notch]} />
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchBottom]} />
 
-            <H1>© {props.data.cost}</H1>
+            <View style={GlobalStyles.CostText}>
+              <Icon name={ICON.CREDIT} size="xsmall" />
+              <H1> {props.data.cost}</H1>
+            </View>
           </View>
         </View>
       </View>
@@ -160,7 +164,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
               return 'Watch this stream for free!';
             }
 
-            return confirming ? 'Press to confirm your purchase!' : `Buy this stream for © ${props.data.cost}`;
+            return confirming ? 'Press to confirm your purchase!' : 'Purchase this stream!';
           })()}
           onPress={onPurchase}
           loading={loading}

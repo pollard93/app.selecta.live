@@ -14,6 +14,8 @@ import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__gen
 import StreamSelfListItemControls from './components/StreamSelfListItemControls/StreamSelfListItemControls';
 import { getStreamDurationPretty } from '../../../utils/streamFunctions';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 export interface StreamSelfListItemProps {
   data: STREAM_SELF_FRAGMENT;
@@ -74,7 +76,11 @@ const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
             {props.data.tags.length > 0 && (
               <Body>{props.data.tags.map(({ title }) => `#${title} `)}</Body>
             )}
-            <Body>Ticket Price: &copy;{props.data.cost}</Body>
+            <View style={GlobalStyles.CostText}>
+              <Body>Ticket Price: </Body>
+              <Icon name={ICON.CREDIT} size="xsmall" />
+              <Body> {props.data.cost}</Body>
+            </View>
             <Body>Stream Duration: {getStreamDurationPretty(props.data)}</Body>
           </View>
           <View style={Styles.meta}>

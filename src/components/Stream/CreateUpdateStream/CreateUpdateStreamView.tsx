@@ -35,6 +35,7 @@ import { pushToast } from '../../../modules/Toast';
 import { GET_CHANNEL_SELF_QUERY } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfsVariables } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 import spacing from '../../../styles/definitions/spacing';
+import Icon, { ICON } from '../../UI/Icon/Icon';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -717,7 +718,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             </View>
 
             <View style={Styles.section}>
-              <H2>Price &copy;</H2>
+              <View style={GlobalStyles.CostText}>
+                <H2>Price </H2>
+                <Icon name={ICON.CREDIT} size="xsmall" />
+              </View>
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View pointerEvents={isFree ? 'none' : 'auto'} style={{ opacity: isFree ? 0.5 : 1 }}>
@@ -725,7 +729,11 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   <>
                     <Body>Value per credit: <Body bold>{parseCurrency(props.channelData.creditWithdrawalValue)}</Body></Body>
                     <Body>Value per purchase: <Body bold>{parseCurrency(cost ? parseInt(cost, 10) * props.channelData.creditWithdrawalValue : 0)}</Body></Body>
-                    <Body>Minimum Price: <Body bold>&copy; {props.channelData.creditMinimumStreamCost}</Body></Body>
+                    <View style={GlobalStyles.CostText}>
+                      <Body>Minimum Price: </Body>
+                      <Icon name={ICON.CREDIT} size="xsmall" />
+                      <Body bold> {props.channelData.creditMinimumStreamCost}</Body>
+                    </View>
                   </>
                 )}
                 <TextInput

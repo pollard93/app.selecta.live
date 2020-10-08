@@ -41,6 +41,7 @@ export enum ICON {
   CREATE = 'CREATE',
   FLAG = 'FLAG',
   ERROR = 'ERROR',
+  CREDIT = 'CREDIT',
 }
 
 export interface IconProps {
@@ -161,6 +162,9 @@ const Icon = (props: IconProps) => {
 
       case ICON.ERROR:
         return require('../../../assets/images/icons/error.png');
+
+      case ICON.CREDIT:
+        return require('../../../assets/images/icons/credit.png');
 
       default:
         return null;
