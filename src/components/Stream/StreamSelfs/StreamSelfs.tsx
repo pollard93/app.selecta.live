@@ -9,7 +9,6 @@ import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
 import H2 from '../../UI/Typography/components/H2';
 import Button from '../../UI/Button/Button';
-import Header from '../../UI/Headers/Header/Header';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
@@ -18,6 +17,7 @@ import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
 import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -67,7 +67,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header
+      <ChannelSelfHeader
         onPop={onPop}
         onPressLogo={onPressLogo}
       />

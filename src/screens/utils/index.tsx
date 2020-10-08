@@ -217,29 +217,34 @@ export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
-export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.showModal({
-  stack: {
-    id: stack,
-    children: [
-      {
-        component: {
-          id: screen.prototype.ScreenName,
-          name: screen.prototype.ScreenName,
-          passProps: props,
-          options: {
-            modalTransitionStyle: OptionsModalTransitionStyle.crossDissolve,
-            modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-            animations: {
-              showModal: {
-                waitForRender: true,
+export const openScreenAsModal = <T extends FC>(
+  stack: STACK,
+  screen: T,
+  props: ExtractProps<T>,
+  modalTransitionStyle = OptionsModalTransitionStyle.crossDissolve,
+) => Navigation.showModal({
+    stack: {
+      id: stack,
+      children: [
+        {
+          component: {
+            id: screen.prototype.ScreenName,
+            name: screen.prototype.ScreenName,
+            passProps: props,
+            options: {
+              modalTransitionStyle,
+              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+              animations: {
+                showModal: {
+                  waitForRender: true,
+                },
               },
             },
           },
         },
-      },
-    ],
-  },
-});
+      ],
+    },
+  });
 
 
 /**

@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { OptionsModalTransitionStyle } from 'react-native-navigation';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import Styles from './ChannelSelfListItem.style';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import H2 from '../../UI/Typography/components/H2';
-import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { useLoginChannelWithTokenMutation } from '../../../API/mutation/loginChannelWithToken/loginChannelWithToken';
-import { pushScreen } from '../../../screens/utils';
+import { openScreenAsModal } from '../../../screens/utils';
 import ChannelSelfScreen from '../../../screens/ChannelSelfScreen/ChannelSelfScreen';
 import { pushToast } from '../../../modules/Toast';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
+import { STACK } from '../../../screens/utils/interfaces';
+import { useGetChannelSelfLazyQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 
 interface ChannelSelfListItemProps {
   data: CHANNEL_SELF_FRAGMENT;
 }
 
-const ChannelSelfListItem = (props: ChannelSelfListItemProps) => {
+const ChannelSelfListItem: FC<ChannelSelfListItemProps> = (props) => {
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
-  const screenProps = useScreenProps();
+
+
+  /**
+   * Get channel self query
+   */
+  const [getChannelSelf] = useGetChannelSelfLazyQuery({
+    onCompleted: () => {
+      /**
+       * Push ChannelSelfScreen
+       */
+      openScreenAsModal(STACK.CHANNEL, ChannelSelfScreen, {}, OptionsModalTransitionStyle.coverVertical);
+    },
+    onError: (e) => {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content={getGQLErrorMessage(e)}
+          />
+        ),
+        dismissible: false,
+      });
+    },
+    fetchPolicy: 'network-only',
+  });
 
 
   /**
@@ -35,9 +62,9 @@ const ChannelSelfListItem = (props: ChannelSelfListItemProps) => {
     },
     onCompleted: () => {
       /**
-       * Push ChannelSelfScreen
+       * getChannelSelf to cache the response
        */
-      pushScreen(screenProps.componentId, ChannelSelfScreen, {});
+      getChannelSelf();
     },
     onError: (e) => {
       pushToast({

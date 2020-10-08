@@ -2,13 +2,13 @@ import React, { FC, MutableRefObject, useRef, useState } from 'react';
 import { View, Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import Header from '../../UI/Headers/Header/Header';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface CreateUpdateStreamProps {
   id?: string;
@@ -97,7 +97,7 @@ const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header
+      <ChannelSelfHeader
         onPop={onPop}
         onPressLogo={onPressLogo}
       />

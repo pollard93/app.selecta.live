@@ -1,4 +1,4 @@
-import React, { useState, useRef, FC, useEffect } from 'react';
+import React, { useState, useRef, FC, useEffect, MutableRefObject } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
@@ -34,7 +34,8 @@ type FormData = {
 
 interface UpdateChannelViewProps {
   data: CHANNEL_SELF_FRAGMENT;
-  canPopRef: React.MutableRefObject<boolean>;
+  canPopRef: MutableRefObject<boolean>;
+  innerRef?: MutableRefObject<ScrollView>;
 }
 
 const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
@@ -269,6 +270,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         <ScrollView
           style={GlobalStyles.PageFill}
           bounces={false}
+          ref={props.innerRef}
         >
           <EditableAsyncImage
             asyncImageProps={{

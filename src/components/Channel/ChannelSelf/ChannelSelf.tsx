@@ -9,6 +9,7 @@ import ChannelSelfView from './ChannelSelfView';
 import { removeChannelAccessToken } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/__generated__/removeChannelAccessToken';
 import { REMOVE_CHANNEL_ACCESS_TOKEN_MUTATION } from '../../../ApolloClient/resolvers/mutation/removeChannelAccessToken/removeChannelAccessTokenMutation';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface ChannelSelfProps {}
 
@@ -38,7 +39,7 @@ const ChannelSelf: FC<ChannelSelfProps> = () => {
     // eslint-disable-next-line no-empty
     } catch {}
 
-    Navigation.pop(screenProps.componentId);
+    Navigation.dismissModal(screenProps.componentId);
   };
 
 
@@ -53,7 +54,7 @@ const ChannelSelf: FC<ChannelSelfProps> = () => {
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header
+      <ChannelSelfHeader
         onPop={onPop}
         onPressLogo={onPressLogo}
       />

@@ -14,6 +14,7 @@ import HeaderNotifications from './components/HeaderNotifications/HeaderNotifica
 import scalePx from '../../../../utils/scalePx';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../../styles/stylesheets/GlobalStyles';
+import { useGetChannelSelfQuery } from '../../../../API/query/getChannelSelf/getChannelSelf';
 
 interface HeaderProps {
   onPop?: () => void;
@@ -31,6 +32,8 @@ export const useHeaderStyles = () => ({
 
 
 const Header: FC<HeaderProps> = (props) => {
+  const { data } = useGetChannelSelfQuery({ fetchPolicy: 'cache-only' });
+  console.log('data', data);
   const screenProps = useScreenProps();
   const safeAreaInsets = useSafeArea();
   const { headerHeight, headerZindex } = useHeaderStyles();
