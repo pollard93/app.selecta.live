@@ -50,7 +50,6 @@ const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {
             data={props.queryResult.data?.getChannelProfile}
             wrapStyle={{ backgroundColor: darkMode ? color.mono.light : titleColor }}
             textStyle={{ color: darkMode ? color.mono.dark : followChannelColor }}
-            iconStyle={{ tintColor: darkMode ? color.mono.dark : followChannelColor }}
           />
         </>
       )}

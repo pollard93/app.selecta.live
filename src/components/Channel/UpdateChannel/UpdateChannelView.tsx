@@ -115,7 +115,10 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       pushToast({
         duration: 1000,
         component: (
-          <Toast content='Updated channel' />
+          <Toast
+            type="SUCCESS"
+            content='Updated channel'
+          />
         ),
         dismissible: false,
       });

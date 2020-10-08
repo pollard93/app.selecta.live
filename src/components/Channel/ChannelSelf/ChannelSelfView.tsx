@@ -29,47 +29,44 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
       {...props}
       data={props.queryResult.data?.getChannelSelf}
       topContent={({ titleColor, followChannelColor }) => (
-        <>
-          <TouchableOpacity
-            onPress={() => {
-              pushScreen(screenProps.componentId, StreamSelfsScreen, {});
-            }}
-          >
-            <Animated.View
-              style={[
-                Styles.manageButton,
-                { backgroundColor: darkMode ? color.mono.light : titleColor },
-              ]}
+        <View>
+          <View style={Styles.topContentWrap}>
+            <TouchableOpacity
+              onPress={() => {
+                pushScreen(screenProps.componentId, StreamSelfsScreen, {});
+              }}
             >
-              <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
-                <Body bold disableBaseColor>Streams</Body>
-              </Animated.Text>
-            </Animated.View>
-          </TouchableOpacity>
+              <Animated.View
+                style={[
+                  Styles.manageButton,
+                  { backgroundColor: darkMode ? color.mono.light : titleColor },
+                ]}
+              >
+                <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
+                  <Body bold disableBaseColor>Streams</Body>
+                </Animated.Text>
+              </Animated.View>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              /**
-               * Push UpdateChannelScreen
-               */
-              pushScreen(screenProps.componentId, UpdateChannelScreen, {});
-            }}
-          >
-            <Animated.View
-              style={[
-                Styles.editButton,
-                { backgroundColor: darkMode ? color.mono.light : titleColor },
-              ]}
+            <TouchableOpacity
+              onPress={() => {
+                /**
+                 * Push UpdateChannelScreen
+                 */
+                pushScreen(screenProps.componentId, UpdateChannelScreen, {});
+              }}
             >
-              <Icon
-                name={ICON.COG}
-                size="small"
-                style={{ tintColor: darkMode ? color.mono.dark : followChannelColor }}
-                animated
-              />
-            </Animated.View>
-          </TouchableOpacity>
-        </>
+              <View style={Styles.editButton}>
+                <Icon
+                  name={ICON.COG}
+                  size="small"
+                  style={{ tintColor: darkMode ? color.mono.light : titleColor }}
+                  animated
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       )}
     >
       {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (

@@ -22,7 +22,10 @@ const ChannelFunds = (props: ChannelFundsProps) => {
       pushToast({
         duration: 1000,
         component: (
-          <Toast content='Updated channel' />
+          <Toast
+            type="SUCCESS"
+            content='Updated channel'
+          />
         ),
         dismissible: false,
       });
