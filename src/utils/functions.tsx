@@ -96,3 +96,10 @@ export const mapRange = (num, inMin, inMax, outMin, outMax): number => {
     return null;
   }
 };
+
+
+/**
+ * Parses amount to be displayed
+ * @param amount - in pence
+ */
+export const parseCurrency = (amount: number, toFixed = 2) => `£${(amount / 100).toFixed(toFixed)}`;

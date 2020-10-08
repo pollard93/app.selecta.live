@@ -14,6 +14,7 @@ import { pushScreen } from '../../../screens/utils';
 import UpdateChannelScreen from '../../../screens/UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelFunds from '../ChannelFunds/ChannelFunds';
 
 export interface ChannelSelfViewProps {
   queryResult: QueryResult<getChannelSelf>;
@@ -89,8 +90,11 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
                 </View>
 
                 <View style={Styles.description}>
-                  <Body bold style={Styles.joined}>Credit: © {props.queryResult.data?.getChannelSelf.credit}</Body>
                   <Body bold style={Styles.joined}>Joined: {formatForTimezone(props.queryResult.data?.getChannelSelf.createdAt, 'calendar')}</Body>
+                </View>
+
+                <View style={Styles.description}>
+                  <ChannelFunds data={props.queryResult.data?.getChannelSelf} />
                 </View>
               </>
             ),

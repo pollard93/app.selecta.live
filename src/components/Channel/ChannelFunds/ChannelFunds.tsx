@@ -1,10 +1,14 @@
-import React from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Alert } from 'react-native';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import { useWithdrawFundsMutation } from '../../../API/mutation/withdrawFunds/withdrawFunds';
 import Toast from '../../UI/Toast/Toast';
-import { getGQLErrorMessage } from '../../../utils/functions';
+import { getGQLErrorMessage, parseCurrency } from '../../../utils/functions';
 import { pushToast } from '../../../modules/Toast';
+import Body from '../../UI/Typography/components/Body';
+import Button from '../../UI/Button/Button';
+import Styles from './ChannelFunds.style';
+import Small from '../../UI/Typography/components/Small';
 
 interface ChannelFundsProps {
   data: CHANNEL_SELF_FRAGMENT;
@@ -24,7 +28,7 @@ const ChannelFunds = (props: ChannelFundsProps) => {
         component: (
           <Toast
             type="SUCCESS"
-            content='Updated channel'
+            content='Thanks, we are processing your request and will be in touch soon!'
           />
         ),
         dismissible: false,
@@ -60,17 +64,32 @@ const ChannelFunds = (props: ChannelFundsProps) => {
   };
 
 
-  return (
-    <View>
-      <Text>Pending Credit: {props.data.pendingCredit}</Text>
-      <Text>Credit: {props.data.credit}</Text>
-      <Text>Value of credit: £{(props.data.credit * props.data.creditWithdrawalValue) / 100}</Text>
+  /**
+   * Get credit values
+   */
+  const creditValue = useMemo(() => props.data.credit * props.data.creditWithdrawalValue, [props.data.credit, props.data.creditWithdrawalValue]);
+  const pendingCreditValue = useMemo(() => props.data.pendingCredit * props.data.creditWithdrawalValue, [props.data.pendingCredit, props.data.creditWithdrawalValue]);
 
-      <Button
-        title="Withdraw Funds"
-        onPress={onWithdraw}
-        disabled={loading || props.data.credit < props.data.creditWithdrawalMinimum}
-      />
+
+  return (
+    <View style={Styles.wrap}>
+      <View>
+        <Body>Credit Value: <Body bold>{parseCurrency(creditValue)}</Body></Body>
+        <Body>Pending Credit Value: <Body bold>{parseCurrency(pendingCreditValue)}</Body></Body>
+      </View>
+
+      <View style={Styles.buttonWrap}>
+        <Button
+          title="Withdraw Funds"
+          onPress={onWithdraw}
+          disabled={creditValue < props.data.creditWithdrawalMinimum}
+          loading={loading}
+          size="small"
+        />
+        {creditValue < props.data.creditWithdrawalMinimum && (
+          <Small>Minimum withdrawal {parseCurrency(props.data.creditWithdrawalMinimum, 0)}</Small>
+        )}
+      </View>
     </View>
   );
 };
