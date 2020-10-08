@@ -289,7 +289,12 @@ export const openTopUpModal = () => {
         }}
       />
     ),
-  }, 'TopUpModal');
+  }, 'TopUpModal', OptionsModalTransitionStyle.crossDissolve);
+};
+
+
+export const closeTopUpModal = () => {
+  Navigation.dismissModal('TopUpModal');
 };
 
 

@@ -4,25 +4,15 @@ import spacing from '../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
   wrap: {
-    paddingHorizontal: spacing.small,
-  },
-  dismiss: {
-    alignSelf: 'flex-start',
-    marginLeft: -(spacing.small),
-    padding: spacing.small,
+    padding: spacing.xsmall,
   },
   item: {
     borderColor: color.mono.light,
     borderWidth: spacing.xxsmall / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: spacing.xsmall,
     paddingHorizontal: spacing.small,
     paddingVertical: spacing.xxsmall,
-  },
-  list: {
-    marginTop: spacing.large,
-  },
-  separator: {
-    height: spacing.small,
   },
 });
