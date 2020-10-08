@@ -118,7 +118,7 @@ const FeedItem: FC<FeedItemProps> = (props) => {
               switch (props.renderInfo.item.type) {
                 case FEED_TYPE.VERTICAL:
                   return (
-                    <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                    <View style={[Styles[`item${props.renderInfo.item.type}`], Styles[`itemLoading${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                       {(() => {
                         switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
@@ -149,15 +149,20 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                         switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return (
-                              <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
-                                <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
-                              </View>
+                              <>
+                                <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                                  <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                                </View>
+                                <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                                  <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                                </View>
+                              </>
                             );
 
                           case 'channels':
                             return (
                               <View style={Styles.loadingHorizontal}>
-                                <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                                <View style={[Styles[`item${props.renderInfo.item.type}`], Styles[`itemLoading${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                                   <ChannelCardSkeleton />
                                 </View>
                                 <Body style={Styles.emptyMessage}>{`No ${props.renderInfo.item.heading}`}</Body>
@@ -219,7 +224,7 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                     <View style={Styles.loadingHorizontal}>
                       {Array(props.renderInfo.item.variables.first).fill(0).map((_, i) => (
                         <View key={i}>
-                          <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
+                          <View style={[Styles[`item${props.renderInfo.item.type}`], Styles[`itemLoading${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                             {(() => {
                               switch (props.renderInfo.item.accessor.split('.').pop()) {
                                 case 'streams':
