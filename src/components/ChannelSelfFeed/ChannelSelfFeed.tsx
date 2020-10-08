@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { FlatListProps, SafeAreaView } from 'react-native';
+import React, { FC, MutableRefObject } from 'react';
+import { FlatList, FlatListProps, SafeAreaView } from 'react-native';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Feed from '../UI/Feed/Feed';
 import { useGetChannelSelfFeedQuery } from '../../API/query/getChannelSelfFeed/getChannelSelfFeed';
@@ -11,6 +11,7 @@ import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsPro
 
 export interface ChannelSelfFeedProps {
   flatListProps: Partial<FlatListProps<any>>;
+  innerRef?: MutableRefObject<FlatList<any>>;
 }
 
 const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
@@ -37,6 +38,7 @@ const ChannelSelfFeed: FC<ChannelSelfFeedProps> = (props) => {
           : (
             <FadeInView>
               <Feed
+                ref={props.innerRef}
                 data={queryResult.data.getChannelSelfFeed}
                 onPressStream={(id) => {
                   pushScreen(screenProps.componentId, StreamSelfScreen, { id });

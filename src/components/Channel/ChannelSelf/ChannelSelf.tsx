@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { View } from 'react-native';
+import React, { FC, useRef } from 'react';
+import { FlatList, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -15,6 +15,7 @@ export interface ChannelSelfProps {}
 const ChannelSelf: FC<ChannelSelfProps> = () => {
   const client = useApolloClient();
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -41,10 +42,25 @@ const ChannelSelf: FC<ChannelSelfProps> = () => {
   };
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={onPop} />
-      <ChannelSelfView queryResult={queryResult} />
+      <Header
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
+      <ChannelSelfView
+        queryResult={queryResult}
+        innerRef={ref}
+      />
     </View>
   );
 };

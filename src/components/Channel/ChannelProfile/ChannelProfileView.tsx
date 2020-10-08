@@ -1,5 +1,5 @@
-import React, { FC, useMemo } from 'react';
-import { View, Animated, Linking, TouchableOpacity } from 'react-native';
+import React, { FC, MutableRefObject, useMemo } from 'react';
+import { View, Animated, Linking, TouchableOpacity, FlatList } from 'react-native';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
 import Styles from './ChannelProfile.style';
@@ -15,6 +15,7 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 export interface ChannelProfileViewProps {
   id: string;
   queryResult: QueryResult<getChannelProfile>;
+  innerRef?: MutableRefObject<FlatList<any>>;
 }
 
 const ChannelProfileView: FC<ChannelProfileViewProps> = (props) => {

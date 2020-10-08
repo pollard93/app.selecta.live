@@ -1,7 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { View } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
+import { FlatList } from 'react-native-gesture-handler';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
@@ -24,6 +25,7 @@ export interface StreamSelfsProps {}
 
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -46,11 +48,32 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   };
 
 
+  /**
+   * On Pop
+   */
+  const onPop = () => {
+    Navigation.pop(screenProps.componentId);
+  };
+
+
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <Header
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
 
       <StreamSelfsFlatList
+        innerRef={ref}
         query={GET_STREAM_SELFS_QUERY}
         variables={variables}
         accessor='getStreamSelfs.streams'

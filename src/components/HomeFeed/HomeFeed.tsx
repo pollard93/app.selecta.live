@@ -35,7 +35,8 @@ const HomeFeed: FC<HomeFeedProps> = () => {
    * Scroll to top of flatlist
    */
   const onPressLogo = () => {
-    ref.current.scrollToOffset({ animated: true, offset: 0 });
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
   };
 
 

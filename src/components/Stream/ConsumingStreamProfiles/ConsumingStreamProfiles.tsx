@@ -63,7 +63,8 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
    * Scroll to top of flatlist
    */
   const onPressLogo = () => {
-    ref.current.scrollToOffset({ animated: true, offset: 0 });
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
   };
 
 
@@ -72,6 +73,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
       <Header onPressLogo={onPressLogo} />
 
       <ConsumingStreamProfilesFlatList
+        innerRef={ref}
         query={GET_CONSUMING_STREAM_PROFILES}
         variables={variables}
         accessor='getConsumingStreamProfiles.streams'
@@ -107,7 +109,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           // Handle error
           if (queryResult.error) {
             return (
-              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
+              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight }]}>
                 <LoadRetry {...queryResult} />
               </View>
             );

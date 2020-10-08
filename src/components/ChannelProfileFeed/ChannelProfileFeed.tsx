@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import React, { FC } from 'react';
-import { FlatListProps, SafeAreaView } from 'react-native';
+import React, { FC, MutableRefObject } from 'react';
+import { FlatList, FlatListProps, SafeAreaView } from 'react-native';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Feed from '../UI/Feed/Feed';
 import { useGetChannelProfileFeedQuery } from '../../API/query/getChannelProfileFeed/getChannelProfileFeed';
@@ -14,6 +14,7 @@ import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsPro
 export interface ChannelProfileFeedProps {
   id: string;
   flatListProps: Partial<FlatListProps<any>>;
+  innerRef?: MutableRefObject<FlatList<any>>;
 }
 
 const ChannelProfileFeed: FC<ChannelProfileFeedProps> = (props) => {
@@ -43,6 +44,7 @@ const ChannelProfileFeed: FC<ChannelProfileFeedProps> = (props) => {
           : (
             <FadeInView>
               <Feed
+                ref={props.innerRef}
                 data={queryResult.data.getChannelProfileFeed}
                 onPressStream={(id) => {
                   pushScreen(screenProps.componentId, StreamProfileScreen, { id });

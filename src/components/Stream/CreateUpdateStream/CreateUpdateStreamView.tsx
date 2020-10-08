@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
+import React, { useState, useEffect, useRef, FC, useMemo, MutableRefObject } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
@@ -55,6 +55,7 @@ interface CreateUpdateStreamViewProps {
   getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
   onPop: () => void;
+  innerRef?: MutableRefObject<ScrollView>;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
@@ -132,6 +133,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Refs
    */
   const infoRef = useRef(null);
+  const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
   const imageResetRef = useRef(null);
@@ -561,7 +563,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={GlobalStyles.PageFill}
       >
-        <ScrollView style={GlobalStyles.PageFill}>
+        <ScrollView
+          style={GlobalStyles.PageFill}
+          ref={props.innerRef}
+        >
           {
             editable
               ? (
@@ -647,6 +652,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
               <DateInput
                 defaultValue={timeFrom}
+                inputRef={startDateRef}
                 mode="date"
                 onChange={(value) => {
                   setValue('timeFrom', value, true);

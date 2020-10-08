@@ -1,4 +1,4 @@
-import React, { useState, useMemo, forwardRef, ForwardRefRenderFunction } from 'react';
+import React, { useState, useMemo, forwardRef, ForwardRefRenderFunction, useRef } from 'react';
 import { FlatList, FlatListProps, RefreshControl } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { ApolloQueryResult } from 'apollo-client';
@@ -17,7 +17,6 @@ interface FeedProps {
 const Feed: ForwardRefRenderFunction<FlatList, FeedProps> = (props, ref) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const refetchRefs = useMemo<{[key:string]:() => Promise<ApolloQueryResult<unknown>>}>(() => ({}), []);
-
 
   /**
    * Handle pull down to refresh

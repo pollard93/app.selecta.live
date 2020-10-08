@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, MutableRefObject } from 'react';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-import { Animated, View, TouchableOpacity } from 'react-native';
+import { Animated, View, TouchableOpacity, FlatList } from 'react-native';
 import Body from '../../UI/Typography/components/Body';
 import { getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import ChannelHeader from '../ChannelHeader/ChannelHeader';
@@ -17,6 +17,7 @@ import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenProps
 
 export interface ChannelSelfViewProps {
   queryResult: QueryResult<getChannelSelf>;
+  innerRef?: MutableRefObject<FlatList<any>>;
 }
 
 const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
@@ -73,6 +74,7 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
     >
       {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (
         <ChannelSelfFeed
+          innerRef={props.innerRef}
           flatListProps={{
             bounces: true,
             contentContainerStyle: {
