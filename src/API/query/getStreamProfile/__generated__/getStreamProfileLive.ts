@@ -11,6 +11,7 @@ export interface getStreamProfileLive_getStreamProfile {
   id: string;
   timeFromLive: any | null;
   timeToLive: any | null;
+  liveConsumersEdge: number | null;
 }
 
 export interface getStreamProfileLive {

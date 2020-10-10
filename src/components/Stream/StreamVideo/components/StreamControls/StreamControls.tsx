@@ -7,6 +7,7 @@ import Small from '../../../../UI/Typography/components/Small';
 import spacing from '../../../../../styles/definitions/spacing';
 import Slider from '../../../../UI/Slider/Slider';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
+import H3 from '../../../../UI/Typography/components/H3';
 import H4 from '../../../../UI/Typography/components/H4';
 import Styles from './StreamControls.style';
 import ShareButton from '../../../../UI/ShareButton/ShareButton';
@@ -28,6 +29,7 @@ interface StreamControlsProps {
   toggleVideoEnabled: () => void;
   isVideoEnabled: boolean;
   streamId: string;
+  liveConsumers: number;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -321,6 +323,15 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                 style={Styles.liveWrap}
                 pointerEvents="box-none"
               >
+                {props.liveConsumers > 0 && (
+                  <View style={Styles.liveConsumers}>
+                    <Icon forceLight name={ICON.PROFILE} size="xsmall" style={Styles.liveConsumersIcon} />
+                    <Small bold forceLight>{props.liveConsumers}</Small>
+                  </View>
+                )}
+
+                <View />
+
                 <View style={Styles.live}>
                   <LoadingIcon size="small" />
                   <Small bold forceLight style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>

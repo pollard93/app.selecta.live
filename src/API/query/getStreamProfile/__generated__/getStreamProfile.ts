@@ -68,6 +68,7 @@ export interface getStreamProfile_getStreamProfile {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   cancelledMessage: string | null;
+  liveConsumersEdge: number | null;
 }
 
 export interface getStreamProfile {

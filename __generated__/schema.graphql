@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Fri Sep 18 2020 15:54:15 GMT+0100 (British Summer Time)
+# timestamp: Sat Oct 10 2020 12:59:12 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -705,8 +705,8 @@ type Query {
   getHomeFeed: FeedPayload
   getNotifications(first: Int, after: String): NotificationProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
-  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
-  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
+  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): ChannelProfilesPayLoad!
+  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): StreamProfilesPayLoad!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!

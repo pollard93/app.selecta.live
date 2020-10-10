@@ -70,6 +70,7 @@ export interface getChannelStreamProfiles_getChannelStreamProfiles_streams {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   cancelledMessage: string | null;
+  liveConsumersEdge: number | null;
 }
 
 export interface getChannelStreamProfiles_getChannelStreamProfiles {

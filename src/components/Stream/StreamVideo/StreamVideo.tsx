@@ -85,6 +85,17 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
               position: data.position,
             },
           });
+        } else {
+          /**
+           * Update stream position with 0 to remove live consumer
+           */
+          await client.mutate({
+            mutation: UPDATE_STREAM_POSITION_MUTATION,
+            variables: {
+              id: props.data.id,
+              position: 0,
+            },
+          });
         }
       // eslint-disable-next-line no-empty
       } catch (e) {}

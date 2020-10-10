@@ -102,7 +102,7 @@ describe('<Login >', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have goneHome
@@ -289,7 +289,7 @@ describe('<Login >', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen
