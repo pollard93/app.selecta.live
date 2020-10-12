@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
+import spacing from '../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
-  wrap: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   buttonWrap: {
-    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginTop: spacing.small,
   },
 });

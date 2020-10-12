@@ -72,11 +72,10 @@ const ChannelFunds = (props: ChannelFundsProps) => {
 
 
   return (
-    <View style={Styles.wrap}>
-      <View>
-        <Body>Credit Value: <Body bold>{parseCurrency(creditValue)}</Body></Body>
-        <Body>Pending Credit Value: <Body bold>{parseCurrency(pendingCreditValue)}</Body></Body>
-      </View>
+    <>
+      <Body>Credit Value: <Body bold>{parseCurrency(creditValue)}</Body></Body>
+      <Body>Pending Credit Value: <Body bold>{parseCurrency(pendingCreditValue)}</Body></Body>
+      <Body>Minimum Withdrawal: <Body bold>{parseCurrency(props.data.creditWithdrawalMinimum, 0)}</Body></Body>
 
       <View style={Styles.buttonWrap}>
         <Button
@@ -86,11 +85,8 @@ const ChannelFunds = (props: ChannelFundsProps) => {
           loading={loading}
           size="small"
         />
-        {creditValue < props.data.creditWithdrawalMinimum && (
-          <Small>Minimum withdrawal {parseCurrency(props.data.creditWithdrawalMinimum, 0)}</Small>
-        )}
       </View>
-    </View>
+    </>
   );
 };
 
