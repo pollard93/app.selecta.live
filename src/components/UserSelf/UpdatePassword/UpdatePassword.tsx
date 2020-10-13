@@ -140,9 +140,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
               <View style={Styles.input}>
                 <TextInput
                   name="confirmPassword"
-                  setRef={(e) => {
-                    confirmPasswordRef.current = e;
-                  }}
+                  setRef={confirmPasswordRef}
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('confirmPassword', text, !!errors.confirmPassword);

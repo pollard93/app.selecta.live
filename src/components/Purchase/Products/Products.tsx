@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
 import { Navigation } from 'react-native-navigation';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
 import { getProductConfig } from '../../../API/query/getProductConfig/__generated__/getProductConfig';
 import H2 from '../../UI/Typography/components/H2';

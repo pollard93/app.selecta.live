@@ -38,7 +38,6 @@ interface StreamVideoViewProps {
  * nowPlayingInfo for iOS is handled natively in selecta.components.react-native-video
 */
 const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
-  console.log('props.data.liveConsumersEdge', props.data.liveConsumersEdge);
   const client = useApolloClient();
   const [rate, setRate] = useState(1);
   const [duration, setDuration] = useState(0);

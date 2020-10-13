@@ -85,9 +85,7 @@ const LoginView = (props: LoginViewProps) => {
           <View style={Styles.input}>
             <TextInput
               name="password"
-              setRef={(e) => {
-                passwordRef.current = e;
-              }}
+              setRef={passwordRef}
               onChangeText={(text) => {
                 // Validate on change if there's an error, otherwise validate onBlur
                 setValue('password', text, !!errors.password);

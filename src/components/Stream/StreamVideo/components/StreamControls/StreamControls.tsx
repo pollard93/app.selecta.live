@@ -7,7 +7,6 @@ import Small from '../../../../UI/Typography/components/Small';
 import spacing from '../../../../../styles/definitions/spacing';
 import Slider from '../../../../UI/Slider/Slider';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
-import H3 from '../../../../UI/Typography/components/H3';
 import H4 from '../../../../UI/Typography/components/H4';
 import Styles from './StreamControls.style';
 import ShareButton from '../../../../UI/ShareButton/ShareButton';

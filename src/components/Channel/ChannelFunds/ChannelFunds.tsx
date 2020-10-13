@@ -8,7 +8,6 @@ import { pushToast } from '../../../modules/Toast';
 import Body from '../../UI/Typography/components/Body';
 import Button from '../../UI/Button/Button';
 import Styles from './ChannelFunds.style';
-import Small from '../../UI/Typography/components/Small';
 
 interface ChannelFundsProps {
   data: CHANNEL_SELF_FRAGMENT;
