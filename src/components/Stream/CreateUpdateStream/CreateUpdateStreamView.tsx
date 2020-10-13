@@ -36,6 +36,9 @@ import { GET_CHANNEL_SELF_QUERY } from '../../../API/query/getChannelSelf/getCha
 import { getChannelSelfsVariables } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
 import spacing from '../../../styles/definitions/spacing';
 import Icon, { ICON } from '../../UI/Icon/Icon';
+import { openModalScreen } from '../../../screens/utils';
+import Tags from '../../Tag/Tags/Tags';
+import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -471,6 +474,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const isFree = watch('isFree');
   const duration = watch('duration');
   const cost = watch('cost');
+  const tags = watch('tags');
 
 
   /**
@@ -652,9 +656,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   // Validate on change if there's an error, otherwise validate onBlur
                   setValue('info', text, !!errors.info);
                 }}
-                setRef={(e) => {
-                  infoRef.current = e;
-                }}
+                setRef={infoRef}
                 placeholder="Enter your stream's info"
                 defaultValue={defaultValues.info}
                 errors={errors}
@@ -662,21 +664,53 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 wrapStyle={Styles.inputWrap}
                 editable={editable}
               />
-
-              {/* If form is not editable, only show if there is tags */}
-              {(editable || props.data?.tags.length > 0) && (
-                <TagInput
-                  defaultValue={defaultValues.tags}
-                  onChange={(value) => {
-                    setValue('tags', value, true);
-                  }}
-                  wrapStyle={Styles.inputWrap}
-                  editable={editable}
-                />
-              )}
             </View>
 
-            <View style={Styles.section}>
+            {/* If form is not editable, only show if there is tags */}
+            {(editable || props.data?.tags.length > 0) && (
+              <View style={Styles.section}>
+                <View style={Styles.tagsHeading}>
+                  <H2>Tags</H2>
+
+                  {editable && (
+                    <Button
+                      type="SECONDARY"
+                      size="small"
+                      title={!tags || tags.length === 0 ? 'Create' : 'Edit'}
+                      onPress={() => {
+                        openModalScreen({
+                          component: (
+                            <Tags
+                              defaultValue={tags}
+                              onDone={(value) => {
+                                setValue('tags', value, true);
+                              }}
+                            />
+                          ),
+                        });
+                      }}
+                      style={Styles.tagsButton}
+                    />
+                  )}
+                </View>
+
+                <View style={Styles.tags}>
+                  <TagsPreview
+                    tags={tags}
+                  />
+                </View>
+              </View>
+              // <TagInput
+              //   defaultValue={defaultValues.tags}
+              //   onChange={(value) => {
+              //     setValue('tags', value, true);
+              //   }}
+              //   wrapStyle={Styles.inputWrap}
+              //   editable={editable}
+              // />
+            )}
+
+            <View style={[Styles.section, Styles.afterTags]}>
               <H2>Schedule</H2>
 
               <DateInput

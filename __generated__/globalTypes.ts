@@ -93,8 +93,6 @@ export enum SOCIAL_PROVIDER {
 }
 
 export enum StreamOrderByInput {
-  approved_ASC = "approved_ASC",
-  approved_DESC = "approved_DESC",
   audioOnly_ASC = "audioOnly_ASC",
   audioOnly_DESC = "audioOnly_DESC",
   cancelledMessage_ASC = "cancelledMessage_ASC",
@@ -1045,14 +1043,6 @@ export interface StreamWhereInput {
   userRecords_every?: StreamUserRecordWhereInput | null;
   userRecords_some?: StreamUserRecordWhereInput | null;
   userRecords_none?: StreamUserRecordWhereInput | null;
-  approved?: any | null;
-  approved_not?: any | null;
-  approved_in?: any[] | null;
-  approved_not_in?: any[] | null;
-  approved_lt?: any | null;
-  approved_lte?: any | null;
-  approved_gt?: any | null;
-  approved_gte?: any | null;
   audioOnly?: boolean | null;
   audioOnly_not?: boolean | null;
   positionRecords_every?: StreamPositionRecordWhereInput | null;

@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Oct 10 2020 12:59:12 GMT+0100 (British Summer Time)
+# timestamp: Tue Oct 13 2020 20:39:48 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -724,7 +724,7 @@ type Query {
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
-  canViewStream(id: String!): Boolean!
+  canViewStream(id: String!): StreamProfile!
   getStreamComments(id: String!, first: Int, after: String): StreamCommentClientPayload
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
@@ -999,8 +999,6 @@ enum StreamOrderByInput {
   cancelledMessage_DESC
   creditRevenue_ASC
   creditRevenue_DESC
-  approved_ASC
-  approved_DESC
   audioOnly_ASC
   audioOnly_DESC
   published_ASC
@@ -1393,14 +1391,6 @@ input StreamWhereInput {
   userRecords_every: StreamUserRecordWhereInput
   userRecords_some: StreamUserRecordWhereInput
   userRecords_none: StreamUserRecordWhereInput
-  approved: DateTime
-  approved_not: DateTime
-  approved_in: [DateTime!]
-  approved_not_in: [DateTime!]
-  approved_lt: DateTime
-  approved_lte: DateTime
-  approved_gt: DateTime
-  approved_gte: DateTime
   audioOnly: Boolean
   audioOnly_not: Boolean
   positionRecords_every: StreamPositionRecordWhereInput

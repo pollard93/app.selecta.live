@@ -1,4 +1,4 @@
-import React, { FC, Ref, useMemo } from 'react';
+import React, { FC, MutableRefObject, useMemo } from 'react';
 import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
 import Styles from './TextInput.style';
@@ -8,7 +8,7 @@ import { parseCamelCase } from '../../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
-  setRef?: Ref<any>;
+  setRef?: MutableRefObject<TextInputRN>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
 }
