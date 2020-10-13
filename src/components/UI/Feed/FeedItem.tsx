@@ -123,13 +123,13 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                         switch (props.renderInfo.item.accessor.split('.').pop()) {
                           case 'streams':
                             return (
-                              <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                              <StreamCardSkeleton emptyMessage="No Streams" />
                             );
 
                           case 'channels':
                             return (
                               <>
-                                <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                                <StreamCardSkeleton emptyMessage="No Channels" />
                                 <StreamCardSkeleton />
                               </>
                             );
@@ -151,10 +151,10 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                             return (
                               <>
                                 <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
-                                  <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                                  <StreamCardSkeleton emptyMessage="No Streams" />
                                 </View>
                                 <View style={[Styles[`item${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
-                                  <StreamCardSkeleton emptyMessage={`No ${props.renderInfo.item.heading}`} />
+                                  <StreamCardSkeleton emptyMessage="No Streams" />
                                 </View>
                               </>
                             );
@@ -165,7 +165,7 @@ const FeedItem: FC<FeedItemProps> = (props) => {
                                 <View style={[Styles[`item${props.renderInfo.item.type}`], Styles[`itemLoading${props.renderInfo.item.type}`], { width: itemWidth.current }]}>
                                   <ChannelCardSkeleton />
                                 </View>
-                                <Body style={Styles.emptyMessage}>{`No ${props.renderInfo.item.heading}`}</Body>
+                                <Body style={Styles.emptyMessage}>No Channels</Body>
                               </View>
                             );
 
