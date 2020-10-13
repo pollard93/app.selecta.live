@@ -38,6 +38,11 @@ export interface CHANNEL_SELF_FRAGMENT_profileImage {
   url: CHANNEL_SELF_FRAGMENT_profileImage_url | null;
 }
 
+export interface CHANNEL_SELF_FRAGMENT_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface CHANNEL_SELF_FRAGMENT {
   __typename: "ChannelSelf";
   id: string;
@@ -61,4 +66,5 @@ export interface CHANNEL_SELF_FRAGMENT {
   instagramUrl: string | null;
   viewCount: number | null;
   createdAt: any | null;
+  tags: (CHANNEL_SELF_FRAGMENT_tags | null)[] | null;
 }

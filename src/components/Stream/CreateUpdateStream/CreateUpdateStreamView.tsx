@@ -15,7 +15,7 @@ import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREA
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 import Styles, { DynamicStyles } from './CreateUpdateStream.style';
-import H2 from '../../UI/Typography/components/H2';
+import H3 from '../../UI/Typography/components/H3';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import TextArea from '../../UI/Form/components/TextArea/TextArea';
 import Button from '../../UI/Button/Button';
@@ -28,7 +28,6 @@ import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getS
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getChannelSelf_getChannelSelf, getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import Switch from '../../UI/Form/components/Switch/Switch';
-import TagInput from '../../UI/Form/components/TagInput/TagInput';
 import { GET_STREAM_SELF_QUERY } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { pushToast } from '../../../modules/Toast';
@@ -605,7 +604,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
           {props.data && (
             <View style={[Styles.settings, dynamicStyles.settings]}>
-              <H2>Settings</H2>
+              <H3>Settings</H3>
 
               {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
                 <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
@@ -629,7 +628,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
           <View style={Styles.form}>
             <View style={Styles.section}>
-              <H2>Description</H2>
+              <H3>Description</H3>
 
               <TextInput
                 name="name"
@@ -670,7 +669,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             {(editable || props.data?.tags.length > 0) && (
               <View style={Styles.section}>
                 <View style={Styles.tagsHeading}>
-                  <H2>Tags</H2>
+                  <H3>Tags</H3>
 
                   {editable && (
                     <Button
@@ -700,18 +699,10 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   />
                 </View>
               </View>
-              // <TagInput
-              //   defaultValue={defaultValues.tags}
-              //   onChange={(value) => {
-              //     setValue('tags', value, true);
-              //   }}
-              //   wrapStyle={Styles.inputWrap}
-              //   editable={editable}
-              // />
             )}
 
             <View style={[Styles.section, Styles.afterTags]}>
-              <H2>Schedule</H2>
+              <H3>Schedule</H3>
 
               <DateInput
                 defaultValue={timeFrom}
@@ -753,7 +744,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
 
             <View style={Styles.section}>
               <View style={GlobalStyles.CostText}>
-                <H2>Price </H2>
+                <H3>Price </H3>
                 <Icon name={ICON.CREDIT} size="xsmall" />
               </View>
 

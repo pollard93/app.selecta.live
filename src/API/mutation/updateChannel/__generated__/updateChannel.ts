@@ -40,6 +40,11 @@ export interface updateChannel_updateChannel_profileImage {
   url: updateChannel_updateChannel_profileImage_url | null;
 }
 
+export interface updateChannel_updateChannel_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface updateChannel_updateChannel {
   __typename: "ChannelSelf";
   id: string;
@@ -63,6 +68,7 @@ export interface updateChannel_updateChannel {
   instagramUrl: string | null;
   viewCount: number | null;
   createdAt: any | null;
+  tags: (updateChannel_updateChannel_tags | null)[] | null;
 }
 
 export interface updateChannel {
