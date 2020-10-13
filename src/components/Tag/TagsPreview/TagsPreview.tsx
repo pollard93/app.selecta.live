@@ -55,7 +55,7 @@ const TagsPreview: FC<TagsPreviewProps> = (props) => {
       onLayout={(ev) => scrollViewHeight.current = ev.nativeEvent.layout.height}
     >
       {props.tags.map((t) => (
-        <View style={[Styles.tag, dynamicStyles.tag]}>
+        <View key={t} style={[Styles.tag, dynamicStyles.tag]}>
           {props.onRemoveTag && (
             <TouchableOpacity
               onPress={() => {
