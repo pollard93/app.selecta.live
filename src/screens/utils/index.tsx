@@ -289,11 +289,6 @@ export const openTopUpModal = () => {
 };
 
 
-export const closeTopUpModal = () => {
-  Navigation.dismissModal('TopUpModal');
-};
-
-
 /**
  * Utility to listen for when a screen 'didAppear' and set the mounted boolean to true
  * Used for conditional rendering, only when a screen appears, suitable for tab based navigation

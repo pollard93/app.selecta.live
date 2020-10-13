@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC, useRef } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
+import { Navigation } from 'react-native-navigation';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
 import { getProductConfig } from '../../../API/query/getProductConfig/__generated__/getProductConfig';
@@ -11,8 +12,8 @@ import Gradient from '../../UI/Gradient/Gradient';
 import Toast from '../../UI/Toast/Toast';
 import { pushToast } from '../../../modules/Toast';
 import DrawerV2 from '../../UI/DrawerV2/DrawerV2';
-import { closeTopUpModal } from '../../../screens/utils';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 interface Product extends RNIap.Product {
   credit: number;
@@ -21,11 +22,17 @@ interface Product extends RNIap.Product {
 export interface ProductsProps {}
 
 const Products: FC<ProductsProps> = () => {
+  const screenProps = useScreenProps();
   const client = useApolloClient();
   const safeAreaInsets = useSafeArea();
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const onCloseRef = useRef<() => void>();
+
+
+  const onDismiss = () => {
+    Navigation.dismissModal(screenProps.componentId);
+  };
 
 
   /**
@@ -43,7 +50,6 @@ const Products: FC<ProductsProps> = () => {
        */
       const { data } = await client.query<getProductConfig>({
         query: GET_PRODUCT_CONFIG_QUERY,
-        fetchPolicy: 'network-only',
       });
 
 
@@ -57,18 +63,27 @@ const Products: FC<ProductsProps> = () => {
 
 
       /**
-       * Set products in state, merging their credit from data.getProductConfig
+       * Set only the available products in state
+       * (the products that are returned from getProductConfig and that are available in getProducts)
        */
-      setAvailableProducts(products.map((p) => ({
-        ...p,
-        credit: data.getProductConfig.find((pc) => pc.productId === p.productId).credit,
-      })));
+      setAvailableProducts(data.getProductConfig.reduce((a, c) => {
+        const product = products.find((p) => p.productId === c.productId);
+        if (product) {
+          return a.concat({
+            ...product,
+            credit: c.credit,
+          });
+        }
+        return a;
+      }, []));
+
       setLoading(false);
     } catch (err) {
       /**
        * Close modal on error and toast
        */
-      closeTopUpModal();
+      onDismiss();
+
       pushToast({
         duration: 1000,
         component: (
@@ -120,18 +135,11 @@ const Products: FC<ProductsProps> = () => {
   /**
    * Loading
    */
-  if (loading) {
-    return (
-      <LoadRetry
-        loading={loading}
-        refetch={getAvailableProducts as any}
-      />
-    );
-  }
+  if (loading) return null;
 
 
   return (
-    <DrawerV2 onClosed={closeTopUpModal}>
+    <DrawerV2 onClosed={onDismiss}>
       {({ onClose }) => {
         onCloseRef.current = onClose;
 
