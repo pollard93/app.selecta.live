@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { ApolloError } from 'apollo-client';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import React, { FC, useReducer, useRef, useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
@@ -124,59 +125,60 @@ const Tags: FC<TagsProps> = (props) => {
           )}
 
           {variables.where && (
-            <TagProfilesFlatList
-              query={GET_TAG_PROFILES_QUERY}
-              variables={variables}
-              accessor='getTagProfiles.tags'
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => addTag(item.title)}>
-                  <Body># {item.title}</Body>
-                </TouchableOpacity>
-              )}
-              ListEmptyComponent={({ queryResult }) => {
-                /**
-                 * If the user has searched for a tag and there is no results
-                 * Show a button to add the tag
-                 */
-                if (!queryResult.loading && !queryResult.error && queryResult.variables?.where?.title_contains.length > 1) {
-                  return (
-                    <Button
-                      title={`Create '# ${queryResult.variables.where.title_contains}'`}
-                      onPress={() => {
-                        addTag(queryResult.variables?.where.title_contains);
-                        setVariables({
-                          ...variables,
-                          where: undefined,
-                        });
-                        // eslint-disable-next-line no-unused-expressions
-                        ref.current?.clear();
-                      }}
-                    />
-                  );
-                }
+            <View style={GlobalStyles.PageFill}>
+              <TagProfilesFlatList
+                query={GET_TAG_PROFILES_QUERY}
+                variables={variables}
+                accessor='getTagProfiles.tags'
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => addTag(item.title)}>
+                    <Body># {item.title}</Body>
+                  </TouchableOpacity>
+                )}
+                ListEmptyComponent={({ queryResult }) => {
+                  /**
+                   * If the user has searched for a tag and there is no results
+                   * Show a button to add the tag
+                   */
+                  if (!queryResult.loading && !queryResult.error && queryResult.variables?.where?.title_contains.length > 1) {
+                    return (
+                      <Button
+                        title={`Create '# ${queryResult.variables.where.title_contains}'`}
+                        onPress={() => {
+                          addTag(queryResult.variables?.where.title_contains);
+                          setVariables({
+                            ...variables,
+                            where: undefined,
+                          });
+                          // eslint-disable-next-line no-unused-expressions
+                          ref.current?.clear();
+                        }}
+                      />
+                    );
+                  }
 
-                return null;
-              }}
-              FlatListProps={{
-                contentContainerStyle: [Styles.scrollViewContainer],
-                ItemSeparatorComponent: () => <View style={Styles.separator} />,
-                showsVerticalScrollIndicator: false,
-              }}
-              debug
-            >
-              {({ queryResult }) => {
-                // Handle error
-                if (queryResult.error) {
-                  return (
-                    <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight }]}>
-                      <LoadRetry {...queryResult} />
-                    </View>
-                  );
-                }
+                  return null;
+                }}
+                FlatListProps={{
+                  contentContainerStyle: [Styles.scrollViewContainer],
+                  ItemSeparatorComponent: () => <View style={Styles.separator} />,
+                  showsVerticalScrollIndicator: false,
+                }}
+              >
+                {({ queryResult }) => {
+                  // Handle error
+                  if (queryResult.error) {
+                    return (
+                      <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight }]}>
+                        <LoadRetry {...queryResult} />
+                      </View>
+                    );
+                  }
 
-                return null;
-              }}
-            </TagProfilesFlatList>
+                  return null;
+                }}
+              </TagProfilesFlatList>
+            </View>
           )}
         </View>
       </SafeAreaView>
