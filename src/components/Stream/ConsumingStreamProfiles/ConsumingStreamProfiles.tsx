@@ -17,6 +17,7 @@ import { useDebounce } from '../../../utils/functions';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
@@ -25,6 +26,7 @@ export interface ConsumingStreamProfilesProps {}
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   const screenProps = useScreenProps();
   const { headerHeight } = useHeaderStyles();
+  const safeAreaInsets = useSafeArea();
   const ref = useRef<FlatList>();
 
 
@@ -109,7 +111,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           // Handle error
           if (queryResult.error) {
             return (
-              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight }]}>
+              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight + safeAreaInsets.top }]}>
                 <LoadRetry {...queryResult} />
               </View>
             );

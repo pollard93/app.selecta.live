@@ -5,6 +5,7 @@ import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from './Drawer.styles';
 import scalePx from '../../../utils/scalePx';
 import Icon, { ICON } from '../Icon/Icon';
+import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 
 interface DrawerProps {
   minHeight: number;
@@ -17,6 +18,7 @@ const Drawer: FC<DrawerProps> = (props) => {
   const touchYValue = useRef(0);
   const barHeight = useRef(scalePx(20)).current;
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
 
   /**
@@ -89,9 +91,10 @@ const Drawer: FC<DrawerProps> = (props) => {
   return (
     <View style={Styles.wrap}>
       <Animated.View
-        style={{
-          height: Animated.add(height, new Animated.Value(-barHeight)),
-        }}
+        style={[
+          { height: Animated.add(height, new Animated.Value(-barHeight)) },
+          globalDynamicStyles.background,
+        ]}
       >
         {props.children}
       </Animated.View>

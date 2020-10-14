@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { OptionsModalTransitionStyle } from 'react-native-navigation';
 import { CHANNEL_SELF_FRAGMENT } from '../../../API/fragments/__generated__/CHANNEL_SELF_FRAGMENT';
 import Styles from './ChannelSelfListItem.style';

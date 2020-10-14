@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import { ApolloProvider } from 'react-apollo';
 import { SafeAreaView, View } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import ApolloClient from '../ApolloClient';
 import InitScreen from './InitScreen/InitScreen';
 import GlobalStyles, { GlobalDynamicStyles } from '../styles/stylesheets/GlobalStyles';
@@ -54,7 +55,7 @@ const wrapContext = (Component) => {
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
 
-    return wrapped;
+    return gestureHandlerRootHOC(wrapped);
   }
 
 
@@ -83,7 +84,7 @@ const wrapContext = (Component) => {
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
 
-    return wrapped;
+    return gestureHandlerRootHOC(wrapped);
   }
 
 
@@ -114,8 +115,7 @@ const wrapContext = (Component) => {
   // Allows static options to be called for react-native-navigation
   (wrapped as any).options = Component.prototype.options;
 
-
-  return wrapped;
+  return gestureHandlerRootHOC(wrapped);
 };
 
 

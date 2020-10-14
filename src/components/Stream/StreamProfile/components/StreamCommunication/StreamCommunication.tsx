@@ -1,6 +1,5 @@
 import React, { FC, useMemo, useState, useRef, useEffect } from 'react';
-import { View, Dimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Dimensions, ScrollView } from 'react-native';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import StreamMessagesVod from '../../../../StreamMessage/StreamMessagesVod/StreamMessagesVod';
 import StreamMessages from '../../../../StreamMessage/StreamMessages/StreamMessages';

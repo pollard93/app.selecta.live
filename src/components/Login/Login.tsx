@@ -21,11 +21,9 @@ import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../modules/Toast';
 
-export interface LoginProps {
-  toastMessage?: string;
-}
+export interface LoginProps {}
 
-const Login: FC<LoginProps> = (props) => {
+const Login: FC<LoginProps> = () => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
   const screenProps = useScreenProps();
@@ -122,16 +120,6 @@ const Login: FC<LoginProps> = (props) => {
    * On Mount logout and clear cache, if toast message is passed, then show it
    */
   useEffect(() => {
-    if (props.toastMessage) {
-      pushToast({
-        duration: 1000,
-        component: (
-          <Toast content={props.toastMessage} />
-        ),
-        dismissible: false,
-      });
-    }
-
     // Logout after render
     client.mutate<removeAccessToken>({
       mutation: REMOVE_ACCESS_TOKEN_MUTATION,

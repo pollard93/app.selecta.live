@@ -121,7 +121,7 @@ const DrawerV2: FC<DrawerV2Props> = (props) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
       // eslint-disable-next-line react-native/no-inline-styles
       style={[Styles.wrap, { opacity: !clampY ? 0 : 1 }]}
       keyboardVerticalOffset={-safeAreaInsets.bottom}

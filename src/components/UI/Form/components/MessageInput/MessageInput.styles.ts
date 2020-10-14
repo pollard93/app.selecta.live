@@ -6,7 +6,6 @@ import color from '../../../../../styles/definitions/color';
 export default StyleSheet.create({
   wrap: {
     alignItems: 'center',
-    backgroundColor: color.mono.light,
     borderTopWidth: 1,
     flexDirection: 'row',
   },
@@ -25,6 +24,7 @@ export default StyleSheet.create({
 
 export const DynamicStyles = new DynamicStyleSheet({
   wrap: {
+    backgroundColor: new DynamicValue(color.mono.light, color.monoDarkMode.pale.dark),
     borderColor: new DynamicValue(color.mono.pale.regular, color.mono.lightCover),
   },
 });

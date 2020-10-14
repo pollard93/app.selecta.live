@@ -18,6 +18,7 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import NotificationListItemSkeleton from '../NotificationListItem/NotificationListItemSkeleton';
 import H4 from '../../UI/Typography/components/H4';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 class NotificationsFlatList extends ApolloFlatList<getNotificationsVariables, getNotifications, getNotifications_getNotifications_notifications, null, notifications> {}
 
@@ -27,6 +28,7 @@ const Notifications: FC<NotificationsProps> = () => {
   const screenProps = useScreenProps();
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const { headerHeight } = useHeaderStyles();
+  const safeAreaInsets = useSafeArea();
 
 
   /**
@@ -115,7 +117,7 @@ const Notifications: FC<NotificationsProps> = () => {
         {({ queryResult, maxCount }) => {
           if (queryResult.error) {
             return (
-              <View style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
+              <View style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight + safeAreaInsets.top }]}>
                 <LoadRetry {...queryResult} />
               </View>
             );
@@ -123,7 +125,7 @@ const Notifications: FC<NotificationsProps> = () => {
 
           if (maxCount === 0) {
             return (
-              <View style={[StyleSheet.absoluteFillObject, Styles.empty, { paddingTop: headerHeight }]}>
+              <View style={[StyleSheet.absoluteFillObject, Styles.empty, { marginTop: headerHeight + safeAreaInsets.top }]}>
                 <View style={GlobalStyles.MaxWidth}>
                   <H4 style={Styles.emptyText}>No Notifications</H4>
                 </View>

@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, ScrollView } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
 import H4 from '../../../../UI/Typography/components/H4';

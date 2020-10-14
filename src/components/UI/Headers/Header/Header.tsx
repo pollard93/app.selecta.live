@@ -24,10 +24,14 @@ interface HeaderProps {
 /**
  * Styles which can be used in other components
  */
-export const useHeaderStyles = () => ({
-  headerHeight: scalePx(35),
-  headerZindex: 100,
-});
+export const useHeaderStyles = () => {
+  const safeAreaInsets = useSafeArea();
+
+  return ({
+    headerHeight: safeAreaInsets.top === 0 ? scalePx(45) : scalePx(35),
+    headerZindex: 100,
+  });
+};
 
 
 const Header: FC<HeaderProps> = (props) => {

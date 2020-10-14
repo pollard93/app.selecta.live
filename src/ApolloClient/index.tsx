@@ -9,7 +9,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import Config from 'react-native-config';
 import { setContext } from 'apollo-link-context';
 import gql from 'graphql-tag';
-import { goToLogin, goHome } from '../screens/utils';
+import { goHome } from '../screens/utils';
 import { GET_ACCESS_TOKEN_QUERY } from './resolvers/query/getAccessToken/getAccessTokenQuery';
 import { getAccessToken } from './resolvers/query/getAccessToken/__generated__/getAccessToken';
 import { PUT_ACCESS_TOKEN_MUTATION } from './resolvers/mutation/putAccessToken/putAccessTokenMutation';
@@ -20,6 +20,8 @@ import { getChannelAccessToken } from './resolvers/query/getChannelAccessToken/_
 import { GET_CHANNEL_ACCESS_TOKEN_QUERY } from './resolvers/query/getChannelAccessToken/getChannelAccessTokenQuery';
 import { putChannelAccessToken, putChannelAccessTokenVariables } from './resolvers/mutation/putChannelAccessToken/__generated__/putChannelAccessToken';
 import { PUT_CHANNEL_ACCESS_TOKEN_MUTATION } from './resolvers/mutation/putChannelAccessToken/putChannelAccessTokenMutation';
+import Toast from '../components/UI/Toast/Toast';
+import { pushToast } from '../modules/Toast';
 
 
 /**
@@ -254,8 +256,12 @@ const AClient = new ApolloClient({
         // Check for Expired General Token message, logout and show toast
         const expiredGeneral = graphQLErrors.find((e) => e.message === 'Expired General Token');
         if (expiredGeneral) {
-          goToLogin({
-            toastMessage: 'Your session has expired! Please login again',
+          pushToast({
+            duration: 1000,
+            component: (
+              <Toast content="Your session has expired! Please login again" />
+            ),
+            dismissible: false,
           });
           return;
         }
@@ -263,11 +269,15 @@ const AClient = new ApolloClient({
         // Check for Expired Channel Token message, goHome to producer tab and show toast
         const expiredChannel = graphQLErrors.find((e) => e.message === 'Expired Channel Token');
         if (expiredChannel) {
-          goHome({
-            passProps: {
-              toastMessage: 'Your channel session has expired!',
-            },
+          pushToast({
+            duration: 1000,
+            component: (
+              <Toast content="Your channel session has expired!" />
+            ),
+            dismissible: false,
           });
+
+          goHome();
         }
       }
     }),

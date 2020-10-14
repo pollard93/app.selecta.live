@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
-import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -59,13 +59,13 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
-          onLayout={(event) => {
+          onLayout={async (event) => {
             if (!drawerLayout) {
               /**
                * Using the layout of this view
                * Set the drawer min and max
                */
-              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight;
+              const safeHeight = window.height - safeAreaInsets.top - safeAreaInsets.bottom - headerHeight - StatusBar.currentHeight;
               setDrawerLayout({
                 minHeight: safeHeight - event.nativeEvent.layout.height,
                 maxHeight: safeHeight,

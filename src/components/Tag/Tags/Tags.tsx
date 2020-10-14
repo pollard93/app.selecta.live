@@ -8,6 +8,7 @@ import { GET_TAG_PROFILES_QUERY } from '../../../API/query/getTagProfiles/getTag
 import { getTagProfiles, getTagProfilesVariables, getTagProfiles_getTagProfiles_tags } from '../../../API/query/getTagProfiles/__generated__/getTagProfiles';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import spacing from '../../../styles/definitions/spacing';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import { useDebounce } from '../../../utils/functions';
 import Button from '../../UI/Button/Button';
@@ -185,7 +186,8 @@ const Tags: FC<TagsProps> = (props) => {
       <View
         style={[
           Styles.button,
-          { paddingBottom: safeAreaInsets.bottom },
+          // eslint-disable-next-line react-native/no-inline-styles
+          { paddingBottom: safeAreaInsets.bottom + spacing.small },
         ]}
       >
         <Button

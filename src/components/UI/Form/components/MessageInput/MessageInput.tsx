@@ -22,6 +22,7 @@ const MessageInput: FC<MessageInputProps> = (props) => {
     <View style={[Styles.wrap, dynamicStyles.wrap]}>
       <TextInput
         name="message"
+        label={null}
         value={props.message}
         onChangeText={props.setMessage}
         placeholder={props.placeholder}

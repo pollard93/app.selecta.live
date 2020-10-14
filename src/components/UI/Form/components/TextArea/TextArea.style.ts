@@ -10,5 +10,6 @@ export default StyleSheet.create({
     paddingTop: spacing.small,
     minHeight: scalePx(120),
     alignItems: 'flex-start',
+    textAlignVertical: 'top',
   },
 });
