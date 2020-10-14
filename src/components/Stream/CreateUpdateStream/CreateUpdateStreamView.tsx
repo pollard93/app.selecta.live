@@ -70,7 +70,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
+  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: props.data
       ? {
@@ -563,6 +563,25 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   }, [register]);
 
 
+  /**
+   * Toast if image error
+   */
+  useEffect(() => {
+    if (errors.image) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add an image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+  }, [errors.image]);
+
+
   return (
     <>
       <KeyboardAvoidingView
@@ -805,7 +824,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           <Button
             title={loading ? `${props.data ? 'Updating' : 'Creating'}` : `${props.data ? 'Update' : 'Create'} Stream`}
             onPress={handleSubmit(onSubmit)}
-            disabled={!isValid || !dirty}
             loading={loading}
             style={Styles.button}
           />

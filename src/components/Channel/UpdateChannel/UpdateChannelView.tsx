@@ -47,7 +47,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset, getValues, watch } = useForm<FormData>({
+  const { register, setValue, handleSubmit, errors, formState: { dirty, dirtyFields }, triggerValidation, reset, getValues, watch } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
       name: props.data.name,
@@ -273,6 +273,38 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       { required: false },
     );
   }, [register]);
+
+
+  /**
+   * Toast if image error
+   */
+  useEffect(() => {
+    if (errors.profileImage) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add a profile image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+
+    if (errors.coverImage) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add a cover image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+  }, [errors.profileImage, errors.coverImage]);
 
 
   /**
@@ -504,7 +536,6 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         <Button
           title={loading ? 'Updating' : 'Update channel'}
           onPress={handleSubmit(onSubmit)}
-          disabled={!isValid || !dirty}
           loading={loading}
           style={Styles.button}
         />

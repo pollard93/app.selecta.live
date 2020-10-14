@@ -1,19 +1,25 @@
-import React, { FC, MutableRefObject, useMemo } from 'react';
+import React, { FC, MutableRefObject, useMemo, useState } from 'react';
 import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
-import Styles from './TextInput.style';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './TextInput.style';
 import color from '../../../../../styles/definitions/color';
 import Small from '../../../Typography/components/Small';
-import { parseCamelCase } from '../../../../../utils/functions';
+import { capitaliseWords, parseCamelCase } from '../../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
+  label?: string; // Defaults to name
   setRef?: MutableRefObject<TextInputRN>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
 }
 
 const TextInput: FC<TextInputProps> = (props) => {
+  const [hasContent, setHasContent] = useState(!!props.defaultValue);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
+
   /**
    * Get error message from props.errors
    * Checks react-hook-forms error object for an error using props.name
@@ -44,19 +50,48 @@ const TextInput: FC<TextInputProps> = (props) => {
   }, [props.errors && props.errors[props.name]]);
 
 
+  /**
+   * Get wrapClasses
+   */
+  const wrapClasses = useMemo(() => {
+    const classes = [Styles.wrap, dynamicStyles.wrap, props.wrapStyle];
+    if (hasContent || errorMessage) classes.push(Styles.showingLabel);
+    if (props.editable === false) classes.push(Styles.disabled);
+    return classes;
+  }, [props.wrapStyle, hasContent, errorMessage, props.editable]);
+
+
   return (
-    <View style={[Styles.wrap, props.wrapStyle, errorMessage && Styles.wrapError, props.editable === false && Styles.disabled]}>
+    <View style={wrapClasses}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
+        onChangeText={(v) => {
+          props.onChangeText(v);
+
+          if (!hasContent && !!v) {
+            setHasContent(true);
+          } else if (hasContent && !v) {
+            setHasContent(false);
+          }
+        }}
         ref={props.setRef}
-        style={[Styles.input, props.style]}
+        style={[Styles.input, dynamicStyles.input, props.style]}
       />
-      {errorMessage && (
-        <View style={Styles.error} pointerEvents="none">
-          {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.errorText}>{errorMessage}</Small>}
-        </View>
-      )}
+      {
+        errorMessage && (
+          <View style={Styles.label} pointerEvents="none">
+            {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.error}>{errorMessage}</Small>}
+          </View>
+        )
+      }
+      {
+        !errorMessage && hasContent && (
+          <View style={Styles.label} pointerEvents="none">
+            <Small style={Styles.labelText}>{props.label || capitaliseWords(props.name)}</Small>
+          </View>
+        )
+      }
     </View>
   );
 };

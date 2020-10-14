@@ -23,6 +23,15 @@ export const parseCamelCase = (text: string) => text.replace(/([A-Z])/g, ' $1');
 
 
 /**
+ * Capitalise first letter of each word
+ */
+export const capitaliseWords = (text: string) => text.toLowerCase()
+  .split(' ')
+  .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+  .join(' ');
+
+
+/**
  * Format the given date for the users timezone
  *
  * @param {string} date

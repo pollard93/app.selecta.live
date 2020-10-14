@@ -23,7 +23,7 @@ export type FormData = {
 };
 
 const RegisterView = (props: RegisterViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
   const passwordRef = useRef(null);
 
 
@@ -101,7 +101,6 @@ const RegisterView = (props: RegisterViewProps) => {
           <Button
             title={props.loading ? 'Signing up' : 'Sign up'}
             onPress={handleSubmit(props.onSubmit)}
-            disabled={!isValid || !dirty}
             loading={props.loading}
             testID="submit"
           />

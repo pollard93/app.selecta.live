@@ -29,7 +29,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
@@ -146,7 +146,6 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
                 <Button
                   title={loading ? 'Requesting' : 'Request email update'}
                   onPress={handleSubmit(onSubmit)}
-                  disabled={!isValid || !dirty}
                   loading={loading}
                 />
               </View>

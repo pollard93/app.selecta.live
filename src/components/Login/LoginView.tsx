@@ -24,7 +24,7 @@ export type FormData = {
 };
 
 const LoginView = (props: LoginViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
   const passwordRef = useRef(null);
 
 
@@ -105,7 +105,6 @@ const LoginView = (props: LoginViewProps) => {
           <Button
             title={props.loading ? 'Logging in' : 'Login'}
             onPress={handleSubmit(props.onSubmit)}
-            disabled={!isValid || !dirty}
             loading={props.loading}
             testID="submit"
           />

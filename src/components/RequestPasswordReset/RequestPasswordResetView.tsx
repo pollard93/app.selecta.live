@@ -20,7 +20,7 @@ export type FormData = {
 };
 
 const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
       email: props.defaultEmailValue,
@@ -69,7 +69,6 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
       <Button
         title={props.loading ? 'Requesting reset' : 'Request password reset'}
         onPress={handleSubmit(props.onSubmit)}
-        disabled={!isValid || (!dirty && !props.defaultEmailValue)}
         loading={props.loading}
         testID="submit"
       />

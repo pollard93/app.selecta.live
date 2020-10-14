@@ -18,7 +18,7 @@ export type FormData = {
 };
 
 const ResetPasswordView = (props: ResetPasswordViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({
     mode: 'onChange',
   });
 
@@ -60,7 +60,6 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
       <Button
         title={props.loading ? 'Resetting password' : 'Reset password'}
         onPress={handleSubmit(props.onSubmit)}
-        disabled={!isValid || !dirty}
         loading={props.loading}
         testID="submit"
       />

@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { ApolloError } from 'apollo-client';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import React, { FC, useReducer, useRef, useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';

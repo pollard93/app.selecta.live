@@ -26,7 +26,7 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
@@ -144,7 +144,6 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
           <Button
             title={loading ? 'Cancelling' : 'Cancel Stream'}
             onPress={handleSubmit(onAlert)}
-            disabled={!isValid || !dirty}
             loading={loading}
             style={Styles.button}
           />
