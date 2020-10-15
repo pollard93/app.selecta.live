@@ -119,7 +119,16 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
 
 
   return (
-    <Animated.View style={[Styles.wrap, { backgroundColor: fullScreenBackgroundColor, zIndex: fullScreenZIndex }]} pointerEvents="box-none">
+    <Animated.View
+      style={[
+        Styles.wrap,
+        // eslint-disable-next-line react-native/no-inline-styles
+        {
+          backgroundColor: fullScreenBackgroundColor,
+          zIndex: fullScreenZIndex,
+          elevation: isFullScreen ? headerZindex : 0,
+        },
+      ]} pointerEvents="box-none">
       <View style={[Styles.inner, { marginTop: safeAreaInsets.top + headerHeight, marginBottom: safeAreaInsets.bottom }]} pointerEvents="box-none">
         <Animated.View
           style={[
