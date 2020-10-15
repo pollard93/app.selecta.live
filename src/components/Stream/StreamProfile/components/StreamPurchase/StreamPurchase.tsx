@@ -16,6 +16,7 @@ import GlobalStyles, { GlobalDynamicStyles } from '../../../../../styles/stylesh
 import { pushToast } from '../../../../../modules/Toast';
 import { getStreamDurationPretty } from '../../../../../utils/streamFunctions';
 import Icon, { ICON } from '../../../../UI/Icon/Icon';
+import StreamInfo from '../StreamInfo/StreamInfo';
 
 interface StreamPurchaseProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -119,9 +120,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
 
   return (
     <>
-      <View style={[Styles.info, dynamicStyles.info]}>
-        <Body>{props.data.info}</Body>
-      </View>
+      <StreamInfo data={props.data} />
 
       <View style={Styles.buy}>
         <View style={Styles.ticket}>

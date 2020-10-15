@@ -12,6 +12,8 @@ import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
 import StreamVideo from '../StreamVideo/StreamVideo';
 import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 import StreamCommunicationWrap from '../StreamProfile/components/StreamCommunication/StreamCommunicationWrap';
+import { canGoLive } from '../../../utils/streamFunctions';
+import StreamInfo from '../StreamProfile/components/StreamInfo/StreamInfo';
 
 
 interface StreamSelfViewProps {
@@ -46,23 +48,29 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
 
 
   /**
-   * Should only load video and communication if stream hasn't been cancelled
+   * Should only load video is lot cancelled
+   * and stream is within the producers threshold to go live
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const isCancelled = props.queryResult.data.getStreamSelf.cancelled !== null;
+  const shouldLoadVideo = props.queryResult.data.getStreamSelf.cancelled !== null
+    && canGoLive(props.queryResult.data.getStreamSelf);
 
 
   /**
    * If cancelled then use ScrollView
    */
-  if (isCancelled) {
+  if (!shouldLoadVideo) {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
         <StreamCard data={props.queryResult.data.getStreamSelf} />
-        <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+        <StreamInfo data={props.queryResult.data.getStreamSelf} />
+
+        {props.queryResult.data.getStreamSelf.cancelled !== null && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+        )}
       </ScrollView>
     );
   }
