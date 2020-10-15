@@ -50,6 +50,7 @@ export interface CHANNEL_SELF_FRAGMENT {
   description: string | null;
   coverImage: CHANNEL_SELF_FRAGMENT_coverImage | null;
   profileImage: CHANNEL_SELF_FRAGMENT_profileImage | null;
+  profileImageColor: string | null;
   verified: boolean | null;
   unreadNotificationCount: number | null;
   followersEdge: number | null;

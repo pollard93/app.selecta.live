@@ -52,6 +52,7 @@ export interface updateChannel_updateChannel {
   description: string | null;
   coverImage: updateChannel_updateChannel_coverImage | null;
   profileImage: updateChannel_updateChannel_profileImage | null;
+  profileImageColor: string | null;
   verified: boolean | null;
   unreadNotificationCount: number | null;
   followersEdge: number | null;

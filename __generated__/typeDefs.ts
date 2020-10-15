@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Tue Oct 13 2020 21:30:26 GMT+0100 (British Summer Time)
+# timestamp: Thu Oct 15 2020 15:39:48 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -33,6 +33,8 @@ enum ChannelOrderByInput {
   facebookUrl_DESC
   instagramUrl_ASC
   instagramUrl_DESC
+  profileImageColor_ASC
+  profileImageColor_DESC
   verified_ASC
   verified_DESC
   credit_ASC
@@ -113,6 +115,7 @@ type ChannelSelf {
   instagramUrl: String
   coverImage: File
   profileImage: File
+  profileImageColor: String
   verified: Boolean
   unreadNotificationCount: Int
   followersEdge: Int
@@ -246,6 +249,20 @@ input ChannelWhereInput {
   instagramUrl_not_ends_with: String
   coverImage: FileWhereInput
   profileImage: FileWhereInput
+  profileImageColor: String
+  profileImageColor_not: String
+  profileImageColor_in: [String!]
+  profileImageColor_not_in: [String!]
+  profileImageColor_lt: String
+  profileImageColor_lte: String
+  profileImageColor_gt: String
+  profileImageColor_gte: String
+  profileImageColor_contains: String
+  profileImageColor_not_contains: String
+  profileImageColor_starts_with: String
+  profileImageColor_not_starts_with: String
+  profileImageColor_ends_with: String
+  profileImageColor_not_ends_with: String
   verified: Boolean
   verified_not: Boolean
   followers_every: UserWhereInput

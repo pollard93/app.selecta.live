@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
 import { Dimensions, SafeAreaView, View, StatusBar } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -52,6 +53,29 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
   const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null;
 
 
+  /**
+   * If no video then use ScrollView
+   */
+  if (!shouldLoadVideo) {
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
+        <StreamCard data={props.queryResult.data.getStreamProfile} />
+
+        {!props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null && (
+          <StreamPurchase data={props.queryResult.data.getStreamProfile} />
+        )}
+
+        {props.queryResult.data.getStreamProfile.cancelled !== null && (
+          <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
+        )}
+      </ScrollView>
+    );
+  }
+
+
   return (
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
@@ -72,21 +96,11 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         >
           <StreamCard data={props.queryResult.data.getStreamProfile} />
         </View>
-
-        {!props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null && (
-          <StreamPurchase data={props.queryResult.data.getStreamProfile} />
-        )}
-
-        {props.queryResult.data.getStreamProfile.cancelled !== null && (
-          <StreamCancelledMessage data={props.queryResult.data.getStreamProfile} />
-        )}
       </SafeAreaView>
 
-      {shouldLoadVideo && (
-        <StreamVideo {...props} data={props.queryResult.data.getStreamProfile} />
-      )}
+      <StreamVideo {...props} data={props.queryResult.data.getStreamProfile} />
 
-      {shouldLoadVideo && drawerLayout && (
+      {drawerLayout && (
         <StreamCommunicationWrap
           drawerProps={{
             minHeight: drawerLayout.minHeight,

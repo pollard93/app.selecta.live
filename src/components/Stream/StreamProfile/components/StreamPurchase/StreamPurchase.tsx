@@ -119,16 +119,12 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
 
 
   return (
-    <ScrollView
-      style={Styles.wrap}
-      bounces={false}
-    >
+    <>
       <View style={[Styles.info, dynamicStyles.info]}>
         <Body>{props.data.info}</Body>
       </View>
 
       <View style={Styles.buy}>
-        <H4>Buy this stream</H4>
         <View style={Styles.ticket}>
           <View style={[Styles.ticketInfo, dynamicStyles.ticket]}>
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight]} />
@@ -170,7 +166,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
           testID="submit"
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 

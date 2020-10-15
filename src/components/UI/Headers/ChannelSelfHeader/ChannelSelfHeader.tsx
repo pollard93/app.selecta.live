@@ -38,6 +38,7 @@ const ChannelSelfHeader: FC<ChannelSelfHeaderProps> = (props) => {
           paddingTop: safeAreaInsets.top,
           zIndex: headerZindex,
         },
+        getChannelSelf.profileImageColor && { backgroundColor: `#${getChannelSelf.profileImageColor}` },
       ]}
     >
       <View

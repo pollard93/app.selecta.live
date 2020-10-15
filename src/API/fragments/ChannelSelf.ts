@@ -13,6 +13,7 @@ export const CHANNEL_SELF_FRAGMENT = gql`
     profileImage {
       ...FILE_FRAGMENT
     }
+    profileImageColor
     verified
     unreadNotificationCount
     followersEdge

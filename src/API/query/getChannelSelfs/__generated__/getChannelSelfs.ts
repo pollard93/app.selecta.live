@@ -52,6 +52,7 @@ export interface getChannelSelfs_getChannelSelfs_channels {
   description: string | null;
   coverImage: getChannelSelfs_getChannelSelfs_channels_coverImage | null;
   profileImage: getChannelSelfs_getChannelSelfs_channels_profileImage | null;
+  profileImageColor: string | null;
   verified: boolean | null;
   unreadNotificationCount: number | null;
   followersEdge: number | null;

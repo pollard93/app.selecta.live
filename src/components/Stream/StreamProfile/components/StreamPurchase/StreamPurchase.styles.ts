@@ -5,9 +5,6 @@ import color from '../../../../../styles/definitions/color';
 import scalePx from '../../../../../utils/scalePx';
 
 export default StyleSheet.create({
-  wrap: {
-    flex: 1,
-  },
   info: {
     padding: spacing.small,
   },

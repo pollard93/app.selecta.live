@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
 import { Dimensions, SafeAreaView, View, StatusBar } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -51,6 +52,22 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
   const isCancelled = props.queryResult.data.getStreamSelf.cancelled !== null;
 
 
+  /**
+   * If cancelled then use ScrollView
+   */
+  if (isCancelled) {
+    return (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
+        <StreamCard data={props.queryResult.data.getStreamSelf} />
+        <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
+      </ScrollView>
+    );
+  }
+
+
   return (
     <>
       <SafeAreaView style={GlobalStyles.PageFill}>
@@ -77,14 +94,12 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         )}
       </SafeAreaView>
 
-      {!isCancelled && (
-        <StreamVideo
-          {...props}
-          data={props.queryResult.data.getStreamSelf}
-        />
-      )}
+      <StreamVideo
+        {...props}
+        data={props.queryResult.data.getStreamSelf}
+      />
 
-      {!isCancelled && drawerLayout && (
+      {drawerLayout && (
         <StreamCommunicationWrap
           drawerProps={{
             minHeight: drawerLayout.minHeight,
