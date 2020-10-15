@@ -13,6 +13,7 @@ import StreamVideo from '../StreamVideo/StreamVideo';
 import StreamPurchase from './components/StreamPurchase/StreamPurchase';
 import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
 import StreamCommunicationWrap from './components/StreamCommunication/StreamCommunicationWrap';
+import { canGoLive } from '../../../utils/streamFunctions';
 
 
 interface StreamProfileViewProps {
@@ -47,10 +48,14 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
 
 
   /**
-   * Should only load video if user is a consumer and it hasn't been cancelled
+   * Should only load video if user is a consumer
+   * and it hasn't been cancelled
+   * and stream is within the producers threshold to go live
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer && props.queryResult.data.getStreamProfile.cancelled === null;
+  const shouldLoadVideo = props.queryResult.data.getStreamProfile.isConsumer
+    && props.queryResult.data.getStreamProfile.cancelled === null
+    && canGoLive(props.queryResult.data.getStreamProfile);
 
 
   /**

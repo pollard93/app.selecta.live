@@ -191,10 +191,9 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
   if (props.disableFullScreen) {
     /**
      * Handle about to go live
-     * Only for StreamProfile, not StreamSelf
      */
     // eslint-disable-next-line no-underscore-dangle
-    if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+    if (!props.data.timeFromLive && canGoLive(props.data)) {
       return (
         <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
           <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>
@@ -227,10 +226,9 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
       {({ toggleFullScreen, isFullScreen }) => {
         /**
          * Handle about to go live
-         * Only for StreamProfile, not StreamSelf
          */
         // eslint-disable-next-line no-underscore-dangle
-        if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+        if (!props.data.timeFromLive && canGoLive(props.data)) {
           return (
             <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
               <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>

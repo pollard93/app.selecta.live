@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
-import H4 from '../../../../UI/Typography/components/H4';
 import Body from '../../../../UI/Typography/components/Body';
 import { formatForTimezone, getGQLErrorMessage } from '../../../../../utils/functions';
 import Button from '../../../../UI/Button/Button';
