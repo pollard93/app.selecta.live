@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { QueryResult } from 'react-apollo';
-import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
+import { Dimensions, SafeAreaView, View, StatusBar } from 'react-native';
 import { getStreamProfile, getStreamProfileVariables } from '../../../API/query/getStreamProfile/__generated__/getStreamProfile';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -8,13 +8,10 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import StreamCard from '../../UI/Cards/StreamCard/StreamCard';
-import FadeInView from '../../UI/FadeInView/FadeInView';
-import Drawer from '../../UI/Drawer/Drawer';
 import StreamVideo from '../StreamVideo/StreamVideo';
-import Styles from './StreamProfile.styles';
-import StreamCommunication from './components/StreamCommunication/StreamCommunication';
 import StreamPurchase from './components/StreamPurchase/StreamPurchase';
 import StreamCancelledMessage from '../StreamCancelledMessage/StreamCancelledMessage';
+import StreamCommunicationWrap from './components/StreamCommunication/StreamCommunicationWrap';
 
 
 interface StreamProfileViewProps {
@@ -26,7 +23,7 @@ interface StreamProfileViewProps {
  * Handle loading and error outside of navigation
  */
 const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
-  const { headerHeight, headerZindex } = useHeaderStyles();
+  const { headerHeight } = useHeaderStyles();
   const safeAreaInsets = useSafeArea();
   const window = useRef(Dimensions.get('window')).current;
   const [drawerLayout, setDrawerLayout] = useState<{minHeight: number, maxHeight: number}>();
@@ -85,24 +82,20 @@ const StreamProfileView: FC<StreamProfileViewProps> = (props) => {
         )}
       </SafeAreaView>
 
-      {shouldLoadVideo && drawerLayout && (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={[Styles.flex, { zIndex: headerZindex + 1 }]}
-        >
-          <FadeInView style={Styles.flex}>
-            <Drawer
-              minHeight={drawerLayout.minHeight}
-              maxHeight={drawerLayout.maxHeight}
-            >
-              <StreamCommunication data={props.queryResult.data.getStreamProfile} />
-            </Drawer>
-          </FadeInView>
-        </KeyboardAvoidingView>
-      )}
-
       {shouldLoadVideo && (
         <StreamVideo {...props} data={props.queryResult.data.getStreamProfile} />
+      )}
+
+      {shouldLoadVideo && drawerLayout && (
+        <StreamCommunicationWrap
+          drawerProps={{
+            minHeight: drawerLayout.minHeight,
+            maxHeight: drawerLayout.maxHeight,
+          }}
+          communicationProps={{
+            data: props.queryResult.data.getStreamProfile,
+          }}
+        />
       )}
     </>
   );

@@ -1,13 +1,13 @@
 import React, { FC, useRef, useEffect } from 'react';
-import { Animated, Dimensions, View } from 'react-native';
-import { PanGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler';
+import { Animated, Dimensions, TouchableOpacity, View } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import Styles, { DynamicStyles } from './Drawer.styles';
 import scalePx from '../../../utils/scalePx';
 import Icon, { ICON } from '../Icon/Icon';
 import { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
+import { useHeaderStyles } from '../Headers/Header/Header';
 
-interface DrawerProps {
+export interface DrawerProps {
   minHeight: number;
   maxHeight: number;
 }
@@ -15,8 +15,9 @@ interface DrawerProps {
 const Drawer: FC<DrawerProps> = (props) => {
   const windowHeight = useRef(Dimensions.get('window').height).current;
   const touchY = useRef(new Animated.Value(-100)).current;
-  const touchYValue = useRef(0);
+  const touchYValue = useRef(props.minHeight);
   const barHeight = useRef(scalePx(20)).current;
+  const { headerZindex } = useHeaderStyles();
   const dynamicStyles = useDynamicValue(DynamicStyles);
   const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
 
@@ -64,19 +65,6 @@ const Drawer: FC<DrawerProps> = (props) => {
 
 
   /**
-   * When drag end, get the closest value between min and max and animate to it
-   */
-  const onDragEnd = () => {
-    const closest = [props.minHeight, props.maxHeight].sort((a, b) => Math.abs(touchYValue.current - a) - Math.abs(touchYValue.current - b))[0];
-    Animated.timing(touchY, {
-      toValue: -closest,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
-  };
-
-
-  /**
    * When tap ends, toggle from min-max and vice versa
    */
   const onTapEnd = () => {
@@ -89,7 +77,10 @@ const Drawer: FC<DrawerProps> = (props) => {
 
 
   return (
-    <View style={Styles.wrap}>
+    <View
+      style={[Styles.wrap, { zIndex: headerZindex + 1 }]}
+      pointerEvents="box-none"
+    >
       <Animated.View
         style={[
           { height: Animated.add(height, new Animated.Value(-barHeight)) },
@@ -98,57 +89,41 @@ const Drawer: FC<DrawerProps> = (props) => {
       >
         {props.children}
       </Animated.View>
-      <PanGestureHandler
-        onGestureEvent={Animated.event([{ nativeEvent: { y: touchY } }], { useNativeDriver: false })}
-        onHandlerStateChange={(event) => {
-          const { nativeEvent } = event;
-          switch (nativeEvent.state) {
-            case State.END:
-              onDragEnd();
-              break;
-          }
-        }}
-      >
-        <TapGestureHandler
-          onHandlerStateChange={(event) => {
-            const { nativeEvent } = event;
-            switch (nativeEvent.state) {
-              case State.END:
-                onTapEnd();
-                break;
-            }
-          }}
+      <View>
+        <Animated.View
+          style={[
+            Styles.bar,
+            dynamicStyles.bar,
+            {
+              height: barHeight,
+              transform: [{
+                translateY: clampY,
+              }],
+            },
+          ]}
         >
-          <Animated.View>
-            <Animated.View
+          <TouchableOpacity
+            onPress={() => {
+              onTapEnd();
+            }}
+            style={Styles.barTouch}
+          >
+            <Icon
+              name={ICON.DRAWER_ARROW}
+              size="xsmall"
+              animated
               style={[
-                Styles.bar,
-                dynamicStyles.bar,
+                dynamicStyles.icon,
                 {
-                  height: barHeight,
                   transform: [{
-                    translateY: clampY,
+                    rotate: arrow,
                   }],
                 },
               ]}
-            >
-              <Icon
-                name={ICON.DRAWER_ARROW}
-                size="xsmall"
-                animated
-                style={[
-                  dynamicStyles.icon,
-                  {
-                    transform: [{
-                      rotate: arrow,
-                    }],
-                  },
-                ]}
-              />
-            </Animated.View>
-          </Animated.View>
-        </TapGestureHandler>
-      </PanGestureHandler>
+            />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </View>
   );
 };

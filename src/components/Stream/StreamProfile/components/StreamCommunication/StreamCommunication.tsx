@@ -10,7 +10,7 @@ import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import Switch from '../../../../UI/Form/components/Switch/Switch';
 import { STREAM_SELF_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 
-interface StreamCommunicationProps {
+export interface StreamCommunicationProps {
   data: STREAM_PROFILE_FRAGMENT | STREAM_SELF_FRAGMENT;
 }
 
