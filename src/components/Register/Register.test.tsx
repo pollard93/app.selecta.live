@@ -51,9 +51,6 @@ describe('<Register />', () => {
     // Test password is secure
     expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Login Button is disabled as default
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
-
     // Test text change and validate form
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onBlur();
@@ -61,9 +58,6 @@ describe('<Register />', () => {
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
     await wait(0);
     wrapper.update();
-
-    // Form should now be valid
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
     await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({

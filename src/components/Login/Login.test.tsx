@@ -58,9 +58,6 @@ describe('<Login >', () => {
     // Test password is secure
     expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Login Button is disabled as default
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
-
     // Test text change and validate form
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onBlur();
@@ -68,9 +65,6 @@ describe('<Login >', () => {
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
     await wait(0);
     wrapper.update();
-
-    // Form should now be valid
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
     await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
@@ -113,7 +107,7 @@ describe('<Login >', () => {
     expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
-  it('should remove token on mount, should toast, disconnect listeners and hide splash screen', async () => {
+  it('should remove token on mount, disconnect listeners and hide splash screen', async () => {
     const client = mockClient();
 
     /**
@@ -132,7 +126,7 @@ describe('<Login >', () => {
      */
     mount(
       <ApolloProvider client={client}>
-        <Login toastMessage="test" />
+        <Login />
       </ApolloProvider>,
     );
 
@@ -153,13 +147,6 @@ describe('<Login >', () => {
     } catch (e) {
       assert.isOk(true);
     }
-
-
-    /**
-     * Should toast if prop passed
-     */
-
-    expect(toastSpy.callCount).to.equal(1);
 
 
     /**
