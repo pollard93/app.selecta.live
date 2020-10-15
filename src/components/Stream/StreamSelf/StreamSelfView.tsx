@@ -73,7 +73,7 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
       <SafeAreaView style={GlobalStyles.PageFill}>
         <View
           onLayout={(event) => {
-            if (!isCancelled && !drawerLayout) {
+            if (!drawerLayout) {
               /**
                * Using the layout of this view
                * Set the drawer min and max
@@ -88,10 +88,6 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
         >
           <StreamCard data={props.queryResult.data.getStreamSelf} />
         </View>
-
-        {isCancelled && (
-          <StreamCancelledMessage data={props.queryResult.data.getStreamSelf} />
-        )}
       </SafeAreaView>
 
       <StreamVideo

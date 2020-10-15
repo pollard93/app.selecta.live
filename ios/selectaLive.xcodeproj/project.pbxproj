@@ -941,6 +941,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -978,6 +979,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1463,6 +1465,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Beta;
