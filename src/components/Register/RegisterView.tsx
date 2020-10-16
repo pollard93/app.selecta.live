@@ -17,6 +17,7 @@ import FadeInView from '../UI/FadeInView/FadeInView';
 import Gradient from '../UI/Gradient/Gradient';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
+import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 
 export interface RegisterViewProps {
   loading: boolean,
@@ -30,11 +31,6 @@ export type FormData = {
 };
 
 const RegisterView = (props: RegisterViewProps) => {
-  const lightLogo = require('../../assets/images/logo-dark.png');
-  const darkLogo = require('../../assets/images/logo-light.png');
-  const logoUri = new DynamicValue(lightLogo, darkLogo);
-
-
   /**
    * Scroll view
    */
@@ -42,9 +38,7 @@ const RegisterView = (props: RegisterViewProps) => {
   const scrollViewWidth = useRef(scrollViewItemWidth * 2).current;
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
-  const [step, setStep] = useState<number>(0);
   const scrollToIndex = (index: number) => {
-    setStep(index);
     scrollViewRef.current.scrollTo({ y: 0, x: scrollViewItemWidth * index });
   };
 
@@ -79,9 +73,7 @@ const RegisterView = (props: RegisterViewProps) => {
 
 
   return (
-    <View style={[GlobalStyles.PageFill, Styles.wrap]}>
-      <Gradient style={Styles.gradient} />
-
+    <OnboardingPageWrap>
       <SafeAreaView style={Styles.flex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -245,7 +237,7 @@ const RegisterView = (props: RegisterViewProps) => {
           <Body bold>Login</Body>
         </TouchableOpacity>
       </SafeAreaView>
-    </View>
+    </OnboardingPageWrap>
   );
 
 

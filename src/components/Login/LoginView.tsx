@@ -15,6 +15,7 @@ import Gradient from '../UI/Gradient/Gradient';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import FadeInView from '../UI/FadeInView/FadeInView';
+import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -78,9 +79,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
 
   return (
-    <View style={[GlobalStyles.PageFill, Styles.wrap]}>
-      <Gradient style={Styles.gradient} />
-
+    <OnboardingPageWrap>
       <SafeAreaView style={Styles.flex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -254,7 +253,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
           <Body bold>Sign up</Body>
         </TouchableOpacity>
       </SafeAreaView>
-    </View>
+    </OnboardingPageWrap>
   );
 };
 
