@@ -3,14 +3,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { action } from '@storybook/addon-actions';
-import { View } from 'react-native';
 import Login from './Login';
 import LoginView from './LoginView';
-import color from '../../styles/definitions/color';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 storiesOf('Onboarding/Login', module)
-  .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { backgroundColor: color.mono.dark }]}>{getStory()}</View>)
   .add('Login', () => (
     <Login />
   ))

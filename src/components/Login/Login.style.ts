@@ -3,30 +3,67 @@ import spacing from '../../styles/definitions/spacing';
 import scalePx from '../../utils/scalePx';
 
 export default StyleSheet.create({
-  scrollView: {
-    flexGrow: 1,
+  wrap: {
+    alignItems: 'stretch',
+    flexDirection: 'row',
+  },
+  gradient: {
+    width: spacing.large,
+  },
+  flex: {
+    flex: 1,
+  },
+  scrollViewWrap: {
+    flex: 1,
     justifyContent: 'center',
-    paddingVertical: spacing.xlarge,
+    paddingVertical: spacing.base,
+  },
+  scrollViewInner: {
+    flexGrow: 0,
+    flexShrink: 0,
   },
   logoWrap: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    aspectRatio: 3.078767123287671,
-    justifyContent: 'center',
-    marginBottom: spacing.xlarge,
+    aspectRatio: 4.854054054054054,
+    marginBottom: spacing.xxlarge,
+    marginLeft: spacing.small,
     maxWidth: scalePx(300),
-    width: '80%',
+    width: '70%',
+  },
+  logo: {
+    maxHeight: '100%',
+    maxWidth: '100%',
   },
   input: {
     flexGrow: 0,
-    marginBottom: spacing.small,
+    paddingHorizontal: spacing.small,
+  },
+  arrow: {
+    bottom: 0,
+    justifyContent: 'center',
+    paddingRight: spacing.xsmall,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  social: {
+    marginTop: spacing.xxlarge,
+    paddingHorizontal: spacing.small,
+  },
+  google: {
+    marginTop: spacing.small,
+  },
+  lower: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   forgot: {
     alignSelf: 'flex-end',
     marginTop: spacing.xsmall,
+    paddingHorizontal: spacing.small,
   },
   register: {
     alignSelf: 'center',
+    marginBottom: spacing.base,
   },
   background: {
     ...StyleSheet.absoluteFillObject,
