@@ -15,12 +15,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginBottom: spacing.xxlarge,
   },
-  input: {
+  section: {
     flexGrow: 0,
     paddingHorizontal: spacing.small,
   },
+  input: {
+    paddingRight: spacing.xlarge,
+  },
   arrow: {
-    backgroundColor: 'red',
     bottom: 0,
     justifyContent: 'center',
     paddingRight: spacing.xsmall,

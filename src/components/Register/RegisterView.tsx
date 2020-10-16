@@ -97,7 +97,7 @@ const RegisterView = (props: RegisterViewProps) => {
             >
               <Animated.View
                 style={[
-                  Styles.input,
+                  Styles.section,
                   { width: scrollViewItemWidth },
                   { opacity: item1Opacity },
                 ]}
@@ -108,7 +108,7 @@ const RegisterView = (props: RegisterViewProps) => {
 
                 <View>
                   <TextInput
-                    style={{ paddingRight: spacing.xlarge }}
+                    style={Styles.input}
                     name="email"
                     onChangeText={(text) => {
                       // Validate on change if there's an error, otherwise validate onBlur
@@ -145,32 +145,30 @@ const RegisterView = (props: RegisterViewProps) => {
 
               <Animated.View
                 style={[
-                  Styles.input,
+                  Styles.section,
                   { width: scrollViewItemWidth },
                   { opacity: item2Opacity },
                 ]}
               >
                 <View style={Styles.headingWrap}>
-                  <FadeInView>
-                    <TouchableOpacity
-                      style={Styles.arrowBack}
-                      onPress={() => {
-                        scrollToIndex(0);
-                      }}
-                    >
-                      <Icon
-                        name={ICON.ARROW_BACKWARD}
-                        size="small"
-                      />
-                    </TouchableOpacity>
-                  </FadeInView>
+                  <TouchableOpacity
+                    style={Styles.arrowBack}
+                    onPress={() => {
+                      scrollToIndex(0);
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_BACKWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
 
                   <H1>Secure your account</H1>
                 </View>
 
                 <View>
                   <TextInput
-                    style={{ paddingRight: spacing.xlarge }}
+                    style={Styles.input}
                     name="password"
                     setRef={passwordRef}
                     onChangeText={(text) => {

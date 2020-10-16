@@ -90,6 +90,22 @@ const LoginView: FC<LoginViewProps> = (props) => {
             bounces={false}
           >
             <View style={Styles.logoWrap}>
+              {step === 1 && (
+                <FadeInView>
+                  <TouchableOpacity
+                    style={Styles.arrowBack}
+                    onPress={() => {
+                      scrollToIndex(0);
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_BACKWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
+                </FadeInView>
+              )}
+
               <Image
                 source={useDynamicValue(logoUri)}
                 resizeMode="contain"
@@ -111,14 +127,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
             >
               <Animated.View
                 style={[
-                  Styles.input,
+                  Styles.section,
                   { width: scrollViewItemWidth },
                   { opacity: item1Opacity },
                 ]}
               >
                 <View>
                   <TextInput
-                    style={{ paddingRight: spacing.xlarge }}
+                    style={Styles.input}
                     name="email"
                     onChangeText={(text) => {
                       // Validate on change if there's an error, otherwise validate onBlur
@@ -155,14 +171,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
               <Animated.View
                 style={[
-                  Styles.input,
+                  Styles.section,
                   { width: scrollViewItemWidth },
                   { opacity: item2Opacity },
                 ]}
               >
                 <View>
                   <TextInput
-                    style={{ paddingRight: spacing.xlarge }}
+                    style={Styles.input}
                     name="password"
                     setRef={passwordRef}
                     onChangeText={(text) => {
@@ -201,28 +217,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
               </Animated.View>
             </ScrollView>
 
-            <View style={Styles.lower}>
-              {step > 0 ? (
-                <FadeInView>
-                  <TouchableOpacity
-                    style={Styles.forgot}
-                    onPress={() => scrollToIndex(0)}
-                    disabled={step === 0}
-                  >
-                    <Body>back</Body>
-                  </TouchableOpacity>
-                </FadeInView>
-              ) : <View />}
-
-              <TouchableOpacity
-                style={Styles.forgot}
-                onPress={() => props.onReset(watch('email'))}
-                disabled={props.loading}
-                testID="reset"
-              >
-                <Body>Forgotten Password?</Body>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={Styles.forgot}
+              onPress={() => props.onReset(watch('email'))}
+              disabled={props.loading}
+              testID="reset"
+            >
+              <Body>Forgotten Password?</Body>
+            </TouchableOpacity>
 
             <View style={Styles.social}>
               <LoginWithFacebook

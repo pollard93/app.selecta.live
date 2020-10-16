@@ -46,7 +46,7 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
             bounces={false}
           >
             <View
-              style={Styles.input}
+              style={Styles.section}
             >
               <View style={Styles.headingWrap}>
                 <TouchableOpacity
@@ -64,6 +64,7 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
 
               <View>
                 <TextInput
+                  style={Styles.input}
                   name="password"
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur

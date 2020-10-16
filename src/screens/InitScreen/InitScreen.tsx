@@ -131,6 +131,13 @@ InitScreen.prototype.ScreenName = 'InitScreen';
 };
 
 /**
+ * Set screen color options (default white)
+ */
+InitScreen.prototype.fullScreen = true;
+// InitScreen.prototype.statusBarColor = color.mono.dark;
+// InitScreen.prototype.backgroundColor = color.mono.dark;
+
+/**
  * Export as const so can be imported without the default
  */
 export const InitScreenName = InitScreen.prototype.ScreenName;

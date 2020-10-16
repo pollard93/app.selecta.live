@@ -33,7 +33,7 @@ LoginScreen.prototype.ScreenName = 'LoginScreen';
  */
 LoginScreen.prototype.fullScreen = true;
 // LoginScreen.prototype.statusBarColor = color.mono.dark;
-LoginScreen.prototype.backgroundColor = color.mono.dark;
+// LoginScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default

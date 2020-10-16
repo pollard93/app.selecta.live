@@ -153,7 +153,7 @@ const Login: FC<LoginProps> = () => {
           component: (
             <Toast
               type="SUCCESS"
-              content="Please open your magic link in the email we have just sent you"
+              content="Please check your email"
             />
           ),
           dismissible: false,

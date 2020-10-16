@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
 import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Styles from './RequestPasswordReset.style';
 import H1 from '../UI/Typography/components/H1';
 import H4 from '../UI/Typography/components/H4';
@@ -55,7 +54,7 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
             bounces={false}
           >
             <View
-              style={Styles.input}
+              style={Styles.section}
             >
               <View style={Styles.headingWrap}>
                 <TouchableOpacity
@@ -73,6 +72,7 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
 
               <View>
                 <TextInput
+                  style={Styles.input}
                   name="email"
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur

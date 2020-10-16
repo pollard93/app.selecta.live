@@ -23,19 +23,26 @@ export default StyleSheet.create({
     flexShrink: 0,
   },
   logoWrap: {
+    alignItems: 'center',
     aspectRatio: 4.854054054054054,
+    flexDirection: 'row',
     marginBottom: spacing.xxlarge,
     marginLeft: spacing.small,
-    maxWidth: scalePx(300),
-    width: '70%',
+    width: scalePx(170),
   },
   logo: {
     maxHeight: '100%',
     maxWidth: '100%',
   },
-  input: {
+  arrowBack: {
+    marginRight: spacing.small,
+  },
+  section: {
     flexGrow: 0,
     paddingHorizontal: spacing.small,
+  },
+  input: {
+    paddingRight: spacing.xlarge,
   },
   arrow: {
     bottom: 0,
@@ -51,10 +58,6 @@ export default StyleSheet.create({
   },
   google: {
     marginTop: spacing.small,
-  },
-  lower: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   forgot: {
     alignSelf: 'flex-end',

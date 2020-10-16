@@ -33,7 +33,7 @@ RegisterScreen.prototype.ScreenName = 'RegisterScreen';
  */
 RegisterScreen.prototype.fullScreen = true;
 // RegisterScreen.prototype.statusBarColor = color.mono.dark;
-RegisterScreen.prototype.backgroundColor = color.mono.dark;
+// RegisterScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default
