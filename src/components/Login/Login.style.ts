@@ -65,8 +65,4 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginBottom: spacing.base,
   },
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.3,
-  },
 });

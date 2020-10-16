@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, FC } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity, SafeAreaView, Animated, Dimensions } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { validate as validateEmail } from 'email-validator';
@@ -28,7 +28,7 @@ export type FormData = {
   password: string;
 };
 
-const LoginView = (props: LoginViewProps) => {
+const LoginView: FC<LoginViewProps> = (props) => {
   const lightLogo = require('../../assets/images/logo-dark.png');
   const darkLogo = require('../../assets/images/logo-light.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
@@ -82,12 +82,13 @@ const LoginView = (props: LoginViewProps) => {
       <Gradient style={Styles.gradient} />
 
       <SafeAreaView style={Styles.flex}>
-        <ScrollView
-          contentContainerStyle={Styles.scrollViewWrap}
-          bounces={false}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={Styles.flex}
         >
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          <ScrollView
+            contentContainerStyle={Styles.scrollViewWrap}
+            bounces={false}
           >
             <View style={Styles.logoWrap}>
               <Image
@@ -223,24 +224,24 @@ const LoginView = (props: LoginViewProps) => {
                 <Body>Forgotten Password?</Body>
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView>
 
-          <View style={Styles.social}>
-            <LoginWithFacebook
-              {...props}
-              disabled={props.loading}
-              buttonText="Login with Facebook"
-            />
-
-            <View style={Styles.google}>
-              <LoginWithGoogle
+            <View style={Styles.social}>
+              <LoginWithFacebook
                 {...props}
                 disabled={props.loading}
-                buttonText="Login with Google"
+                buttonText="Login with Facebook"
               />
+
+              <View style={Styles.google}>
+                <LoginWithGoogle
+                  {...props}
+                  disabled={props.loading}
+                  buttonText="Login with Google"
+                />
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
 
         <Separator margin="base" />
 
@@ -253,90 +254,6 @@ const LoginView = (props: LoginViewProps) => {
           <Body bold>Sign up</Body>
         </TouchableOpacity>
       </SafeAreaView>
-
-      {/* <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={GlobalStyles.PageFill}
-      >
-        <SafeAreaView style={GlobalStyles.PageFill}>
-          <ScrollView
-            contentContainerStyle={[Styles.scrollView, GlobalStyles.MaxWidth]}
-            bounces={false}
-          >
-            <View style={Styles.logoWrap}>
-              <Image
-                source={useDynamicValue(logoUri)}
-                resizeMode="contain"
-                style={Styles.logo}
-              />
-            </View>
-
-
-            {/* <View style={Styles.input}>
-              <TextInput
-                name="password"
-                setRef={passwordRef}
-                onChangeText={(text) => {
-                  // Validate on change if there's an error, otherwise validate onBlur
-                  setValue('password', text, !!errors.password);
-                }}
-                placeholder="Enter your password"
-                secureTextEntry
-                autoCompleteType="password"
-                autoCapitalize="none"
-                returnKeyType="done"
-                errors={errors}
-                onBlur={() => triggerValidation('password')}
-                onSubmitEditing={handleSubmit(props.onSubmit)}
-                testID="password"
-              />
-            </View> */}
-
-            {/* <Button
-              title={props.loading ? 'Logging in' : 'Login'}
-              onPress={handleSubmit(props.onSubmit)}
-              loading={props.loading}
-              testID="submit"
-            />
-
-            <TouchableOpacity
-              style={Styles.forgot}
-              onPress={() => props.onReset(watch('email'))}
-              disabled={props.loading}
-              testID="reset"
-            >
-              <Body forceLight>Forgotten Password?</Body>
-            </TouchableOpacity>
-
-            <Separator margin="large" />
-
-            <View style={Styles.input}>
-              <LoginWithFacebook
-                {...props}
-                disabled={props.loading}
-                buttonText="Login with Facebook"
-              />
-            </View>
-
-            <LoginWithGoogle
-              {...props}
-              disabled={props.loading}
-              buttonText="Login with Google"
-            />
-
-            <Separator margin="large" />
-
-            <TouchableOpacity
-              style={Styles.register}
-              onPress={props.onRegister}
-              disabled={props.loading}
-              testID="register"
-            >
-              <Body bold forceLight>Don't have an account?</Body>
-            </TouchableOpacity>
-          </ScrollView>
-        </SafeAreaView>
-      </KeyboardAvoidingView> */}
     </View>
   );
 };
