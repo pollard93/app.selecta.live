@@ -33,6 +33,11 @@ describe('<RequestPasswordReset />', () => {
       persist: jest.fn,
     } as any);
     await wait(0);
+    wrapper.update();
+
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Should have called onCompletion
     expect(completionSpy.callCount).to.equal(1);

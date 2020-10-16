@@ -4,9 +4,7 @@ import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
 import Styles from './RequestPasswordReset.style';
 import H1 from '../UI/Typography/components/H1';
-import H4 from '../UI/Typography/components/H4';
 import TextInput from '../UI/Form/components/TextInput/TextInput';
-import Button from '../UI/Button/Button';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
@@ -93,11 +91,13 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
                 <TouchableOpacity
                   style={Styles.arrow}
                   onPress={handleSubmit(props.onSubmit)}
+                  disabled={props.loading}
+                  testID="submit"
                 >
                   {
                     props.loading
                       ? (
-                        <LoadingIcon size="small" />
+                        <LoadingIcon testID="submitLoading" size="small" />
                       )
                       : (
                         <Icon
@@ -112,43 +112,6 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
-    </OnboardingPageWrap>
-  );
-
-
-  return (
-    <OnboardingPageWrap
-      heading="Reset Password"
-      onPop={props.onPop}
-    >
-      <View style={Styles.input}>
-        <H4 style={Styles.content}>Enter your email and we'll send you a magic link to reset your password.</H4>
-
-        <TextInput
-          name="email"
-          onChangeText={(text) => {
-            // Validate on change if there's an error, otherwise validate onBlur
-            setValue('email', text, !!errors.email);
-          }}
-          placeholder="Enter your email"
-          autoCompleteType="email"
-          keyboardType="email-address"
-          returnKeyType="done"
-          autoCapitalize="none"
-          errors={errors}
-          onBlur={() => triggerValidation('email')}
-          onSubmitEditing={handleSubmit(props.onSubmit)}
-          defaultValue={props.defaultEmailValue}
-          testID="email"
-        />
-      </View>
-
-      <Button
-        title={props.loading ? 'Requesting reset' : 'Request password reset'}
-        onPress={handleSubmit(props.onSubmit)}
-        loading={props.loading}
-        testID="submit"
-      />
     </OnboardingPageWrap>
   );
 };

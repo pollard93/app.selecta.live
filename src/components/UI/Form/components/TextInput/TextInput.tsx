@@ -30,7 +30,6 @@ const TextInput: FC<TextInputProps> = (props) => {
 
     // If message is defined then return it
     if (props.errors[props.name].message) {
-      if (props.errors[props.name].message === 'DO_NOT_DISPLAY') return null;
       return props.errors[props.name].message;
     }
 

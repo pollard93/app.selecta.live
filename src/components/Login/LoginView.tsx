@@ -3,7 +3,6 @@ import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpaci
 import { useForm } from 'react-hook-form';
 import { validate as validateEmail } from 'email-validator';
 import { DynamicValue, useDynamicValue } from 'react-native-dynamic';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import LoginWithFacebook from './components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from './components/LoginWithGoogle/LoginWithGoogle';
 import Styles from './Login.style';
@@ -11,11 +10,10 @@ import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Separator from '../UI/Separator/Separator';
 import Body from '../UI/Typography/components/Body';
 import spacing from '../../styles/definitions/spacing';
-import Gradient from '../UI/Gradient/Gradient';
-import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
+import Icon, { ICON } from '../UI/Icon/Icon';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -199,11 +197,13 @@ const LoginView: FC<LoginViewProps> = (props) => {
                   <TouchableOpacity
                     style={Styles.arrow}
                     onPress={handleSubmit(props.onSubmit)}
+                    disabled={props.loading}
+                    testID="submit"
                   >
                     {
                       props.loading
                         ? (
-                          <LoadingIcon size="small" />
+                          <LoadingIcon testID="submitLoading" size="small" />
                         )
                         : (
                           <Icon

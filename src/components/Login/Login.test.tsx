@@ -74,8 +74,9 @@ describe('<Login >', () => {
     await wait(0);
     wrapper.update();
 
-    // Button is now be loading
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -101,10 +102,6 @@ describe('<Login >', () => {
 
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
-
-    // Update - button should not return to enabled as no errors
-    wrapper.update();
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
   it('should remove token on mount, disconnect listeners and hide splash screen', async () => {

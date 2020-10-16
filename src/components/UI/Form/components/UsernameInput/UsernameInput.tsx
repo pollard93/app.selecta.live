@@ -1,9 +1,8 @@
 import React, { useEffect, FC, ReactNode, useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
 import { useApolloClient } from 'react-apollo';
 import { useUpdateSelfMutation } from '../../../../../API/mutation/updateSelf/updateSelf';
-import { getGQLErrorMessage, useDebounce } from '../../../../../utils/functions';
-import { IS_USERNAME_UNIQUE_QUERY, useIsUsernameUniqueLazyQuery } from '../../../../../API/query/isUsernameUnique/isUsernameUnique';
+import { getGQLErrorMessage } from '../../../../../utils/functions';
+import { IS_USERNAME_UNIQUE_QUERY } from '../../../../../API/query/isUsernameUnique/isUsernameUnique';
 import { pushToast } from '../../../../../modules/Toast';
 import SearchInput from '../SearchInput/SearchInput';
 import Toast from '../../../Toast/Toast';

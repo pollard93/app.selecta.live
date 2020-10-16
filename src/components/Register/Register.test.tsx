@@ -67,8 +67,9 @@ describe('<Register />', () => {
     await wait(0);
     wrapper.update();
 
-    // Button is now be loading
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -94,10 +95,6 @@ describe('<Register />', () => {
 
     expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
     expect(pushScreenSpy.args[0][2]).to.be.empty;
-
-    // Update - button should not return to state as no errors
-    wrapper.update();
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
   it('should fail to register', async () => {

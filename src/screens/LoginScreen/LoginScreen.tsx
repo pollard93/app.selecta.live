@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import Login, { LoginProps } from '../../components/Login/Login';
-import color from '../../styles/definitions/color';
 
 export interface LoginScreenProps extends LoginProps {}
 
