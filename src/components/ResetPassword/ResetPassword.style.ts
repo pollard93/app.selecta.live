@@ -2,10 +2,32 @@ import { StyleSheet } from 'react-native';
 import spacing from '../../styles/definitions/spacing';
 
 export default StyleSheet.create({
-  input: {
+  flex: {
     flex: 1,
   },
-  content: {
-    marginBottom: spacing.large,
+  scrollViewWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingVertical: spacing.base,
+  },
+  headingWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: spacing.xxlarge,
+  },
+  input: {
+    flexGrow: 0,
+    paddingHorizontal: spacing.small,
+  },
+  arrow: {
+    bottom: 0,
+    justifyContent: 'center',
+    paddingRight: spacing.xsmall,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  arrowBack: {
+    marginRight: spacing.small,
   },
 });
