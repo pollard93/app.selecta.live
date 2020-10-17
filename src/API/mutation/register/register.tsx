@@ -3,8 +3,8 @@ import { useMutation, MutationHookOptions } from 'react-apollo';
 import { register, registerVariables } from './__generated__/register';
 
 export const REGISTER_MUTATION = gql`
-  mutation register($email: String!, $password: String!){
-    register(email: $email, password: $password){
+  mutation register($data: RegisterInput){
+    register(data: $data){
       token
     }
   }

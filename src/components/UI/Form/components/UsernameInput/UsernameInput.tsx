@@ -11,13 +11,16 @@ import TextInput from '../TextInput/TextInput';
 import { isUsernameUnique, isUsernameUniqueVariables } from '../../../../../API/query/isUsernameUnique/__generated__/isUsernameUnique';
 
 export interface UsernameInputProps {
-  onCompleted: () => void;
+  onCompleted?: () => void;
   useTextInput?: boolean; // Uses TextInput instead of SearchInput
+  onSubmit?: () => void; // Pass to override internal submission
+  setRef?: any;
   children: (args: {
     disabled: boolean;
     mutationLoading: boolean;
     queryLoading: boolean;
     onSubmit: () => void;
+    value: string;
   }) => ReactNode;
 }
 
@@ -128,6 +131,11 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
   const onSubmit = async () => {
     if (!await validate()) return;
 
+    if (props.onSubmit) {
+      props.onSubmit();
+      return;
+    }
+
     mutation({
       variables: {
         username: value,
@@ -142,6 +150,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
         props.useTextInput
           ? (
             <TextInput
+              setRef={props.setRef}
               name="username"
               value={value}
               onChangeText={setValue}
@@ -155,6 +164,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
           )
           : (
             <SearchInput
+              setRef={props.setRef}
               name="username"
               value={value}
               onChangeText={setValue}
@@ -174,6 +184,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
         mutationLoading,
         queryLoading: loading,
         onSubmit,
+        value,
       })}
     </>
   );

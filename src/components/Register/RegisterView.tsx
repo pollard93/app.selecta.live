@@ -13,6 +13,7 @@ import spacing from '../../styles/definitions/spacing';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
+import UsernameInput from '../UI/Form/components/UsernameInput/UsernameInput';
 
 export interface RegisterViewProps {
   loading: boolean,
@@ -23,6 +24,7 @@ export interface RegisterViewProps {
 export type FormData = {
   email: string;
   password: string;
+  username: string;
 };
 
 const RegisterView: FC<RegisterViewProps> = (props) => {
@@ -30,7 +32,6 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
    * Scroll view
    */
   const scrollViewItemWidth = useRef((Dimensions.get('screen').width - spacing.large)).current;
-  const scrollViewWidth = useRef(scrollViewItemWidth * 2).current;
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollToIndex = (index: number) => {
@@ -39,20 +40,19 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
 
 
   /**
-   * Item 1 opacity
+   * ScrollView item opacities
    */
-  const item1Opacity = useRef(scrollX.interpolate({
-    inputRange: [0, scrollViewWidth / 2],
+  const item0Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth],
     outputRange: [1, 0],
   })).current;
-
-
-  /**
-   * Item 2 opacity
-   */
+  const item1Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth, scrollViewItemWidth * 2],
+    outputRange: [0, 1, 0],
+  })).current;
   const item2Opacity = useRef(scrollX.interpolate({
-    inputRange: [0, scrollViewWidth / 2],
-    outputRange: [0, 1],
+    inputRange: [0, scrollViewItemWidth, scrollViewItemWidth * 2],
+    outputRange: [0, 0, 1],
   })).current;
 
 
@@ -60,11 +60,19 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
    * Register form
    */
   const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
-  const passwordRef = useRef(null);
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+    register({ name: 'username' }, { required: true });
   }, [register]);
+
+
+  /**
+   * Refs
+   */
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const usernameRef = useRef(null);
 
 
   return (
@@ -94,7 +102,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                 style={[
                   Styles.section,
                   { width: scrollViewItemWidth },
-                  { opacity: item1Opacity },
+                  { opacity: item0Opacity },
                 ]}
               >
                 <View style={Styles.headingWrap}>
@@ -103,6 +111,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
 
                 <View>
                   <TextInput
+                    setRef={emailRef}
                     style={Styles.input}
                     name="email"
                     onChangeText={(text) => {
@@ -128,6 +137,8 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     style={Styles.arrow}
                     onPress={() => {
                       scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
                     }}
                   >
                     <Icon
@@ -142,7 +153,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                 style={[
                   Styles.section,
                   { width: scrollViewItemWidth },
-                  { opacity: item2Opacity },
+                  { opacity: item1Opacity },
                 ]}
               >
                 <View style={Styles.headingWrap}>
@@ -150,6 +161,8 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     style={Styles.arrowBack}
                     onPress={() => {
                       scrollToIndex(0);
+                      // eslint-disable-next-line no-unused-expressions
+                      emailRef.current?.focus();
                     }}
                   >
                     <Icon
@@ -174,32 +187,90 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     secureTextEntry
                     autoCompleteType="password"
                     autoCapitalize="none"
-                    returnKeyType="done"
+                    returnKeyType="next"
                     errors={errors}
                     onBlur={() => triggerValidation('password')}
-                    onSubmitEditing={handleSubmit(props.onSubmit)}
+                    onSubmitEditing={() => {
+                      scrollToIndex(2);
+                      // eslint-disable-next-line no-unused-expressions
+                      usernameRef.current?.focus();
+                    }}
                     testID="password"
                   />
 
                   <TouchableOpacity
                     style={Styles.arrow}
-                    onPress={handleSubmit(props.onSubmit)}
-                    disabled={props.loading}
-                    testID="submit"
+                    onPress={() => {
+                      scrollToIndex(2);
+                      // eslint-disable-next-line no-unused-expressions
+                      usernameRef.current?.focus();
+                    }}
                   >
-                    {
-                      props.loading
-                        ? (
-                          <LoadingIcon testID="submitLoading" size="small" />
-                        )
-                        : (
-                          <Icon
-                            name={ICON.ARROW_FORWARD}
-                            size="small"
-                          />
-                        )
-                    }
+                    <Icon
+                      name={ICON.ARROW_FORWARD}
+                      size="small"
+                    />
                   </TouchableOpacity>
+                </View>
+              </Animated.View>
+
+              <Animated.View
+                style={[
+                  Styles.section,
+                  { width: scrollViewItemWidth },
+                  { opacity: item2Opacity },
+                ]}
+              >
+                <View style={Styles.headingWrap}>
+                  <TouchableOpacity
+                    style={Styles.arrowBack}
+                    onPress={() => {
+                      scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_BACKWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
+
+                  <H1>Claim your username</H1>
+                </View>
+
+                <View>
+                  <UsernameInput
+                    onSubmit={handleSubmit(props.onSubmit)}
+                    useTextInput
+                    setRef={usernameRef}
+                  >
+                    {(args) => {
+                      setValue('username', args.value);
+
+                      return (
+                        <TouchableOpacity
+                          style={Styles.arrow}
+                          onPress={args.onSubmit}
+                          disabled={args.disabled || props.loading || args.queryLoading}
+                          testID="submit"
+                        >
+                          {
+                            props.loading || args.queryLoading
+                              ? (
+                                <LoadingIcon testID="submitLoading" size="small" />
+                              )
+                              : (
+                                <Icon
+                                  name={ICON.ARROW_FORWARD}
+                                  size="small"
+                                />
+                              )
+                          }
+                        </TouchableOpacity>
+                      );
+                    }}
+                  </UsernameInput>
                 </View>
               </Animated.View>
             </ScrollView>

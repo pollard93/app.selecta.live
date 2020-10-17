@@ -14,7 +14,6 @@ import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import RegisterView from './RegisterView';
 import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import * as ToastModule from '../../modules/Toast';
 
@@ -26,8 +25,8 @@ describe('<Register />', () => {
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(ToastModule, 'pushToast');
-  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
 
   afterEach(() => {
     sandbox.restore();
@@ -35,8 +34,8 @@ describe('<Register />', () => {
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(ToastModule, 'pushToast');
-    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   });
 
   it('should succeed', async () => {
@@ -93,8 +92,8 @@ describe('<Register />', () => {
     // Pushnotifications should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
-    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenSpy.args[0][2]).to.be.empty;
+    // Should have goneHome
+    expect(goHomeSpy.callCount).to.equal(1);
   });
 
   it('should fail to register', async () => {
@@ -221,8 +220,5 @@ describe('<Register />', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
-
-    // Should not have called OnboardingWelcomeScreen
-    expect(pushScreenSpy.callCount).to.equal(0);
   });
 });

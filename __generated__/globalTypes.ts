@@ -575,6 +575,12 @@ export interface NotificationWhereInput {
   NOT?: NotificationWhereInput[] | null;
 }
 
+export interface RegisterInput {
+  email: string;
+  password: string;
+  username: string;
+}
+
 export interface RequestedChannelWhereInput {
   id?: string | null;
   id_not?: string | null;
