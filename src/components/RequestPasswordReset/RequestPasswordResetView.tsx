@@ -85,6 +85,7 @@ const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
                   onBlur={() => triggerValidation('email')}
                   onSubmitEditing={handleSubmit(props.onSubmit)}
                   defaultValue={props.defaultEmailValue}
+                  onboarding
                   testID="email"
                 />
 

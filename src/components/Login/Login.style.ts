@@ -53,19 +53,23 @@ export default StyleSheet.create({
     top: 0,
   },
   social: {
-    marginTop: spacing.xxlarge,
+    alignSelf: 'center',
+    marginTop: spacing.xxlarge + spacing.base,
     paddingHorizontal: spacing.small,
   },
   google: {
     marginTop: spacing.small,
   },
+  lower: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: spacing.small,
+    paddingHorizontal: spacing.base,
+  },
   forgot: {
     alignSelf: 'flex-end',
-    marginTop: spacing.xsmall,
-    paddingHorizontal: spacing.small,
   },
   register: {
     alignSelf: 'center',
-    marginBottom: spacing.base,
   },
 });

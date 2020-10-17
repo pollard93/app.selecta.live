@@ -42,6 +42,8 @@ export enum ICON {
   FLAG = 'FLAG',
   ERROR = 'ERROR',
   CREDIT = 'CREDIT',
+  GOOGLE = 'GOOGLE',
+  FACEBOOK_LOGIN = 'FACEBOOK_LOGIN',
 }
 
 export interface IconProps {
@@ -165,6 +167,12 @@ const Icon = (props: IconProps) => {
 
       case ICON.CREDIT:
         return require('../../../assets/images/icons/credit.png');
+
+      case ICON.GOOGLE:
+        return require('../../../assets/images/icons/google.png');
+
+      case ICON.FACEBOOK_LOGIN:
+        return require('../../../assets/images/icons/facebook-login.png');
 
       default:
         return null;

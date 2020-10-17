@@ -130,6 +130,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                       // eslint-disable-next-line no-unused-expressions
                       passwordRef.current?.focus();
                     }}
+                    onboarding
                     testID="email"
                   />
 
@@ -195,6 +196,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                       // eslint-disable-next-line no-unused-expressions
                       usernameRef.current?.focus();
                     }}
+                    onboarding
                     testID="password"
                   />
 
@@ -243,7 +245,10 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                   <UsernameInput
                     onSubmit={handleSubmit(props.onSubmit)}
                     useTextInput
-                    setRef={usernameRef}
+                    inputProps={{
+                      setRef: usernameRef,
+                      onboarding: true,
+                    }}
                   >
                     {(args) => {
                       setValue('username', args.value);
@@ -295,13 +300,15 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
 
         <Separator margin="base" />
 
-        <TouchableOpacity
-          style={Styles.register}
-          onPress={props.onLogin}
-          disabled={props.loading}
-        >
-          <Body bold>Login</Body>
-        </TouchableOpacity>
+        <View style={Styles.lower}>
+          <TouchableOpacity
+            style={Styles.register}
+            onPress={props.onLogin}
+            disabled={props.loading}
+          >
+            <Body bold>Login</Body>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </OnboardingPageWrap>
   );

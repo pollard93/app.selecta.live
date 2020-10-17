@@ -11,8 +11,7 @@ export default StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: spacing.xsmall,
-    paddingVertical: spacing.small,
+    padding: spacing.small,
   },
   radius: {
     borderRadius: 2,
@@ -30,6 +29,7 @@ export default StyleSheet.create({
   FB: {
     backgroundColor: color.brands.facebook,
   },
+  // eslint-disable-next-line react-native/no-color-literals
   GOOGLE: {
     backgroundColor: color.brands.google,
   },
@@ -44,14 +44,16 @@ export default StyleSheet.create({
   textLIGHT: {
     color: color.mono.dark,
   },
+  textGOOGLE: {
+    color: color.mono.dark,
+  },
 
 
   /**
    * Icon and loading
    */
   icon: {
-    marginLeft: spacing.small,
-    tintColor: color.mono.light,
+    marginRight: spacing.small,
   },
   loading: {
     marginLeft: spacing.small,

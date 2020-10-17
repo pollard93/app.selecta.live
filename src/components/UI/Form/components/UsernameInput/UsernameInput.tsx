@@ -7,14 +7,14 @@ import { pushToast } from '../../../../../modules/Toast';
 import SearchInput from '../SearchInput/SearchInput';
 import Toast from '../../../Toast/Toast';
 import { updateStoredGetSelf } from '../../../../../utils/userFunctions';
-import TextInput from '../TextInput/TextInput';
+import TextInput, { TextInputProps } from '../TextInput/TextInput';
 import { isUsernameUnique, isUsernameUniqueVariables } from '../../../../../API/query/isUsernameUnique/__generated__/isUsernameUnique';
 
 export interface UsernameInputProps {
   onCompleted?: () => void;
   useTextInput?: boolean; // Uses TextInput instead of SearchInput
   onSubmit?: () => void; // Pass to override internal submission
-  setRef?: any;
+  inputProps?: Partial<TextInputProps>;
   children: (args: {
     disabled: boolean;
     mutationLoading: boolean;
@@ -150,7 +150,6 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
         props.useTextInput
           ? (
             <TextInput
-              setRef={props.setRef}
               name="username"
               value={value}
               onChangeText={setValue}
@@ -160,11 +159,11 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
               returnKeyType="done"
               errors={error && ({ username: { message: error } })}
               onSubmitEditing={onSubmit}
+              {...props.inputProps}
             />
           )
           : (
             <SearchInput
-              setRef={props.setRef}
               name="username"
               value={value}
               onChangeText={setValue}
@@ -175,6 +174,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
               errors={error && ({ username: { message: error } })}
               onSubmitEditing={onSubmit}
               loading={loading}
+              {...props.inputProps}
             />
           )
       }

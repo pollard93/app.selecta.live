@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import { View } from 'react-native';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
@@ -16,6 +17,7 @@ import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/Onboa
 import { store } from '../../../../utils/storage';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../../../modules/Toast';
+import Icon, { ICON } from '../../../UI/Icon/Icon';
 
 interface LoginWithGoogleProps {
   disabled?: boolean;
@@ -138,10 +140,15 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
 
   return (
     <Button
+      icon={(
+        <Icon
+          name={ICON.GOOGLE}
+          size="small"
+        />
+      )}
       type="GOOGLE"
       title={props.buttonText}
       disabled={props.disabled || loading}
-      loading={loading}
       onPress={async () => {
         setLoading(true);
 

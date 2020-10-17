@@ -40,6 +40,9 @@ export default StyleSheet.create({
   NOTIFICATIONS_READ_LIGHT: {
     tintColor: undefined,
   },
+  GOOGLE: {
+    tintColor: undefined,
+  },
   forceLight: {
     tintColor: color.mono.light,
   },

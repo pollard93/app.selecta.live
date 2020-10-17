@@ -14,6 +14,7 @@ import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Icon, { ICON } from '../UI/Icon/Icon';
+import useSafeArea from '../../modules/SafeAreaInsets/SafeAreaInsets';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -28,6 +29,7 @@ export type FormData = {
 };
 
 const LoginView: FC<LoginViewProps> = (props) => {
+  const safeAreaInsets = useSafeArea();
   const lightLogo = require('../../assets/images/logo-dark.png');
   const darkLogo = require('../../assets/images/logo-light.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
@@ -48,19 +50,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
 
   /**
-   * Item 1 opacity
+   * ScrollView item opacities
    */
-  const item1Opacity = useRef(scrollX.interpolate({
-    inputRange: [0, scrollViewWidth / 2],
+  const item0Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth],
     outputRange: [1, 0],
   })).current;
-
-
-  /**
-   * Item 2 opacity
-   */
-  const item2Opacity = useRef(scrollX.interpolate({
-    inputRange: [0, scrollViewWidth / 2],
+  const item1Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth],
     outputRange: [0, 1],
   })).current;
 
@@ -69,11 +66,17 @@ const LoginView: FC<LoginViewProps> = (props) => {
    * Register form
    */
   const { register, setValue, handleSubmit, errors, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
-  const passwordRef = useRef(null);
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true });
   }, [register]);
+
+
+  /**
+   * Refs
+   */
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
 
   return (
@@ -94,6 +97,8 @@ const LoginView: FC<LoginViewProps> = (props) => {
                     style={Styles.arrowBack}
                     onPress={() => {
                       scrollToIndex(0);
+                      // eslint-disable-next-line no-unused-expressions
+                      emailRef.current?.focus();
                     }}
                   >
                     <Icon
@@ -127,11 +132,12 @@ const LoginView: FC<LoginViewProps> = (props) => {
                 style={[
                   Styles.section,
                   { width: scrollViewItemWidth },
-                  { opacity: item1Opacity },
+                  { opacity: item0Opacity },
                 ]}
               >
                 <View>
                   <TextInput
+                    setRef={emailRef}
                     style={Styles.input}
                     name="email"
                     onChangeText={(text) => {
@@ -150,6 +156,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
                       // eslint-disable-next-line no-unused-expressions
                       passwordRef.current?.focus();
                     }}
+                    onboarding
                     testID="email"
                   />
 
@@ -157,6 +164,8 @@ const LoginView: FC<LoginViewProps> = (props) => {
                     style={Styles.arrow}
                     onPress={() => {
                       scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
                     }}
                   >
                     <Icon
@@ -171,7 +180,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
                 style={[
                   Styles.section,
                   { width: scrollViewItemWidth },
-                  { opacity: item2Opacity },
+                  { opacity: item1Opacity },
                 ]}
               >
                 <View>
@@ -191,6 +200,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
                     errors={errors}
                     onBlur={() => triggerValidation('password')}
                     onSubmitEditing={handleSubmit(props.onSubmit)}
+                    onboarding
                     testID="password"
                   />
 
@@ -217,15 +227,6 @@ const LoginView: FC<LoginViewProps> = (props) => {
               </Animated.View>
             </ScrollView>
 
-            <TouchableOpacity
-              style={Styles.forgot}
-              onPress={() => props.onReset(watch('email'))}
-              disabled={props.loading}
-              testID="reset"
-            >
-              <Body>Forgotten Password?</Body>
-            </TouchableOpacity>
-
             <View style={Styles.social}>
               <LoginWithFacebook
                 {...props}
@@ -246,14 +247,25 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
         <Separator margin="base" />
 
-        <TouchableOpacity
-          style={Styles.register}
-          onPress={props.onRegister}
-          disabled={props.loading}
-          testID="register"
-        >
-          <Body bold>Sign up</Body>
-        </TouchableOpacity>
+        <View style={Styles.lower}>
+          <TouchableOpacity
+            style={Styles.register}
+            onPress={props.onRegister}
+            disabled={props.loading}
+            testID="register"
+          >
+            <Body bold>Sign up</Body>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={Styles.forgot}
+            onPress={() => props.onReset(watch('email'))}
+            disabled={props.loading}
+            testID="reset"
+          >
+            <Body>Forgot Password?</Body>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </OnboardingPageWrap>
   );

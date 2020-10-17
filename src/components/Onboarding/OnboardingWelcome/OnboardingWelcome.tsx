@@ -47,6 +47,9 @@ const OnboardingWelcome: FC<OnboardingWelcomeProps> = () => {
                 <UsernameInput
                   onCompleted={onCompleted}
                   useTextInput
+                  inputProps={{
+                    onboarding: true,
+                  }}
                 >
                   {(args) => (
                     <TouchableOpacity

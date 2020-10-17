@@ -45,19 +45,19 @@ export default StyleSheet.create({
     marginRight: spacing.small,
   },
   social: {
+    alignSelf: 'center',
     marginTop: spacing.xxlarge + spacing.base,
     paddingHorizontal: spacing.small,
   },
   google: {
     marginTop: spacing.small,
   },
-  forgot: {
-    alignSelf: 'flex-end',
-    marginTop: spacing.xsmall,
-    paddingHorizontal: spacing.small,
+  lower: {
+    flexDirection: 'row',
+    marginBottom: spacing.small,
+    paddingHorizontal: spacing.base,
   },
   register: {
     alignSelf: 'center',
-    marginBottom: spacing.base,
   },
 });

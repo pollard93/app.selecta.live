@@ -3,7 +3,6 @@ import { TouchableOpacity, ButtonProps as BaseProps, TouchableOpacityProps, View
 import { useDarkMode } from 'react-native-dynamic';
 import Styles from './Button.style';
 import Body from '../Typography/components/Body';
-import Icon, { ICON } from '../Icon/Icon';
 import Gradient from '../Gradient/Gradient';
 import LoadingIcon from '../LoadingIcon/LoadingIcon';
 
@@ -11,7 +10,7 @@ import LoadingIcon from '../LoadingIcon/LoadingIcon';
 export interface ButtonProps extends BaseProps {
   type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'FB' | 'GOOGLE'; // Default PRIMARY
   size?: 'small' | 'regular'; // Default regular
-  icon?: ICON;
+  icon?: JSX.Element;
   loading?: boolean;
   style?: TouchableOpacityProps['style'],
 }
@@ -41,15 +40,14 @@ const Button: FC<ButtonProps> = (props) => {
         Styles[size],
       ]}
     >
+      {props.icon && (
+        <View style={Styles.icon}>
+          {props.icon}
+        </View>
+      )}
+
       <Body bold style={[Styles.text, Styles[`text${type}`]]}>{props.title}</Body>
 
-      {props.icon && !props.loading && (
-        <Icon
-          name={props.icon}
-          size="small"
-          style={Styles.icon}
-        />
-      )}
 
       {props.loading && (
         (

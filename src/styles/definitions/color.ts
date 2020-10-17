@@ -55,7 +55,7 @@ export default {
   // Specific brand colors
   brands: {
     facebook: '#3b5998',
-    google: '#db3236',
+    google: '#d8d8d8',
   },
 
 };

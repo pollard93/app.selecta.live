@@ -13,6 +13,7 @@ export interface TextInputProps extends TextInputPropsRN {
   setRef?: MutableRefObject<TextInputRN>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
+  onboarding?: boolean; // Sets onboarding styles
 }
 
 const TextInput: FC<TextInputProps> = (props) => {
@@ -54,10 +55,21 @@ const TextInput: FC<TextInputProps> = (props) => {
    */
   const wrapClasses = useMemo(() => {
     const classes = [Styles.wrap, dynamicStyles.wrap, props.wrapStyle];
+    if (props.onboarding) classes.push(Styles.wrapOnboarding, dynamicStyles.wrapOnboarding);
     if ((hasContent && props.label !== null) || errorMessage) classes.push(Styles.showingLabel);
     if (props.editable === false) classes.push(Styles.disabled);
     return classes;
-  }, [props.wrapStyle, hasContent, errorMessage, props.editable]);
+  }, [props.wrapStyle, hasContent, errorMessage, props.editable, props.onboarding]);
+
+
+  /**
+   * Get inputClasses
+   */
+  const inputClasses = useMemo(() => {
+    const classes = [Styles.input, dynamicStyles.input, props.style];
+    if (props.onboarding) classes.push(Styles.inputOnboarding);
+    return classes;
+  }, [props.style, props.onboarding]);
 
 
   return (
@@ -75,18 +87,18 @@ const TextInput: FC<TextInputProps> = (props) => {
           }
         }}
         ref={props.setRef}
-        style={[Styles.input, dynamicStyles.input, props.style]}
+        style={inputClasses}
       />
       {
         errorMessage && (
-          <View style={Styles.label} pointerEvents="none">
+          <View style={[Styles.label, props.onboarding && Styles.labelOnboarding]} pointerEvents="none">
             {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.error}>{errorMessage}</Small>}
           </View>
         )
       }
       {
         !errorMessage && hasContent && props.label !== null && (
-          <View style={Styles.label} pointerEvents="none">
+          <View style={[Styles.label, props.onboarding && Styles.labelOnboarding]} pointerEvents="none">
             <Small style={Styles.labelText}>{props.label || capitaliseWords(props.name)}</Small>
           </View>
         )
