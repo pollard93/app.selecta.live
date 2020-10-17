@@ -8,6 +8,8 @@
     "dev:android:deep:linking": "./node_modules/.bin/ts-node ./scripts/dev:android:deep:linking.ts",
     "dev:api": "./node_modules/.bin/ts-node ./scripts/dev:api.ts",
     "dev:appicon": "./node_modules/.bin/ts-node ./scripts/dev:appicon.ts",
+    "dev:fastlane:android": "cd android && fastlane",
+    "dev:fastlane:ios": "cd ios && fastlane",
     "dev:icons": "./node_modules/.bin/ts-node ./scripts/dev:icons.ts",
     "dev:storybook": "rnstl",
     "dev:storybook:disable": "sed -i '' 's/^REACT_APP_APP_STORYBOOK=.*$/REACT_APP_APP_STORYBOOK=false/g' .env.Debug",
