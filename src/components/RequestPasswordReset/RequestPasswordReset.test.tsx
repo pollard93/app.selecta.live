@@ -32,7 +32,6 @@ describe('<RequestPasswordReset />', () => {
       preventDefault: jest.fn,
       persist: jest.fn,
     } as any);
-    await wait(0);
     wrapper.update();
 
     // Button should now be loading
@@ -40,6 +39,7 @@ describe('<RequestPasswordReset />', () => {
     expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Should have called onCompletion
+    await wait(0);
     expect(completionSpy.callCount).to.equal(1);
   });
 

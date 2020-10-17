@@ -26,7 +26,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     aspectRatio: 4.854054054054054,
     flexDirection: 'row',
-    marginBottom: spacing.xxlarge,
+    marginBottom: spacing.xlarge,
     marginLeft: spacing.small,
     width: scalePx(170),
   },

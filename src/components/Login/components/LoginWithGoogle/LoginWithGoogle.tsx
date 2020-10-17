@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { View } from 'react-native';
 import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';

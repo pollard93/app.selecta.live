@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { KeyboardAvoidingView, Platform, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
 import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
@@ -20,7 +20,7 @@ export type FormData = {
   email: string;
 };
 
-const RequestPasswordResetView = (props: RequestPasswordResetViewProps) => {
+const RequestPasswordResetView: FC<RequestPasswordResetViewProps> = (props) => {
   const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {

@@ -24,7 +24,7 @@ export default StyleSheet.create({
   headingWrap: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: spacing.xxlarge,
+    marginBottom: spacing.xlarge,
   },
   section: {
     flexGrow: 0,

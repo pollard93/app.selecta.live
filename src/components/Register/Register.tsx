@@ -3,7 +3,7 @@ import { useApolloClient } from 'react-apollo';
 import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
-import { pushScreen, goToRequireUpdateScreen, goHome } from '../../screens/utils';
+import { goToRequireUpdateScreen, goHome } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';

@@ -248,6 +248,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     inputProps={{
                       setRef: usernameRef,
                       onboarding: true,
+                      testID: 'username',
                     }}
                   >
                     {(args) => {
@@ -284,14 +285,14 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
               <LoginWithFacebook
                 {...props}
                 disabled={props.loading}
-                buttonText="Login with Facebook"
+                buttonText="Continue with Facebook"
               />
 
               <View style={Styles.google}>
                 <LoginWithGoogle
                   {...props}
                   disabled={props.loading}
-                  buttonText="Login with Google"
+                  buttonText="Continue with Google"
                 />
               </View>
             </View>

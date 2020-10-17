@@ -52,9 +52,8 @@ describe('<Register />', () => {
 
     // Test text change and validate form
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
-    wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onBlur();
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
-    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     await wait(0);
     wrapper.update();
 
@@ -117,6 +116,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update
@@ -157,6 +157,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update
@@ -200,6 +201,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update

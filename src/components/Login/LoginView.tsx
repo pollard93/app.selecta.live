@@ -14,7 +14,6 @@ import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Icon, { ICON } from '../UI/Icon/Icon';
-import useSafeArea from '../../modules/SafeAreaInsets/SafeAreaInsets';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -29,7 +28,6 @@ export type FormData = {
 };
 
 const LoginView: FC<LoginViewProps> = (props) => {
-  const safeAreaInsets = useSafeArea();
   const lightLogo = require('../../assets/images/logo-dark.png');
   const darkLogo = require('../../assets/images/logo-light.png');
   const logoUri = new DynamicValue(lightLogo, darkLogo);
@@ -39,7 +37,6 @@ const LoginView: FC<LoginViewProps> = (props) => {
    * Scroll view
    */
   const scrollViewItemWidth = useRef((Dimensions.get('screen').width - spacing.large)).current;
-  const scrollViewWidth = useRef(scrollViewItemWidth * 2).current;
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [step, setStep] = useState<number>(0);
@@ -231,14 +228,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
               <LoginWithFacebook
                 {...props}
                 disabled={props.loading}
-                buttonText="Login with Facebook"
+                buttonText="Continue with Facebook"
               />
 
               <View style={Styles.google}>
                 <LoginWithGoogle
                   {...props}
                   disabled={props.loading}
-                  buttonText="Login with Google"
+                  buttonText="Continue with Google"
                 />
               </View>
             </View>
