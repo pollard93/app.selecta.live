@@ -9,6 +9,7 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 
 interface LoadRetryProps extends Partial<QueryResult> {
   cover?: boolean; // Absolutely fills parent
+  light?: boolean;
 }
 
 const LoadRetry: FC<LoadRetryProps> = (props) => {
@@ -18,7 +19,7 @@ const LoadRetry: FC<LoadRetryProps> = (props) => {
   if (loading || !called) {
     return (
       <View style={[styles.wrap, props.cover && styles.cover]}>
-        <LoadingIcon />
+        <LoadingIcon type={props.light ? 'LIGHT' : undefined} />
       </View>
     );
   }
@@ -41,6 +42,7 @@ const LoadRetry: FC<LoadRetryProps> = (props) => {
           }
         }}
         loading={refetching}
+        type={props.light ? 'LIGHT' : undefined}
       />
     </View>
   );

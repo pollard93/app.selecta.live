@@ -20,6 +20,7 @@ import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
 export interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
   disableFullScreen?: boolean;
+  isChannelPreview?: boolean; // Will not display 'about go live' for a channels go live preview
 }
 
 const StreamVideo: FC<StreamVideoProps> = (props) => {
@@ -193,7 +194,7 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
      * Handle about to go live
      */
     // eslint-disable-next-line no-underscore-dangle
-    if (!props.data.timeFromLive && canGoLive(props.data)) {
+    if (!props.isChannelPreview && !props.data.timeFromLive && canGoLive(props.data)) {
       return (
         <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
           <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>
@@ -228,7 +229,7 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
          * Handle about to go live
          */
         // eslint-disable-next-line no-underscore-dangle
-        if (!props.data.timeFromLive && canGoLive(props.data)) {
+        if (!props.isChannelPreview && !props.data.timeFromLive && canGoLive(props.data)) {
           return (
             <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
               <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>

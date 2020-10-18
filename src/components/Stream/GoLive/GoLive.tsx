@@ -11,14 +11,13 @@ import { useGoLiveMutation } from '../../../API/mutation/goLive/goLive';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { useEndLiveMutation } from '../../../API/mutation/endLive/endLive';
 import GoLiveView from './GoLiveView';
-import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface GoLiveProps {
   id: string;
 }
 
-export type GoLiveState = 'WAITING' | 'CONNECTED' | 'LIVE' | 'ENDED';
+export type GoLiveState = 'WAITING' | 'CONNECTED' | 'LIVE' | 'ENDING' | 'ENDED';
 
 const GoLive: FC<GoLiveProps> = (props) => {
   /**
@@ -37,7 +36,6 @@ const GoLive: FC<GoLiveProps> = (props) => {
   /**
    * Misc
    */
-  const safeAreaInsets = useSafeArea();
   const screenProps = useScreenProps();
 
 
@@ -184,32 +182,46 @@ const GoLive: FC<GoLiveProps> = (props) => {
 
 
   /**
-   * On end live confirm action
+   * On end live
+   */
+  const onStartEndLive = () => {
+    setState('ENDING');
+  };
+
+
+  /**
+   * On end live
+   */
+  const onCancelEndLive = () => {
+    setState('LIVE');
+  };
+
+
+  /**
+   * On end live
    */
   const onEndLive = () => {
-    Alert.alert(
-      'Are you sure you want to end this stream?',
-      '',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Yes', onPress: () => endLiveMutation() },
-      ],
-    );
+    endLiveMutation();
   };
 
 
   return (
-    <View style={[GlobalStyles.PageFill, { paddingBottom: safeAreaInsets.bottom }]}>
+    <View style={GlobalStyles.PageFill}>
       <ChannelSelfHeader onPop={() => Navigation.pop(screenProps.componentId)} />
-      <GoLiveView
-        state={state}
-        streamSelfQueryResult={streamSelfQueryResult}
-        streamUrlQueryResult={streamUrlQueryResult}
-        onGoLive={onGoLive}
-        goLiveLoading={goLiveLoading}
-        onEndLive={onEndLive}
-        endLiveLoading={endLiveLoading}
-      />
+      <View style={GlobalStyles.PageFill}>
+        <GoLiveView
+          id={props.id}
+          state={state}
+          streamSelfQueryResult={streamSelfQueryResult}
+          streamUrlQueryResult={streamUrlQueryResult}
+          onGoLive={onGoLive}
+          goLiveLoading={goLiveLoading}
+          onStartEndLive={onStartEndLive}
+          onCancelEndLive={onCancelEndLive}
+          onEndLive={onEndLive}
+          endLiveLoading={endLiveLoading}
+        />
+      </View>
     </View>
   );
 };

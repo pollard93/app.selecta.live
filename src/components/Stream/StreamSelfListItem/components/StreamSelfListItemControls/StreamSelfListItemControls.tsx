@@ -71,7 +71,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    * or finished
    * return edit button
    */
-  if (props.data.published === null || props.data.timeToLive !== null) {
+  if (props.data.published === null) {
     return (
       <View style={Styles.topRight}>
         <Button
@@ -85,12 +85,53 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
 
 
   /**
+   * If finished
+   * return edit and view button
+   */
+  if (props.data.timeToLive !== null) {
+    return (
+      <View style={Styles.topRight}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+      </View>
+    );
+  }
+
+
+  /**
    * If stream is live
    * Return button to end live if stream is live
    */
   if (props.data.timeFromLive) {
     return (
-      <View style={Styles.centre}>
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
         <Button
           type="PRIMARY"
           title="END LIVE"
@@ -106,7 +147,22 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (canGoLive(props.data)) {
     return (
-      <View style={Styles.centre}>
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
         <Button
           type="PRIMARY"
           title="GO LIVE"

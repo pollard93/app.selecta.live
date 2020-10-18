@@ -7,6 +7,7 @@ import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStrea
 import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import GoLive from './GoLive';
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 storiesOf('Stream/GoLive', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
@@ -27,15 +28,18 @@ storiesOf('Stream/GoLive', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView>
+        <SafeAreaView style={GlobalStyles.PageFill}>
           <GoLiveView
+            endLiveLoading={false}
+            goLiveLoading={false}
+            id=""
+            onCancelEndLive={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            onStartEndLive={console.log}
             state="WAITING"
             streamSelfQueryResult={streamSelfQueryResult}
             streamUrlQueryResult={streamUrlQueryResult}
-            onGoLive={console.log}
-            goLiveLoading={false}
-            onEndLive={console.log}
-            endLiveLoading={false}
           />
         </SafeAreaView>
       );
@@ -59,15 +63,18 @@ storiesOf('Stream/GoLive', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView>
+        <SafeAreaView style={GlobalStyles.PageFill}>
           <GoLiveView
+            endLiveLoading={false}
+            goLiveLoading={false}
+            id=""
+            onCancelEndLive={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            onStartEndLive={console.log}
             state="CONNECTED"
             streamSelfQueryResult={streamSelfQueryResult}
             streamUrlQueryResult={streamUrlQueryResult}
-            onGoLive={console.log}
-            goLiveLoading={false}
-            onEndLive={console.log}
-            endLiveLoading={false}
           />
         </SafeAreaView>
       );
@@ -91,15 +98,53 @@ storiesOf('Stream/GoLive', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView>
+        <SafeAreaView style={GlobalStyles.PageFill}>
           <GoLiveView
+            endLiveLoading={false}
+            goLiveLoading={false}
+            id=""
+            onCancelEndLive={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            onStartEndLive={console.log}
             state="LIVE"
             streamSelfQueryResult={streamSelfQueryResult}
             streamUrlQueryResult={streamUrlQueryResult}
-            onGoLive={console.log}
-            goLiveLoading={false}
-            onEndLive={console.log}
+          />
+        </SafeAreaView>
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('GoLive - ENDING', () => {
+    const TestComponent = () => {
+      const streamSelfQueryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      const streamUrlQueryResult = useGetStreamUrlQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (streamSelfQueryResult.loading) return null;
+      if (streamUrlQueryResult.loading) return null;
+
+      return (
+        <SafeAreaView style={GlobalStyles.PageFill}>
+          <GoLiveView
             endLiveLoading={false}
+            goLiveLoading={false}
+            id=""
+            onCancelEndLive={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            onStartEndLive={console.log}
+            state="ENDING"
+            streamSelfQueryResult={streamSelfQueryResult}
+            streamUrlQueryResult={streamUrlQueryResult}
           />
         </SafeAreaView>
       );
@@ -123,15 +168,18 @@ storiesOf('Stream/GoLive', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView>
+        <SafeAreaView style={GlobalStyles.PageFill}>
           <GoLiveView
+            endLiveLoading={false}
+            goLiveLoading={false}
+            id=""
+            onCancelEndLive={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            onStartEndLive={console.log}
             state="ENDED"
             streamSelfQueryResult={streamSelfQueryResult}
             streamUrlQueryResult={streamUrlQueryResult}
-            onGoLive={console.log}
-            goLiveLoading={false}
-            onEndLive={console.log}
-            endLiveLoading={false}
           />
         </SafeAreaView>
       );

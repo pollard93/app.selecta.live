@@ -52,7 +52,7 @@ const StreamSelfView: FC<StreamSelfViewProps> = (props) => {
    * and stream is within the producers threshold to go live
    * If the stream is yet to start, this will be handled in <StreamVideo />
    */
-  const shouldLoadVideo = props.queryResult.data.getStreamSelf.cancelled !== null
+  const shouldLoadVideo = props.queryResult.data.getStreamSelf.cancelled === null
     && canGoLive(props.queryResult.data.getStreamSelf);
 
 

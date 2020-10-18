@@ -54,7 +54,7 @@ const Button: FC<ButtonProps> = (props) => {
           <LoadingIcon
             size="small"
             type={(() => {
-              switch (props.type) {
+              switch (type) {
                 case 'LIGHT':
                   return 'PRIMARY';
                 default:

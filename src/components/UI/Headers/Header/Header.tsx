@@ -28,7 +28,7 @@ export const useHeaderStyles = () => {
   const safeAreaInsets = useSafeArea();
 
   return ({
-    headerHeight: safeAreaInsets.top === 0 ? scalePx(45) : scalePx(35),
+    headerHeight: safeAreaInsets.top === 0 ? Math.floor(scalePx(45)) : Math.floor(scalePx(35)),
     headerZindex: 100,
   });
 };
