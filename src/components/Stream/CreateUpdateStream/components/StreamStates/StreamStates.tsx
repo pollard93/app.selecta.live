@@ -7,7 +7,6 @@ import CancelStream from '../../../CancelStream/CancelStream';
 import Styles from './StreamStates.style';
 import { formatForTimezone } from '../../../../../utils/functions';
 import H4 from '../../../../UI/Typography/components/H4';
-import { getStreamSelfsVariables } from '../../../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import Button from '../../../../UI/Button/Button';
 import { pushScreen } from '../../../../../screens/utils';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
@@ -16,7 +15,6 @@ import Body from '../../../../UI/Typography/components/Body';
 
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
-  getStreamSelfsVariables: getStreamSelfsVariables;
   onPop?: () => void;
 }
 

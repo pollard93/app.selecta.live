@@ -13,7 +13,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             name: 'Stream Title to go here and here and here And maybe here',
@@ -40,7 +39,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             tags: [],
@@ -58,7 +56,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             published: null,
@@ -76,7 +73,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             cancelled: new Date().toISOString(),
@@ -94,7 +90,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFromLive: null,
@@ -114,7 +109,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFromLive: null,
@@ -134,7 +128,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeToLive: null,
@@ -153,7 +146,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeToLive: new Date().toISOString(), // Has ended

@@ -6,7 +6,6 @@ import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREA
 import Styles, { DynamicStyles } from './StreamSelfListItem.style';
 import Body from '../../UI/Typography/components/Body';
 import H4 from '../../UI/Typography/components/H4';
-import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItemControls from './components/StreamSelfListItemControls/StreamSelfListItemControls';
 import { getStreamDurationPretty } from '../../../utils/streamFunctions';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
@@ -14,7 +13,6 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 
 export interface StreamSelfListItemProps {
   data: STREAM_SELF_FRAGMENT;
-  getStreamSelfsVariables: getStreamSelfsVariables;
 }
 
 const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {

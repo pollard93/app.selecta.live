@@ -45,7 +45,6 @@ describe('<DeleteStream />', () => {
       return (
         <DeleteStream
           data={queryResult.data.getStreamSelf}
-          getStreamSelfsVariables={{}}
           onPop={onPopSpy}
         />
       );
@@ -103,7 +102,6 @@ describe('<DeleteStream />', () => {
       <ApolloProvider client={client}>
         <DeleteStream
           data={{ id: 'test', published: null } as any}
-          getStreamSelfsVariables={{}}
           // eslint-disable-next-line no-console
           onPop={console.log}
         />

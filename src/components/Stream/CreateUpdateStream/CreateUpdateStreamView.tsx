@@ -38,6 +38,7 @@ import Icon, { ICON } from '../../UI/Icon/Icon';
 import { openModalScreen } from '../../../screens/utils';
 import Tags from '../../Tag/Tags/Tags';
 import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
+import { getStreamSelfsVariablesDefault } from '../StreamSelfs/StreamSelfs';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -56,7 +57,6 @@ interface CreateUpdateStreamViewProps {
   channelData: getChannelSelf_getChannelSelf;
   data?: STREAM_SELF_FRAGMENT;
   onCreated: (id: string) => void;
-  getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
   onPop: () => void;
   innerRef?: MutableRefObject<ScrollView>;
@@ -226,12 +226,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       try {
         const queryData = client.readQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
         });
 
         client.writeQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
           data: {
             ...queryData,
             getStreamSelfs: {
@@ -637,7 +637,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 <View style={Styles.inputWrap}>
                   <StreamStates
                     data={props.data}
-                    getStreamSelfsVariables={props.getStreamSelfsVariables}
                     onPop={props.onPop}
                   />
                 </View>

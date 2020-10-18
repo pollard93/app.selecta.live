@@ -23,6 +23,12 @@ class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStr
 
 export interface StreamSelfsProps {}
 
+export const getStreamSelfsVariablesDefault: getStreamSelfsVariables = {
+  first: 5,
+  orderBy: StreamOrderByInput.createdAt_DESC,
+  after: null,
+};
+
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const screenProps = useScreenProps();
   const ref = useRef<FlatList>();
@@ -31,20 +37,14 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   /**
    * Initial Variables
    */
-  const [variables] = useState<getStreamSelfsVariables>({
-    first: 5,
-    orderBy: StreamOrderByInput.createdAt_DESC,
-    after: null,
-  });
+  const [variables] = useState<getStreamSelfsVariables>(getStreamSelfsVariablesDefault);
 
 
   /**
    * Push CreateUpdateStreamScreen
    */
   const onCreate = () => {
-    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {
-      getStreamSelfsVariables: variables,
-    });
+    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {});
   };
 
 
@@ -82,7 +82,6 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
             <StreamSelfListItem
               {...props}
               data={item}
-              getStreamSelfsVariables={variables}
             />
           </View>
         )}

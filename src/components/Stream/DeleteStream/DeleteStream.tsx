@@ -9,10 +9,10 @@ import Button from '../../UI/Button/Button';
 import { getStreamSelfs, getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { pushToast } from '../../../modules/Toast';
+import { getStreamSelfsVariablesDefault } from '../StreamSelfs/StreamSelfs';
 
 interface DeleteStreamProps {
   data: STREAM_SELF_FRAGMENT;
-  getStreamSelfsVariables: getStreamSelfsVariables;
   onPop?: () => void;
 }
 
@@ -34,12 +34,12 @@ const DeleteStream: FC<DeleteStreamProps> = (props) => {
       try {
         const queryData = client.readQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
         });
 
         client.writeQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
           data: {
             ...queryData,
             getStreamSelfs: {

@@ -5,14 +5,12 @@ import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface CreateUpdateStreamProps {
   id?: string;
-  getStreamSelfsVariables?: getStreamSelfsVariables;
 }
 
 export interface CreateUpdateStreamInnerProps extends CreateUpdateStreamProps {
@@ -50,7 +48,6 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
       channelData={getChannelSelf}
       data={queryResult?.data?.getStreamSelf}
       onCreated={setId}
-      getStreamSelfsVariables={props.getStreamSelfsVariables}
       canPopRef={props.canPopRef}
       onPop={() => Navigation.pop(screenProps.componentId)}
       innerRef={props.innerRef}
