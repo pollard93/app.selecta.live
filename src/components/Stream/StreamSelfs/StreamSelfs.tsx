@@ -6,7 +6,7 @@ import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStr
 import { getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
-import H2 from '../../UI/Typography/components/H2';
+import H3 from '../../UI/Typography/components/H3';
 import Button from '../../UI/Button/Button';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
@@ -14,9 +14,10 @@ import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
-import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
+import Gradient from '../../UI/Gradient/Gradient';
+import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
@@ -86,19 +87,19 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           </View>
         )}
         ListHeaderComponent={() => (
-          <View style={Styles.header}>
-            <H2>Stream Management</H2>
+          <Gradient style={Styles.header}>
+            <H3 forceLight>Stream Management</H3>
             <Button
-              type="PRIMARY"
-              title="Create New Stream"
+              type="LIGHT"
+              title="New Stream"
+              size="small"
               onPress={onCreate}
-              style={Styles.createButton}
             />
-          </View>
+          </Gradient>
         )}
         ListFooterComponent={({ queryResult, maxCount }) => {
           if (queryResult.loading) {
-            return <StreamSelfListItemSkeleton />;
+            return <StreamCardSkeleton />;
           }
 
           if (queryResult.error) {

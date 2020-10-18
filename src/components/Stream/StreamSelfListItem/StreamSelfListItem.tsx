@@ -5,15 +5,10 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import Styles, { DynamicStyles } from './StreamSelfListItem.style';
 import Body from '../../UI/Typography/components/Body';
-import Button from '../../UI/Button/Button';
-import H3 from '../../UI/Typography/components/H3';
-import { formatForTimezone } from '../../../utils/functions';
-import { pushScreen } from '../../../screens/utils';
-import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import H4 from '../../UI/Typography/components/H4';
 import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItemControls from './components/StreamSelfListItemControls/StreamSelfListItemControls';
 import { getStreamDurationPretty } from '../../../utils/streamFunctions';
-import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 
@@ -23,77 +18,48 @@ export interface StreamSelfListItemProps {
 }
 
 const StreamSelfListItem: FC<StreamSelfListItemProps> = (props) => {
-  const screenProps = useScreenProps();
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
-  /**
-   * Push CreateUpdateStreamScreen
-   */
-  const onEdit = () => {
-    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {
-      id: props.data.id,
-    });
-  };
-
-
   return (
-    <View style={dynamicStyles.wrap}>
-      <View style={Styles.banner}>
-        <Body bold forceLight style={Styles.bannerHeader}>
-          Live On: {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'DD/MM/Y HH:mm z')}
-          {!props.data.timeFromLive && ' (Upcoming)'}
-        </Body>
-
-        <Button
-          title="Edit"
-          type="LIGHT"
-          onPress={onEdit}
-          size="small"
+    <View style={[Styles.wrap, dynamicStyles.wrap]}>
+      <View style={Styles.imageWrap}>
+        <AsyncImage
+          splashUrl={props.data.image?.url.splash}
+          fullUrl={props.data.image?.url.large}
+          containerProps={{
+            style: Styles.image,
+          }}
         />
+
+        <StreamSelfListItemControls {...props} />
       </View>
 
-      <View style={Styles.body}>
-        <View style={Styles.header}>
-          <H3
-            numberOfLines={3}
-            ellipsizeMode="tail"
-            style={Styles.title}
-          >
-            {props.data.name}
-          </H3>
-          <AsyncImage
-            containerProps={{
-              style: Styles.image,
-            }}
-            fullUrl={props.data.image.url.full}
-            splashUrl={props.data.image.url.splash}
-          />
+      <View style={Styles.item}>
+        <H4
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {props.data.name}
+        </H4>
+      </View>
+
+      {props.data.tags.length > 0 && (
+        <View style={Styles.item}>
+          <Body numberOfLines={1} ellipsizeMode="tail">#{props.data.tags.map((t) => t.title).join(' #')}</Body>
+        </View>
+      )}
+
+      <View style={Styles.item}>
+        <View style={GlobalStyles.CostText}>
+          <Body>Ticket Price: </Body>
+          <Icon name={ICON.CREDIT} size="xsmall" />
+          <Body bold> {props.data.cost}</Body>
         </View>
 
-        <View style={Styles.details}>
-          <View style={Styles.detail}>
-            {props.data.tags.length > 0 && (
-              <Body>{props.data.tags.map(({ title }) => `#${title} `)}</Body>
-            )}
-            <View style={GlobalStyles.CostText}>
-              <Body>Ticket Price: </Body>
-              <Icon name={ICON.CREDIT} size="xsmall" />
-              <Body> {props.data.cost}</Body>
-            </View>
-            <Body>Stream Duration: {getStreamDurationPretty(props.data)}</Body>
-          </View>
-          <View style={Styles.meta}>
-            <Body>Streams: {props.data.viewCount}</Body>
-            <Body>Purchases: {props.data.consumersEdge}</Body>
-          </View>
-        </View>
-
-        <Body bold>{props.data.info}</Body>
-
-        <View style={Styles.controls}>
-          <StreamSelfListItemControls {...props} />
-        </View>
+        <Body>Stream Duration: <Body bold>{getStreamDurationPretty(props.data)}</Body></Body>
+        <Body>Streams: <Body bold>{props.data.viewCount}</Body></Body>
+        <Body>Purchases: <Body bold>{props.data.consumersEdge}</Body></Body>
       </View>
     </View>
   );

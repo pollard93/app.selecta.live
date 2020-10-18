@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react-native';
 import StreamSelfListItem from './StreamSelfListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import StreamSelfListItemSkeleton from './StreamSelfListItemSkeleton';
 
 storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
@@ -164,5 +163,4 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
     };
 
     return <TestComponent />;
-  })
-  .add('StreamSelfsListItemSkeleton', () => <StreamSelfListItemSkeleton />);
+  });

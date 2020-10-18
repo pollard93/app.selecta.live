@@ -12,6 +12,10 @@ export default StyleSheet.create({
     width: scalePx(160),
   },
   header: {
-    padding: spacing.small,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.small,
+    paddingVertical: spacing.base,
   },
 });

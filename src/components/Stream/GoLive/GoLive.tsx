@@ -12,7 +12,7 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 import { useEndLiveMutation } from '../../../API/mutation/endLive/endLive';
 import GoLiveView from './GoLiveView';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
-import Header from '../../UI/Headers/Header/Header';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface GoLiveProps {
   id: string;
@@ -200,7 +200,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
 
   return (
     <View style={[GlobalStyles.PageFill, { paddingBottom: safeAreaInsets.bottom }]}>
-      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <ChannelSelfHeader onPop={() => Navigation.pop(screenProps.componentId)} />
       <GoLiveView
         state={state}
         streamSelfQueryResult={streamSelfQueryResult}
