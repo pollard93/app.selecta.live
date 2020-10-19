@@ -118,6 +118,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                       // Validate on change if there's an error, otherwise validate onBlur
                       setValue('email', text, !!errors.email);
                     }}
+                    textContentType="emailAddress"
                     placeholder="Enter your email"
                     autoCompleteType="email"
                     keyboardType="email-address"
@@ -184,6 +185,7 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                       // Validate on change if there's an error, otherwise validate onBlur
                       setValue('password', text, !!errors.password);
                     }}
+                    textContentType="newPassword"
                     placeholder="Enter your password"
                     secureTextEntry
                     autoCompleteType="password"

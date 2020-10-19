@@ -76,6 +76,7 @@ const RequestPasswordResetView: FC<RequestPasswordResetViewProps> = (props) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('email', text, !!errors.email);
                   }}
+                  textContentType="emailAddress"
                   placeholder="Enter your email"
                   autoCompleteType="email"
                   keyboardType="email-address"

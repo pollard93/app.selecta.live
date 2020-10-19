@@ -142,6 +142,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
                       setValue('email', text, !!errors.email);
                     }}
                     placeholder="Enter your email"
+                    textContentType="emailAddress"
                     autoCompleteType="email"
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -189,6 +190,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
                       // Validate on change if there's an error, otherwise validate onBlur
                       setValue('password', text, !!errors.password);
                     }}
+                    textContentType="password"
                     placeholder="Enter your password"
                     secureTextEntry
                     autoCompleteType="password"

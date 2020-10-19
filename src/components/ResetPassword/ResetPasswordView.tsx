@@ -68,6 +68,7 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('password', text, !!errors.password);
                   }}
+                  textContentType="newPassword"
                   placeholder="Enter new password"
                   secureTextEntry
                   autoCompleteType="password"

@@ -16,6 +16,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   backgroundImage: {
+    maxWidth: '20%',
     opacity: 0.2,
   },
   bottom: {

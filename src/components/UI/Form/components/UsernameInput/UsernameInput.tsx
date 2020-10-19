@@ -24,10 +24,6 @@ export interface UsernameInputProps {
   }) => ReactNode;
 }
 
-type FormData = {
-  username: string;
-};
-
 const UsernameInput: FC<UsernameInputProps> = (props) => {
   const client = useApolloClient();
 
@@ -159,6 +155,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
               returnKeyType="done"
               errors={error && ({ username: { message: error } })}
               onSubmitEditing={onSubmit}
+              textContentType="username"
               {...props.inputProps}
             />
           )
@@ -174,6 +171,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
               errors={error && ({ username: { message: error } })}
               onSubmitEditing={onSubmit}
               loading={loading}
+              textContentType="username"
               {...props.inputProps}
             />
           )
