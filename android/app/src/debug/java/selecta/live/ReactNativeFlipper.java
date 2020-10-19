@@ -1,4 +1,4 @@
-package live.selecta.app;
+package selecta.live;
 
 import android.content.Context;
 import com.facebook.flipper.android.AndroidFlipperClient;

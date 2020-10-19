@@ -1,4 +1,4 @@
-package live.selecta.app;
+package selecta.live;
 
 import android.app.Application;
 import android.content.Context;
@@ -67,7 +67,7 @@ public class MainApplication extends NavigationApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("live.selecta.app.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("selecta.live.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

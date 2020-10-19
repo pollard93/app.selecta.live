@@ -2,15 +2,15 @@
 /* eslint-disable prefer-spread */
 export const getProductConfig = () => [
   {
-    productId: 'live.selecta.app.debug.consumable.tier1',
+    productId: 'selecta.live.debug.consumable.tier1',
     credit: 10,
   },
   {
-    productId: 'live.selecta.app.debug.consumable.tier2',
+    productId: 'selecta.live.debug.consumable.tier2',
     credit: 20,
   },
   {
-    productId: 'live.selecta.app.debug.consumable.tier3',
+    productId: 'selecta.live.debug.consumable.tier3',
     credit: 30,
   },
 ];
