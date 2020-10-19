@@ -58,9 +58,6 @@ describe('<Login >', () => {
     // Test password is secure
     expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Login Button is disabled as default
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
-
     // Test text change and validate form
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onBlur();
@@ -68,9 +65,6 @@ describe('<Login >', () => {
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
     await wait(0);
     wrapper.update();
-
-    // Form should now be valid
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
     await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
@@ -80,8 +74,9 @@ describe('<Login >', () => {
     await wait(0);
     wrapper.update();
 
-    // Button is now be loading
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -102,18 +97,14 @@ describe('<Login >', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
-
-    // Update - button should not return to enabled as no errors
-    wrapper.update();
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
-  it('should remove token on mount, should toast, disconnect listeners and hide splash screen', async () => {
+  it('should remove token on mount, disconnect listeners and hide splash screen', async () => {
     const client = mockClient();
 
     /**
@@ -132,7 +123,7 @@ describe('<Login >', () => {
      */
     mount(
       <ApolloProvider client={client}>
-        <Login toastMessage="test" />
+        <Login />
       </ApolloProvider>,
     );
 
@@ -153,13 +144,6 @@ describe('<Login >', () => {
     } catch (e) {
       assert.isOk(true);
     }
-
-
-    /**
-     * Should toast if prop passed
-     */
-
-    expect(toastSpy.callCount).to.equal(1);
 
 
     /**
@@ -289,7 +273,7 @@ describe('<Login >', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen

@@ -1,35 +1,63 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../styles/definitions/spacing';
-import scalePx from '../../utils/scalePx';
 
 export default StyleSheet.create({
-  scrollView: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingVertical: spacing.xlarge,
+  wrap: {
+    alignItems: 'stretch',
+    flexDirection: 'row',
   },
-  logoWrap: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    aspectRatio: 3.078767123287671,
+  gradient: {
+    width: spacing.large,
+  },
+  flex: {
+    flex: 1,
+  },
+  scrollViewWrap: {
+    flex: 1,
     justifyContent: 'center',
+    paddingVertical: spacing.base,
+  },
+  scrollViewInner: {
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  headingWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
     marginBottom: spacing.xlarge,
-    maxWidth: scalePx(300),
-    width: '80%',
+  },
+  section: {
+    flexGrow: 0,
+    paddingHorizontal: spacing.small,
   },
   input: {
-    flexGrow: 0,
-    marginBottom: spacing.small,
+    paddingRight: spacing.xlarge,
   },
-  forgot: {
-    alignSelf: 'flex-end',
-    marginTop: spacing.xsmall,
+  arrow: {
+    bottom: 0,
+    justifyContent: 'center',
+    paddingRight: spacing.xsmall,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  arrowBack: {
+    marginRight: spacing.small,
+  },
+  social: {
+    alignSelf: 'center',
+    marginTop: spacing.xxlarge + spacing.base,
+    paddingHorizontal: spacing.small,
+  },
+  google: {
+    marginTop: spacing.small,
+  },
+  lower: {
+    flexDirection: 'row',
+    marginBottom: spacing.small,
+    paddingHorizontal: spacing.base,
   },
   register: {
     alignSelf: 'center',
-  },
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.3,
   },
 });

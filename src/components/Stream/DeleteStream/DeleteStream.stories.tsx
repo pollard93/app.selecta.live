@@ -17,7 +17,6 @@ storiesOf('Stream/DeleteStream', module)
 
       return (
         <DeleteStream
-          getStreamSelfsVariables={{}}
           data={queryResult.data.getStreamSelf}
         />
       );

@@ -1,11 +1,11 @@
 import React, { FC, useRef } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
-import Header from '../../UI/Headers/Header/Header';
 import UpdateChannelView from './UpdateChannelView';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 interface UpdateChannelProps {}
 
@@ -13,6 +13,7 @@ const UpdateChannel: FC<UpdateChannelProps> = () => {
   const { data: { getChannelSelf } } = useGetChannelSelfQuery();
   const canPopRef = useRef();
   const screenProps = useScreenProps();
+  const ref = useRef<ScrollView>();
 
 
   /**
@@ -37,10 +38,26 @@ const UpdateChannel: FC<UpdateChannelProps> = () => {
   };
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollTo(0);
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={onPop} />
-      <UpdateChannelView data={getChannelSelf} canPopRef={canPopRef} />
+      <ChannelSelfHeader
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
+      <UpdateChannelView
+        data={getChannelSelf}
+        canPopRef={canPopRef}
+        innerRef={ref}
+      />
     </View>
   );
 };

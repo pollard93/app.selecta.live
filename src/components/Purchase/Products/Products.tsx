@@ -1,39 +1,37 @@
-import React, { useEffect, useState, FC } from 'react';
-import { View, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useEffect, useState, FC, useRef } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { useApolloClient } from 'react-apollo';
-import { FlatList } from 'react-native-gesture-handler';
-import { useDynamicValue } from 'react-native-dynamic';
-import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { useGetSelf } from '../../../API/query/getSelf/getSelf';
+import { Navigation } from 'react-native-navigation';
 import { GET_PRODUCT_CONFIG_QUERY } from '../../../API/query/getProductConfig/getProductConfig';
 import { getProductConfig } from '../../../API/query/getProductConfig/__generated__/getProductConfig';
-import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import H2 from '../../UI/Typography/components/H2';
-import H3 from '../../UI/Typography/components/H3';
-import Body from '../../UI/Typography/components/Body';
 import Styles from './Products.style';
 import Gradient from '../../UI/Gradient/Gradient';
-import Icon, { ICON } from '../../UI/Icon/Icon';
 import Toast from '../../UI/Toast/Toast';
-import FadeInView from '../../UI/FadeInView/FadeInView';
 import { pushToast } from '../../../modules/Toast';
+import DrawerV2 from '../../UI/DrawerV2/DrawerV2';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
+import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 interface Product extends RNIap.Product {
   credit: number;
 }
 
-export interface ProductsProps {
-  onDismiss: () => void;
-}
+export interface ProductsProps {}
 
-const Products: FC<ProductsProps> = (props) => {
+const Products: FC<ProductsProps> = () => {
+  const screenProps = useScreenProps();
   const client = useApolloClient();
-  const self = useGetSelf();
+  const safeAreaInsets = useSafeArea();
   const [availableProducts, setAvailableProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+  const onCloseRef = useRef<() => void>();
+
+
+  const onDismiss = () => {
+    Navigation.dismissModal(screenProps.componentId);
+  };
 
 
   /**
@@ -43,7 +41,6 @@ const Products: FC<ProductsProps> = (props) => {
    */
   const getAvailableProducts = async () => {
     setLoading(true);
-    setError(false);
 
     try {
       /**
@@ -52,7 +49,6 @@ const Products: FC<ProductsProps> = (props) => {
        */
       const { data } = await client.query<getProductConfig>({
         query: GET_PRODUCT_CONFIG_QUERY,
-        fetchPolicy: 'network-only',
       });
 
 
@@ -66,16 +62,37 @@ const Products: FC<ProductsProps> = (props) => {
 
 
       /**
-       * Set products in state, merging their credit from data.getProductConfig
+       * Set only the available products in state
+       * (the products that are returned from getProductConfig and that are available in getProducts)
        */
-      setAvailableProducts(products.map((p) => ({
-        ...p,
-        credit: data.getProductConfig.find((pc) => pc.productId === p.productId).credit,
-      })));
+      setAvailableProducts(data.getProductConfig.reduce((a, c) => {
+        const product = products.find((p) => p.productId === c.productId);
+        if (product) {
+          return a.concat({
+            ...product,
+            credit: c.credit,
+          });
+        }
+        return a;
+      }, []));
+
       setLoading(false);
     } catch (err) {
-      setLoading(false);
-      setError(true);
+      /**
+       * Close modal on error and toast
+       */
+      onDismiss();
+
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Something went wrong'
+          />
+        ),
+        dismissible: false,
+      });
     }
   };
 
@@ -90,10 +107,13 @@ const Products: FC<ProductsProps> = (props) => {
 
   /**
    * Requests a purchase from native
+   * Close modal
    */
   const purchaseProduct = async (productId: string) => {
     try {
       await RNIap.requestPurchase(productId, false);
+      // eslint-disable-next-line no-unused-expressions
+      onCloseRef.current?.();
     } catch (err) {
       if (err.code !== RNIap.IAPErrorCode.E_USER_CANCELLED) {
         pushToast({
@@ -111,54 +131,35 @@ const Products: FC<ProductsProps> = (props) => {
   };
 
 
+  /**
+   * Loading
+   */
+  if (loading) return null;
+
+
   return (
-    <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill]}>
-      <View style={[GlobalStyles.PageFill, Styles.wrap]}>
-        <TouchableOpacity
-          onPress={props.onDismiss}
-          style={Styles.dismiss}
-        >
-          <Icon name={ICON.CROSS} size="small" />
-        </TouchableOpacity>
+    <DrawerV2 onClosed={onDismiss}>
+      {({ onClose }) => {
+        onCloseRef.current = onClose;
 
-        <H2>Top Up</H2>
-        <H3>Your Balance: {self.credit}</H3>
-        <Body bold>Select the amount of credit's you'd like to purchase</Body>
-
-        {
-          loading || error
-            ? (
-              <LoadRetry
-                loading={!error && loading}
-                refetch={getAvailableProducts as any}
-              />
-            )
-            : (
-              <FadeInView style={[GlobalStyles.PageFill, Styles.list]}>
-                <FlatList
-                  bounces={false}
-                  data={availableProducts}
-                  showsVerticalScrollIndicator={false}
-                  ItemSeparatorComponent={() => <View style={Styles.separator} />}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() => {
-                        purchaseProduct(item.productId);
-                      }}
-                    >
-                      <Gradient style={Styles.item}>
-                        <H2 forceLight>{item.credit} Credits</H2>
-                        <H2 forceLight>{item.localizedPrice}</H2>
-                      </Gradient>
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item.productId}
-                />
-              </FadeInView>
-            )
-        }
-      </View>
-    </SafeAreaView>
+        return (
+          <View style={[Styles.wrap, { paddingBottom: safeAreaInsets.bottom }]}>
+            {availableProducts.map((item) => (
+              <TouchableOpacity
+                onPress={() => {
+                  purchaseProduct(item.productId);
+                }}
+              >
+                <Gradient style={Styles.item}>
+                  <H2 forceLight>{item.credit} Credits</H2>
+                  <H2 forceLight>{item.localizedPrice}</H2>
+                </Gradient>
+              </TouchableOpacity>
+            ))}
+          </View>
+        );
+      }}
+    </DrawerV2>
   );
 };
 

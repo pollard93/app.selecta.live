@@ -1,19 +1,26 @@
-import React, { FC, Ref, useMemo } from 'react';
+import React, { FC, MutableRefObject, useMemo, useState } from 'react';
 import { TextInput as TextInputRN, TextInputProps as TextInputPropsRN, View, StyleProp, ViewStyle } from 'react-native';
 import { FieldError, NestDataObject } from 'react-hook-form';
-import Styles from './TextInput.style';
+import { useDynamicValue } from 'react-native-dynamic';
+import Styles, { DynamicStyles } from './TextInput.style';
 import color from '../../../../../styles/definitions/color';
 import Small from '../../../Typography/components/Small';
-import { parseCamelCase } from '../../../../../utils/functions';
+import { capitaliseWords, parseCamelCase } from '../../../../../utils/functions';
 
 export interface TextInputProps extends TextInputPropsRN {
   name: string;
-  setRef?: Ref<any>;
+  label?: string; // Defaults to name, pass null to hide
+  setRef?: MutableRefObject<TextInputRN>;
   errors?: NestDataObject<any, FieldError>; // The entire errors object from react-hook-form
   wrapStyle?: StyleProp<ViewStyle>;
+  onboarding?: boolean; // Sets onboarding styles
 }
 
 const TextInput: FC<TextInputProps> = (props) => {
+  const [hasContent, setHasContent] = useState(!!props.defaultValue);
+  const dynamicStyles = useDynamicValue(DynamicStyles);
+
+
   /**
    * Get error message from props.errors
    * Checks react-hook-forms error object for an error using props.name
@@ -24,7 +31,6 @@ const TextInput: FC<TextInputProps> = (props) => {
 
     // If message is defined then return it
     if (props.errors[props.name].message) {
-      if (props.errors[props.name].message === 'DO_NOT_DISPLAY') return null;
       return props.errors[props.name].message;
     }
 
@@ -44,19 +50,59 @@ const TextInput: FC<TextInputProps> = (props) => {
   }, [props.errors && props.errors[props.name]]);
 
 
+  /**
+   * Get wrapClasses
+   */
+  const wrapClasses = useMemo(() => {
+    const classes = [Styles.wrap, dynamicStyles.wrap, props.wrapStyle];
+    if (props.onboarding) classes.push(Styles.wrapOnboarding, dynamicStyles.wrapOnboarding);
+    if ((hasContent && props.label !== null) || errorMessage) classes.push(Styles.showingLabel);
+    if (props.editable === false) classes.push(Styles.disabled);
+    return classes;
+  }, [props.wrapStyle, hasContent, errorMessage, props.editable, props.onboarding]);
+
+
+  /**
+   * Get inputClasses
+   */
+  const inputClasses = useMemo(() => {
+    const classes = [Styles.input, dynamicStyles.input, props.style];
+    if (props.onboarding) classes.push(Styles.inputOnboarding);
+    return classes;
+  }, [props.style, props.onboarding]);
+
+
   return (
-    <View style={[Styles.wrap, props.wrapStyle, errorMessage && Styles.wrapError, props.editable === false && Styles.disabled]}>
+    <View style={wrapClasses}>
       <TextInputRN
         placeholderTextColor={color.mono.pale.dark}
         {...props}
+        onChangeText={(v) => {
+          props.onChangeText(v);
+
+          if (!hasContent && !!v) {
+            setHasContent(true);
+          } else if (hasContent && !v) {
+            setHasContent(false);
+          }
+        }}
         ref={props.setRef}
-        style={[Styles.input, props.style]}
+        style={inputClasses}
       />
-      {errorMessage && (
-        <View style={Styles.error} pointerEvents="none">
-          {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.errorText}>{errorMessage}</Small>}
-        </View>
-      )}
+      {
+        errorMessage && (
+          <View style={[Styles.label, props.onboarding && Styles.labelOnboarding]} pointerEvents="none">
+            {React.isValidElement(errorMessage) ? errorMessage : <Small style={Styles.error}>{errorMessage}</Small>}
+          </View>
+        )
+      }
+      {
+        !errorMessage && hasContent && props.label !== null && (
+          <View style={[Styles.label, props.onboarding && Styles.labelOnboarding]} pointerEvents="none">
+            <Small style={Styles.labelText}>{props.label || capitaliseWords(props.name)}</Small>
+          </View>
+        )
+      }
     </View>
   );
 };

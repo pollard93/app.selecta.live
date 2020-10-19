@@ -24,6 +24,7 @@ import { getStreamProfiles } from './resolvers/query/getStreamProfiles/getStream
 import { getStreamSelf } from './resolvers/query/getStreamSelf/getStreamSelf';
 import { getStreamSelfs } from './resolvers/query/getStreamSelfs/getStreamSelfs';
 import { getStreamUrl } from './resolvers/query/getStreamUrl/getStreamUrl';
+import { isUsernameUnique } from './resolvers/query/isUsernameUnique/isUsernameUnique';
 import { purchaseStream } from './resolvers/mutation/purchaseStream/purchaseStream';
 import { putStreamComment } from './resolvers/mutation/putStreamComment/putStreamComment';
 import { putStreamMessage } from './resolvers/mutation/putStreamMessage/putStreamMessage';
@@ -61,6 +62,7 @@ export default {
     getStreamSelf,
     getStreamSelfs,
     getStreamUrl,
+    isUsernameUnique,
   }),
   DateTime: () => new Date(0).toISOString(),
   Url: () => ({

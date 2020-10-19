@@ -40,6 +40,11 @@ export interface getChannelSelfs_getChannelSelfs_channels_profileImage {
   url: getChannelSelfs_getChannelSelfs_channels_profileImage_url | null;
 }
 
+export interface getChannelSelfs_getChannelSelfs_channels_tags {
+  __typename: "TagProfile";
+  title: string | null;
+}
+
 export interface getChannelSelfs_getChannelSelfs_channels {
   __typename: "ChannelSelf";
   id: string;
@@ -47,6 +52,7 @@ export interface getChannelSelfs_getChannelSelfs_channels {
   description: string | null;
   coverImage: getChannelSelfs_getChannelSelfs_channels_coverImage | null;
   profileImage: getChannelSelfs_getChannelSelfs_channels_profileImage | null;
+  profileImageColor: string | null;
   verified: boolean | null;
   unreadNotificationCount: number | null;
   followersEdge: number | null;
@@ -63,6 +69,7 @@ export interface getChannelSelfs_getChannelSelfs_channels {
   instagramUrl: string | null;
   viewCount: number | null;
   createdAt: any | null;
+  tags: (getChannelSelfs_getChannelSelfs_channels_tags | null)[] | null;
 }
 
 export interface getChannelSelfs_getChannelSelfs {

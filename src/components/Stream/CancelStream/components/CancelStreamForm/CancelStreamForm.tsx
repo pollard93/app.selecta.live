@@ -1,21 +1,22 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, View, StyleSheet, Dimensions } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useForm } from 'react-hook-form';
+import { Navigation } from 'react-native-navigation';
 import { STREAM_SELF_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useCancelStreamMutation } from '../../../../../API/mutation/cancelStream/cancelStream';
 import { getGQLErrorMessage } from '../../../../../utils/functions';
 import Toast from '../../../../UI/Toast/Toast';
 import Button from '../../../../UI/Button/Button';
-import GlobalStyles from '../../../../../styles/stylesheets/GlobalStyles';
 import TextArea from '../../../../UI/Form/components/TextArea/TextArea';
 import Styles from './CancelStreamForm.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import spacing from '../../../../../styles/definitions/spacing';
 import { pushToast } from '../../../../../modules/Toast';
+import DrawerV2 from '../../../../UI/DrawerV2/DrawerV2';
+import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 interface CancelStreamFormProps {
   data: STREAM_SELF_FRAGMENT;
-  onDismiss: (success?: boolean) => void;
 }
 
 type FormData = {
@@ -26,7 +27,7 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
@@ -54,8 +55,8 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
    * Misc
    */
   const safeAreaInsets = useSafeArea();
-  const window = useRef(Dimensions.get('window')).current;
-  const windowHeight = useRef(window.height - safeAreaInsets.bottom).current;
+  const screenProps = useScreenProps();
+  const onCloseRef = useRef<() => void>();
 
 
   /**
@@ -63,7 +64,19 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
    */
   const [mutation, { loading }] = useCancelStreamMutation({
     onCompleted: () => {
-      props.onDismiss(true);
+      // eslint-disable-next-line no-unused-expressions
+      onCloseRef.current?.();
+
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="SUCCESS"
+            content="Stream cancelled"
+          />
+        ),
+        dismissible: false,
+      });
     },
     onError: (e) => {
       pushToast({
@@ -109,48 +122,45 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
 
 
   return (
-    <ScrollView
-      style={[GlobalStyles.PageFill, StyleSheet.absoluteFillObject, Styles.wrap]}
-      contentContainerStyle={[Styles.flexEnd, { height: windowHeight }]}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[GlobalStyles.PageFill, Styles.flexEnd]}
-      >
-        <View style={[Styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
-          <View>
+    <DrawerV2 onClosed={() => Navigation.dismissModal(screenProps.componentId)}>
+      {({ onClose }) => {
+        onCloseRef.current = onClose;
+
+        return (
+          <View style={[Styles.inner, { paddingBottom: safeAreaInsets.bottom + spacing.small }]}>
+            <View>
+              <Button
+                title="back"
+                type="SECONDARY"
+                size="small"
+                onPress={onClose}
+                disabled={loading}
+                style={Styles.backButton}
+              />
+            </View>
+
+            <TextArea
+              name="message"
+              onChangeText={(text) => {
+                // Validate on change if there's an error, otherwise validate onBlur
+                setValue('message', text, !!errors.message);
+              }}
+              placeholder="Enter a message for your fans"
+              returnKeyType="default"
+              errors={errors}
+              onBlur={() => triggerValidation('message')}
+            />
+
             <Button
-              title="back"
-              type="SECONDARY"
-              size="small"
-              onPress={() => props.onDismiss()}
-              disabled={loading}
-              style={Styles.backButton}
+              title={loading ? 'Cancelling' : 'Cancel Stream'}
+              onPress={handleSubmit(onAlert)}
+              loading={loading}
+              style={Styles.button}
             />
           </View>
-
-          <TextArea
-            name="message"
-            onChangeText={(text) => {
-              // Validate on change if there's an error, otherwise validate onBlur
-              setValue('message', text, !!errors.message);
-            }}
-            placeholder="Enter a message for your fans"
-            returnKeyType="default"
-            errors={errors}
-            onBlur={() => triggerValidation('message')}
-          />
-
-          <Button
-            title={loading ? 'Cancelling' : 'Cancel Stream'}
-            onPress={handleSubmit(onAlert)}
-            disabled={!isValid || !dirty}
-            loading={loading}
-            style={Styles.button}
-          />
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        );
+      }}
+    </DrawerV2>
   );
 };
 

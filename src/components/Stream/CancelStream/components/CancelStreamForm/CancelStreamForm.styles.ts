@@ -10,8 +10,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
   },
   inner: {
-    backgroundColor: color.mono.light,
-    padding: spacing.small,
+    paddingHorizontal: spacing.small,
   },
   backButton: {
     alignSelf: 'flex-start',

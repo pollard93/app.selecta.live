@@ -1,7 +1,6 @@
 import { Navigation, OptionsModalPresentationStyle, OptionsModalTransitionStyle, Options } from 'react-native-navigation';
 import React, { useState, useEffect, FC } from 'react';
 import { LoginScreenName } from '../LoginScreen/LoginScreen';
-import { LoginProps } from '../../components/Login/Login';
 import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScreen';
 import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
@@ -18,7 +17,7 @@ import { ConsumingStreamProfilesScreenName } from '../ConsumingStreamProfilesScr
  * Resets navigation stack to login screen using STACK.ONBOARDING
  * @param toastMessage - optional toast message to show on mount of login
  */
-export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
+export const goToLogin = () => Navigation.setRoot({
   root: {
     stack: {
       id: STACK.ONBOARDING,
@@ -26,7 +25,6 @@ export const goToLogin = (passProps: LoginProps = {}) => Navigation.setRoot({
         {
           component: {
             name: LoginScreenName,
-            passProps,
           },
         },
       ],
@@ -55,7 +53,6 @@ export const goToOnboarding = () => Navigation.setRoot({
 
 interface GoHomeProps {
   currentTabIndex?: number; // Default 0
-  passProps?: any; // Pass props
 }
 
 /**
@@ -76,7 +73,6 @@ export const goHome = (props?: GoHomeProps) => {
                 {
                   component: {
                     name: HomeFeedScreenName,
-                    passProps: currentTabIndex === 0 && props?.passProps,
                   },
                 },
               ],
@@ -86,7 +82,6 @@ export const goHome = (props?: GoHomeProps) => {
                   selectedIcon: require('../../assets/images/icons/tabs/feed-selected.png'),
                   iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
-                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
               },
             },
@@ -98,7 +93,6 @@ export const goHome = (props?: GoHomeProps) => {
                 {
                   component: {
                     name: ConsumingStreamProfilesScreenName,
-                    passProps: currentTabIndex === 1 && props?.passProps,
                   },
                 },
               ],
@@ -108,7 +102,6 @@ export const goHome = (props?: GoHomeProps) => {
                   selectedIcon: require('../../assets/images/icons/tabs/streams-selected.png'),
                   iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
-                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
               },
             },
@@ -120,7 +113,6 @@ export const goHome = (props?: GoHomeProps) => {
                 {
                   component: {
                     name: WalletScreenName,
-                    passProps: currentTabIndex === 2 && props?.passProps,
                   },
                 },
               ],
@@ -130,7 +122,6 @@ export const goHome = (props?: GoHomeProps) => {
                   selectedIcon: require('../../assets/images/icons/tabs/wallet-selected.png'),
                   iconColor: color.monoDarkMode.pale.dark,
                   selectedIconColor: color.accent.primary,
-                  iconInsets: { top: 10, left: 0, bottom: -10, right: 0 },
                 },
               },
             },
@@ -140,6 +131,7 @@ export const goHome = (props?: GoHomeProps) => {
           bottomTabs: {
             currentTabIndex,
             tabsAttachMode: 'onSwitchToTab',
+            titleDisplayMode: 'alwaysHide',
           },
         },
       },
@@ -217,29 +209,34 @@ export const pushScreen = <T extends FC>(stack: STACK | string, screen: T, props
  * @param screen - Screen class, ScreenName is aquired from the
  * @param props - Props of screen class
  */
-export const openScreenAsModal = <T extends FC>(stack: STACK, screen: T, props: ExtractProps<T>) => Navigation.showModal({
-  stack: {
-    id: stack,
-    children: [
-      {
-        component: {
-          id: screen.prototype.ScreenName,
-          name: screen.prototype.ScreenName,
-          passProps: props,
-          options: {
-            modalTransitionStyle: OptionsModalTransitionStyle.crossDissolve,
-            modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-            animations: {
-              showModal: {
-                waitForRender: true,
+export const openScreenAsModal = <T extends FC>(
+  stack: STACK,
+  screen: T,
+  props: ExtractProps<T>,
+  modalTransitionStyle = OptionsModalTransitionStyle.crossDissolve,
+) => Navigation.showModal({
+    stack: {
+      id: stack,
+      children: [
+        {
+          component: {
+            id: screen.prototype.ScreenName,
+            name: screen.prototype.ScreenName,
+            passProps: props,
+            options: {
+              modalTransitionStyle,
+              modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+              animations: {
+                showModal: {
+                  waitForRender: true,
+                },
               },
             },
           },
         },
-      },
-    ],
-  },
-});
+      ],
+    },
+  });
 
 
 /**
@@ -278,13 +275,9 @@ export const openModalScreen = (
 export const openTopUpModal = () => {
   openModalScreen({
     component: (
-      <Products
-        onDismiss={() => {
-          Navigation.dismissModal('TopUpModal');
-        }}
-      />
+      <Products />
     ),
-  }, 'TopUpModal');
+  }, 'TopUpModal', OptionsModalTransitionStyle.crossDissolve);
 };
 
 

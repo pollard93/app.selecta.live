@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react-native';
 import { View } from 'react-native';
 import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import Button from './Button';
-import { ICON } from '../Icon/Icon';
+import Icon, { ICON } from '../Icon/Icon';
 
 storiesOf('UI/Button', module)
   .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{getStory()}</CenterView>)
@@ -27,7 +27,6 @@ storiesOf('UI/Button', module)
     <Button
       title="Primary"
       onPress={console.log}
-      icon={ICON.SEARCH}
       loading
     />
   ))
@@ -88,14 +87,24 @@ storiesOf('UI/Button', module)
     <Button
       title="Icon"
       onPress={console.log}
-      icon={ICON.SEARCH}
+      icon={(
+        <Icon
+          name={ICON.SEARCH}
+          size="small"
+        />
+      )}
     />
   ))
   .add('Button - icon - disabled', () => (
     <Button
       title="Icon"
       onPress={console.log}
-      icon={ICON.SEARCH}
+      icon={(
+        <Icon
+          name={ICON.SEARCH}
+          size="small"
+        />
+      )}
       disabled
     />
   ))

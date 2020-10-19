@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useState, FC } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, FC, useRef } from 'react';
+import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { GET_CONSUMING_STREAM_PROFILES } from '../../../API/query/getConsumingStreamProfiles/getConsumingStreamProfiles';
 // eslint-disable-next-line max-len
@@ -17,6 +17,7 @@ import { useDebounce } from '../../../utils/functions';
 import Header, { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
+import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 
 class ConsumingStreamProfilesFlatList extends ApolloFlatList<getConsumingStreamProfilesVariables, getConsumingStreamProfiles, getConsumingStreamProfiles_getConsumingStreamProfiles_streams> {}
 
@@ -25,6 +26,8 @@ export interface ConsumingStreamProfilesProps {}
 const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   const screenProps = useScreenProps();
   const { headerHeight } = useHeaderStyles();
+  const safeAreaInsets = useSafeArea();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -58,11 +61,21 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
   };
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header />
+      <Header onPressLogo={onPressLogo} />
 
       <ConsumingStreamProfilesFlatList
+        innerRef={ref}
         query={GET_CONSUMING_STREAM_PROFILES}
         variables={variables}
         accessor='getConsumingStreamProfiles.streams'
@@ -86,7 +99,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           </>
         )}
         ListEmptyComponent={({ queryResult }) => !queryResult.loading && !queryResult.error && (
-          <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'Your streams will appear here'} />
+          <StreamCardSkeleton emptyMessage={variables.where?.name_contains ? 'No Streams Found' : 'No Purchased Streams'} />
         )}
         FlatListProps={{
           contentContainerStyle: [Styles.scrollViewContainer],
@@ -98,7 +111,7 @@ const ConsumingStreamProfiles: FC<ConsumingStreamProfilesProps> = () => {
           // Handle error
           if (queryResult.error) {
             return (
-              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { paddingTop: headerHeight }]}>
+              <View pointerEvents="box-none" style={[StyleSheet.absoluteFillObject, { marginTop: headerHeight + safeAreaInsets.top }]}>
                 <LoadRetry {...queryResult} />
               </View>
             );

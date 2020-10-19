@@ -1,15 +1,19 @@
-import { ScrollView, KeyboardAvoidingView, Platform, View, Image, TouchableOpacity, SafeAreaView } from 'react-native';
-import React, { useRef, useEffect } from 'react';
+import { ScrollView, KeyboardAvoidingView, Platform, View, TouchableOpacity, SafeAreaView, Animated, Dimensions } from 'react-native';
+import React, { useRef, useEffect, FC } from 'react';
 import { validate as validateEmail } from 'email-validator';
 import { useForm } from 'react-hook-form';
-import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Styles from './Register.style';
 import TextInput from '../UI/Form/components/TextInput/TextInput';
-import Button from '../UI/Button/Button';
 import Separator from '../UI/Separator/Separator';
 import LoginWithFacebook from '../Login/components/LoginWithFacebook/LoginWithFacebook';
 import LoginWithGoogle from '../Login/components/LoginWithGoogle/LoginWithGoogle';
 import Body from '../UI/Typography/components/Body';
+import H1 from '../UI/Typography/components/H1';
+import spacing from '../../styles/definitions/spacing';
+import Icon, { ICON } from '../UI/Icon/Icon';
+import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
+import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
+import UsernameInput from '../UI/Form/components/UsernameInput/UsernameInput';
 
 export interface RegisterViewProps {
   loading: boolean,
@@ -20,122 +24,296 @@ export interface RegisterViewProps {
 export type FormData = {
   email: string;
   password: string;
+  username: string;
 };
 
-const RegisterView = (props: RegisterViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
-  const passwordRef = useRef(null);
+const RegisterView: FC<RegisterViewProps> = (props) => {
+  /**
+   * Scroll view
+   */
+  const scrollViewItemWidth = useRef((Dimensions.get('screen').width - spacing.large)).current;
+  const scrollViewRef = useRef<ScrollView>();
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollToIndex = (index: number) => {
+    scrollViewRef.current.scrollTo({ y: 0, x: scrollViewItemWidth * index });
+  };
 
 
+  /**
+   * ScrollView item opacities
+   */
+  const item0Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth],
+    outputRange: [1, 0],
+  })).current;
+  const item1Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth, scrollViewItemWidth * 2],
+    outputRange: [0, 1, 0],
+  })).current;
+  const item2Opacity = useRef(scrollX.interpolate({
+    inputRange: [0, scrollViewItemWidth, scrollViewItemWidth * 2],
+    outputRange: [0, 0, 1],
+  })).current;
+
+
+  /**
+   * Register form
+   */
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
   useEffect(() => {
     register({ name: 'email' }, { required: true, validate: validateEmail });
     register({ name: 'password' }, { required: true, pattern: /^.{6,}$/ });
+    register({ name: 'username' }, { required: true });
   }, [register]);
 
 
+  /**
+   * Refs
+   */
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const usernameRef = useRef(null);
+
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={GlobalStyles.PageFill}
-    >
-      <Image
-        source={require('../../assets/images/auth-background.jpeg')}
-        style={Styles.background}
-        resizeMode="contain"
-      />
-
-      <SafeAreaView style={GlobalStyles.PageFill}>
-        <ScrollView
-          contentContainerStyle={[Styles.scrollView, GlobalStyles.MaxWidth]}
-          bounces={false}
+    <OnboardingPageWrap>
+      <SafeAreaView style={Styles.flex}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={Styles.flex}
         >
-          <View style={Styles.logoWrap}>
-            <Image
-              source={require('../../assets/images/logo-with-strap-light.png')}
-              resizeMode="contain"
-            />
-          </View>
+          <ScrollView
+            contentContainerStyle={Styles.scrollViewWrap}
+            bounces={false}
+          >
+            <ScrollView
+              scrollEventThrottle={16}
+              ref={scrollViewRef}
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              )}
+              horizontal
+              scrollEnabled={false}
+              style={Styles.scrollViewInner}
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps={'always'}
+            >
+              <Animated.View
+                style={[
+                  Styles.section,
+                  { width: scrollViewItemWidth },
+                  { opacity: item0Opacity },
+                ]}
+              >
+                <View style={Styles.headingWrap}>
+                  <H1>Let's get started</H1>
+                </View>
 
-          <View style={Styles.input}>
-            <TextInput
-              name="email"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('email', text, !!errors.email);
-              }}
-              placeholder="Enter your email"
-              autoCompleteType="email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              returnKeyType="next"
-              errors={errors}
-              onBlur={() => triggerValidation('email')}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                passwordRef.current?.focus();
-              }}
-              testID="email"
-            />
-          </View>
+                <View>
+                  <TextInput
+                    setRef={emailRef}
+                    style={Styles.input}
+                    name="email"
+                    onChangeText={(text) => {
+                      // Validate on change if there's an error, otherwise validate onBlur
+                      setValue('email', text, !!errors.email);
+                    }}
+                    textContentType="emailAddress"
+                    placeholder="Enter your email"
+                    autoCompleteType="email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    errors={errors}
+                    onBlur={() => triggerValidation('email')}
+                    onSubmitEditing={() => {
+                      scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
+                    }}
+                    onboarding
+                    testID="email"
+                  />
 
-          <View style={Styles.input}>
-            <TextInput
-              name="password"
-              setRef={(e) => {
-                passwordRef.current = e;
-              }}
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('password', text, !!errors.password);
-              }}
-              placeholder="Enter a password"
-              secureTextEntry
-              autoCompleteType="password"
-              autoCapitalize="none"
-              returnKeyType="done"
-              errors={errors}
-              onBlur={() => triggerValidation('password')}
-              onSubmitEditing={handleSubmit(props.onSubmit)}
-              testID="password"
-            />
-          </View>
+                  <TouchableOpacity
+                    style={Styles.arrow}
+                    onPress={() => {
+                      scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_FORWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </Animated.View>
 
-          <Button
-            title={props.loading ? 'Signing up' : 'Sign up'}
-            onPress={handleSubmit(props.onSubmit)}
-            disabled={!isValid || !dirty}
-            loading={props.loading}
-            testID="submit"
-          />
+              <Animated.View
+                style={[
+                  Styles.section,
+                  { width: scrollViewItemWidth },
+                  { opacity: item1Opacity },
+                ]}
+              >
+                <View style={Styles.headingWrap}>
+                  <TouchableOpacity
+                    style={Styles.arrowBack}
+                    onPress={() => {
+                      scrollToIndex(0);
+                      // eslint-disable-next-line no-unused-expressions
+                      emailRef.current?.focus();
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_BACKWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
 
-          <Separator margin="large" />
+                  <H1>Secure your account</H1>
+                </View>
 
-          <View style={Styles.input}>
-            <LoginWithFacebook
-              {...props}
-              disabled={props.loading}
-              buttonText="Sign up with Facebook"
-            />
-          </View>
+                <View>
+                  <TextInput
+                    style={Styles.input}
+                    name="password"
+                    setRef={passwordRef}
+                    onChangeText={(text) => {
+                      // Validate on change if there's an error, otherwise validate onBlur
+                      setValue('password', text, !!errors.password);
+                    }}
+                    textContentType="newPassword"
+                    placeholder="Enter your password"
+                    secureTextEntry
+                    autoCompleteType="password"
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    errors={errors}
+                    onBlur={() => triggerValidation('password')}
+                    onSubmitEditing={() => {
+                      scrollToIndex(2);
+                      // eslint-disable-next-line no-unused-expressions
+                      usernameRef.current?.focus();
+                    }}
+                    onboarding
+                    testID="password"
+                  />
 
-          <LoginWithGoogle
-            {...props}
-            disabled={props.loading}
-            buttonText="Sign up with Google"
-          />
+                  <TouchableOpacity
+                    style={Styles.arrow}
+                    onPress={() => {
+                      scrollToIndex(2);
+                      // eslint-disable-next-line no-unused-expressions
+                      usernameRef.current?.focus();
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_FORWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </Animated.View>
 
-          <Separator margin="large" />
+              <Animated.View
+                style={[
+                  Styles.section,
+                  { width: scrollViewItemWidth },
+                  { opacity: item2Opacity },
+                ]}
+              >
+                <View style={Styles.headingWrap}>
+                  <TouchableOpacity
+                    style={Styles.arrowBack}
+                    onPress={() => {
+                      scrollToIndex(1);
+                      // eslint-disable-next-line no-unused-expressions
+                      passwordRef.current?.focus();
+                    }}
+                  >
+                    <Icon
+                      name={ICON.ARROW_BACKWARD}
+                      size="small"
+                    />
+                  </TouchableOpacity>
 
+                  <H1>Claim your username</H1>
+                </View>
+
+                <View>
+                  <UsernameInput
+                    onSubmit={handleSubmit(props.onSubmit)}
+                    useTextInput
+                    inputProps={{
+                      setRef: usernameRef,
+                      onboarding: true,
+                      testID: 'username',
+                    }}
+                  >
+                    {(args) => {
+                      setValue('username', args.value);
+
+                      return (
+                        <TouchableOpacity
+                          style={Styles.arrow}
+                          onPress={args.onSubmit}
+                          disabled={args.disabled || props.loading || args.queryLoading}
+                          testID="submit"
+                        >
+                          {
+                            props.loading || args.queryLoading
+                              ? (
+                                <LoadingIcon testID="submitLoading" size="small" />
+                              )
+                              : (
+                                <Icon
+                                  name={ICON.ARROW_FORWARD}
+                                  size="small"
+                                />
+                              )
+                          }
+                        </TouchableOpacity>
+                      );
+                    }}
+                  </UsernameInput>
+                </View>
+              </Animated.View>
+            </ScrollView>
+
+            <View style={Styles.social}>
+              <LoginWithFacebook
+                {...props}
+                disabled={props.loading}
+                buttonText="Continue with Facebook"
+              />
+
+              <View style={Styles.google}>
+                <LoginWithGoogle
+                  {...props}
+                  disabled={props.loading}
+                  buttonText="Continue with Google"
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+
+        <Separator margin="base" />
+
+        <View style={Styles.lower}>
           <TouchableOpacity
             style={Styles.register}
             onPress={props.onLogin}
             disabled={props.loading}
           >
-            <Body bold forceLight>Already have an account?</Body>
+            <Body bold>Login</Body>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </OnboardingPageWrap>
   );
 };
 

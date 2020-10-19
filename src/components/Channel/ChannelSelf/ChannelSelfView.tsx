@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, MutableRefObject } from 'react';
 import { QueryResult } from 'react-apollo';
 import { useDarkMode } from 'react-native-dynamic';
-import { Animated, View, TouchableOpacity } from 'react-native';
+import { Animated, View, TouchableOpacity, FlatList } from 'react-native';
 import Body from '../../UI/Typography/components/Body';
 import { getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import ChannelHeader from '../ChannelHeader/ChannelHeader';
@@ -14,9 +14,11 @@ import { pushScreen } from '../../../screens/utils';
 import UpdateChannelScreen from '../../../screens/UpdateChannelScreen/UpdateChannelScreen';
 import StreamSelfsScreen from '../../../screens/StreamSelfsScreen/StreamSelfsScreen';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelFunds from '../ChannelFunds/ChannelFunds';
 
 export interface ChannelSelfViewProps {
   queryResult: QueryResult<getChannelSelf>;
+  innerRef?: MutableRefObject<FlatList<any>>;
 }
 
 const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
@@ -28,51 +30,49 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
       {...props}
       data={props.queryResult.data?.getChannelSelf}
       topContent={({ titleColor, followChannelColor }) => (
-        <>
-          <TouchableOpacity
-            onPress={() => {
-              pushScreen(screenProps.componentId, StreamSelfsScreen, {});
-            }}
-          >
-            <Animated.View
-              style={[
-                Styles.manageButton,
-                { backgroundColor: darkMode ? color.mono.light : titleColor },
-              ]}
+        <View>
+          <View style={Styles.topContentWrap}>
+            <TouchableOpacity
+              onPress={() => {
+                pushScreen(screenProps.componentId, StreamSelfsScreen, {});
+              }}
             >
-              <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
-                <Body bold disableBaseColor>Streams</Body>
-              </Animated.Text>
-            </Animated.View>
-          </TouchableOpacity>
+              <Animated.View
+                style={[
+                  Styles.manageButton,
+                  { backgroundColor: darkMode ? color.mono.light : titleColor },
+                ]}
+              >
+                <Animated.Text style={{ color: darkMode ? color.mono.dark : followChannelColor }}>
+                  <Body bold disableBaseColor>Streams</Body>
+                </Animated.Text>
+              </Animated.View>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              /**
-               * Push UpdateChannelScreen
-               */
-              pushScreen(screenProps.componentId, UpdateChannelScreen, {});
-            }}
-          >
-            <Animated.View
-              style={[
-                Styles.editButton,
-                { backgroundColor: darkMode ? color.mono.light : titleColor },
-              ]}
+            <TouchableOpacity
+              onPress={() => {
+                /**
+                 * Push UpdateChannelScreen
+                 */
+                pushScreen(screenProps.componentId, UpdateChannelScreen, {});
+              }}
             >
-              <Icon
-                name={ICON.COG}
-                size="small"
-                style={{ tintColor: darkMode ? color.mono.dark : followChannelColor }}
-                animated
-              />
-            </Animated.View>
-          </TouchableOpacity>
-        </>
+              <View style={Styles.editButton}>
+                <Icon
+                  name={ICON.COG}
+                  size="small"
+                  style={{ tintColor: darkMode ? color.mono.light : titleColor }}
+                  animated
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       )}
     >
       {({ coverImageHeadingDefaultHeight, headerLayout, scrollY }) => (
         <ChannelSelfFeed
+          innerRef={props.innerRef}
           flatListProps={{
             bounces: true,
             contentContainerStyle: {
@@ -90,8 +90,11 @@ const ChannelSelfView: FC<ChannelSelfViewProps> = (props) => {
                 </View>
 
                 <View style={Styles.description}>
-                  <Body bold style={Styles.joined}>Credit: © {props.queryResult.data?.getChannelSelf.credit}</Body>
                   <Body bold style={Styles.joined}>Joined: {formatForTimezone(props.queryResult.data?.getChannelSelf.createdAt, 'calendar')}</Body>
+                </View>
+
+                <View style={Styles.description}>
+                  <ChannelFunds data={props.queryResult.data?.getChannelSelf} />
                 </View>
               </>
             ),

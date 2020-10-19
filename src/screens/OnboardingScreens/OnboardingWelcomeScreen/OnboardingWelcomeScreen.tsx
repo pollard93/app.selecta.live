@@ -27,7 +27,7 @@ OnboardingWelcomeScreen.prototype.ScreenName = 'OnboardingWelcomeScreen';
 /**
  * Set screen color options (default white)
  */
-// OnboardingWelcomeScreen.prototype.fullScreen = true;
+OnboardingWelcomeScreen.prototype.fullScreen = true;
 // OnboardingWelcomeScreen.prototype.statusBarColor = color.mono.dark;
 // OnboardingWelcomeScreen.prototype.backgroundColor = color.mono.dark;
 

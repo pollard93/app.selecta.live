@@ -32,4 +32,17 @@ export default StyleSheet.create({
   button: {
     padding: spacing.small,
   },
+  section: {
+    marginTop: spacing.base,
+  },
+  tagsHeading: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  tagsButton: {
+    marginLeft: spacing.small,
+  },
+  tags: {
+    marginTop: spacing.small,
+  },
 });

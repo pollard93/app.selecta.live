@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import React, { FC, useState, useEffect, useRef } from 'react';
-import { View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, FlatList } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
 import { useGetStreamMessagesVodQuery } from '../../../API/query/getStreamMessagesVod/getStreamMessagesVod';
 import { getStreamMessagesVodVariables } from '../../../API/query/getStreamMessagesVod/__generated__/getStreamMessagesVod';

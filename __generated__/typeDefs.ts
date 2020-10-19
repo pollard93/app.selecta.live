@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Fri Sep 18 2020 15:54:15 GMT+0100 (British Summer Time)
+# timestamp: Sat Oct 17 2020 15:22:41 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -33,6 +33,8 @@ enum ChannelOrderByInput {
   facebookUrl_DESC
   instagramUrl_ASC
   instagramUrl_DESC
+  profileImageColor_ASC
+  profileImageColor_DESC
   verified_ASC
   verified_DESC
   credit_ASC
@@ -113,6 +115,7 @@ type ChannelSelf {
   instagramUrl: String
   coverImage: File
   profileImage: File
+  profileImageColor: String
   verified: Boolean
   unreadNotificationCount: Int
   followersEdge: Int
@@ -246,6 +249,20 @@ input ChannelWhereInput {
   instagramUrl_not_ends_with: String
   coverImage: FileWhereInput
   profileImage: FileWhereInput
+  profileImageColor: String
+  profileImageColor_not: String
+  profileImageColor_in: [String!]
+  profileImageColor_not_in: [String!]
+  profileImageColor_lt: String
+  profileImageColor_lte: String
+  profileImageColor_gt: String
+  profileImageColor_gte: String
+  profileImageColor_contains: String
+  profileImageColor_not_contains: String
+  profileImageColor_starts_with: String
+  profileImageColor_not_starts_with: String
+  profileImageColor_ends_with: String
+  profileImageColor_not_ends_with: String
   verified: Boolean
   verified_not: Boolean
   followers_every: UserWhereInput
@@ -265,30 +282,30 @@ input ChannelWhereInput {
   credit_lte: Float
   credit_gt: Float
   credit_gte: Float
-  creditMinimumStreamCost: Int
-  creditMinimumStreamCost_not: Int
-  creditMinimumStreamCost_in: [Int!]
-  creditMinimumStreamCost_not_in: [Int!]
-  creditMinimumStreamCost_lt: Int
-  creditMinimumStreamCost_lte: Int
-  creditMinimumStreamCost_gt: Int
-  creditMinimumStreamCost_gte: Int
-  creditWithdrawalValue: Int
-  creditWithdrawalValue_not: Int
-  creditWithdrawalValue_in: [Int!]
-  creditWithdrawalValue_not_in: [Int!]
-  creditWithdrawalValue_lt: Int
-  creditWithdrawalValue_lte: Int
-  creditWithdrawalValue_gt: Int
-  creditWithdrawalValue_gte: Int
-  creditWithdrawalMinimum: Int
-  creditWithdrawalMinimum_not: Int
-  creditWithdrawalMinimum_in: [Int!]
-  creditWithdrawalMinimum_not_in: [Int!]
-  creditWithdrawalMinimum_lt: Int
-  creditWithdrawalMinimum_lte: Int
-  creditWithdrawalMinimum_gt: Int
-  creditWithdrawalMinimum_gte: Int
+  creditMinimumStreamCost: Float
+  creditMinimumStreamCost_not: Float
+  creditMinimumStreamCost_in: [Float!]
+  creditMinimumStreamCost_not_in: [Float!]
+  creditMinimumStreamCost_lt: Float
+  creditMinimumStreamCost_lte: Float
+  creditMinimumStreamCost_gt: Float
+  creditMinimumStreamCost_gte: Float
+  creditWithdrawalValue: Float
+  creditWithdrawalValue_not: Float
+  creditWithdrawalValue_in: [Float!]
+  creditWithdrawalValue_not_in: [Float!]
+  creditWithdrawalValue_lt: Float
+  creditWithdrawalValue_lte: Float
+  creditWithdrawalValue_gt: Float
+  creditWithdrawalValue_gte: Float
+  creditWithdrawalMinimum: Float
+  creditWithdrawalMinimum_not: Float
+  creditWithdrawalMinimum_in: [Float!]
+  creditWithdrawalMinimum_not_in: [Float!]
+  creditWithdrawalMinimum_lt: Float
+  creditWithdrawalMinimum_lte: Float
+  creditWithdrawalMinimum_gt: Float
+  creditWithdrawalMinimum_gte: Float
   freeStreamAllowance: Int
   freeStreamAllowance_not: Int
   freeStreamAllowance_in: [Int!]
@@ -541,7 +558,7 @@ type Mutation {
   loginWithSocial(provider: SOCIAL_PROVIDER!): AuthPayload
   putStreamComment(id: String!, comment: String!): StreamCommentClient
   putStreamMessage(id: String!, message: String!): StreamMessageClient
-  register(email: String!, password: String!): AuthPayload
+  register(data: RegisterInput): AuthPayload
   requestPasswordReset(email: String!): Boolean
   resetPassword(password: String!): AuthPayload
 }
@@ -707,8 +724,8 @@ type Query {
   getHomeFeed: FeedPayload
   getNotifications(first: Int, after: String): NotificationProfilesPayLoad!
   getProductConfig: [ProductConfig!]!
-  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): RelatedChannelsPayload!
-  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): RelatedStreamsPayload!
+  getRelatedChannelProfiles(channelId: String!, first: Int, after: String): ChannelProfilesPayLoad!
+  getRelatedStreamProfiles(streamId: String!, first: Int, after: String): StreamProfilesPayLoad!
   getSelf: UserSelf
   getStreamProfile(id: String!): StreamProfile!
   getStreamProfiles(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamProfilesPayLoad!
@@ -724,11 +741,17 @@ type Query {
   getStreamSelf(id: String!): StreamSelf!
   getStreamSelfs(where: StreamWhereInput, first: Int, after: String, orderBy: StreamOrderByInput): StreamSelfsPayLoad!
   getTagProfiles(where: TagWhereInput, first: Int, after: String): TagProfilesPayload!
-  canViewStream(id: String!): Boolean!
+  canViewStream(id: String!): StreamProfile!
   getStreamComments(id: String!, first: Int, after: String): StreamCommentClientPayload
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
   getStreamUrl(id: String!): StreamUrlPayload!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  username: String!
 }
 
 type RelatedChannel {
@@ -999,8 +1022,6 @@ enum StreamOrderByInput {
   cancelledMessage_DESC
   creditRevenue_ASC
   creditRevenue_DESC
-  approved_ASC
-  approved_DESC
   audioOnly_ASC
   audioOnly_DESC
   published_ASC
@@ -1393,14 +1414,6 @@ input StreamWhereInput {
   userRecords_every: StreamUserRecordWhereInput
   userRecords_some: StreamUserRecordWhereInput
   userRecords_none: StreamUserRecordWhereInput
-  approved: DateTime
-  approved_not: DateTime
-  approved_in: [DateTime!]
-  approved_not_in: [DateTime!]
-  approved_lt: DateTime
-  approved_lte: DateTime
-  approved_gt: DateTime
-  approved_gte: DateTime
   audioOnly: Boolean
   audioOnly_not: Boolean
   positionRecords_every: StreamPositionRecordWhereInput

@@ -1,22 +1,21 @@
-import React, { FC, useRef, useState } from 'react';
-import { View, Alert } from 'react-native';
+import React, { FC, MutableRefObject, useRef, useState } from 'react';
+import { View, Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import Header from '../../UI/Headers/Header/Header';
 import CreateUpdateStreamView from './CreateUpdateStreamView';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
-import { getStreamSelfsVariables } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
 
 export interface CreateUpdateStreamProps {
   id?: string;
-  getStreamSelfsVariables?: getStreamSelfsVariables;
 }
 
 export interface CreateUpdateStreamInnerProps extends CreateUpdateStreamProps {
   canPopRef: React.MutableRefObject<boolean>;
+  innerRef?: MutableRefObject<ScrollView>;
 }
 
 const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
@@ -49,9 +48,9 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
       channelData={getChannelSelf}
       data={queryResult?.data?.getStreamSelf}
       onCreated={setId}
-      getStreamSelfsVariables={props.getStreamSelfsVariables}
       canPopRef={props.canPopRef}
       onPop={() => Navigation.pop(screenProps.componentId)}
+      innerRef={props.innerRef}
     />
   );
 };
@@ -59,6 +58,7 @@ const CreateUpdateStreamInner: FC<CreateUpdateStreamInnerProps> = (props) => {
 const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
   const canPopRef = useRef();
   const screenProps = useScreenProps();
+  const ref = useRef<ScrollView>();
 
 
   /**
@@ -83,10 +83,26 @@ const CreateUpdateStream: FC<CreateUpdateStreamProps> = (props) => {
   };
 
 
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollTo(0);
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={onPop} />
-      <CreateUpdateStreamInner {...props} canPopRef={canPopRef} />
+      <ChannelSelfHeader
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
+      <CreateUpdateStreamInner
+        {...props}
+        canPopRef={canPopRef}
+        innerRef={ref}
+      />
     </View>
   );
 };

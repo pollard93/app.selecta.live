@@ -9,6 +9,8 @@ import H3 from '../../Typography/components/H3';
 import Button from '../../Button/Button';
 import Small from '../../Typography/components/Small';
 import { openTopUpModal } from '../../../../screens/utils';
+import Icon, { ICON } from '../../Icon/Icon';
+import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
 
 interface WalletCardProps {}
 
@@ -34,7 +36,11 @@ const WalletCard: FC<WalletCardProps> = () => {
       <View style={Styles.bottom}>
         <View>
           <H4 style={Styles.username}>{self.username}</H4>
-          <H4>Balance © {self.credit}</H4>
+          <View style={GlobalStyles.CostText}>
+            <H4>Balance </H4>
+            <Icon name={ICON.CREDIT} size="xsmall" />
+            <H4> {self.credit}</H4>
+          </View>
         </View>
         <View>
           <Button

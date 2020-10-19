@@ -22,7 +22,6 @@ storiesOf('Stream/CreateUpdateStream', module)
         <CreateUpdateStreamView
           onCreated={console.log}
           channelData={getChannelSelf}
-          getStreamSelfsVariables={{}}
           canPopRef={ref}
           onPop={console.log}
         />
@@ -43,7 +42,6 @@ storiesOf('Stream/CreateUpdateStream', module)
             ...getChannelSelf,
             freeStreamAllowance: 0,
           }}
-          getStreamSelfsVariables={{}}
           canPopRef={ref}
           onPop={console.log}
         />
@@ -74,7 +72,6 @@ storiesOf('Stream/CreateUpdateStream', module)
             cost: getChannelSelf.creditMinimumStreamCost,
             published: null,
           }}
-          getStreamSelfsVariables={{}}
           canPopRef={ref}
           onPop={console.log}
         />
@@ -108,7 +105,6 @@ storiesOf('Stream/CreateUpdateStream', module)
             cost: getChannelSelf.creditMinimumStreamCost,
             published: null,
           }}
-          getStreamSelfsVariables={{}}
           canPopRef={ref}
           onPop={console.log}
         />
@@ -143,7 +139,6 @@ storiesOf('Stream/CreateUpdateStream', module)
             published: new Date().toISOString(),
             cancelled: new Date().toISOString(),
           }}
-          getStreamSelfsVariables={{}}
           canPopRef={ref}
           onPop={console.log}
         />

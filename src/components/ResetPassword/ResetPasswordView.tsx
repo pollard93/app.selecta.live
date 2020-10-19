@@ -1,11 +1,12 @@
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Button from '../UI/Button/Button';
 import TextInput from '../UI/Form/components/TextInput/TextInput';
 import Styles from './ResetPassword.style';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
-import H4 from '../UI/Typography/components/H4';
+import Icon, { ICON } from '../UI/Icon/Icon';
+import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
+import H1 from '../UI/Typography/components/H1';
 
 export interface ResetPasswordViewProps {
   loading: boolean;
@@ -18,7 +19,7 @@ export type FormData = {
 };
 
 const ResetPasswordView = (props: ResetPasswordViewProps) => {
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({
     mode: 'onChange',
   });
 
@@ -32,38 +33,78 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
 
 
   return (
-    <OnboardingPageWrap
-      heading="Reset Password"
-      onPop={props.onPop}
-    >
-      <View style={Styles.input}>
-        <H4 style={Styles.content}>Enter your new password</H4>
+    <OnboardingPageWrap>
+      <SafeAreaView style={Styles.flex}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={Styles.flex}
+        >
+          <ScrollView
+            contentContainerStyle={Styles.scrollViewWrap}
+            bounces={false}
+          >
+            <View
+              style={Styles.section}
+            >
+              <View style={Styles.headingWrap}>
+                <TouchableOpacity
+                  style={Styles.arrowBack}
+                  onPress={props.onPop}
+                >
+                  <Icon
+                    name={ICON.ARROW_BACKWARD}
+                    size="small"
+                  />
+                </TouchableOpacity>
 
-        <TextInput
-          name="password"
-          onChangeText={(text) => {
-            // Validate on change if there's an error, otherwise validate onBlur
-            setValue('password', text, !!errors.password);
-          }}
-          placeholder="Enter new password"
-          secureTextEntry
-          autoCompleteType="password"
-          autoCapitalize="none"
-          returnKeyType="done"
-          errors={errors}
-          onBlur={() => triggerValidation('password')}
-          onSubmitEditing={handleSubmit(props.onSubmit)}
-          testID="password"
-        />
-      </View>
+                <H1>Reset your password</H1>
+              </View>
 
-      <Button
-        title={props.loading ? 'Resetting password' : 'Reset password'}
-        onPress={handleSubmit(props.onSubmit)}
-        disabled={!isValid || !dirty}
-        loading={props.loading}
-        testID="submit"
-      />
+              <View>
+                <TextInput
+                  style={Styles.input}
+                  name="password"
+                  onChangeText={(text) => {
+                    // Validate on change if there's an error, otherwise validate onBlur
+                    setValue('password', text, !!errors.password);
+                  }}
+                  textContentType="newPassword"
+                  placeholder="Enter new password"
+                  secureTextEntry
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  errors={errors}
+                  onBlur={() => triggerValidation('password')}
+                  onSubmitEditing={handleSubmit(props.onSubmit)}
+                  onboarding
+                  testID="password"
+                />
+
+                <TouchableOpacity
+                  style={Styles.arrow}
+                  onPress={handleSubmit(props.onSubmit)}
+                  disabled={props.loading}
+                  testID="submit"
+                >
+                  {
+                    props.loading
+                      ? (
+                        <LoadingIcon testID="submitLoading" size="small" />
+                      )
+                      : (
+                        <Icon
+                          name={ICON.ARROW_FORWARD}
+                          size="small"
+                        />
+                      )
+                  }
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </OnboardingPageWrap>
   );
 };

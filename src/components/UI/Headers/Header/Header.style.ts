@@ -14,11 +14,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingBottom: spacing.xsmall,
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.small,
   },
   noSafeArea: {
-    paddingBottom: spacing.small,
-    paddingTop: spacing.small,
+    paddingBottom: spacing.xsmall,
+    paddingTop: spacing.xsmall,
   },
   left: {
     alignItems: 'center',
@@ -50,6 +50,12 @@ export default StyleSheet.create({
   icon: {
     height: '100%',
     width: '100%',
+  },
+  iconSelected: {
+    tintColor: color.accent.primary,
+  },
+  profileSelected: {
+    borderColor: color.accent.primary,
   },
   profilePictureIconWrap: {
     padding: 1,

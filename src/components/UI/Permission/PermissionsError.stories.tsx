@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { RESULTS, openSettings, PERMISSIONS } from 'react-native-permissions';
@@ -23,36 +24,26 @@ storiesOf('UI/PermissionsError', module)
   ))
   .add('usePermissions', () => {
     const TestComponent = () => {
+      /**
+       * Check permissions and wait until granted
+       */
       const { permissionStatus } = usePermissions({
-        iosPermission: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-        androidPermission: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-        errorMessage: 'Permission error message',
+        iosPermission: PERMISSIONS.IOS.PHOTO_LIBRARY,
+        androidPermission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
       });
-      // eslint-disable-next-line no-console
-      if (permissionStatus !== RESULTS.GRANTED) return null;
 
-      return (
-        <CenterView>
-          <Text>Permissions are OKAY</Text>
-          <Button
-            title="Open settings to change permissions"
-            onPress={openSettings}
+      /**
+       * Permission error
+       */
+      if (permissionStatus && permissionStatus !== RESULTS.GRANTED) {
+        return (
+          <PermissionsError
+            state={permissionStatus}
+            errorMessage="We require permission to access your camera roll."
+            onDismiss={console.log}
           />
-        </CenterView>
-      );
-    };
-
-    return <TestComponent />;
-  })
-  .add('usePermissions - dismissable', () => {
-    const TestComponent = () => {
-      const { permissionStatus } = usePermissions({
-        iosPermission: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-        androidPermission: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-        errorMessage: 'Permission error message',
-      });
-      // eslint-disable-next-line no-console
-      if (permissionStatus !== RESULTS.GRANTED) return null;
+        );
+      }
 
       return (
         <CenterView>

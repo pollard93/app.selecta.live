@@ -1,9 +1,12 @@
 import { StyleSheet } from 'react-native';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
-import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
+  topContentWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   manageButton: {
     alignItems: 'center',
     backgroundColor: color.mono.dark,
@@ -14,11 +17,10 @@ export default StyleSheet.create({
   editButton: {
     alignItems: 'center',
     aspectRatio: 1,
-    backgroundColor: color.mono.light,
     borderRadius: 100,
+    flex: 1,
     justifyContent: 'center',
     marginLeft: spacing.xsmall,
-    width: scalePx(24),
   },
   description: {
     marginBottom: spacing.small,

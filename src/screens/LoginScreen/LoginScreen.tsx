@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import Login, { LoginProps } from '../../components/Login/Login';
-import color from '../../styles/definitions/color';
 
 export interface LoginScreenProps extends LoginProps {}
 
@@ -33,7 +32,7 @@ LoginScreen.prototype.ScreenName = 'LoginScreen';
  */
 LoginScreen.prototype.fullScreen = true;
 // LoginScreen.prototype.statusBarColor = color.mono.dark;
-LoginScreen.prototype.backgroundColor = color.mono.dark;
+// LoginScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default

@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { View } from 'react-native';
+import React, { FC, useRef } from 'react';
+import { FlatList, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import { useGetChannelProfileQuery } from '../../../API/query/getChannelProfile/getChannelProfile';
@@ -13,6 +13,7 @@ export interface ChannelProfileProps {
 
 const ChannelProfile: FC<ChannelProfileProps> = (props) => {
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
@@ -25,12 +26,33 @@ const ChannelProfile: FC<ChannelProfileProps> = (props) => {
   });
 
 
+  /**
+   * On Pop
+   */
+  const onPop = () => {
+    Navigation.pop(screenProps.componentId);
+  };
+
+
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <Header
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
       <ChannelProfileView
         {...props}
         queryResult={queryResult}
+        innerRef={ref}
       />
     </View>
   );

@@ -1,53 +1,25 @@
-import React, { FC } from 'react';
-import { View, Image, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from 'react-native';
-import { useDynamicValue } from 'react-native-dynamic';
-import H2 from '../../Typography/components/H2';
-import Styles, { DynamicStyles } from './OnboardingPageWrap.style';
+import React, { FC, useRef } from 'react';
+import { View } from 'react-native';
+import AnimatedLinearGradient from 'react-native-animated-linear-gradient';
+import Styles from './OnboardingPageWrap.style';
 import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
-import Icon, { ICON } from '../../Icon/Icon';
+import color from '../../../../styles/definitions/color';
 
-interface OnboardingPageWrapProps {
-  heading: string;
-  onPop?: () => void;
-}
+interface OnboardingPageWrapProps {}
 
 const OnboardingPageWrap: FC<OnboardingPageWrapProps> = (props) => {
-  const dynamicStyles = useDynamicValue(DynamicStyles);
+  const colors = useRef(color.gradient.primary.map((c) => c.color().rgb().toString())).current;
 
   return (
-    <View style={[GlobalStyles.PageFill, dynamicStyles.wrap]}>
-      <View style={[Styles.heading, dynamicStyles.heading]}>
-        <View style={Styles.logoWrap}>
-          <Image
-            source={require('../../../../assets/images/logo-icon.png')}
-            style={Styles.logo}
-            resizeMode="contain"
-          />
-        </View>
-
-        <View style={Styles.headingInner}>
-          {props.onPop && (
-            <TouchableOpacity
-              onPress={props.onPop}
-              style={Styles.back}
-            >
-              <Icon name={ICON.ARROW_BACKWARD} size="xsmall" />
-            </TouchableOpacity>
-          )}
-          <H2>{props.heading}</H2>
-        </View>
+    <View style={[GlobalStyles.PageFill, Styles.wrap]}>
+      <View style={Styles.gradient}>
+        <AnimatedLinearGradient
+          points={{ start: { x: 0.5, y: 0 }, end: { x: 0.5, y: 1 } }}
+          customColors={colors}
+          speed={4000}
+        />
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[GlobalStyles.PageFill, GlobalStyles.MaxWidth]}
-      >
-        <ScrollView
-          contentContainerStyle={Styles.scrollView}
-          bounces={false}
-        >
-          {props.children}
-        </ScrollView>
-      </KeyboardAvoidingView>
+      {props.children}
     </View>
   );
 };

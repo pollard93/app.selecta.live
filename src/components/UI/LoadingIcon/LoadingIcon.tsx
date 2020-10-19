@@ -10,6 +10,7 @@ interface LoadingIconProps {
   type?: 'PRIMARY' | 'LIGHT'; // Default PRIMARY
   animating?: boolean; // Default true
   hideOuterRing?: boolean;
+  testID?: string;
 }
 
 const LoadingIcon: FC<LoadingIconProps> = (props) => {

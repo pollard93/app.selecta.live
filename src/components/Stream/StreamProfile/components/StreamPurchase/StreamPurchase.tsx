@@ -1,9 +1,7 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { useDynamicValue } from 'react-native-dynamic';
 import { STREAM_PROFILE_FRAGMENT } from '../../../../../API/fragments/__generated__/STREAM_PROFILE_FRAGMENT';
-import H4 from '../../../../UI/Typography/components/H4';
 import Body from '../../../../UI/Typography/components/Body';
 import { formatForTimezone, getGQLErrorMessage } from '../../../../../utils/functions';
 import Button from '../../../../UI/Button/Button';
@@ -14,9 +12,11 @@ import Toast from '../../../../UI/Toast/Toast';
 import Styles, { DynamicStyles } from './StreamPurchase.styles';
 import H1 from '../../../../UI/Typography/components/H1';
 import { getSelf } from '../../../../../API/query/getSelf/__generated__/getSelf';
-import { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../../../styles/stylesheets/GlobalStyles';
 import { pushToast } from '../../../../../modules/Toast';
-import { getStreamDuration } from '../../../../../utils/streamFunctions';
+import { getStreamDurationPretty } from '../../../../../utils/streamFunctions';
+import Icon, { ICON } from '../../../../UI/Icon/Icon';
+import StreamInfo from '../StreamInfo/StreamInfo';
 
 interface StreamPurchaseProps {
   data: STREAM_PROFILE_FRAGMENT;
@@ -115,29 +115,24 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
   /**
    * Duration
    */
-  const duration = getStreamDuration(props.data);
+  const duration = getStreamDurationPretty(props.data);
 
 
   return (
-    <ScrollView
-      style={Styles.wrap}
-      bounces={false}
-    >
-      <View style={[Styles.info, dynamicStyles.info]}>
-        <Body>{props.data.info}</Body>
-      </View>
+    <>
+      <StreamInfo data={props.data} />
 
       <View style={Styles.buy}>
-        <H4>Buy this stream</H4>
         <View style={Styles.ticket}>
           <View style={[Styles.ticketInfo, dynamicStyles.ticket]}>
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight]} />
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchRight, Styles.notchBottom]} />
 
             <Body bold>Admission #1</Body>
-            <Body bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'calendar')}</Body>
+            <Body bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'MMMM Do YYYY')}</Body>
+
             <Body bold>Entry from {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'z')}</Body>
-            <Body bold>{`${duration.hours} Hours ${duration.minutes ? `${duration.minutes} Minutes` : ''}`}</Body>
+            <Body bold>Duration {duration}</Body>
           </View>
 
           <View style={[Styles.cost, dynamicStyles.ticket]}>
@@ -145,7 +140,10 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
             <View style={[globalDynamicStyles.background, Styles.notch]} />
             <View style={[globalDynamicStyles.background, Styles.notch, Styles.notchBottom]} />
 
-            <H1>© {props.data.cost}</H1>
+            <View style={GlobalStyles.CostText}>
+              <Icon name={ICON.CREDIT} size="xsmall" />
+              <H1> {props.data.cost}</H1>
+            </View>
           </View>
         </View>
       </View>
@@ -159,14 +157,14 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
               return 'Watch this stream for free!';
             }
 
-            return confirming ? 'Press to confirm your purchase!' : `Buy this stream for © ${props.data.cost}`;
+            return confirming ? 'Press to confirm your purchase!' : 'Purchase this stream!';
           })()}
           onPress={onPurchase}
           loading={loading}
           testID="submit"
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 

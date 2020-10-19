@@ -7,4 +7,5 @@ export const getChannelSelf = () => ({
   creditWithdrawalValue: 100,
   creditWithdrawalMinimum: 1,
   freeStreamAllowance: 1,
+  profileImageColor: null,
 });

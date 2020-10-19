@@ -10,7 +10,7 @@ import { useCallback } from 'react';
  * Otherwise use fallback
  */
 export const getGQLErrorMessage = (Err: ApolloError, fallback = 'Something went wrong') => {
-  if (Err.networkError) return 'There is no internet connection';
+  if (Err.networkError) return 'No internet connection';
   if (!Err.message.includes('GraphQL error:')) return fallback;
   return Err.message.replace('GraphQL error: ', '');
 };
@@ -20,6 +20,15 @@ export const getGQLErrorMessage = (Err: ApolloError, fallback = 'Something went 
  * Parse camel case into string with spaces
  */
 export const parseCamelCase = (text: string) => text.replace(/([A-Z])/g, ' $1');
+
+
+/**
+ * Capitalise first letter of each word
+ */
+export const capitaliseWords = (text: string) => text.toLowerCase()
+  .split(' ')
+  .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+  .join(' ');
 
 
 /**
@@ -96,3 +105,10 @@ export const mapRange = (num, inMin, inMax, outMin, outMax): number => {
     return null;
   }
 };
+
+
+/**
+ * Parses amount to be displayed
+ * @param amount - in pence
+ */
+export const parseCurrency = (amount: number, toFixed = 2) => `£${(amount / 100).toFixed(toFixed)}`;

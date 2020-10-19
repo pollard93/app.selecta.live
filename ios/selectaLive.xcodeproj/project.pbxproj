@@ -25,6 +25,7 @@
 		BC4246E2233F78F200A52916 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4246E1233F78F200A52916 /* NotificationService.m */; };
 		BC4246E6233F78F200A52916 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC4246DE233F78F200A52916 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
+		BCBF842C252672E3004604F0 /* Google in Resources */ = {isa = PBXBuildFile; fileRef = BCBF842B252672E3004604F0 /* Google */; };
 		BCEFDBBE2459F3F300B8D4F8 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */; };
 		CB23AFFF273BC85402268605 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */; };
 		F87033D083454475965E6727 /* OpenSans-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 355D94735BD944C0ADAE817B /* OpenSans-CondLight.ttf */; };
@@ -114,6 +115,7 @@
 		BC9233E724F8F145006DBF89 /* OneSignalNotificationServiceExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtensionRelease.entitlements; sourceTree = "<group>"; };
 		BC92FFC12339186400D986A6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BCBF71AE24F8652700FAB6B1 /* OneSignalNotificationServiceExtensionBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtensionBeta.entitlements; sourceTree = "<group>"; };
+		BCBF842B252672E3004604F0 /* Google */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Google; path = selectaLive/Google; sourceTree = "<group>"; };
 		BCEFDBBC2459F3F200B8D4F8 /* selectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "selectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
 		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = selectaLive/Dummy.swift; sourceTree = "<group>"; };
 		BCF1342B24F84B87003504E5 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		13B07FAE1A68108700A75B9A /* selectaLive */ = {
 			isa = PBXGroup;
 			children = (
+				BCBF842B252672E3004604F0 /* Google */,
 				BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */,
 				BC4246D9233F78A100A52916 /* selectaLive.entitlements */,
 				BC4246EC233F7BDA00A52916 /* selectaLive.beta.entitlements */,
@@ -358,6 +361,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				BC4246EB233F78F200A52916 /* Embed App Extensions */,
 				32937B77DF3CBEF198BF82E1 /* [CP] Copy Pods Resources */,
+				BCBF842A25267167004604F0 /* Google Plist */,
 			);
 			buildRules = (
 			);
@@ -508,6 +512,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				5845D24BBBB4428EA1725DDF /* OpenSans-CondBold.ttf in Resources */,
 				F87033D083454475965E6727 /* OpenSans-CondLight.ttf in Resources */,
+				BCBF842C252672E3004604F0 /* Google in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +553,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		05C5F7781411C05F72FE3876 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -671,6 +676,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BCBF842A25267167004604F0 /* Google Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Google Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -r -v \"${PROJECT_DIR}/selectaLive/Google/${CONFIGURATION}/GoogleService-Info.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\";\n";
 		};
 		CA7A21C844DCB4ADE303E6C0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -894,10 +917,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.debug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-2a6mtmti045nrubclvfbfaroi15eob6b";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -917,6 +941,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -931,10 +956,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-dcq743o31n3bi6pb0ncqc033855m4jr8";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -950,9 +976,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app;
 				PRODUCT_NAME = selectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1197,7 +1224,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1256,7 +1283,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1281,7 +1308,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.madebyprism.selectaLive.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1326,7 +1353,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1415,10 +1442,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.beta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CQFWKU4GYE;
 				ENABLE_BITCODE = NO;
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-sc1ccg1qqs8nql377divnn9j6ii34jpf";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1437,6 +1465,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Beta;

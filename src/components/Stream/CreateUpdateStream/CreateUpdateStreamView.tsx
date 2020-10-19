@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FC, useMemo } from 'react';
+import React, { useState, useEffect, useRef, FC, useMemo, MutableRefObject } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
@@ -9,13 +9,13 @@ import { useDynamicValue } from 'react-native-dynamic';
 import { useApolloClient } from 'react-apollo';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
-import { getGQLErrorMessage } from '../../../utils/functions';
+import { getGQLErrorMessage, parseCurrency } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useUpdateStreamMutation } from '../../../API/mutation/updateStream/updateStream';
 import { EditableAsyncImage } from '../../UI/EditableAsyncImage/EditableAsyncImage';
 import Styles, { DynamicStyles } from './CreateUpdateStream.style';
-import H2 from '../../UI/Typography/components/H2';
+import H3 from '../../UI/Typography/components/H3';
 import TextInput from '../../UI/Form/components/TextInput/TextInput';
 import TextArea from '../../UI/Form/components/TextArea/TextArea';
 import Button from '../../UI/Button/Button';
@@ -28,12 +28,17 @@ import { getStreamSelfsVariables, getStreamSelfs } from '../../../API/query/getS
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getChannelSelf_getChannelSelf, getChannelSelf } from '../../../API/query/getChannelSelf/__generated__/getChannelSelf';
 import Switch from '../../UI/Form/components/Switch/Switch';
-import TagInput from '../../UI/Form/components/TagInput/TagInput';
 import { GET_STREAM_SELF_QUERY } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { pushToast } from '../../../modules/Toast';
 import { GET_CHANNEL_SELF_QUERY } from '../../../API/query/getChannelSelf/getChannelSelf';
 import { getChannelSelfsVariables } from '../../../API/query/getChannelSelfs/__generated__/getChannelSelfs';
+import spacing from '../../../styles/definitions/spacing';
+import Icon, { ICON } from '../../UI/Icon/Icon';
+import { openModalScreen } from '../../../screens/utils';
+import Tags from '../../Tag/Tags/Tags';
+import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
+import { getStreamSelfsVariablesDefault } from '../StreamSelfs/StreamSelfs';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -52,9 +57,9 @@ interface CreateUpdateStreamViewProps {
   channelData: getChannelSelf_getChannelSelf;
   data?: STREAM_SELF_FRAGMENT;
   onCreated: (id: string) => void;
-  getStreamSelfsVariables?: getStreamSelfsVariables;
   canPopRef: React.MutableRefObject<boolean>;
   onPop: () => void;
+  innerRef?: MutableRefObject<ScrollView>;
 }
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
@@ -65,7 +70,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
+  const { register, setValue, handleSubmit, getValues, watch, errors, formState: { dirty, dirtyFields }, triggerValidation, reset } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: props.data
       ? {
@@ -132,6 +137,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
    * Refs
    */
   const infoRef = useRef(null);
+  const startDateRef = useRef(null);
   const startTimeRef = useRef(null);
   const durationRef = useRef(null);
   const imageResetRef = useRef(null);
@@ -220,12 +226,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
       try {
         const queryData = client.readQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
         });
 
         client.writeQuery<getStreamSelfs, getStreamSelfsVariables>({
           query: GET_STREAM_SELFS_QUERY,
-          variables: props.getStreamSelfsVariables,
+          variables: getStreamSelfsVariablesDefault,
           data: {
             ...queryData,
             getStreamSelfs: {
@@ -466,6 +472,8 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const timeFrom = watch('timeFrom');
   const isFree = watch('isFree');
   const duration = watch('duration');
+  const cost = watch('cost');
+  const tags = watch('tags');
 
 
   /**
@@ -555,13 +563,37 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   }, [register]);
 
 
+  /**
+   * Toast if image error
+   */
+  useEffect(() => {
+    if (errors.image) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add an image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+  }, [errors.image]);
+
+
   return (
-    <View style={GlobalStyles.PageFill}>
+    <>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
         style={GlobalStyles.PageFill}
       >
-        <ScrollView style={GlobalStyles.PageFill}>
+        <ScrollView
+          bounces={false}
+          contentContainerStyle={{ paddingBottom: spacing.small }}
+          ref={props.innerRef}
+          style={GlobalStyles.PageFill}
+        >
           {
             editable
               ? (
@@ -589,9 +621,32 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               )
           }
 
+          {props.data && (
+            <View style={[Styles.settings, dynamicStyles.settings]}>
+              <H3>Settings</H3>
+
+              {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
+                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
+                <Switch
+                  onValueChange={(value) => setValue('audioOnly', value, true)}
+                  value={watch('audioOnly')}
+                />
+              </View> */}
+
+              {props.data && (
+                <View style={Styles.inputWrap}>
+                  <StreamStates
+                    data={props.data}
+                    onPop={props.onPop}
+                  />
+                </View>
+              )}
+            </View>
+          )}
+
           <View style={Styles.form}>
             <View style={Styles.section}>
-              <H2>Description</H2>
+              <H3>Description</H3>
 
               <TextInput
                 name="name"
@@ -618,9 +673,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   // Validate on change if there's an error, otherwise validate onBlur
                   setValue('info', text, !!errors.info);
                 }}
-                setRef={(e) => {
-                  infoRef.current = e;
-                }}
+                setRef={infoRef}
                 placeholder="Enter your stream's info"
                 defaultValue={defaultValues.info}
                 errors={errors}
@@ -628,25 +681,50 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                 wrapStyle={Styles.inputWrap}
                 editable={editable}
               />
-
-              {/* If form is not editable, only show if there is tags */}
-              {(editable || props.data?.tags.length > 0) && (
-                <TagInput
-                  defaultValue={defaultValues.tags}
-                  onChange={(value) => {
-                    setValue('tags', value, true);
-                  }}
-                  wrapStyle={Styles.inputWrap}
-                  editable={editable}
-                />
-              )}
             </View>
 
-            <View style={Styles.section}>
-              <H2>Schedule</H2>
+            {/* If form is not editable, only show if there is tags */}
+            {(editable || props.data?.tags.length > 0) && (
+              <View style={Styles.section}>
+                <View style={Styles.tagsHeading}>
+                  <H3>Tags</H3>
+
+                  {editable && (
+                    <Button
+                      type="SECONDARY"
+                      size="small"
+                      title={!tags || tags.length === 0 ? 'Create' : 'Edit'}
+                      onPress={() => {
+                        openModalScreen({
+                          component: (
+                            <Tags
+                              defaultValue={tags}
+                              onDone={(value) => {
+                                setValue('tags', value, true);
+                              }}
+                            />
+                          ),
+                        });
+                      }}
+                      style={Styles.tagsButton}
+                    />
+                  )}
+                </View>
+
+                <View style={Styles.tags}>
+                  <TagsPreview
+                    tags={tags}
+                  />
+                </View>
+              </View>
+            )}
+
+            <View style={[Styles.section, Styles.afterTags]}>
+              <H3>Schedule</H3>
 
               <DateInput
                 defaultValue={timeFrom}
+                inputRef={startDateRef}
                 mode="date"
                 onChange={(value) => {
                   setValue('timeFrom', value, true);
@@ -683,11 +761,24 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             </View>
 
             <View style={Styles.section}>
-              <H2>Price &copy;</H2>
+              <View style={GlobalStyles.CostText}>
+                <H3>Price </H3>
+                <Icon name={ICON.CREDIT} size="xsmall" />
+              </View>
 
               {/* eslint-disable-next-line react-native/no-inline-styles */}
               <View pointerEvents={isFree ? 'none' : 'auto'} style={{ opacity: isFree ? 0.5 : 1 }}>
-                {editable && <Body>Minimum Price: &copy; {props.channelData.creditMinimumStreamCost}</Body>}
+                {editable && (
+                  <>
+                    <Body>Value per credit: <Body bold>{parseCurrency(props.channelData.creditWithdrawalValue)}</Body></Body>
+                    <Body>Value per purchase: <Body bold>{parseCurrency(cost ? parseInt(cost, 10) * props.channelData.creditWithdrawalValue : 0)}</Body></Body>
+                    <View style={GlobalStyles.CostText}>
+                      <Body>Minimum Price: </Body>
+                      <Icon name={ICON.CREDIT} size="xsmall" />
+                      <Body bold> {props.channelData.creditMinimumStreamCost}</Body>
+                    </View>
+                  </>
+                )}
                 <TextInput
                   name="cost"
                   onChangeText={(value) => setValue('cost', value, true)}
@@ -720,30 +811,6 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               )}
             </View>
           </View>
-
-          {props.data && (
-            <View style={[Styles.section, Styles.settings, dynamicStyles.settings]}>
-              <H2>Settings</H2>
-
-              {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
-                <Body bold style={Styles.toggleInputLabel}>Audio Only</Body>
-                <Switch
-                  onValueChange={(value) => setValue('audioOnly', value, true)}
-                  value={watch('audioOnly')}
-                />
-              </View> */}
-
-              {props.data && (
-                <View style={Styles.inputWrap}>
-                  <StreamStates
-                    data={props.data}
-                    getStreamSelfsVariables={props.getStreamSelfsVariables}
-                    onPop={props.onPop}
-                  />
-                </View>
-              )}
-            </View>
-          )}
         </ScrollView>
       </KeyboardAvoidingView>
 
@@ -756,13 +823,12 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           <Button
             title={loading ? `${props.data ? 'Updating' : 'Creating'}` : `${props.data ? 'Update' : 'Create'} Stream`}
             onPress={handleSubmit(onSubmit)}
-            disabled={!isValid || !dirty}
             loading={loading}
             style={Styles.button}
           />
         </View>
       )}
-    </View>
+    </>
   );
 };
 

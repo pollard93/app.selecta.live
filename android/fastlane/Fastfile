@@ -77,39 +77,39 @@ platform :android do
       }
     )
 
-    upload_to_play_store(
-      track: 'internal',
-      package_name: 'live.selecta.app.beta',
-      apk: "./app/build/outputs/apk/releaseBeta/app-releaseBeta.apk",
-    )
+    # upload_to_play_store(
+    #   track: 'internal',
+    #   package_name: 'live.selecta.app.beta',
+    #   apk: "./app/build/outputs/apk/releaseBeta/app-releaseBeta.apk",
+    # )
   end
 
-  # desc "Deploy a new version to the Google Play Store"
-  # lane :release do
-  #   # Get the last version code and increment it.
-  #   versionCode = File.read("metadata/versionCode").to_i
-  #   versionCode = versionCode+1
+  desc "Deploy a new version to the Google Play Store"
+  lane :release do
+    # Get the last version code and increment it.
+    versionCode = File.read("metadata/versionCode").to_i
+    versionCode = versionCode+1
 
-  #   # Save versionCode
-  #   f = File.new("metadata/versionCode", "w")
-  #   f.write(versionCode)
-  #   f.close
+    # Save versionCode
+    f = File.new("metadata/versionCode", "w")
+    f.write(versionCode)
+    f.close
 
-  #   # Set and get the version number
-  #   sh('yarn', 'format:version')
-  #   sh('yarn', 'setup:all')
-  #   versionName = File.read("metadata/versionName")
+    # Set and get the version number
+    sh('yarn', 'format:version')
+    sh('yarn', 'setup:all')
+    versionName = File.read("metadata/versionName")
 
-  #   # Build
-  #   gradle(
-  #     task: "assemble",
-  #     build_type: "Release",
-  #     properties: {
-  #       'versionCode' => versionCode,
-  #       'versionName' => versionName,
-  #     }
-  #   )
+    # Build
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      properties: {
+        'versionCode' => versionCode,
+        'versionName' => versionName,
+      }
+    )
 
-  #   upload_to_play_store(aab: "./app/build/outputs/bundle/release/app.aab")
-  # end
+    # upload_to_play_store(aab: "./app/build/outputs/bundle/release/app.aab")
+  end
 end

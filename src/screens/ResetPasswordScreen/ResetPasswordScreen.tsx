@@ -27,7 +27,7 @@ ResetPasswordScreen.prototype.ScreenName = 'ResetPasswordScreen';
 /**
  * Set screen color options (default white)
  */
-// ResetPasswordScreen.prototype.fullScreen = true;
+ResetPasswordScreen.prototype.fullScreen = true;
 // ResetPasswordScreen.prototype.statusBarColor = color.mono.dark;
 // ResetPasswordScreen.prototype.backgroundColor = color.mono.dark;
 

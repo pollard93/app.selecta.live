@@ -19,7 +19,6 @@ storiesOf('Stream/CancelStream/CancelStreamForm', module)
       return (
         <CancelStreamForm
           data={queryResult.data.getStreamSelf}
-          onDismiss={console.log}
         />
       );
     };

@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Options } from 'react-native-navigation';
 import Register, { RegisterProps } from '../../components/Register/Register';
-import color from '../../styles/definitions/color';
 
 export interface RegisterScreenProps extends RegisterProps {}
 
@@ -33,7 +32,7 @@ RegisterScreen.prototype.ScreenName = 'RegisterScreen';
  */
 RegisterScreen.prototype.fullScreen = true;
 // RegisterScreen.prototype.statusBarColor = color.mono.dark;
-RegisterScreen.prototype.backgroundColor = color.mono.dark;
+// RegisterScreen.prototype.backgroundColor = color.mono.dark;
 
 /**
  * Export as const so can be imported without the default

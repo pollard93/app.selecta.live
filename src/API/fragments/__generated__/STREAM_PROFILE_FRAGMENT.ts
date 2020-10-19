@@ -68,4 +68,5 @@ export interface STREAM_PROFILE_FRAGMENT {
   isConsumer: boolean | null;
   audioOnly: boolean | null;
   cancelledMessage: string | null;
+  liveConsumersEdge: number | null;
 }

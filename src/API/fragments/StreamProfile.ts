@@ -38,6 +38,7 @@ export const STREAM_PROFILE_FRAGMENT = gql`
     isConsumer
     audioOnly
     cancelledMessage
+    liveConsumersEdge
   },
   ${STREAM_PROFILE_FRAGMENT_SHORT}
 `;

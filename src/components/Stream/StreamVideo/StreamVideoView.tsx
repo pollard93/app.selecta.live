@@ -423,6 +423,7 @@ const StreamVideoView: FC<StreamVideoViewProps> = (props) => {
         toggleVideoEnabled={toggleVideoEnabled}
         isVideoEnabled={videoEnabled}
         streamId={props.data.id}
+        liveConsumers={props.data.liveConsumersEdge}
       />
     </>
   );

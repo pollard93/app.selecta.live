@@ -2,7 +2,7 @@
 import gql from 'graphql-tag';
 import { QueryHookOptions, useQuery } from 'react-apollo';
 import { NOTIFICATION_FRAGMENT } from '../../fragments/Notification';
-import { getNotifications } from './__generated__/getNotifications';
+import { getNotifications, getNotificationsVariables } from './__generated__/getNotifications';
 
 export const GET_NOTIFICATIONS_QUERY = gql`
   query getNotifications($first: Int, $after: String){

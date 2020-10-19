@@ -33,7 +33,8 @@ const DateInput: FC<DateInputProps> = (props) => {
     }
 
     /** Blur the input so it can be triggered again */
-    props.inputRef.current.blur();
+    // eslint-disable-next-line no-unused-expressions
+    props.inputRef?.current?.blur();
 
     if (value) {
       setDate(value);

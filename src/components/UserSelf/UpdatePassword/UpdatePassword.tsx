@@ -29,7 +29,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
@@ -119,6 +119,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
               <View style={Styles.input}>
                 <TextInput
                   name="newPassword"
+                  label="New Password"
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('newPassword', text, !!errors.newPassword);
@@ -140,9 +141,8 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
               <View style={Styles.input}>
                 <TextInput
                   name="confirmPassword"
-                  setRef={(e) => {
-                    confirmPasswordRef.current = e;
-                  }}
+                  label="Confirm Password"
+                  setRef={confirmPasswordRef}
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('confirmPassword', text, !!errors.confirmPassword);
@@ -164,9 +164,8 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
               <View style={Styles.input}>
                 <TextInput
                   name="currentPassword"
-                  setRef={(e) => {
-                    currentPasswordRef.current = e;
-                  }}
+                  label="Current Password"
+                  setRef={currentPasswordRef}
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('currentPassword', text, !!errors.currentPassword);
@@ -186,7 +185,6 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
                 <Button
                   title={loading ? 'Updating' : 'Update Password'}
                   onPress={handleSubmit(onSubmit)}
-                  disabled={!isValid || !dirty}
                   loading={loading}
                 />
               </View>

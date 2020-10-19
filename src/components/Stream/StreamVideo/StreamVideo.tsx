@@ -20,6 +20,7 @@ import LoadingIcon from '../../UI/LoadingIcon/LoadingIcon';
 export interface StreamVideoProps {
   data: getStreamProfile_getStreamProfile | getStreamSelf_getStreamSelf;
   disableFullScreen?: boolean;
+  isChannelPreview?: boolean; // Will not display 'about go live' for a channels go live preview
 }
 
 const StreamVideo: FC<StreamVideoProps> = (props) => {
@@ -83,6 +84,17 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
             variables: {
               id: props.data.id,
               position: data.position,
+            },
+          });
+        } else {
+          /**
+           * Update stream position with 0 to remove live consumer
+           */
+          await client.mutate({
+            mutation: UPDATE_STREAM_POSITION_MUTATION,
+            variables: {
+              id: props.data.id,
+              position: 0,
             },
           });
         }
@@ -180,10 +192,9 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
   if (props.disableFullScreen) {
     /**
      * Handle about to go live
-     * Only for StreamProfile, not StreamSelf
      */
     // eslint-disable-next-line no-underscore-dangle
-    if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+    if (!props.isChannelPreview && !props.data.timeFromLive && canGoLive(props.data)) {
       return (
         <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
           <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>
@@ -216,10 +227,9 @@ const StreamVideo: FC<StreamVideoProps> = (props) => {
       {({ toggleFullScreen, isFullScreen }) => {
         /**
          * Handle about to go live
-         * Only for StreamProfile, not StreamSelf
          */
         // eslint-disable-next-line no-underscore-dangle
-        if (props.data.__typename === 'StreamProfile' && !props.data.timeFromLive && canGoLive(props.data)) {
+        if (!props.isChannelPreview && !props.data.timeFromLive && canGoLive(props.data)) {
           return (
             <View style={[StyleSheet.absoluteFillObject, Styles.goLive]}>
               <H4 forceLight style={Styles.goLiveText}>About to go live!</H4>

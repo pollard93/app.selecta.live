@@ -55,17 +55,11 @@ describe('<ResetPassword />', () => {
     // Test password is secure
     expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Submit Button is disabled as default
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
-
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('Validpassword1!');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
     await wait(0);
     wrapper.update();
-
-    // Form should now be valid
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
     await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
@@ -75,8 +69,9 @@ describe('<ResetPassword />', () => {
     await wait(0);
     wrapper.update();
 
-    // Button is now be loading
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -97,15 +92,11 @@ describe('<ResetPassword />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should have goneHome
     expect(goHomeSpy.callCount).to.equal(1);
-
-    // Update - button should not return to default state as no errors
-    wrapper.update();
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
   });
 
   it('should fail to resetPassword', async () => {
@@ -230,7 +221,7 @@ describe('<ResetPassword />', () => {
     // Pushnotifications should have been initialised
     expect(pushNotificationInitSpy.callCount).to.equal(1);
 
-    // Pushnotifications should have been initialised
+    // InAppPurchases should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
     // Should goToRequireUpdateScreen

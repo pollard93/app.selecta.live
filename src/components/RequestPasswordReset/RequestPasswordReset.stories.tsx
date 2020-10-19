@@ -3,10 +3,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import RequestPasswordResetView from './RequestPasswordResetView';
 import RequestPasswordReset from './RequestPasswordReset';
-import SafeAreaViewDecorator from '../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 
 storiesOf('RequestPasswordReset', module)
-  .addDecorator(getStory => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .add('RequestPasswordReset', () => (
     <RequestPasswordReset onCompletion={console.log} />
   ))

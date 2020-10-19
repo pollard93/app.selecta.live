@@ -27,7 +27,7 @@ RequestPasswordResetScreen.prototype.ScreenName = 'RequestPasswordResetScreen';
 /**
  * Set screen color options (default white)
  */
-// RequestPasswordResetScreen.prototype.fullScreen = true;
+RequestPasswordResetScreen.prototype.fullScreen = true;
 // RequestPasswordResetScreen.prototype.statusBarColor = color.mono.dark;
 // RequestPasswordResetScreen.prototype.backgroundColor = color.mono.dark;
 

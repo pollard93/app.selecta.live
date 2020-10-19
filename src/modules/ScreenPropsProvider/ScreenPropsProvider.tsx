@@ -3,11 +3,14 @@ import { ScreenProps } from '../../screens/utils/interfaces';
 
 const ScreenContext = React.createContext<ScreenProps>(null);
 
-const ScreenPropsProvider: FC<ScreenProps> = (props) => (
-  <ScreenContext.Provider value={{ componentId: props.componentId, rootTag: props.rootTag }}>
-    {props.children}
-  </ScreenContext.Provider>
-);
+const ScreenPropsProvider: FC<ScreenProps> = (props) => {
+  const { children, ...p } = props;
+  return (
+    <ScreenContext.Provider value={p}>
+      {children}
+    </ScreenContext.Provider>
+  );
+};
 
 export const useScreenProps = () => useContext(ScreenContext);
 

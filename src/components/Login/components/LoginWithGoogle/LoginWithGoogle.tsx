@@ -16,6 +16,7 @@ import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/Onboa
 import { store } from '../../../../utils/storage';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../../../modules/Toast';
+import Icon, { ICON } from '../../../UI/Icon/Icon';
 
 interface LoginWithGoogleProps {
   disabled?: boolean;
@@ -32,10 +33,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
    * Configure on mount
    */
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '235314003497-37plkfi911daivvke6ic7pv4mhphg68l.apps.googleusercontent.com',
-      iosClientId: '235314003497-4jl8egs3ca885o2crijqngq3i86rh6cu.apps.googleusercontent.com',
-    });
+    GoogleSignin.configure();
   }, []);
 
 
@@ -141,10 +139,15 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
 
   return (
     <Button
+      icon={(
+        <Icon
+          name={ICON.GOOGLE}
+          size="small"
+        />
+      )}
       type="GOOGLE"
       title={props.buttonText}
       disabled={props.disabled || loading}
-      loading={loading}
       onPress={async () => {
         setLoading(true);
 

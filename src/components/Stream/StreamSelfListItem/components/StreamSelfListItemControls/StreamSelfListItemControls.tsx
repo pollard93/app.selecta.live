@@ -1,17 +1,18 @@
 import React, { FC, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import moment from 'moment-timezone';
-import Styles from '../../StreamSelfListItem.style';
+import Styles from './StreamSelfListControls.style';
 import Body from '../../../../UI/Typography/components/Body';
 import Button from '../../../../UI/Button/Button';
-import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import { pushScreen } from '../../../../../screens/utils';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
-import StreamStates from '../../../CreateUpdateStream/components/StreamStates/StreamStates';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
 import { useStreamStart, canGoLive } from '../../../../../utils/streamFunctions';
+import CreateUpdateStreamScreen from '../../../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
+import spacing from '../../../../../styles/definitions/spacing';
+import Chip from '../../../../UI/Chip/Chip';
 
 const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
   const screenProps = useScreenProps();
@@ -25,49 +26,118 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
 
 
   /**
-   * If not published or cancelled, return stream states
+   * Push CreateUpdateStreamScreen
    */
-  if (props.data.published === null || props.data.cancelled !== null) {
-    return (
-      <StreamStates {...props} />
-    );
-  }
+  const onEdit = () => {
+    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, { id: props.data.id });
+  };
 
 
   /**
-   * Return metrics if finished
+   * Push StreamSelfScreen
    */
-  if (props.data.timeToLive) {
-    return (
-      <View style={Styles.metrics}>
-        <TouchableOpacity onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}>
-          <View style={Styles.metric}>
-            <Icon name={ICON.CHAT} size="small" />
-            <Body style={Styles.metricBody}>{props.data.commentsEdge} Comment{props.data.commentsEdge === 1 ? '' : 's'}</Body>
-          </View>
-        </TouchableOpacity>
+  const onView = () => {
+    pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id });
+  };
 
-        <TouchableOpacity onPress={() => pushScreen(screenProps.componentId, StreamSelfScreen, { id: props.data.id })}>
-          <View style={Styles.metric}>
-            <Icon name={ICON.PLAY} size="small" />
-            <Body style={Styles.metricBody}>View Stream</Body>
-          </View>
-        </TouchableOpacity>
+
+  /**
+   * Push GoLiveScreen
+   */
+  const onGoLive = () => {
+    pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id });
+  };
+
+
+  /**
+   * If cancelled
+   * return view button
+   */
+  if (props.data.cancelled !== null) {
+    return (
+      <View style={Styles.topRight}>
+        <Button
+          title="View"
+          size="small"
+          onPress={onView}
+        />
       </View>
     );
   }
 
 
   /**
-   * Return button end live if stream is live
+   * If not published
+   * or finished
+   * return edit button
+   */
+  if (props.data.published === null) {
+    return (
+      <View style={Styles.topRight}>
+        <Button
+          title="Edit"
+          size="small"
+          onPress={onEdit}
+        />
+      </View>
+    );
+  }
+
+
+  /**
+   * If finished
+   * return edit and view button
+   */
+  if (props.data.timeToLive !== null) {
+    return (
+      <View style={Styles.topRight}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+      </View>
+    );
+  }
+
+
+  /**
+   * If stream is live
+   * Return button to end live if stream is live
    */
   if (props.data.timeFromLive) {
     return (
-      <Button
-        type="PRIMARY"
-        title="END STREAM"
-        onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
-      />
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
+        <Button
+          type="PRIMARY"
+          title="END LIVE"
+          onPress={onGoLive}
+        />
+      </View>
     );
   }
 
@@ -77,25 +147,56 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (canGoLive(props.data)) {
     return (
-      <Button
-        type="PRIMARY"
-        title="GO LIVE"
-        onPress={() => pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id })}
-      />
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
+        <Button
+          type="PRIMARY"
+          title="GO LIVE"
+          onPress={onGoLive}
+        />
+      </View>
     );
   }
 
 
   /**
-   * Otherwise show a disbaled button saying they can go live half an hour before
+   * Otherwise show a disabled button saying they can go live half an hour before
    */
   return (
-    <Button
-      type="PRIMARY"
-      title={`Available to go live ${moment(new Date(new Date(props.data.timeFrom).getTime() - 1.8e+6)).fromNow()}`}
-      onPress={() => {}}
-      disabled
-    />
+    <View style={Styles.spaceBetween}>
+      <View style={Styles.row}>
+        <Button
+          title="Edit"
+          size="small"
+          type="LIGHT"
+          onPress={onEdit}
+        />
+        <Button
+          title="View"
+          size="small"
+          onPress={onView}
+          style={{ marginLeft: spacing.small }}
+        />
+      </View>
+
+      <Chip type="PRIMARY">
+        <Body bold forceLight>{`Go live ${moment(new Date(new Date(props.data.timeFrom).getTime() - 1.8e+6)).fromNow()}`}</Body>
+      </Chip>
+    </View>
   );
 };
 

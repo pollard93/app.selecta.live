@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import color from '../../../styles/definitions/color';
+import shadow from '../../../styles/definitions/shadow';
 
 export default StyleSheet.create({
   wrap: {
@@ -8,13 +9,16 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
   },
   bar: {
-    alignItems: 'center',
     alignSelf: 'stretch',
     borderTopWidth: 1,
     justifyContent: 'center',
     left: 0,
     position: 'absolute',
     right: 0,
+    ...shadow.regular,
+  },
+  barTouch: {
+    alignItems: 'center',
   },
 });
 

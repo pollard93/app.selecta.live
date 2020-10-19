@@ -1,51 +1,48 @@
-/* eslint-disable max-classes-per-file */
-import React, { FC, useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import React, { FC, useEffect, useRef } from 'react';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import { requestNotifications } from 'react-native-permissions';
 import { useGetHomeFeedQuery } from '../../API/query/getHomeFeed/getHomeFeed';
 import LoadRetry from '../UI/LoadRetry/LoadRetry';
 import Header from '../UI/Headers/Header/Header';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 import Feed from '../UI/Feed/Feed';
-import Toast from '../UI/Toast/Toast';
 import { pushScreen } from '../../screens/utils';
 import StreamProfileScreen from '../../screens/StreamProfileScreen/StreamProfileScreen';
 import ChannelProfileScreen from '../../screens/ChannelProfileScreen/ChannelProfileScreen';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import { pushToast } from '../../modules/Toast';
 
 
-export interface HomeFeedProps {
-  toastMessage?: string;
-}
+export interface HomeFeedProps {}
 
-const HomeFeed: FC<HomeFeedProps> = (props) => {
+const HomeFeed: FC<HomeFeedProps> = () => {
   const queryResult = useGetHomeFeedQuery();
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
    * Remove splash
+   * request notifications
    */
   useEffect(() => {
     SplashScreen.hide();
-
-    // If toastMessage given then show toast
-    if (props.toastMessage) {
-      pushToast({
-        duration: 1000,
-        component: (
-          <Toast content={props.toastMessage} />
-        ),
-        dismissible: false,
-      });
-    }
+    requestNotifications(['alert', 'sound', 'badge']);
   }, []);
+
+
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
 
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header />
+      <Header onPressLogo={onPressLogo} />
 
       <SafeAreaView style={GlobalStyles.PageFill}>
         {
@@ -53,6 +50,7 @@ const HomeFeed: FC<HomeFeedProps> = (props) => {
             ? <LoadRetry cover {...queryResult} />
             : (
                 <Feed
+                  ref={ref}
                   data={queryResult.data.getHomeFeed}
                   onPressStream={(id) => {
                     pushScreen(screenProps.componentId, StreamProfileScreen, { id });

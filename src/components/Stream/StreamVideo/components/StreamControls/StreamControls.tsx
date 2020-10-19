@@ -28,6 +28,7 @@ interface StreamControlsProps {
   toggleVideoEnabled: () => void;
   isVideoEnabled: boolean;
   streamId: string;
+  liveConsumers: number;
 }
 
 const StreamControls: FC<StreamControlsProps> = (props) => {
@@ -321,6 +322,15 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                 style={Styles.liveWrap}
                 pointerEvents="box-none"
               >
+                {props.liveConsumers > 0 && (
+                  <View style={Styles.liveConsumers}>
+                    <Icon forceLight name={ICON.PROFILE} size="xsmall" style={Styles.liveConsumersIcon} />
+                    <Small bold forceLight>{props.liveConsumers}</Small>
+                  </View>
+                )}
+
+                <View />
+
                 <View style={Styles.live}>
                   <LoadingIcon size="small" />
                   <Small bold forceLight style={{ paddingLeft: spacing.xsmall }}>LIVE</Small>

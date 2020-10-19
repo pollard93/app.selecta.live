@@ -1,56 +1,79 @@
-import React, { FC, useState } from 'react';
-import { View } from 'react-native';
+import React, { FC, useRef, useState } from 'react';
+import { View, FlatList } from 'react-native';
 import ApolloFlatList from 'mbp-components-rn-apolloflatlist';
 import { Navigation } from 'react-native-navigation';
 import { GET_STREAM_SELFS_QUERY } from '../../../API/query/getStreamSelfs/getStreamSelfs';
 import { getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams } from '../../../API/query/getStreamSelfs/__generated__/getStreamSelfs';
 import StreamSelfListItem from '../StreamSelfListItem/StreamSelfListItem';
 import Styles from './StreamSelfs.styles';
-import H2 from '../../UI/Typography/components/H2';
+import H3 from '../../UI/Typography/components/H3';
 import Button from '../../UI/Button/Button';
-import Header from '../../UI/Headers/Header/Header';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import Body from '../../UI/Typography/components/Body';
 import LoadRetry from '../../UI/LoadRetry/LoadRetry';
 import { pushScreen } from '../../../screens/utils';
 import CreateUpdateStreamScreen from '../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import { StreamOrderByInput } from '../../../../__generated__/globalTypes';
-import StreamSelfListItemSkeleton from '../StreamSelfListItem/StreamSelfListItemSkeleton';
 import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
+import Gradient from '../../UI/Gradient/Gradient';
+import StreamCardSkeleton from '../../UI/Cards/StreamCard/StreamCardSkeleton';
 
 class StreamSelfsFlatList extends ApolloFlatList<getStreamSelfsVariables, getStreamSelfs, getStreamSelfs_getStreamSelfs_streams> {}
 
 export interface StreamSelfsProps {}
 
+export const getStreamSelfsVariablesDefault: getStreamSelfsVariables = {
+  first: 5,
+  orderBy: StreamOrderByInput.createdAt_DESC,
+  after: null,
+};
+
 const StreamSelfs: FC<StreamSelfsProps> = (props) => {
   const screenProps = useScreenProps();
+  const ref = useRef<FlatList>();
 
 
   /**
    * Initial Variables
    */
-  const [variables] = useState<getStreamSelfsVariables>({
-    first: 5,
-    orderBy: StreamOrderByInput.createdAt_DESC,
-    after: null,
-  });
+  const [variables] = useState<getStreamSelfsVariables>(getStreamSelfsVariablesDefault);
 
 
   /**
    * Push CreateUpdateStreamScreen
    */
   const onCreate = () => {
-    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {
-      getStreamSelfsVariables: variables,
-    });
+    pushScreen(screenProps.componentId, CreateUpdateStreamScreen, {});
+  };
+
+
+  /**
+   * On Pop
+   */
+  const onPop = () => {
+    Navigation.pop(screenProps.componentId);
+  };
+
+
+  /**
+   * Scroll to top of flatlist
+   */
+  const onPressLogo = () => {
+    // eslint-disable-next-line no-unused-expressions
+    ref.current?.scrollToOffset({ animated: true, offset: 0 });
   };
 
 
   return (
     <View style={GlobalStyles.PageFill}>
-      <Header onPop={() => Navigation.pop(screenProps.componentId)} />
+      <ChannelSelfHeader
+        onPop={onPop}
+        onPressLogo={onPressLogo}
+      />
 
       <StreamSelfsFlatList
+        innerRef={ref}
         query={GET_STREAM_SELFS_QUERY}
         variables={variables}
         accessor='getStreamSelfs.streams'
@@ -59,24 +82,23 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
             <StreamSelfListItem
               {...props}
               data={item}
-              getStreamSelfsVariables={variables}
             />
           </View>
         )}
         ListHeaderComponent={() => (
-          <View style={Styles.header}>
-            <H2>Stream Management</H2>
+          <Gradient style={Styles.header}>
+            <H3 forceLight>Stream Management</H3>
             <Button
-              type="PRIMARY"
-              title="Create New Stream"
+              type="LIGHT"
+              title="New Stream"
+              size="small"
               onPress={onCreate}
-              style={Styles.createButton}
             />
-          </View>
+          </Gradient>
         )}
         ListFooterComponent={({ queryResult, maxCount }) => {
           if (queryResult.loading) {
-            return <StreamSelfListItemSkeleton />;
+            return <StreamCardSkeleton />;
           }
 
           if (queryResult.error) {
@@ -90,7 +112,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
           if (maxCount === 0) {
             return (
               <View style={Styles.header}>
-                <Body>Your streams will appear here</Body>
+                <Body>No Streams</Body>
               </View>
             );
           }

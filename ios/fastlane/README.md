@@ -41,6 +41,11 @@ Build ipa and push to browserstack
 fastlane ios beta
 ```
 Push a new beta build to TestFlight
+### ios release
+```
+fastlane ios release
+```
+Push a new release build to the App Store
 
 ----
 

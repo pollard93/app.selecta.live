@@ -12,7 +12,6 @@ function loadStories() {
 	require('../src/components/Channel/ChannelSelfs/ChannelSelfs.stories');
 	require('../src/components/Channel/FollowChannel/FollowChannel.stories');
 	require('../src/components/Channel/RegisterChannel/RegisterChannel.stories');
-	require('../src/components/Channel/SearchChannels/SearchChannels.stories');
 	require('../src/components/Channel/UpdateChannel/UpdateChannel.stories');
 	require('../src/components/ChannelProfileFeed/ChannelProfileFeed.stories');
 	require('../src/components/ChannelSelfFeed/ChannelSelfFeed.stories');
@@ -21,8 +20,6 @@ function loadStories() {
 	require('../src/components/Login/Login.stories');
 	require('../src/components/Notification/NotificationListItem/NotificationListItem.stories');
 	require('../src/components/Notification/Notifications/Notifications.stories');
-	require('../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories');
-	require('../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories');
 	require('../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories');
 	require('../src/components/Purchase/Products/Products.stories');
 	require('../src/components/Register/Register.stories');
@@ -39,7 +36,6 @@ function loadStories() {
 	require('../src/components/Stream/GoLive/GoLive.stories');
 	require('../src/components/Stream/PublishStream/PublishStream.stories');
 	require('../src/components/Stream/ReportStream/ReportStream.stories');
-	require('../src/components/Stream/SearchStreams/SearchStreams.stories');
 	require('../src/components/Stream/StreamProfile/StreamProfile.stories');
 	require('../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories');
 	require('../src/components/Stream/StreamProfile/components/StreamPurchase/StreamPurchase.stories');
@@ -70,9 +66,9 @@ function loadStories() {
 	require('../src/components/UI/Form/components/MessageInput/MessageInput.stories');
 	require('../src/components/UI/Form/components/SearchInput/SearchInput.stories');
 	require('../src/components/UI/Form/components/Switch/Switch.stories');
-	require('../src/components/UI/Form/components/TagInput/TagInput.stories');
 	require('../src/components/UI/Form/components/TextArea/TextArea.stories');
 	require('../src/components/UI/Form/components/TextInput/TextInput.stories');
+	require('../src/components/UI/Headers/ChannelSelfHeader/ChannelSelfHeader.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
 	require('../src/components/UI/Icon/Icon.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
@@ -85,7 +81,6 @@ function loadStories() {
 	require('../src/components/UI/Toast/Toast.stories');
 	require('../src/components/UI/Typography/Typography.stories');
 	require('../src/components/UserSelf/Profile/Profile.stories');
-	require('../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories');
 	require('../src/components/UserSelf/UpdateEmail/UpdateEmail.stories');
 	require('../src/components/UserSelf/UpdatePassword/UpdatePassword.stories');
 	require('../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories');
@@ -103,7 +98,6 @@ const stories = [
 	'../src/components/Channel/ChannelSelfs/ChannelSelfs.stories',
 	'../src/components/Channel/FollowChannel/FollowChannel.stories',
 	'../src/components/Channel/RegisterChannel/RegisterChannel.stories',
-	'../src/components/Channel/SearchChannels/SearchChannels.stories',
 	'../src/components/Channel/UpdateChannel/UpdateChannel.stories',
 	'../src/components/ChannelProfileFeed/ChannelProfileFeed.stories',
 	'../src/components/ChannelSelfFeed/ChannelSelfFeed.stories',
@@ -112,8 +106,6 @@ const stories = [
 	'../src/components/Login/Login.stories',
 	'../src/components/Notification/NotificationListItem/NotificationListItem.stories',
 	'../src/components/Notification/Notifications/Notifications.stories',
-	'../src/components/Onboarding/OnboardingGetStarted/OnboardingGetStarted.stories',
-	'../src/components/Onboarding/OnboardingNotifications/OnboardingNotifications.stories',
 	'../src/components/Onboarding/OnboardingWelcome/OnboardingWelcome.stories',
 	'../src/components/Purchase/Products/Products.stories',
 	'../src/components/Register/Register.stories',
@@ -130,7 +122,6 @@ const stories = [
 	'../src/components/Stream/GoLive/GoLive.stories',
 	'../src/components/Stream/PublishStream/PublishStream.stories',
 	'../src/components/Stream/ReportStream/ReportStream.stories',
-	'../src/components/Stream/SearchStreams/SearchStreams.stories',
 	'../src/components/Stream/StreamProfile/StreamProfile.stories',
 	'../src/components/Stream/StreamProfile/components/StreamCommunication/StreamCommunication.stories',
 	'../src/components/Stream/StreamProfile/components/StreamPurchase/StreamPurchase.stories',
@@ -161,9 +152,9 @@ const stories = [
 	'../src/components/UI/Form/components/MessageInput/MessageInput.stories',
 	'../src/components/UI/Form/components/SearchInput/SearchInput.stories',
 	'../src/components/UI/Form/components/Switch/Switch.stories',
-	'../src/components/UI/Form/components/TagInput/TagInput.stories',
 	'../src/components/UI/Form/components/TextArea/TextArea.stories',
 	'../src/components/UI/Form/components/TextInput/TextInput.stories',
+	'../src/components/UI/Headers/ChannelSelfHeader/ChannelSelfHeader.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
 	'../src/components/UI/Icon/Icon.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
@@ -176,7 +167,6 @@ const stories = [
 	'../src/components/UI/Toast/Toast.stories',
 	'../src/components/UI/Typography/Typography.stories',
 	'../src/components/UserSelf/Profile/Profile.stories',
-	'../src/components/UserSelf/ProfileUpdate/ProfileUpdate.stories',
 	'../src/components/UserSelf/UpdateEmail/UpdateEmail.stories',
 	'../src/components/UserSelf/UpdatePassword/UpdatePassword.stories',
 	'../src/components/UserSelf/UpdateProfilePicture/UpdateProfilePicture.stories',

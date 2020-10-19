@@ -89,7 +89,8 @@ export const canGoLive = (data: StreamTimes) => new Date(data.timeFrom).getTime(
 
 
 /**
- * Poll stream profile every 10 seconds and update stream.timeFromLive and stream.timeToLive in cache
+ * Poll stream profile every 10 seconds and updates stream.timeFromLive and stream.timeToLive and stream.liveConsumersEdge in cache
+ * Polls before stream is live, until it has ended (timeToLive is set)
  */
 export const usePollLive = (id: string) => {
   const [query, queryResult] = useGetStreamProfileLiveLazyQuery({

@@ -23,6 +23,7 @@ export default StyleSheet.create({
   },
   icon: {
     backgroundColor: color.mono.darkCover,
+    borderRadius: 2,
     margin: spacing.xxsmall,
     padding: spacing.xxsmall / 2,
   },

@@ -17,6 +17,7 @@ import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/Onboa
 import { store } from '../../../../utils/storage';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../../../modules/Toast';
+import Icon, { ICON } from '../../../UI/Icon/Icon';
 
 interface LoginWithFacebookProps {
   disabled?: boolean;
@@ -122,10 +123,16 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
 
   return (
     <Button
+      icon={(
+        <Icon
+          name={ICON.FACEBOOK_LOGIN}
+          size="small"
+          forceLight
+        />
+      )}
       type="FB"
       title={props.buttonText}
       disabled={props.disabled || loading}
-      loading={loading}
       onPress={() => {
         setLoading(true);
 

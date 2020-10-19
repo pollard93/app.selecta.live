@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
-import { TextInput } from 'react-native-gesture-handler';
 import { useDynamicValue } from 'react-native-dynamic';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
 import ChannelSelfs from '../../Channel/ChannelSelfs/ChannelSelfs';

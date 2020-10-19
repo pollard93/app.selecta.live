@@ -23,7 +23,6 @@ storiesOf('Stream/CreateUpdateStream/StreamStates', module)
             ...queryResult.data.getStreamSelf,
             published: null,
           }}
-          getStreamSelfsVariables={{}}
           onPop={console.log}
         />
       );
@@ -47,7 +46,6 @@ storiesOf('Stream/CreateUpdateStream/StreamStates', module)
             ...queryResult.data.getStreamSelf,
             published: new Date().toISOString(),
           }}
-          getStreamSelfsVariables={{}}
           onPop={console.log}
         />
       );
@@ -72,7 +70,6 @@ storiesOf('Stream/CreateUpdateStream/StreamStates', module)
             published: new Date().toISOString(),
             cancelled: new Date().toISOString(),
           }}
-          getStreamSelfsVariables={{}}
           onPop={console.log}
         />
       );

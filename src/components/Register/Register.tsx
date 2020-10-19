@@ -3,7 +3,7 @@ import { useApolloClient } from 'react-apollo';
 import { Navigation } from 'react-native-navigation';
 import { useRegisterMutation } from '../../API/mutation/register/register';
 import RegisterView, { FormData } from './RegisterView';
-import { pushScreen, goToRequireUpdateScreen } from '../../screens/utils';
+import { goToRequireUpdateScreen, goHome } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { putAccessToken, putAccessTokenVariables } from '../../ApolloClient/resolvers/mutation/putAccessToken/__generated__/putAccessToken';
@@ -11,7 +11,6 @@ import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../modules/Toast';
@@ -49,10 +48,7 @@ const Register: FC<RegisterProps> = () => {
       }
 
       // Navigate now getSelf is cached
-      // Carry on onboarding process
-      pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
-        setLoading(false);
-      });
+      goHome();
     },
     onError: (e) => {
       setLoading(false);
@@ -111,7 +107,9 @@ const Register: FC<RegisterProps> = () => {
   const onSubmit = (variables: FormData) => {
     setLoading(true);
     registerMutation({
-      variables,
+      variables: {
+        data: variables,
+      },
     });
   };
 

@@ -8,6 +8,7 @@ export const GET_STREAM_PROFILE_LIVE_QUERY = gql`
       id
       timeFromLive
       timeToLive
+      liveConsumersEdge
     }
   }
 `;

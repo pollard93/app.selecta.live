@@ -29,7 +29,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty }, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  const { register, setValue, handleSubmit, errors, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
 
 
   /**
@@ -126,9 +126,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
               <View style={Styles.input}>
                 <TextInput
                   name="password"
-                  setRef={(e) => {
-                    passwordRef.current = e;
-                  }}
+                  setRef={passwordRef}
                   onChangeText={(text) => {
                     // Validate on change if there's an error, otherwise validate onBlur
                     setValue('password', text, !!errors.password);
@@ -148,7 +146,6 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
                 <Button
                   title={loading ? 'Requesting' : 'Request email update'}
                   onPress={handleSubmit(onSubmit)}
-                  disabled={!isValid || !dirty}
                   loading={loading}
                 />
               </View>

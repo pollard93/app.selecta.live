@@ -14,7 +14,6 @@ import { GET_SELF_QUERY } from '../../API/query/getSelf/getSelf';
 import RegisterView from './RegisterView';
 import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import * as ToastModule from '../../modules/Toast';
 
@@ -26,8 +25,8 @@ describe('<Register />', () => {
   let pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(ToastModule, 'pushToast');
-  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+  let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
 
   afterEach(() => {
     sandbox.restore();
@@ -35,8 +34,8 @@ describe('<Register />', () => {
     pushNotificationInitSpy = sandbox.stub(PushNotifications, 'init');
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(ToastModule, 'pushToast');
-    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
+    goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   });
 
   it('should succeed', async () => {
@@ -51,19 +50,12 @@ describe('<Register />', () => {
     // Test password is secure
     expect(wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().secureTextEntry).to.equal(true);
 
-    // Login Button is disabled as default
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
-
     // Test text change and validate form
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
-    wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onBlur();
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
-    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onBlur();
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     await wait(0);
     wrapper.update();
-
-    // Form should now be valid
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.false;
 
     // Submit and wait for response and update
     await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
@@ -73,8 +65,9 @@ describe('<Register />', () => {
     await wait(0);
     wrapper.update();
 
-    // Button is now be loading
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Button should now be loading
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().disabled).to.be.true;
+    expect(wrapper.findWhere((n) => n.prop('testID') === 'submitLoading').first()).to.have.length;
 
     // Check that the access token has been stored
     const gat = client.readQuery<getAccessToken>({
@@ -98,12 +91,8 @@ describe('<Register />', () => {
     // Pushnotifications should have been initialised
     expect(inAppPurchasesInitSpy.callCount).to.equal(1);
 
-    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenSpy.args[0][2]).to.be.empty;
-
-    // Update - button should not return to state as no errors
-    wrapper.update();
-    expect(wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().loading).to.be.true;
+    // Should have goneHome
+    expect(goHomeSpy.callCount).to.equal(1);
   });
 
   it('should fail to register', async () => {
@@ -127,6 +116,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update
@@ -167,6 +157,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update
@@ -210,6 +201,7 @@ describe('<Register />', () => {
     // Test text change
     wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
     wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
+    wrapper.findWhere((n) => n.prop('testID') === 'username').first().props().onChangeText('username');
     wrapper.update();
 
     // Submit and update
@@ -230,8 +222,5 @@ describe('<Register />', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
-
-    // Should not have called OnboardingWelcomeScreen
-    expect(pushScreenSpy.callCount).to.equal(0);
   });
 });

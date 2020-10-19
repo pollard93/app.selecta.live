@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import { ApolloProvider } from 'react-apollo';
 import { SafeAreaView, View } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import ApolloClient from '../ApolloClient';
 import InitScreen from './InitScreen/InitScreen';
 import GlobalStyles, { GlobalDynamicStyles } from '../styles/stylesheets/GlobalStyles';
@@ -16,8 +17,6 @@ import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelSelfScreen from './ChannelSelfScreen/ChannelSelfScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
 import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
-import OnboardingNotificationsScreen from './OnboardingScreens/OnboardingNotificationsScreen/OnboardingNotificationsScreen';
-import OnboardingGetStartedScreen from './OnboardingScreens/OnboardingGetStartedScreen/OnboardingGetStartedScreen';
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
@@ -40,16 +39,23 @@ const wrapContext = (Component) => {
    * Overlay component
    */
   if (Component.prototype.options?.overlay) {
-    const wrapped = (props: ScreenProps) => (
-      <ScreenPropsProvider {...props}>
-        <Component {...props} />
-      </ScreenPropsProvider>
-    );
+    const wrapped = (props: ScreenProps) => {
+      const screenProps: ScreenProps = {
+        ...props,
+        name: Component.prototype.ScreenName,
+      };
+
+      return (
+        <ScreenPropsProvider {...screenProps}>
+          <Component {...props} />
+        </ScreenPropsProvider>
+      );
+    };
 
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
 
-    return wrapped;
+    return gestureHandlerRootHOC(wrapped);
   }
 
 
@@ -59,9 +65,13 @@ const wrapContext = (Component) => {
   if (Component.prototype.fullScreen) {
     const wrapped = (props: ScreenProps) => {
       const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+      const screenProps: ScreenProps = {
+        ...props,
+        name: Component.prototype.ScreenName,
+      };
 
       return (
-        <ScreenPropsProvider {...props}>
+        <ScreenPropsProvider {...screenProps}>
           <ApolloProvider client={ApolloClient}>
             <View style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
               <Component {...props} />
@@ -74,7 +84,7 @@ const wrapContext = (Component) => {
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
 
-    return wrapped;
+    return gestureHandlerRootHOC(wrapped);
   }
 
 
@@ -83,9 +93,13 @@ const wrapContext = (Component) => {
    */
   const wrapped = (props: ScreenProps) => {
     const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+    const screenProps: ScreenProps = {
+      ...props,
+      name: Component.prototype.ScreenName,
+    };
 
     return (
-      <ScreenPropsProvider {...props}>
+      <ScreenPropsProvider {...screenProps}>
         <ApolloProvider client={ApolloClient}>
           <SafeAreaView style={{ flex: 0, backgroundColor: Component.prototype.statusBarColor || 'transparent' }} />
           <SafeAreaView style={[globalDynamicStyles.background, GlobalStyles.PageFill, Component.prototype.backgroundColor && { backgroundColor: Component.prototype.backgroundColor }]}>
@@ -101,7 +115,7 @@ const wrapContext = (Component) => {
   // Allows static options to be called for react-native-navigation
   (wrapped as any).options = Component.prototype.options;
 
-  return wrapped;
+  return gestureHandlerRootHOC(wrapped);
 };
 
 
@@ -116,8 +130,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(ChannelSelfScreen.prototype.ScreenName, () => wrapContext(ChannelSelfScreen));
   Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen));
   Navigation.registerComponent(OnboardingWelcomeScreen.prototype.ScreenName, () => wrapContext(OnboardingWelcomeScreen));
-  Navigation.registerComponent(OnboardingNotificationsScreen.prototype.ScreenName, () => wrapContext(OnboardingNotificationsScreen));
-  Navigation.registerComponent(OnboardingGetStartedScreen.prototype.ScreenName, () => wrapContext(OnboardingGetStartedScreen));
   Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
   Navigation.registerComponent(ChannelProfileScreen.prototype.ScreenName, () => wrapContext(ChannelProfileScreen));
   Navigation.registerComponent(StreamProfileScreen.prototype.ScreenName, () => wrapContext(StreamProfileScreen));

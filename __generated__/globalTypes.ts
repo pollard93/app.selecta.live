@@ -29,6 +29,8 @@ export enum ChannelOrderByInput {
   instagramUrl_DESC = "instagramUrl_DESC",
   name_ASC = "name_ASC",
   name_DESC = "name_DESC",
+  profileImageColor_ASC = "profileImageColor_ASC",
+  profileImageColor_DESC = "profileImageColor_DESC",
   twitterUrl_ASC = "twitterUrl_ASC",
   twitterUrl_DESC = "twitterUrl_DESC",
   updatedAt_ASC = "updatedAt_ASC",
@@ -93,8 +95,6 @@ export enum SOCIAL_PROVIDER {
 }
 
 export enum StreamOrderByInput {
-  approved_ASC = "approved_ASC",
-  approved_DESC = "approved_DESC",
   audioOnly_ASC = "audioOnly_ASC",
   audioOnly_DESC = "audioOnly_DESC",
   cancelledMessage_ASC = "cancelledMessage_ASC",
@@ -274,6 +274,20 @@ export interface ChannelWhereInput {
   instagramUrl_not_ends_with?: string | null;
   coverImage?: FileWhereInput | null;
   profileImage?: FileWhereInput | null;
+  profileImageColor?: string | null;
+  profileImageColor_not?: string | null;
+  profileImageColor_in?: string[] | null;
+  profileImageColor_not_in?: string[] | null;
+  profileImageColor_lt?: string | null;
+  profileImageColor_lte?: string | null;
+  profileImageColor_gt?: string | null;
+  profileImageColor_gte?: string | null;
+  profileImageColor_contains?: string | null;
+  profileImageColor_not_contains?: string | null;
+  profileImageColor_starts_with?: string | null;
+  profileImageColor_not_starts_with?: string | null;
+  profileImageColor_ends_with?: string | null;
+  profileImageColor_not_ends_with?: string | null;
   verified?: boolean | null;
   verified_not?: boolean | null;
   followers_every?: UserWhereInput | null;
@@ -559,6 +573,12 @@ export interface NotificationWhereInput {
   AND?: NotificationWhereInput[] | null;
   OR?: NotificationWhereInput[] | null;
   NOT?: NotificationWhereInput[] | null;
+}
+
+export interface RegisterInput {
+  email: string;
+  password: string;
+  username: string;
 }
 
 export interface RequestedChannelWhereInput {
@@ -1045,14 +1065,6 @@ export interface StreamWhereInput {
   userRecords_every?: StreamUserRecordWhereInput | null;
   userRecords_some?: StreamUserRecordWhereInput | null;
   userRecords_none?: StreamUserRecordWhereInput | null;
-  approved?: any | null;
-  approved_not?: any | null;
-  approved_in?: any[] | null;
-  approved_not_in?: any[] | null;
-  approved_lt?: any | null;
-  approved_lte?: any | null;
-  approved_gt?: any | null;
-  approved_gte?: any | null;
   audioOnly?: boolean | null;
   audioOnly_not?: boolean | null;
   positionRecords_every?: StreamPositionRecordWhereInput | null;

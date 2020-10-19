@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react-native';
 import StreamSelfListItem from './StreamSelfListItem';
 import SafeAreaViewDecorator from '../../../../storybook/Decorators/SafeAreaViewDecorator/SafeAreaViewDecorator';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import StreamSelfListItemSkeleton from './StreamSelfListItemSkeleton';
 
 storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
@@ -14,7 +13,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             name: 'Stream Title to go here and here and here And maybe here',
@@ -41,7 +39,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             tags: [],
@@ -59,7 +56,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             published: null,
@@ -77,7 +73,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             cancelled: new Date().toISOString(),
@@ -95,7 +90,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFromLive: null,
@@ -115,7 +109,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeFromLive: null,
@@ -135,7 +128,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeToLive: null,
@@ -154,7 +146,6 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
 
       return (
         <StreamSelfListItem
-          getStreamSelfsVariables={{}}
           data={{
             ...res.data.getStreamSelf,
             timeToLive: new Date().toISOString(), // Has ended
@@ -164,5 +155,4 @@ storiesOf('Stream/StreamSelfs/StreamSelfListItem', module)
     };
 
     return <TestComponent />;
-  })
-  .add('StreamSelfsListItemSkeleton', () => <StreamSelfListItemSkeleton />);
+  });

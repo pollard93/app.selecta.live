@@ -38,7 +38,7 @@ const CreditTransactions: FC = () => (
       if (queryResult.data.getCreditTransactionProfiles.count === 0) {
         return (
           <View>
-            <Body style={{ color: color.mono.pale.dark }}>Your purchases will appear here</Body>
+            <Body style={{ color: color.mono.pale.dark }}>No Purchases</Body>
           </View>
         );
       }

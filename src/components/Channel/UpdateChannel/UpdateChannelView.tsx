@@ -1,4 +1,4 @@
-import React, { useState, useRef, FC, useEffect } from 'react';
+import React, { useState, useRef, FC, useEffect, MutableRefObject } from 'react';
 import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
@@ -19,6 +19,10 @@ import Button from '../../UI/Button/Button';
 import ChannelHeaderStyles from '../ChannelHeader/ChannelHeader.style';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { pushToast } from '../../../modules/Toast';
+import H3 from '../../UI/Typography/components/H3';
+import { openModalScreen } from '../../../screens/utils';
+import Tags from '../../Tag/Tags/Tags';
+import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
 
 
 type FormData = {
@@ -30,18 +34,20 @@ type FormData = {
   twitterUrl: string;
   facebookUrl: string;
   instagramUrl: string;
+  tags: string[];
 };
 
 interface UpdateChannelViewProps {
   data: CHANNEL_SELF_FRAGMENT;
-  canPopRef: React.MutableRefObject<boolean>;
+  canPopRef: MutableRefObject<boolean>;
+  innerRef?: MutableRefObject<ScrollView>;
 }
 
 const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
   /**
    * Form
    */
-  const { register, setValue, handleSubmit, errors, formState: { isValid, dirty, dirtyFields }, triggerValidation, reset, getValues } = useForm<FormData>({
+  const { register, setValue, handleSubmit, errors, formState: { dirty, dirtyFields }, triggerValidation, reset, getValues, watch } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
       name: props.data.name,
@@ -52,6 +58,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       twitterUrl: props.data.twitterUrl,
       facebookUrl: props.data.facebookUrl,
       instagramUrl: props.data.instagramUrl,
+      tags: props.data.tags.map((t) => t.title),
     },
   });
   const [defaultValues] = useState(getValues());
@@ -101,6 +108,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         twitterUrl: updateChannel.twitterUrl,
         facebookUrl: updateChannel.facebookUrl,
         instagramUrl: updateChannel.instagramUrl,
+        tags: updateChannel.tags.map((t) => t.title),
       });
 
       // Reset images
@@ -114,7 +122,10 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       pushToast({
         duration: 1000,
         component: (
-          <Toast content='Updated channel' />
+          <Toast
+            type="SUCCESS"
+            content='Updated channel'
+          />
         ),
         dismissible: false,
       });
@@ -257,18 +268,61 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
       { name: 'instagramUrl' },
       { required: false },
     );
+    register(
+      { name: 'tags' },
+      { required: false },
+    );
   }, [register]);
 
 
+  /**
+   * Toast if image error
+   */
+  useEffect(() => {
+    if (errors.profileImage) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add a profile image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+
+    if (errors.coverImage) {
+      pushToast({
+        duration: 1000,
+        component: (
+          <Toast
+            type="ERROR"
+            content='Please add a cover image'
+          />
+        ),
+        dismissible: false,
+      });
+    }
+  }, [errors.profileImage, errors.coverImage]);
+
+
+  /**
+   * Watch
+   */
+  const tags = watch('tags');
+
+
   return (
-    <View style={GlobalStyles.PageFill}>
+    <>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={GlobalStyles.PageFill}
       >
         <ScrollView
-          style={GlobalStyles.PageFill}
           bounces={false}
+          ref={props.innerRef}
+          style={GlobalStyles.PageFill}
         >
           <EditableAsyncImage
             asyncImageProps={{
@@ -323,124 +377,153 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
           </View>
 
           <View style={Styles.form}>
-            <TextInput
-              name="name"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('name', text, !!errors.name);
-              }}
-              placeholder="Enter your channel name"
-              defaultValue={defaultValues.name}
-              returnKeyType="next"
-              errors={errors}
-              onBlur={() => triggerValidation('name', true)}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                descriptionRef.current?.focus();
-              }}
-              wrapStyle={Styles.inputWrap}
-            />
+            <View style={Styles.section}>
+              <H3>Description</H3>
 
-            <TextArea
-              name="description"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('description', text, !!errors.description);
-              }}
-              setRef={(e) => {
-                descriptionRef.current = e;
-              }}
-              placeholder="Enter your channel description"
-              defaultValue={defaultValues.description}
-              errors={errors}
-              onBlur={() => triggerValidation('description', true)}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                websiteUrlRef.current?.focus();
-              }}
-              wrapStyle={Styles.inputWrap}
-            />
+              <TextInput
+                name="name"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('name', text, !!errors.name);
+                }}
+                placeholder="Enter your channel name"
+                defaultValue={defaultValues.name}
+                returnKeyType="next"
+                errors={errors}
+                onBlur={() => triggerValidation('name', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  descriptionRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+              />
 
-            <TextInput
-              name="websiteUrl"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('websiteUrl', text, !!errors.websiteUrl);
-              }}
-              setRef={(e) => {
-                websiteUrlRef.current = e;
-              }}
-              placeholder="Enter your channel's website"
-              defaultValue={defaultValues.websiteUrl}
-              returnKeyType="next"
-              errors={errors}
-              onBlur={() => triggerValidation('websiteUrl', true)}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                twitterUrlRef.current?.focus();
-              }}
-              wrapStyle={Styles.inputWrap}
-            />
+              <TextArea
+                name="description"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('description', text, !!errors.description);
+                }}
+                setRef={descriptionRef}
+                placeholder="Enter your channel description"
+                defaultValue={defaultValues.description}
+                errors={errors}
+                onBlur={() => triggerValidation('description', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  websiteUrlRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+              />
+            </View>
 
-            <TextInput
-              name="twitterUrl"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('twitterUrl', text, !!errors.twitterUrl);
-              }}
-              setRef={(e) => {
-                twitterUrlRef.current = e;
-              }}
-              placeholder="Enter your channel's twitter url"
-              defaultValue={defaultValues.twitterUrl}
-              returnKeyType="next"
-              errors={errors}
-              onBlur={() => triggerValidation('twitterUrl', true)}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                facebookUrlRef.current?.focus();
-              }}
-              wrapStyle={Styles.inputWrap}
-            />
+            <View style={Styles.section}>
+              <H3>Social</H3>
 
-            <TextInput
-              name="facebookUrl"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('facebookUrl', text, !!errors.facebookUrl);
-              }}
-              setRef={(e) => {
-                facebookUrlRef.current = e;
-              }}
-              placeholder="Enter your channel's facebook url"
-              defaultValue={defaultValues.facebookUrl}
-              returnKeyType="next"
-              errors={errors}
-              onBlur={() => triggerValidation('facebookUrl', true)}
-              onSubmitEditing={() => {
-                // eslint-disable-next-line no-unused-expressions
-                instagramUrlRef.current?.focus();
-              }}
-              wrapStyle={Styles.inputWrap}
-            />
+              <TextInput
+                name="websiteUrl"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('websiteUrl', text, !!errors.websiteUrl);
+                }}
+                setRef={websiteUrlRef}
+                placeholder="Enter your channel's website"
+                defaultValue={defaultValues.websiteUrl}
+                returnKeyType="next"
+                errors={errors}
+                onBlur={() => triggerValidation('websiteUrl', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  twitterUrlRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+              />
 
-            <TextInput
-              name="instagramUrl"
-              onChangeText={(text) => {
-                // Validate on change if there's an error, otherwise validate onBlur
-                setValue('instagramUrl', text, !!errors.instagramUrl);
-              }}
-              setRef={(e) => {
-                instagramUrlRef.current = e;
-              }}
-              placeholder="Enter your channel's instagram url"
-              defaultValue={defaultValues.instagramUrl}
-              returnKeyType="done"
-              errors={errors}
-              onBlur={() => triggerValidation('instagramUrl', true)}
-              onSubmitEditing={handleSubmit(onSubmit)}
-              wrapStyle={Styles.inputWrap}
-            />
+              <TextInput
+                name="twitterUrl"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('twitterUrl', text, !!errors.twitterUrl);
+                }}
+                setRef={twitterUrlRef}
+                placeholder="Enter your channel's twitter url"
+                defaultValue={defaultValues.twitterUrl}
+                returnKeyType="next"
+                errors={errors}
+                onBlur={() => triggerValidation('twitterUrl', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  facebookUrlRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+              />
+
+              <TextInput
+                name="facebookUrl"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('facebookUrl', text, !!errors.facebookUrl);
+                }}
+                setRef={facebookUrlRef}
+                placeholder="Enter your channel's facebook url"
+                defaultValue={defaultValues.facebookUrl}
+                returnKeyType="next"
+                errors={errors}
+                onBlur={() => triggerValidation('facebookUrl', true)}
+                onSubmitEditing={() => {
+                  // eslint-disable-next-line no-unused-expressions
+                  instagramUrlRef.current?.focus();
+                }}
+                wrapStyle={Styles.inputWrap}
+              />
+
+              <TextInput
+                name="instagramUrl"
+                onChangeText={(text) => {
+                  // Validate on change if there's an error, otherwise validate onBlur
+                  setValue('instagramUrl', text, !!errors.instagramUrl);
+                }}
+                setRef={instagramUrlRef}
+                placeholder="Enter your channel's instagram url"
+                defaultValue={defaultValues.instagramUrl}
+                returnKeyType="done"
+                errors={errors}
+                onBlur={() => triggerValidation('instagramUrl', true)}
+                onSubmitEditing={handleSubmit(onSubmit)}
+                wrapStyle={Styles.inputWrap}
+              />
+            </View>
+
+            <View style={Styles.section}>
+              <View style={Styles.tagsHeading}>
+                <H3>Tags</H3>
+
+                <Button
+                  type="SECONDARY"
+                  size="small"
+                  title={!tags || tags.length === 0 ? 'Create' : 'Edit'}
+                  onPress={() => {
+                    openModalScreen({
+                      component: (
+                        <Tags
+                          defaultValue={tags}
+                          onDone={(value) => {
+                            setValue('tags', value, true);
+                          }}
+                        />
+                      ),
+                    });
+                  }}
+                  style={Styles.tagsButton}
+                />
+              </View>
+
+              <View style={Styles.tags}>
+                <TagsPreview
+                  tags={tags}
+                />
+              </View>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -453,12 +536,11 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         <Button
           title={loading ? 'Updating' : 'Update channel'}
           onPress={handleSubmit(onSubmit)}
-          disabled={!isValid || !dirty}
           loading={loading}
           style={Styles.button}
         />
       </View>
-    </View>
+    </>
   );
 };
 

@@ -19,6 +19,10 @@ export default StyleSheet.create({
     position: 'absolute',
     width: '100%',
   },
+  CostText: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });
 
 

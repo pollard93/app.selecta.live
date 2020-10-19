@@ -40,12 +40,15 @@ export default StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   horizontalArrowHORIZONTAL_SMALL: {
-    tintColor: color.mono.light,
+    tintColor: color.accent.primary,
   },
 
   // item
   itemHORIZONTAL: {
     paddingRight: spacing.small,
+  },
+  itemLoadingHORIZONTAL_SMALL: {
+    marginRight: spacing.small,
   },
   itemFlex: {
     flex: 1,
