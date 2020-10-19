@@ -118,6 +118,7 @@ const channelTokenEndpoints = [
   'putStream',
   'registerChannel',
   'requestChannelLoginCode',
+  'unlistStream',
   'updateChannel',
   'updateStream',
   'withdrawFunds',

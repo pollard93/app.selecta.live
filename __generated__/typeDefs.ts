@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Oct 17 2020 15:22:41 GMT+0100 (British Summer Time)
+# timestamp: Mon Oct 19 2020 16:01:13 GMT+0100 (British Summer Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -551,6 +551,7 @@ type Mutation {
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
   requestChannelLoginCode(id: String!): Boolean
+  unlistStream(id: String!, list: Boolean): StreamSelf
   updateChannel(data: ChannelUpdateInput): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
@@ -1026,6 +1027,8 @@ enum StreamOrderByInput {
   audioOnly_DESC
   published_ASC
   published_DESC
+  unlisted_ASC
+  unlisted_DESC
   viewCount_ASC
   viewCount_DESC
   createdAt_ASC
@@ -1147,6 +1150,7 @@ type StreamSelf {
   cancelled: DateTime
   cancelledMessage: String
   published: DateTime
+  unlisted: DateTime
   password: String
   creditRevenuePending: Int
   creditRevenue: Int
@@ -1433,6 +1437,14 @@ input StreamWhereInput {
   published_lte: DateTime
   published_gt: DateTime
   published_gte: DateTime
+  unlisted: DateTime
+  unlisted_not: DateTime
+  unlisted_in: [DateTime!]
+  unlisted_not_in: [DateTime!]
+  unlisted_lt: DateTime
+  unlisted_lte: DateTime
+  unlisted_gt: DateTime
+  unlisted_gte: DateTime
   viewCount: Int
   viewCount_not: Int
   viewCount_in: [Int!]

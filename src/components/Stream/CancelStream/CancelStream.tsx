@@ -24,7 +24,7 @@ const CancelStream: FC<CancelStreamProps> = (props) => {
 
   return (
     <Button
-      title="Cancel stream"
+      title="Cancel"
       type="SECONDARY"
       onPress={open}
     />

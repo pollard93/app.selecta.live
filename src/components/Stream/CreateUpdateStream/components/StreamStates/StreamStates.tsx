@@ -12,6 +12,8 @@ import { pushScreen } from '../../../../../screens/utils';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import Body from '../../../../UI/Typography/components/Body';
+import UnlistStream from '../../../UnlistStream/UnlistStream';
+import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
 
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
@@ -23,7 +25,7 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
 
 
   /**
-   * Handle published state
+   * Unpublished
    */
   if (!props.data.published) {
     return (
@@ -51,10 +53,57 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
 
 
   /**
-   * Handle cancelled or published
+   * Cancelled
    */
-  return !props.data.cancelled
-    ? (
+  if (props.data.cancelled) {
+    return (
+      <H4>Stream Cancelled: {formatForTimezone(props.data.cancelled, 'calendar')}</H4>
+    );
+  }
+
+
+  /**
+   * Live
+   */
+  if (props.data.timeFromLive !== null && props.data.timeToLive === null) {
+    /**
+     * Push GoLiveScreen
+     */
+    const onGoLive = () => {
+      pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id });
+    };
+
+
+    return (
+      <>
+        <Body style={Styles.published}>Stream Published: {formatForTimezone(props.data.published, 'calendar')}</Body>
+        <View style={Styles.wrap}>
+          <View style={Styles.inner}>
+            <Button
+              title="END LIVE"
+              onPress={onGoLive}
+              type="SECONDARY"
+            />
+          </View>
+          <View style={Styles.spacer} />
+          <View style={Styles.inner}>
+            <Button
+              title="View"
+              onPress={onViewStream}
+            />
+          </View>
+        </View>
+      </>
+    );
+  }
+
+
+  /**
+   * Published
+   * Not gone live
+   */
+  if (props.data.timeFromLive === null) {
+    return (
       <>
         <Body style={Styles.published}>Stream Published: {formatForTimezone(props.data.published, 'calendar')}</Body>
         <View style={Styles.wrap}>
@@ -64,14 +113,37 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
           <View style={Styles.spacer} />
           <View style={Styles.inner}>
             <Button
-              title="View Stream"
+              title="View"
               onPress={onViewStream}
             />
           </View>
         </View>
       </>
-    )
-    : <H4>Stream Cancelled: {formatForTimezone(props.data.cancelled, 'calendar')}</H4>;
+    );
+  }
+
+
+  /**
+   * Published
+   * Has finished
+   */
+  return (
+    <>
+      <Body style={Styles.published}>Stream Published: {formatForTimezone(props.data.published, 'calendar')}</Body>
+      <View style={Styles.wrap}>
+        <View style={Styles.inner}>
+          <UnlistStream {...props} />
+        </View>
+        <View style={Styles.spacer} />
+        <View style={Styles.inner}>
+          <Button
+            title="View"
+            onPress={onViewStream}
+          />
+        </View>
+      </View>
+    </>
+  );
 };
 
 export default StreamStates;

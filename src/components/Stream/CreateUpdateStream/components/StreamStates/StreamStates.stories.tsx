@@ -30,29 +30,6 @@ storiesOf('Stream/CreateUpdateStream/StreamStates', module)
 
     return <TestComponent />;
   })
-  .add('CreateUpdateStreamView - published', () => {
-    const TestComponent = () => {
-      // Get stream data
-      const queryResult = useGetStreamSelfQuery({
-        variables: {
-          id: 'test',
-        },
-      });
-      if (queryResult.loading) return null;
-
-      return (
-        <StreamStates
-          data={{
-            ...queryResult.data.getStreamSelf,
-            published: new Date().toISOString(),
-          }}
-          onPop={console.log}
-        />
-      );
-    };
-
-    return <TestComponent />;
-  })
   .add('CreateUpdateStreamView - cancelled', () => {
     const TestComponent = () => {
       // Get stream data
@@ -69,6 +46,104 @@ storiesOf('Stream/CreateUpdateStream/StreamStates', module)
             ...queryResult.data.getStreamSelf,
             published: new Date().toISOString(),
             cancelled: new Date().toISOString(),
+          }}
+          onPop={console.log}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CreateUpdateStreamView - live', () => {
+    const TestComponent = () => {
+      // Get stream data
+      const queryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <StreamStates
+          data={{
+            ...queryResult.data.getStreamSelf,
+            timeFromLive: new Date().toISOString(),
+            timeToLive: null,
+          }}
+          onPop={console.log}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CreateUpdateStreamView - published - not gone live', () => {
+    const TestComponent = () => {
+      // Get stream data
+      const queryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <StreamStates
+          data={{
+            ...queryResult.data.getStreamSelf,
+            timeFromLive: null,
+            timeToLive: null,
+          }}
+          onPop={console.log}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CreateUpdateStreamView - published - has finished - listed', () => {
+    const TestComponent = () => {
+      // Get stream data
+      const queryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <StreamStates
+          data={{
+            ...queryResult.data.getStreamSelf,
+            timeFromLive: new Date().toISOString(),
+            timeToLive: new Date().toISOString(),
+            unlisted: null,
+          }}
+          onPop={console.log}
+        />
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CreateUpdateStreamView - published - has finished - unlisted', () => {
+    const TestComponent = () => {
+      // Get stream data
+      const queryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (queryResult.loading) return null;
+
+      return (
+        <StreamStates
+          data={{
+            ...queryResult.data.getStreamSelf,
+            timeFromLive: new Date().toISOString(),
+            timeToLive: new Date().toISOString(),
+            unlisted: new Date().toISOString(),
           }}
           onPop={console.log}
         />

@@ -37,6 +37,7 @@ export const STREAM_SELF_FRAGMENT = gql`
     streamUrl
     audioOnly
     published
+    unlisted
     viewCount
     position
   },

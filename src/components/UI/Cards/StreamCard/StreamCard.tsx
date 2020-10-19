@@ -8,45 +8,19 @@ import Body from '../../Typography/components/Body';
 import H4 from '../../Typography/components/H4';
 import Chip from '../../Chip/Chip';
 import Styles, { DynamicStyles } from './StreamCard.style';
-import { formatForTimezone } from '../../../../utils/functions';
 import ShareButton from '../../ShareButton/ShareButton';
 import { STREAM_SELF_FRAGMENT } from '../../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { getStreamDurationMs } from '../../../../utils/streamFunctions';
 import Icon, { ICON } from '../../Icon/Icon';
 import { openModalScreen } from '../../../../screens/utils';
 import ReportStream from '../../../Stream/ReportStream/ReportStream';
+import StreamCardTime from './components/StreamCardTime/StreamCardTime';
 
-interface StreamCardProps {
+export interface StreamCardProps {
   data: STREAM_PROFILE_FRAGMENT_SHORT | STREAM_SELF_FRAGMENT;
   fillHeight?: boolean; // Sets flex: 1 on wrapper to fill the height, used for displaying in feed
   showPosition?: boolean;
 }
-
-const StreamCardTime: FC<StreamCardProps> = (props) => {
-  /**
-   * Return cancelled message
-   */
-  if (props.data.cancelled !== null) {
-    return <Chip bold>Cancelled</Chip>;
-  }
-
-  /**
-   * Return Live
-   */
-  if (props.data.timeFromLive && !props.data.timeToLive) {
-    return <Chip bold>Live</Chip>;
-  }
-
-  /**
-   * Fallback to returning date and time
-   */
-  return (
-    <>
-      <Chip bold style={Styles.chipLeft}>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'calendar')}</Chip>
-      <Chip bold>{formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'HH:mm')} {formatForTimezone(props.data.timeFromLive || props.data.timeFrom, 'z')}</Chip>
-    </>
-  );
-};
 
 const StreamCard: FC<StreamCardProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);

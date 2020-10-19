@@ -55,12 +55,23 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (props.data.cancelled !== null) {
     return (
-      <View style={Styles.topRight}>
-        <Button
-          title="View"
-          size="small"
-          onPress={onView}
-        />
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
+        <Chip bold type="SECONDARY">Cancelled</Chip>
       </View>
     );
   }
@@ -90,7 +101,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (props.data.timeToLive !== null) {
     return (
-      <View style={Styles.topRight}>
+      <View style={Styles.spaceBetween}>
         <View style={Styles.row}>
           <Button
             title="Edit"
@@ -105,6 +116,8 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
             style={{ marginLeft: spacing.small }}
           />
         </View>
+
+        <Chip bold type="SECONDARY">{props.data.unlisted ? 'Unlisted' : 'Listed'}</Chip>
       </View>
     );
   }

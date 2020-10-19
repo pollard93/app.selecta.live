@@ -39,6 +39,7 @@ import { openModalScreen } from '../../../screens/utils';
 import Tags from '../../Tag/Tags/Tags';
 import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
 import { getStreamSelfsVariablesDefault } from '../StreamSelfs/StreamSelfs';
+import FadeInView from '../../UI/FadeInView/FadeInView';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -622,7 +623,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           }
 
           {props.data && (
-            <View style={[Styles.settings, dynamicStyles.settings]}>
+            <FadeInView style={[Styles.settings, dynamicStyles.settings]}>
               <H3>Settings</H3>
 
               {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
@@ -641,7 +642,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   />
                 </View>
               )}
-            </View>
+            </FadeInView>
           )}
 
           <View style={Styles.form}>
