@@ -16,6 +16,7 @@
     "dev:storybook:enable": "sed -i '' 's/^REACT_APP_APP_STORYBOOK=.*$/REACT_APP_APP_STORYBOOK=true/g' .env.Debug",
     "format:version": "./node_modules/.bin/ts-node ./scripts/format:version.ts",
     "setup:all": "yarn install && cd ios && pod install",
+    "setup:rename": "chmod u+x renameApp.sh && bash renameApp.sh",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "yarn dev:storybook:disable && yarn start:android:raw",
     "start:android:raw": "(adb reverse tcp:8097 tcp:8097 || true) && react-native run-android --variant=debug --appIdSuffix=debug",

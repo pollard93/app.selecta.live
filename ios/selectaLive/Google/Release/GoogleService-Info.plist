@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>923259272645-dcq743o31n3bi6pb0ncqc033855m4jr8.apps.googleusercontent.com</string>
+	<string>923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.923259272645-dcq743o31n3bi6pb0ncqc033855m4jr8</string>
+	<string>com.googleusercontent.apps.923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>923259272645-b524vkidlg1jgkb0rumfhli8ckeu0kmo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>live.selecta.app</string>
+	<string>selecta.live</string>
 	<key>PROJECT_ID</key>
 	<string>selecta-live-1601575055552</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:923259272645:ios:d1fdc3389a51d985961fac</string>
+	<string>1:923259272645:ios:5e88a31ab5381278961fac</string>
 	<key>DATABASE_URL</key>
 	<string>https://selecta-live-1601575055552.firebaseio.com</string>
 </dict>

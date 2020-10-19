@@ -20,16 +20,17 @@ platform :ios do
   desc "Create Beta and App Store apps on both App Store Connect and the Apple Developer Portal"
   lane :produce_apps do
     # Create app group
-    sh("fastlane produce group -g group.#{ENV['BASE_BUNDLE_ID']}.onesignal -n \"#{ENV['APP_NAME']} App Group\" -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce group -g group.#{ENV['BASE_BUNDLE_ID']}.onesignal -n \"#{ENV['APP_NAME']} App Group\" -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
 
     # Debug
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug",
-      app_name: "#{ENV['APP_NAME']} debug",
+      app_name: "#{ENV['APP_NAME']} Debug",
       language: 'en-GB',
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
         push_notification: "on",
@@ -37,31 +38,33 @@ platform :ios do
         app_group: "on",
       }
     )
-    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.debug group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.debug group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
 
     # Debug onesignal extension
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug.OneSignalNotificationServiceExtension",
-      app_name: "#{ENV['APP_NAME']} debug onesignal",
+      app_name: "#{ENV['APP_NAME']} Debug onesignal",
       skip_itc: true,
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
         app_group: "on",
       }
     )
-    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.debug.OneSignalNotificationServiceExtension group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.debug.OneSignalNotificationServiceExtension group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
 
     # Beta
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
-      app_name: "#{ENV['APP_NAME']} beta",
+      app_name: "#{ENV['APP_NAME']} Beta",
       language: 'en-GB',
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
         push_notification: "on",
@@ -70,51 +73,54 @@ platform :ios do
       }
     )
 
-    # Beta
+    # Beta onesignal extension
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
-      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta",
-      app_name: "#{ENV['APP_NAME']} beta",
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
+      app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension",
+      app_name: "#{ENV['APP_NAME']} Beta onesignal",
+      skip_itc: true,
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
-        push_notification: "on",
         app_group: "on",
       }
     )
-    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.beta group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.beta group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
 
     # Release
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}",
       app_name: "#{ENV['APP_NAME']}",
       language: "en-GB",
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
         push_notification: "on",
         app_group: "on",
       }
     )
-    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']} group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']} group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
 
     # Release onesignal extension
     produce(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
-      itc_team_id: '2203907',
+      team_id: 'XHGHG46PR6',
+      itc_team_id: '122243347',
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension",
       app_name: "#{ENV['APP_NAME']} onesignal",
       skip_itc: true,
+      company_name: 'SELECTA LIVE LTD',
 
       enable_services: {
         app_group: "on",
       }
     )
-    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b CQFWKU4GYE -k 2203907")
+    sh("fastlane produce associate_group -a #{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension group.#{ENV['BASE_BUNDLE_ID']}.onesignal -u dev@madebyprism.com -b XHGHG46PR6 -k 122243347")
   end
 
   desc "Create pems for push notifications"
@@ -122,7 +128,7 @@ platform :ios do
     # Debug
     get_push_certificate(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       # force: true, # create a new profile, even if the old one is still valid
       development: true,
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.debug", # optional app identifier,
@@ -142,7 +148,7 @@ platform :ios do
     # Beta development
     get_push_certificate(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       # force: true, # create a new profile, even if the old one is still valid
       development: true,
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
@@ -162,7 +168,7 @@ platform :ios do
     # Beta production
     get_push_certificate(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       # force: true, # create a new profile, even if the old one is still valid
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}.beta", # optional app identifier,
       save_private_key: true,
@@ -180,7 +186,7 @@ platform :ios do
     # Release
     get_push_certificate(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       # force: true, # create a new profile, even if the old one is still valid
       app_identifier: "#{ENV['BASE_BUNDLE_ID']}", # optional app identifier,
       save_private_key: true,
@@ -202,28 +208,28 @@ platform :ios do
     # Beta adhoc
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "adhoc",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
     )
     # Beta appstore
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "appstore",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
     )
     # Release
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "appstore",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}", "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
     )
   end
@@ -232,10 +238,10 @@ platform :ios do
   lane :adhoc do
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "adhoc",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
       readonly: true,
     )
@@ -264,10 +270,10 @@ platform :ios do
 
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "appstore",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
       readonly: true,
     )
@@ -287,7 +293,7 @@ platform :ios do
 
     upload_to_testflight(
       username: "dev@madebyprism.com",
-      team_id: "2203907",
+      team_id: "122243347",
       ipa: "builds/beta.ipa"
     )
   end
@@ -298,10 +304,10 @@ platform :ios do
 
     match(
       username: 'dev@madebyprism.com',
-      team_id: 'CQFWKU4GYE',
+      team_id: 'XHGHG46PR6',
       type: "appstore",
       app_identifier: ["#{ENV['BASE_BUNDLE_ID']}", "#{ENV['BASE_BUNDLE_ID']}.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/madebyprism-ios-certs.git",
+      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
       git_branch: "master",
       readonly: true,
     )
@@ -320,7 +326,7 @@ platform :ios do
 
     upload_to_testflight(
       username: "dev@madebyprism.com",
-      team_id: "2203907",
+      team_id: "122243347",
       ipa: "builds/release.ipa"
     )
 
@@ -328,7 +334,7 @@ platform :ios do
     #   skip_metadata: true,
     #   skip_screenshots: true,
     #   username: "dev@madebyprism.com",
-    #   team_id: "2203907",
+    #   team_id: "122243347",
     #   ipa: "builds/release.ipa",
     # )
   end

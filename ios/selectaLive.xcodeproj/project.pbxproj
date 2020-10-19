@@ -444,7 +444,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = CQFWKU4GYE;
+						DevelopmentTeam = XHGHG46PR6;
 						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -467,7 +467,7 @@
 					};
 					BC4246DD233F78F200A52916 = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = CQFWKU4GYE;
+						DevelopmentTeam = XHGHG46PR6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -919,7 +919,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
 				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-2a6mtmti045nrubclvfbfaroi15eob6b";
 				INFOPLIST_FILE = selectaLive/Info.plist;
@@ -935,7 +935,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live.debug;
 				PRODUCT_NAME = selectaLive;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
@@ -958,7 +958,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
 				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-dcq743o31n3bi6pb0ncqc033855m4jr8";
 				INFOPLIST_FILE = selectaLive/Info.plist;
@@ -974,9 +974,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live;
 				PRODUCT_NAME = selectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore selecta.live";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1221,12 +1221,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -1238,7 +1238,7 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.debug.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live.debug.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1285,7 +1285,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1306,9 +1306,9 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore selecta.live.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1355,7 +1355,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1376,9 +1376,9 @@
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live.beta.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta.OneSignalNotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore selecta.live.beta.OneSignalNotificationServiceExtension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1444,7 +1444,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = CQFWKU4GYE;
+				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
 				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-sc1ccg1qqs8nql377divnn9j6ii34jpf";
 				INFOPLIST_FILE = selectaLive/Info.plist;
@@ -1460,9 +1460,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = live.selecta.app.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = selecta.live.beta;
 				PRODUCT_NAME = selectaLive;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore live.selecta.app.beta";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore selecta.live.beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "selectaLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
