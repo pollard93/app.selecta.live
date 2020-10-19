@@ -74,8 +74,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Selecta would like access to your camera roll</string>
 	<key>OneSignal_disable_badge_clearing</key>
@@ -100,6 +98,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Selecta Live would like to use your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Selecta Live would like to use your location</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>
