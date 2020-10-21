@@ -122,7 +122,7 @@ class InAppPurchases {
               content="There is a pending transaction for this item"
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
 
         InAppPurchases.reConnect();
@@ -141,7 +141,7 @@ class InAppPurchases {
               content={error.message || 'Something went wrong with your payment'}
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
         break;
     }

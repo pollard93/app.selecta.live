@@ -77,7 +77,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
             content="Password Updated"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -89,7 +89,7 @@ const UpdatePassword: FC<UpdatePasswordProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

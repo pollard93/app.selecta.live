@@ -185,6 +185,7 @@ ToastOverlay.prototype.ScreenName = 'ToastOverlay';
  */
 (ToastOverlay.prototype.options as Options) = {
   layout: {
+    backgroundColor: 'transparent',
     componentBackgroundColor: 'transparent',
   },
   overlay: {

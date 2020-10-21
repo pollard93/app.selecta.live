@@ -114,7 +114,7 @@ const UsernameInput: FC<UsernameInputProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

@@ -29,7 +29,7 @@ const UnlistStream: FC<UnlistStreamProps> = (props) => {
             content={unlistStream.unlisted ? 'Stream unlisted' : 'Stream listed'}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -41,7 +41,7 @@ const UnlistStream: FC<UnlistStreamProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

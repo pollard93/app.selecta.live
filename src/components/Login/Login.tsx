@@ -76,7 +76,7 @@ const Login: FC<LoginProps> = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -110,7 +110,7 @@ const Login: FC<LoginProps> = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -156,7 +156,7 @@ const Login: FC<LoginProps> = () => {
               content="Please check your email"
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       },
     });

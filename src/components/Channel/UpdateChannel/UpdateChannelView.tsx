@@ -127,7 +127,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
             content='Updated channel'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -141,7 +141,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -202,7 +202,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
         component: (
           <Toast type="ERROR" content='Something went wrong' />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
   };
@@ -288,7 +288,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
             content='Please add a profile image'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
 
@@ -301,7 +301,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
             content='Please add a cover image'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
   }, [errors.profileImage, errors.coverImage]);

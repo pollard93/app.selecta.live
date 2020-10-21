@@ -55,7 +55,7 @@ const wrapContext = (Component) => {
     // Allows static options to be called for react-native-navigation
     (wrapped as any).options = Component.prototype.options;
 
-    return gestureHandlerRootHOC(wrapped);
+    return wrapped;
   }
 
 

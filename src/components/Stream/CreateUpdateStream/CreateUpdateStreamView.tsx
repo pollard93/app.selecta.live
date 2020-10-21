@@ -267,7 +267,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Created stream'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -281,7 +281,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -342,7 +342,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Updated stream'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -356,7 +356,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -429,7 +429,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               content='Something went wrong'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
     } else {
@@ -460,7 +460,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               content='Something went wrong'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
     }
@@ -577,7 +577,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Please add an image'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
   }, [errors.image]);

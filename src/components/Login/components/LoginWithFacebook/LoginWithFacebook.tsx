@@ -76,7 +76,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -115,7 +115,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -187,7 +187,7 @@ const LoginWithFacebook: FC<LoginWithFacebookProps> = (props) => {
               component: (
                 <Toast content="Something went wrong" />
               ),
-              dismissible: false,
+              dismissible: true,
             });
           },
         );

@@ -262,7 +262,7 @@ const AClient = new ApolloClient({
             component: (
               <Toast content="Your session has expired! Please login again" />
             ),
-            dismissible: false,
+            dismissible: true,
           });
           return;
         }
@@ -275,7 +275,7 @@ const AClient = new ApolloClient({
             component: (
               <Toast content="Your channel session has expired!" />
             ),
-            dismissible: false,
+            dismissible: true,
           });
 
           goHome();

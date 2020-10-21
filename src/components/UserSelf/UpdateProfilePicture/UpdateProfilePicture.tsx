@@ -80,7 +80,7 @@ const UpdateProfilePicture: FC<UpdateProfilePictureProps> = () => {
             content='Updated image'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -94,7 +94,7 @@ const UpdateProfilePicture: FC<UpdateProfilePictureProps> = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

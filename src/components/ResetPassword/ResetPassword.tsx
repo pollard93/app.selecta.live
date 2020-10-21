@@ -75,7 +75,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -114,7 +114,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

@@ -31,7 +31,7 @@ const validateToken = (token: string) => {
           content="Link has expired"
         />
       ),
-      dismissible: false,
+      dismissible: true,
     });
     return false;
   }
@@ -82,7 +82,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
                 content="You are now verified"
               />
             ),
-            dismissible: false,
+            dismissible: true,
           });
         } catch (e) {
           pushToast({
@@ -93,7 +93,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
                 content={getGQLErrorMessage(e)}
               />
             ),
-            dismissible: false,
+            dismissible: true,
           });
         }
         break;
@@ -125,7 +125,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
                 content="Email Updated"
               />
             ),
-            dismissible: false,
+            dismissible: true,
           });
         } catch (e) {
           pushToast({
@@ -136,7 +136,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
                 content={getGQLErrorMessage(e)}
               />
             ),
-            dismissible: false,
+            dismissible: true,
           });
         }
         break;
@@ -194,7 +194,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
               content='Cannot open link'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
         break;
     }
@@ -210,7 +210,7 @@ export const onOpenLink = async ({ url }: { url: string }) => {
           content='Cannot open link'
         />
       ),
-      dismissible: false,
+      dismissible: true,
     });
   }
 };

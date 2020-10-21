@@ -42,7 +42,7 @@ const ChannelLogin = (props: ChannelLoginProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -80,7 +80,7 @@ const ChannelLogin = (props: ChannelLoginProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -107,7 +107,7 @@ const ChannelLogin = (props: ChannelLoginProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

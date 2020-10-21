@@ -61,7 +61,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
             content="Purchase successful, enjoy!"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -73,7 +73,7 @@ const StreamPurchase: FC<StreamPurchaseProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

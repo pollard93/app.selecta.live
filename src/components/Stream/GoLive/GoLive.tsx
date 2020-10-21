@@ -63,7 +63,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content="Stream is now live"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -75,7 +75,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -99,7 +99,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content="Stream hs now ended"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -111,7 +111,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

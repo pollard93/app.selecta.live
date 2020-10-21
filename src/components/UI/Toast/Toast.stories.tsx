@@ -5,9 +5,27 @@ import { storiesOf } from '@storybook/react-native';
 import { View } from 'react-native';
 import Toast from './Toast';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import Button from '../Button/Button';
+import { pushToast } from '../../../modules/Toast';
 
 storiesOf('UI/Toast', module)
   .addDecorator((getStory) => <View style={[GlobalStyles.PageFill, { justifyContent: 'flex-start', backgroundColor: 'white' }]}>{getStory()}</View>)
+  .add('Toast', () => (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        title="Push toast"
+        onPress={() => {
+          pushToast({
+            duration: 1000,
+            component: (
+              <Toast content="TEST" />
+            ),
+            dismissible: true,
+          });
+        }}
+      />
+    </View>
+  ))
   .add('Toast - info', () => (
     <Toast
       type="INFO"

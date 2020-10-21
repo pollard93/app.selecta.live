@@ -18,7 +18,7 @@ const Toast: FC<ToastProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
 
   return (
-    <View style={[Styles.outer, Styles[type], dynamicStyles[type], { paddingTop: safeAreaInsets.bottom }]}>
+    <View style={[Styles.outer, Styles[type], dynamicStyles[type], { paddingTop: safeAreaInsets.top }]}>
       <View style={{ minHeight: headerHeight }}>
         <View style={Styles.inner}>
           <H4 forceLight={['SUCCESS', 'ERROR'].includes(type)}>{props.content}</H4>

@@ -64,7 +64,7 @@ const GoLiveView: FC<GoLiveViewProps> = (props) => {
       component: (
         <Toast content='Copied!' />
       ),
-      dismissible: false,
+      dismissible: true,
     });
   };
 
