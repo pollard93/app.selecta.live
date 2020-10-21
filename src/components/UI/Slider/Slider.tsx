@@ -1,6 +1,6 @@
 import React, { FC, useRef, useEffect, useState, useMemo } from 'react';
 import { Animated, View, TouchableHighlight } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { gestureHandlerRootHOC, PanGestureHandler, State } from 'react-native-gesture-handler';
 import Styles from './Slider.style';
 import scalePx from '../../../utils/scalePx';
 import PulsingIcon from '../PulsingIcon/PulsingIcon';
@@ -122,92 +122,96 @@ const Slider: FC<SliderProps> = (props) => {
 
 
   return (
-    <PanGestureHandler
-      onGestureEvent={Animated.event([{ nativeEvent: { x: touchX } }], { useNativeDriver: true })}
-      onHandlerStateChange={(event) => {
-        const { nativeEvent } = event;
-        currentState.current = nativeEvent.state;
-        switch (nativeEvent.state) {
-          case State.BEGAN:
-            if (props.onSlidingStarted) {
-              props.onSlidingStarted();
-            }
-            break;
-
-          case State.END:
-            if (props.onSlidingComplete) {
-              clearTimeout(valueChangeTimeout.current);
-              // eslint-disable-next-line no-underscore-dangle
-              const value = mapRange((clampThumb as any)._parent._value, 0, trackWidth, props.minimumValue, props.maximumValue);
-              if (value != null) {
-                props.onSlidingComplete(value);
+    <View style={Styles.outer}>
+      <PanGestureHandler
+        onGestureEvent={Animated.event([{ nativeEvent: { x: touchX } }], { useNativeDriver: true })}
+        onHandlerStateChange={(event) => {
+          const { nativeEvent } = event;
+          currentState.current = nativeEvent.state;
+          switch (nativeEvent.state) {
+            case State.BEGAN:
+              if (props.onSlidingStarted) {
+                props.onSlidingStarted();
               }
-            }
-            break;
-        }
-      }}
-    >
-      <Animated.View
-        style={Styles.wrap}
-        onLayout={(event) => {
-          if (!trackWidth) {
-            /**
-             * Set the trackWidth on mount
-             */
-            setTrackWidth(event.nativeEvent.layout.width);
-          } else {
-            /**
-             * If this value is updated, update it on a timeout
-             * In the event of animations this be more efficient
-             */
-            clearTimeout(trackWidthTimeout.current);
-            event.persist();
-            trackWidthTimeout.current = setTimeout(() => {
-              setTrackWidth(event.nativeEvent.layout.width);
-            }, 100);
+              break;
+
+            case State.END:
+              if (props.onSlidingComplete) {
+                clearTimeout(valueChangeTimeout.current);
+                // eslint-disable-next-line no-underscore-dangle
+                const value = mapRange((clampThumb as any)._parent._value, 0, trackWidth, props.minimumValue, props.maximumValue);
+                if (value != null) {
+                  props.onSlidingComplete(value);
+                }
+              }
+              break;
           }
         }}
       >
-        <View style={Styles.track}>
-          {props.tracks.map((t, i) => (
-            <View key={i} style={[Styles.track, { backgroundColor: t.color, width: `${t.width * 100}%` }]} />
-          ))}
+        <Animated.View
+          style={Styles.wrap}
+          onLayout={(event) => {
+            if (!trackWidth) {
+              /**
+               * Set the trackWidth on mount
+               */
+              setTrackWidth(event.nativeEvent.layout.width);
+            } else {
+              /**
+               * If this value is updated, update it on a timeout
+               * In the event of animations this be more efficient
+               */
+              clearTimeout(trackWidthTimeout.current);
+              event.persist();
+              trackWidthTimeout.current = setTimeout(() => {
+                setTrackWidth(event.nativeEvent.layout.width);
+              }, 100);
+            }
+          }}
+        >
+          <View style={Styles.track}>
+            <View style={Styles.inner}>
+              {props.tracks.map((t, i) => (
+                <View key={i} style={[Styles.track, { backgroundColor: t.color, width: `${t.width * 100}%` }]} />
+              ))}
 
-          {/* Main track */}
-          <Animated.View
-            style={[
-              Styles.mainTrack,
-              {
-                width: trackWidth,
-                transform: [{
-                  translateX: mainTrackWidth,
-                }],
-              },
-            ]}
-          />
-        </View>
-
-        {trackWidth !== 0 && (
-          <TouchableHighlight underlayColor="transparent">
-            {/* TouchableHighlight to stop propopgration of touch event */}
-            <Animated.View
-              style={{
-                transform: [{
-                  translateX: Animated.add(clampThumb, new Animated.Value(-(thumbWidth / 2))),
-                }],
-              }}
-              pointerEvents="none"
-            >
-              <PulsingIcon
-                size={thumbWidth}
-                animating={!!props.loading}
+              {/* Main track */}
+              <Animated.View
+                style={[
+                  Styles.mainTrack,
+                  {
+                    width: trackWidth,
+                    transform: [{
+                      translateX: mainTrackWidth,
+                    }],
+                  },
+                ]}
               />
-            </Animated.View>
-          </TouchableHighlight>
-        )}
-      </Animated.View>
-    </PanGestureHandler>
+            </View>
+          </View>
+
+          {trackWidth !== 0 && (
+            <TouchableHighlight underlayColor="transparent">
+              {/* TouchableHighlight to stop propopgration of touch event */}
+              <Animated.View
+                style={{
+                  transform: [{
+                    translateX: Animated.add(clampThumb, new Animated.Value(-(thumbWidth / 2))),
+                  }],
+                }}
+                pointerEvents="none"
+              >
+                <PulsingIcon
+                  size={thumbWidth}
+                  animating={!!props.loading}
+                />
+              </Animated.View>
+            </TouchableHighlight>
+          )}
+        </Animated.View>
+      </PanGestureHandler>
+    </View>
   );
 };
 
-export default Slider;
+export default gestureHandlerRootHOC(Slider);

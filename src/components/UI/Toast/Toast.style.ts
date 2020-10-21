@@ -9,6 +9,8 @@ export default StyleSheet.create({
     ...shadow.regular,
   },
   inner: {
+    flex: 1,
+    justifyContent: 'center',
     paddingHorizontal: spacing.small,
     paddingVertical: spacing.xsmall,
   },
