@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { PhotoIdentifier } from '@react-native-community/cameraroll';
 import ImageResizer from 'react-native-image-resizer';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import { useDynamicValue } from 'react-native-dynamic';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../utils/functions';
 import { useUpdateChannelMutation } from '../../../API/mutation/updateChannel/updateChannel';
@@ -44,6 +45,9 @@ interface UpdateChannelViewProps {
 }
 
 const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
+
+
   /**
    * Form
    */
@@ -329,7 +333,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
               splashUrl: props.data.coverImage?.url.splash,
               fullUrl: props.data.coverImage?.url.full,
               containerProps: {
-                style: Styles.coverImage,
+                style: [Styles.coverImage, globalDynamicStyles.skeleton],
               },
               placeholderImageProps: {
                 source: require('../../../assets/images/logo-icon.png'),
@@ -365,7 +369,7 @@ const UpdateChannelView: FC<UpdateChannelViewProps> = (props) => {
                     splashUrl: props.data.profileImage?.url.splash,
                     fullUrl: props.data.profileImage?.url.full,
                     containerProps: {
-                      style: Styles.profileImage,
+                      style: [Styles.profileImage, globalDynamicStyles.skeleton],
                     },
                   }}
                   onChange={(file) => setValue('profileImage', file, true)}

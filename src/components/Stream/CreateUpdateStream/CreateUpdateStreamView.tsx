@@ -7,7 +7,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
 import { useApolloClient } from 'react-apollo';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage, parseCurrency } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
@@ -65,6 +65,7 @@ interface CreateUpdateStreamViewProps {
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
   const client = useApolloClient();
 
 
@@ -604,7 +605,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                     splashUrl: props.data?.image?.url?.splash,
                     fullUrl: props.data?.image?.url?.full,
                     containerProps: {
-                      style: Styles.image,
+                      style: [Styles.image, globalDynamicStyles.skeleton],
                     },
                   }}
                   onChange={(file) => setValue('image', file, true)}

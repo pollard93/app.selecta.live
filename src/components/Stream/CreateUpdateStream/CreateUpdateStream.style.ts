@@ -6,7 +6,6 @@ import color from '../../../styles/definitions/color';
 export default StyleSheet.create({
   image: {
     aspectRatio: 1.7777777778,
-    backgroundColor: color.mono.pale.regular,
     width: '100%',
   },
   form: {
