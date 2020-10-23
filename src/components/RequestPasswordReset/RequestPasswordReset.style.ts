@@ -13,7 +13,7 @@ export default StyleSheet.create({
   headingWrap: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: spacing.base,
+    marginBottom: spacing.xlarge,
   },
   section: {
     flexGrow: 0,

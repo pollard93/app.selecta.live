@@ -35,7 +35,7 @@ export default {
     h2: scalePx(22),
     h3: scalePx(20),
     h4: scalePx(16),
-    body: scalePx(16),
+    body: scalePx(14),
     small: scalePx(11),
   },
 

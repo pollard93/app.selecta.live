@@ -86,6 +86,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
           <ScrollView
             contentContainerStyle={Styles.scrollViewWrap}
             bounces={false}
+            keyboardShouldPersistTaps={'handled'}
           >
             <View style={Styles.logoWrap}>
               {step === 1 && (

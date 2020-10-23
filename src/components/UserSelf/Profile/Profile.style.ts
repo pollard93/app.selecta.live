@@ -45,6 +45,9 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: spacing.xsmall,
   },
+  channels: {
+    marginVertical: spacing.base,
+  },
 });
 
 export const DynamicStyles = new DynamicStyleSheet({

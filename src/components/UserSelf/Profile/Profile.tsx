@@ -177,7 +177,7 @@ const Profile: FC<ProfileProps> = (props) => {
           <View style={[GlobalStyles.PageFill, Styles.item]}>
             <H4>Your Channels</H4>
 
-            <View style={[GlobalStyles.PageFill, Styles.item]}>
+            <View style={[GlobalStyles.PageFill, Styles.channels]}>
               <ChannelSelfs {...props} />
             </View>
           </View>
