@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   send: {
-    margin: spacing.small,
+    marginRight: spacing.small,
     tintColor: color.accent.primary,
   },
   sendDisabled: {

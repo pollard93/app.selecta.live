@@ -6,10 +6,12 @@ import { useGetStreamCommentsQuery } from '../../../API/query/getStreamComments/
 import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 import { useGetStreamProfileQuery } from '../../../API/query/getStreamProfile/getStreamProfile';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
+import GetChannelSelfDecorator from '../../../../storybook/Decorators/GetChannelSelfDecorator/GetChannelSelfDecorator';
 
 storiesOf('Stream/StreamComments/StreamCommentListItem', module)
   .addDecorator((getStory) => <SafeAreaViewDecorator>{getStory()}</SafeAreaViewDecorator>)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
+  .addDecorator((getStory) => <GetChannelSelfDecorator>{getStory()}</GetChannelSelfDecorator>)
   .add('StreamCommentListItem - long message', () => {
     const TestComonent = () => {
       const streamProfile = useGetStreamProfileQuery({
@@ -87,38 +89,6 @@ storiesOf('Stream/StreamComments/StreamCommentListItem', module)
             user: {
               ...streamComments.data.getStreamComments.comments[0].user,
               profilePicture: null,
-            },
-          }}
-          streamData={streamProfile.data.getStreamProfile}
-        />
-      );
-    };
-
-    return (
-      <TestComonent />
-    );
-  })
-  .add('StreamCommentListItem - self', () => {
-    const TestComonent = () => {
-      const streamProfile = useGetStreamProfileQuery({
-        variables: {
-          id: 'test-id',
-        },
-      });
-      const streamComments = useGetStreamCommentsQuery({
-        variables: {
-          id: 'test-id',
-        },
-      });
-      if (streamProfile.loading || streamComments.loading) return null;
-
-      return (
-        <StreamCommentListItem
-          data={{
-            ...streamComments.data.getStreamComments.comments[0],
-            user: {
-              ...streamComments.data.getStreamComments.comments[0].user,
-              id: 'SELF',
             },
           }}
           streamData={streamProfile.data.getStreamProfile}

@@ -1,17 +1,16 @@
 import { StyleSheet } from 'react-native';
-import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
 import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
   wrap: {
-    alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: spacing.small,
   },
   profilePictureWrap: {
     aspectRatio: 1,
     marginRight: spacing.small,
+    marginTop: spacing.xxsmall,
     width: scalePx(26),
   },
   channelTick: {
@@ -30,18 +29,16 @@ export default StyleSheet.create({
   },
   commentWrap: {
     alignSelf: 'flex-start',
-    backgroundColor: color.mono.light,
-    borderBottomLeftRadius: 0,
-    borderRadius: scalePx(10),
     overflow: 'hidden',
-    paddingHorizontal: spacing.base,
-    paddingVertical: spacing.xxsmall,
   },
   comment: {
-    color: color.mono.dark,
     flexWrap: 'wrap',
   },
-  commentSelf: {
-    color: color.mono.light,
+  lower: {
+    flexDirection: 'row',
+    marginBottom: spacing.xxsmall,
+  },
+  time: {
+    marginLeft: spacing.small,
   },
 });
