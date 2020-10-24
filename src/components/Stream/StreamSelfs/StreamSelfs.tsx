@@ -73,6 +73,7 @@ const StreamSelfs: FC<StreamSelfsProps> = (props) => {
       />
 
       <StreamSelfsFlatList
+        fetchPolicy='network-only'
         innerRef={ref}
         query={GET_STREAM_SELFS_QUERY}
         variables={variables}
