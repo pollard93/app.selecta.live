@@ -16,6 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* selectaLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* selectaLiveTests.m */; };
+		3A127EF8B3EC1B63A795D725 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9CE4A369BC4FAEB4818B718 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		3CF540228E3424C1DAB36F31 /* libPods-selectaLive-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */; };
 		442105BF5B2F07C3BA205FAF /* libPods-selectaLive-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */; };
 		5845D24BBBB4428EA1725DDF /* OpenSans-CondBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022274F1425F465C961F640B /* OpenSans-CondBold.ttf */; };
@@ -27,7 +28,6 @@
 		BC42BCFF2333F85100E6BDB4 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42BCFE2333F85100E6BDB4 /* main.jsbundle */; };
 		BCBF842C252672E3004604F0 /* Google in Resources */ = {isa = PBXBuildFile; fileRef = BCBF842B252672E3004604F0 /* Google */; };
 		BCEFDBBE2459F3F300B8D4F8 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */; };
-		CB23AFFF273BC85402268605 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */; };
 		F87033D083454475965E6727 /* OpenSans-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 355D94735BD944C0ADAE817B /* OpenSans-CondLight.ttf */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +75,7 @@
 		00E356F21AD99517003FC87E /* selectaLiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = selectaLiveTests.m; sourceTree = "<group>"; };
 		022274F1425F465C961F640B /* OpenSans-CondBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-CondBold.ttf"; path = "../src/assets/fonts/OpenSans-CondBold.ttf"; sourceTree = "<group>"; };
 		052B7DDB11C76C3F45B58668 /* Pods-selectaLive.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.beta.xcconfig"; sourceTree = "<group>"; };
+		05FF8F80A15D43DA33EAA6CF /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		077B60DE9C663EA67EA32C12 /* Pods-selectaLive-selectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-selectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
 		0A8351AE4FEF9C015B73EE0C /* Pods-selectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
 		0BDA38AEB5AA72542BA2E779 /* Pods-selectaLiveTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.beta.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.beta.xcconfig"; sourceTree = "<group>"; };
@@ -86,22 +87,21 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = selectaLive/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = selectaLive/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = selectaLive/main.m; sourceTree = "<group>"; };
-		212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		24571C3AD69B927539C0832E /* libPods-selectaLive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		281BC5C8099353E5BCD03458 /* Pods-OneSignalNotificationServiceExtension.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.appstore.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.appstore.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* selectaLive-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "selectaLive-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* selectaLive-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "selectaLive-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		355D94735BD944C0ADAE817B /* OpenSans-CondLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-CondLight.ttf"; path = "../src/assets/fonts/OpenSans-CondLight.ttf"; sourceTree = "<group>"; };
+		438370821035DB7A4B9235DE /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6A610808D7E62154AD3C57 /* Pods-selectaLive-tvOS.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.appstore.xcconfig"; sourceTree = "<group>"; };
 		4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		69311FA1FB06845E72B09972 /* Pods-selectaLive-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		6AEA1CC4F7D802B71189A203 /* Pods-selectaLiveTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.appstore.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		6BE072390F5553236E11F13C /* Pods-selectaLive-tvOS.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.app store.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.app store.xcconfig"; sourceTree = "<group>"; };
+		792D947366F39243DD8DE89C /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		7DA111C8D34BF6F678880068 /* Pods-selectaLive-tvOSTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.app store.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.app store.xcconfig"; sourceTree = "<group>"; };
-		9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-selectaLive-selectaLiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.beta.xcconfig"; sourceTree = "<group>"; };
 		AF518C5256E127C943DD2B61 /* Pods-selectaLive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive/Pods-selectaLive.debug.xcconfig"; sourceTree = "<group>"; };
 		BC2678FB2469665900969C42 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BC4246D9233F78A100A52916 /* selectaLive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = selectaLive.entitlements; path = selectaLive/selectaLive.entitlements; sourceTree = "<group>"; };
@@ -119,8 +119,8 @@
 		BCEFDBBC2459F3F200B8D4F8 /* selectaLive-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "selectaLive-Bridging-Header.h"; sourceTree = "<group>"; };
 		BCEFDBBD2459F3F300B8D4F8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Dummy.swift; path = selectaLive/Dummy.swift; sourceTree = "<group>"; };
 		BCF1342B24F84B87003504E5 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
-		BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		C07EB01DDDE9BE9FC39C87B2 /* Pods-selectaLive-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOSTests/Pods-selectaLive-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C9CE4A369BC4FAEB4818B718 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1EBB0B60E785F36A6845977 /* Pods-selectaLive-tvOS.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-tvOS.beta.xcconfig"; path = "Target Support Files/Pods-selectaLive-tvOS/Pods-selectaLive-tvOS.beta.xcconfig"; sourceTree = "<group>"; };
 		D54FA311AF02E7DE3237FD3E /* Pods-selectaLiveTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLiveTests.app store.xcconfig"; path = "Target Support Files/Pods-selectaLiveTests/Pods-selectaLiveTests.app store.xcconfig"; sourceTree = "<group>"; };
 		D55CF8F9055154D8CFC16112 /* Pods-selectaLive-selectaLiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-selectaLive-selectaLiveTests.release.xcconfig"; path = "Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB23AFFF273BC85402268605 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				3A127EF8B3EC1B63A795D725 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,8 +227,8 @@
 				24571C3AD69B927539C0832E /* libPods-selectaLive.a */,
 				4707FE0BBA97EABF7039D55E /* libPods-selectaLive-tvOS.a */,
 				4F14BBD316980A4E526C51C4 /* libPods-selectaLive-tvOSTests.a */,
-				212613D0989372B3D1C6BAFB /* libPods-OneSignalNotificationServiceExtension.a */,
 				9B829DDA59C7E32F11B5F4B6 /* libPods-selectaLive-selectaLiveTests.a */,
+				C9CE4A369BC4FAEB4818B718 /* libPods-OneSignalNotificationServiceExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -315,13 +315,13 @@
 				4B6A610808D7E62154AD3C57 /* Pods-selectaLive-tvOS.appstore.xcconfig */,
 				E6EBE0E9C617C26FC3651B19 /* Pods-selectaLive-tvOSTests.appstore.xcconfig */,
 				6AEA1CC4F7D802B71189A203 /* Pods-selectaLiveTests.appstore.xcconfig */,
-				9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
 				281BC5C8099353E5BCD03458 /* Pods-OneSignalNotificationServiceExtension.appstore.xcconfig */,
-				A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
-				BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
 				E2A139F443F4BE935B4C7071 /* Pods-selectaLive-selectaLiveTests.debug.xcconfig */,
 				D55CF8F9055154D8CFC16112 /* Pods-selectaLive-selectaLiveTests.release.xcconfig */,
 				077B60DE9C663EA67EA32C12 /* Pods-selectaLive-selectaLiveTests.beta.xcconfig */,
+				792D947366F39243DD8DE89C /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				438370821035DB7A4B9235DE /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				05FF8F80A15D43DA33EAA6CF /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -416,7 +416,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC4246E7233F78F200A52916 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
 			buildPhases = (
-				286DC17C59767E718977D36A /* [CP] Check Pods Manifest.lock */,
+				D6ABD272F61D0DFD06650345 /* [CP] Check Pods Manifest.lock */,
 				BC4246DA233F78F200A52916 /* Sources */,
 				BC4246DB233F78F200A52916 /* Frameworks */,
 				BC4246DC233F78F200A52916 /* Resources */,
@@ -577,28 +577,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		286DC17C59767E718977D36A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -622,11 +600,13 @@
 				"${PODS_ROOT}/Target Support Files/Pods-selectaLive/Pods-selectaLive-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -704,15 +684,39 @@
 				"${PODS_ROOT}/Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-selectaLive-selectaLiveTests/Pods-selectaLive-selectaLiveTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D6ABD272F61D0DFD06650345 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F021F91CAFDCA699080DF5A9 /* [CP] Check Pods Manifest.lock */ = {
@@ -1212,7 +1216,7 @@
 		};
 		BC4246E8233F78F200A52916 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9894531053D03E2FD52B38F2 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = 792D947366F39243DD8DE89C /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1248,7 +1252,7 @@
 		};
 		BC4246E9233F78F200A52916 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BFE7AF1CF7621FB2C67766A6 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			baseConfigurationReference = 438370821035DB7A4B9235DE /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1318,7 +1322,7 @@
 		};
 		BC4246EA233F78F200A52916 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3B9B3C332CC3F811394FD5A /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */;
+			baseConfigurationReference = 05FF8F80A15D43DA33EAA6CF /* Pods-OneSignalNotificationServiceExtension.beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
