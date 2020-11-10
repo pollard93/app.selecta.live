@@ -27,6 +27,7 @@ function loadStories() {
 	require('../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories');
 	require('../src/components/ResetPassword/ResetPassword.stories');
 	require('../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories');
+	require('../src/components/Stream/CameraStream/components/CameraStreamControls/CameraStreamControls.stories');
 	require('../src/components/Stream/CancelStream/CancelStream.stories');
 	require('../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories');
 	require('../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories');
@@ -44,6 +45,7 @@ function loadStories() {
 	require('../src/components/Stream/StreamSelfs/StreamSelfs.stories');
 	require('../src/components/Stream/StreamVideo/StreamVideo.stories');
 	require('../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories');
+	require('../src/components/Stream/UnlistStream/UnlistStream.stories');
 	require('../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories');
 	require('../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories');
 	require('../src/components/StreamComment/StreamComments/StreamComments.stories');
@@ -113,6 +115,7 @@ const stories = [
 	'../src/components/RequestedChannel/RequestedChannels/RequestedChannels.stories',
 	'../src/components/ResetPassword/ResetPassword.stories',
 	'../src/components/Stream/CalculateStreamRevenue/CalculateStreamRevenue.stories',
+	'../src/components/Stream/CameraStream/components/CameraStreamControls/CameraStreamControls.stories',
 	'../src/components/Stream/CancelStream/CancelStream.stories',
 	'../src/components/Stream/CancelStream/components/CancelStreamForm/CancelStreamForm.stories',
 	'../src/components/Stream/ConsumingStreamProfiles/ConsumingStreamProfiles.stories',
@@ -130,6 +133,7 @@ const stories = [
 	'../src/components/Stream/StreamSelfs/StreamSelfs.stories',
 	'../src/components/Stream/StreamVideo/StreamVideo.stories',
 	'../src/components/Stream/StreamVideo/components/StreamControls/StreamControls.stories',
+	'../src/components/Stream/UnlistStream/UnlistStream.stories',
 	'../src/components/StreamComment/CreateStreamComment/CreateStreamComment.stories',
 	'../src/components/StreamComment/StreamCommentListItem/StreamCommentListItem.stories',
 	'../src/components/StreamComment/StreamComments/StreamComments.stories',

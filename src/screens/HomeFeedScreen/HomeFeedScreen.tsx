@@ -25,9 +25,6 @@ HomeFeedScreen.prototype.ScreenName = 'HomeFeedScreen';
  * Set Screen options or remove to use default
  */
 (HomeFeedScreen.prototype.options as Options) = {
-  topBar: {
-    visible: false,
-  },
 };
 
 /**

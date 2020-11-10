@@ -111,3 +111,6 @@ export const usePollLive = (id: string) => {
     };
   }, [queryResult]);
 };
+
+
+export type GoLiveState = 'WAITING' | 'CONNECTED' | 'LIVE_CONFIRM' | 'LIVE' | 'END_CONFIRM' | 'ENDED';

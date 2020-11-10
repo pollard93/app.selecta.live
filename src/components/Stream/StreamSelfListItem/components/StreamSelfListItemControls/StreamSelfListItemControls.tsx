@@ -8,7 +8,7 @@ import { pushScreen } from '../../../../../screens/utils';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
+import GoLiveIntroScreen from '../../../../../screens/GoLiveIntroScreen/GoLiveIntroScreen';
 import { useStreamStart, canGoLive } from '../../../../../utils/streamFunctions';
 import CreateUpdateStreamScreen from '../../../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import spacing from '../../../../../styles/definitions/spacing';
@@ -42,10 +42,10 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
 
 
   /**
-   * Push GoLiveScreen
+   * Push GoLiveIntroScreen
    */
   const onGoLive = () => {
-    pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id });
+    pushScreen(screenProps.componentId, GoLiveIntroScreen, { id: props.data.id });
   };
 
 

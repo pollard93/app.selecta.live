@@ -1,5 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 import { Linking } from 'react-native';
+import Orientation from 'react-native-orientation';
 import { registerScreens } from './src/screens';
 import { InitScreenName } from './src/screens/InitScreen/InitScreen';
 import { onOpenLink } from './src/modules/DeepLink';
@@ -11,6 +12,8 @@ console.disableYellowBox = true;
 registerScreens();
 
 Navigation.events().registerAppLaunchedListener(() => {
+  Orientation.lockToPortrait();
+
   /**
    * Start listening for deep linking
    * Remove incase it's been bound

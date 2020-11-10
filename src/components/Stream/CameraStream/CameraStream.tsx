@@ -1,24 +1,27 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { View, Alert } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import { pushToast } from '../../../modules/Toast';
-import Toast from '../../UI/Toast/Toast';
-import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { NodeCameraView } from 'react-native-nodemediaclient';
+import Orientation from 'react-native-orientation';
 import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
-import { useScreenProps } from '../../../modules/ScreenPropsProvider/ScreenPropsProvider';
+import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
+import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
+import LoadRetry from '../../UI/LoadRetry/LoadRetry';
+import { closeCameraOverlay } from '../../../screens/utils';
 import { useGoLiveMutation } from '../../../API/mutation/goLive/goLive';
-import { getGQLErrorMessage } from '../../../utils/functions';
 import { useEndLiveMutation } from '../../../API/mutation/endLive/endLive';
-import GoLiveView from './GoLiveView';
-import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
+import { pushToast } from '../../../modules/Toast';
+import { getGQLErrorMessage } from '../../../utils/functions';
 import { GoLiveState } from '../../../utils/streamFunctions';
+import Toast from '../../UI/Toast/Toast';
+import CameraStreamControls from './components/CameraStreamControls/CameraStreamControls';
+import Button from '../../UI/Button/Button';
+import Styles from './CameraStream.style';
 
-export interface GoLiveProps {
+export interface CameraStreamProps {
   id: string;
 }
 
-const GoLive: FC<GoLiveProps> = (props) => {
+const CameraStream: FC<CameraStreamProps> = (props) => {
   /**
    * Get stream and url
    */
@@ -33,15 +36,37 @@ const GoLive: FC<GoLiveProps> = (props) => {
 
 
   /**
-   * Misc
+   * Streaming controls
    */
-  const screenProps = useScreenProps();
+  const [streaming, ss] = useState(false);
+  const st = useRef<any>();
+  const setStreaming = (v: boolean) => {
+    if (v) {
+      st.current.start();
+    } else {
+      st.current.stop();
+    }
+    ss(v);
+  };
 
 
   /**
    * State
    */
   const [state, setState] = useState<GoLiveState>('WAITING');
+  console.log('state', state);
+
+
+  /**
+   * On Cancel
+   */
+  const onCancel = () => {
+    Orientation.lockToPortrait();
+
+    setTimeout(() => {
+      closeCameraOverlay();
+    }, 0);
+  };
 
 
   /**
@@ -53,17 +78,6 @@ const GoLive: FC<GoLiveProps> = (props) => {
     },
     onCompleted: () => {
       setState('LIVE');
-
-      pushToast({
-        duration: 1000,
-        component: (
-          <Toast
-            type="SUCCESS"
-            content="Stream is now live"
-          />
-        ),
-        dismissible: true,
-      });
     },
     onError: (e) => {
       setState('CONNECTED');
@@ -91,24 +105,10 @@ const GoLive: FC<GoLiveProps> = (props) => {
     },
     onCompleted: () => {
       setState('ENDED');
-
-      pushToast({
-        duration: 1000,
-        component: (
-          <Toast
-            type="SUCCESS"
-            content="Stream has now ended"
-          />
-        ),
-        dismissible: true,
-      });
+      onCancel();
     },
     onError: (e) => {
-      /**
-       * Back to live
-       */
       setState('LIVE');
-
 
       pushToast({
         duration: 1000,
@@ -145,6 +145,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
            * Handle video
            */
           const res = await fetch(videoUrl);
+          console.log('res', res.status);
           if (res.status !== 200) throw new Error();
 
           /**
@@ -174,33 +175,26 @@ const GoLive: FC<GoLiveProps> = (props) => {
 
 
   /**
-   * On go live confirm action
+   * On go live
    */
   const onGoLive = () => {
-    Alert.alert(
-      'Are you sure you want to go live?',
-      'Users will be notified and can access this stream.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Yes', onPress: () => goLiveMutation() },
-      ],
-    );
+    setState('LIVE_CONFIRM');
   };
 
 
   /**
-   * On end live
+   * On go live
    */
-  const onStartEndLive = () => {
-    setState('END_CONFIRM');
+  const onGoLiveCancel = () => {
+    setState('CONNECTED');
   };
 
 
   /**
-   * On end live
+   * On go live
    */
-  const onCancelEndLive = () => {
-    setState('LIVE');
+  const onGoLiveConfirm = () => {
+    goLiveMutation();
   };
 
 
@@ -208,29 +202,103 @@ const GoLive: FC<GoLiveProps> = (props) => {
    * On end live
    */
   const onEndLive = () => {
+    setState('END_CONFIRM');
+  };
+
+
+  /**
+   * On end live
+   */
+  const onEndLiveCancel = () => {
+    setState('LIVE');
+  };
+
+
+  /**
+   * On end live
+   */
+  const onEndLiveConfirm = () => {
     endLiveMutation();
   };
 
 
+  /**
+   * Lock to landscape
+   */
+  useEffect(() => {
+    Orientation.lockToLandscapeRight();
+
+    return () => {
+      Orientation.lockToPortrait();
+    };
+  }, []);
+
+
+  /**
+   * Load retry
+   */
+  if (streamSelfQueryResult.loading || streamSelfQueryResult.error) {
+    return (
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <LoadRetry cover {...streamSelfQueryResult} />
+
+        <View style={Styles.controls}>
+          <Button
+            title='Cancel'
+            onPress={onCancel}
+            type="SECONDARY"
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+  if (streamUrlQueryResult.loading || streamUrlQueryResult.error) {
+    return (
+      <SafeAreaView style={GlobalStyles.PageFill}>
+        <LoadRetry cover {...streamUrlQueryResult} />
+
+        <View style={Styles.controls}>
+          <Button
+            title='Cancel'
+            onPress={onCancel}
+            type="SECONDARY"
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+
   return (
     <View style={GlobalStyles.PageFill}>
-      <ChannelSelfHeader onPop={() => Navigation.pop(screenProps.componentId)} />
       <View style={GlobalStyles.PageFill}>
-        <GoLiveView
-          id={props.id}
-          state={state}
-          streamSelfQueryResult={streamSelfQueryResult}
-          streamUrlQueryResult={streamUrlQueryResult}
-          onGoLive={onGoLive}
-          goLiveLoading={goLiveLoading}
-          onStartEndLive={onStartEndLive}
-          onCancelEndLive={onCancelEndLive}
-          onEndLive={onEndLive}
+        <NodeCameraView
+          style={StyleSheet.absoluteFillObject}
+          ref={(vb) => { st.current = vb; }}
+          outputUrl = {`${streamSelfQueryResult.data?.getStreamSelf.streamUrl}/${streamSelfQueryResult.data?.getStreamSelf.streamKey}`}
+          camera={{ cameraId: 0 }}
+          audio={{ bitrate: 32000, profile: 0, samplerate: 44100 }}
+          video={{ preset: 16, bitrate: 650000, profile: 2, fps: 30 }}
+          autopreview={true}
+        />
+
+        <CameraStreamControls
           endLiveLoading={endLiveLoading}
+          goLiveLoading={goLiveLoading}
+          onCancel={onCancel}
+          onEndLive={onEndLive}
+          onEndLiveCancel={onEndLiveCancel}
+          onEndLiveConfirm={onEndLiveConfirm}
+          onGoLive={onGoLive}
+          onGoLiveCancel={onGoLiveCancel}
+          onGoLiveConfirm={onGoLiveConfirm}
+          setStreaming={setStreaming}
+          state={state}
+          streaming={streaming}
         />
       </View>
     </View>
   );
 };
 
-export default GoLive;
+export default CameraStream;

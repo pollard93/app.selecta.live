@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, Options } from 'react-native-navigation';
 import { ApolloProvider } from 'react-apollo';
 import { SafeAreaView, View } from 'react-native';
 import { useDynamicValue } from 'react-native-dynamic';
@@ -32,6 +32,18 @@ import { ScreenProps } from './utils/interfaces';
 import NotificationsScreen from './NotificationsScreen/NotificationsScreen';
 import ScreenPropsProvider from '../modules/ScreenPropsProvider/ScreenPropsProvider';
 import GoLiveScreen from './GoLiveScreen/GoLiveScreen';
+import CameraStreamScreen from './CameraStreamScreen/CameraStreamScreen';
+import GoLiveIntroScreen from './GoLiveIntroScreen/GoLiveIntroScreen';
+
+
+const defaultOptions: Options = {
+  topBar: {
+    visible: false,
+  },
+  layout: {
+    // orientation: ['portrait'],
+  },
+};
 
 
 const wrapContext = (Component) => {
@@ -53,7 +65,7 @@ const wrapContext = (Component) => {
     };
 
     // Allows static options to be called for react-native-navigation
-    (wrapped as any).options = Component.prototype.options;
+    (wrapped as any).options = { ...defaultOptions, ...Component.prototype.options };
 
     return wrapped;
   }
@@ -82,7 +94,7 @@ const wrapContext = (Component) => {
     };
 
     // Allows static options to be called for react-native-navigation
-    (wrapped as any).options = Component.prototype.options;
+    (wrapped as any).options = { ...defaultOptions, ...Component.prototype.options };
 
     return gestureHandlerRootHOC(wrapped);
   }
@@ -113,7 +125,7 @@ const wrapContext = (Component) => {
   };
 
   // Allows static options to be called for react-native-navigation
-  (wrapped as any).options = Component.prototype.options;
+  (wrapped as any).options = { ...defaultOptions, ...Component.prototype.options };
 
   return gestureHandlerRootHOC(wrapped);
 };
@@ -143,4 +155,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(NotificationsScreen.prototype.ScreenName, () => wrapContext(NotificationsScreen));
   Navigation.registerComponent(ToastOverlay.prototype.ScreenName, () => wrapContext(ToastOverlay));
   Navigation.registerComponent(GoLiveScreen.prototype.ScreenName, () => wrapContext(GoLiveScreen));
+  Navigation.registerComponent(GoLiveIntroScreen.prototype.ScreenName, () => wrapContext(GoLiveIntroScreen));
+  Navigation.registerComponent(CameraStreamScreen.prototype.ScreenName, () => wrapContext(CameraStreamScreen));
 };

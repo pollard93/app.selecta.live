@@ -13,7 +13,7 @@ import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/Scree
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import Body from '../../../../UI/Typography/components/Body';
 import UnlistStream from '../../../UnlistStream/UnlistStream';
-import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
+import GoLiveIntroScreen from '../../../../../screens/GoLiveIntroScreen/GoLiveIntroScreen';
 
 interface StreamStatesProps {
   data: STREAM_SELF_FRAGMENT;
@@ -67,10 +67,10 @@ const StreamStates: FC<StreamStatesProps> = (props) => {
    */
   if (props.data.timeFromLive !== null && props.data.timeToLive === null) {
     /**
-     * Push GoLiveScreen
+     * Push GoLiveIntroScreen
      */
     const onGoLive = () => {
-      pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id });
+      pushScreen(screenProps.componentId, GoLiveIntroScreen, { id: props.data.id });
     };
 
 

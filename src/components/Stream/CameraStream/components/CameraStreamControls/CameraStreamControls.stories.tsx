@@ -2,17 +2,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { SafeAreaView } from 'react-native';
-import GoLiveView from './GoLiveView';
-import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
-import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
-import GoLive from './GoLive';
-import GetSelfDecorator from '../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import CameraStreamControls from './CameraStreamControls';
+import GlobalStyles from '../../../../../styles/stylesheets/GlobalStyles';
+import { useGetStreamSelfQuery } from '../../../../../API/query/getStreamSelf/getStreamSelf';
+import { useGetStreamUrlQuery } from '../../../../../API/query/getStreamUrl/getStreamUrl';
+import GetSelfDecorator from '../../../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
 
-storiesOf('Stream/GoLive', module)
+storiesOf('Stream/CameraStreamControls', module)
   .addDecorator((getStory) => <GetSelfDecorator>{getStory()}</GetSelfDecorator>)
-  .add('GoLive', () => <GoLive id="TEST" />)
-  .add('GoLive - WAITING', () => {
+  .add('CameraStreamControls - WAITING - not streaming', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -29,17 +27,15 @@ storiesOf('Stream/GoLive', module)
 
       return (
         <SafeAreaView style={GlobalStyles.PageFill}>
-          <GoLiveView
+          <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
-            id=""
-            onCancelEndLive={console.log}
+            onCancel={console.log}
             onEndLive={console.log}
             onGoLive={console.log}
-            onStartEndLive={console.log}
+            setStreaming={console.log}
             state="WAITING"
-            streamSelfQueryResult={streamSelfQueryResult}
-            streamUrlQueryResult={streamUrlQueryResult}
+            streaming={false}
           />
         </SafeAreaView>
       );
@@ -47,7 +43,7 @@ storiesOf('Stream/GoLive', module)
 
     return <TestComponent />;
   })
-  .add('GoLive - CONNECTED', () => {
+  .add('CameraStreamControls - WAITING - streaming', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -64,17 +60,48 @@ storiesOf('Stream/GoLive', module)
 
       return (
         <SafeAreaView style={GlobalStyles.PageFill}>
-          <GoLiveView
+          <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
-            id=""
-            onCancelEndLive={console.log}
+            onCancel={console.log}
             onEndLive={console.log}
             onGoLive={console.log}
-            onStartEndLive={console.log}
+            setStreaming={console.log}
+            state="WAITING"
+            streaming={true}
+          />
+        </SafeAreaView>
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CameraStreamControls - CONNECTED', () => {
+    const TestComponent = () => {
+      const streamSelfQueryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      const streamUrlQueryResult = useGetStreamUrlQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (streamSelfQueryResult.loading) return null;
+      if (streamUrlQueryResult.loading) return null;
+
+      return (
+        <SafeAreaView style={GlobalStyles.PageFill}>
+          <CameraStreamControls
+            endLiveLoading={false}
+            goLiveLoading={false}
+            onCancel={console.log}
+            onEndLive={console.log}
+            onGoLive={console.log}
+            setStreaming={console.log}
             state="CONNECTED"
-            streamSelfQueryResult={streamSelfQueryResult}
-            streamUrlQueryResult={streamUrlQueryResult}
+            streaming={true}
           />
         </SafeAreaView>
       );
@@ -82,7 +109,7 @@ storiesOf('Stream/GoLive', module)
 
     return <TestComponent />;
   })
-  .add('GoLive - LIVE', () => {
+  .add('CameraStreamControls - LIVE', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -99,17 +126,15 @@ storiesOf('Stream/GoLive', module)
 
       return (
         <SafeAreaView style={GlobalStyles.PageFill}>
-          <GoLiveView
+          <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
-            id=""
-            onCancelEndLive={console.log}
+            onCancel={console.log}
             onEndLive={console.log}
             onGoLive={console.log}
-            onStartEndLive={console.log}
+            setStreaming={console.log}
             state="LIVE"
-            streamSelfQueryResult={streamSelfQueryResult}
-            streamUrlQueryResult={streamUrlQueryResult}
+            streaming={true}
           />
         </SafeAreaView>
       );
@@ -117,7 +142,7 @@ storiesOf('Stream/GoLive', module)
 
     return <TestComponent />;
   })
-  .add('GoLive - END_CONFIRM', () => {
+  .add('CameraStreamControls - LIVE with consumers', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -134,17 +159,16 @@ storiesOf('Stream/GoLive', module)
 
       return (
         <SafeAreaView style={GlobalStyles.PageFill}>
-          <GoLiveView
+          <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
-            id=""
-            onCancelEndLive={console.log}
+            onCancel={console.log}
             onEndLive={console.log}
             onGoLive={console.log}
-            onStartEndLive={console.log}
-            state="END_CONFIRM"
-            streamSelfQueryResult={streamSelfQueryResult}
-            streamUrlQueryResult={streamUrlQueryResult}
+            setStreaming={console.log}
+            state="LIVE"
+            streaming={true}
+            liveConsumers={100}
           />
         </SafeAreaView>
       );
@@ -152,7 +176,7 @@ storiesOf('Stream/GoLive', module)
 
     return <TestComponent />;
   })
-  .add('GoLive - ENDED', () => {
+  .add('CameraStreamControls - ENDED', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -169,17 +193,15 @@ storiesOf('Stream/GoLive', module)
 
       return (
         <SafeAreaView style={GlobalStyles.PageFill}>
-          <GoLiveView
+          <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
-            id=""
-            onCancelEndLive={console.log}
+            onCancel={console.log}
             onEndLive={console.log}
             onGoLive={console.log}
-            onStartEndLive={console.log}
+            setStreaming={console.log}
             state="ENDED"
-            streamSelfQueryResult={streamSelfQueryResult}
-            streamUrlQueryResult={streamUrlQueryResult}
+            streaming={true}
           />
         </SafeAreaView>
       );

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Selecta Live would like to access your camera for streaming</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -75,7 +77,7 @@
 		</dict>
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Selecta would like access to your camera roll</string>
+	<string>Selecta Live would like access to your camera roll to upload content for your streams</string>
 	<key>OneSignal_disable_badge_clearing</key>
 	<string>YES</string>
 	<key>UIAppFonts</key>
@@ -97,11 +99,14 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Selecta Live would like to use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Selecta Live would like to use your location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Selecta Live would like to use your microphone for streaming</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>
