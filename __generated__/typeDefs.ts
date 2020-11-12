@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Mon Oct 19 2020 16:01:13 GMT+0100 (British Summer Time)
+# timestamp: Thu Nov 12 2020 17:13:56 GMT+0000 (Greenwich Mean Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -550,6 +550,7 @@ type Mutation {
   publishStream(id: String!): StreamSelf
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
+  registerChannelBrochure(data: RegisterChannelBrochureInput!): Boolean
   requestChannelLoginCode(id: String!): Boolean
   unlistStream(id: String!, list: Boolean): StreamSelf
   updateChannel(data: ChannelUpdateInput): ChannelSelf
@@ -747,6 +748,14 @@ type Query {
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
   getStreamUrl(id: String!): StreamUrlPayload!
+}
+
+input RegisterChannelBrochureInput {
+  name: String!
+  email: String!
+  number: String!
+  entityName: String!
+  comments: String
 }
 
 input RegisterInput {
@@ -1735,6 +1744,8 @@ input UserWhereInput {
   positions_every: StreamPositionRecordWhereInput
   positions_some: StreamPositionRecordWhereInput
   positions_none: StreamPositionRecordWhereInput
+  isAdmin: Boolean
+  isAdmin_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

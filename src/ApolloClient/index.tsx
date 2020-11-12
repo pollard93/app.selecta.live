@@ -111,6 +111,7 @@ const channelTokenEndpoints = [
   'getChannelSelfFeed',
   'getRequestedChannels',
   'getStreamSelf',
+  'getStreamSelfLive',
   'getStreamSelfs',
   'getTagProfiles',
   'goLive',

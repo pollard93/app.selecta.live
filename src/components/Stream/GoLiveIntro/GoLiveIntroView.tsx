@@ -109,7 +109,7 @@ const GoLiveIntroView: FC<GoLiveIntroViewProps> = (props) => {
                   id: props.id,
                 });
               }}
-              type="SECONDARY"
+              type="FORCE_LIGHT"
             />
 
             <Button
@@ -119,7 +119,7 @@ const GoLiveIntroView: FC<GoLiveIntroViewProps> = (props) => {
                   id: props.id,
                 });
               }}
-              type="SECONDARY"
+              type="FORCE_LIGHT"
               style={Styles.button}
             />
           </View>

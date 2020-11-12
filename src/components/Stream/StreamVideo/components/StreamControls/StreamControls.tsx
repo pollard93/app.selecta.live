@@ -10,6 +10,7 @@ import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
 import H4 from '../../../../UI/Typography/components/H4';
 import Styles from './StreamControls.style';
 import ShareButton from '../../../../UI/ShareButton/ShareButton';
+import LiveConsumers from '../../../../UI/LiveConsumers/LiveConsumers';
 
 interface StreamControlsProps {
   isPlaying: boolean; // Stops and starts internal position interval
@@ -323,10 +324,10 @@ const StreamControls: FC<StreamControlsProps> = (props) => {
                 pointerEvents="box-none"
               >
                 {props.liveConsumers > 0 && (
-                  <View style={Styles.liveConsumers}>
-                    <Icon forceLight name={ICON.PROFILE} size="xsmall" style={Styles.liveConsumersIcon} />
-                    <Small bold forceLight>{props.liveConsumers}</Small>
-                  </View>
+                  <LiveConsumers
+                    count={props.liveConsumers}
+                    wrapStyle={Styles.liveConsumers}
+                  />
                 )}
 
                 <View />

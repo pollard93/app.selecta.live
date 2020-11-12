@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { formatTime } from './functions';
 import { useGetStreamProfileLiveLazyQuery } from '../API/query/getStreamProfile/getStreamProfileLive';
+import { useGetStreamSelfLiveLazyQuery } from '../API/query/getStreamSelf/getStreamSelfLive';
 
 
 /**
@@ -89,7 +90,7 @@ export const canGoLive = (data: StreamTimes) => new Date(data.timeFrom).getTime(
 
 
 /**
- * Poll stream profile every 10 seconds and updates stream.timeFromLive and stream.timeToLive and stream.liveConsumersEdge in cache
+ * Poll streamProfile every 10 seconds and updates stream.timeFromLive and stream.timeToLive and stream.liveConsumersEdge in cache
  * Polls before stream is live, until it has ended (timeToLive is set)
  */
 export const usePollLive = (id: string) => {
@@ -105,6 +106,29 @@ export const usePollLive = (id: string) => {
         query();
       }, 10000);
     }
+
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, [queryResult]);
+};
+
+
+/**
+ * Poll streamSelf every 10 seconds to update stream.liveConsumersEdge in cache
+ * Polls indefinitely
+ */
+export const usePollSelfLive = (id: string) => {
+  const [query, queryResult] = useGetStreamSelfLiveLazyQuery({
+    variables: { id },
+    fetchPolicy: 'network-only',
+  });
+
+  const interval = useRef<number>();
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      query();
+    }, 10000);
 
     return () => {
       clearInterval(interval.current);

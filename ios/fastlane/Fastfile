@@ -266,30 +266,30 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    increment_build_number(xcodeproj: "#{ENV['XPROJECT_NAME']}")
+    # increment_build_number(xcodeproj: "#{ENV['XPROJECT_NAME']}")
 
-    match(
-      username: 'dev@madebyprism.com',
-      team_id: 'XHGHG46PR6',
-      type: "appstore",
-      app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
-      git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
-      git_branch: "master",
-      readonly: true,
-    )
+    # match(
+    #   username: 'dev@madebyprism.com',
+    #   team_id: 'XHGHG46PR6',
+    #   type: "appstore",
+    #   app_identifier: ["#{ENV['BASE_BUNDLE_ID']}.beta", "#{ENV['BASE_BUNDLE_ID']}.beta.OneSignalNotificationServiceExtension"],
+    #   git_url: "git@bitbucket.org:madebyprism/selecta.fastlane.ios.git",
+    #   git_branch: "master",
+    #   readonly: true,
+    # )
 
-    sh('yarn', 'format:version')
-    sh('yarn', 'setup:all')
-    sh('yarn', 'build:ios')
+    # sh('yarn', 'format:version')
+    # sh('yarn', 'setup:all')
+    # sh('yarn', 'build:ios')
 
-    gym(
-      workspace: "#{ENV['XWORKSPACE_NAME']}",
-      scheme: "#{ENV['SCHEME_NAME']}",
-      configuration: "Beta",
-      export_method: 'app-store',
-      output_directory: "builds",
-      output_name: 'beta.ipa',
-    )
+    # gym(
+    #   workspace: "#{ENV['XWORKSPACE_NAME']}",
+    #   scheme: "#{ENV['SCHEME_NAME']}",
+    #   configuration: "Beta",
+    #   export_method: 'app-store',
+    #   output_directory: "builds",
+    #   output_name: 'beta.ipa',
+    # )
 
     upload_to_testflight(
       username: "dev@madebyprism.com",

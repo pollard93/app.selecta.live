@@ -3,10 +3,12 @@ import { View, SafeAreaView } from 'react-native';
 import Styles from './CameraStreamControls.style';
 import { GoLiveState } from '../../../../../utils/streamFunctions';
 import Button from '../../../../UI/Button/Button';
-import Icon, { ICON } from '../../../../UI/Icon/Icon';
 import Small from '../../../../UI/Typography/components/Small';
 import spacing from '../../../../../styles/definitions/spacing';
 import LoadingIcon from '../../../../UI/LoadingIcon/LoadingIcon';
+import H4 from '../../../../UI/Typography/components/H4';
+import LiveConsumers from '../../../../UI/LiveConsumers/LiveConsumers';
+import FadeInView from '../../../../UI/FadeInView/FadeInView';
 
 export interface CameraStreamControlsProps {
   endLiveLoading: boolean;
@@ -25,9 +27,6 @@ export interface CameraStreamControlsProps {
 }
 
 const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
-  console.log('props', props);
-
-
   switch (props.state) {
     case 'WAITING':
       return (
@@ -39,10 +38,13 @@ const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
               type="SECONDARY"
             />
 
-            <Button
-              title={props.streaming ? 'Disconnect' : 'Connect'}
-              onPress={() => props.setStreaming(!props.streaming)}
-            />
+            <View style={Styles.controls}>
+              {props.streaming && <H4 style={Styles.status}>Waiting for connection..</H4>}
+              <Button
+                title={props.streaming ? 'Disconnect' : 'Connect'}
+                onPress={() => props.setStreaming(!props.streaming)}
+              />
+            </View>
           </View>
         </SafeAreaView>
       );
@@ -83,7 +85,7 @@ const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
             />
 
             <Button
-              title='CONFIRM GO LIVE'
+              title={props.goLiveLoading ? 'GOING LIVE' : 'CONFIRM GO LIVE'}
               onPress={props.onGoLiveConfirm}
               loading={props.goLiveLoading}
             />
@@ -102,16 +104,24 @@ const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
               </View>
 
               {props.liveConsumers > 0 && (
-                <View style={Styles.liveConsumers}>
-                  <Icon forceLight name={ICON.PROFILE} size="xsmall" style={Styles.liveConsumersIcon} />
-                  <Small bold forceLight>{props.liveConsumers}</Small>
-                </View>
+                <FadeInView>
+                  <LiveConsumers
+                    count={props.liveConsumers}
+                    wrapStyle={Styles.liveConsumers}
+                  />
+                </FadeInView>
               )}
             </View>
 
             <Button
-              title="END STREAM"
-              onPress={props.onEndLive}
+              title={props.streaming ? 'END STREAM' : 'Connect'}
+              onPress={() => {
+                if (props.streaming) {
+                  props.onEndLive();
+                } else {
+                  props.setStreaming(true);
+                }
+              }}
             />
           </View>
         </SafeAreaView>
@@ -119,22 +129,22 @@ const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
 
     case 'END_CONFIRM':
       return (
-          <SafeAreaView>
-            <View style={Styles.controls}>
-              <Button
-                title='Cancel'
-                onPress={props.onEndLiveCancel}
-                type="SECONDARY"
-                disabled={props.endLiveLoading}
-              />
+        <SafeAreaView>
+          <View style={Styles.controls}>
+            <Button
+              title='Cancel'
+              onPress={props.onEndLiveCancel}
+              type="SECONDARY"
+              disabled={props.endLiveLoading}
+            />
 
-              <Button
-                title='CONFIRM END LIVE'
-                onPress={props.onEndLiveConfirm}
-                loading={props.endLiveLoading}
-              />
-            </View>
-          </SafeAreaView>
+            <Button
+              title={props.endLiveLoading ? 'ENDING STREAM' : 'CONFIRM END STREAM'}
+              onPress={props.onEndLiveConfirm}
+              loading={props.endLiveLoading}
+            />
+          </View>
+        </SafeAreaView>
       );
 
     default:

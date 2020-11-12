@@ -73,6 +73,7 @@ function loadStories() {
 	require('../src/components/UI/Headers/ChannelSelfHeader/ChannelSelfHeader.stories');
 	require('../src/components/UI/Headers/Header/Header.stories');
 	require('../src/components/UI/Icon/Icon.stories');
+	require('../src/components/UI/LiveConsumers/LiveConsumers.stories');
 	require('../src/components/UI/LoadRetry/LoadRetry.stories');
 	require('../src/components/UI/LoadingIcon/LoadingIcon.stories');
 	require('../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories');
@@ -161,6 +162,7 @@ const stories = [
 	'../src/components/UI/Headers/ChannelSelfHeader/ChannelSelfHeader.stories',
 	'../src/components/UI/Headers/Header/Header.stories',
 	'../src/components/UI/Icon/Icon.stories',
+	'../src/components/UI/LiveConsumers/LiveConsumers.stories',
 	'../src/components/UI/LoadRetry/LoadRetry.stories',
 	'../src/components/UI/LoadingIcon/LoadingIcon.stories',
 	'../src/components/UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap.stories',

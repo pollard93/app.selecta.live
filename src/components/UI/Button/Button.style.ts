@@ -26,6 +26,9 @@ export default StyleSheet.create({
   LIGHT: {
     backgroundColor: color.mono.light,
   },
+  FORCE_LIGHT: {
+    backgroundColor: color.mono.light,
+  },
   FB: {
     backgroundColor: color.brands.facebook,
   },
@@ -42,6 +45,10 @@ export default StyleSheet.create({
     color: color.mono.light,
   },
   textLIGHT: {
+    color: color.mono.dark,
+  },
+  // eslint-disable-next-line camelcase
+  textFORCE_LIGHT: {
     color: color.mono.dark,
   },
   textGOOGLE: {

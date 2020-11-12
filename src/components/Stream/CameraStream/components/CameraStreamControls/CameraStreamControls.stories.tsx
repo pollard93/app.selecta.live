@@ -32,7 +32,11 @@ storiesOf('Stream/CameraStreamControls', module)
             goLiveLoading={false}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="WAITING"
             streaming={false}
@@ -65,7 +69,11 @@ storiesOf('Stream/CameraStreamControls', module)
             goLiveLoading={false}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="WAITING"
             streaming={true}
@@ -76,7 +84,7 @@ storiesOf('Stream/CameraStreamControls', module)
 
     return <TestComponent />;
   })
-  .add('CameraStreamControls - CONNECTED', () => {
+  .add('CameraStreamControls - CONNECTED - not streaming', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -98,7 +106,48 @@ storiesOf('Stream/CameraStreamControls', module)
             goLiveLoading={false}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
+            setStreaming={console.log}
+            state="CONNECTED"
+            streaming={false}
+          />
+        </SafeAreaView>
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CameraStreamControls - CONNECTED - streaming', () => {
+    const TestComponent = () => {
+      const streamSelfQueryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      const streamUrlQueryResult = useGetStreamUrlQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (streamSelfQueryResult.loading) return null;
+      if (streamUrlQueryResult.loading) return null;
+
+      return (
+        <SafeAreaView style={GlobalStyles.PageFill}>
+          <CameraStreamControls
+            endLiveLoading={false}
+            goLiveLoading={false}
+            onCancel={console.log}
+            onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
+            onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="CONNECTED"
             streaming={true}
@@ -109,7 +158,7 @@ storiesOf('Stream/CameraStreamControls', module)
 
     return <TestComponent />;
   })
-  .add('CameraStreamControls - LIVE', () => {
+  .add('CameraStreamControls - LIVE_CONFIRM', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -131,7 +180,85 @@ storiesOf('Stream/CameraStreamControls', module)
             goLiveLoading={false}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
+            setStreaming={console.log}
+            state="LIVE_CONFIRM"
+            streaming={true}
+          />
+        </SafeAreaView>
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CameraStreamControls - LIVE - not streaming', () => {
+    const TestComponent = () => {
+      const streamSelfQueryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      const streamUrlQueryResult = useGetStreamUrlQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (streamSelfQueryResult.loading) return null;
+      if (streamUrlQueryResult.loading) return null;
+
+      return (
+        <SafeAreaView style={GlobalStyles.PageFill}>
+          <CameraStreamControls
+            endLiveLoading={false}
+            goLiveLoading={false}
+            onCancel={console.log}
+            onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
+            onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
+            setStreaming={console.log}
+            state="LIVE"
+            streaming={false}
+          />
+        </SafeAreaView>
+      );
+    };
+
+    return <TestComponent />;
+  })
+  .add('CameraStreamControls - LIVE - streaming', () => {
+    const TestComponent = () => {
+      const streamSelfQueryResult = useGetStreamSelfQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      const streamUrlQueryResult = useGetStreamUrlQuery({
+        variables: {
+          id: 'test',
+        },
+      });
+      if (streamSelfQueryResult.loading) return null;
+      if (streamUrlQueryResult.loading) return null;
+
+      return (
+        <SafeAreaView style={GlobalStyles.PageFill}>
+          <CameraStreamControls
+            endLiveLoading={false}
+            goLiveLoading={false}
+            onCancel={console.log}
+            onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
+            onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="LIVE"
             streaming={true}
@@ -162,13 +289,17 @@ storiesOf('Stream/CameraStreamControls', module)
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
+            liveConsumers={10000}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="LIVE"
             streaming={true}
-            liveConsumers={100}
           />
         </SafeAreaView>
       );
@@ -196,9 +327,14 @@ storiesOf('Stream/CameraStreamControls', module)
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
+            liveConsumers={10000}
             onCancel={console.log}
             onEndLive={console.log}
+            onEndLiveCancel={console.log}
+            onEndLiveConfirm={console.log}
             onGoLive={console.log}
+            onGoLiveCancel={console.log}
+            onGoLiveConfirm={console.log}
             setStreaming={console.log}
             state="ENDED"
             streaming={true}

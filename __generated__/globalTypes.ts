@@ -1338,6 +1338,8 @@ export interface UserWhereInput {
   positions_every?: StreamPositionRecordWhereInput | null;
   positions_some?: StreamPositionRecordWhereInput | null;
   positions_none?: StreamPositionRecordWhereInput | null;
+  isAdmin?: boolean | null;
+  isAdmin_not?: boolean | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;
