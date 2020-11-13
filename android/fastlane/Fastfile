@@ -64,7 +64,7 @@ platform :android do
 
     # Set and get the version number
     sh('yarn', 'format:version')
-    sh('yarn', 'setup:all')
+    sh('yarn', 'install')
     versionName = File.read("metadata/versionName")
 
     # Build
@@ -96,7 +96,7 @@ platform :android do
 
     # Set and get the version number
     sh('yarn', 'format:version')
-    sh('yarn', 'setup:all')
+    sh('yarn', 'install')
     versionName = File.read("metadata/versionName")
 
     # Build
