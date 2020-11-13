@@ -1,6 +1,5 @@
 import React, { useRef, ReactNode, useState } from 'react';
 import { Dimensions, Animated, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import Styles from './FullScreenWrap.style';

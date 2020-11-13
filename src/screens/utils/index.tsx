@@ -131,7 +131,6 @@ export const goHome = (props?: GoHomeProps) => {
         options: {
           bottomTabs: {
             currentTabIndex,
-            tabsAttachMode: 'onSwitchToTab',
             titleDisplayMode: 'alwaysHide',
           },
         },
