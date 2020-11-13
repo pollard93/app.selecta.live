@@ -26,22 +26,20 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
-          <CameraStreamControls
-            endLiveLoading={false}
-            goLiveLoading={false}
-            onCancel={console.log}
-            onEndLive={console.log}
-            onEndLiveCancel={console.log}
-            onEndLiveConfirm={console.log}
-            onGoLive={console.log}
-            onGoLiveCancel={console.log}
-            onGoLiveConfirm={console.log}
-            setStreaming={console.log}
-            state="WAITING"
-            streaming={false}
-          />
-        </SafeAreaView>
+        <CameraStreamControls
+          endLiveLoading={false}
+          goLiveLoading={false}
+          onCancel={console.log}
+          onEndLive={console.log}
+          onEndLiveCancel={console.log}
+          onEndLiveConfirm={console.log}
+          onGoLive={console.log}
+          onGoLiveCancel={console.log}
+          onGoLiveConfirm={console.log}
+          setStreaming={console.log}
+          state="WAITING"
+          streaming={false}
+        />
       );
     };
 
@@ -63,7 +61,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -78,7 +75,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="WAITING"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 
@@ -100,7 +96,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -115,7 +110,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="CONNECTED"
             streaming={false}
           />
-        </SafeAreaView>
       );
     };
 
@@ -137,7 +131,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -152,7 +145,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="CONNECTED"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 
@@ -174,7 +166,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -189,7 +180,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="LIVE_CONFIRM"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 
@@ -211,7 +201,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -226,7 +215,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="LIVE"
             streaming={false}
           />
-        </SafeAreaView>
       );
     };
 
@@ -248,7 +236,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -263,7 +250,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="LIVE"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 
@@ -285,7 +271,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -301,7 +286,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="LIVE"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 
@@ -323,7 +307,6 @@ storiesOf('Stream/CameraStreamControls', module)
       if (streamUrlQueryResult.loading) return null;
 
       return (
-        <SafeAreaView style={GlobalStyles.PageFill}>
           <CameraStreamControls
             endLiveLoading={false}
             goLiveLoading={false}
@@ -339,7 +322,6 @@ storiesOf('Stream/CameraStreamControls', module)
             state="ENDED"
             streaming={true}
           />
-        </SafeAreaView>
       );
     };
 

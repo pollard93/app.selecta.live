@@ -8,6 +8,11 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     padding: spacing.base,
   },
+  inner: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   liveWrap: {
     alignItems: 'center',
     flexDirection: 'row',

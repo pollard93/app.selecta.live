@@ -38,7 +38,7 @@ const CameraStreamControls: FC<CameraStreamControlsProps> = (props) => {
               type="SECONDARY"
             />
 
-            <View style={Styles.controls}>
+            <View style={Styles.inner}>
               {props.streaming && <H4 style={Styles.status}>Waiting for connection..</H4>}
               <Button
                 title={props.streaming ? 'Disconnect' : 'Connect'}
