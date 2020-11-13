@@ -292,8 +292,8 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
           ref={(vb) => { st.current = vb; }}
           outputUrl = {`${streamSelfQueryResult.data?.getStreamSelf.streamUrl}/${streamSelfQueryResult.data?.getStreamSelf.streamKey}`}
           camera={{ cameraId: 0 }}
-          audio={{ bitrate: 32000, profile: 0, samplerate: 44100 }}
-          video={{ preset: 16, bitrate: 650000, profile: 2, fps: 30 }}
+          audio={{ bitrate: 320000, profile: 0, samplerate: 44100 }}
+          video={{ preset: 5, bitrate: 3500000, profile: 2, fps: 30 }}
           autopreview={true}
         />
 
