@@ -42,7 +42,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
   const [step, setStep] = useState<number>(0);
   const scrollToIndex = (index: number) => {
     setStep(index);
-    scrollViewRef.current.scrollTo({ y: 0, x: scrollViewItemWidth * index });
+    scrollViewRef.current.scrollTo({ y: 0, x: scrollViewItemWidth * index, animated: Platform.OS === 'ios' });
   };
 
 

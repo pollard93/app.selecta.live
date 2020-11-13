@@ -40,17 +40,6 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
         duration: 700,
         useNativeDriver: false,
       }).start();
-
-      /**
-       * Change status bar color (android)
-       * Hide bottom tabs
-       */
-      Navigation.mergeOptions(screenProps.componentId, {
-        statusBar: {
-          backgroundColor: 'black',
-        },
-        bottomTabs: { visible: false, animate: true },
-      });
     }
 
     // eslint-disable-next-line no-underscore-dangle
@@ -65,17 +54,6 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
         duration: 700,
         useNativeDriver: false,
       }).start();
-
-      /**
-       * Change status bar color (android)
-       * Show bottom tabs
-       */
-      Navigation.mergeOptions(screenProps.componentId, {
-        statusBar: {
-          backgroundColor: 'white',
-        },
-        bottomTabs: { visible: true, animate: true },
-      });
     }
   };
 
