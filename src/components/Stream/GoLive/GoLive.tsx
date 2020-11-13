@@ -12,12 +12,11 @@ import { getGQLErrorMessage } from '../../../utils/functions';
 import { useEndLiveMutation } from '../../../API/mutation/endLive/endLive';
 import GoLiveView from './GoLiveView';
 import ChannelSelfHeader from '../../UI/Headers/ChannelSelfHeader/ChannelSelfHeader';
+import { GoLiveState } from '../../../utils/streamFunctions';
 
 export interface GoLiveProps {
   id: string;
 }
-
-export type GoLiveState = 'WAITING' | 'CONNECTED' | 'LIVE' | 'ENDING' | 'ENDED';
 
 const GoLive: FC<GoLiveProps> = (props) => {
   /**
@@ -63,10 +62,12 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content="Stream is now live"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
+      setState('CONNECTED');
+
       pushToast({
         duration: 1000,
         component: (
@@ -75,7 +76,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -96,13 +97,19 @@ const GoLive: FC<GoLiveProps> = (props) => {
         component: (
           <Toast
             type="SUCCESS"
-            content="Stream hs now ended"
+            content="Stream has now ended"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
+      /**
+       * Back to live
+       */
+      setState('LIVE');
+
+
       pushToast({
         duration: 1000,
         component: (
@@ -111,7 +118,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -185,7 +192,7 @@ const GoLive: FC<GoLiveProps> = (props) => {
    * On end live
    */
   const onStartEndLive = () => {
-    setState('ENDING');
+    setState('END_CONFIRM');
   };
 
 

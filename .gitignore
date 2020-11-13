@@ -31,7 +31,7 @@ build/
 local.properties
 android/app/gradle.properties
 *.iml
-android/mbpPlaystoreKey.json
+android/playstore-key.json
 
 # Visual Studio Code
 #

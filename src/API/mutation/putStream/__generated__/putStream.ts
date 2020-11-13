@@ -75,6 +75,7 @@ export interface putStream_putStream {
   streamUrl: string | null;
   audioOnly: boolean | null;
   published: any | null;
+  unlisted: any | null;
   viewCount: number | null;
   position: number | null;
 }

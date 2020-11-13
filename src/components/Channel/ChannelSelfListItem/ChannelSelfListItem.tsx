@@ -44,7 +44,7 @@ const ChannelSelfListItem: FC<ChannelSelfListItemProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -74,7 +74,7 @@ const ChannelSelfListItem: FC<ChannelSelfListItemProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

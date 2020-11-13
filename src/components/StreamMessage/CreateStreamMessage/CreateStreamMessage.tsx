@@ -66,7 +66,7 @@ const CreateStreamMessage: FC<CreateStreamMessageProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

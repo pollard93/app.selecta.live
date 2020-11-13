@@ -1,7 +1,7 @@
 
     export default `
       # source: http://localhost:4000/graphql
-# timestamp: Sat Oct 17 2020 15:22:41 GMT+0100 (British Summer Time)
+# timestamp: Thu Nov 12 2020 17:13:56 GMT+0000 (Greenwich Mean Time)
 
 type AppUpdatePayload {
   appStoreUrl: String
@@ -550,7 +550,9 @@ type Mutation {
   publishStream(id: String!): StreamSelf
   putStream(name: String!, info: String!, timeFrom: DateTime!, timeTo: DateTime!, cost: Int!, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   registerChannel(name: String!, description: String!): RequestedChannel
+  registerChannelBrochure(data: RegisterChannelBrochureInput!): Boolean
   requestChannelLoginCode(id: String!): Boolean
+  unlistStream(id: String!, list: Boolean): StreamSelf
   updateChannel(data: ChannelUpdateInput): ChannelSelf
   updateStream(id: String!, name: String, info: String, timeFrom: DateTime, timeTo: DateTime, cost: Int, image: Upload, audioOnly: Boolean, tags: [String!]): StreamSelf
   withdrawFunds: ChannelSelf
@@ -746,6 +748,14 @@ type Query {
   getStreamMessages(id: String!, first: Int, after: String): StreamMessageClientPayload
   getStreamMessagesVod(id: String!, from: DateTime!, last: Int, before: String): StreamMessageClientPayload
   getStreamUrl(id: String!): StreamUrlPayload!
+}
+
+input RegisterChannelBrochureInput {
+  name: String!
+  email: String!
+  number: String!
+  entityName: String!
+  comments: String
 }
 
 input RegisterInput {
@@ -1026,6 +1036,8 @@ enum StreamOrderByInput {
   audioOnly_DESC
   published_ASC
   published_DESC
+  unlisted_ASC
+  unlisted_DESC
   viewCount_ASC
   viewCount_DESC
   createdAt_ASC
@@ -1147,6 +1159,7 @@ type StreamSelf {
   cancelled: DateTime
   cancelledMessage: String
   published: DateTime
+  unlisted: DateTime
   password: String
   creditRevenuePending: Int
   creditRevenue: Int
@@ -1433,6 +1446,14 @@ input StreamWhereInput {
   published_lte: DateTime
   published_gt: DateTime
   published_gte: DateTime
+  unlisted: DateTime
+  unlisted_not: DateTime
+  unlisted_in: [DateTime!]
+  unlisted_not_in: [DateTime!]
+  unlisted_lt: DateTime
+  unlisted_lte: DateTime
+  unlisted_gt: DateTime
+  unlisted_gte: DateTime
   viewCount: Int
   viewCount_not: Int
   viewCount_in: [Int!]
@@ -1723,6 +1744,8 @@ input UserWhereInput {
   positions_every: StreamPositionRecordWhereInput
   positions_some: StreamPositionRecordWhereInput
   positions_none: StreamPositionRecordWhereInput
+  isAdmin: Boolean
+  isAdmin_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

@@ -65,7 +65,7 @@ const CreateStreamComment: FC<CreateStreamCommentProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

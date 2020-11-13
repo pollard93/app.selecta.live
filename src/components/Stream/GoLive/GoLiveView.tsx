@@ -12,7 +12,6 @@ import Toast from '../../UI/Toast/Toast';
 import Icon, { ICON } from '../../UI/Icon/Icon';
 import Button from '../../UI/Button/Button';
 import StreamVideo from '../StreamVideo/StreamVideo';
-import { GoLiveState } from './GoLive';
 import { getStreamSelf, getStreamSelfVariables } from '../../../API/query/getStreamSelf/__generated__/getStreamSelf';
 import { getStreamUrl, getStreamUrlVariables } from '../../../API/query/getStreamUrl/__generated__/getStreamUrl';
 import H2 from '../../UI/Typography/components/H2';
@@ -24,6 +23,7 @@ import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../UI/Headers/Header/Header';
 import { pushScreen } from '../../../screens/utils';
 import StreamSelfScreen from '../../../screens/StreamSelfScreen/StreamSelfScreen';
+import { GoLiveState } from '../../../utils/streamFunctions';
 
 export interface GoLiveViewProps {
   id: string;
@@ -64,7 +64,7 @@ const GoLiveView: FC<GoLiveViewProps> = (props) => {
       component: (
         <Toast content='Copied!' />
       ),
-      dismissible: false,
+      dismissible: true,
     });
   };
 
@@ -238,7 +238,7 @@ const GoLiveView: FC<GoLiveViewProps> = (props) => {
         </ScrollView>
       );
 
-    case 'ENDING':
+    case 'END_CONFIRM':
       return (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

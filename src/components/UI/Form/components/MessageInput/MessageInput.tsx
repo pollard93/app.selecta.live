@@ -41,7 +41,7 @@ const MessageInput: FC<MessageInputProps> = (props) => {
         testID="submit"
       >
         <Icon
-          name={ICON.SEND}
+          name={ICON.ARROW_FORWARD}
           size="small"
           style={[Styles.send, props.disabled && Styles.sendDisabled]}
         />

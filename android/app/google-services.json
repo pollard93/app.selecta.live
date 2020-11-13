@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:923259272645:android:6277f25e5f296f16961fac",
+        "mobilesdk_app_id": "1:923259272645:android:7cbc17c2cb2699ed961fac",
         "android_client_info": {
-          "package_name": "live.selecta.app"
+          "package_name": "selecta.live"
         }
       },
       "oauth_client": [
         {
-          "client_id": "923259272645-b524vkidlg1jgkb0rumfhli8ckeu0kmo.apps.googleusercontent.com",
+          "client_id": "923259272645-vf9b808mpn3ppgot756po4h8g8e136db.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "live.selecta.app",
+            "package_name": "selecta.live",
             "certificate_hash": "2368af2c7417bc0f33714eacf1da7d635c86d31d"
           }
         },
@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_id": "923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "live.selecta.app"
+                "bundle_id": "selecta.live"
               }
             }
           ]
@@ -52,17 +52,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:923259272645:android:9936f01fba5f4960961fac",
+        "mobilesdk_app_id": "1:923259272645:android:9da8d0bc2564ae92961fac",
         "android_client_info": {
-          "package_name": "live.selecta.app.beta"
+          "package_name": "selecta.live.beta"
         }
       },
       "oauth_client": [
         {
-          "client_id": "923259272645-bofi6aktt14krvv7rhn8ntej31vak3q1.apps.googleusercontent.com",
+          "client_id": "923259272645-nddqaa6dlef5jtq503shifskuht1hglr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "live.selecta.app.beta",
+            "package_name": "selecta.live.beta",
             "certificate_hash": "4db23896ecec14e6fcf2de29e012dab57b661875"
           }
         },
@@ -84,10 +84,10 @@
               "client_type": 3
             },
             {
-              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_id": "923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "live.selecta.app"
+                "bundle_id": "selecta.live"
               }
             }
           ]
@@ -96,17 +96,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:923259272645:android:82b8a72e67a0311b961fac",
+        "mobilesdk_app_id": "1:923259272645:android:22e8e9b0ca01f9d5961fac",
         "android_client_info": {
-          "package_name": "live.selecta.app.debug"
+          "package_name": "selecta.live.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "923259272645-thgfjig02np5cqbibeq4v0kqv5pugk5k.apps.googleusercontent.com",
+          "client_id": "923259272645-9781kgg2qolaujhs491mbejp09dd2lte.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "live.selecta.app.debug",
+            "package_name": "selecta.live.debug",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
@@ -128,10 +128,10 @@
               "client_type": 3
             },
             {
-              "client_id": "923259272645-0mug6qse5c8i23pvc2tj7pm0quucqaa8.apps.googleusercontent.com",
+              "client_id": "923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "live.selecta.app"
+                "bundle_id": "selecta.live"
               }
             }
           ]

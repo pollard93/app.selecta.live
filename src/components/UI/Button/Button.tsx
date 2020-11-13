@@ -8,11 +8,11 @@ import LoadingIcon from '../LoadingIcon/LoadingIcon';
 
 
 export interface ButtonProps extends BaseProps {
-  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'FB' | 'GOOGLE'; // Default PRIMARY
+  type?: 'PRIMARY' | 'SECONDARY' | 'LIGHT' | 'FORCE_LIGHT' | 'FB' | 'GOOGLE'; // Default PRIMARY
   size?: 'small' | 'regular'; // Default regular
   icon?: JSX.Element;
   loading?: boolean;
-  style?: TouchableOpacityProps['style'],
+  style?: TouchableOpacityProps['style'];
 }
 
 const Button: FC<ButtonProps> = (props) => {

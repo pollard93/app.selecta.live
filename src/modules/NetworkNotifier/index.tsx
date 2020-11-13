@@ -38,7 +38,7 @@ export default () => {
               content='You are not connected to the internet'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
 

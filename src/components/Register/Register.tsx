@@ -61,7 +61,7 @@ const Register: FC<RegisterProps> = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -95,7 +95,7 @@ const Register: FC<RegisterProps> = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

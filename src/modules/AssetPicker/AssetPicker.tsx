@@ -74,15 +74,17 @@ const AssetPicker: FC<AssetPickerProps> = (props) => {
     iosPermission: PERMISSIONS.IOS.PHOTO_LIBRARY,
     androidPermission: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
   });
+  if (permissionStatus === null) return null;
+
 
   /**
    * Permission error
    */
-  if (permissionStatus && permissionStatus !== RESULTS.GRANTED) {
+  if (permissionStatus !== RESULTS.GRANTED) {
     return (
       <PermissionsError
         state={permissionStatus}
-        errorMessage="We require permission to access your camera roll."
+        errorMessage="Please allow permission to access your photos."
         onDismiss={closeAssetPickerModal}
       />
     );

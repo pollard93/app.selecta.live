@@ -91,7 +91,7 @@ const Products: FC<ProductsProps> = () => {
             content='Something went wrong'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
   };
@@ -124,7 +124,7 @@ const Products: FC<ProductsProps> = () => {
               content={err.message}
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
     }

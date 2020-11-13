@@ -8,7 +8,7 @@ import { pushScreen } from '../../../../../screens/utils';
 import StreamSelfScreen from '../../../../../screens/StreamSelfScreen/StreamSelfScreen';
 import { StreamSelfListItemProps } from '../../StreamSelfListItem';
 import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
-import GoLiveScreen from '../../../../../screens/GoLiveScreen/GoLiveScreen';
+import GoLiveIntroScreen from '../../../../../screens/GoLiveIntroScreen/GoLiveIntroScreen';
 import { useStreamStart, canGoLive } from '../../../../../utils/streamFunctions';
 import CreateUpdateStreamScreen from '../../../../../screens/CreateUpdateStreamScreen/CreateUpdateStreamScreen';
 import spacing from '../../../../../styles/definitions/spacing';
@@ -42,10 +42,10 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
 
 
   /**
-   * Push GoLiveScreen
+   * Push GoLiveIntroScreen
    */
   const onGoLive = () => {
-    pushScreen(screenProps.componentId, GoLiveScreen, { id: props.data.id });
+    pushScreen(screenProps.componentId, GoLiveIntroScreen, { id: props.data.id });
   };
 
 
@@ -55,12 +55,23 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (props.data.cancelled !== null) {
     return (
-      <View style={Styles.topRight}>
-        <Button
-          title="View"
-          size="small"
-          onPress={onView}
-        />
+      <View style={Styles.spaceBetween}>
+        <View style={Styles.row}>
+          <Button
+            title="Edit"
+            size="small"
+            type="LIGHT"
+            onPress={onEdit}
+          />
+          <Button
+            title="View"
+            size="small"
+            onPress={onView}
+            style={{ marginLeft: spacing.small }}
+          />
+        </View>
+
+        <Chip bold type="SECONDARY">Cancelled</Chip>
       </View>
     );
   }
@@ -90,7 +101,7 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
    */
   if (props.data.timeToLive !== null) {
     return (
-      <View style={Styles.topRight}>
+      <View style={Styles.spaceBetween}>
         <View style={Styles.row}>
           <Button
             title="Edit"
@@ -105,6 +116,8 @@ const StreamSelfListItemControls: FC<StreamSelfListItemProps> = (props) => {
             style={{ marginLeft: spacing.small }}
           />
         </View>
+
+        <Chip bold type="SECONDARY">{props.data.unlisted ? 'Unlisted' : 'Listed'}</Chip>
       </View>
     );
   }

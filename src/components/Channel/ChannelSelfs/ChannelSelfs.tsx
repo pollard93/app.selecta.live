@@ -38,6 +38,7 @@ const ChannelSelfs: FC<ChannelSelfsProps> = () => (
 
         return null;
       }}
+      fetchPolicy='network-only'
     />
   </View>
 );

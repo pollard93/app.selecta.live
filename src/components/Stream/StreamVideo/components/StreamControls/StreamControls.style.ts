@@ -43,17 +43,8 @@ export default StyleSheet.create({
     padding: spacing.small,
   },
   liveConsumers: {
-    alignItems: 'center',
     alignSelf: 'flex-start',
-    backgroundColor: color.accent.primary,
-    borderRadius: 2,
-    flexDirection: 'row',
     marginLeft: spacing.small,
     marginTop: spacing.small,
-    paddingHorizontal: spacing.xsmall,
-    paddingVertical: spacing.xxsmall,
-  },
-  liveConsumersIcon: {
-    marginRight: spacing.xsmall,
   },
 });

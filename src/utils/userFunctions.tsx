@@ -26,7 +26,7 @@ export const isLoggedIn = () => {
           content="Please login"
         />
       ),
-      dismissible: false,
+      dismissible: true,
     });
     return false;
   }

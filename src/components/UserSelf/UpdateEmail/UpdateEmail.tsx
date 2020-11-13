@@ -67,7 +67,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
             content="Email request submitted, please check your email"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -79,7 +79,7 @@ const UpdateEmail: FC<UpdateEmailProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

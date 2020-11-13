@@ -41,7 +41,7 @@ const ReportStream = (props: ReportStreamProps) => {
             content="Thank you, we'll be in touch."
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -53,7 +53,7 @@ const ReportStream = (props: ReportStreamProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

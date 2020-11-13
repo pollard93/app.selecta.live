@@ -34,7 +34,7 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderRadius: scalePx(10),
     overflow: 'hidden',
-    paddingHorizontal: spacing.base,
+    paddingHorizontal: spacing.small,
     paddingVertical: spacing.xxsmall,
   },
   message: {
@@ -44,7 +44,11 @@ export default StyleSheet.create({
   messageSelf: {
     color: color.mono.light,
   },
-  time: {
+  lower: {
+    flexDirection: 'row',
     marginTop: spacing.xxsmall,
+  },
+  time: {
+    marginLeft: spacing.small,
   },
 });

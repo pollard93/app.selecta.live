@@ -117,7 +117,7 @@ storiesOf('Stream/GoLive', module)
 
     return <TestComponent />;
   })
-  .add('GoLive - ENDING', () => {
+  .add('GoLive - END_CONFIRM', () => {
     const TestComponent = () => {
       const streamSelfQueryResult = useGetStreamSelfQuery({
         variables: {
@@ -142,7 +142,7 @@ storiesOf('Stream/GoLive', module)
             onEndLive={console.log}
             onGoLive={console.log}
             onStartEndLive={console.log}
-            state="ENDING"
+            state="END_CONFIRM"
             streamSelfQueryResult={streamSelfQueryResult}
             streamUrlQueryResult={streamUrlQueryResult}
           />

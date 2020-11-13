@@ -11,6 +11,7 @@ import color from '../../styles/definitions/color';
 import Products from '../../components/Purchase/Products/Products';
 import { WalletScreenName } from '../WalletScreen/WalletScreen';
 import { ConsumingStreamProfilesScreenName } from '../ConsumingStreamProfilesScreen/ConsumingStreamProfilesScreen';
+import CameraStreamScreen from '../CameraStreamScreen/CameraStreamScreen';
 
 
 /**
@@ -278,6 +279,58 @@ export const openTopUpModal = () => {
       <Products />
     ),
   }, 'TopUpModal', OptionsModalTransitionStyle.crossDissolve);
+};
+
+
+/**
+ * Opens CameraStreamScreen as overlay
+ */
+export const openCameraOverlay = (props: ExtractProps<typeof CameraStreamScreen>) => {
+  // Navigation.showModal({
+  //   component: {
+  //     id: CameraStreamScreen.prototype.ScreenName,
+  //     name: CameraStreamScreen.prototype.ScreenName,
+  //     passProps: {
+  //       id: props.id,
+  //     },
+  //     options: {
+  //       layout: {
+  //         orientation: ['landscape'],
+  //       },
+  //       modalTransitionStyle: OptionsModalTransitionStyle.coverVertical,
+  //       modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+  //       animations: {
+  //         showModal: {
+  //           waitForRender: true,
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
+
+  Navigation.showOverlay({
+    component: {
+      id: CameraStreamScreen.prototype.ScreenName,
+      name: CameraStreamScreen.prototype.ScreenName,
+      passProps: {
+        id: props.id,
+      },
+      // options: {
+      //   layout: {
+      //     orientation: ['landscape'],
+      //   },
+      // },
+    },
+  });
+};
+
+
+/**
+ * Closes CameraStreamScreen overlay
+ */
+export const closeCameraOverlay = () => {
+  // Navigation.dismissModal(CameraStreamScreen.prototype.ScreenName);
+  Navigation.dismissOverlay(CameraStreamScreen.prototype.ScreenName);
 };
 
 

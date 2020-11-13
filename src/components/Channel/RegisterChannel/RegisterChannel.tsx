@@ -31,7 +31,7 @@ const RegisterChannel = () => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

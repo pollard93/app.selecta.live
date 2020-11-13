@@ -75,7 +75,7 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
             content="Stream cancelled"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -87,7 +87,7 @@ const CancelStreamForm: FC<CancelStreamFormProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

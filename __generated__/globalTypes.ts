@@ -125,6 +125,8 @@ export enum StreamOrderByInput {
   timeToLive_DESC = "timeToLive_DESC",
   timeTo_ASC = "timeTo_ASC",
   timeTo_DESC = "timeTo_DESC",
+  unlisted_ASC = "unlisted_ASC",
+  unlisted_DESC = "unlisted_DESC",
   updatedAt_ASC = "updatedAt_ASC",
   updatedAt_DESC = "updatedAt_DESC",
   viewCount_ASC = "viewCount_ASC",
@@ -1084,6 +1086,14 @@ export interface StreamWhereInput {
   published_lte?: any | null;
   published_gt?: any | null;
   published_gte?: any | null;
+  unlisted?: any | null;
+  unlisted_not?: any | null;
+  unlisted_in?: any[] | null;
+  unlisted_not_in?: any[] | null;
+  unlisted_lt?: any | null;
+  unlisted_lte?: any | null;
+  unlisted_gt?: any | null;
+  unlisted_gte?: any | null;
   viewCount?: number | null;
   viewCount_not?: number | null;
   viewCount_in?: number[] | null;
@@ -1328,6 +1338,8 @@ export interface UserWhereInput {
   positions_every?: StreamPositionRecordWhereInput | null;
   positions_some?: StreamPositionRecordWhereInput | null;
   positions_none?: StreamPositionRecordWhereInput | null;
+  isAdmin?: boolean | null;
+  isAdmin_not?: boolean | null;
   createdAt?: any | null;
   createdAt_not?: any | null;
   createdAt_in?: any[] | null;

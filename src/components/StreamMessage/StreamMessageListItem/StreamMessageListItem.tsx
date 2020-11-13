@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
@@ -14,6 +14,7 @@ import Small from '../../UI/Typography/components/Small';
 import { STREAM_SELF_FRAGMENT } from '../../../API/fragments/__generated__/STREAM_SELF_FRAGMENT';
 import { useGetChannelSelfQuery } from '../../../API/query/getChannelSelf/getChannelSelf';
 import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
+import color from '../../../styles/definitions/color';
 
 interface StreamMessageListItemProps {
   data: STREAM_MESSAGE_FRAGMENT;
@@ -30,9 +31,9 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
    */
   const self = useGetSelf();
   const channel = useGetChannelSelfQuery({ fetchPolicy: 'cache-only' });
-  const isSelf = props.data.user
+  const isSelf = useRef(props.data.user
     ? props.data.user?.id === self.id
-    : channel.data?.getChannelSelf.id === props.streamData.channel.id;
+    : channel.data?.getChannelSelf.id === props.streamData.channel.id).current;
 
   /**
    * If no user is assigned in the data
@@ -54,10 +55,11 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
           fullUrl={imageUrl.small}
           // eslint-disable-next-line global-require
           placeholderImageProps={{
-            source: require('../../../../icons/icon.jpg'),
+            source: require('../../../assets/images/icons/profile.png'),
             style: {
               width: '100%',
               height: '100%',
+              tintColor: color.mono.pale.dark,
             },
           }}
           containerProps={{
@@ -79,7 +81,10 @@ const StreamMessageListItem: FC<StreamMessageListItemProps> = (props) => {
           <Body style={[Styles.message, isSelf && Styles.messageSelf]}>{props.data.message}</Body>
         </View>
 
-        <Small style={Styles.time}>{relativeTime}</Small>
+        <View style={Styles.lower}>
+          <Small bold>{props.data.user?.username || channel.data.getChannelSelf.name}</Small>
+          <Small style={Styles.time}>{relativeTime}</Small>
+        </View>
       </View>
     </View>
   );

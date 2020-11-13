@@ -67,7 +67,7 @@ const DeleteStream: FC<DeleteStreamProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

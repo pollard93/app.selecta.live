@@ -7,7 +7,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { AsyncImage } from 'mbp-components-rn-asyncimage';
 import { useDynamicValue } from 'react-native-dynamic';
 import { useApolloClient } from 'react-apollo';
-import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
+import GlobalStyles, { GlobalDynamicStyles } from '../../../styles/stylesheets/GlobalStyles';
 import Toast from '../../UI/Toast/Toast';
 import { getGQLErrorMessage, parseCurrency } from '../../../utils/functions';
 import { usePutStreamMutation } from '../../../API/mutation/putStream/putStream';
@@ -39,6 +39,7 @@ import { openModalScreen } from '../../../screens/utils';
 import Tags from '../../Tag/Tags/Tags';
 import TagsPreview from '../../Tag/TagsPreview/TagsPreview';
 import { getStreamSelfsVariablesDefault } from '../StreamSelfs/StreamSelfs';
+import FadeInView from '../../UI/FadeInView/FadeInView';
 
 type FormData = {
   image: PhotoIdentifier['node'];
@@ -64,6 +65,7 @@ interface CreateUpdateStreamViewProps {
 
 const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
   const dynamicStyles = useDynamicValue(DynamicStyles);
+  const globalDynamicStyles = useDynamicValue(GlobalDynamicStyles);
   const client = useApolloClient();
 
 
@@ -266,7 +268,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Created stream'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -280,7 +282,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -341,7 +343,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Updated stream'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -355,7 +357,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -428,7 +430,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               content='Something went wrong'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
     } else {
@@ -459,7 +461,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
               content='Something went wrong'
             />
           ),
-          dismissible: false,
+          dismissible: true,
         });
       }
     }
@@ -576,7 +578,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
             content='Please add an image'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     }
   }, [errors.image]);
@@ -603,7 +605,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                     splashUrl: props.data?.image?.url?.splash,
                     fullUrl: props.data?.image?.url?.full,
                     containerProps: {
-                      style: Styles.image,
+                      style: [Styles.image, globalDynamicStyles.skeleton],
                     },
                   }}
                   onChange={(file) => setValue('image', file, true)}
@@ -622,7 +624,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
           }
 
           {props.data && (
-            <View style={[Styles.settings, dynamicStyles.settings]}>
+            <FadeInView style={[Styles.settings, dynamicStyles.settings]}>
               <H3>Settings</H3>
 
               {/* <View style={[Styles.toggleInput, Styles.inputWrap, !editable && Styles.disabled]}>
@@ -641,7 +643,7 @@ const CreateUpdateStreamView: FC<CreateUpdateStreamViewProps> = (props) => {
                   />
                 </View>
               )}
-            </View>
+            </FadeInView>
           )}
 
           <View style={Styles.form}>

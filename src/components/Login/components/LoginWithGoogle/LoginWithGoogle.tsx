@@ -92,7 +92,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     fetchPolicy: 'network-only',
@@ -131,7 +131,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
@@ -181,7 +181,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
               component: (
                 <Toast content="Something went wrong" />
               ),
-              dismissible: false,
+              dismissible: true,
             });
           } else {
             // some other error happened
@@ -191,7 +191,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
               component: (
                 <Toast content="Something went wrong" />
               ),
-              dismissible: false,
+              dismissible: true,
             });
           }
         }

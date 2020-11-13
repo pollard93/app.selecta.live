@@ -50,7 +50,7 @@ const NotificationListItem: FC<NotificationListItemProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

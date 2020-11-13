@@ -36,7 +36,7 @@ const RequestPasswordReset: FC<RequestPasswordResetProps> = (props) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

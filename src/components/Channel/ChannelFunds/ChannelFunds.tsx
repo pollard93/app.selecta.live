@@ -30,7 +30,7 @@ const ChannelFunds = (props: ChannelFundsProps) => {
             content='Thanks, we are processing your request and will be in touch soon!'
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -42,7 +42,7 @@ const ChannelFunds = (props: ChannelFundsProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });

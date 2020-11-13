@@ -28,7 +28,7 @@ const PublishStream = (props: PublishStreamProps) => {
             content="Stream published"
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
     onError: (e) => {
@@ -40,7 +40,7 @@ const PublishStream = (props: PublishStreamProps) => {
             content={getGQLErrorMessage(e)}
           />
         ),
-        dismissible: false,
+        dismissible: true,
       });
     },
   });
