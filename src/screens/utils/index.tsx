@@ -286,40 +286,11 @@ export const openTopUpModal = () => {
  * Opens CameraStreamScreen as overlay
  */
 export const openCameraOverlay = (props: ExtractProps<typeof CameraStreamScreen>) => {
-  // Navigation.showModal({
-  //   component: {
-  //     id: CameraStreamScreen.prototype.ScreenName,
-  //     name: CameraStreamScreen.prototype.ScreenName,
-  //     passProps: {
-  //       id: props.id,
-  //     },
-  //     options: {
-  //       layout: {
-  //         orientation: ['landscape'],
-  //       },
-  //       modalTransitionStyle: OptionsModalTransitionStyle.coverVertical,
-  //       modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-  //       animations: {
-  //         showModal: {
-  //           waitForRender: true,
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
   Navigation.showOverlay({
     component: {
       id: CameraStreamScreen.prototype.ScreenName,
       name: CameraStreamScreen.prototype.ScreenName,
-      passProps: {
-        id: props.id,
-      },
-      // options: {
-      //   layout: {
-      //     orientation: ['landscape'],
-      //   },
-      // },
+      passProps: props,
     },
   });
 };
@@ -329,7 +300,6 @@ export const openCameraOverlay = (props: ExtractProps<typeof CameraStreamScreen>
  * Closes CameraStreamScreen overlay
  */
 export const closeCameraOverlay = () => {
-  // Navigation.dismissModal(CameraStreamScreen.prototype.ScreenName);
   Navigation.dismissOverlay(CameraStreamScreen.prototype.ScreenName);
 };
 

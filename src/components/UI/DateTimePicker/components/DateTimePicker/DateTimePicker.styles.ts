@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
-import color from '../../../../../styles/definitions/color';
 import spacing from '../../../../../styles/definitions/spacing';
 
 export default StyleSheet.create({
@@ -12,11 +10,5 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: spacing.small,
-  },
-});
-
-export const DynamicStyles = new DynamicStyleSheet({
-  text: {
-    color: new DynamicValue(color.mono.dark, color.mono.light),
   },
 });

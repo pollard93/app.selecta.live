@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import DateTimePickerCommunity, { IOSNativeProps, AndroidNativeProps } from '@react-native-community/datetimepicker';
 import { View, Platform } from 'react-native';
-import { useDynamicValue } from 'react-native-dynamic';
-import Styles, { DynamicStyles } from './DateTimePicker.styles';
+import Styles from './DateTimePicker.styles';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import Button from '../../../Button/Button';
 import spacing from '../../../../../styles/definitions/spacing';
@@ -16,7 +15,6 @@ interface DateTimePickerProps {
 const DateTimePicker = (props: DateTimePickerProps) => {
   const safeAreaInsets = useSafeArea();
   const [date, setDate] = useState(props.pickerProps.value);
-  const dynamicStyles = useDynamicValue(DynamicStyles);
 
 
   /**
@@ -82,7 +80,6 @@ const DateTimePicker = (props: DateTimePickerProps) => {
             value={date}
             onChange={onChange}
             style={{ paddingVertical: spacing.small }}
-            textColor={dynamicStyles.text.color}
           />
         </View>
       )}

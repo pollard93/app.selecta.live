@@ -19,6 +19,7 @@ import Styles from './CameraStream.style';
 
 export interface CameraStreamInnerProps {
   id: string;
+  onComplete: () => void; // Called when stream is complete
 }
 
 const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
@@ -76,11 +77,15 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
   /**
    * On Cancel
    */
-  const onCancel = () => {
+  const onCancel = (complete = false) => {
     Orientation.lockToPortrait();
 
     setTimeout(() => {
       closeCameraOverlay();
+
+      if (complete) {
+        props.onComplete();
+      }
     }, 0);
   };
 
@@ -121,7 +126,7 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
     },
     onCompleted: () => {
       setState('ENDED');
-      onCancel();
+      onCancel(true);
     },
     onError: (e) => {
       setState('LIVE');
@@ -260,7 +265,7 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
         <View style={Styles.controls}>
           <Button
             title='Cancel'
-            onPress={onCancel}
+            onPress={() => onCancel(false)}
             type="SECONDARY"
           />
         </View>
@@ -275,7 +280,7 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
         <View style={Styles.controls}>
           <Button
             title='Cancel'
-            onPress={onCancel}
+            onPress={() => onCancel(false)}
             type="SECONDARY"
           />
         </View>
@@ -291,16 +296,16 @@ const CameraStreamInner: FC<CameraStreamInnerProps> = (props) => {
           style={StyleSheet.absoluteFillObject}
           ref={(vb) => { st.current = vb; }}
           outputUrl = {`${streamSelfQueryResult.data?.getStreamSelf.streamUrl}/${streamSelfQueryResult.data?.getStreamSelf.streamKey}`}
-          camera={{ cameraId: 0 }}
+          camera={{ cameraId: 0, cameraFrontMirror: false }}
           audio={{ bitrate: 320000, profile: 0, samplerate: 44100 }}
-          video={{ preset: 5, bitrate: 3500000, profile: 2, fps: 30 }}
+          video={{ preset: 5, bitrate: 3500000, profile: 2, fps: 30, videoFrontMirror: false }}
           autopreview={true}
         />
 
         <CameraStreamControls
           endLiveLoading={endLiveLoading}
           goLiveLoading={goLiveLoading}
-          onCancel={onCancel}
+          onCancel={() => onCancel(false)}
           onEndLive={onEndLive}
           onEndLiveCancel={onEndLiveCancel}
           onEndLiveConfirm={onEndLiveConfirm}

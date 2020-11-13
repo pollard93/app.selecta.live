@@ -1,6 +1,7 @@
 import React, { FC, useRef } from 'react';
 import { View, Image, Dimensions, StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Navigation } from 'react-native-navigation';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -42,25 +43,6 @@ const GoLiveIntroView: FC<GoLiveIntroViewProps> = (props) => {
    * Misc
    */
   const screenProps = useScreenProps();
-
-
-  // /**
-  //  * State TODO
-  //  */
-  // const [state, setState] = useState<GoLiveState>('WAITING');
-
-
-  // /**
-  //  * Wait until we have result back and check if live
-  //  */
-  // useEffect(() => {
-  //   /**
-  //    * If timeFromLive is set, then the stream is already live
-  //    */
-  //   if (streamSelfQueryResult.data?.getStreamSelf.timeFromLive) {
-  //     setState('LIVE');
-  //   }
-  // }, [streamSelfQueryResult.data?.getStreamSelf, streamUrlQueryResult.data?.getStreamUrl]);
 
 
   /**
@@ -117,6 +99,7 @@ const GoLiveIntroView: FC<GoLiveIntroViewProps> = (props) => {
               onPress={() => {
                 openCameraOverlay({
                   id: props.id,
+                  onComplete: () => Navigation.pop(screenProps.componentId),
                 });
               }}
               type="FORCE_LIGHT"

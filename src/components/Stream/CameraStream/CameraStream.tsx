@@ -7,6 +7,7 @@ import CameraStreamInner from './CameraStreamInner';
 
 export interface CameraStreamProps {
   id: string;
+  onComplete: () => void; // Called when stream is complete
 }
 
 const CameraStream: FC<CameraStreamProps> = (props) => {

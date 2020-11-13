@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
-import { SafeAreaView } from 'react-native';
 import CameraStreamControls from './CameraStreamControls';
-import GlobalStyles from '../../../../../styles/stylesheets/GlobalStyles';
 import { useGetStreamSelfQuery } from '../../../../../API/query/getStreamSelf/getStreamSelf';
 import { useGetStreamUrlQuery } from '../../../../../API/query/getStreamUrl/getStreamUrl';
 import GetSelfDecorator from '../../../../../../storybook/Decorators/GetSelfDecorator/GetSelfDecorator';
