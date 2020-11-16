@@ -2,11 +2,12 @@ import { StyleSheet } from 'react-native';
 import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../styles/definitions/spacing';
 import color from '../../../styles/definitions/color';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 export default StyleSheet.create({
   image: {
-    aspectRatio: 1.7777777778,
     width: '100%',
+    ...GlobalStyles.AspectRatio,
   },
   form: {
     paddingHorizontal: spacing.small,

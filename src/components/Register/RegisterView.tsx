@@ -14,6 +14,7 @@ import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import UsernameInput from '../UI/Form/components/UsernameInput/UsernameInput';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface RegisterViewProps {
   loading: boolean,
@@ -31,7 +32,14 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
   /**
    * Scroll view
    */
-  const scrollViewItemWidth = useRef((Dimensions.get('screen').width - spacing.large)).current;
+  const scrollViewItemWidth = useRef(
+    /**
+     * '- spacing.large' is refering to the side bar in OnboardingPageWrap
+     */
+    GlobalStyles.MaxWidth.maxWidth >= Dimensions.get('screen').width
+      ? GlobalStyles.MaxWidth.maxWidth - spacing.large
+      : GlobalStyles.MaxWidth.maxWidth,
+  ).current;
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollToIndex = (index: number) => {
@@ -80,10 +88,10 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
       <SafeAreaView style={Styles.flex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={Styles.flex}
+          style={GlobalStyles.PageFill}
         >
           <ScrollView
-            contentContainerStyle={Styles.scrollViewWrap}
+            contentContainerStyle={[Styles.scrollViewWrap, GlobalStyles.MaxWidth]}
             bounces={false}
           >
             <ScrollView

@@ -7,6 +7,7 @@ import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPa
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import H1 from '../UI/Typography/components/H1';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface ResetPasswordViewProps {
   loading: boolean;
@@ -40,7 +41,7 @@ const ResetPasswordView = (props: ResetPasswordViewProps) => {
           style={Styles.flex}
         >
           <ScrollView
-            contentContainerStyle={Styles.scrollViewWrap}
+            contentContainerStyle={[Styles.scrollViewWrap, GlobalStyles.MaxWidth]}
             bounces={false}
           >
             <View

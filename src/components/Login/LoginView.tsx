@@ -14,6 +14,7 @@ import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
 import FadeInView from '../UI/FadeInView/FadeInView';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Icon, { ICON } from '../UI/Icon/Icon';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface LoginViewProps {
   loading: boolean;
@@ -36,7 +37,14 @@ const LoginView: FC<LoginViewProps> = (props) => {
   /**
    * Scroll view
    */
-  const scrollViewItemWidth = useRef((Dimensions.get('screen').width - spacing.large)).current;
+  const scrollViewItemWidth = useRef(
+    /**
+     * '- spacing.large' is refering to the side bar in OnboardingPageWrap
+     */
+    GlobalStyles.MaxWidth.maxWidth >= Dimensions.get('screen').width
+      ? GlobalStyles.MaxWidth.maxWidth - spacing.large
+      : GlobalStyles.MaxWidth.maxWidth,
+  ).current;
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [step, setStep] = useState<number>(0);
@@ -81,10 +89,10 @@ const LoginView: FC<LoginViewProps> = (props) => {
       <SafeAreaView style={Styles.flex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={Styles.flex}
+          style={GlobalStyles.PageFill}
         >
           <ScrollView
-            contentContainerStyle={Styles.scrollViewWrap}
+            contentContainerStyle={[Styles.scrollViewWrap, GlobalStyles.MaxWidth]}
             bounces={false}
             keyboardShouldPersistTaps={'handled'}
           >

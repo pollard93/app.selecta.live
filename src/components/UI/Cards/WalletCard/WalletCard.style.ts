@@ -2,13 +2,14 @@ import { StyleSheet } from 'react-native';
 import { DynamicStyleSheet, DynamicValue } from 'react-native-dynamic';
 import spacing from '../../../../styles/definitions/spacing';
 import color from '../../../../styles/definitions/color';
+import GlobalStyles from '../../../../styles/stylesheets/GlobalStyles';
 
 export default StyleSheet.create({
   wrap: {
-    aspectRatio: 1.7777777778,
     borderRadius: spacing.base,
     justifyContent: 'space-between',
     padding: spacing.base,
+    ...GlobalStyles.AspectRatio,
   },
   backgroundImageWrap: {
     ...StyleSheet.absoluteFillObject,

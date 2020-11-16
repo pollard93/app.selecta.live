@@ -31,7 +31,7 @@ export interface ChannelHeaderProps {
 
 const ChannelHeader: FC<ChannelHeaderProps> = (props) => {
   const windowWidth = useRef(Dimensions.get('window').width);
-  const coverImageHeadingDefaultHeight = useRef(windowWidth.current * 0.5625);
+  const coverImageHeadingDefaultHeight = useRef(windowWidth.current / GlobalStyles.AspectRatio.aspectRatio);
   const [headerLayout, setHeaderLayout] = useState<Partial<LayoutRectangle>>({ height: 0 });
   const [headerTopLayout, setHeaderTopLayout] = useState<Partial<LayoutRectangle>>({ height: 0 });
   const [titleLayout, setTitleLayout] = useState<Partial<LayoutRectangle>>({ height: 0 });

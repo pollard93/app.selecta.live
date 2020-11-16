@@ -8,6 +8,7 @@ import TextInput from '../UI/Form/components/TextInput/TextInput';
 import OnboardingPageWrap from '../UI/Onboarding/OnboardingPageWrap/OnboardingPageWrap';
 import Icon, { ICON } from '../UI/Icon/Icon';
 import LoadingIcon from '../UI/LoadingIcon/LoadingIcon';
+import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
 
 export interface RequestPasswordResetViewProps {
   defaultEmailValue: string;
@@ -45,10 +46,10 @@ const RequestPasswordResetView: FC<RequestPasswordResetViewProps> = (props) => {
       <SafeAreaView style={Styles.flex}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={Styles.flex}
+          style={GlobalStyles.PageFill}
         >
           <ScrollView
-            contentContainerStyle={Styles.scrollViewWrap}
+            contentContainerStyle={[Styles.scrollViewWrap, GlobalStyles.MaxWidth]}
             bounces={false}
           >
             <View

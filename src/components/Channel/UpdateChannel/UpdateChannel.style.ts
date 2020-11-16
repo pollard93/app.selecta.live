@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 
 export default StyleSheet.create({
   coverImage: {
-    aspectRatio: 1.7777777778,
     width: '100%',
+    ...GlobalStyles.AspectRatio,
   },
   profileImageWrap: {
     backgroundColor: color.mono.light,

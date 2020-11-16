@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import spacing from '../../../styles/definitions/spacing';
+import GlobalStyles from '../../../styles/stylesheets/GlobalStyles';
 import scalePx from '../../../utils/scalePx';
 
 export default StyleSheet.create({
@@ -62,8 +63,8 @@ export default StyleSheet.create({
   // Skeleton
   skeletonCoverImage: {
     alignItems: 'center',
-    aspectRatio: 1.7777777778,
     justifyContent: 'center',
+    ...GlobalStyles.AspectRatio,
   },
   skeletonCoverImageIcon: {
     height: scalePx(50),

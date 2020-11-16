@@ -20,7 +20,6 @@ const FullScreenWrap = (props: FullScreenWrapProps) => {
   const animValue = useRef(new Animated.Value(0)).current;
   const [isFullScreen, setFullScreen] = useState(false);
   const { headerHeight, headerZindex } = useHeaderStyles();
-  const screenProps = useScreenProps();
 
 
   /**
