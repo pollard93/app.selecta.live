@@ -3,7 +3,6 @@ import { Dimensions, Animated, View } from 'react-native';
 import useSafeArea from '../../../../../modules/SafeAreaInsets/SafeAreaInsets';
 import { useHeaderStyles } from '../../../../UI/Headers/Header/Header';
 import Styles from './FullScreenWrap.style';
-import { useScreenProps } from '../../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 
 
 interface FullScreenWrapProps {
