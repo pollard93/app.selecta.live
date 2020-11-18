@@ -49,7 +49,8 @@ export default {
 
   // State color group
   state: {
-    error: '#b4090f',
+    success: '#DD247C',
+    error: '#E40436',
   },
 
   // Specific brand colors

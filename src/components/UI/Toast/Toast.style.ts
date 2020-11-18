@@ -15,7 +15,7 @@ export default StyleSheet.create({
     paddingVertical: spacing.xsmall,
   },
   SUCCESS: {
-    backgroundColor: color.accent.primary,
+    backgroundColor: color.state.success,
   },
   ERROR: {
     backgroundColor: color.state.error,
