@@ -23,9 +23,13 @@ export default StyleSheet.create({
   username: {
     flex: 1,
   },
-  logout: {
-    alignSelf: 'flex-start',
+  buttons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginTop: spacing.xsmall,
+  },
+  contact: {
+    marginLeft: spacing.xsmall,
   },
   icon: {
     opacity: 0.5,

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput, Linking } from 'react-native';
 import { Navigation, OptionsModalTransitionStyle } from 'react-native-navigation';
 import { useDynamicValue } from 'react-native-dynamic';
 import { useGetSelf } from '../../../API/query/getSelf/getSelf';
@@ -120,13 +120,23 @@ const Profile: FC<ProfileProps> = (props) => {
 
             <Body>Joined {formatForTimezone(self.createdAt, 'calendar')}</Body>
 
-            <Button
-              title="Logout"
-              onPress={onLogout}
-              size="small"
-              style={Styles.logout}
-              type="SECONDARY"
-            />
+            <View style={Styles.buttons}>
+              <Button
+                title="Logout"
+                onPress={onLogout}
+                size="small"
+                type="SECONDARY"
+              />
+
+              <Button
+                title="Contact"
+                size="small"
+                style={Styles.contact}
+                onPress={() => {
+                  Linking.openURL('mailto:support@selecta.live');
+                }}
+              />
+            </View>
           </View>
         </View>
 
