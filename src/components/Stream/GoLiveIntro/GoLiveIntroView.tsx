@@ -2,6 +2,7 @@ import React, { FC, useRef } from 'react';
 import { View, Image, Dimensions, StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
+import Orientation from 'react-native-orientation';
 import { useGetStreamSelfQuery } from '../../../API/query/getStreamSelf/getStreamSelf';
 import { useGetStreamUrlQuery } from '../../../API/query/getStreamUrl/getStreamUrl';
 import useSafeArea from '../../../modules/SafeAreaInsets/SafeAreaInsets';
@@ -99,7 +100,14 @@ const GoLiveIntroView: FC<GoLiveIntroViewProps> = (props) => {
               onPress={() => {
                 openCameraOverlay({
                   id: props.id,
-                  onComplete: () => Navigation.pop(screenProps.componentId),
+                  onComplete: async () => {
+                    try {
+                      await Navigation.pop(screenProps.componentId);
+                    // eslint-disable-next-line no-empty
+                    } catch {}
+
+                    Orientation.lockToPortrait();
+                  },
                 });
               }}
               type="FORCE_LIGHT"
