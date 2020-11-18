@@ -7,7 +7,7 @@ import CenterView from '../../../../storybook/Decorators/CenterView/CenterView';
 import LoadingIcon from './LoadingIcon';
 
 storiesOf('UI/LoadingIcon', module)
-  .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'black' }}>{getStory()}</CenterView>)
+  .addDecorator((getStory) => <CenterView style={{ backgroundColor: 'black', alignItems: 'center' }}>{getStory()}</CenterView>)
   .add('LoadingIcon - default', () => (
     <LoadingIcon />
   ))

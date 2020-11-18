@@ -9,4 +9,7 @@ export default StyleSheet.create({
   borderRadius: {
     borderRadius: 500,
   },
+  overflow: {
+    overflow: 'hidden',
+  },
 });

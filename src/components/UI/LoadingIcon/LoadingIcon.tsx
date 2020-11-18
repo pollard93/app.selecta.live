@@ -1,21 +1,26 @@
 import React, { useRef, useEffect, FC, memo } from 'react';
-import { View, Animated, StyleProp, ViewStyle } from 'react-native';
+import { View, Animated, StyleProp, ViewStyle, Image, StyleSheet } from 'react-native';
 import color from '../../../styles/definitions/color';
 import Styles from './LoadingIcon.style';
 import scalePx from '../../../utils/scalePx';
+import Gradient from '../Gradient/Gradient';
 
 interface LoadingIconProps {
   style?: StyleProp<ViewStyle>;
   size?: 'small' | 'regular' | number; // Defaults to regular
   type?: 'PRIMARY' | 'LIGHT'; // Default PRIMARY
   animating?: boolean; // Default true
-  hideOuterRing?: boolean;
   testID?: string;
 }
 
 const LoadingIcon: FC<LoadingIconProps> = (props) => {
   const timeout = useRef<number>();
   const value = useRef(new Animated.Value(0));
+
+
+  /**
+   * Outer width
+   */
   const outerWidthFixed = useRef((() => {
     if (typeof props.size === 'number') {
       return props.size;
@@ -28,20 +33,17 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
         return scalePx(40);
     }
   })());
-  const innerWidthFixed = useRef(outerWidthFixed.current / 2);
-  const baseColor = useRef((() => {
-    switch (props.type) {
-      case 'LIGHT':
-        return color.mono.light;
-      default:
-        return color.accent.primary;
-    }
-  })());
+
+
+  /**
+   * Inner width
+   */
+  const innerWidthFixed = useRef(outerWidthFixed.current / 2.3);
 
 
   const animation = useRef(Animated.timing(value.current, {
     toValue: 1,
-    duration: 700,
+    duration: 3000,
     useNativeDriver: false,
   })).current;
 
@@ -102,7 +104,7 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
 
   const pulseWidth = useRef(value.current.interpolate({
     inputRange: [0.61, 1],
-    outputRange: [innerWidthFixed.current, innerWidthFixed.current * 2.7],
+    outputRange: [innerWidthFixed.current, innerWidthFixed.current * 2.2],
   }));
 
   const pulseOpacity = useRef(value.current.interpolate({
@@ -113,32 +115,14 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
 
   return (
     <View style={[props.style, { width: outerWidthFixed.current, height: outerWidthFixed.current }]}>
-      {!props.hideOuterRing && (
-        <View style={Styles.item}>
-          <View
-            style={[
-              Styles.borderRadius,
-              {
-                borderWidth: outerWidthFixed.current * 0.08,
-                borderColor: baseColor.current,
-                height: outerWidthFixed.current,
-                width: outerWidthFixed.current,
-              },
-            ]}
-          />
-        </View>
-      )}
-
       <View style={Styles.item}>
-        <Animated.View
-          style={[
-            Styles.borderRadius,
-            {
-              backgroundColor: baseColor.current,
-              height: innerWidth.current,
-              width: innerWidth.current,
-            },
-          ]}
+        <Image
+          source={require('../../../assets/images/logo-icon-outer.png')}
+          style={{
+            height: outerWidthFixed.current,
+            width: outerWidthFixed.current,
+            tintColor: props.type === 'LIGHT' ? color.mono.light : undefined,
+          }}
         />
       </View>
 
@@ -146,14 +130,33 @@ const LoadingIcon: FC<LoadingIconProps> = (props) => {
         <Animated.View
           style={[
             Styles.borderRadius,
+            Styles.overflow,
             {
-              backgroundColor: baseColor.current,
+              height: innerWidth.current,
+              width: innerWidth.current,
+              backgroundColor: props.type === 'LIGHT' ? color.mono.light : undefined,
+            },
+          ]}
+        >
+          {props.type !== 'LIGHT' && <Gradient style={StyleSheet.absoluteFillObject} />}
+        </Animated.View>
+      </View>
+
+      <View style={Styles.item}>
+        <Animated.View
+          style={[
+            Styles.borderRadius,
+            Styles.overflow,
+            {
               height: pulseWidth.current,
               width: pulseWidth.current,
               opacity: pulseOpacity.current,
+              backgroundColor: props.type === 'LIGHT' ? color.mono.light : undefined,
             },
           ]}
-        />
+        >
+          {props.type !== 'LIGHT' && <Gradient style={StyleSheet.absoluteFillObject} />}
+        </Animated.View>
       </View>
     </View>
   );
