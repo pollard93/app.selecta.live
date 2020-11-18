@@ -35,6 +35,16 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
 
   /**
+   * Register form
+   */
+  const { register, setValue, handleSubmit, errors, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
+  useEffect(() => {
+    register({ name: 'email' }, { required: true, validate: validateEmail });
+    register({ name: 'password' }, { required: true });
+  }, [register]);
+
+
+  /**
    * Scroll view
    */
   const scrollViewItemWidth = useRef(
@@ -48,7 +58,7 @@ const LoginView: FC<LoginViewProps> = (props) => {
   const scrollViewRef = useRef<ScrollView>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const [step, setStep] = useState<number>(0);
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = async (index: number) => {
     setStep(index);
     scrollViewRef.current.scrollTo({ y: 0, x: scrollViewItemWidth * index, animated: Platform.OS === 'ios' });
   };
@@ -65,16 +75,6 @@ const LoginView: FC<LoginViewProps> = (props) => {
     inputRange: [0, scrollViewItemWidth],
     outputRange: [0, 1],
   })).current;
-
-
-  /**
-   * Register form
-   */
-  const { register, setValue, handleSubmit, errors, watch, triggerValidation } = useForm<FormData>({ mode: 'onChange' });
-  useEffect(() => {
-    register({ name: 'email' }, { required: true, validate: validateEmail });
-    register({ name: 'password' }, { required: true });
-  }, [register]);
 
 
   /**
@@ -158,10 +158,12 @@ const LoginView: FC<LoginViewProps> = (props) => {
                     returnKeyType="next"
                     errors={errors}
                     onBlur={() => triggerValidation('email')}
-                    onSubmitEditing={() => {
-                      scrollToIndex(1);
-                      // eslint-disable-next-line no-unused-expressions
-                      passwordRef.current?.focus();
+                    onSubmitEditing={async () => {
+                      if (await triggerValidation('email')) {
+                        scrollToIndex(1);
+                        // eslint-disable-next-line no-unused-expressions
+                        passwordRef.current?.focus();
+                      }
                     }}
                     onboarding
                     testID="email"
@@ -169,10 +171,12 @@ const LoginView: FC<LoginViewProps> = (props) => {
 
                   <TouchableOpacity
                     style={Styles.arrow}
-                    onPress={() => {
-                      scrollToIndex(1);
-                      // eslint-disable-next-line no-unused-expressions
-                      passwordRef.current?.focus();
+                    onPress={async () => {
+                      if (await triggerValidation('email')) {
+                        scrollToIndex(1);
+                        // eslint-disable-next-line no-unused-expressions
+                        passwordRef.current?.focus();
+                      }
                     }}
                   >
                     <Icon

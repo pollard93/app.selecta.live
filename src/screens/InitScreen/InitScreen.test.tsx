@@ -31,7 +31,6 @@ describe('<InitScreen >', () => {
   let goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
   let goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
   let goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
-  let goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
   let setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
 
   afterEach(async () => {
@@ -43,7 +42,6 @@ describe('<InitScreen >', () => {
     goToLoginSpy = sandbox.spy(ScreenUtilsModule, 'goToLogin');
     goHomeSpy = sandbox.spy(ScreenUtilsModule, 'goHome');
     goToRequireUpdateScreenSpy = sandbox.spy(ScreenUtilsModule, 'goToRequireUpdateScreen');
-    goToOnboardingSpy = sandbox.stub(ScreenUtilsModule, 'goToOnboarding');
     setSafeAreaSpy = sandbox.stub(SafeAreaInsetsModule, 'setSafeArea');
 
     // Clear getSelf store
@@ -243,47 +241,6 @@ describe('<InitScreen >', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
-
-    // Should not have goneHome
-    expect(goHomeSpy.callCount).to.equal(0);
-  });
-
-  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
-    /**
-     * Create mock client and force getSelf.requiresUpdate to be true
-     */
-    const client = mockClient({
-      Query: () => ({
-        getSelf: () => ({
-          requiresUpdate: null,
-          username: null,
-        }),
-      }),
-    });
-
-    // Store general token
-    writeGeneralTokenToCache(client);
-
-    const wrapper = mount(
-      <ApolloProvider client={client}>
-        <InitScreen />
-      </ApolloProvider>,
-    );
-    wrapper.update();
-    await wait(0);
-    await wait(0);
-    await wait(0);
-    await wait(0);
-    await wait(0);
-
-    // Pushnotifications should have been initialised
-    expect(pushNotificationInitSpy.callCount).to.equal(1);
-
-    // Pushnotifications should have been initialised
-    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
-
-    // Should have gone to OnboardingWelcomeScreen
-    expect(goToOnboardingSpy.callCount).to.equal(1);
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

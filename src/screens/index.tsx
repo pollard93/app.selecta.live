@@ -16,7 +16,6 @@ import RequestResetPasswordScreen from './RequestPasswordResetScreen/RequestPass
 import ModalScreen from './ModalScreen/ModalScreen';
 import ChannelSelfScreen from './ChannelSelfScreen/ChannelSelfScreen';
 import ChannelLoginScreen from './ChannelLoginScreen/ChannelLoginScreen';
-import OnboardingWelcomeScreen from './OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import HomeFeedScreen from './HomeFeedScreen/HomeFeedScreen';
 import ChannelProfileScreen from './ChannelProfileScreen/ChannelProfileScreen';
 import StreamProfileScreen from './StreamProfileScreen/StreamProfileScreen';
@@ -141,7 +140,6 @@ export const registerScreens = () => {
   Navigation.registerComponent(ModalScreen.prototype.ScreenName, () => wrapContext(ModalScreen));
   Navigation.registerComponent(ChannelSelfScreen.prototype.ScreenName, () => wrapContext(ChannelSelfScreen));
   Navigation.registerComponent(ChannelLoginScreen.prototype.ScreenName, () => wrapContext(ChannelLoginScreen));
-  Navigation.registerComponent(OnboardingWelcomeScreen.prototype.ScreenName, () => wrapContext(OnboardingWelcomeScreen));
   Navigation.registerComponent(HomeFeedScreen.prototype.ScreenName, () => wrapContext(HomeFeedScreen));
   Navigation.registerComponent(ChannelProfileScreen.prototype.ScreenName, () => wrapContext(ChannelProfileScreen));
   Navigation.registerComponent(StreamProfileScreen.prototype.ScreenName, () => wrapContext(StreamProfileScreen));

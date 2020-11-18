@@ -11,7 +11,6 @@ import { useResetPasswordMutation } from '../../API/mutation/resetPassword/reset
 import Toast from '../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../utils/functions';
 import { FormData } from '../Register/RegisterView';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
@@ -54,15 +53,7 @@ const ResetPassword: FC<ResetPasswordProps> = (props) => {
       }
 
       // Navigate now getSelf is cached
-      if (!getSelf.username) {
-        // Carry on onboarding process if user has no name
-        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
-          setLoading(false);
-        });
-      } else {
-        // Go home if name is set
-        goHome();
-      }
+      goHome();
     },
     onError: (e) => {
       setLoading(false);

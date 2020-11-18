@@ -16,7 +16,6 @@ import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen
 import { getGQLErrorMessage } from '../../utils/functions';
 import Toast from '../UI/Toast/Toast';
 import InAppPurchases from '../../modules/InAppPurchases';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../modules/Toast';
@@ -55,15 +54,7 @@ const Login: FC<LoginProps> = () => {
       }
 
       // Navigate now getSelf is cached
-      if (!getSelf.username) {
-        // Carry on onboarding process if user has no username
-        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
-          setLoading(false);
-        });
-      } else {
-        // Go home if username is set
-        goHome();
-      }
+      goHome();
     },
     onError: (e) => {
       setLoading(false);

@@ -17,7 +17,6 @@ import * as ScreenUtilsModule from '../../screens/utils';
 import InAppPurchases from '../../modules/InAppPurchases';
 import RequestPasswordResetScreen from '../../screens/RequestPasswordResetScreen/RequestPasswordResetScreen';
 import RegisterScreen from '../../screens/RegisterScreen/RegisterScreen';
-import OnboardingWelcomeScreen from '../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../utils/storage';
 import * as ToastModule from '../../modules/Toast';
 
@@ -278,56 +277,6 @@ describe('<Login >', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
-
-    // Should not have goneHome
-    expect(goHomeSpy.callCount).to.equal(0);
-  });
-
-  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
-    /**
-     * Create mock client and force getSelf.requiresUpdate to be true
-     */
-    const client = mockClient({
-      Query: () => ({
-        getSelf: () => ({
-          requiresUpdate: null,
-          username: null,
-        }),
-      }),
-    });
-
-    const wrapper = mount(
-      <ApolloProvider client={client}>
-        <Login />
-      </ApolloProvider>,
-    );
-
-    // Test text change
-    wrapper.findWhere((n) => n.prop('testID') === 'email').first().props().onChangeText('email@test.com');
-    wrapper.findWhere((n) => n.prop('testID') === 'password').first().props().onChangeText('ValidPassword1!');
-    await wait(0);
-    wrapper.update();
-
-    // Submit
-    await wrapper.findWhere((n) => n.prop('testID') === 'submit').first().props().onPress({
-      preventDefault: jest.fn,
-      persist: jest.fn,
-    } as any);
-
-    // Wait for response and update
-    await wait(0);
-    wrapper.update();
-
-    // Pushnotifications should have been initialised
-    expect(pushNotificationInitSpy.callCount).to.equal(1);
-
-    // Pushnotifications should have been initialised
-    expect(inAppPurchasesInitSpy.callCount).to.equal(1);
-
-    // Should have gone to OnboardingWelcomeScreen
-    expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

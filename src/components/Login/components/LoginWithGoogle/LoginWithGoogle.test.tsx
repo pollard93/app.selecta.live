@@ -14,7 +14,6 @@ import { getSelf } from '../../../../API/query/getSelf/__generated__/getSelf';
 import { GET_SELF_QUERY } from '../../../../API/query/getSelf/getSelf';
 import * as ScreenUtilsModule from '../../../../screens/utils';
 import InAppPurchases from '../../../../modules/InAppPurchases';
-import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import Button from '../../../UI/Button/Button';
 import { store } from '../../../../utils/storage';
 import * as ToastModule from '../../../../modules/Toast';
@@ -227,42 +226,6 @@ describe('<LoginWithGoogle />', () => {
 
     // Should goToRequireUpdateScreen
     expect(goToRequireUpdateScreenSpy.callCount).to.equal(1);
-
-    // Should not have goneHome
-    expect(goHomeSpy.callCount).to.equal(0);
-  });
-
-  it('should go to OnboardingWelcomeScreen if getSelf.username is null', async () => {
-    /**
-     * Create mock client and force getSelf.requiresUpdate to be true
-     */
-    const client = mockClient({
-      Query: () => ({
-        getSelf: () => ({
-          requiresUpdate: null,
-          username: null,
-        }),
-      }),
-    });
-
-    const wrapper = mount(
-      <ApolloProvider client={client}>
-        <LoginWithGoogle buttonText="text" />
-      </ApolloProvider>,
-    );
-
-    // Submit form
-    await wrapper.find(Button).first().props().onPress({} as any);
-    wrapper.update();
-
-    // Wait for response and update
-    await wait(0);
-    wrapper.update();
-
-    // Should have gone to OnboardingWelcomeScreen
-    expect(pushScreenSpy.callCount).to.equal(1);
-    expect(pushScreenSpy.args[0][1]).to.equal(OnboardingWelcomeScreen);
-    expect(pushScreenSpy.args[0][2]).to.be.empty;
 
     // Should not have goneHome
     expect(goHomeSpy.callCount).to.equal(0);

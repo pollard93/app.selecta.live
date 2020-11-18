@@ -134,10 +134,12 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     returnKeyType="next"
                     errors={errors}
                     onBlur={() => triggerValidation('email')}
-                    onSubmitEditing={() => {
-                      scrollToIndex(1);
-                      // eslint-disable-next-line no-unused-expressions
-                      passwordRef.current?.focus();
+                    onSubmitEditing={async () => {
+                      if (await triggerValidation('email')) {
+                        scrollToIndex(1);
+                        // eslint-disable-next-line no-unused-expressions
+                        passwordRef.current?.focus();
+                      }
                     }}
                     onboarding
                     testID="email"
@@ -145,10 +147,12 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
 
                   <TouchableOpacity
                     style={Styles.arrow}
-                    onPress={() => {
-                      scrollToIndex(1);
-                      // eslint-disable-next-line no-unused-expressions
-                      passwordRef.current?.focus();
+                    onPress={async () => {
+                      if (await triggerValidation('email')) {
+                        scrollToIndex(1);
+                        // eslint-disable-next-line no-unused-expressions
+                        passwordRef.current?.focus();
+                      }
                     }}
                   >
                     <Icon
@@ -201,10 +205,12 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
                     returnKeyType="next"
                     errors={errors}
                     onBlur={() => triggerValidation('password')}
-                    onSubmitEditing={() => {
-                      scrollToIndex(2);
-                      // eslint-disable-next-line no-unused-expressions
-                      usernameRef.current?.focus();
+                    onSubmitEditing={async () => {
+                      if (await triggerValidation('password')) {
+                        scrollToIndex(2);
+                        // eslint-disable-next-line no-unused-expressions
+                        usernameRef.current?.focus();
+                      }
                     }}
                     onboarding
                     testID="password"
@@ -212,10 +218,12 @@ const RegisterView: FC<RegisterViewProps> = (props) => {
 
                   <TouchableOpacity
                     style={Styles.arrow}
-                    onPress={() => {
-                      scrollToIndex(2);
-                      // eslint-disable-next-line no-unused-expressions
-                      usernameRef.current?.focus();
+                    onPress={async () => {
+                      if (await triggerValidation('password')) {
+                        scrollToIndex(2);
+                        // eslint-disable-next-line no-unused-expressions
+                        usernameRef.current?.focus();
+                      }
                     }}
                   >
                     <Icon

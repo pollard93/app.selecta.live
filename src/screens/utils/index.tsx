@@ -5,7 +5,6 @@ import { RequireUpdateScreenName } from '../RequireUpdateScreen/RequireUpdateScr
 import { STACK } from './interfaces';
 import { ModalScreenName, ModalScreenProps } from '../ModalScreen/ModalScreen';
 import { ChannelSelfScreenName } from '../ChannelSelfScreen/ChannelSelfScreen';
-import { OnboardingWelcomeScreenName } from '../OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { HomeFeedScreenName } from '../HomeFeedScreen/HomeFeedScreen';
 import color from '../../styles/definitions/color';
 import Products from '../../components/Purchase/Products/Products';
@@ -33,24 +32,6 @@ export const goToLogin = () => Navigation.setRoot({
   },
 });
 
-
-/**
- * Resets navigation stack to require update screen using STACK.REQUIRE_UDPATE
- */
-export const goToOnboarding = () => Navigation.setRoot({
-  root: {
-    stack: {
-      id: STACK.ONBOARDING,
-      children: [
-        {
-          component: {
-            name: OnboardingWelcomeScreenName,
-          },
-        },
-      ],
-    },
-  },
-});
 
 interface GoHomeProps {
   currentTabIndex?: number; // Default 0

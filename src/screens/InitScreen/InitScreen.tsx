@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Options } from 'react-native-navigation';
 import { useApolloClient } from 'react-apollo';
-import { goToLogin, goHome, goToRequireUpdateScreen, goToOnboarding } from '../utils';
+import { goToLogin, goHome, goToRequireUpdateScreen } from '../utils';
 import { getToken } from '../../ApolloClient';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import GlobalStyles from '../../styles/stylesheets/GlobalStyles';
@@ -41,14 +41,6 @@ const InitScreen = () => {
        */
       if (getSelf.requiresUpdate) {
         goToRequireUpdateScreen();
-        return;
-      }
-
-      /**
-       * If no username is set, send user to welcome screen
-       */
-      if (!getSelf.username) {
-        goToOnboarding();
         return;
       }
 

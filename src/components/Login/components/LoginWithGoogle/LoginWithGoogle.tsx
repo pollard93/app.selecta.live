@@ -12,7 +12,6 @@ import Toast from '../../../UI/Toast/Toast';
 import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
-import OnboardingWelcomeScreen from '../../../../screens/OnboardingScreens/OnboardingWelcomeScreen/OnboardingWelcomeScreen';
 import { store } from '../../../../utils/storage';
 import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../../../modules/Toast';
@@ -72,14 +71,7 @@ const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
       }
 
       // Navigate now getSelf is cached
-      if (!getSelf.username) {
-        // Carry on onboarding process if user has no username
-        pushScreen(screenProps.componentId, OnboardingWelcomeScreen, {}).finally(() => {
-          setLoading(false);
-        });
-      } else {
-        goHome();
-      }
+      goHome();
     },
     onError: (e) => {
       setLoading(false);
