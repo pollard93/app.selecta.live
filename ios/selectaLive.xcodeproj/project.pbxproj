@@ -921,11 +921,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.debug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
-				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-2a6mtmti045nrubclvfbfaroi15eob6b";
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-poefcfqao1r651m82knjior3jkul1uc1";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -960,11 +960,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
-				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-dcq743o31n3bi6pb0ncqc033855m4jr8";
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-sbltnvrlil22d9m4fge5jq6ncjamb92r";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1228,7 +1228,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1287,7 +1287,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1357,7 +1357,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1446,11 +1446,11 @@
 				CODE_SIGN_ENTITLEMENTS = selectaLive/selectaLive.beta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = XHGHG46PR6;
 				ENABLE_BITCODE = NO;
-				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-sc1ccg1qqs8nql377divnn9j6ii34jpf";
+				GOOGLE_REVERSED_CLIENT_ID = "com.googleusercontent.apps.923259272645-t853rmsa0fbbpc1ku1kn58o8ofllk6d7";
 				INFOPLIST_FILE = selectaLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
