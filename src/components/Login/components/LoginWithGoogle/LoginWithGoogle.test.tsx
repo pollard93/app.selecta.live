@@ -34,7 +34,6 @@ describe('<LoginWithGoogle />', () => {
   let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
-  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
 
   afterEach(() => {
     sandbox.restore();
@@ -50,7 +49,6 @@ describe('<LoginWithGoogle />', () => {
     toastSpy = sandbox.stub(ToastModule, 'pushToast');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
-    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   });
 
   it('should succeed', async () => {

@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { Navigation } from 'react-native-navigation';
 import ResetPasswordView from './ResetPasswordView';
-import { goHome, goToRequireUpdateScreen, pushScreen } from '../../screens/utils';
+import { goHome, goToRequireUpdateScreen } from '../../screens/utils';
 import PushNotifications from '../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../API/query/getSelf/getSelf';
 import { PUT_ACCESS_TOKEN_MUTATION } from '../../ApolloClient/resolvers/mutation/putAccessToken/putAccessTokenMutation';
@@ -13,7 +13,6 @@ import { getGQLErrorMessage } from '../../utils/functions';
 import { FormData } from '../Register/RegisterView';
 import InAppPurchases from '../../modules/InAppPurchases';
 import { store } from '../../utils/storage';
-import { useScreenProps } from '../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../modules/Toast';
 import { STACK } from '../../screens/utils/interfaces';
 
@@ -24,7 +23,6 @@ export interface ResetPasswordProps {
 const ResetPassword: FC<ResetPasswordProps> = (props) => {
   const client = useApolloClient();
   const [loading, setLoading] = useState(false);
-  const screenProps = useScreenProps();
 
 
   /**

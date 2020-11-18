@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useApolloClient } from 'react-apollo';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { goHome, goToRequireUpdateScreen, pushScreen } from '../../../../screens/utils';
+import { goHome, goToRequireUpdateScreen } from '../../../../screens/utils';
 import { useLoginWithSocialMutation } from '../../../../API/mutation/loginWithSocial/loginWithSocial';
 import PushNotifications from '../../../../modules/PushNotifications';
 import { useGetSelfLazyQuery } from '../../../../API/query/getSelf/getSelf';
@@ -13,7 +13,6 @@ import { getGQLErrorMessage } from '../../../../utils/functions';
 import InAppPurchases from '../../../../modules/InAppPurchases';
 import Button from '../../../UI/Button/Button';
 import { store } from '../../../../utils/storage';
-import { useScreenProps } from '../../../../modules/ScreenPropsProvider/ScreenPropsProvider';
 import { pushToast } from '../../../../modules/Toast';
 import Icon, { ICON } from '../../../UI/Icon/Icon';
 
@@ -25,7 +24,6 @@ interface LoginWithGoogleProps {
 const LoginWithGoogle: FC<LoginWithGoogleProps> = (props) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  const screenProps = useScreenProps();
 
 
   /**

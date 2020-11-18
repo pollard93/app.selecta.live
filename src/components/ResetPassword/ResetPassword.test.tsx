@@ -26,7 +26,6 @@ describe('<ResetPassword />', () => {
   let inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
   let toastSpy = sandbox.stub(ToastModule, 'pushToast');
   let goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-  let pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
   let goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
 
   afterEach(() => {
@@ -36,7 +35,6 @@ describe('<ResetPassword />', () => {
     inAppPurchasesInitSpy = sandbox.stub(InAppPurchases, 'init');
     toastSpy = sandbox.stub(ToastModule, 'pushToast');
     goHomeSpy = sandbox.stub(ScreenUtilsModule, 'goHome');
-    pushScreenSpy = sandbox.stub(ScreenUtilsModule, 'pushScreen');
     goToRequireUpdateScreenSpy = sandbox.stub(ScreenUtilsModule, 'goToRequireUpdateScreen');
   });
 
